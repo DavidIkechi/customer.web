@@ -11,6 +11,15 @@ from db import Base, engine, SessionLocal
 from sqlalchemy.orm import Session
 import crud, schema
 
+# Dependency
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
 description = """
 Scrybe API helps you analyse sentiments in your customer support calls
 """
@@ -28,14 +37,6 @@ tags_metadata = [
 
 # create the database.
 models.Base.metadata.create_all(engine)
-
-# Dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 
 app = FastAPI(
@@ -74,7 +75,7 @@ async def analyse(file: UploadFile=File(...)):
     return {"transcript": transcript, "sentiment_result": sentiment_result}
 
 
-@app.post("/analyse", tags=['analyse'])
+@app.post("/new_analyse", tags=['analyse'])
 async def new_analyse(audio: schema.AudioCreate, db: Session = Depends(get_db), file: UploadFile=File(...)):
     aud = crud.create_audio(db, audio, user_id)
 
@@ -104,7 +105,6 @@ async def new_analyse(audio: schema.AudioCreate, db: Session = Depends(get_db), 
 async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     # return token once the user has been successfully authenticated, or it returns an error.
     return await main_login(form_data, db)
-
 
 @app.post("/users/", response_model=schema.User, tags=['users'])
 def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):
