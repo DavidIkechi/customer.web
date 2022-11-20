@@ -2,6 +2,9 @@
 from sqlalchemy.orm import Session
 import models, schema
 from random import randint
+from passlib.context import CryptContext
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 def get_user(db: Session, user_id: int):
@@ -32,7 +35,7 @@ def create_user(db: Session, user: schema.User):
     # create the company.
     create_company(db, user.company_name, company_id)
     # create the user.
-    db_user = models.User(first_name=user.first_name, last_name=user.last_name, email=user.email, password=user.password, company_id = company_id)
+    db_user = models.User(first_name=user.first_name, last_name=user.last_name, email=user.email, password=pwd_context.hash(user.password), company_id = company_id)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
