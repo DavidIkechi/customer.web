@@ -1,7 +1,7 @@
 import React from "react";
-import logoutIllusration from "../../assets/images/logout-illustration.png";
+import logoutIllusration from "./assets/logout-illustration.png";
 import logoWithText from "../../assets/scrybe_logo_with_text.svg";
-import "../../assets/styles/logout.scss";
+import "./logout.scss";
 
 function Logout() {
   return (
