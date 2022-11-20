@@ -57,7 +57,7 @@ async def get_current_user(db: Session = Depends(_services.get_session), token: 
     user = get_user_by_email(db, email=token_data.email)
     if user is None:
         raise credentials_exception
-    
+    # return the current user.
     return user
 
 async def get_active_user(db: Session = Depends(_services.get_session), token: str = Depends(oauth2_scheme)) -> bool:
