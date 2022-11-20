@@ -1,6 +1,8 @@
 # crud operations for the backend app
 from sqlalchemy.orm import Session
 import models, schema
+from random import randint
+
 
 def get_user(db: Session, user_id: int):
     return db.query(models.User).filter(models.User.id == user_id).first()
@@ -11,9 +13,23 @@ def get_user_by_email(db: Session, email: str):
 def get_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.User).offset(skip).limit(limit).all()
 
-def create_user(db: Session, user: schema.UserCreate):
-    db_user = models.User(email=user.email, hashed_password=user.hashed_password, 
-    first_name=user.first_name, last_name=user.last_name, company_id=user.company_id)
+def create_company(db: Session, company_name: str, id: int):
+    db_company = models.Company(id= id, name=company_name)
+    db.add(db_company)
+    db.commit()
+    db.refresh(db_company)
+    return db_company
+
+def create_user(db: Session, user: schema.User):
+    # get a random id
+    company_id = randint(0, 1000000)
+    while (get_company(db, company_id) is not None):
+        company_id = randint(0, 1000000)
+    
+    # create the company.
+    create_company(db, user.company_name, company_id)
+    # create the user.
+    db_user = models.User(first_name=user.first_name, last_name=user.last_name, email=user.email, password=user.password, company_id = company_id)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
@@ -27,13 +43,6 @@ def get_audios(db: Session, skip: int = 0, limit: int = 100):
 
 def get_company(db: Session, company_id: int):
     return db.query(models.Company).filter(models.Company.id == company_id).first()
-
-def create_company(db: Session, company: schema.Company):
-    db_company = models.Company(name=company.name, size=company.size)
-    db.add(db_company)
-    db.commit()
-    db.refresh(db_company)
-    return db_company
 
 def create_audio(db: Session, audio: schema.Audio, agent_id: int):
     db_audio = models.Audio(audio_path=audio.audio_path, transcript=audio.transcript, timestamp=audio.timestamp, positivity_score=audio.positivity_score, 
