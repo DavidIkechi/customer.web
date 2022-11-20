@@ -74,7 +74,7 @@ async def analyse(file: UploadFile=File(...)):
     return {"transcript": transcript, "sentiment_result": sentiment_result}
 
 
-@app.post("/analyse", tags=['analyse'])
+@app.post("/new_analyse", tags=['analyse'])
 async def new_analyse(audio: schema.AudioCreate, db: Session = Depends(get_db), file: UploadFile=File(...)):
     aud = crud.create_audio(db, audio, user_id)
 
