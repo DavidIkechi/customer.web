@@ -1,0 +1,67 @@
+.header_style {
+    height: 14rem;
+    background-color: #E6F0FF;
+
+    .help_nav {
+        padding: 1.2rem 6rem;
+        
+        a {
+            color: #002D6B;
+            font-weight: 300;
+            font-size: 18px;
+            text-decoration: none;
+        }
+    }
+    
+    .help_header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        margin-top: 1rem;
+        
+        h1 {
+            font-size: 43px;
+            font-weight: 600;
+        }
+        p {
+            font-size: 18px;
+            margin-top: 4px;
+            font-weight: 300;
+        }
+    }
+
+    @media screen and (max-width:500px) {
+        height: auto;
+        padding: 1rem 1rem 3rem 2rem;
+
+        .help_nav {
+
+            padding: 0;
+            margin-bottom: 1rem;
+
+            a {
+                font-size: 14px;
+            }
+        }
+
+        .help_header {
+            align-items: start;
+            height: 100%;
+            margin-top: 0;
+            
+            h1 {
+                font-size: 22px;    
+                margin-left: 2rem;
+
+            }
+            p {
+                font-size: 16px;
+                margin-top: 5px;
+                font-weight: 300;
+            }
+        
+        }
+    }
+
+}

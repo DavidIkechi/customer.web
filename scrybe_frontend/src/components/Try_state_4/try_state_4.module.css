@@ -1,0 +1,181 @@
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap");
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "Kanit", sans-serif;
+}
+
+.Analysis {
+  margin: 3vh 6%;
+  background: rgba(205, 225, 237, 0.08);
+  border-radius: 4px;
+  padding: 2vh 3%;
+}
+.Analysis .recordingName {
+  display: flex;
+  background: #FFFFFF;
+  border-radius: 8px;
+  gap: 2%;
+  padding: 1.5vh 2%;
+  margin-bottom: 3vh;
+}
+.Analysis .recordingName img {
+  width: 100%;
+}
+.Analysis .recordingName p {
+  color: #535353;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 26px;
+}
+.Analysis .recordingName small {
+  font-weight: 400;
+  font-size: 0.9rem;
+  line-height: 26px;
+  color: #887F7F;
+}
+.Analysis h2 {
+  text-align: center;
+  font-weight: 600;
+  font-size: 2.2rem;
+  line-height: 56px;
+  color: #535353;
+  margin-bottom: 1vh;
+}
+.Analysis .callWords {
+  display: flex;
+  gap: 5%;
+  color: #3F4350;
+  padding: 2.5vh 0;
+}
+.Analysis .callWords p {
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 26px;
+}
+.Analysis .callWords span {
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 26px;
+  color: #959595;
+}
+.Analysis hr {
+  opacity: 0.3;
+  margin: 5vh 0;
+}
+
+.overallSentiment {
+  padding: 0 2%;
+}
+.overallSentiment h3 {
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 32px;
+  color: #262626;
+  text-align: center;
+}
+.overallSentiment .overallProgress {
+  padding: 2vh 2%;
+  margin: 3vh 6%;
+  background: #FFFFFF;
+  border: 0.5px solid rgba(18, 18, 18, 0.15);
+  border-radius: 8px;
+}
+.overallSentiment .progress p {
+  font-weight: 300;
+  font-size: 0.9rem;
+  line-height: 26px;
+}
+.overallSentiment .spanDiv {
+  position: relative;
+  display: flex;
+  background: #FFFFFF;
+  border: 0.5px solid #8AB1C6;
+  border-radius: 40px;
+}
+.overallSentiment .spanDiv p {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 16px;
+  color: #1D1D1D;
+}
+.overallSentiment .span1 {
+  background: #B0CAD9;
+  border-radius: 40px;
+  width: 90%;
+  height: 2.5vh;
+  border: 0;
+}
+.overallSentiment .verdict {
+  margin-top: 2vh;
+}
+.overallSentiment .verdict p {
+  color: #535353;
+  font-weight: 400;
+  font-size: 0.9rem;
+  line-height: 24px;
+  padding-bottom: 0.5vh;
+}
+.overallSentiment .verdict h5 {
+  font-weight: 500;
+  font-size: 1.05rem;
+  line-height: 24px;
+  color: #1D1D1D;
+}
+
+.like {
+  display: flex;
+  gap: 1.5%;
+  margin: 10vh 6% 4vh;
+}
+.like hr {
+  border: 2px solid #006CFF;
+  margin: 0vh 0 1vh;
+}
+.like p {
+  font-weight: 400;
+  font-size: 1.03rem;
+  line-height: 26px;
+  color: #6A6A6A;
+}
+
+.priceSignup {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 6% 5vh;
+  gap: 2%;
+}
+.priceSignup .button1 {
+  font-weight: 500;
+  font-size: 0.9rem;
+  line-height: 24px;
+  text-decoration: none;
+  border: solid 2px #006CFF;
+  color: #006CFF;
+  border-radius: 4px;
+  background-color: #FFFFFF;
+  padding: 1.5vh 2.5%;
+}
+.priceSignup .button1:hover {
+  background: #006CFF;
+  color: #FFFFFF;
+}
+.priceSignup .button2 {
+  font-weight: 500;
+  font-size: 0.9rem;
+  line-height: 24px;
+  background: #006CFF;
+  color: #FFFFFF;
+  text-decoration: none;
+  border-radius: 4px;
+  padding: 1.5vh 2.5%;
+}
+.priceSignup .button2:hover {
+  border: solid 2px #006CFF;
+  color: #006CFF;
+  background-color: #FFFFFF;
+}/*# sourceMappingURL=try_state_4.module.css.map */

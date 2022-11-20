@@ -66,7 +66,7 @@
     }
 }
 
-@mixin container {
+@mixin containers {
     width: 90%;
     margin: auto;
 }
@@ -80,8 +80,8 @@
 
 .content-section {
     // padding: 8rem 0;
-    .container {
-        @include container;
+    .containers {
+        @include containers;
     
         .flex-items {
             @include flexItem(space-between, row);
@@ -91,7 +91,7 @@
     
                 h1 {
                     color: #005584;
-                    font-size: 40px;
+                    font-size: 3.3vw;
                     line-height: 1.5;
                     font-weight: 600;
                     margin-bottom: 20px;
@@ -139,8 +139,8 @@
 }
 
 .why-scrybe {
-    .container {
-        @include container;
+    .containers {
+        @include containers;
 
         h1 {
             color: #005584;
@@ -155,11 +155,11 @@
             color: #3F3F3F;
             font-weight: 300;
             text-align: center;
-            width: 50%;
+            width: 100%;
             margin: auto;
         }
 
-        .card-container {
+        .card-containers {
             @include flexItem(space-around, row);
             margin: 3.5rem auto 0 auto;
             width: 80%;
@@ -191,8 +191,8 @@
 }
 
 .buss-section {
-    .container {
-        @include container;
+    .containers {
+        @include containers;
 
         .buss-flex{
             @include flexItem(space-between, row);
@@ -202,26 +202,26 @@
                 h1 {
                     color: #005584;
                     margin: 0 0 20px 0;
-                    font-size: 30px;
+                    font-size: 2vw;
                     line-height: 1.6;
                 }
 
                 p {
                     color: #3F3F3F;
-                    font-size: 20px;
+                    font-size: 1.5vw;
                     line-height: 1.8;
                     margin-bottom: 8px;
                 }
 
                 h4 {
-                    font-size: 20px;
+                    font-size: 1.4vw;
                     font-weight: 600;
                     color: #006CFF;
                 }
             }
 
             .buss-img  {
-                width: 50%;
+                width: 45%;
 
                 img {
                     width: 100%;
@@ -232,8 +232,8 @@
 }
 
 .monitor-section {
-    .container {
-        @include container;
+    .containers {
+        @include containers;
 
         .monitor-flex{
             @include flexItem(space-between, row);
@@ -243,13 +243,13 @@
                 h1 {
                     color: #005584;
                     margin: 0 0 20px 0;
-                    font-size: 30px;
+                    font-size: 2.2vw;
                     line-height: 1.6;
                 }
 
                 p {
                     color: #3F3F3F;
-                    font-size: 20px;
+                    font-size: 1.4vw;
                     line-height: 1.9;
                     margin-bottom: 8px;
 
@@ -260,7 +260,7 @@
                 }
 
                 h4 {
-                    font-size: 20px;
+                    font-size: 1.4vw;
                     font-weight: 600;
                     color: #006CFF;
                 }
@@ -274,18 +274,19 @@
                 }
 
                 .img {
-                    width: 90%
+                    width: 90%;
+                    margin: auto;
                 }
             }
         }
     }
 }
 
-.container {
-    @include container;
+.containers {
+    @include containers;
     padding: 6rem 0;
 
-    .upload-container {
+    .upload-containers {
         background: url(./assets/blur-bg.png);
         background-size: cover;
         background-repeat: no-repeat;
@@ -321,10 +322,10 @@
     }
 }
 
-.container {
-    @include container;
+.containers {
+    @include containers;
 
-    .setblur-container {
+    .setblur-containers {
         background: url(./assets/set-blur.png);
         background-size: cover;
         background-repeat: no-repeat;
@@ -363,7 +364,7 @@
 .logo-section {
     padding: 0 0 13rem 0;
 
-    .container {
+    .containers {
         text-align: center;
         h1 {
             color: #262626;
@@ -392,9 +393,9 @@
     }
 }
 
-@media (max-width: 1121px) {
+@media (max-width: 985px) {
     .content-section {
-        .container {
+        .containers {
             .flex-items {
                 flex-direction: column;
                 row-gap: 4rem;
@@ -406,6 +407,14 @@
                 .txt-item {
                     text-align: center;
 
+                    h1 {
+                        font-size: 40px;
+                    }
+
+                    p {
+                        font-size: 20px;
+                    }
+
                     .btns {
                         align-items: center;
                         justify-content: center;
@@ -416,8 +425,8 @@
     }
 
     .why-scrybe {
-        .container {
-            .card-container {
+        .containers {
+            .card-containers {
                 flex-direction: column;
                 row-gap: 3rem;
 
@@ -428,8 +437,8 @@
         }
     }
 
-    .container {
-        .setblur-container {
+    .containers {
+        .setblur-containers {
             .cont {
                 h1 {
                     font-size: 30px;
@@ -442,8 +451,8 @@
         }
     }
 
-    .container {
-        .upload-container {
+    .containers {
+        .upload-containers {
             .cont {
                 h1 {
                     font-size: 30px;
@@ -456,11 +465,9 @@
             }
         }
     }
-}
 
-@media (max-width: 1376px) {
     .buss-section {
-        .container {
+        .containers {
 
             .buss-flex {
                 @include flexItem(space-between, column);
@@ -470,12 +477,22 @@
                     width: 100%;
                     text-align: center;
                 }
+
+                .buss-txt {
+                    h1 {
+                        font-size: 30px
+                    }
+
+                    p , h4{
+                        font-size: 19px;
+                    }
+                }
             }
         }
     }
 
     .monitor-section {
-        .container {
+        .containers {
             .monitor-flex {
                 @include flexItem(space-between, column-reverse );
                 row-gap: 6rem;
@@ -484,15 +501,26 @@
                     width: 100%;
                     text-align: center;
                 }
+
+                .buss-txt {
+                    h1 {
+                        font-size: 30px
+                    }
+
+                    p , h4{
+                        font-size: 19px;
+                    }
+                }
             }
         }
     }
 }
 
+
 @media (max-width: 920px) {
     .why-scrybe {
-        .container {
-            .card-container {
+        .containers {
+            .card-containers {
                 .card {
                     width: 45%;
                 }
@@ -503,11 +531,11 @@
 
 @media (max-width: 790px) {
     .why-scrybe {
-        .container {
+        .containers {
             p {
                 width: 80%;
             }
-            .card-container {
+            .card-containers {
                 .card {
                     width: 55%;
                 }
@@ -518,8 +546,8 @@
 
 @media (max-width: 570px) {
     .why-scrybe {
-        .container {
-            .card-container {
+        .containers {
+            .card-containers {
                 .card {
                     width: 65%;
                 }
@@ -531,8 +559,8 @@
 
 @media (max-width: 550px) {
     .why-scrybe {
-        .container {
-            .card-container {
+        .containers {
+            .card-containers {
                 .card {
                     width: 100%;
                 }
@@ -543,7 +571,7 @@
 
 @media (max-width: 420px) {
     .content-section {
-        .container {
+        .containers {
             .flex-items {
                 .txt-item {
                     .btns {
@@ -555,8 +583,8 @@
         }
     }
 
-    .container {
-        .setblur-container, .upload-container {
+    .containers {
+        .setblur-containers, .upload-containers {
             .cont {
                 width: 100%;
             }

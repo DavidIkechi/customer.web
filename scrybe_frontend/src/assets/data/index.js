@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 export const termsData = [
   {
     title: "Introduction",
@@ -33,7 +32,7 @@ export const termsData = [
   {
     title: "Accounts",
     content:
-      'In the course of registering for or using the Services, you may be required to provide Scrybe with certain information, including your contact information, username and password ("Credentials"). Scrybe handles such information with the utmost attention, care and security. Nonetheless, you, not Scrybe, shall be responsible for maintaining and protecting your Credentials in connection with the Services. If your contact information or other information relating to your account changes, you must notify Scrybe promptly and keep such information current. You are solely responsible for any activity using your Credentials, whether or not you authorized that activity. You should immediately notify Scrybe of any unauthorized use of your Credentials or if your email or password has been hacked or stolen. If you discover that someone is using your Credentials without your consent, or you discover any other breach of security, you agree to notify Scrybe immediately.',
+      "In the course of registering for or using the Services, you may be required to provide Scrybe with certain information, including your contact information, username and password ('Credentials'). Scrybe handles such information with the utmost attention, care and security. Nonetheless, you, not Scrybe, shall be responsible for maintaining and protecting your Credentials in connection with the Services. If your contact information or other information relating to your account changes, you must notify Scrybe promptly and keep such information current. You are solely responsible for any activity using your Credentials, whether or not you authorized that activity. You should immediately notify Scrybe of any unauthorized use of your Credentials or if your email or password has been hacked or stolen. If you discover that someone is using your Credentials without your consent, or you discover any other breach of security, you agree to notify Scrybe immediately.",
   },
   {
     title: "Intellectual Property",
@@ -48,7 +47,7 @@ export const termsData = [
   {
     title: "Third Party Software",
     content:
-      'The Services may incorporate certain third party software ("Third Party Software"), which is licensed subject to the terms and conditions of the third party licensing such Third Party Software. Nothing in these Terms limits your rights under, or grants you rights that supersede, the terms and conditions of any applicable license for such Third Party Software.',
+      "The Services may incorporate certain third party software ('Third Party Software'), which is licensed subject to the terms and conditions of the third party licensing such Third Party Software. Nothing in these Terms limits your rights under, or grants you rights that supersede, the terms and conditions of any applicable license for such Third Party Software.",
   },
   {
     title: "Error Reporting and Feedback",
