@@ -1,5 +1,6 @@
 @use "../../functions.scss" as *;
 
+
 .customerFeed {
         padding-block: pix-rem(16);
         position: relative;
@@ -39,6 +40,7 @@
                                 font-weight: bold;
                                 color: #0095e8;
                                 font-size: pix-rem(24);
+                                display: block;
                         }
                         .indicators {
                                 display: flex;
