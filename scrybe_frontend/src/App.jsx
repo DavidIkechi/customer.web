@@ -123,10 +123,7 @@ function App() {
           path="/pw-reset-successful"
           element={<PasswordResetSuccessful />}
         />
-        <Route
-          path="/reviews"
-          element={<Reviews />}
-        />
+        <Route path="/reviews" element={<Reviews />} />
       </Routes>
     </>
   );
