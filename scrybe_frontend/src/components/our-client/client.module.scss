@@ -1,0 +1,21 @@
+@use '../../functions.scss' as *;
+
+.container{
+        padding-block: pix-rem(32);
+        padding-inline: pix-rem(20);
+        .logos{
+                margin-top: pix-rem(40);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-flow: row wrap;
+        }
+        .title{
+                text-align: center;
+                font-size: pix-rem(32);
+                font-weight: 600;
+        }
+        .display{
+                width: min(100%, pix-rem(200));
+        }
+}

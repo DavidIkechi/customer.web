@@ -1,0 +1,111 @@
+@function pix-rem($value, $suffix: rem) {
+    $calculate: calc($value/16);
+    @return #{$calculate}#{$suffix};
+}
+
+.AudioControl {
+    width: 320px;
+    background-color: #FFFFFf;
+    padding: pix-rem(40) pix-rem(24);
+    border-radius: 4px;
+    box-shadow: 0 8px 6px -6px rgb(0 0 0 / 0.07);
+    filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+}
+
+.AudioInfo {
+    display: flex;
+    column-gap: pix-rem(16);
+
+    .AudioName {
+
+        h2 {
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 24px;
+            color: #313131;
+        }
+
+        p {
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 24px;
+            color: #828282;
+        }
+    }
+}
+
+.ControlButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: pix-rem(32);
+    margin: pix-rem(32) 0 pix-rem(12) 0;
+
+    .RewindButton,
+    .PlayButton,
+    .ForwardButton {
+        cursor: pointer;
+        transition: all 150ms ease-in;
+
+    }
+}
+
+.RewindButton:hover,
+.PlayButton:hover,
+.ForwardButton:hover {
+    background-color: #E6F0FF;
+    border-radius: 4PX;
+    transform: scale(1.25);
+}
+
+.AudioTimer {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    column-gap: pix-rem(12);
+
+    p {
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 24px;
+        color: #828282;
+    }
+
+    .AudioSlider {
+        width: pix-rem(180);
+        position: relative;
+        cursor: pointer;
+
+
+        .AudioFull {
+            height: 4px;
+            width: 100%;
+            background: #ECECEC;
+            border-radius: 8px;
+        }
+
+        .AudioIndicator {
+            position: absolute;
+            top: 0;
+            left:0;
+            height: 4px;
+            width: 35%;
+            background: #004DB5;
+            border-radius: 8px;
+            z-index: 2;
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .AudioControl {
+        width: 100%;
+        padding: pix-rem(16) pix-rem(24);
+        border-radius: 2px;
+    }
+
+    .ControlButtons {
+        margin: pix-rem(16) 0 pix-rem(8) 0;
+    }
+}

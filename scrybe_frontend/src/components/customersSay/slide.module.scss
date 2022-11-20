@@ -1,0 +1,65 @@
+@use "../../functions.scss" as *;
+
+.customerFeed {
+        padding-block: pix-rem(16);
+        position: relative;
+        max-width: pix-rem(1264);
+        margin-inline: auto;
+        .customer {
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                gap: pix-rem(16);
+                flex-wrap: wrap;
+                &__img {
+                        max-width: pix-rem(331.84);
+                }
+                &__details {
+                        padding-top: pix-rem(15);
+                        max-width: pix-rem(700);
+                        &__msg {
+                                font-size: pix-rem(22);
+                        }
+                        &__author {
+                                font-size: pix-rem(20);
+                                font-weight: bold;
+                        }
+                        &__role {
+                                font-weight: bold;
+                                color: #0095e8;
+                                font-size: pix-rem(24);
+                        }
+                        .indicators {
+                                display: flex;
+                                gap: pix-rem(16);
+                                justify-content: center;
+                                & > * {
+                                        width: pix-rem(24);
+                                        background-color: grey;
+                                        aspect-ratio: 1;
+                                        border-radius: 50%;
+                                }
+                                &__active {
+                                        width: pix-rem(42);
+                                        aspect-ratio: 2/1;
+                                        border-radius: pix-rem(18);
+                                        background-color: #54a4ff;
+                                }
+                        }
+                }
+        }
+        &__left,
+        &__right {
+                position: absolute;
+                top: 50%;
+                translate: 0 -50%;
+                cursor: pointer;
+        }
+        &__right {
+                right: 0;
+                rotate: 180deg;
+        }
+        &__left {
+                left: 0;
+        }
+}

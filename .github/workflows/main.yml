@@ -1,0 +1,65 @@
+name: Main Testing
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  
+  build_and_push_to_registry:
+
+    # name: Build and push Docker Frontend image to Docker Hub
+    # if: github.event.pull_request.merged == true
+
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: scrybe_frontend
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+        
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}          
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+            
+      - name: Get Current Date 
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d--%M-%S')"
+      
+      - name: docker build, tag and push
+        run: |
+          docker build -t vicdam/scrybefrontend:latest .
+          docker push vicdam/scrybefrontend:latest
+
+      - name: docker build, tag and push
+        run: |
+          cd ../backend/app
+          docker build -t vicdam/scrybebackend:latest .
+          docker push vicdam/scrybebackend:latest             
+
+
+  Deploy: 
+    needs: [ build_and_push_to_registry ]
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@master
+
+      - name: Pull from GitHub
+        uses: appleboy/ssh-action@master
+
+        with:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          KEY: ${{ secrets.KEY }}
+          script: |
+            sudo docker-compose up -d             
+            
+
+
+        

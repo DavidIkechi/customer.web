@@ -1,0 +1,80 @@
+@use "../../functions.scss" as *;
+
+.hero {
+        background-color: #e6f0ff;
+        padding-block: pix-rem(16);
+        min-height: 95vh;
+        overflow-x: visible;
+        padding-inline: pix-rem(16);
+        -webkit-mask-image: url(./assets/heroclip.svg);
+        mask-image: url(./assets/heroclip.svg);
+        mask-repeat: no-repeat;
+        -webkit-mask-repeat: no-repeat;
+        mask-position: 0 100%;
+        -webkit-mask-position: 0 100%;
+        mask-size: cover;
+        -webkit-mask-size: cover;
+
+        .container {
+                width: min(100%, pix-rem(1204));
+                margin-inline: auto;
+                font-family: "Kanit", sans-serif;
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                @include media(1220px) {
+                        justify-content: center;
+                }
+
+                .content {
+                        margin-top: pix-rem(90);
+                        width: min(100%, pix-rem(576));
+                        .heroH1 {
+                                font-size: pix-rem(48);
+                                font-weight: bold;
+                                color: #313131;
+                                line-height: 1.3;
+                        }
+                        .heroText {
+                                margin-top: pix-rem(8);
+                                font-size: pix-rem(20);
+                        }
+                        .heroAccent {
+                                color: #006cff;
+                        }
+                }
+                .heroImage {
+                        width: min(100%, pix-rem(613));
+                }
+                .CTAs {
+                        display: flex;
+                        gap: pix-rem(50);
+                        margin-top: pix-rem(90);
+
+                        .ctaDemo,
+                        .ctaStarter {
+                                text-decoration: none;
+                                padding-block: pix-rem(16);
+                                padding-inline: pix-rem(16);
+                                border-radius: pix-rem(4);
+                                width: min(100%, pix-rem(181));
+                                text-align: center;
+                        }
+                        .ctaDemo {
+                                border: pix-rem(1) solid #006cff;
+                                color: #006cff;
+                                &:active {
+                                        color: darken($color: #006cff, $amount: 15);
+                                        border: pix-rem(1) solid darken(#006cff, $amount: 15);
+                                }
+                        }
+                        .ctaStarter {
+                                background-color: #006cff;
+                                color: white;
+                                &:active {
+                                        background-color: darken($color: #006cff, $amount: 15);
+                                }
+                        }
+                }
+        }
+}

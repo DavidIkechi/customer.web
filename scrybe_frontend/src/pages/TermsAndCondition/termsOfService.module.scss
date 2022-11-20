@@ -1,0 +1,36 @@
+.pageContainer{
+    padding: 1rem 4rem;
+
+
+    .pageHeader{
+        font-family: 'Kanit';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 48px;
+        line-height: 56px;
+        color: #1F1F1F;
+        text-align: center;
+    }
+}
+@media screen and (max-width:650px){
+    .pageContainer{
+        padding: 1rem 0.7rem;
+
+        .pageHeader{
+            font-size: 32px;
+            line-height: 56px;
+        }
+    }
+}
+
+@media screen and (max-width:300px){
+    .pageContainer{
+        padding: 1rem 0.3rem;
+    }
+    .pageHeader{
+        font-size: 25px;
+        line-height: 30px;
+    }
+}
+
+

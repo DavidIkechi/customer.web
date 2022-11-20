@@ -1,0 +1,565 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Kanit', sans-serif;
+}
+
+@mixin btn {
+    font-family: 'Kanit', sans-serif;
+    background: #006CFF;
+    padding: 15px 20px;
+    color: #fff;
+    border: 0;
+    border-radius: 3px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-block;
+    width: 180px;
+    font-size: 18px;
+    position: relative;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+@mixin btnStates {
+    &:hover {
+        background: transparent;
+        border-color: #006CFF;
+        color: #006CFF;
+    }
+
+    &:active {
+        top: 2px;
+    }
+}
+
+@mixin btnTrans {
+    font-family: 'Kanit', sans-serif;
+    padding: 15px 20px;
+    background: transparent;
+    color: #006CFF;
+    border: 1px solid #006CFF;
+    border-radius: 3px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 180px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+    transition: all 0.3s ease;
+}
+@mixin btnTransStates {
+    &:hover {
+        background: #006CFF;
+        border-color: #fff;
+        color: #fff;
+    }
+
+    &:active {
+        top: 3px;
+    }
+}
+
+@mixin container {
+    width: 90%;
+    margin: auto;
+}
+
+@mixin flexItem($justifyContent, $direction) {
+    display: flex;
+    align-items: center;
+    flex-direction: $direction;
+    justify-content: $justifyContent;
+}
+
+.content-section {
+    // padding: 8rem 0;
+    .container {
+        @include container;
+    
+        .flex-items {
+            @include flexItem(space-between, row);
+    
+            .txt-item {
+                width: 45%;
+    
+                h1 {
+                    color: #005584;
+                    font-size: 40px;
+                    line-height: 1.5;
+                    font-weight: 600;
+                    margin-bottom: 20px;
+                }
+    
+                p {
+                    font-size: 20px;
+                    color: #3F3F3F;
+                    font-weight: 300;
+                }
+    
+                .btns {
+                    display: flex;
+                    align-items: center;
+                    gap: 4rem;
+                    margin-top: 40px;
+    
+                    .filled {
+                        @include btn;
+
+                        &:hover {
+                            @include btnStates;
+                        }
+                    }
+        
+                    .transparent {
+                        @include btnTrans;
+
+                        &:hover {
+                            @include btnTransStates;
+                        }
+                    }
+                }
+            }
+    
+            .img-item {
+                width: 50%;
+    
+                img {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+.why-scrybe {
+    .container {
+        @include container;
+
+        h1 {
+            color: #005584;
+            font-weight: 600;
+            font-size: 30px;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        p {
+            font-size: 20px;
+            color: #3F3F3F;
+            font-weight: 300;
+            text-align: center;
+            width: 50%;
+            margin: auto;
+        }
+
+        .card-container {
+            @include flexItem(space-around, row);
+            margin: 3.5rem auto 0 auto;
+            width: 80%;
+
+            .card {
+                width: 27%;
+                height: 300px;
+                border: 1px solid #B0D1FF;
+                filter: drop-shadow(2px 2px 10px #C5C5C514);
+                padding: 40px 20px;
+                border-radius: 7px;
+                @include flexItem(center, column);
+
+                img {
+                    width: 100px;
+                }
+
+                p {
+                    color: #005584;
+                    font-size: 16px;
+                    line-height: 1.6;
+                    width: 100%;
+                    margin-top: 30px;
+                }
+            }
+
+        }
+    }
+}
+
+.buss-section {
+    .container {
+        @include container;
+
+        .buss-flex{
+            @include flexItem(space-between, row);
+
+            .buss-txt {
+                width: 50%;
+                h1 {
+                    color: #005584;
+                    margin: 0 0 20px 0;
+                    font-size: 30px;
+                    line-height: 1.6;
+                }
+
+                p {
+                    color: #3F3F3F;
+                    font-size: 20px;
+                    line-height: 1.8;
+                    margin-bottom: 8px;
+                }
+
+                h4 {
+                    font-size: 20px;
+                    font-weight: 600;
+                    color: #006CFF;
+                }
+            }
+
+            .buss-img  {
+                width: 50%;
+
+                img {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+.monitor-section {
+    .container {
+        @include container;
+
+        .monitor-flex{
+            @include flexItem(space-between, row);
+
+            .buss-txt {
+                width: 50%;
+                h1 {
+                    color: #005584;
+                    margin: 0 0 20px 0;
+                    font-size: 30px;
+                    line-height: 1.6;
+                }
+
+                p {
+                    color: #3F3F3F;
+                    font-size: 20px;
+                    line-height: 1.9;
+                    margin-bottom: 8px;
+
+                    span {
+                        color: #006CFF;
+                        font-weight: 600;
+                    }
+                }
+
+                h4 {
+                    font-size: 20px;
+                    font-weight: 600;
+                    color: #006CFF;
+                }
+            }
+
+            .buss-img  {
+                width: 45%;
+
+                img {
+                    width: 100%;
+                }
+
+                .img {
+                    width: 90%
+                }
+            }
+        }
+    }
+}
+
+.container {
+    @include container;
+    padding: 6rem 0;
+
+    .upload-container {
+        background: url(./assets/blur-bg.png);
+        background-size: cover;
+        background-repeat: no-repeat;
+        padding: 3rem;
+
+        .cont {
+            width: 80%;
+            margin: auto;
+            text-align: center;
+
+            h4 {
+                font-size: 23px;
+                color: #3F3F3F;
+                margin-bottom: 20px;
+            }
+
+            h1 {
+                font-size: 55px;
+                color: #006CFF;;
+                font-weight: 600;
+                letter-spacing: 2px;
+                margin-bottom: 20px;
+            }
+
+            button {
+                @include btn;
+
+                &:hover {
+                    @include btnStates;
+                }
+            }
+        }
+    }
+}
+
+.container {
+    @include container;
+
+    .setblur-container {
+        background: url(./assets/set-blur.png);
+        background-size: cover;
+        background-repeat: no-repeat;
+        padding: 3rem;
+
+        .cont {
+            width: 80%;
+            margin: auto;
+            text-align: center;
+
+            h4 {
+                font-size: 23px;
+                color: #3F3F3F;
+                margin-bottom: 20px;
+            }
+
+            h1 {
+                font-size: 55px;
+                color: #006CFF;
+                font-weight: 600;
+                letter-spacing: 2px;
+                margin-bottom: 20px;
+            }
+
+            button {
+                @include btn;
+
+                &:hover {
+                    @include btnStates;
+                }
+            }
+        }
+    }
+}
+
+.logo-section {
+    padding: 0 0 13rem 0;
+
+    .container {
+        text-align: center;
+        h1 {
+            color: #262626;
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        p {
+            font-size: 19px;
+            color: #3F3F3F;
+        }
+
+        .logo-flex {
+            display: flex;
+            align-items: center;
+            width: 80%;
+            flex-wrap: wrap;
+            margin: 3rem auto 0 auto;
+            row-gap: 3rem;
+            justify-content: space-around;
+
+            img {
+                width: 260px;
+            }
+        }
+    }
+}
+
+@media (max-width: 1121px) {
+    .content-section {
+        .container {
+            .flex-items {
+                flex-direction: column;
+                row-gap: 4rem;
+
+                .txt-item, .img-item {
+                    width: 100%;
+                }
+
+                .txt-item {
+                    text-align: center;
+
+                    .btns {
+                        align-items: center;
+                        justify-content: center;
+                    }
+                }
+            }
+        }
+    }
+
+    .why-scrybe {
+        .container {
+            .card-container {
+                flex-direction: column;
+                row-gap: 3rem;
+
+                .card {
+                    width: 38%;
+                }
+            }
+        }
+    }
+
+    .container {
+        .setblur-container {
+            .cont {
+                h1 {
+                    font-size: 30px;
+                }
+
+                h4 {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+
+    .container {
+        .upload-container {
+            .cont {
+                h1 {
+                    font-size: 30px;
+                    text-align: center;
+                }
+
+                h4 {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1376px) {
+    .buss-section {
+        .container {
+
+            .buss-flex {
+                @include flexItem(space-between, column);
+                row-gap: 6rem;
+    
+                .buss-txt, .buss-img {
+                    width: 100%;
+                    text-align: center;
+                }
+            }
+        }
+    }
+
+    .monitor-section {
+        .container {
+            .monitor-flex {
+                @include flexItem(space-between, column-reverse );
+                row-gap: 6rem;
+
+                .buss-txt, .buss-img {
+                    width: 100%;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 920px) {
+    .why-scrybe {
+        .container {
+            .card-container {
+                .card {
+                    width: 45%;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 790px) {
+    .why-scrybe {
+        .container {
+            p {
+                width: 80%;
+            }
+            .card-container {
+                .card {
+                    width: 55%;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 570px) {
+    .why-scrybe {
+        .container {
+            .card-container {
+                .card {
+                    width: 65%;
+                }
+            }
+        }
+    }
+}
+
+
+@media (max-width: 550px) {
+    .why-scrybe {
+        .container {
+            .card-container {
+                .card {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 420px) {
+    .content-section {
+        .container {
+            .flex-items {
+                .txt-item {
+                    .btns {
+                        flex-direction: column;
+                        gap: 2rem;
+                    }
+                }
+            }
+        }
+    }
+
+    .container {
+        .setblur-container, .upload-container {
+            .cont {
+                width: 100%;
+            }
+        }
+    }
+}

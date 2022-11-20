@@ -1,0 +1,565 @@
+@import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: 'Kanit', sans-serif;
+}
+
+.content-section {
+  padding: 8rem 0;
+}
+
+.content-section .container {
+  width: 90%;
+  margin: auto;
+}
+
+.content-section .container .flex-items {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.content-section .container .flex-items .txt-item {
+  width: 45%;
+}
+
+.content-section .container .flex-items .txt-item h1 {
+  color: #005584;
+  font-size: 40px;
+  line-height: 1.7;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.content-section .container .flex-items .txt-item p {
+  font-size: 20px;
+  color: #3F3F3F;
+  font-weight: 300;
+}
+
+.content-section .container .flex-items .txt-item .btns {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 4rem;
+  margin-top: 30px;
+}
+
+.content-section .container .flex-items .txt-item .btns .filled {
+  font-family: 'Kanit', sans-serif;
+  background: #006CFF;
+  padding: 15px 20px;
+  color: #fff;
+  border: 0;
+  border-radius: 3px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-block;
+  width: 180px;
+  font-size: 18px;
+}
+
+.content-section .container .flex-items .txt-item .btns .transparent {
+  font-family: 'Kanit', sans-serif;
+  padding: 15px 20px;
+  background: transparent;
+  color: #006CFF;
+  border: 1px solid #006CFF;
+  border-radius: 3px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 180px;
+  font-size: 18px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 0.5rem;
+}
+
+.content-section .container .flex-items .img-item {
+  width: 50%;
+}
+
+.content-section .container .flex-items .img-item img {
+  width: 100%;
+}
+
+.why-scrybe .container {
+  width: 90%;
+  margin: auto;
+}
+
+.why-scrybe .container h1 {
+  color: #005584;
+  font-weight: 600;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.why-scrybe .container p {
+  font-size: 20px;
+  color: #3F3F3F;
+  font-weight: 300;
+  text-align: center;
+  width: 50%;
+  margin: auto;
+}
+
+.why-scrybe .container .card-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  margin: 3.5rem auto 0 auto;
+  width: 80%;
+}
+
+.why-scrybe .container .card-container .card {
+  width: 27%;
+  height: 300px;
+  border: 1px solid #B0D1FF;
+  -webkit-filter: drop-shadow(2px 2px 10px #C5C5C514);
+          filter: drop-shadow(2px 2px 10px #C5C5C514);
+  padding: 40px 20px;
+  border-radius: 7px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.why-scrybe .container .card-container .card img {
+  width: 100px;
+}
+
+.why-scrybe .container .card-container .card p {
+  color: #005584;
+  font-size: 16px;
+  line-height: 1.6;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.buss-section {
+  padding: 7rem 0;
+}
+
+.buss-section .container {
+  width: 90%;
+  margin: auto;
+}
+
+.buss-section .container .buss-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.buss-section .container .buss-flex .buss-txt {
+  width: 50%;
+}
+
+.buss-section .container .buss-flex .buss-txt h1 {
+  color: #005584;
+  margin: 0 0 30px 0;
+  font-size: 30px;
+  line-height: 1.9;
+}
+
+.buss-section .container .buss-flex .buss-txt p {
+  color: #3F3F3F;
+  font-size: 20px;
+  line-height: 1.8;
+  margin-bottom: 30px;
+}
+
+.buss-section .container .buss-flex .buss-txt h4 {
+  font-size: 25px;
+  font-weight: 600;
+  color: #006CFF;
+}
+
+.buss-section .container .buss-flex .buss-img {
+  width: 40%;
+}
+
+.buss-section .container .buss-flex .buss-img img {
+  width: 100%;
+}
+
+.monitor-section {
+  padding: 7rem 0;
+}
+
+.monitor-section .container {
+  width: 90%;
+  margin: auto;
+}
+
+.monitor-section .container .monitor-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.monitor-section .container .monitor-flex .buss-txt {
+  width: 50%;
+}
+
+.monitor-section .container .monitor-flex .buss-txt h1 {
+  color: #005584;
+  margin: 0 0 30px 0;
+  font-size: 30px;
+  line-height: 1.8;
+}
+
+.monitor-section .container .monitor-flex .buss-txt p {
+  color: #3F3F3F;
+  font-size: 20px;
+  line-height: 1.9;
+  margin-bottom: 30px;
+}
+
+.monitor-section .container .monitor-flex .buss-txt h4 {
+  font-size: 25px;
+  font-weight: 600;
+  color: #006CFF;
+}
+
+.monitor-section .container .monitor-flex .buss-img {
+  width: 40%;
+}
+
+.monitor-section .container .monitor-flex .buss-img img {
+  width: 100%;
+}
+
+.container {
+  width: 90%;
+  margin: auto;
+}
+
+.container .upload-container {
+  background: url(./assets/blur-bg.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 4rem;
+}
+
+.container .upload-container .cont {
+  width: 80%;
+  margin: auto;
+  text-align: center;
+}
+
+.container .upload-container .cont h4 {
+  font-size: 23px;
+  color: #3F3F3F;
+  margin-bottom: 20px;
+}
+
+.container .upload-container .cont h1 {
+  font-size: 55px;
+  color: #005584;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.container .upload-container .cont h1 span {
+  color: #006CFF;
+}
+
+.container .upload-container .cont button {
+  font-family: 'Kanit', sans-serif;
+  background: #006CFF;
+  padding: 15px 20px;
+  color: #fff;
+  border: 0;
+  border-radius: 3px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-block;
+  width: 180px;
+  font-size: 18px;
+}
+
+.container {
+  width: 90%;
+  margin: auto;
+}
+
+.container .setblur-container {
+  background: url(./assets/set-blur.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 4rem;
+}
+
+.container .setblur-container .cont {
+  width: 80%;
+  margin: auto;
+  text-align: center;
+}
+
+.container .setblur-container .cont h4 {
+  font-size: 23px;
+  color: #3F3F3F;
+  margin-bottom: 20px;
+}
+
+.container .setblur-container .cont h1 {
+  font-size: 55px;
+  color: #005584;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.container .setblur-container .cont h1 span {
+  color: #006CFF;
+}
+
+.container .setblur-container .cont button {
+  font-family: 'Kanit', sans-serif;
+  background: #006CFF;
+  padding: 15px 20px;
+  color: #fff;
+  border: 0;
+  border-radius: 3px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-block;
+  width: 180px;
+  font-size: 18px;
+}
+
+.logo-section {
+  padding: 8rem 0 13rem 0;
+}
+
+.logo-section .container {
+  text-align: center;
+}
+
+.logo-section .container h1 {
+  color: #262626;
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+.logo-section .container p {
+  font-size: 19px;
+  color: #3F3F3F;
+}
+
+.logo-section .container .logo-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 70%;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin: 3rem auto 0 auto;
+  row-gap: 3rem;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.logo-section .container .logo-flex img {
+  width: 200px;
+}
+
+@media (max-width: 1121px) {
+  .content-section .container .flex-items {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    row-gap: 4rem;
+  }
+  .content-section .container .flex-items .txt-item, .content-section .container .flex-items .img-item {
+    width: 100%;
+  }
+  .content-section .container .flex-items .txt-item {
+    text-align: center;
+  }
+  .content-section .container .flex-items .txt-item .btns {
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .why-scrybe .container .card-container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    row-gap: 3rem;
+  }
+  .why-scrybe .container .card-container .card {
+    width: 38%;
+  }
+  .container .setblur-container .cont h1 {
+    font-size: 30px;
+  }
+  .container .setblur-container .cont h4 {
+    font-size: 18px;
+  }
+  .container .upload-container .cont h1 {
+    font-size: 30px;
+    text-align: center;
+  }
+  .container .upload-container .cont h4 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 1376px) {
+  .buss-section .container .buss-flex {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    row-gap: 6rem;
+  }
+  .buss-section .container .buss-flex .buss-txt, .buss-section .container .buss-flex .buss-img {
+    width: 100%;
+    text-align: center;
+  }
+  .monitor-section .container .monitor-flex {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    row-gap: 6rem;
+  }
+  .monitor-section .container .monitor-flex .buss-txt, .monitor-section .container .monitor-flex .buss-img {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 920px) {
+  .why-scrybe .container .card-container .card {
+    width: 45%;
+  }
+}
+
+@media (max-width: 790px) {
+  .why-scrybe .container p {
+    width: 80%;
+  }
+  .why-scrybe .container .card-container .card {
+    width: 55%;
+  }
+}
+
+@media (max-width: 570px) {
+  .why-scrybe .container .card-container .card {
+    width: 65%;
+  }
+}
+
+@media (max-width: 550px) {
+  .why-scrybe .container .card-container .card {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .content-section .container .flex-items .txt-item .btns {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    gap: 2rem;
+  }
+  .container .setblur-container .cont, .container .upload-container .cont {
+    width: 100%;
+  }
+}
+/*# sourceMappingURL=Solutions.css.map */

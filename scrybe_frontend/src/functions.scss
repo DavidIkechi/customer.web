@@ -1,0 +1,10 @@
+@function pix-rem($value, $suffix:rem){
+        $calculated: calc($value/16);
+        @return #{$calculated}#{$suffix};
+}
+
+@mixin media($screen) {
+        @media (max-width: $screen){
+        	@content
+        }
+}

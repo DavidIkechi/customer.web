@@ -1,0 +1,131 @@
+@mixin display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.faq__wrapper {
+  font-family: kanit;
+  max-width: 1440px;
+  @include display();
+  flex-direction: column;
+}
+.faq__hero {
+  padding: 4rem 5rem;
+  width: 100%;
+  height: 600px;
+  background: url(../../assets/vector_faq.svg) no-repeat;
+  background-size: cover;
+  background-position-y: bottom;
+  @include display();
+  @media (max-width: 900px) {
+    flex-direction: column-reverse;
+    padding: 3rem 0;
+    height: 100%;
+    background-position-x: right;
+  }
+  @media (max-width: 450px) {
+    background: url(../../assets/vector-mobile.png) no-repeat;
+    background-position-x: right;
+    background-size: cover;
+    background-position-y: bottom;
+    height: 450px;
+    
+  }
+}
+
+.faqHero__content {
+  @include display();
+
+  div {
+    font-style: normal;
+    color: var(--gray-600);
+    font-weight: 600;
+    font-size: 72px;
+    width: 50%;
+    &:first-child {
+      margin-right: 4rem;
+      span {
+        color: var(--primary-blue);
+      }
+      @media (max-width: 1274px) {
+        margin-right: 2rem;
+        font-size: 4.2rem;
+      }
+      @media (max-width: 1174px) {
+        font-size: 3rem;
+      }
+    }
+
+    img {
+      margin-left: 1rem;
+    }
+  }
+  @media (max-width: 900px) {
+    flex-direction: column-reverse;
+    padding: 0;
+    margin: 0;
+    @include display();
+    div {
+      position: relative;
+      width: 80%;
+      &:first-child {
+        margin-right: 0;
+        text-align: center;
+        padding-bottom: 5rem;
+      }
+      &:last-child {
+        @include display();
+        img {
+          width: 300px;
+        }
+      }
+    }
+  }
+  @media (max-width: 450px) {
+    div {
+      position: relative;
+      width: 80%;
+      padding: 0 2rem;
+      &:first-child {
+        margin-right: 0;
+        text-align: center;
+        line-height: 35px;
+        font-size: 30px;
+        padding-bottom: 3rem;
+      }
+      &:last-child {
+        @include display();
+        img {
+          width: 200px;
+          margin-bottom: 2rem;
+        }
+      }
+    }
+  }
+}
+
+.faq__section {
+  margin: 4rem 0;
+
+  flex-direction: column;
+
+  @media (max-width: 650px) {
+    padding: 0;
+  }
+}
+
+.faq__title {
+  font-family: kanit;
+  @include display();
+  flex-direction: column;
+  @media (max-width: 450px) {
+    font-size: 13px;
+    p {
+      font-weight: 600;
+    }
+  }
+}
+
+.faq__accordion {
+  max-width: 600px;
+}

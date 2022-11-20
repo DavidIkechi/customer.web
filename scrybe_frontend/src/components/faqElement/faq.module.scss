@@ -1,0 +1,35 @@
+@use "../../functions.scss" as *;
+
+.faq {
+        padding-inline: pix-rem(20);
+        padding-block: pix-rem(20);
+        border-radius: pix-rem(8);
+        border: pix-rem(1) solid #959494;
+        & > .faq__question::after {
+                content: url(./asset/plus.svg);
+                width: pix-rem(24);
+                aspect-ratio: 1;
+                position: absolute;
+                inset-block: 14%;
+                inset-inline: 95%;
+        }
+        &[open] > .faq__question::after {
+                content: url(./asset/minus.svg);
+                width: pix-rem(24);
+                aspect-ratio: 1;
+                position: absolute;
+                inset-block: 14%;
+                inset-inline: 95%;
+        }
+
+        &__question {
+                font-size: pix-rem(24);
+                list-style: none;
+                position: relative;
+                cursor: pointer;
+        }
+        &__ans {
+                margin-top: pix-rem(24);
+        }
+}
+

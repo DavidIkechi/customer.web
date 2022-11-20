@@ -1,0 +1,10 @@
+@import "../../../../assets/styles/utilities/functionsANDmedia";
+
+.inner__container {
+  width: 100%;
+  padding: pix-rem(16);
+  display: flex;
+  gap: pix-rem(16);
+  background-color: white;
+  border-radius: pix-rem(4);
+}

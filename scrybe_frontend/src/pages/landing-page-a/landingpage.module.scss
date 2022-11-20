@@ -1,0 +1,165 @@
+@use "../../functions.scss" as *;
+
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700&display=swap");
+
+.aboutUs {
+        padding-block: pix-rem(40);
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        &__img {
+                width: min(100%, pix-rem(600.85));
+        }
+        &__content {
+                width: min(100%, pix-rem(590));
+                margin-top: pix-rem(110);
+        }
+        &__title {
+                font-size: pix-rem(32);
+        }
+        &__details {
+                margin-top: pix-rem(38);
+                font-size: pix-rem(24);
+                color: #313131;
+                font-weight: 400;
+        }
+        &__cta {
+                width: min(100%, pix-rem(146));
+                background-color: #006cff;
+                text-align: center;
+                padding-block: pix-rem(16);
+                text-decoration: none;
+                color: white;
+                display: inline-block;
+                border-radius: pix-rem(4);
+                margin-top: pix-rem(60);
+        }
+}
+
+.gettingStarted {
+        background-color: #e6f6ff;
+        padding-block: pix-rem(70);
+
+        &__title {
+                text-align: center;
+                font-size: pix-rem(32);
+        }
+
+        &__card {
+                &_title {
+                        font-size: pix-rem(32);
+                        font-weight: 600;
+                        margin-top: pix-rem(46);
+                }
+                &_detail {
+                        font-size: pix-rem(20);
+                        font-weight: 300;
+                        color: #313131;
+                        margin-top: pix-rem(8);
+                        text-align: center;
+                }
+                &_cta {
+                        text-decoration: none;
+                        padding-block: pix-rem(16);
+                        color: #006cff;
+                        border: pix-rem(1) solid #006cff;
+                        display: inline-block;
+                        width: min(100%, pix-rem(180));
+                        text-align: center;
+                        border-radius: pix-rem(4);
+                        margin-top: pix-rem(32);
+                }
+        }
+
+        &__cards {
+                display: flex;
+                margin-top: pix-rem(60);
+                justify-content: space-between;
+                & > * {
+                        flex: 1;
+                        background-color: white;
+                        max-width: pix-rem(372);
+                        padding: pix-rem(24);
+                        border-radius: pix-rem(16);
+                        display: flex;
+                        flex-flow: column;
+                        justify-content: flex-start;
+                        align-items: center;
+                        border: 1px solid #8abbff;
+                        &:nth-child(2) {
+                                border: 1px solid #828282;
+                                .gettingStarted__card_title {
+                                        margin-top: pix-rem(28);
+                                }
+                        }
+                }
+        }
+}
+
+.faq {
+        padding-block: pix-rem(24);
+        &__h2 {
+                font-size: pix-rem(32);
+                text-align: center;
+                & > span {
+                        color: #0095e8;
+                }
+        }
+        &_faqs {
+                margin-top: pix-rem(50);
+                & > * {
+                        margin-top: pix-rem(32);
+                }
+        }
+        &__load {
+                text-decoration: none;
+                padding-block: pix-rem(16);
+                color: #006cff;
+                border: pix-rem(1) solid #006cff;
+                display: block;
+                width: min(100%, pix-rem(180));
+                text-align: center;
+                border-radius: pix-rem(4);
+                margin-top: pix-rem(32);
+                margin-inline: auto;
+        }
+}
+
+.subscribe {
+        background-color: #e6f6ff;
+        padding-block: pix-rem(90);
+        &__form {
+                display: flex;
+                flex-flow: row;
+                width: min(100%, pix-rem(627));
+                margin-inline: auto;
+                margin-top: pix-rem(60);
+                gap: pix-rem(8);
+                & > * {
+                        &:nth-child(1) {
+                                flex: 2 1 0;
+                                background-color: transparent;
+                                border: pix-rem(1) solid #C5C5C5;
+                                padding-block: pix-rem(16);
+                                padding-inline: pix-rem(32);
+                                border-radius: pix-rem(4);
+                        }
+                        &:nth-child(2) {
+                                flex: 1 1 0;
+                                max-width: pix-rem(136);
+                                padding-block: pix-rem(16);
+                                padding-inline: pix-rem(32);
+                                background-color: #006CFF;
+                                color: white;
+                                border: none;
+                                border-radius: pix-rem(4);
+                        }
+                }
+        }
+        &__title {
+                font-size: pix-rem(48);
+                text-align: center;
+                max-width: 24ch;
+                margin-inline: auto;
+        }
+}
