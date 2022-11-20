@@ -1,20 +1,20 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import SentimentAnalysis from "./Pages/SentimentAnalysis";
-import DummyPage from "./Pages/DummyPage";
-import TranscribePage from "./Pages/TranscribePage/TranscribePage";
-import { FAQs, TermsOfService } from "./Pages";
-import LandingPage from "./Pages/landing-page-a";
-import PageB from "./Pages/Landing-page-b";
+import SentimentAnalysis from "./pages/SentimentAnalysis";
+import DummyPage from "./pages/DummyPage";
+import TranscribePage from "./pages/TranscribePage/TranscribePage";
+import { FAQs, TermsOfService } from "./pages";
+import LandingPage from "./pages/landing-page-a";
+import PageB from "./pages/Landing-page-b";
 import NavBar from "./components/navBar";
-import TermsAndCondition from "./Pages/TermsAndCondition/TermsOfService";
-import Industry from "./Pages/indsutry/industry";
+import TermsAndCondition from "./pages/TermsAndCondition/TermsOfService";
+import Industry from "./pages/indsutry/industry";
 import IndustryArticle from "./components/Industry/industryArticle";
-import HowItWorks from "./Pages/HowItWorks/HowItWorks";
+import HowItWorks from "./pages/HowItWorks/HowItWorks";
 
-import Services from "./Pages/services-page/Services";
-import Solutions from "./Pages/solutions-page/Solutions";
-import DashboardOverview from "./Pages/DashboardOverview";
+import Services from "./pages/services-page/Services";
+import Solutions from "./pages/solutions-page/Solutions";
+import DashboardOverview from "./pages/DashboardOverview";
 
 function App() {
   return (
