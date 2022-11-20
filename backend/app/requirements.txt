@@ -10,4 +10,4 @@ passlib
 pyjwt
 mysql-connector-python
 mysqlclient
-
+fastapi-mail

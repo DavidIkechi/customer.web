@@ -10,6 +10,8 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from db import Base, engine, SessionLocal
 from sqlalchemy.orm import Session
 import crud, schema
+from emails import send_email, verify_token
+from starlette.requests import Request
 
 # Dependency
 def get_db():
@@ -108,8 +110,9 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
 
 
 @app.post("/users/", response_model=schema.User, tags=['users'])
-def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):
+async def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
+    await send_email([user.email], user)
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
     return crud.create_user(db=db, user=user)
@@ -127,3 +130,17 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
+
+
+
+
+@app.get('/verification')
+async def email_verification(request: Request, token: str):
+    user = await verify_token(token)
+
+    if user and not user.is_verified:
+        user.is_verified = True
+        await user.save()
+        return{
+            "status" : "ok",
+            "data" : f"Hello {user.username}, your account has been successfully verified"}
