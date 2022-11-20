@@ -2,10 +2,10 @@ from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException
 from routers.sentiment import sentiment
 from routers.transcribe import transcribe_file
 import models
-from jwt import (
-    main_login
-)
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+# from jwt import (
+#     main_login
+# )
+# from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 from db import Base, engine, SessionLocal
 from sqlalchemy.orm import Session
@@ -65,11 +65,11 @@ async def analyse(file: UploadFile=File(...)):
     sentiment_result = sentiment(transcript)
     return {"transcript": transcript, "sentiment_result": sentiment_result}
 
-# create the endpoint
-@app.post('/login', summary = "create access token for logged in user")
-async def login(form_data: OAuth2PasswordRequestForm = Depends(), session: Session = Depends(get_session)):
-    # return token once the user has been successfully authenticated, or it returns an error.
-    return await main_login(form_data, session)
+# # create the endpoint
+# @app.post('/login', summary = "create access token for logged in user")
+# async def login(form_data: OAuth2PasswordRequestForm = Depends(), session: Session = Depends(get_session)):
+#     # return token once the user has been successfully authenticated, or it returns an error.
+#     return await main_login(form_data, session)
 
 # Dependency
 def get_db():
