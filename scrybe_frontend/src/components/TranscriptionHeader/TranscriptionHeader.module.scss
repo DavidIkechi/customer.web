@@ -1,0 +1,94 @@
+@function pix-rem($value, $suffix: rem) {
+    $calculate: calc($value/16);
+    @return #{$calculate}#{$suffix};
+}
+
+.header {
+    // width: 70vw;
+    display: flex;
+    justify-content: space-between;
+    padding: pix-rem(16) pix-rem(40);
+    background-color: #FFFFFF;
+    box-shadow: 0 8px 6px -6px rgb(0 0 0 / 0.07);
+    filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+}
+
+.searchBar {
+    padding: pix-rem(12) pix-rem(60) pix-rem(12) pix-rem(12);
+    border: 1px #A9A9A9 solid;
+    border-radius: 4px;
+    font-family: 'Kanit';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.headerLeftPanel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: pix-rem(48);
+}
+
+.userPanel {
+    display: flex;
+    align-items: center;
+    column-gap: pix-rem(12);
+}
+
+.userImage {
+    border: 2px #B0D1FF solid;
+    width: pix-rem(48);
+    height: pix-rem(48);
+    border-radius: 50%;
+}
+
+.userInfo {
+
+    p {
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 20px;
+        color: #A9A9A9;
+    }
+}
+
+.userName {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    cursor: pointer;
+
+    h3 {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 24px;
+        color: #454545;
+        margin: 0;
+    }
+}
+
+
+.uploadButton {
+    display: flex;
+    align-items: center;
+    background-color: #006CFF;
+    padding: pix-rem(12) pix-rem(32);
+    border-radius: 4px;
+    border: none;
+    color: #FFFFFF;
+    column-gap: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    cursor: pointer;
+}
+
+
+@media screen and (max-width: 480px) {
+    .header {
+        display: none;
+    }
+}

@@ -1,0 +1,409 @@
+@import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.hero-section {
+  background: url(./assets/hero-bg.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 7rem 0 4rem 0;
+  font-family: 'Kanit', sans-serif;
+}
+
+.hero-section .container {
+  width: 90%;
+  margin: auto;
+}
+
+.hero-section .hero-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.hero-section .text-cont {
+  width: 50%;
+}
+
+.hero-section .text-cont h1 {
+  color: #1A1818;
+  font-weight: 700;
+  font-size: clamp(40px, 55px, 67px);
+  margin-bottom: 30px;
+}
+
+.hero-section .text-cont p {
+  color: #1A1818;
+  font-weight: 500;
+  font-size: clamp(22px, 30px, 37px);
+  line-height: 1.7;
+  margin-bottom: 30px;
+}
+
+.hero-section .text-cont button {
+  font-family: 'Kanit', sans-serif;
+  background: #006CFF;
+  padding: 15px 20px;
+  color: #fff;
+  border: 0;
+  border-radius: 3px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-block;
+  width: 180px;
+  font-size: 18px;
+}
+
+.hero-section .img-cont {
+  width: 50%;
+}
+
+.hero-section .img-cont img {
+  width: 100%;
+}
+
+.offer-section {
+  padding: 6rem 0;
+}
+
+.offer-section .container {
+  width: 90%;
+  margin: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.offer-section h1 {
+  color: #1A1818;
+  font-weight: 800;
+  font-size: 40px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.offer-section p {
+  color: #1A1818;
+  font-size: 35px;
+  text-align: center;
+  width: 70%;
+  line-height: 1.7;
+  margin: auto;
+}
+
+.offer-section button {
+  font-family: 'Kanit', sans-serif;
+  background: #006CFF;
+  padding: 15px 20px;
+  color: #fff;
+  border: 0;
+  border-radius: 3px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-block;
+  width: 180px;
+  font-size: 18px;
+  text-align: center;
+  margin: 30px auto 0 auto;
+}
+
+.we-can-section {
+  background: #E6F0FF;
+  padding: 7rem 0;
+}
+
+.we-can-section .container {
+  width: 90%;
+  margin: auto;
+}
+
+.we-can-section .container .wecan-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.we-can-section .container .wecan-txt {
+  width: 50%;
+}
+
+.we-can-section .container .wecan-txt h1 {
+  color: #1A1818;
+  font-weight: 800;
+  font-size: 40px;
+  margin-bottom: 40px;
+}
+
+.we-can-section .container .wecan-txt li {
+  font-size: 27px;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.we-can-section .container .wecan-txt .list {
+  margin-bottom: 30px;
+}
+
+.we-can-section .container .wecan-img {
+  width: 50%;
+}
+
+.we-can-section .container .wecan-img img {
+  width: 50%;
+}
+
+.transcription-section .container, .sentiment-section .container, .report-section .container {
+  width: 90%;
+  margin: auto;
+}
+
+.transcription-section .container .trans-flex, .sentiment-section .container .trans-flex, .report-section .container .trans-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 12rem 0;
+}
+
+.transcription-section .container .trans-flex .trans-txt, .sentiment-section .container .trans-flex .trans-txt, .report-section .container .trans-flex .trans-txt {
+  width: 50%;
+}
+
+.transcription-section .container .trans-flex .trans-txt h1, .sentiment-section .container .trans-flex .trans-txt h1, .report-section .container .trans-flex .trans-txt h1 {
+  color: #1A1818;
+  font-weight: 800;
+  font-size: 40px;
+  margin-bottom: 40px;
+}
+
+.transcription-section .container .trans-flex .trans-txt .check-container span, .sentiment-section .container .trans-flex .trans-txt .check-container span, .report-section .container .trans-flex .trans-txt .check-container span {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+  gap: 2rem;
+  margin: 40px 0;
+}
+
+.transcription-section .container .trans-flex .trans-txt .check-container span img, .sentiment-section .container .trans-flex .trans-txt .check-container span img, .report-section .container .trans-flex .trans-txt .check-container span img {
+  width: 20px;
+}
+
+.transcription-section .container .trans-flex .trans-txt .check-container span p, .sentiment-section .container .trans-flex .trans-txt .check-container span p, .report-section .container .trans-flex .trans-txt .check-container span p {
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 1.7;
+}
+
+.transcription-section .container .trans-flex .trans-txt button, .sentiment-section .container .trans-flex .trans-txt button, .report-section .container .trans-flex .trans-txt button {
+  font-family: 'Kanit', sans-serif;
+  padding: 15px 20px;
+  background: transparent;
+  color: #006CFF;
+  border: 1px solid #006CFF;
+  border-radius: 3px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 180px;
+  font-size: 18px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 0.5rem;
+}
+
+.transcription-section .container .trans-flex .tras-img, .sentiment-section .container .trans-flex .tras-img, .report-section .container .trans-flex .tras-img {
+  width: 45%;
+}
+
+.transcription-section .container .trans-flex .tras-img img, .sentiment-section .container .trans-flex .tras-img img, .report-section .container .trans-flex .tras-img img {
+  width: 100%;
+}
+
+.transcription-section .container .line, .sentiment-section .container .line, .report-section .container .line {
+  border-bottom: 1px solid #868686;
+  width: 100%;
+}
+
+.sentiment-section .trans-flex {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+}
+
+.article-section {
+  padding: 6rem 0 20rem 0;
+}
+
+.article-section .container {
+  width: 90%;
+  margin: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 2.5rem;
+}
+
+.article-section .container p {
+  color: #1A1818;
+  font-weight: 300;
+  font-size: 25px;
+  text-align: center;
+  width: 70%;
+  line-height: 1.9;
+  margin: auto;
+}
+
+.article-section .container button {
+  font-family: 'Kanit', sans-serif;
+  background: #006CFF;
+  padding: 15px 20px;
+  color: #fff;
+  border: 0;
+  border-radius: 3px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-block;
+  width: 180px;
+  font-size: 18px;
+}
+
+@media (max-width: 970px) {
+  .hero-section .hero-flex {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    gap: 5rem;
+  }
+  .hero-section .hero-flex .text-cont, .hero-section .hero-flex .img-cont {
+    width: 100%;
+    text-align: center;
+  }
+  .hero-section .hero-flex .text-cont p {
+    font-size: 3.5vw;
+  }
+  .offer-section p {
+    width: 90%;
+    font-size: 5.5vw;
+  }
+  .offer-section h1 {
+    font-size: 5vw;
+  }
+  .we-can-section .wecan-flex {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    gap: 4rem;
+  }
+  .we-can-section .wecan-flex .wecan-img, .we-can-section .wecan-flex .wecan-txt {
+    width: 100%;
+  }
+  .we-can-section .wecan-flex .wecan-img img {
+    width: 70%;
+    display: block;
+    margin: auto;
+  }
+  .we-can-section .wecan-flex .wecan-txt h1 {
+    text-align: center;
+    font-size: 6vw;
+  }
+  .we-can-section .wecan-flex .wecan-txt li {
+    font-size: 25px;
+  }
+  .transcription-section .container .trans-flex, .sentiment-section .container .trans-flex, .report-section .container .trans-flex {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
+    gap: 5rem;
+  }
+  .transcription-section .container .trans-flex .trans-txt, .transcription-section .container .trans-flex .tras-img, .sentiment-section .container .trans-flex .trans-txt, .sentiment-section .container .trans-flex .tras-img, .report-section .container .trans-flex .trans-txt, .report-section .container .trans-flex .tras-img {
+    width: 100%;
+  }
+  .transcription-section .container .trans-flex .trans-txt h1, .sentiment-section .container .trans-flex .trans-txt h1, .report-section .container .trans-flex .trans-txt h1 {
+    text-align: center;
+  }
+  .transcription-section .container .trans-flex .trans-txt .check-container span, .sentiment-section .container .trans-flex .trans-txt .check-container span, .report-section .container .trans-flex .trans-txt .check-container span {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .transcription-section .container .trans-flex .trans-txt button, .sentiment-section .container .trans-flex .trans-txt button, .report-section .container .trans-flex .trans-txt button {
+    margin: auto;
+  }
+}
+
+@media (max-width: 500px) {
+  .hero-section .container .hero-flex .text-cont p {
+    font-size: 22px;
+  }
+  .transcription-section .container .trans-flex .trans-txt h1, .sentiment-section .container .trans-flex .trans-txt h1, .report-section .container .trans-flex .trans-txt h1 {
+    font-size: 5vw;
+    text-align: center;
+  }
+  .transcription-section .container .trans-flex .trans-txt .check-container span p, .sentiment-section .container .trans-flex .trans-txt .check-container span p, .report-section .container .trans-flex .trans-txt .check-container span p {
+    font-size: 15px;
+  }
+  .transcription-section .container .trans-flex .trans-txt .check-container span img, .sentiment-section .container .trans-flex .trans-txt .check-container span img, .report-section .container .trans-flex .trans-txt .check-container span img {
+    width: 15px;
+  }
+  .wecan-txt li {
+    font-size: 15px;
+  }
+  .article-section .container p {
+    width: 90%;
+    font-size: 17px;
+  }
+}
+/*# sourceMappingURL=Services.css.map */

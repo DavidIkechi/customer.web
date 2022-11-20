@@ -1,21 +1,22 @@
-
-
 @function pix-rem($value, $suffix: rem) {
-        $calculate: calc($value/16);
-        @return #{$calculate}#{$suffix};
+  $calculate: calc($value/16);
+  @return #{$calculate}#{$suffix};
 }
 // This Functions Convert Pix value to Rem or Em
 // Example of using the function
 // with: pix-rem(20,em)
 // height: pix-rem(10)
 
-
 @mixin easyMediaQueries($value) {
-        @media ($value) {
-                @content;
-        }
+  @media ($value) {
+    @content;
+  }
 }
 // Easy Media Queries for individual Module/Components
-// 
+//
 
-
+@mixin mediaQuery($value) {
+  @media (max-width: $value) {
+    @content;
+  }
+}

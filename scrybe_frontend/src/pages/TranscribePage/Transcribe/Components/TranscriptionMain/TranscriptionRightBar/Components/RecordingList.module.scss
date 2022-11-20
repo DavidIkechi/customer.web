@@ -1,0 +1,89 @@
+@function pix-rem($value, $suffix: rem) {
+    $calculate: calc($value/16);
+    @return #{$calculate}#{$suffix};
+}
+
+.RecordingList { 
+    width: 320px;
+    background-color: #FFFFFf;
+    padding: pix-rem(40) pix-rem(24);
+    margin: pix-rem(24) 0;
+    border-radius: 4px;
+    box-shadow: 0 8px 6px -6px rgb(0 0 0 / 0.07);
+    filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+}
+
+.searchBar {
+    padding: pix-rem(12) 0 pix-rem(12) pix-rem(12);
+    width: 100%;
+    border: 1px #A9A9A9 solid;
+    border-radius: 4px;
+    font-family: 'Kanit';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 24px;
+    transition: all 200ms ease-in;
+}
+
+.searchBar:focus {
+    border: 1px #E6F0FF solid;
+}
+
+.mostRecent {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    cursor: pointer;
+    margin: pix-rem(24) 0 pix-rem(30) 0;
+
+    h3 {
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 24px;
+        color: #828282;
+    }
+}
+
+.audioList {
+    display: flex;
+    flex-direction: column;
+    row-gap: pix-rem(32);
+}
+
+.AudioInfo {
+    display: flex;
+    column-gap: pix-rem(16);
+    cursor: pointer;
+    transition: all 200ms ease-in;
+
+    .AudioName {
+
+        h2 {
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 24px;
+            color: #313131;
+        }
+
+        p {
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 24px;
+            color: #828282;
+        }
+    }
+}
+
+.AudioInfo:hover {
+    background-color: #E6F0FF;
+    border-radius: 4PX;
+    transform: scale(1.03);
+}
+
+
+@media screen and (max-width: 480px) {
+    .RecordingList {
+        display: none;
+    }
+}

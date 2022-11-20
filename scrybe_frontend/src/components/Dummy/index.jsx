@@ -1,7 +1,8 @@
 import React from "react";
+import Proptypes from "prop-types";
 import scrybeLogo from "../../assets/scrybe_logo_with_text.svg";
 
-function Dummy() {
+function Dummy({ someText }) {
   return (
     <div className="App" data-testid="app-container">
       <div
@@ -17,9 +18,14 @@ function Dummy() {
           alt="scrybeLogo"
           style={{ objectFit: "contain", width: "100%" }}
         />
+        {someText}
       </div>
     </div>
   );
 }
+
+Dummy.propTypes = {
+  someText: Proptypes.string.isRequired,
+};
 
 export default Dummy;

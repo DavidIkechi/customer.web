@@ -1,0 +1,24 @@
+@import "../../../../assets/styles/utilities/functionsANDmedia";
+
+.audio__file {
+  font-size: pix-rem(16);
+  font-weight: 300;
+
+  .audio__icon__container {
+    width: pix-rem(52);
+    height: pix-rem(52);
+  }
+
+  .audio__text {
+    margin-right: auto;
+    text-align: left;
+
+    .audio__name {
+      color: #313131;
+    }
+
+    .audio__size {
+      color: #828282;
+    }
+  }
+}

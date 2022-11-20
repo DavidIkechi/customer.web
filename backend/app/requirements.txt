@@ -1,2 +1,13 @@
 fastapi==0.68.0
 uvicorn==0.12.2
+python-multipart
+nltk
+sqlalchemy
+banana-dev==4.0.0
+python-dotenv
+python-jose
+passlib
+pyjwt
+mysql-connector-python
+mysqlclient
+

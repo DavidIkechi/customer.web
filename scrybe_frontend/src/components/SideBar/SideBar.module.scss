@@ -1,0 +1,39 @@
+@function pix-rem($value, $suffix: rem) {
+  $calculate: calc($value/16);
+  @return #{$calculate}#{$suffix};
+}
+
+.SideBar {
+  width: 280px;
+  height: 100vh;
+  background-color: #ffffff;
+  position: fixed;
+  padding: pix-rem(32) 0 0 pix-rem(40);
+  border-right: 1px solid #dfdede;
+}
+
+.navLinks {
+  margin: pix-rem(100) 0 0 0;
+}
+
+.navLink {
+  display: flex;
+  column-gap: pix-rem(20);
+  padding: pix-rem(20) 0 pix-rem(20) 0;
+  text-decoration: none;
+  cursor: pointer;
+
+  p {
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 26px;
+    color: #6a6a6a;
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .SideBar {
+    display: none;
+  }
+}

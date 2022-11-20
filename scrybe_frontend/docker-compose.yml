@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+    frontend:
+        image: vicdam/scrybefrontend:latest
+        container_name: frontendpage
+        ports:
+          - 80:3000
+        depends_on:
+          - backend
+
+    backend:
+        image: vicdam/scrybebackend:latest
+        container_name: backend
+        command: uvicorn --host 0.0.0.0 --port 5000 main:app
+        ports:
+            - "5000:5000"

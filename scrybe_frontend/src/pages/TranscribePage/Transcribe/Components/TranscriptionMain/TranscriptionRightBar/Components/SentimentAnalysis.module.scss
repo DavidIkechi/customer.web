@@ -1,0 +1,103 @@
+@function pix-rem($value, $suffix: rem) {
+    $calculate: calc($value/16);
+    @return #{$calculate}#{$suffix};
+}
+
+.SentimentAnalysis { 
+    width: 320px;
+    background-color: #FFFFFf;
+    padding: pix-rem(40) pix-rem(24);
+    margin: pix-rem(24) 0;
+    border-radius: 4px;
+    box-shadow: 0 8px 6px -6px rgb(0 0 0 / 0.07);
+    filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+
+    h2 {
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 26px;
+        color: #1D1D1D;
+        margin: 0 0 pix-rem(12) 0;
+    }
+
+    p {
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 20px;
+        color: #6A6A6A;
+        margin: 0 0 pix-rem(32) 0;
+    }
+}
+
+.downloadPanel {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+
+    .downloadButton {
+        cursor: pointer;
+    }
+}
+
+.analysisButton {
+    display: flex;
+    align-items: center;
+    background-color: #006CFF;
+    padding: pix-rem(12) pix-rem(32);
+    border-radius: 4px;
+    border: none;
+    column-gap: 8px;
+    cursor: pointer;
+
+    a {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 24px;
+        color: #FFFFFF;
+        text-decoration: none;
+    }
+}
+
+.mobileSentimentAnalysis {
+    display: none;
+}
+
+@media screen and (max-width: 480px) {
+    .SentimentAnalysis {
+        width: 100%;
+        background-color: none;
+        padding: 0;
+        margin: pix-rem(16) 0;
+        border-radius: 0;
+        box-shadow: none;
+        filter: none;
+
+        h2,
+        p,
+        .downloadPanel {
+            display: none;
+        }
+    }
+
+    .mobileSentimentAnalysis {
+        display: block;
+        width: 100%;
+        display: flex;
+        justify-content: right;
+
+    }
+
+    .mobileContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        column-gap: 8px;
+
+        h5 {
+            font-weight: 300;
+            font-size: 14px;
+            line-height: 20px;
+            color: #006CFF;
+        }
+    }
+}

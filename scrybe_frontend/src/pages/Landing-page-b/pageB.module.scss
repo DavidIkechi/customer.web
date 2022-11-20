@@ -1,0 +1,16 @@
+@use '../../functions.scss' as *;
+
+.customer {
+        padding-block: pix-rem(58);
+        
+        &__h2{
+                text-align: center;
+                margin-bottom: pix-rem(40);
+                font-size: pix-rem(36);
+                font-weight: 600;
+                color: #313131;
+                &> span{
+                        color: #0095E8;
+                }
+        }
+}
