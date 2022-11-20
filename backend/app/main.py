@@ -1,4 +1,4 @@
-from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException
+from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Request
 from routers.sentiment import sentiment
 from routers.transcribe import transcribe_file
 import models
@@ -108,8 +108,9 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     return db_user
 
 @app.get("/sentiment_analysis")
-async def get_sentiment_analysis_result():
-    return{"Message": "This is the result of the analysis. Thank you for using our service",
-        "Transcript": transcribe_file,
-        "Sentiment Result": sentiment
-    }
+async def get_sentiment_analysis_result(request: Request):
+    await analyse()
+    transcript = request.transcript
+    sentiment_result= request.sentiment_result
+    return {"Transcript": transcript, "Sentiment": sentiment_result} 
+    
