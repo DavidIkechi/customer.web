@@ -18,6 +18,7 @@ import Successful from "./pages/Successful/Successful";
 import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
+import Reviews from "./pages/Reviews/Reviews";
 
 function App() {
   return (
@@ -121,6 +122,10 @@ function App() {
         <Route
           path="/pw-reset-successful"
           element={<PasswordResetSuccessful />}
+        />
+        <Route
+          path="/reviews"
+          element={<Reviews />}
         />
       </Routes>
     </>
