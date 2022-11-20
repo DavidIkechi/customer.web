@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default */
 import React from "react";
 import "./App.scss";
 import { Routes, Route } from "react-router-dom";
@@ -10,10 +11,10 @@ import LandingPage from "./pages/landing-page-a";
 import PageB from "./pages/Landing-page-b";
 import NavBar from "./components/navBar";
 import TermsOfService from "./pages/Terms-of-service/TermsOfService";
-
 import Services from "./pages/services-page/Services";
 import Solutions from "./pages/solutions-page/Solutions";
 import DashboardOverview from "./pages/DashboardOverview";
+import Blogs from "./pages/Blogs-page/Blogs";
 
 function App() {
   return (
@@ -67,7 +68,7 @@ function App() {
         {/* about us */}
         <Route path="/about-us" element={<DummyPage someText="about us" />} />
         {/* events */}
-        <Route path="/events" element={<DummyPage someText="events" />} />
+        <Route path="/events" element={<DummyPage someText="about us" />} />
         {/* agent report */}
         <Route
           path="/report"
@@ -100,7 +101,7 @@ function App() {
         {/* FAQs */}
         <Route path="/faqs" element={<FAQs />} />
         {/* blog */}
-        <Route path="/blog" element={<DummyPage someText="blog" />} />
+        <Route path="/blog" element={<Blogs />} />
         <Route path="/homeB" element={<PageB />} />
       </Routes>
     </>
