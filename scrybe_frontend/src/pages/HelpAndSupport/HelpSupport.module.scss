@@ -1,0 +1,13 @@
+.body {
+    background-color: #FBF9F6;
+}
+
+.article {
+    padding: 0 5rem;
+}
+
+@media screen and (max-width: 500px) {
+    .article {
+        padding: 0 1rem;
+    }
+}

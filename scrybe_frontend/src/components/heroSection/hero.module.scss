@@ -24,6 +24,9 @@
                 flex-wrap: wrap;
                 @include media(1220px) {
                         justify-content: center;
+                        & > * {
+                                text-align: center;
+                        }
                 }
 
                 .content {
@@ -50,6 +53,10 @@
                         display: flex;
                         gap: pix-rem(50);
                         margin-top: pix-rem(90);
+                        @include media(1220px) {
+                                flex-direction: column-reverse;
+                                align-items: center;
+                        }
 
                         .ctaDemo,
                         .ctaStarter {

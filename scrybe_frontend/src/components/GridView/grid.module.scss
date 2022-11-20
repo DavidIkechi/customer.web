@@ -1,0 +1,38 @@
+$primary-color: #ffffff;
+$text-color: #000000;
+$negative-color: #dbeab8;
+
+@mixin flexCenter($gap) {
+  display: flex;
+  align-items: center;
+  gap: $gap;
+}
+
+.card {
+  background-color: $primary-color;
+  width: 16rem;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+}
+
+.filename {
+  @include flexCenter(1rem);
+
+  .filename__text {
+    line-height: 1px;
+  }
+}
+
+.paragraph {
+  font-size: 12px;
+}
+
+.analysis {
+  @include flexCenter(3.4rem);
+
+  .main__analysis {
+    background-color: pink;
+    padding: 0.1rem 0.9rem;
+    border-radius: 4px;
+  }
+}

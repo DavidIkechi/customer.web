@@ -1,0 +1,51 @@
+@use "../../functions.scss" as *;
+
+.footer {
+        padding-inline: pix-rem(16);
+        background-color: #006cff;
+        color: white;
+        padding-block: pix-rem(70);
+
+        &__content {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: pix-rem(16);
+        }
+        &__middle {
+                display: flex;
+                width: min(100%, pix-rem(320));
+                justify-content: space-between;
+                gap: pix-rem(20);
+                flex-wrap: wrap;
+                &> ul > li {
+                        font-weight: 300;
+                        color: rgba(255, 255, 255, 0.873);
+                }
+                &> ul > h4 {
+                        font-weight: bold;
+                        font-size: pix-rem(20);
+                }
+        }
+        &__content {
+                width: min(100%, pix-rem(1264));
+                margin-inline: auto;
+        }
+        &__right{
+                &> h4{
+                        font-weight: bold;
+                        font-size: pix-rem(20);
+                }
+                &__contact{
+                        display: flex;
+                        margin-top: pix-rem(16);
+                }
+        }
+
+        &__bottom{
+                padding-block: pix-rem(32);
+                border-top: 2px solid white;
+                text-align: center;
+                margin-top: pix-rem(16);
+        }
+}

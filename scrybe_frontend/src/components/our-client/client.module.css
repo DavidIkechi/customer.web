@@ -1,0 +1,19 @@
+.container {
+  padding-block: 2rem;
+  padding-inline: 1.25rem;
+}
+.container .logos {
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-flow: row wrap;
+}
+.container .title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+}
+.container .display {
+  width: min(100%, 12.5rem);
+}/*# sourceMappingURL=client.module.css.map */

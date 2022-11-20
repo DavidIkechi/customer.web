@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import "../../App.css";
+import "../../von.css";
 
 import { NavLink } from "react-router-dom";
 
@@ -45,7 +45,7 @@ function Signin() {
                 placeholder="Enter your company email"
                 className={`${errors.email && "error-input"} `}
                 // eslint-disable-next-line
-                  {...register("email", {
+                {...register("email", {
                   required: "Email is required",
                   pattern: {
                     value: /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i,
@@ -64,7 +64,7 @@ function Signin() {
                 placeholder="Password at least 8 characters"
                 className={`${errors.password && "error-input"} `}
                 // eslint-disable-next-line
-                  {...register("password", {
+                {...register("password", {
                   required: "Password is required",
                   minLength: {
                     value: 8,

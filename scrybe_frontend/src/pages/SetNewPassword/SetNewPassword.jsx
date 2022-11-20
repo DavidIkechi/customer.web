@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import "../../App.css";
+import "../../von.css";
 
 function SetNewPassword() {
   const {
@@ -42,7 +42,7 @@ function SetNewPassword() {
                 placeholder="Password at least 8 characters"
                 className={`${errors.password && "error-input"} `}
                 // eslint-disable-next-line
-                  {...register("password", {
+                {...register("password", {
                   required: "Password is required",
                   minLength: {
                     value: 8,
@@ -62,7 +62,7 @@ function SetNewPassword() {
                 placeholder="Confirm Password"
                 className={`${errors.password && "error-input"} `}
                 // eslint-disable-next-line
-                  {...register("password2", {
+                {...register("password2", {
                   required: "Password is required",
                   minLength: {
                     value: 8,

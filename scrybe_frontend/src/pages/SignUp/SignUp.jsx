@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import "../../App.css";
+import "../../von.css";
 import { NavLink } from "react-router-dom";
 
 function Signup() {
@@ -48,7 +48,7 @@ function Signup() {
                 placeholder="Enter your full name"
                 className={`${errors.fullname && "error-input"} `}
                 // eslint-disable-next-line
-                  {...register("fullname", { required: "Name is required" })}
+                {...register("fullname", { required: "Name is required" })}
               />
             </label>
             <p className="error-msg">{errors.fullname?.message}</p>
@@ -62,7 +62,7 @@ function Signup() {
                 placeholder="Enter your company email"
                 className={`${errors.email && "error-input"} `}
                 // eslint-disable-next-line
-                  {...register("email", {
+                {...register("email", {
                   required: "Email is required",
                   pattern: {
                     value: /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i,
@@ -82,7 +82,7 @@ function Signup() {
                 placeholder="Enter your company name"
                 className={`${errors.company && "error-input"} `}
                 // eslint-disable-next-line
-                  {...register("company", {
+                {...register("company", {
                   required: "Company name is required",
                 })}
               />
@@ -98,7 +98,7 @@ function Signup() {
                 placeholder="Enter your password"
                 className={`${errors.password && "error-input"} `}
                 // eslint-disable-next-line
-                  {...register("password", {
+                {...register("password", {
                   required: "Password is required",
                   minLength: {
                     value: 8,

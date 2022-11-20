@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import "../../App.css";
+import "../../von.css";
 
 import { NavLink } from "react-router-dom";
 
@@ -43,7 +43,7 @@ function ForgetPassword() {
                 placeholder="Enter your company email"
                 className={`${errors.email && "error-input"} `}
                 // eslint-disable-next-line
-                  {...register("email", {
+                {...register("email", {
                   required: "Email is required",
                   pattern: {
                     value: /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i,
