@@ -67,9 +67,9 @@ async def analyse(file: UploadFile=File(...)):
 
 # create the endpoint
 @app.post('/login', summary = "create access token for logged in user")
-async def login(form_data: OAuth2PasswordRequestForm = Depends(), session: Session = Depends(get_session)):
+async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_session)):
     # return token once the user has been successfully authenticated, or it returns an error.
-    return await main_login(form_data, session)
+    return await main_login(form_data, db)
 
 # Dependency
 def get_db():
