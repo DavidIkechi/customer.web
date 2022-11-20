@@ -111,6 +111,12 @@
       }
     }
   }
+  @media (max-width:400px) {
+    div{
+      width: 90%;
+      padding: 0 1rem;
+    }
+  }
 }
 
 .blogs__grid_wrapper {
@@ -210,6 +216,7 @@ div a.blogs__navSelected {
 
 .blogs__lastSectionTitle {
   h3 {
+    margin-bottom: 2rem;
     color: #454545;
     font-size: 2rem;
   }
