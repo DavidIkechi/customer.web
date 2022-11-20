@@ -26,6 +26,7 @@ import Account from "./pages/Account";
 import Signin from "./pages/SignIn/SignIn";
 import Careers from "./pages/Careers";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import IndustryArticle from "./components/Industry/industryArticle";
 
 function App() {
   return (
@@ -85,6 +86,8 @@ function App() {
       <Route path="/accounts" element={<Account />} />
       {/* industry */}
       <Route path="/industry" element={<Industry />} />
+      {/* industry article */}
+      <Route path="/industryarticle" element={<IndustryArticle />} />
       {/* how it works */}
       <Route path="/how-it-works" element={<HowitWorks />} />
       {/* demo pages */}
