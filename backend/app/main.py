@@ -38,6 +38,7 @@ tags_metadata = [
 # create the database.
 models.Base.metadata.create_all(engine)
 
+
 app = FastAPI(
     title="Scrybe API",
     description=description,
@@ -104,8 +105,6 @@ async def new_analyse(audio: schema.AudioCreate, db: Session = Depends(get_db), 
 async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     # return token once the user has been successfully authenticated, or it returns an error.
     return await main_login(form_data, db)
-
-
 
 @app.post("/users/", response_model=schema.User, tags=['users'])
 def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):
