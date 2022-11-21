@@ -22,7 +22,7 @@ import About from "./pages/AboutUs/About";
 import TryForFree from "./pages/TryForFree";
 import Industry from "./pages/indsutry/industry";
 import HowitWorks from "./pages/HowItWorks/HowItWorks";
-import UploadedRecordings from "./components/UploadRecordings";
+import UploadedRecordings from "./pages/UploadRecordings";
 import Account from "./pages/Account";
 import Signin from "./pages/SignIn/SignIn";
 import Careers from "./pages/Careers";

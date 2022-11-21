@@ -1,8 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap');
-*{
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+.recordingSection{
     font-family: 'Kanit', sans-serif;
 }
 .recordingDrag{
@@ -57,7 +54,8 @@
         }
     }
     button{
-        background: #ECECEC;
+        background: #006CFF;
+        color: #FFFFFF;
         margin-top: 4vh;
         border-radius: 4px;
         padding: 1.8vh 9%;
@@ -67,23 +65,45 @@
 
     }
 }
+.transcribeSection{
+    margin: 0 15%;
+    padding: 2vh 3%;
+    display: flex;
+    background: rgba(205, 225, 237, 0.08);
+    border: 1px solid #006CFF;
+    border-radius: 8px;
 
-.tryNote{
-    color: #6A6A6A;
-    font-weight: 400;
-    font-size: 1.1rem;
-    line-height: 26px;
-    padding: 0 6%;
-    margin-bottom: 5vh;
-    margin-top: 10vh;
-    
+    .transcribe1{
+        width: 10%;
+
+        img{
+            width: 40%;
+        }
+    }
+
+    .transcribe2{
+        width: 85%;
+
+        h4{
+            margin-bottom: 3vh;
+        }
+
+        input{
+            width: 100%;
+        }
+    }
+}
+.wait{
+    margin: 5vh 0;
     p{
-        padding-bottom: 1vh;
+        font-weight: 400;
+        font-size: 1.05rem;
+        line-height: 26px;
+        color: #6A6A6A;
+        text-align: center;
     }
-    ul{
-        margin-left: 2%;
-    }
-    li{
-        padding-bottom: 0.8vh;
+    .signUp{
+        text-decoration: none;
+        color: #006CFF;
     }
 }
