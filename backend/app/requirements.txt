@@ -11,3 +11,4 @@ pyjwt
 mysql-connector-python
 mysqlclient
 fastapi-mail
+bcrypt==4.0.1
