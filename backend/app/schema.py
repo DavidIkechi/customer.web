@@ -84,3 +84,5 @@ class Company(CompanyBase):
     class Config:
         orm_mode = True
 
+class Analysis(AudioBase):
+    pass

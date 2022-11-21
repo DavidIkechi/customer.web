@@ -63,3 +63,12 @@ def create_job(db: Session, job: schema.Job, audio_id: int):
     db.commit()
     db.refresh(db_job)
     return db_job
+def create_analysis(db, result= schema.Audio, user_id=int):
+    db_analysis = models.Analysis(transcript = result.transcript, positivity_score= result.positivity_score, negativity_score= result.negativity_score, overall_sentiment= result.overall_sentiment)
+    db.add(db_analysis)
+    db.commit()
+    db.refresh(db_analysis)
+    return db_analysis
+
+def get_analysis(db: Session, analysis_id = int):
+    return db.query(models.Analysis).filter(models.Analysis == analysis_id).first()

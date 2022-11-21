@@ -112,6 +112,18 @@ async def new_analyse(audio: schema.AudioCreate, db: Session = Depends(get_db), 
 
     return {"transcript": transcript, "sentiment_result": sentiment_result}
 
+@app.get("/new_analyse/{id}", response_model=schema.AudioBase, tags=['analysis'])
+def get_sentiment_result(id: int, db: Session = Depends(get_db)):
+    """
+    Get single analyse
+    """
+    analysis = crud.get_analysis(db, id)
+    if not analysis:
+        raise HTTPException(
+            status_code=404,
+            detail="The analyse doesn't exist",
+        )
+    return analyse
 
 # create the endpoint
 @app.post('/login', summary = "create access token for logged in user", tags=['users'])
@@ -140,9 +152,4 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     db_user = crud.get_user(db, user_id=user_id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
-    return db_user
-
-@app.get("/sentiment_analysis")
-async def get_sentiment_analysis_result(request: Request):
-    return await new_analyse()
-  
+    return db_user  

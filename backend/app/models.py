@@ -66,3 +66,6 @@ class Job(Base):
     audio_id = Column(Integer, ForeignKey("audios.id"))
 
     audio = relationship("Audio", back_populates="job")
+
+class Analysis(Audio):
+    pass
