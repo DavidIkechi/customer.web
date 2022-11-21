@@ -1,6 +1,19 @@
+.uploadedRecordingsGrid {
+  display: flex;
+  // grid-template-columns: repeat(2);
+  // gap: 1rem;
+  // margin: 1rem 0;
+  max-width: 100%;
+}
+
 .uploaded_recordings {
   padding: 2rem !important;
   background: #f9f9f9;
+}
+
+.uploadedRecordingsSideBar {
+  border-top: 1px solid #cdcaca;
+  width: 280px !important;
 }
 
 .no_items_found .uploaded_table_wrap {
@@ -234,7 +247,7 @@
       margin-right: 2rem;
     }
     .calbackurl_wrap {
-      // width: 350px;
+      width: 380px;
       word-wrap: break-word;
       // display: flex;
       p {
