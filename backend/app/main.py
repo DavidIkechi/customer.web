@@ -135,12 +135,12 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
 
 
 @app.get('/verification')
-async def email_verification(request: Request, token: str):
-    user = await verify_token(token)
+async def email_verification(request: Request, token: str, db: Session = Depends(get_db)):
+    user = await verify_token(token, db)
 
-    if user and not user.is_verified:
-        user.is_verified = True
-        await user.save()
+    if user and not user.is_active:
+        user.is_active = True
+        db.commit()
         return{
             "status" : "ok",
-            "data" : f"Hello {user.username}, your account has been successfully verified"}
+            "data" : f"Hello {user.first_name}, your account has been successfully verified"}

@@ -7,6 +7,8 @@ from dotenv import dotenv_values
 from models import User
 from starlette.requests import Request
 from starlette.responses import JSONResponse
+from crud import get_user_by_email
+from sqlalchemy.orm import Session
 
 
 config_credentials = dotenv_values('.env')
@@ -62,10 +64,11 @@ async def send_email(email: List, instance: User):
     await fm.send_message(message=message)
 
 
-async def verify_token(token: str):
+async def verify_token(token: str, db: Session):
     try:
         payload = jwt.decode(token, config_credentials['SECRET'], algorithms=['HS256'])
-        user = await User.get(email = payload.get("email"))
+        user = get_user_by_email(db, payload.get("email"))
+        
     except Exception as e:
         print(e)
         raise HTTPException(
