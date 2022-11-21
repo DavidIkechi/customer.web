@@ -7,7 +7,7 @@ import zuri from "./assets/zuri.webp";
 
 function OurClient() {
   return (
-    <div className={`container ${styles.container}`}>
+    <div className={` ${styles.container}`}>
       <h2 className={styles.title}>Our Clients</h2>
       <div className={styles.logos}>
         <div className={styles.display}>
