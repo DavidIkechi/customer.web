@@ -8,10 +8,10 @@ import LandingPage from "./pages/landing-page-a";
 import PageB from "./pages/Landing-page-b";
 import TermsAndCondition from "./pages/TermsAndCondition/TermsOfService";
 import History from "./pages/History/History";
-import Services from "./pages/services-page/Services";
-import Solutions from "./pages/solutions-page/Solutions";
+import Services from "./pages/ServicePage";
+import Solutions from "./pages/SolutionPage";
 import DashboardOverview from "./pages/DashboardOverview";
-import Events from "./pages/Events-page/Events";
+import Events from "./pages/EventsPage";
 import HelpSupport from "./pages/HelpAndSupport/HelpSupport";
 import General from "./components/HelpAndSupport/HelpAndSupportGeneral/General";
 import General1 from "./components/HelpAndSupport/general1/General1";
@@ -22,11 +22,16 @@ import About from "./pages/AboutUs/About";
 import TryForFree from "./pages/TryForFree";
 import Industry from "./pages/indsutry/industry";
 import HowitWorks from "./pages/HowItWorks/HowItWorks";
-import UploadedRecordings from "./components/UploadRecordings";
+import UploadedRecordings from "./pages/UploadRecordings";
 import Account from "./pages/Account";
 import Signin from "./pages/SignIn/SignIn";
 import Careers from "./pages/Careers";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Signup from "./pages/SignUp/SignUp";
+import Successful from "./pages/Successful/Successful";
+import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
+import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
+import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
 
 function App() {
   return (
@@ -53,14 +58,10 @@ function App() {
       {/* help and support */}
       <Route path="/help" element={<DummyPage someText="help and supprt" />} />
       {/* sign in */}
-      <Route
-        path="/signin"
-        element={<Signin someText="sign-in, sign up, reset password" />}
-      />
+
       {/* career page & legal */}
       <Route path="/careers" element={<Careers />} />
       <Route path="/privacy" element={<PrivacyPolicy />} />
-
       {/* solutions & services */}
       <Route
         path="/services"
@@ -84,9 +85,7 @@ function App() {
       {/* dashboard */}
       <Route path="/dashboard" element={<DashboardOverview />} />
       {/* accounts */}
-
       <Route path="/accounts" element={<Account />} />
-
       {/* industry */}
       <Route path="/industry" element={<Industry />} />
       {/* how it works */}
@@ -138,7 +137,17 @@ function App() {
         <Route index element={<PromotedArticle1 />} />
         <Route path="*" element={<PromotedArticle1 />} />
       </Route>
-      {/* uploaded recordings */}
+
+      {/* Sign In, Sign Up and Reset Password  Flow */}
+      <Route path="/create-account" element={<Signup />} />
+      <Route path="/signin" element={<Signin />} />
+      <Route path="/reset-successful" element={<Successful />} />
+      <Route path="/set-new-password" element={<SetNewPassword />} />
+      <Route path="/forget-password" element={<ForgetPassword />} />
+      <Route
+        path="/pw-reset-successful"
+        element={<PasswordResetSuccessful />}
+      />
       <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
     </Routes>
   );

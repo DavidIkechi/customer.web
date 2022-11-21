@@ -1,5 +1,11 @@
 .body {
     background-color: #FBF9F6;
+    P, h1, h2 , h3, h4, h5 {
+        line-height: normal;
+    }
+    img, picture {
+        max-width: none;
+    }
 }
 .general {
     padding: 0 5rem;
