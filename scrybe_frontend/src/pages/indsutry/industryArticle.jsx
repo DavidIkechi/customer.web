@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "../../pages/indsutry/industry.module.css";
-import Image from "../../pages/indsutry/assets/industryImage.png";
+import styles from "./industry.module.css";
+import Image from "./assets/industryImage.png";
 
 function industryArticle() {
   return (
