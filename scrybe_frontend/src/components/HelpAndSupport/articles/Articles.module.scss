@@ -3,7 +3,7 @@
     align-items: center;
     p {
         font-weight: 600;
-        font-size: 17px;
+        font-size: 20px !important;
         margin-left: 1rem;
     }
 
@@ -31,14 +31,14 @@
     border: 1px solid #D9D9D9;
 
     h3 {
-        font-size: 18px;
+        font-size: 18px !important;
         border-bottom: 1px solid #D9D9D9;
         font-weight: 500;
         padding: 1rem  2rem;
     }
 
     a {
-        font-size: 18px;
+        font-size: 18px !important;
         border-bottom: 1px solid #D9D9D9;
         font-weight: 500;
         padding: 1rem  2rem;
@@ -60,7 +60,7 @@
     .info_intro {
         margin-top: 1rem;
         p {
-            font-size: 20px;
+            font-size: 20px !important;
         }        
     }
     
@@ -79,7 +79,7 @@
         border: 1px solid #D9D9D9;
     
         h3, a {
-            font-size: 12px;
+            font-size: 12px !important;
             padding: 1rem ;
         }
         

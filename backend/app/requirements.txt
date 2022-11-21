@@ -10,4 +10,5 @@ passlib
 pyjwt
 mysql-connector-python
 mysqlclient
+bcrypt==4.0.1
 
