@@ -27,6 +27,12 @@ import Account from "./pages/Account";
 import Signin from "./pages/SignIn/SignIn";
 import Careers from "./pages/Careers";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Signup from "./pages/SignUp/SignUp";
+import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
+import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
+import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
+import Successful from "./pages/Successful/Successful";
+import Reviews from "./pages/Reviews/Reviews";
 
 function App() {
   return (
@@ -140,6 +146,21 @@ function App() {
       </Route>
       {/* uploaded recordings */}
       <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
+      {/* Sign Up */}
+      <Route path="/create-account" element={<Signup />} />
+      {/* Forget Password*/}
+      <Route path="/forget-password" element={<ForgetPassword />} />
+      {/* Password Reset*/}
+      <Route
+        path="/pw-reset-successful"
+        element={<PasswordResetSuccessful />}
+      />
+      {/* Set New Password*/}
+      <Route path="/set-new-password" element={<SetNewPassword />} />
+      {/* Password Reset Successful*/}
+      <Route path="/reset-successful" element={<Successful />} />
+      {/* Reviews*/}
+      <Route path="/reviews" element={<Reviews />} />
     </Routes>
   );
 }
