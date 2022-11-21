@@ -14,12 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./scrybe_frontend
+        working-directory: scrybe_frontend
 
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
-      
+        
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
@@ -29,49 +29,23 @@ jobs:
       - name: Get Current Date 
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d--%M-%S')"
-
-      - name: Build Docker Image
-        run: docker build . --file Dockerfile --tag $DOCKERHUB_USERNAME/$REPOSITORY_NAME:${{ steps.date.outputs.date }}
-        
-      - name: Push Docker Image to Docker Hub
-        run: docker push $DOCKERHUB_USERNAME/$REPOSITORY_NAME:${{ steps.date.outputs.date }}
-
-
-  
-  build_and_push_to_registry_backend:
-
-    # name: Build and push Docker image to Docker Hub
-    # if: github.event.pull_request.merged == true
-
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./backend    
-
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v3
       
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}          
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-            
-      - name: Get Current Date 
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d--%M-%S')"
+      - name: docker build, tag and push
+        run: |
+          docker build -t vicdam/scrybefrontend:latest .
+          docker push vicdam/scrybefrontend:latest
 
-      - name: Build Docker Image
-        run: docker build . --file Dockerfile --tag $DOCKERHUB_USERNAME/$REPOSITORY_NAME_BACKEND:${{ steps.date.outputs.date }}
-        
-      - name: Push Docker Image to Docker Hub
-        run: docker push $DOCKERHUB_USERNAME/$REPOSITORY_NAME_BACKEND:${{ steps.date.outputs.date }}
+      - name: docker build, tag and push
+        run: |
+          cd ../backend/app
+          docker build -t vicdam/scrybebackend:latest .
+          docker push vicdam/scrybebackend:latest             
+
 
   Deploy: 
-    needs: [ build_and_push_to_registry_backend , build_and_push_to_registry ]
+    needs: [ build_and_push_to_registry ]
     runs-on: ubuntu-latest
-
+  
     steps:
       - name: Checkout master
         uses: actions/checkout@master
@@ -84,7 +58,8 @@ jobs:
           USERNAME: ${{ secrets.USERNAME }}
           KEY: ${{ secrets.KEY }}
           script: |
-            docker-compose up -d .             
+            sudo docker-compose up -d             
+            
 
 
         

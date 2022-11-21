@@ -11,10 +11,21 @@
                 align-items: flex-start;
                 gap: pix-rem(16);
                 flex-wrap: wrap;
+                position: relative;
                 &__img {
                         max-width: pix-rem(331.84);
                 }
                 &__details {
+                        position: relative;
+                        &__quote_r {
+                                position: absolute;
+                                right: 0;
+                                bottom: pix-rem(-40);
+                        }
+                        &__quote_l {
+                                position: absolute;
+                                left: pix-rem(-32);
+                        }
                         padding-top: pix-rem(15);
                         max-width: pix-rem(700);
                         &__msg {

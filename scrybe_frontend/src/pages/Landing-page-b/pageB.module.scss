@@ -1,16 +1,77 @@
-@use '../../functions.scss' as *;
+@use "../../functions.scss" as *;
 
 .customer {
         padding-block: pix-rem(58);
-        
-        &__h2{
+
+        &__h2 {
                 text-align: center;
                 margin-bottom: pix-rem(40);
                 font-size: pix-rem(36);
                 font-weight: 600;
                 color: #313131;
-                &> span{
-                        color: #0095E8;
+                & > span {
+                        color: #0095e8;
                 }
+        }
+}
+
+.getStarted {
+        padding-block: pix-rem(20);
+        width: min(100%, pix-rem(1264));
+        margin-inline: auto;
+        &__content {
+                display: flex;
+                justify-content: space-between;
+                width: min(100%, pix-rem(1264));
+                flex-wrap: wrap;
+                gap: pix-rem(16);
+                @include media(1051px){
+                        flex-direction: column;
+                        align-items: center;
+                }
+        }
+        &__image {
+                max-width: pix-rem(400);
+        }
+        &__h2{
+                text-align: center;
+                font-size: pix-rem(32);
+        }
+        &__h3{
+                font-size: pix-rem(64);
+                font-weight: bold;
+        }
+        &__title{
+                font-size: pix-rem(32);
+                margin-top: pix-rem(16);
+        }
+        &__details{
+                max-width: pix-rem(600);
+        }
+}
+
+.upload{
+        margin-top: pix-rem(24);
+        width: min(100%, pix-rem(1264));
+        margin-inline: auto;
+        &__content{
+                background-color: white;
+                border: 4px dotted grey;
+                box-shadow: 0 0 0 pix-rem(30) rgb(212, 212, 212);
+                max-width: pix-rem(310);
+                padding: pix-rem(20);
+                margin: auto;
+                display: flex;
+                flex-direction: column;
+        }
+        &__btn{
+                all: unset;
+                background-color: #006CFF;
+                color: white;
+                padding-inline: pix-rem(32);
+                padding-block: pix-rem(16);
+                border-radius: pix-rem(4);
+                margin-top: pix-rem(16);
+                margin: auto;
         }
 }

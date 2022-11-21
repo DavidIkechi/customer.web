@@ -31,8 +31,14 @@
       font-size: pix-rem(16);
       font-weight: 300;
       color: #006cff;
-      cursor: pointer;
       align-items: center;
+    }
+
+    .opener__content {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+      cursor: pointer;
     }
   }
 

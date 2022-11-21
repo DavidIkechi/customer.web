@@ -19,6 +19,27 @@
     width: 95%;
     height: 95%;
     margin: 0px auto;
+    .chartHeader {
+      & > h1 {
+        font-size: 100px;
+      }
+      .chartText {
+        display: flex;
+        justify-content: space-between;
+        .checkbox {
+          display: flex;
+          justify-content: space-evenly;
+          align-items: center;
+          width: 100px;
+          border: 0.5px solid rgb(207, 203, 203);
+          border-radius: 10px;
+          .textIcon {
+            height: 15px;
+            width: 15px;
+          }
+        }
+      }
+    }
   }
 }
 

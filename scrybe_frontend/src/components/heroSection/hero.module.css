@@ -1,0 +1,77 @@
+.hero {
+  background-color: #e6f0ff;
+  padding-block: 1rem;
+  min-height: 95vh;
+  overflow-x: visible;
+  padding-inline: 1rem;
+  -webkit-mask-image: url(./assets/heroclip.svg);
+  mask-image: url(./assets/heroclip.svg);
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-position: 0 100%;
+  -webkit-mask-position: 0 100%;
+  mask-size: cover;
+  -webkit-mask-size: cover;
+}
+.hero .container {
+  width: min(100%, 75.25rem);
+  margin-inline: auto;
+  font-family: "Kanit", sans-serif;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+@media (max-width: 1220px) {
+  .hero .container {
+    justify-content: center;
+  }
+}
+.hero .container .content {
+  margin-top: 5.625rem;
+  width: min(100%, 36rem);
+}
+.hero .container .content .heroH1 {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #313131;
+  line-height: 1.3;
+}
+.hero .container .content .heroText {
+  margin-top: 0.5rem;
+  font-size: 1.25rem;
+}
+.hero .container .content .heroAccent {
+  color: #006cff;
+}
+.hero .container .heroImage {
+  width: min(100%, 38.3125rem);
+}
+.hero .container .CTAs {
+  display: flex;
+  gap: 3.125rem;
+  margin-top: 5.625rem;
+}
+.hero .container .CTAs .ctaDemo,
+.hero .container .CTAs .ctaStarter {
+  text-decoration: none;
+  padding-block: 1rem;
+  padding-inline: 1rem;
+  border-radius: 0.25rem;
+  width: min(100%, 11.3125rem);
+  text-align: center;
+}
+.hero .container .CTAs .ctaDemo {
+  border: 0.0625rem solid #006cff;
+  color: #006cff;
+}
+.hero .container .CTAs .ctaDemo:active {
+  color: #004cb3;
+  border: 0.0625rem solid #004cb3;
+}
+.hero .container .CTAs .ctaStarter {
+  background-color: #006cff;
+  color: white;
+}
+.hero .container .CTAs .ctaStarter:active {
+  background-color: #004cb3;
+}/*# sourceMappingURL=hero.module.css.map */
