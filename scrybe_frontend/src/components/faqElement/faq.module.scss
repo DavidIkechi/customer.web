@@ -12,6 +12,9 @@
                 position: absolute;
                 inset-block: 14%;
                 inset-inline: 95%;
+                @include media(525) {
+                        scale: 0.5;
+                }
         }
         &[open] > .faq__question::after {
                 content: url(./asset/minus.svg);
@@ -19,7 +22,11 @@
                 aspect-ratio: 1;
                 position: absolute;
                 inset-block: 14%;
+
                 inset-inline: 95%;
+                @include media(525) {
+                        scale: 0.5;
+                }
         }
 
         &__question {
@@ -32,4 +39,3 @@
                 margin-top: pix-rem(24);
         }
 }
-

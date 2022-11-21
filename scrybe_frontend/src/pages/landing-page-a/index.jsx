@@ -6,17 +6,20 @@ import aboutUsimage from "./assets/Group 1000000931.webp";
 import FaqElement from "../../components/faqElement";
 import Hero from "../../components/heroSection";
 import CustomerSay from "../../components/customersSay";
+import Footer from "../../components/footer";
+import NavBarFree from "../../components/navBar_free";
 
 function LandingPage() {
   return (
     <div>
+      <NavBarFree />
       <Hero />
       <section aria-label="Our Clients">
         <OurClient />
       </section>
 
       <section aria-label="About Us">
-        <div className={`container ${styles.aboutUs}`}>
+        <div className={` ${styles.aboutUs}`}>
           <div className={styles.aboutUs__img}>
             <img src={aboutUsimage} alt="" srcSet="" />
           </div>
@@ -39,7 +42,7 @@ function LandingPage() {
         </div>
       </section>
       <section className={styles.gettingStarted}>
-        <div className="container">
+        <div>
           <h2 className={styles.gettingStarted__title}>Getting Started</h2>
           <div className={styles.gettingStarted__cards}>
             <div className={styles.gettingStarted__card}>
@@ -2108,6 +2111,7 @@ function LandingPage() {
           </form>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }

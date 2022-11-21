@@ -1,0 +1,78 @@
+.vacancy-container {
+    
+    padding: 50px 5%;
+    color: #1F1F1F;
+
+    h1 {
+        font-size: 24px;
+    }
+
+    p, li {
+        line-height: 25px;
+        font-weight: 300;
+        letter-spacing: -2;
+        
+    }
+
+    .summary {
+        border-bottom: 1px solid #00A4FF;
+        padding: 10px 0;
+        margin-bottom: 20px;
+        .job-title {
+            display: flex;
+            margin: 15px 0;
+            align-items: center;
+            
+            button {
+                margin-left: 20px;
+                background: #006CFF;
+                padding: 8px 25px;
+                color: white;
+                border: none;
+                border-radius: 2px;
+                cursor: pointer;
+            }
+        }
+    
+        .location {
+            margin: 15px 0;
+        }
+    
+        .posted {
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+
+    .description {
+        p {
+            margin: 20px 0;
+        }
+    }
+
+    .list {
+        margin: 30px 0;
+        h1 {
+            color: #005584;
+            font-size: 19px;
+        }
+
+        ul {
+            position: relative;
+            left: 30px;
+        }
+    }
+    
+
+   @media (min-width: 700px) {
+        padding: 50px 20%;
+
+        .summary {
+            .job-title {
+                button {
+                    margin-left: 120px;
+                }
+            }
+        }
+   }
+}

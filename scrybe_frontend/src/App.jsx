@@ -1,21 +1,18 @@
-/* eslint-disable import/no-named-as-default */
 import React from "react";
 import "./App.scss";
 import { Routes, Route } from "react-router-dom";
 import SentimentAnalysis from "./pages/SentimentAnalysis";
 import DummyPage from "./pages/DummyPage";
 import TranscribePage from "./pages/TranscribePage/TranscribePage";
-import TermsAndCondition from "./pages/Terms-and-conditions/TermsAndCondition";
-import FAQs from "./pages/FAQs-page/FAQs";
+import { FAQs, TermsOfService } from "./pages";
 import LandingPage from "./pages/landing-page-a";
 import PageB from "./pages/Landing-page-b";
 import NavBar from "./components/navBar";
-import TermsOfService from "./pages/Terms-of-service/TermsOfService";
+import TermsAndCondition from "./pages/TermsAndCondition/TermsOfService";
+
 import Services from "./pages/services-page/Services";
 import Solutions from "./pages/solutions-page/Solutions";
 import DashboardOverview from "./pages/DashboardOverview";
-import Blogs from "./pages/Blogs-page/Blogs";
-import BlogPostPage from "./pages/BlogPostPage";
 
 function App() {
   return (
@@ -69,7 +66,7 @@ function App() {
         {/* about us */}
         <Route path="/about-us" element={<DummyPage someText="about us" />} />
         {/* events */}
-        <Route path="/events" element={<DummyPage someText="about us" />} />
+        <Route path="/events" element={<DummyPage someText="events" />} />
         {/* agent report */}
         <Route
           path="/report"
@@ -96,15 +93,20 @@ function App() {
           element={<DummyPage someText="leaderboard" />}
         />
         {/* terms and conditions */}
-        <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route
+          path="/terms"
+          element={<TermsAndCondition someText="terms and conditions" />}
+        />
         {/* terms of service */}
-        <Route path="/terms-and-condition" element={<TermsAndCondition />} />
-        {/* FAQs */}
-        <Route path="/faqs" element={<FAQs />} />
+        <Route
+          path="/terms-of-service"
+          element={<DummyPage someText="terms of service" />}
+        />
         {/* blog */}
-        <Route path="/blog/:id" element={<BlogPostPage />} />
-        <Route path="/blog" element={<Blogs />} />
+        <Route path="/blog" element={<DummyPage someText="blog" />} />
         <Route path="/homeB" element={<PageB />} />
+        <Route path="faq" element={<FAQs />} />
+        <Route path="faq" element={<TermsOfService />} />
       </Routes>
     </>
   );

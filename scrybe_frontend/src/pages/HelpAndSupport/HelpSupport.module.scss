@@ -1,0 +1,24 @@
+.body {
+    background-color: #FBF9F6;
+    P, h1, h2 , h3, h4, h5 {
+        line-height: normal;
+    }
+
+    img, picture {
+        max-width: none;
+    }
+}
+
+.article {
+    padding: 0 5rem;
+}
+
+@media screen and (max-width: 500px) {
+    
+    body {
+        padding: 0 !important;
+    }
+    .article {
+        padding: 0 1rem;
+    }
+}

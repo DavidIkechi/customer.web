@@ -6,13 +6,17 @@
   flex-direction: column;
   gap: pix-rem(24);
   background-color: #f9f9f9;
+  box-shadow: -2px 0px 20px rgba(48, 48, 48, 0.205);
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
   cursor: auto;
 
   @include mediaQuery(768px) {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     max-width: pix-rem(500);
+    overflow-y: scroll;
     height: 100%;
   }
 
@@ -27,6 +31,12 @@
     color: #3f3f3f;
     margin-top: pix-rem(32);
     gap: 0.5em;
+    padding: pix-rem(16);
+
+    .back__content {
+      display: flex;
+      cursor: pointer;
+    }
   }
 
   .inner__container {
@@ -191,4 +201,8 @@
       }
     }
   }
+}
+
+.open__aside {
+  transform: none;
 }
