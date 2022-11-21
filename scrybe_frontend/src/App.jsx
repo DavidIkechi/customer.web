@@ -11,7 +11,7 @@ import History from "./pages/History/History";
 import Services from "./pages/ServicePage/Index";
 import Solutions from "./pages/SolutionPage/Index";
 import DashboardOverview from "./pages/DashboardOverview";
-import Events from "./pages/Events-page/Events";
+import Events from "./pages/EventsPage/Index";
 import HelpSupport from "./pages/HelpAndSupport/HelpSupport";
 import General from "./components/HelpAndSupport/HelpAndSupportGeneral/General";
 import General1 from "./components/HelpAndSupport/general1/General1";

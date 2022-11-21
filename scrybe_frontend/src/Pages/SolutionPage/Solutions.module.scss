@@ -82,14 +82,14 @@
     
                 h1 {
                     color: #005584;
-                    font-size: 3.3vw;
+                    font-size: 3.3vw !important;
                     line-height: 1.5;
                     font-weight: 600;
                     margin-bottom: 20px;
                 }
     
                 p {
-                    font-size: 20px;
+                    font-size: 20px !important;
                     color: #3F3F3F;
                     font-weight: 300;
                 }
@@ -136,13 +136,13 @@
         h1 {
             color: #005584;
             font-weight: 600;
-            font-size: 30px;
+            font-size: 30px !important;
             text-align: center;
             margin-bottom: 16px;
         }
 
         p {
-            font-size: 20px;
+            font-size: 20px !important;
             color: #3F3F3F;
             font-weight: 300;
             text-align: center;
@@ -170,7 +170,7 @@
 
                 p {
                     color: #005584;
-                    font-size: 16px;
+                    font-size: 16px !important;
                     line-height: 1.6;
                     width: 100%;
                     margin-top: 30px;
@@ -193,19 +193,19 @@
                 h1 {
                     color: #005584;
                     margin: 0 0 20px 0;
-                    font-size: 2vw;
+                    font-size: 2vw !important;
                     line-height: 1.6;
                 }
 
                 p {
                     color: #3F3F3F;
-                    font-size: 1.5vw;
+                    font-size: 1.5vw !important;
                     line-height: 1.8;
                     margin-bottom: 8px;
                 }
 
                 h4 {
-                    font-size: 1.4vw;
+                    font-size: 1.4vw !important;
                     font-weight: 600;
                     color: #006CFF;
                 }
@@ -234,13 +234,13 @@
                 h1 {
                     color: #005584;
                     margin: 0 0 20px 0;
-                    font-size: 2.2vw;
+                    font-size: 2.2vw !important;
                     line-height: 1.6;
                 }
 
                 p {
                     color: #3F3F3F;
-                    font-size: 1.4vw;
+                    font-size: 1.4vw !important;
                     line-height: 1.9;
                     margin-bottom: 8px;
 
@@ -251,7 +251,7 @@
                 }
 
                 h4 {
-                    font-size: 1.4vw;
+                    font-size: 1.4vw !important;
                     font-weight: 600;
                     color: #006CFF;
                 }
@@ -289,13 +289,13 @@
             text-align: center;
 
             h4 {
-                font-size: 23px;
+                font-size: 23px !important;
                 color: #3F3F3F;
                 margin-bottom: 20px;
             }
 
             h1 {
-                font-size: 55px;
+                font-size: 55px !important;
                 color: #006CFF;;
                 font-weight: 600;
                 letter-spacing: 2px;
@@ -328,13 +328,13 @@
             text-align: center;
 
             h4 {
-                font-size: 23px;
+                font-size: 23px !important;
                 color: #3F3F3F;
                 margin-bottom: 20px;
             }
 
             h1 {
-                font-size: 55px;
+                font-size: 55px !important;
                 color: #006CFF;
                 font-weight: 600;
                 letter-spacing: 2px;
@@ -359,12 +359,12 @@
         text-align: center;
         h1 {
             color: #262626;
-            font-size: 40px;
+            font-size: 40px !important;
             margin-bottom: 16px;
         }
 
         p {
-            font-size: 19px;
+            font-size: 19px !important;
             color: #3F3F3F;
         }
 
@@ -399,11 +399,11 @@
                     text-align: center;
 
                     h1 {
-                        font-size: 40px;
+                        font-size: 40px !important;
                     }
 
                     p {
-                        font-size: 20px;
+                        font-size: 20px !important;
                     }
 
                     .btns {
@@ -432,11 +432,11 @@
         .setblurContainers {
             .cont {
                 h1 {
-                    font-size: 30px;
+                    font-size: 30px !important;
                 }
 
                 h4 {
-                    font-size: 18px;
+                    font-size: 18px !important;
                 }
             }
         }
@@ -446,12 +446,12 @@
         .uploadContainers {
             .cont {
                 h1 {
-                    font-size: 30px;
+                    font-size: 30px !important;
                     text-align: center;
                 }
 
                 h4 {
-                    font-size: 18px;
+                    font-size: 18px !important;
                 }
             }
         }
@@ -471,11 +471,11 @@
 
                 .bussTxt {
                     h1 {
-                        font-size: 30px
+                        font-size: 30px !important;
                     }
 
                     p , h4{
-                        font-size: 19px;
+                        font-size: 19px !important;
                     }
                 }
             }
@@ -495,11 +495,11 @@
 
                 .bussTxt {
                     h1 {
-                        font-size: 30px
+                        font-size: 30px !important;
                     }
 
                     p , h4{
-                        font-size: 19px;
+                        font-size: 19px !important;
                     }
                 }
             }
