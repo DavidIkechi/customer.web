@@ -3,7 +3,7 @@
 .hero {
         background-color: #e6f0ff;
         padding-block: pix-rem(16);
-        min-height: 95vh;
+        min-height: 95vh !important;
         overflow-x: visible;
         padding-inline: pix-rem(16);
         -webkit-mask-image: url(./assets/heroclip.svg);
@@ -16,7 +16,7 @@
         -webkit-mask-size: cover;
 
         .container {
-                width: min(100%, pix-rem(1204));
+                max-width: min(100%, pix-rem(1264));
                 margin-inline: auto;
                 font-family: "Kanit", sans-serif;
                 display: flex;
@@ -24,13 +24,16 @@
                 flex-wrap: wrap;
                 @include media(1220px) {
                         justify-content: center;
+                        & > * {
+                                text-align: center;
+                        }
                 }
 
                 .content {
                         margin-top: pix-rem(90);
                         width: min(100%, pix-rem(576));
                         .heroH1 {
-                                font-size: pix-rem(48);
+                                font-size: pix-rem(48) !important;
                                 font-weight: bold;
                                 color: #313131;
                                 line-height: 1.3;
@@ -41,6 +44,7 @@
                         }
                         .heroAccent {
                                 color: #006cff;
+                                font-size: pix-rem(48);
                         }
                 }
                 .heroImage {
@@ -50,6 +54,10 @@
                         display: flex;
                         gap: pix-rem(50);
                         margin-top: pix-rem(90);
+                        @include media(1220px) {
+                                flex-direction: column-reverse;
+                                align-items: center;
+                        }
 
                         .ctaDemo,
                         .ctaStarter {

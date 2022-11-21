@@ -1,0 +1,226 @@
+.signup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+}
+
+.signup .first,
+.signup .second {
+  flex-basis: 45%;
+}
+
+.signup input {
+  display: block;
+  width: 100%;
+  border-radius: 4px;
+  padding: 1rem;
+  border: thin solid #c5c5c5;
+  margin-bottom: 1rem;
+  outline: none;
+}
+
+.signup input[type="checkbox"] {
+  width: fit-content;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.signup .accept {
+  display: flex;
+  justify-content: space-around;
+  align-items: baseline;
+}
+
+.signup .accept span {
+  text-align: center;
+  font-weight: 400;
+}
+
+.signup-wrapper h1 {
+  font-weight: 600;
+  font-size: 2rem;
+  line-height: 2.5rem;
+  color: #454545;
+  margin-bottom: 0.5rem;
+}
+
+.signup-wrapper h3 {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 26px;
+  color: #a9a9a9;
+  margin-bottom: 1rem;
+}
+
+.signup label {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #6a6a6a;
+}
+
+.signup input::placeholder {
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 24px;
+  color: #a9a9a9;
+}
+
+.signup .second img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.signup input[type="submit"] {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+  color: #c5c5c5;
+  background-color: #ececec;
+  cursor: pointer;
+  margin-top: 1rem;
+  border: none;
+}
+
+/* Chrome's Autofill Autocomplete */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+.signup input:focus {
+  border: 1px solid #006cff;
+}
+
+.signup a {
+  color: #006cff;
+  font-weight: 600;
+}
+
+/* Sign In  */
+.remember.accept {
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+.remember-me {
+  display: flex;
+}
+
+.remember-me span {
+  margin-left: 0.5rem;
+  color: #454545;
+  font-weight: 400;
+}
+
+.signup .other-than-signup {
+  margin-top: 6rem;
+}
+
+.first.signin p {
+  color: #454545;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Forget Password */
+.forget-pw {
+  margin-bottom: 8rem;
+}
+
+.successful-p {
+  text-align: left !important;
+}
+
+/* Reset Complete */
+
+.success-btn {
+  color: #ffffff !important;
+  background-color: #006cff !important;
+  cursor: pointer;
+}
+
+.error-input {
+  border: 1px solid #f44336 !important;
+}
+
+.error-msg {
+  font-size: 12px;
+  line-height: 16px;
+  color: #f44336 !important;
+  text-align: left !important;
+  margin-bottom: 0.5rem;
+}
+
+.submit-valid {
+  background: #006cff !important;
+  color: #ffffff !important;
+}
+
+/* Media Queries */
+
+@media screen and (max-width: 800px) {
+  .signup {
+    flex-direction: column;
+  }
+
+  .second {
+    display: none;
+  }
+
+  .signup .first {
+    width: 100%;
+  }
+
+  .signup .accept {
+    align-items: center;
+  }
+
+  .accept.up {
+    align-items: baseline;
+  }
+
+  .signup .accept .remember-span {
+    text-align: left;
+    white-space: nowrap;
+    font-size: 0.8rem;
+  }
+
+  .signup .accept .remember-forget {
+    white-space: nowrap;
+    font-size: 0.8rem;
+  }
+}
+
+/* Very small devices */
+@media screen and (max-width: 486px) {
+  body {
+    padding: 5%;
+  }
+  .signup-wrapper h1 {
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+  }
+
+  .signup-wrapper h3 {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .signup input[type="submit"] {
+    font-size: 0.875rem;
+    line-height: 1.2rem;
+  }
+
+  .signup .accept span {
+    font-size: 0.7rem;
+  }
+
+  .forget-pw {
+    margin-bottom: 2rem;
+  }
+}

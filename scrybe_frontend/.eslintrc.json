@@ -4,13 +4,7 @@
     "es2021": true,
     "jest": true
   },
-  "extends": [
-    "react-app",
-    "react-app/jest",
-    "airbnb",
-    "airbnb/hooks",
-    "plugin:prettier/recommended"
-  ],
+  "extends": ["react-app", "react-app/jest", "plugin:prettier/recommended"],
   "overrides": [],
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -19,6 +13,12 @@
   "plugins": ["react", "prettier"],
   "rules": {
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "quotes": ["error", "double"],
+
+
+    "semi": ["error", "always"],
     "prettier/prettier": ["error", { "endOfLine": "auto" }]
+
+
   }
 }

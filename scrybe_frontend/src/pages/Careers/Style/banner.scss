@@ -1,0 +1,72 @@
+.problem-solvers {
+    position: relative;
+ 
+    img {
+        width: 100%;
+        filter: brightness(40%);
+    }
+
+    .problem-solvers-container {
+        width: 100%;
+        position: absolute;
+        bottom: 15%;
+        padding: 0 5%;
+
+        h1 {
+            color: white;
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+        
+
+        .input-containers {
+            display: flex;
+            justify-content: flex-start;
+
+            .input{
+                width: 30%;
+                margin: 0 5px;
+                height: fit-content;
+                background: white;
+                padding: 7px 3px;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+
+                .icon {
+                    font-size: 14px;
+                    margin-right: 2px;
+                }
+
+                input {
+                    width:90%;
+                    border: none;
+                    font-size: 10px;
+                    
+                }
+
+                input:focus {
+                    outline: none;
+                }
+            }
+        }
+
+        
+    }
+
+    @media (min-width: 700px){
+        .problem-solvers-container {
+            h1 {
+                font-size: 50px;
+                margin-bottom: 50px;
+            }
+
+            .input-containers {
+                .input {
+                    width: 20%;
+                    padding: 12px 3px;
+                }
+            }
+        }
+    }
+}

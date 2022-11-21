@@ -11,7 +11,7 @@ function Services() {
   return (
     <div className="services-section">
       <div className="hero-section">
-        <div className="container">
+        <div className="containers">
           <div className="hero-flex">
             <div className="text-cont">
               <h1>Services</h1>
@@ -29,7 +29,7 @@ function Services() {
       </div>
 
       <div className="offer-section">
-        <div className="container">
+        <div className="containers">
           <h1>We offer the best services</h1>
           <p>
             Scrybe makes customer engagement in your business seamless and easy
@@ -40,10 +40,10 @@ function Services() {
       </div>
 
       <div className="we-can-section">
-        <div className="container">
+        <div className="containers">
           <div className="wecan-flex">
             <div className="wecan-img">
-              <img src={weCan} alt="wecan" />
+              <img src={weCan} alt="wecan" className="we-img" />
             </div>
             <div className="wecan-txt">
               <h1>Here Is What We Can Do For You</h1>
@@ -62,18 +62,18 @@ function Services() {
       </div>
 
       <div className="transcription-section">
-        <div className="container">
+        <div className="containers">
           <div className="trans-flex">
             <div className="trans-txt">
               <h1>Audio-to-text Transcription</h1>
-              <div className="check-container">
+              <div className="check-containers">
                 <span>
                   <img src={check} alt="checkmark" />
                   <p>Time Stamp</p>
                 </span>
                 <span>
                   <img src={check} alt="checkmark" />
-                  <p>Convert recorded calls into readable tex</p>
+                  <p>Convert recorded calls into readable text</p>
                 </span>
                 <span>
                   <img src={check} alt="checkmark" />
@@ -94,11 +94,11 @@ function Services() {
       </div>
 
       <div className="sentiment-section">
-        <div className="container">
+        <div className="containers">
           <div className="trans-flex">
             <div className="trans-txt">
               <h1>Sentiment Analysis</h1>
-              <div className="check-container">
+              <div className="check-containers">
                 <span>
                   <img src={check} alt="checkmark" />
                   <p>Detects unprofessional words</p>
@@ -122,16 +122,15 @@ function Services() {
       </div>
 
       <div className="report-section">
-        <div className="container">
+        <div className="containers">
           <div className="trans-flex">
             <div className="trans-txt">
               <h1>Detailed Report</h1>
-              <div className="check-container">
+              <div className="check-containers">
                 <span>
                   <img src={check} alt="checkmark" />
                   <p>
-                    Reports on customers’ engagement and call agent’s
-                    efficeiency.
+                    Reports on customer’s engagement and call agent’s efficiency
                   </p>
                 </span>
               </div>
@@ -149,7 +148,7 @@ function Services() {
       </div>
 
       <div className="article-section">
-        <div className="container">
+        <div className="containers">
           <p>
             We help you inderstand your customers and your customer service.
             Have a feel of our uniqueness!
