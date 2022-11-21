@@ -15,13 +15,13 @@ import communication from "./assets/communication.png";
 import winingWay from "./assets/winning-way.png";
 import business from "./assets/business.png";
 
-import NavBar from '../../components/navBar/index'
-import Footer from '../../components/footer/index'
+import NavBar from "../../components/navBar/index";
+import Footer from "../../components/footer/index";
 
 const Events = () => {
   return (
     <div className="event-section">
-    <NavBar />
+      <NavBar />
       <div className={Event.headerSection}>
         <div className={Event.containers}>
           <div className={Event.eventFlex}>
