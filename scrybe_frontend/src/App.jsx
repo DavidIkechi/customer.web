@@ -151,7 +151,10 @@ function App() {
       {/* Forget Password*/}
       <Route path="/forget-password" element={<ForgetPassword />} />
       {/* Password Reset*/}
-      <Route path="/pw-reset-successful" element={<PasswordResetSuccessful />} />
+      <Route
+        path="/pw-reset-successful"
+        element={<PasswordResetSuccessful />}
+      />
       {/* Set New Password*/}
       <Route path="/set-new-password" element={<SetNewPassword />} />
       {/* Password Reset Successful*/}
