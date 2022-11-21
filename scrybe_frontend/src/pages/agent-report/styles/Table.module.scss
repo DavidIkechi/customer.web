@@ -1,0 +1,73 @@
+@use "./_mixins.scss" as mixin;
+
+// .recordings {
+//   .title {
+//     font-size: 16px;
+//     margin: 20px 0px;
+//     @include mixin.sm {
+//     }
+//   }
+//   .plainTable {
+//     background-color: #ececec;
+//   }
+//   .tableContainer {
+//     height: 25%;
+//     overflow: scroll;
+//     &::-webkit-scrollbar {
+//       display: none;
+//     }
+//   }
+// }
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    tr {
+        border-bottom: 0.5px solid gray;
+    }
+    th {
+        border-bottom: 0.5px solid gray;
+    }
+  .nameImg {
+    height: 40px;
+    width: 45px;
+    background-color: #f1fafa;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    margin-right: 10px;
+    @include mixin.sm {
+      margin-right: 20px;
+    }
+    .img {
+      height: 10px;
+      width: 15px;
+      @include mixin.sm {
+        height: 25px;
+        width: 25px;
+      }
+    }
+  }
+  .tableTitle {
+    font-size: 12px;
+    color: #313131;
+    @include mixin.sm {
+      font-size: 16px;
+    }
+  }
+  .tableDescription {
+    font-size: 10px;
+    color: #313131;
+    @include mixin.sm {
+      font-size: 14px;
+    }
+  }
+
+  .tableName {
+    display: flex;
+    flex-direction: column;
+    line-height: 0.5;
+  }
+}
