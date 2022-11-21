@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import "../../von.css";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import footerImg from "./assets/signup-img.svg";
+import styles from "./SignUp.module.scss";
 
 function Signup() {
   const {
@@ -33,35 +35,31 @@ function Signup() {
   const isValid = fullname && email && company && password;
 
   return (
-    <main className="signup-wrapper">
-      <div className="signup">
-        <div className="first">
-          <h1>Create an account</h1>
-          <h3>Let’s get you started</h3>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <label htmlFor="fullname">
-              Full name
+    <>
+      <main className={styles.signUpWrapper}>
+        <div className={styles.signup}>
+          <div className={styles.first}>
+            <h1>Create an account</h1>
+            <h3>Let’s get you started</h3>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <label htmlFor="fullname">Full name</label>
               <input
                 type="text"
                 name="fullname"
                 id="fullname"
                 placeholder="Enter your full name"
-                className={`${errors.fullname && "error-input"} `}
-                // eslint-disable-next-line
+                className={`${errors.fullname && styles.errorInput} `}
                 {...register("fullname", { required: "Name is required" })}
               />
-            </label>
-            <p className="error-msg">{errors.fullname?.message}</p>
+              <p className={styles.errorMsg}>{errors.fullname?.message}</p>
 
-            <label htmlFor="email">
-              Email
+              <label htmlFor="email">Email</label>
               <input
                 type="email"
                 name="email"
                 id="email"
                 placeholder="Enter your company email"
-                className={`${errors.email && "error-input"} `}
-                // eslint-disable-next-line
+                className={`${errors.email && styles.errorInput} `}
                 {...register("email", {
                   required: "Email is required",
                   pattern: {
@@ -70,34 +68,28 @@ function Signup() {
                   },
                 })}
               />
-            </label>
-            <p className="error-msg">{errors.email?.message}</p>
+              <p className={styles.errorMsg}>{errors.email?.message}</p>
 
-            <label htmlFor="company">
-              Company
+              <label htmlFor="company">Company</label>
               <input
                 type="text"
                 name="company"
                 id="company"
                 placeholder="Enter your company name"
-                className={`${errors.company && "error-input"} `}
-                // eslint-disable-next-line
+                className={`${errors.company && styles.errorInput} `}
                 {...register("company", {
                   required: "Company name is required",
                 })}
               />
-            </label>
-            <p className="error-msg">{errors.company?.message}</p>
+              <p className={styles.errorMsg}>{errors.company?.message}</p>
 
-            <label htmlFor="password">
-              Password
+              <label htmlFor="password">Password</label>
               <input
                 type="password"
                 name="password"
                 id="password"
                 placeholder="Enter your password"
-                className={`${errors.password && "error-input"} `}
-                // eslint-disable-next-line
+                className={`${errors.password && styles.errorInput} `}
                 {...register("password", {
                   required: "Password is required",
                   minLength: {
@@ -106,32 +98,33 @@ function Signup() {
                   },
                 })}
               />
-            </label>
-            <p className="error-msg">{errors.password?.message}</p>
+              <p className={styles.errorMsg}>{errors.password?.message}</p>
 
-            <input
-              type="submit"
-              disabled={!isValid}
-              value="Create an account"
-              className={`${isValid && "submit-valid"}`}
-            />
-            <div className="accept up">
-              <input type="checkbox" name="" id="" />
-              <span>
-                I have read and agree to{" "}
-                <NavLink to="">Terms of Service</NavLink> and{" "}
-                <NavLink to="">Privacy Policy</NavLink>
-                <br />
-                Already have an account? <NavLink to="/signin">Sign in</NavLink>
-              </span>
-            </div>
-          </form>
+              <input
+                type="submit"
+                disabled={!isValid}
+                value="Create an account"
+                className={`${isValid && styles.submitValid}`}
+              />
+              <div className={`${styles.accept} ${styles.up}`}>
+                <input type="checkbox" name="" id="" />
+                <span>
+                  I have read and agree to{" "}
+                  <NavLink to={""}>Terms of Service</NavLink> and{" "}
+                  <NavLink to={""}>Privacy Policy</NavLink>
+                  <br />
+                  Already have an account?{" "}
+                  <NavLink to={"/signin"}>Sign in</NavLink>
+                </span>
+              </div>
+            </form>
+          </div>
+          <div className={styles.second}>
+            <img src={footerImg} alt="" />
+          </div>
         </div>
-        <div className="second">
-          <img src="img/signup-img.svg" alt="" />
-        </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
 

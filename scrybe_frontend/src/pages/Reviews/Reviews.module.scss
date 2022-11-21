@@ -1,0 +1,186 @@
+.hero {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background: url(../Reviews/assets/header-bg.svg) no-repeat;
+    background-position: bottom;
+    padding: 3rem 3rem 10rem;
+    margin-bottom: 10rem;
+
+    .text, .image {
+        flex-basis: 45%;
+    }
+
+    .image img {
+        width: 100%;
+        object-fit: contain;
+    }
+
+    h1 {
+        font-weight: 600;
+        font-size: 52px;
+        line-height: 62px;
+        color: #323231
+    }
+
+    p {
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 24px;
+        color: #323231;
+        margin-top: 1rem;
+    }
+}
+
+.first_title {
+    text-align: center;
+    margin: 2rem 0 3rem;
+
+    h2 {
+        font-weight: 600;
+        font-size: 48px;
+        line-height: 56px;
+        color: #323231;
+    }
+
+    h3 {
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 24px;
+        color: #000000;
+    }
+}
+
+.companies {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10rem;
+
+    div {
+        flex-basis: 23%;
+        margin-bottom: 2rem;
+    }
+}
+
+.testimonial {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 10rem;
+
+    > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        flex-basis: 47%;
+        background: #E6EEF3;
+        border-radius: 8px;
+        padding: 20px 10px;
+        height: 300px;
+
+        div {
+            margin-bottom: 1rem;
+
+            img {
+                width: 50%;
+                margin: 0 auto;
+            }
+        }
+
+        h3 {
+            font-weight: 600;
+            font-size: 24px;
+            line-height: 32px;
+            color: #454E9E;
+            width: 85%;
+        }
+
+        p {
+            font-weight: 300;
+            font-size: 20px;
+            line-height: 26px;
+            color: #666666;
+            margin-bottom: 1rem;
+            width: 90%;
+        }
+    }
+}
+
+.join {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: url(../Reviews/assets/footer-bg.svg) no-repeat;
+    background-position: top;
+    padding: 15rem 3rem 3rem;
+
+    h3 {
+        font-weight: 600;
+        font-size: 48px;
+        line-height: 56px;
+        color: #323231;
+        margin-bottom: 0.5rem;
+        text-align: center;
+    }
+
+    p {
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 24px;
+        color: #000000;
+        margin-bottom: 3rem;
+    }
+
+    .join_flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        > div {
+            flex-basis: 45%;
+
+            img {
+                width: 100%;
+            }
+
+            h2 {
+                font-weight: 600;
+                font-size: 64px;
+                line-height: 72px;
+                margin-bottom: 2rem;
+            }
+        }
+        .btns_btm {
+            display: flex;
+            gap: 1rem;
+
+            button {
+                display: inline-block;
+                padding: 16px 32px;
+                border-radius: 4px;
+                outline: none;
+                border: none;
+            }
+
+            .left_btn {
+                background: #006CFF;
+                border-radius: 4px;
+                color: #FFFFFF;
+            }
+
+            .right_btn {
+                background: #E6F0FF;
+                color: #006CFF;
+                border: thin solid #006CFF;
+            }
+        }
+    }
+}
