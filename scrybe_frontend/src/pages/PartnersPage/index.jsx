@@ -1,16 +1,16 @@
 import React from "react";
 import styles from "./partners.module.scss";
-import heroIcon from "../myAssets/hero__image.png";
-import layoutIcon from "../myAssets/layout__three-hero.png";
-import footIcon from "../myAssets/footer__init.png";
-import google from "../myAssets/google.png";
-import microsoft from "../myAssets/microsoft.png";
-import hotel from "../myAssets/hotel.png";
-import payooneer from "../myAssets/payooneer.png";
-import oneIcon from "../myAssets/one__icon.png";
-import twoIcon from "../myAssets/two__icon.png";
-import threeIcon from "../myAssets/three__icon.png";
-import fourIcon from "../myAssets/four__icon.png";
+import heroIcon from "./assets/hero__image.png";
+import layoutIcon from "./assets/layout__three-hero.png";
+import footIcon from "./assets/footer__init.png";
+import google from "./assets/google.png";
+import microsoft from "./assets/microsoft.png";
+import hotel from "./assets/hotel.png";
+import payooneer from "./assets/payooneer.png";
+import oneIcon from "./assets/one__icon.png";
+import twoIcon from "./assets/two__icon.png";
+import threeIcon from "./assets/three__icon.png";
+import fourIcon from "./assets/four__icon.png";
 
 const index = () => {
   return (

@@ -1,17 +1,17 @@
 import React from "react";
 import styles from "./press.module.scss";
-import pressCardone from "../myAssets/pressCardone.png";
-import pressCardtwo from "../myAssets/pressCardtwo.png";
-import pressCardthree from "../myAssets/pressCardthree.png";
-import pressSmcardOne from "../myAssets/pressSmcardOne.png";
-import pressSmcardTwo from "../myAssets/pressSmcardTwo.png";
-import pressSmcard from "../myAssets/pressSmcard.png";
-import headDot from "../myAssets/headDot.png";
-import arrowLeft from "../myAssets/arrow__left.png";
-import whiteArrowleft from "../myAssets/whiteArrowleft.png";
-import logoText from "../myAssets/logoText.png";
-import bannerImage from "../myAssets/bannerImage.png";
-import cardlogo from "../myAssets/cardlogo.png";
+import pressCardone from "./assets/pressCardone.png";
+import pressCardtwo from "./assets/pressCardtwo.png";
+import pressCardthree from "./assets/pressCardthree.png";
+import pressSmcardOne from "./assets/pressSmcardOne.png";
+import pressSmcardTwo from "./assets/pressSmcardTwo.png";
+import pressSmcard from "./assets/pressSmcard.png";
+import headDot from "./assets/headDot.png";
+import arrowLeft from "./assets/arrow__left.png";
+import whiteArrowleft from "./assets/whiteArrowleft.png";
+import logoText from "./assets/logoText.png";
+import bannerImage from "./assets/bannerImage.png";
+import cardlogo from "./assets/cardlogo.png";
 
 const index = () => {
   return (
