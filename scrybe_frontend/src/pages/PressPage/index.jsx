@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styles from "./press.module.scss";
 import pressCardone from "./assets/pressCardone.png";
 import pressCardtwo from "./assets/pressCardtwo.png";
@@ -58,9 +59,9 @@ const index = () => {
             </div>
             <div className={styles.right__ban}>
               <div className={styles.banner__details}>
-                <a className={styles.banner__read} href="/">
+                <Link className={styles.banner__read} to="/PressArticle">
                   Read more
-                </a>
+                </Link>
                 <span>
                   <img
                     src={whiteArrowleft}
@@ -178,9 +179,9 @@ const index = () => {
                   </p>
                 </div>
                 <div className={styles.banner__details}>
-                  <a className={styles.banner__read} href="/">
+                  <Link className={styles.banner__read} to="/">
                     Learn more
-                  </a>
+                  </Link>
                   <span>
                     <img
                       src={whiteArrowleft}
@@ -209,9 +210,9 @@ const index = () => {
                   <img src={cardlogo} alt="Logo of scrybe and hotel ng" />
                 </div>
                 <div className={styles.banner__details}>
-                  <a className={styles.banner__read} href="/">
+                  <Link className={styles.banner__read} to="/">
                     Learn more
-                  </a>
+                  </Link>
                   <span>
                     <img
                       src={whiteArrowleft}
@@ -242,9 +243,9 @@ const index = () => {
                   </p>
                 </div>
                 <div className={styles.banner__details}>
-                  <a className={styles.banner__read} href="/">
+                  <Link className={styles.banner__read} to="/">
                     Learn more
-                  </a>
+                  </Link>
                   <span>
                     <img
                       src={whiteArrowleft}
@@ -277,9 +278,9 @@ const index = () => {
                   </p>
                 </div>
                 <div className={styles.banner__details}>
-                  <a className={styles.banner__read} href="/">
+                  <Link className={styles.banner__read} to="/">
                     Learn more
-                  </a>
+                  </Link>
                   <span>
                     <img
                       src={whiteArrowleft}
@@ -328,9 +329,9 @@ const index = () => {
                 </p>
               </div>
               <div className={styles.more__details}>
-                <a className={styles.read__more} href="/">
+                <Link className={styles.read__more} to="/">
                   Read more
-                </a>
+                </Link>
                 <span>
                   <img
                     src={arrowLeft}
@@ -361,9 +362,9 @@ const index = () => {
                 </p>
               </div>
               <div className={styles.more__details}>
-                <a className={styles.read__more} href="/">
+                <Link className={styles.read__more} to="/">
                   Read more
-                </a>
+                </Link>
                 <span>
                   <img
                     src={arrowLeft}
@@ -393,9 +394,9 @@ const index = () => {
                 </p>
               </div>
               <div className={styles.more__details}>
-                <a className={styles.read__more} href="/">
+                <Link className={styles.read__more} to="/">
                   Read more
-                </a>
+                </Link>
                 <span>
                   <img
                     src={arrowLeft}
@@ -425,9 +426,9 @@ const index = () => {
                 </p>
               </div>
               <div className={styles.more__details}>
-                <a className={styles.read__more} href="/">
+                <Link className={styles.read__more} to="/">
                   Read more
-                </a>
+                </Link>
                 <span>
                   <img
                     src={arrowLeft}
@@ -458,9 +459,9 @@ const index = () => {
                 </p>
               </div>
               <div className={styles.more__details}>
-                <a className={styles.read__more} href="/">
+                <Link className={styles.read__more} to="/">
                   Read more
-                </a>
+                </Link>
                 <span>
                   <img
                     src={arrowLeft}
@@ -490,9 +491,9 @@ const index = () => {
                 </p>
               </div>
               <div className={styles.more__details}>
-                <a className={styles.read__more} href="/">
+                <Link className={styles.read__more} to="/">
                   Read more
-                </a>
+                </Link>
                 <span>
                   <img
                     src={arrowLeft}
@@ -523,9 +524,9 @@ const index = () => {
                 </p>
               </div>
               <div className={styles.more__details}>
-                <a className={styles.read__more} href="/">
+                <Link className={styles.read__more} to="/">
                   Read more
-                </a>
+                </Link>
                 <span>
                   <img
                     src={arrowLeft}
@@ -556,9 +557,9 @@ const index = () => {
                 </p>
               </div>
               <div className={styles.more__details}>
-                <a className={styles.read__more} href="/">
+                <Link className={styles.read__more} to="/">
                   Read more
-                </a>
+                </Link>
                 <span>
                   <img
                     src={arrowLeft}
@@ -589,9 +590,9 @@ const index = () => {
                 </p>
               </div>
               <div className={styles.more__details}>
-                <a className={styles.read__more} href="/">
+                <Link className={styles.read__more} to="/">
                   Read more
-                </a>
+                </Link>
                 <span>
                   <img
                     src={arrowLeft}
@@ -620,9 +621,9 @@ const index = () => {
                 </p>
               </div>
               <div className={styles.more__details}>
-                <a className={styles.read__more} href="/">
+                <Link className={styles.read__more} to="/">
                   Read more
-                </a>
+                </Link>
                 <span>
                   <img
                     src={arrowLeft}
