@@ -16,7 +16,7 @@ def get_db():
 @app.get("/tryForFree/{user_id}")
 async def try_free(user_id: int, db: Session = Depends(get_db)):
     userDetails = crud.get_user(db, user_id=user_id)
-    retur if not userDetails:
+    return if not userDetails:
         raise HTTPException(
             status_code=status.HTTP_423_LOCKED,
             detail="Cannot Use This Service, Please Register And Subscribe"
