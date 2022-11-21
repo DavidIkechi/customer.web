@@ -13,7 +13,7 @@ def get_db():
     finally:
         db.close()
 
-@app.get("/tryForFree/{id}")
+@app.get("/tryForFree/{user_id}")
 async def try_free(user_id: int, db: Session = Depends(get_db)):
     userDetails = crud.get_user(db, user_id=user_id)
     if not userDetails:
