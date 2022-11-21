@@ -2,25 +2,10 @@
     margin-top: 5rem;
     p {
         font-weight: 600;
-        font-size: 17px;
+        font-size: 20px !important;
     }
 }
 
-.info_intro2 {
-    display: flex;
-    align-items: center;
-    p {
-        font-weight: 600;
-        font-size: 17px;
-        margin-left: 1rem;
-    }
-
-    img {
-        height: 23px;
-        width: 23px;
-    }
-    
-}
 
 .articles_cont {
     margin-top: 2rem;
@@ -36,7 +21,7 @@
     border: 1px solid #D9D9D9;
 
     h3, .link {
-        font-size: 17px;
+        font-size: 17px !important;
         border-bottom: 1px solid #D9D9D9;
         font-weight: 500;
         cursor: pointer;
@@ -60,14 +45,6 @@
         }
     }
     
-    .info_intro2 {
-        display: flex;
-        align-items: center;
-        p {
-            font-size: 20px;
-        }   
-    }
-    
     
     .articles_cont {
         margin-top: 2rem;
@@ -81,7 +58,7 @@
         border: 1px solid #D9D9D9;
     
         h3, .link {
-            font-size: 12px;
+            font-size: 12px !important;
             padding: 1rem ;
         }
         
