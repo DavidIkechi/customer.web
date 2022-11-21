@@ -49,6 +49,7 @@ function App() {
       <Route path="/press" element={<DummyPage someText="press" />} />
       {/* settings */}
       <Route path="/settings" element={<DummyPage someText="settings" />} />
+
       {/* uploaded */}
       <Route
         path="/uploaded"
