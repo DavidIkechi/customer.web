@@ -6,7 +6,7 @@ import RecordingLogo from "../../assets/Recording-logo.png";
 
 export default function TryState1() {
   return (
-    <div>
+    <div className={styles.recordingSection}>
       <div className={styles.recordingDrag}>
         <div className={styles.recordingContent}>
           <div className={styles.recordingImageContainer}>

@@ -16,7 +16,7 @@ export default function tryHero() {
             Experience a touch of Scrybe without committing to our
             subscriptions. Try our other features when you sign up with us.
           </p>
-          <Link to="/" className={styles.HeroButton}>
+          <Link to="/auth" className={styles.HeroButton}>
             Sign Up Now
           </Link>
         </div>

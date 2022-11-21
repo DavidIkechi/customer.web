@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-warning-comments
 // TODO disable eslint warning for this todo ;)
 import React from "react";
+// import ProgressBar from "react-bootstrap/ProgressBar";
 import { Link } from "react-router-dom";
 import styles from "./try_state_4.module.scss";
 import RecordingName from "../../assets/recording-name-1.png";
@@ -8,7 +9,7 @@ import RecordingName from "../../assets/recording-name-1.png";
 export default function TryFourth() {
   // const [filled, setFilled] = useState(0);
   return (
-    <section>
+    <section className={styles.transcribeAnalysis}>
       <div className={styles.Analysis}>
         <h2>Transcription and Sentiment Analysis</h2>
 

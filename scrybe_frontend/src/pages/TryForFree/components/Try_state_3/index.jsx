@@ -8,7 +8,7 @@ import TranscribeLogo from "../../assets/file-transcribing.png";
 
 export default function TryThird() {
   return (
-    <div>
+    <div className={styles.recordingSection}>
       <div className={styles.recordingDrag}>
         <div className={styles.recordingContent}>
           <div className={styles.recordingImageContainer}>
