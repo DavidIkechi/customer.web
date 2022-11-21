@@ -3,8 +3,16 @@
 .footer {
         padding-inline: pix-rem(16);
         background-color: #006cff;
-        color: white;
+
+        color: white !important;
         padding-block: pix-rem(70);
+        h4 {
+                color: white;
+                font-size: pix-rem(20) !important ;
+        }
+        p {
+                color: white;
+        }
 
         &__content {
                 display: flex;
@@ -14,38 +22,41 @@
         }
         &__middle {
                 display: flex;
-                width: min(100%, pix-rem(320));
+
                 justify-content: space-between;
                 gap: pix-rem(20);
                 flex-wrap: wrap;
-                &> ul > li {
+                & > ul > li {
                         font-weight: 300;
                         color: rgba(255, 255, 255, 0.873);
                 }
-                &> ul > h4 {
+                & > ul > h4 {
                         font-weight: bold;
-                        font-size: pix-rem(20);
+                        font-size: pix-rem(20) !important;
                 }
         }
         &__content {
-                width: min(100%, pix-rem(1264));
+                width: min(100%, pix-rem(1300));
                 margin-inline: auto;
+                margin-block: pix-rem(24);
         }
-        &__right{
-                &> h4{
+        &__right {
+                & > h4 {
                         font-weight: bold;
-                        font-size: pix-rem(20);
+                        font-size: pix-rem(20) !important;
                 }
-                &__contact{
+                &__contact {
                         display: flex;
                         margin-top: pix-rem(16);
+                        align-items: center;
+                        gap: pix-rem(12);
                 }
         }
 
-        &__bottom{
+        &__bottom {
                 padding-block: pix-rem(32);
                 border-top: 2px solid white;
                 text-align: center;
-                margin-top: pix-rem(16);
+
         }
 }

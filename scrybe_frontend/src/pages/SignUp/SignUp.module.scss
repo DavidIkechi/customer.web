@@ -1,0 +1,224 @@
+.signUpWrapper {
+    width: 100vw;
+    height: 100vh;
+    padding: 3% 8% 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    h1 {
+      font-weight: 600;
+      font-size: 2rem;
+      line-height: 2.5rem;
+      color: #454545;
+      margin-bottom: 0.5rem;
+    }
+  
+    h3 {
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 26px;
+      color: #A9A9A9;
+      margin-bottom: 1rem;
+    }
+  
+    label {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 16px;
+      color: #6A6A6A;
+    }
+  
+    input::placeholder {
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 24px;
+      color: #A9A9A9;
+    }
+  
+    .second img {
+      width: 100%;
+      object-fit: contain;
+    }
+  
+    .signup {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      width: 100%;
+  
+      .first, .second {
+          flex-basis: 45%;
+      }
+  
+      .errorInput {
+        border: 1px solid #F44336 !important;
+      }
+      
+      .errorMsg {
+        font-size: 12px;
+        line-height: 16px;
+        color: #F44336 !important;
+        text-align: left !important;
+        margin-bottom: 0.5rem;
+      }
+      
+      .submitValid {
+        background: #006CFF !important;
+        color: #ffffff !important;
+      }
+  
+      input {
+          display: block;
+          width: 100%;
+          border-radius: 4px;
+          padding: 1rem;
+          border: thin solid #C5C5C5;
+          margin-bottom: 1rem;
+          outline: none;
+        }
+  
+      input[type=checkbox] {
+      width: fit-content;
+      margin-bottom: 0;
+      padding: 0;
+      }
+  
+      input[type=submit] {
+      font-size: 1rem;
+      line-height: 1.5rem;font-weight: 500;
+      color: #C5C5C5;
+      background-color: #ECECEC;
+      cursor: pointer;
+      margin-top: 1rem;
+      border: none;
+      }
+  
+      a {
+        color: #006CFF;
+        font-weight: 600;
+      }
+  
+      /* Chrome's Autofill Autocomplete */
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover, 
+      input:-webkit-autofill:focus, 
+      input:-webkit-autofill:active{
+      -webkit-box-shadow: 0 0 0 30px white inset !important;
+      }
+  
+      input:focus {
+          border: 1px solid #006CFF;
+        }
+  
+      .accept {
+      display: flex;
+      justify-content: space-around;
+      align-items: baseline;
+  
+          span {
+              text-align: center;
+              font-weight: 400;
+          }
+      }
+  
+      .accept {
+          &.remember {
+            display: flex;
+            justify-content: space-between;
+            margin: 1rem 0;
+  
+          .rememberMe {
+              display: flex;
+  
+              span {
+                  margin-left: 0.5rem;
+                  color: #454545;
+                  font-weight: 400;
+                }
+            }
+        }
+      }
+      
+      .otherThanSignup {
+        margin-top: 6rem;
+      }
+  
+      .first {
+        &.signin {
+            p {
+                color: #454545;
+                text-align: center;
+                margin-top: 1rem;
+            }
+        }
+      }
+    }
+  }
+  
+  // Media Query 800px
+  @media screen and (max-width:800px) {
+    .signup {
+      flex-direction: column;
+  
+      .first {
+        width: 100%;
+      }
+  
+      .second {
+        display: none;
+      }
+  
+      .accept {
+        align-items: center;
+  
+        .rememberSpan {
+          text-align: left;
+          white-space: nowrap;
+          font-size: 0.8rem;
+        }
+  
+        .rememberForget {
+          white-space: nowrap;
+          font-size: 0.8rem;
+        }
+  
+        &.up {
+          align-items: baseline;
+        }
+      }
+  
+      
+    }
+  }
+  
+  // Media Query 486px
+  @media screen and (max-width:486px) {
+    .signupWrapper {
+      padding: 5%;
+  
+      h1 {
+        font-size: 1.125rem;
+        line-height: 1.5rem;
+      }
+  
+      h3 {
+        font-size: 1rem;
+        line-height: 1.5rem;
+      }
+  
+      input[type=submit] {
+        font-size: 0.875rem;
+        line-height: 1.2rem;
+      }
+  
+      .accept {
+        span {
+          font-size: 0.7rem;
+        }
+      }
+    }
+  }

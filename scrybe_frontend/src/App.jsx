@@ -8,9 +8,10 @@ import LandingPage from "./pages/landing-page-a";
 import PageB from "./pages/Landing-page-b";
 import TermsAndCondition from "./pages/TermsAndCondition/TermsOfService";
 import History from "./pages/History/History";
-import Services from "./pages/services-page/Services";
-import Solutions from "./pages/solutions-page/Solutions";
+import Services from "./pages/ServicePage";
+import Solutions from "./pages/SolutionPage";
 import DashboardOverview from "./pages/DashboardOverview";
+import Events from "./pages/EventsPage";
 import HelpSupport from "./pages/HelpAndSupport/HelpSupport";
 import General from "./components/HelpAndSupport/HelpAndSupportGeneral/General";
 import General1 from "./components/HelpAndSupport/general1/General1";
@@ -21,7 +22,7 @@ import About from "./pages/AboutUs/About";
 import TryForFree from "./pages/TryForFree";
 import Industry from "./pages/indsutry/industry";
 import HowitWorks from "./pages/HowItWorks/HowItWorks";
-import UploadedRecordings from "./components/UploadRecordings";
+import UploadedRecordings from "./pages/UploadRecordings";
 import Account from "./pages/Account";
 import Signin from "./pages/SignIn/SignIn";
 import Careers from "./pages/Careers";
@@ -72,7 +73,7 @@ function App() {
       {/* about us */}
       <Route path="/about-us" element={<About someText="about us" />} />
       {/* events */}
-      <Route path="/events" element={<DummyPage someText="events" />} />
+      <Route path="/events" element={<Events someText="events" />} />
       {/* agent report */}
       <Route
         path="/report"

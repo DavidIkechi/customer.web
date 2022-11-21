@@ -1,5 +1,5 @@
 .card_style {
-    width: 330px;
+    width: 335px;
     height: 128px;
     display: flex;
     align-items: center;
@@ -12,32 +12,29 @@
 
 .icon {
     background-color: white;
-    height: 50px;
-    width: 80px;
     .img {
         height: 40px;
         width: 40px;
-        margin-right: 1rem;
     }
 }
 
 .message {
-    margin-left: 1rem;
+    margin-left: 1.3rem;
     h1 {
-        font-size: 17px;
+        font-size: 17px ;
         font-weight: 600;
         margin-bottom: .5rem;
     }
     p {
-        font-size: 14px;
+        font-size: 15px !important;
         color: #828282;
     }
 }
 
 @media screen and (max-width: 900px) {
     .card_style {
-        width: 90%;
-        margin-bottom: 2rem;
+        width: 100%;
+        margin-bottom: 1.5rem;
     }
     
     .icon {
@@ -45,7 +42,6 @@
         .img {
             height: 40px;
             width: 40px;
-            margin-right: 1rem;
         }
     }
     

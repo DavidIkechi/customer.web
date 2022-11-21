@@ -127,6 +127,7 @@
                 text-align: center;
                 & > span {
                         color: #0095e8;
+                        font-size: pix-rem(32);
                 }
         }
         &_faqs {
@@ -199,6 +200,8 @@
                 color: #313131;
                 & > span {
                         color: #0095e8;
+
+                        font-size: pix-rem(36);
                 }
         }
 }
