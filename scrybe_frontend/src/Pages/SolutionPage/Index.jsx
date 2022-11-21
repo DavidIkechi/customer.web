@@ -23,7 +23,7 @@ import google from "./assets/googole-logo.svg";
 function Solutions() {
   return (
     <div className="solution-section">
-    <NavBar />
+      <NavBar />
       <div className={styled.contentSection}>
         <div className={styled.containers}>
           <div className={styled.flexItems}>

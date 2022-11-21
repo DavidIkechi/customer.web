@@ -13,7 +13,7 @@ import Footer from "../../components/footer";
 function Services() {
   return (
     <div className="services-section">
-    <NavBar />
+      <NavBar />
       <div className={Styling.heroSection}>
         <div className={Styling.containers}>
           <div className={Styling.heroFlex}>
