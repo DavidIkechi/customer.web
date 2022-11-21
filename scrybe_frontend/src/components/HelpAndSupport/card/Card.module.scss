@@ -12,22 +12,21 @@
 
 .icon {
     background-color: white;
-    img {
+    .img {
         height: 40px;
         width: 40px;
     }
 }
 
 .message {
-    margin-left: 1rem;
-
+    margin-left: 1.3rem;
     h1 {
-        font-size: 17px;
+        font-size: 17px ;
         font-weight: 600;
         margin-bottom: .5rem;
     }
     p {
-        font-size: 14px;
+        font-size: 15px !important;
         color: #828282;
     }
 }
@@ -35,12 +34,12 @@
 @media screen and (max-width: 900px) {
     .card_style {
         width: 100%;
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
     }
     
     .icon {
         background-color: white;
-        img {
+        .img {
             height: 40px;
             width: 40px;
         }

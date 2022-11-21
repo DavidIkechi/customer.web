@@ -14,7 +14,11 @@
   "rules": {
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "quotes": ["error", "double"],
-    "prettier/prettier": ["error", { "endOfLine": "auto" }],
-    "semi": ["error", "always"]
+
+
+    "semi": ["error", "always"],
+    "prettier/prettier": ["error", { "endOfLine": "auto" }]
+
+
   }
 }

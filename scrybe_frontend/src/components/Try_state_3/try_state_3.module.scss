@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap');
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: 'Kanit', sans-serif;
+}
+.recordingDrag{
+    margin: 10vh 15% 3vh;
+    display: flex;
+    justify-content: center;
+    border: 1px dashed #006CFF;
+    border-radius: 24px;
+    text-align: center;
+    background: rgba(205, 225, 237, 0.08);
+    padding: 20vh 10% 5vh;
+
+    .recordingContent{
+        width: 50%;
+        
+
+        .recordingImageContainer{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        
+            img{
+                width: 20%;
+            
+            }
+    }
+    h4{
+        font-weight: 700;
+        font-size: 1.1rem;
+        line-height: 26px;
+        margin-top: 4vh;
+    }
+    .Upload{
+        color: #006CFF;
+        text-decoration: underline;
+        cursor: pointer;
+        margin-top: 2vh;
+    }
+    .Or{
+        color: #706F6F;
+        width: 100%;
+        display: flex;
+        gap: 12%;
+        justify-content: center;
+        margin-top: 1vh;
+
+        div{
+            border: 1px solid #706F6F;
+            height: 10vh;
+            transform: rotate(90deg);
+            margin-top: -3vh;
+        }
+    }
+    button{
+        background: #006CFF;
+        color: #FFFFFF;
+        margin-top: 4vh;
+        border-radius: 4px;
+        padding: 1.8vh 9%;
+        border: 0;
+        cursor: pointer;
+    }
+
+    }
+}
+.transcribeSection{
+    margin: 0 15%;
+    padding: 2vh 3%;
+    display: flex;
+    background: rgba(205, 225, 237, 0.08);
+    border: 1px solid #006CFF;
+    border-radius: 8px;
+
+    .transcribe1{
+        width: 10%;
+
+        img{
+            width: 40%;
+        }
+    }
+
+    .transcribe2{
+        width: 85%;
+
+        h4{
+            margin-bottom: 3vh;
+        }
+
+        input{
+            width: 100%;
+        }
+    }
+}
+.wait{
+    margin: 5vh 0;
+    p{
+        font-weight: 400;
+        font-size: 1.05rem;
+        line-height: 26px;
+        color: #6A6A6A;
+        text-align: center;
+    }
+    .signUp{
+        text-decoration: none;
+        color: #006CFF;
+    }
+}

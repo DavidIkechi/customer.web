@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap");
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "Kanit", sans-serif;
+}
+
+.recordingDrag {
+  margin: 10vh 15% 3vh;
+  display: flex;
+  justify-content: center;
+  border: 1px dashed #006CFF;
+  border-radius: 24px;
+  text-align: center;
+  background: rgba(205, 225, 237, 0.08);
+  padding: 20vh 10% 5vh;
+}
+.recordingDrag .recordingContent {
+  width: 50%;
+}
+.recordingDrag .recordingContent .recordingImageContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.recordingDrag .recordingContent .recordingImageContainer img {
+  width: 20%;
+}
+.recordingDrag .recordingContent h4 {
+  font-weight: 700;
+  font-size: 1.1rem;
+  line-height: 26px;
+  margin-top: 4vh;
+}
+.recordingDrag .recordingContent .Upload {
+  color: #006CFF;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 2vh;
+}
+.recordingDrag .recordingContent .Or {
+  color: #706F6F;
+  width: 100%;
+  display: flex;
+  gap: 12%;
+  justify-content: center;
+  margin-top: 1vh;
+}
+.recordingDrag .recordingContent .Or div {
+  border: 1px solid #706F6F;
+  height: 10vh;
+  transform: rotate(90deg);
+  margin-top: -3vh;
+}
+.recordingDrag .recordingContent button {
+  background: #ECECEC;
+  margin-top: 4vh;
+  border-radius: 4px;
+  padding: 1.8vh 9%;
+  border: 0;
+  cursor: pointer;
+}
+
+.tryNote {
+  color: #6A6A6A;
+  font-weight: 400;
+  font-size: 1.1rem;
+  line-height: 26px;
+  padding: 0 6%;
+  margin-bottom: 5vh;
+  margin-top: 10vh;
+}
+.tryNote p {
+  padding-bottom: 1vh;
+}
+.tryNote ul {
+  margin-left: 2%;
+}
+.tryNote li {
+  padding-bottom: 0.8vh;
+}/*# sourceMappingURL=try_state_1.module.css.map */

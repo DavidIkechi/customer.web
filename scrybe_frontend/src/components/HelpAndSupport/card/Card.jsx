@@ -6,7 +6,7 @@ function Card({ src, header, paragrapgh }) {
   return (
     <div className={styles.card_style}>
       <div className={styles.icon}>
-        <img src={src} alt={header} />
+        <img className={styles.img} src={src} alt={header} />
       </div>
 
       <div className={styles.message}>
