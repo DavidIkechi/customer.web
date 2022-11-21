@@ -83,6 +83,7 @@ const TableData = () => {
   const [allRecordings, setAllRecordings] = useState(recordings);
   const [recordCheckedList, setRecordCheckedList] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [recordingsProcessed, setRecordingsProcessed] = useState(false);
   const handleOpen = () => {
     setOpenModal(true);
   };
@@ -122,7 +123,11 @@ const TableData = () => {
     const allProcessed = allRecordings.every(
       (item) => item.status !== "Processing"
     );
-    return allProcessed;
+    if (allProcessed) {
+      setRecordingsProcessed(true);
+    } else {
+      setRecordingsProcessed(false);
+    }
   };
 
   useEffect(() => {
@@ -133,7 +138,7 @@ const TableData = () => {
     <div
       className={`${styles.uploaded_recordings} ${
         allRecordings.length < 1 ? styles.no_items_found : ""
-      } `}
+      } ${recordingsProcessed ? styles.processed : ""}`}
     >
       <div className={styles.overall_table}>
         <div
@@ -277,15 +282,7 @@ const TableData = () => {
                 </p>
               </div>
             </div>
-            <div
-              className={`${styles.view_resultbtn} ${
-                allRecordingsProcessed === true
-                  ? styles.processed
-                  : styles.processing
-              }`}
-            >
-              View Result
-            </div>
+            <div className={`${styles.view_resultbtn} `}>View Result</div>
           </div>
         )}
       </div>

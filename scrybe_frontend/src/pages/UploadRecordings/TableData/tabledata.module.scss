@@ -1,7 +1,6 @@
 .uploaded_recordings {
   padding: 2rem !important;
   background: #f9f9f9;
- 
 }
 
 .no_items_found .uploaded_table_wrap {
@@ -223,6 +222,7 @@
 }
 
 // options for the table styles
+
 .uploaded_recordings_options {
   display: flex;
   justify-content: space-between;
@@ -269,14 +269,10 @@
 
     color: #c5c5c5;
     border: none;
-  }
-  .processing {
-    background: #ececec;
+    background: #ececec !important;
     cursor: not-allowed;
   }
-  .processed {
-    background: #006cff;
-    cursor: pointer;
+  .processing {
   }
 
   //custom select
@@ -332,6 +328,11 @@
   }
 }
 
+.processed .view_resultbtn {
+  background: #006cff !important;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 768px) {
   //responsive styles for the table
   .uploaded_recordings {
@@ -352,8 +353,18 @@
     border: 0;
     th,
     td {
-      font-size: 10px;
+      font-size: 12px !important;
       padding: 10px 5px !important;
+    }
+    td {
+      .retry {
+        margin-left: 0px !important;
+        text-decoration: underline;
+        font-size: 12px !important;
+      }
+      strong {
+        font-size: 12px !important;
+      }
     }
   }
 
@@ -388,7 +399,7 @@
           font-family: "Kanit";
           font-style: normal;
           font-weight: 300;
-          font-size: 16px;
+          font-size: 16px !important;
           line-height: 24px;
           /* or 150% */
 
