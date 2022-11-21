@@ -4,14 +4,16 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
+import { Link } from "react-router-dom";
 import { BlogHero, insta01, insta02, insta03 } from "../../assets";
 import styles from "./Blogs.module.scss";
+import utils from "../../utils.module.scss";
 import Card from "../../components/BlogCard/Card";
 import { blogs } from "../../assets/data";
 
 function Blogs() {
   return (
-    <div className={styles.blogs__wrapper}>
+    <div className={styles.blogs}>
       <div className={styles.blogs__hero}>
         <div className={styles.blogsHero__content}>
           <div>
@@ -22,19 +24,31 @@ function Blogs() {
           </div>
         </div>
       </div>
+      {/* bread crumb */}
+      <div
+        className={`${utils.d_flex} ${styles.blogs__breadcrum}`}
+        style={{ "--gap": "16px" }}
+      >
+        <a href="/">Home</a>
+        <a href="#blog" className={styles.blogs__breadcrum_current} disabled>
+          Blog
+        </a>
+      </div>
       <div className={styles.blogs__grid_wrapper}>
         <div className={styles.blogs__search}>
           <input type="search" name="search" placeholder="Search Blogs" />
         </div>
         <div className={styles.blogs__grid}>
           {blogs.map((blog, i) => (
-            <Card
-              key={i + 1}
-              imageUrl={blog.img}
-              title={blog.title}
-              date={blog.date}
-              body={blog.content}
-            />
+            <Link to={`/blog/${i}`} key={i + 1}>
+              <Card
+                key={i + 1}
+                imageUrl={blog.img}
+                title={blog.title}
+                date={blog.date}
+                body={blog.content}
+              />
+            </Link>
           ))}
         </div>
         <div className={styles.blogs__nav} id="#blog">
