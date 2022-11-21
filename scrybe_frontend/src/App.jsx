@@ -1,32 +1,38 @@
-import { Route, Routes } from "react-router-dom";
 import "./App.scss";
-import General1 from "./components/HelpAndSupport/general1/General1";
-import General2 from "./components/HelpAndSupport/general2/General2";
-import General from "./components/HelpAndSupport/HelpAndSupportGeneral/General";
-import PromotedArticles from "./components/HelpAndSupport/promoted-articles/PromotedArticles";
-import PromotedArticle1 from "./components/HelpAndSupport/PromotedArticle1/PromotedArticle1";
-import { FAQs, TermsOfService } from "./pages";
-import About from "./pages/AboutUs/About";
-import Account from "./pages/Account";
-import Careers from "./pages/Careers";
-import DashboardOverview from "./pages/DashboardOverview";
+import { Routes, Route } from "react-router-dom";
+import SentimentAnalysis from "./pages/SentimentAnalysis";
 import DummyPage from "./pages/DummyPage";
-import Events from "./pages/Events-page/Events";
-import HelpSupport from "./pages/HelpAndSupport/HelpSupport";
-import History from "./pages/History/History";
-import HowitWorks from "./pages/HowItWorks/HowItWorks";
-import Industry from "./pages/indsutry/industry";
+import TranscribePage from "./pages/TranscribePage/TranscribePage";
+import { FAQs, TermsOfService } from "./pages";
 import LandingPage from "./pages/landing-page-a";
 import PageB from "./pages/Landing-page-b";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import SentimentAnalysis from "./pages/SentimentAnalysis";
-import Services from "./pages/services-page/Services";
-import Signin from "./pages/SignIn/SignIn";
-import Solutions from "./pages/solutions-page/Solutions";
 import TermsAndCondition from "./pages/TermsAndCondition/TermsOfService";
-import TranscribePage from "./pages/TranscribePage/TranscribePage";
+import History from "./pages/History/History";
+import Services from "./pages/services-page/Services";
+import Solutions from "./pages/solutions-page/Solutions";
+import DashboardOverview from "./pages/DashboardOverview";
+import Events from "./pages/Events-page/Events";
+import HelpSupport from "./pages/HelpAndSupport/HelpSupport";
+import General from "./components/HelpAndSupport/HelpAndSupportGeneral/General";
+import General1 from "./components/HelpAndSupport/general1/General1";
+import General2 from "./components/HelpAndSupport/general2/General2";
+import PromotedArticles from "./components/HelpAndSupport/promoted-articles/PromotedArticles";
+import PromotedArticle1 from "./components/HelpAndSupport/PromotedArticle1/PromotedArticle1";
+import About from "./pages/AboutUs/About";
 import TryForFree from "./pages/TryForFree";
+import Industry from "./pages/indsutry/industry";
+import HowitWorks from "./pages/HowItWorks/HowItWorks";
 import UploadedRecordings from "./pages/UploadRecordings";
+import Account from "./pages/Account";
+import Signin from "./pages/SignIn/SignIn";
+import Careers from "./pages/Careers";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Signup from "./pages/SignUp/SignUp";
+import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
+import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
+import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
+import Successful from "./pages/Successful/Successful";
+import Reviews from "./pages/Reviews/Reviews";
 
 function App() {
   return (
@@ -140,6 +146,21 @@ function App() {
       </Route>
       {/* uploaded recordings */}
       <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
+      {/* Sign Up */}
+      <Route path="/create-account" element={<Signup />} />
+      {/* Forget Password*/}
+      <Route path="/forget-password" element={<ForgetPassword />} />
+      {/* Password Reset*/}
+      <Route
+        path="/pw-reset-successful"
+        element={<PasswordResetSuccessful />}
+      />
+      {/* Set New Password*/}
+      <Route path="/set-new-password" element={<SetNewPassword />} />
+      {/* Password Reset Successful*/}
+      <Route path="/reset-successful" element={<Successful />} />
+      {/* Reviews*/}
+      <Route path="/reviews" element={<Reviews />} />
     </Routes>
   );
 }
