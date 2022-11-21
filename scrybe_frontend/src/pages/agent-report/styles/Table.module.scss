@@ -20,14 +20,14 @@
 // }
 
 .table {
-    width: 100%;
-    border-collapse: collapse;
-    tr {
-        border-bottom: 0.5px solid gray;
-    }
-    th {
-        border-bottom: 0.5px solid gray;
-    }
+  width: 100%;
+  border-collapse: collapse;
+  tr,
+  th {
+    border-bottom: 0.5px solid #6a6a6a;
+    color: #6a6a6a;
+  }
+
   .nameImg {
     height: 40px;
     width: 45px;

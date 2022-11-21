@@ -82,7 +82,11 @@ function Charts() {
           </div>
           <h1 style={{ fontSize: "24px" }}>50</h1>
         </div>
-        <img src={Chartimg} alt="chart placeholder" />
+        <img
+          src={Chartimg}
+          alt="chart placeholder"
+          style={{ objectFit: "contain" }}
+        />
       </div>
     </div>
   );

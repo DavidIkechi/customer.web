@@ -6,11 +6,11 @@ function Table() {
   return (
     <div>
       <table className={styles.table}>
-        <thead style={{ textAlign: "left" }}>
-          <th style={{ width: "75%" }}>Name</th>
-          <th>Length</th>
-          <th>Size</th>
-          <th>Uploaded</th>
+        <thead style={{ textAlign: "left", marginBottom: 20 }}>
+          <th style={{ width: "70%", marginRight: "5px" }}>Name</th>
+          <th style={{ marginLeft: "5px", marginRight: "5px" }}>Length</th>
+          <th style={{ marginLeft: "5px", marginRight: "5px" }}>Size</th>
+          <th style={{ marginLeft: "5px", marginRight: "5px" }}>Uploaded</th>
         </thead>
         <tbody>
           <tr>
@@ -27,9 +27,9 @@ function Table() {
                 </div>
               </div>
             </td>
-            <td>4 mins</td>
-            <td>50mb</td>
-            <td>13/11/22</td>
+            <td style={{ paddingHorizontal: "5px" }}>4 mins</td>
+            <td style={{ paddingHorizontal: "5px" }}>50mb</td>
+            <td style={{ paddingHorizontal: "5px" }}>13/11/22</td>
           </tr>
           <tr>
             <td>
