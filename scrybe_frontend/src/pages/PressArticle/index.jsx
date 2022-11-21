@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./pressArticle.module.scss";
-import pressArtIcon from "../myAssets/pressArtIcon.png";
-import arrowLeft from "../myAssets/arrow__left.png";
+import pressArtIcon from "./assets/pressArtIcon.png";
+import arrowLeft from "./assets/arrow__left.png";
 
 const index = () => {
   return (
