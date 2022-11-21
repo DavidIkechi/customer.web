@@ -36,8 +36,8 @@ function HowItWorks() {
               <h3>Upload Recordings or Audio files of Conversation</h3>
               <p>Scrybe will analyze the conversation to produce:</p>
               <ul>
-                <li>a readable and searchable text file</li>
-                <li>A Sentiment Analysis report</li>
+                <li>&bull; A readable and searchable text file</li>
+                <li>&bull; A Sentiment Analysis report</li>
               </ul>
               <p>
                 Scrybe automatically transcribes and analyzes your file within
@@ -68,7 +68,7 @@ function HowItWorks() {
               </p>
             </div>
             <div className={styles.cardImage}>
-              <img src={Image3} alt="" />
+              <img src={Image3} alt="" className={styles.makeLarge} />
             </div>
           </div>
           <div className={`${styles.card} ${styles.right}`}>
@@ -85,7 +85,7 @@ function HowItWorks() {
               </p>
             </div>
             <div className={styles.cardImage}>
-              <img src={Image4} alt="" />
+              <img src={Image4} alt="" className={styles.makeLarge} />
             </div>
           </div>
         </section>

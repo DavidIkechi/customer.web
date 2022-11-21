@@ -41,7 +41,7 @@
     width: 64.4%;
     display: flex;
     padding: 8% 0;
-    gap: 3%;
+    gap: 10%;
     position: relative;
     margin-top: 6%;
 }
@@ -178,6 +178,9 @@
     .howitworks .links {
         width: 60%;
     }
+    .howitworks .cardImage .makeLarge {
+        transform: scale(1.4);
+    }
 
 }
 
@@ -187,7 +190,7 @@
     
     }
     .howitworks .card span {
-        display: none;
+        font-size: 28rem;
     }
 }
 
@@ -210,6 +213,8 @@
 @media screen and (max-width: 620px) {
     .howitworks .banner h1 {
         font-size: 1.875rem;
+        line-height: 2rem;
+        padding-bottom: 1rem;
     }
     .howitworks .banner h1 span{
         font-size: 1.875rem;
@@ -234,13 +239,14 @@
     }
     .howitworks .card {
         flex-direction: column;
-        margin-top: 0;
+        margin: 6% 0;
+
   
     }
 
     .howitworks .cardImage,.howitworks .cardInfo {
         width: 80%;
-        margin: 0 auto;
+        margin: 3% auto;
     }
 
     .howitworks .cardInfo {
@@ -250,6 +256,7 @@
 
     .howitworks .cardImage {
         width: 100%;
+        height: 180px;
         margin: 0 auto;
         background-color: #E6F0FF;
         border-radius: 0.5rem;
@@ -258,6 +265,10 @@
     .howitworks .cardImage img {
         max-width: 50%;
         margin: 0 auto;
+    }
+
+    .howitworks .linkBtn {
+        padding: 0.5rem 1rem;
     }
 
    
