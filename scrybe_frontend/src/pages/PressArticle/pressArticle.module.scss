@@ -142,6 +142,8 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
         font-style: normal;
         fill: solid;
         line-height: 1rem;
+        text-decoration: none;
+        list-style: none;
     }
 
     .article__details .arrowleft {
