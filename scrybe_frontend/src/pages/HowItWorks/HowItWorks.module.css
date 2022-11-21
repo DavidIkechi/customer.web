@@ -14,17 +14,17 @@
 .howitworks h1 {
     font-size: 3rem;
     font-weight: 600;
-    line-height: 56px;
+    line-height: 3.5rem;
     color: #313131;
 }
 
 .howitworks h1 span {
-    font-size: 48px;
+    font-size: 3rem;
     color: #0062E8;
 }
 
 .howitworks p {
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: 300;
     display: inline-block;
     line-height: 26px;
@@ -48,7 +48,7 @@
 
 .howitworks .card span {
     position: absolute;
-    font-size: 670px;
+    font-size: 41.875rem;
     font-weight: 800;
     top: -70%;
     left: 0;
@@ -79,15 +79,15 @@
 }
 
 .howitworks h3 {
-    font-size: 28px;
+    font-size: 1.75rem;
     font-weight: 700;
-    line-height: 33px;
+    line-height: 2.063rem;
     color: #434342;
 }
 
 .howitworks .steps p {
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 1rem;
+    line-height: 1.5rem;
     padding-top: 2%;
 }
 
@@ -101,11 +101,11 @@
 }
 
 .howitworks .linkBtn {
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: 300;
-    line-height: 26px;
+    line-height: 1.625rem;
     text-decoration: none;
-    padding: 12px 32px;
+    padding: 0.75rem 2rem;
     border-radius: 4px;
     border: 1px solid #006aff;
 }
@@ -120,11 +120,11 @@
 
 
 .howitworks ul {
-    padding-left: 30px;
+    padding-left: 1.875rem;
 }
 
 .howitworks ul li {
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 300;
     
 }
@@ -137,17 +137,17 @@
        
     }
     .howitworks .banner h1 {
-        font-size: 40px;
+        font-size: 2.5rem;
     }
     .howitworks .banner h1 span{
-        font-size: 40px;
+        font-size: 2.5rem;
     }
     .howitworks .banner p {
-        font-size: 16px;
+        font-size: 1rem;
     }
 
     .howitworks .linkBtn {
-        font-size: 14px;
+        font-size: 0.875rem;
     }
 
 
@@ -155,24 +155,24 @@
 
 @media screen and (max-width: 1024px) {
     .howitworks .banner h1 {
-        font-size: 36px;
+        font-size: 2.25rem;
     }
     .howitworks .banner h1 span{
-        font-size: 36px;
+        font-size: 2.25rem;
     }
     .howitworks .banner p {
-        font-size: 14px;
-        line-height: 2px;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
     }
 
     .howitworks .card span {
-        font-size: 560px;
+        font-size: 35rem;
         top: -55%;
 
     }
 
     .howitworks h3 {
-        font-size: 24px;
+        font-size: 1.5rem;
     }
 
     .howitworks .links {
@@ -193,26 +193,26 @@
 
 @media screen and (max-width: 768px) {
     .howitworks h3 {
-        font-size: 20px;
+        font-size: 1.25rem;
     }
 
     .howitworks .steps p {
-        font-size: 14px;
-        line-height: 24px;
+        font-size: 0.875rem;
+        line-height: 1.5rem;
     }
 
     .howitworks ul li {
-        font-size: 14px;
+        font-size: 0.875rem;
         
     }
 }
 
 @media screen and (max-width: 620px) {
     .howitworks .banner h1 {
-        font-size: 30px;
+        font-size: 1.875rem;
     }
     .howitworks .banner h1 span{
-        font-size: 30px;
+        font-size: 1.875rem;
     }
 
     .howitworks .steps p {
@@ -225,11 +225,11 @@
         top: -5%;
         left: 50%;
         transform: translateX(-50%);
-        font-size: 100px;
+        font-size: 6.25rem;
         -webkit-text-stroke: 1px #B0D1FF;
         -webkit-text-fill-color: transparent;
    
-        width: 30px;
+        width: 1.875rem;
         z-index: -1;
     }
     .howitworks .card {
@@ -252,7 +252,7 @@
         width: 100%;
         margin: 0 auto;
         background-color: #E6F0FF;
-        border-radius: 8px;
+        border-radius: 0.5rem;
     }
 
     .howitworks .cardImage img {
