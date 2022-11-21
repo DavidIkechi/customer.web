@@ -27,6 +27,11 @@ import Account from "./pages/Account";
 import Signin from "./pages/SignIn/SignIn";
 import Careers from "./pages/Careers";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Signup from "./pages/SignUp/SignUp";
+import Successful from "./pages/Successful/Successful";
+import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
+import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
+import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
 
 function App() {
   return (
@@ -53,10 +58,7 @@ function App() {
       {/* help and support */}
       <Route path="/help" element={<DummyPage someText="help and supprt" />} />
       {/* sign in */}
-      <Route
-        path="/signin"
-        element={<Signin someText="sign-in, sign up, reset password" />}
-      />
+
       {/* career page & legal */}
       <Route path="/careers" element={<Careers />} />
       <Route path="/privacy" element={<PrivacyPolicy />} />
@@ -135,7 +137,17 @@ function App() {
         <Route index element={<PromotedArticle1 />} />
         <Route path="*" element={<PromotedArticle1 />} />
       </Route>
-      {/* uploaded recordings */}
+
+      {/* Sign In, Sign Up and Reset Password  Flow */}
+      <Route path="/create-account" element={<Signup />} />
+      <Route path="/signin" element={<Signin />} />
+      <Route path="/reset-successful" element={<Successful />} />
+      <Route path="/set-new-password" element={<SetNewPassword />} />
+      <Route path="/forget-password" element={<ForgetPassword />} />
+      <Route
+        path="/pw-reset-successful"
+        element={<PasswordResetSuccessful />}
+      />
       <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
     </Routes>
   );
