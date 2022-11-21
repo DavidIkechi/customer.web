@@ -8,7 +8,7 @@ import Image4 from "./assets/howitworks4.svg";
 
 function HowItWorks() {
   return (
-    <div className={style.howitworks}>
+    <div className={styles.howitworks}>
       <div className={styles.container}>
         <div className={styles.banner}>
           <h1>

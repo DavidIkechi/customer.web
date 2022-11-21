@@ -5,7 +5,7 @@ import Image from "../../pages/indsutry/assets/industryImage.png";
 
 function industryCard() {
   return (
-    <div>
+    <div className={styles.industryCard}>
       <Link to="/industryarticle">
         <div className={styles.card}>
           <div className={styles.titleCard}>
@@ -20,7 +20,7 @@ function industryCard() {
             <p>
               We often feel that emotions have no place in business but it is
               thecore of what drives it. Humans are emotional and humans build
-              andmakeup businesses. They&apos;re part of who we are, and
+              and makeup businesses. They&apos;re part of who we are, and
               it&apos;s important to be able to harness their potential.
               Emotions have a significant impact on business and your
               company&apos;s success
