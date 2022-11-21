@@ -60,6 +60,7 @@ function App() {
       {/* career page & legal */}
       <Route path="/careers" element={<Careers />} />
       <Route path="/privacy" element={<PrivacyPolicy />} />
+
       {/* solutions & services */}
       <Route
         path="/services"
@@ -83,7 +84,9 @@ function App() {
       {/* dashboard */}
       <Route path="/dashboard" element={<DashboardOverview />} />
       {/* accounts */}
+
       <Route path="/accounts" element={<Account />} />
+
       {/* industry */}
       <Route path="/industry" element={<Industry />} />
       {/* how it works */}

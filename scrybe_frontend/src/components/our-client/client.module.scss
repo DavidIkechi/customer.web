@@ -9,6 +9,8 @@
                 justify-content: space-between;
                 align-items: center;
                 flex-flow: row wrap;
+                max-width: pix-rem(1200);
+                margin-inline: auto;
                 @include media(1228px) {
                         display: flex;
                         flex-direction: column;
