@@ -18,7 +18,7 @@ const recordings = [
     length: "05:23",
     size: "4.2 MB",
     date: "13/11/22 (5:22 PM)",
-    status: "Successful",
+    status: "Processing",
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const recordings = [
     length: "05:23",
     size: "3.4 MB",
     date: "13/11/22 (5:22 PM)",
-    status: "Successful",
+    status: "Processing",
   },
   {
     id: 3,
@@ -134,7 +134,7 @@ function UploadedRecordings() {
     <div className={styles.uploadedRecordingsParent}>
       <NavBar />
       <div className={styles.uploadedRecordingsGrid}>
-        <div className={styles.uploadedRecordingsSideBar}>Sidebar</div>
+        {/* <div className={styles.uploadedRecordingsSideBar}>Sidebar</div> */}
         <div
           className={`${styles.uploaded_recordings} ${
             allRecordings.length < 1 ? styles.no_items_found : ""
