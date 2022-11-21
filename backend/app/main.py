@@ -12,6 +12,7 @@ from sqlalchemy.orm import Session
 import crud, schema
 from emails import send_email, verify_token
 from starlette.requests import Request
+import fastapi as _fastapi
 
 # Dependency
 def get_db():
