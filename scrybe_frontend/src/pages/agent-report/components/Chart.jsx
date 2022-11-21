@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import Chart from "react-apexcharts";
+// import React, { useState } from "react";
+// import Chart from "react-apexcharts";
 import styles from "../styles/Chart.module.scss";
 import Chartimg from "../assets/chart.svg";
 import DownArrow from "../assets/chevron_right.svg";
