@@ -255,7 +255,7 @@
                 margin-bottom: 3rem;
             }
             .expectTalk {
-                @include flexItem(space-between, row, 0);
+                @include flexItem(center, row, 0);
 
                 .expect {
                     width: 40%;
@@ -419,7 +419,11 @@
                 align-items: flex-start;
 
                 .cominImg {
-                    width: 60%;
+                    width: 70%;
+                }
+
+                .cominTxt {
+                    width: 80%;
                 }
             }
         }
@@ -448,4 +452,95 @@
         }
     }
   }
+}
+
+@media (max-width: 765px) {
+    .headerSection {
+        .containers {
+                p {
+                    width: 80%;
+                }
+        }
+        .comingsoon {
+            .containers {
+                .comingFlex {
+                    .cominImg {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+
+    .otherEvent {
+        .containers {
+            .contentContainer {
+                .eventContent {
+                   .imgContent {
+                    width: 90%;
+                   }
+                }
+            }
+        }
+      }
+
+      .missionSection {
+        .expectContainer {
+            .expectTalk {
+                flex-wrap: wrap;
+                @include flexItem(center, row, 0);
+                align-items: center;
+            }
+        }
+      }
+
+}
+
+@media (max-width: 485px) {
+    .headerSection {
+        .containers {
+            .eventFlex {
+                h1 {
+                    font-size: 40px !important;
+                }
+            }
+        }
+    }
+
+    .otherEvent {
+        .containers {
+            .contentContainer {
+                .eventContent {
+                   .imgContent {
+                    width: 100%;
+                   }
+                }
+            }
+        }
+      }
+
+      .missionSection {
+        .containers {
+            .speakerContainer {
+    
+                .speaker {
+                    width: 70%;
+                }
+            }
+        }
+      }
+
+      .otherEvent {
+        .containers {
+            .contentContainer {
+                .eventContent {
+                   .txtContent {
+                    p {
+                        width: 90%;
+                    }
+                   }
+                }
+            }
+        }
+      }
 }
