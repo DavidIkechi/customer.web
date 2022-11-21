@@ -4,7 +4,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Background from "../../assets/Try-background.png";
 import TryPic from "../../assets/Try-hero.png";
-import styles from "./try_hero.module.css";
+import styles from "./try_hero.module.scss";
 
 export default function tryHero() {
   return (
@@ -16,13 +16,17 @@ export default function tryHero() {
             Experience a touch of Scrybe without committing to our
             subscriptions. Try our other features when you sign up with us.
           </p>
-          <Link to="/" className={styles.HeroButton}>
+          <Link to="/auth" className={styles.HeroButton}>
             Sign Up Now
           </Link>
         </div>
         <div className={styles.Hero2}>
           <img src={TryPic} alt="some" />
         </div>
+
+        <Link to="/" className={styles.HeroButtonMobile}>
+          Sign Up Now
+        </Link>
         <img className={styles.backgroundImage} src={Background} alt="some" />
       </div>
 

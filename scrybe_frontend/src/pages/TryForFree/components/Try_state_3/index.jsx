@@ -2,13 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 // eslint-disable-next-line no-warning-comments
 // TODO disable eslint warning for this todo ;)
-import styles from "./try_state_3.module.css";
+import styles from "./try_state_3.module.scss";
 import RecordingLogo from "../../assets/Recording-logo.png";
 import TranscribeLogo from "../../assets/file-transcribing.png";
 
 export default function TryThird() {
   return (
-    <div>
+    <div className={styles.recordingSection}>
       <div className={styles.recordingDrag}>
         <div className={styles.recordingContent}>
           <div className={styles.recordingImageContainer}>
