@@ -10,6 +10,7 @@ class UserBase(BaseModel):
     created_at: datetime
 
 class UserCreate(UserBase):
+    company_name: str
     password: str
 
 class User(UserBase):
