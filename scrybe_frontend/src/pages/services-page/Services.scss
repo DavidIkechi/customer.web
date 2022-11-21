@@ -7,6 +7,7 @@
     color: #fff;
     border: 0;
     border-radius: 3px;
+    display: block !important;
     font-weight: 600;
     cursor: pointer;
     display: inline-block;
@@ -31,6 +32,7 @@
 
 @mixin btnTrans {
     font-family: 'Kanit', sans-serif;
+    display: block !important;
     padding: 15px 20px;
     background: transparent;
     color: #006CFF;
@@ -40,7 +42,7 @@
     cursor: pointer;
     width: 180px;
     font-size: 18px;
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
@@ -60,16 +62,17 @@
     }
 }
 
-@mixin container {
+@mixin containers {
     width: 90%;
     margin: auto;
+    padding: 0;
 }
 
 @mixin heading {
     color: #1A1818;
-    font-weight: 800;
+    font-weight: 600;
     font-size: 40px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 
@@ -77,11 +80,11 @@
     background: url(./assets/hero-bg.png);
     background-size: cover;
     background-repeat: no-repeat;
-    padding: 7rem 0 4rem 0;
     font-family: 'Kanit', sans-serif;
 
-    .container {
-        @include container;
+    .containers {
+        @include containers;
+        padding: 4rem 0 7rem 0;
     }
 
     .hero-flex {
@@ -126,10 +129,9 @@
 }
 
 .offer-section {
-    padding: 6rem 0;
-
-    .container {
-        @include container;
+    padding: 10rem 0;
+    .containers {
+        @include containers;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -146,7 +148,7 @@
         font-size: 35px;
         text-align: center;
         width: 70%;
-        line-height: 1.7;
+        line-height: 1.6;
         margin: auto;
     }
 
@@ -165,8 +167,8 @@
     background: #E6F0FF;
     padding: 7rem 0;
 
-    .container {
-        @include container;
+    .containers {
+        @include containers;
 
         .wecan-flex {
             display: flex;
@@ -175,42 +177,43 @@
         }
     
         .wecan-txt {
-            width: 50%;
+            width: 55%;
     
             h1 {
                 @include heading;
             }
     
             li {
-                font-size: 27px;
+                font-size: 30px;
                 line-height: 1.6;
                 font-weight: 300;
             }
     
             .list {
-                margin-bottom: 30px;
+                margin-bottom: 35px;
             }
         }
     
         .wecan-img {
-            width: 50%;
+            width: 40%;
+            margin: auto;
 
-            img {
-                width: 50%
+            .we-img {
+                width: 70%
             }
         }
     }
 }
 
 .transcription-section, .sentiment-section, .report-section {
-    .container {
-        @include container;
+    .containers {
+        @include containers;
 
         .trans-flex {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12rem 0;
+            padding: 8rem 0;
     
             .trans-txt {
                 width: 50%;
@@ -218,7 +221,7 @@
                     @include heading;
                 }
     
-                .check-container {
+                .check-containers {
                     span {
                         display: flex;
                         align-items: baseline;
@@ -230,8 +233,8 @@
                         }
     
                         p {
-                            font-size: 25px;
-                            font-weight: 500;
+                            font-size: 27px;
+                            font-weight: 400;
                             line-height: 1.7
                         }
                     }
@@ -270,8 +273,8 @@
 .article-section {
     padding: 6rem 0 20rem 0;
     
-    .container {
-        @include container;
+    .containers {
+        @include containers;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -324,7 +327,7 @@
     .offer-section {
         p {
             width: 90%;
-            font-size: 5.5vw;
+            font-size: 4.5vw;
         }
 
         h1 {
@@ -342,8 +345,8 @@
             }
 
             .wecan-img {
-                img {
-                    width: 70%;
+                .we-img {
+                    width: 55%;
                     display: block;
                     margin: auto;
                 }
@@ -356,14 +359,15 @@
                 }
 
                 li {
-                    font-size: 25px;
+                    font-size: 20px;
+                    text-align: center;
                 }
             }
         }
     }
 
     .transcription-section, .sentiment-section, .report-section {
-        .container {
+        .containers {
             .trans-flex {
                 flex-direction: column-reverse;
                 gap: 5rem;
@@ -376,9 +380,14 @@
                     h1 {
                         text-align: center;
                     }
-                    .check-container {
+                    .check-containers {
                         span {
                             justify-content: center;
+                            gap: 1rem;
+
+                            p {
+                                text-align: center;
+                            }
                         }
                     }
 
@@ -393,7 +402,7 @@
 
 @media (max-width: 500px) {
     .hero-section {
-        .container {
+        .containers {
             .hero-flex {
                 .text-cont {
                     p {
@@ -405,14 +414,14 @@
     }
 
     .transcription-section, .sentiment-section, .report-section {
-        .container {
+        .containers {
             .trans-flex {
                 .trans-txt {
                     h1 {
                         font-size: 5vw;
                         text-align: center;
                     }
-                    .check-container {
+                    .check-containers {
                         span {
                             p {
                                 font-size: 15px;
@@ -435,7 +444,7 @@
     }
 
     .article-section {
-        .container {
+        .containers {
             p {
                 width: 90%;
                 font-size: 17px;

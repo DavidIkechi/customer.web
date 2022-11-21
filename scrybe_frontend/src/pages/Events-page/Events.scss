@@ -1,0 +1,408 @@
+@mixin btn {
+    font-family: 'Kanit', sans-serif;
+    background: #006CFF;
+    padding: 15px 20px;
+    color: #fff;
+    border: 0;
+    border-radius: 3px;
+    font-weight: 400;
+    cursor: pointer;
+    display: inline-block;
+    width: 180px;
+    font-size: 18px;
+    position: relative;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+@mixin btnStates {
+    &:hover {
+        background: transparent;
+        border-color: #006CFF;
+        color: #006CFF;
+    }
+
+    &:active {
+        top: 2px;
+    }
+}
+
+@mixin btnTrans {
+    font-family: 'Kanit', sans-serif;
+    padding: 15px 20px;
+    background: transparent;
+    color: #006CFF;
+    border: 1px solid #006CFF;
+    border-radius: 3px;
+    font-weight: 400;
+    cursor: pointer;
+    width: 180px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+    transition: all 0.3s ease;
+}
+@mixin btnTransStates {
+    &:hover {
+        background: #006CFF;
+        border-color: #fff;
+        color: #fff;
+    }
+
+    &:active {
+        top: 3px;
+    }
+}
+
+@mixin container {
+    width: 90%;
+    margin: auto;
+    padding: 0;
+}
+
+@mixin flexItem($justifyContent, $direction, $gap) {
+    display: flex;
+    align-items: center;
+    flex-direction: $direction;
+    justify-content: $justifyContent;
+    gap: $gap;
+}
+
+@mixin pargraphs {
+    color: #3F3F3F;
+    font-size: 19px;
+    line-height: 1.6;
+    font-weight: 300;
+}
+
+@mixin  headText {
+    font-size: 72px;
+    font-weight: 600;
+    color: #3F3F3F;
+    margin-bottom: 20px;
+}
+
+.header-section {
+    background: #F9FDFF;
+    padding: 4rem 0;
+    .containers {
+        @include container;
+
+        .event-flex {
+            @include flexItem(space-between, row, auto);
+
+                h1 {
+                    @include headText;
+                }
+    
+               
+    
+            button {
+                @include flexItem(space-between, row, 1rem);
+                font-family: 'Kanit', sans-serif;
+                padding: 15px 20px;
+                background: transparent;
+                color: #00A4FF;
+                border: 1px solid #00A4FF;
+                border-radius: 3px;
+                font-weight: 400;
+                cursor: pointer;
+                width: 180px;
+                font-size: 18px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                position: relative;
+                transition: all 0.3s ease;
+            }
+        }
+
+        p {
+            @include pargraphs;
+            margin-bottom: 20px;
+            width: 50%
+        }
+
+        button {
+            @include btnTrans;
+
+            &:hover {
+                @include btnTransStates;
+            }
+        }
+    }
+
+    .comingsoon {
+        margin-top: 5rem;
+        .containers {
+            @include container;
+            h1 {
+                @include headText;
+                font-size: 47px;
+            }
+
+            .coming-flex {
+                // @include flexItem(flex-start, row, 5rem );
+                display: flex;
+                flex-direction: row;
+                gap: 5rem;
+                align-items: flex-start;
+                margin-top: 3rem;
+
+                .comin-img {
+                    width: 40%;
+
+                    img {
+                        width: 100%
+                    }
+                }
+
+                .comin-txt {
+                    p {
+                        @include pargraphs();
+                        font-weight: 400;
+                        width: 100%;
+                    }
+
+                    .line {
+                        border-bottom: 1px solid #3F3F3F;
+                        margin: 2rem 0;
+                    }
+
+                    button {
+                        margin-top: 2rem;
+                        @include btn();
+
+                        &:hover {
+                            @include btnStates;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.mission-section {
+    margin-top: 5rem;
+    .containers {
+        @include container;
+        text-align: center;
+
+        h1 {
+            @include headText;
+            font-size: 40px;
+            margin-bottom: 2rem;
+        }
+
+        p {
+            @include pargraphs;
+            width: 80%;
+            margin: auto;
+            margin-bottom: 3rem;
+        }
+
+        .speaker-container {
+            @include flexItem(space-between, row, 0);
+
+            .speaker {
+                width: 25%;
+
+                img {
+                    margin: auto;
+                }
+
+                p {
+                    background: #005584;
+                    padding: 3px 10px;
+                    width: 200px;
+                    text-align: center;
+                    color: #fff;
+                    font-size: 14px;
+                    border-radius: 3px;
+                    margin: 10px auto;
+                }
+
+                span {
+                    background: #fff;
+                    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.068));
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 200px;
+                    margin: auto;
+                    padding: 5px 10px;
+                    border-radius: 3px;
+
+                    img {
+                        width: 20px;
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+
+        .expect-container {
+            margin-top: 5rem;
+            h2 {
+                @include headText;
+                font-size: 30px;
+                margin-bottom: 3rem;
+            }
+            .expect-talk {
+                @include flexItem(space-between, row, 0);
+
+                .expect {
+                    width: 40%;
+                    padding: 2rem;
+
+                    img {
+                        margin: auto;
+                        width: 40px;
+                    }
+
+                    p {
+                        margin-top: 15px;
+                    }
+                }
+            }
+
+            button {
+                @include btn;
+
+                &:hover {
+                    @include btnStates();
+                }
+            }
+        }
+    }
+}
+
+.other-event {
+    margin: 5rem 0;
+
+    .containers {
+        @include container();
+        padding: 0;
+        h2 {
+            @include headText();
+            font-size: 40px;
+            margin-bottom: 3rem;
+        }
+
+        .content-container {
+            .event-content {
+                @include flexItem(space-between, row, 4rem);
+                align-items: flex-start;
+                margin-bottom: 5rem;
+                .img-content {
+                    width: 45%;
+
+                    img {
+                        max-width: 100%;
+                    }
+                }
+
+                .txt-content {
+                    h4 {
+                        @include headText;
+                        font-size: 30px;
+                    }
+
+                    p {
+                        color: #3F3F3F;
+                        font-size: 17px;
+                        line-height: 1.6;
+                        font-weight: 200;
+                        width: 50%;
+                        margin-bottom: 1rem;
+                    }
+
+                    button {
+                        @include btn;
+                        // margin-top: 1rem;
+
+                        &:hover {
+                            @include btnStates();
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.past-event {
+    margin-top: 10rem;
+
+    .containers {
+        @include container();
+        padding: 0;
+        margin-bottom: 5rem;
+
+        h1 {
+            @include headText();
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 2rem;
+        }
+
+        .past-content {
+            @include flexItem(space-between, row , 4rem);
+            .past-container {
+                width: 35%;
+                h2 {
+                    @include headText();
+                    font-size: 25px;
+                }
+
+                .past-card {
+                    border: 5px solid #00A4FF;
+                    border-radius: 10px;
+                    padding: 40px;
+                    text-align: center;
+
+                    .right {
+                        text-align: right ;
+                        color: #3F3F3FA3;
+                        font-size: 17px;
+                        margin-bottom: 40px;
+                    }
+
+                    h3 {
+                        @include headText;
+                        font-size: 27px;
+                        text-align: center;
+                        margin-bottom: 60px;
+                    }
+
+                    p {
+                        @include pargraphs();
+                        margin-bottom: 30px;
+                    }
+
+                    button {
+                        @include btn();
+                        &:hover {
+                            @include btnStates()
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 970px) {
+    .comingsoon {
+        .containers {
+            .coming-flex {
+                @include flexItem(space-between, row-reverse, 2rem)
+            }
+        }
+    }
+}

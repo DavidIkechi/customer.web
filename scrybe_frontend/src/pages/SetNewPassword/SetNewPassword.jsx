@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import "../../von.css";
+import { useState } from "react";
+import footerImg from "./assets/reset-pw.png";
+import styles from "./SetNewPassword.module.scss";
 
 function SetNewPassword() {
   const {
@@ -27,21 +29,22 @@ function SetNewPassword() {
 
   const isValid = password && password2;
   return (
-    <main className="signup-wrapper">
-      <div className="signup">
-        <div className="first signin other-than-signup">
-          <h1>Set new password</h1>
-          <h3>Your new password must be different from the previous one</h3>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <label htmlFor="password">
-              Password
+    <>
+      <main className={styles.signUpWrapper}>
+        <div className={styles.signup}>
+          <div
+            className={`${styles.first} ${styles.signin} ${styles.otherThanSignup}`}
+          >
+            <h1>Set new password</h1>
+            <h3>Your new password must be different from the previous one</h3>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <label htmlFor="password">Password</label>
               <input
                 type="password"
                 name="password"
                 id="password"
                 placeholder="Password at least 8 characters"
-                className={`${errors.password && "error-input"} `}
-                // eslint-disable-next-line
+                className={`${errors.password && styles.errorInput} `}
                 {...register("password", {
                   required: "Password is required",
                   minLength: {
@@ -50,18 +53,15 @@ function SetNewPassword() {
                   },
                 })}
               />
-            </label>
-            <p className="error-msg">{errors.password?.message}</p>
+              <p className={styles.errorMsg}>{errors.password?.message}</p>
 
-            <label htmlFor="password2">
-              Password
+              <label htmlFor="password2">Password</label>
               <input
                 type="password"
                 name="password2"
                 id="password2"
                 placeholder="Confirm Password"
-                className={`${errors.password && "error-input"} `}
-                // eslint-disable-next-line
+                className={`${errors.password && styles.errorInput} `}
                 {...register("password2", {
                   required: "Password is required",
                   minLength: {
@@ -70,20 +70,20 @@ function SetNewPassword() {
                   },
                 })}
               />
-            </label>
-            <p className="error-msg">{errors.password2?.message}</p>
-            <input
-              type="submit"
-              value="Reset password"
-              className={`${isValid && "submit-valid"}`}
-            />
-          </form>
+              <p className={styles.errorMsg}>{errors.password2?.message}</p>
+              <input
+                type="submit"
+                value="Reset password"
+                className={`${isValid && "submit-valid"}`}
+              />
+            </form>
+          </div>
+          <div className={styles.second}>
+            <img src={footerImg} alt="" />
+          </div>
         </div>
-        <div className="second">
-          <img src="img/reset-pw.png" alt="" />
-        </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
 
