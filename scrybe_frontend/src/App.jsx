@@ -54,7 +54,6 @@ function App() {
       <Route path="/help" element={<DummyPage someText="help and supprt" />} />
       {/* sign in */}
       <Route
-
         path="/signin"
         element={<Signin someText="sign-in, sign up, reset password" />}
       />
@@ -86,9 +85,7 @@ function App() {
       <Route path="/dashboard" element={<DashboardOverview />} />
       {/* accounts */}
 
-
       <Route path="/accounts" element={<Account />} />
-
 
       {/* industry */}
       <Route path="/industry" element={<Industry />} />
@@ -143,7 +140,6 @@ function App() {
       </Route>
       {/* uploaded recordings */}
       <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
-
     </Routes>
   );
 }
