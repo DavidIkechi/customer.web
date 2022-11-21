@@ -1,12 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: 'Kanit', sans-serif;
-}
-
 @mixin btn {
     font-family: 'Kanit', sans-serif;
     background: #006CFF;
@@ -78,27 +69,27 @@
     justify-content: $justifyContent;
 }
 
-.content-section {
+.contentSection {
     // padding: 8rem 0;
     .containers {
         @include containers;
     
-        .flex-items {
+        .flexItems {
             @include flexItem(space-between, row);
     
-            .txt-item {
+            .txtItem {
                 width: 45%;
     
                 h1 {
                     color: #005584;
-                    font-size: 3.3vw;
+                    font-size: 3.3vw !important;
                     line-height: 1.5;
                     font-weight: 600;
                     margin-bottom: 20px;
                 }
     
                 p {
-                    font-size: 20px;
+                    font-size: 20px !important;
                     color: #3F3F3F;
                     font-weight: 300;
                 }
@@ -127,7 +118,7 @@
                 }
             }
     
-            .img-item {
+            .imgItem {
                 width: 50%;
     
                 img {
@@ -138,20 +129,20 @@
     }
 }
 
-.why-scrybe {
+.whyScrybe {
     .containers {
         @include containers;
 
         h1 {
             color: #005584;
             font-weight: 600;
-            font-size: 30px;
+            font-size: 30px !important;
             text-align: center;
             margin-bottom: 16px;
         }
 
         p {
-            font-size: 20px;
+            font-size: 20px !important;
             color: #3F3F3F;
             font-weight: 300;
             text-align: center;
@@ -159,7 +150,7 @@
             margin: auto;
         }
 
-        .card-containers {
+        .cardContainers {
             @include flexItem(space-around, row);
             margin: 3.5rem auto 0 auto;
             width: 80%;
@@ -179,7 +170,7 @@
 
                 p {
                     color: #005584;
-                    font-size: 16px;
+                    font-size: 16px !important;
                     line-height: 1.6;
                     width: 100%;
                     margin-top: 30px;
@@ -190,37 +181,37 @@
     }
 }
 
-.buss-section {
+.bussSection {
     .containers {
         @include containers;
 
-        .buss-flex{
+        .bussFlex{
             @include flexItem(space-between, row);
 
-            .buss-txt {
+            .bussTxt {
                 width: 50%;
                 h1 {
                     color: #005584;
                     margin: 0 0 20px 0;
-                    font-size: 2vw;
+                    font-size: 2vw !important;
                     line-height: 1.6;
                 }
 
                 p {
                     color: #3F3F3F;
-                    font-size: 1.5vw;
+                    font-size: 1.5vw !important;
                     line-height: 1.8;
                     margin-bottom: 8px;
                 }
 
                 h4 {
-                    font-size: 1.4vw;
+                    font-size: 1.4vw !important;
                     font-weight: 600;
                     color: #006CFF;
                 }
             }
 
-            .buss-img  {
+            .bussImg  {
                 width: 45%;
 
                 img {
@@ -231,25 +222,25 @@
     }
 }
 
-.monitor-section {
+.monitorSection {
     .containers {
         @include containers;
 
-        .monitor-flex{
+        .monitorFlex{
             @include flexItem(space-between, row);
 
-            .buss-txt {
+            .bussTxt {
                 width: 50%;
                 h1 {
                     color: #005584;
                     margin: 0 0 20px 0;
-                    font-size: 2.2vw;
+                    font-size: 2.2vw !important;
                     line-height: 1.6;
                 }
 
                 p {
                     color: #3F3F3F;
-                    font-size: 1.4vw;
+                    font-size: 1.4vw !important;
                     line-height: 1.9;
                     margin-bottom: 8px;
 
@@ -260,13 +251,13 @@
                 }
 
                 h4 {
-                    font-size: 1.4vw;
+                    font-size: 1.4vw !important;
                     font-weight: 600;
                     color: #006CFF;
                 }
             }
 
-            .buss-img  {
+            .bussImg  {
                 width: 45%;
 
                 img {
@@ -286,7 +277,7 @@
     @include containers;
     padding: 6rem 0;
 
-    .upload-containers {
+    .uploadContainers {
         background: url(./assets/blur-bg.png);
         background-size: cover;
         background-repeat: no-repeat;
@@ -298,13 +289,13 @@
             text-align: center;
 
             h4 {
-                font-size: 23px;
+                font-size: 23px !important;
                 color: #3F3F3F;
                 margin-bottom: 20px;
             }
 
             h1 {
-                font-size: 55px;
+                font-size: 55px !important;
                 color: #006CFF;;
                 font-weight: 600;
                 letter-spacing: 2px;
@@ -325,7 +316,7 @@
 .containers {
     @include containers;
 
-    .setblur-containers {
+    .setblurContainers {
         background: url(./assets/set-blur.png);
         background-size: cover;
         background-repeat: no-repeat;
@@ -337,13 +328,13 @@
             text-align: center;
 
             h4 {
-                font-size: 23px;
+                font-size: 23px !important;
                 color: #3F3F3F;
                 margin-bottom: 20px;
             }
 
             h1 {
-                font-size: 55px;
+                font-size: 55px !important;
                 color: #006CFF;
                 font-weight: 600;
                 letter-spacing: 2px;
@@ -361,23 +352,23 @@
     }
 }
 
-.logo-section {
+.logoSection {
     padding: 0 0 13rem 0;
 
     .containers {
         text-align: center;
         h1 {
             color: #262626;
-            font-size: 40px;
+            font-size: 40px !important;
             margin-bottom: 16px;
         }
 
         p {
-            font-size: 19px;
+            font-size: 19px !important;
             color: #3F3F3F;
         }
 
-        .logo-flex {
+        .logoFlex {
             display: flex;
             align-items: center;
             width: 80%;
@@ -394,25 +385,25 @@
 }
 
 @media (max-width: 985px) {
-    .content-section {
+    .contentSection {
         .containers {
-            .flex-items {
+            .flexItems {
                 flex-direction: column;
                 row-gap: 4rem;
 
-                .txt-item, .img-item {
+                .txtItem, .imgItem {
                     width: 100%;
                 }
 
-                .txt-item {
+                .txtItem {
                     text-align: center;
 
                     h1 {
-                        font-size: 40px;
+                        font-size: 40px !important;
                     }
 
                     p {
-                        font-size: 20px;
+                        font-size: 20px !important;
                     }
 
                     .btns {
@@ -424,9 +415,9 @@
         }
     }
 
-    .why-scrybe {
+    .whyScrybe {
         .containers {
-            .card-containers {
+            .cardContainers {
                 flex-direction: column;
                 row-gap: 3rem;
 
@@ -438,77 +429,77 @@
     }
 
     .containers {
-        .setblur-containers {
+        .setblurContainers {
             .cont {
                 h1 {
-                    font-size: 30px;
+                    font-size: 30px !important;
                 }
 
                 h4 {
-                    font-size: 18px;
+                    font-size: 18px !important;
                 }
             }
         }
     }
 
     .containers {
-        .upload-containers {
+        .uploadContainers {
             .cont {
                 h1 {
-                    font-size: 30px;
+                    font-size: 30px !important;
                     text-align: center;
                 }
 
                 h4 {
-                    font-size: 18px;
+                    font-size: 18px !important;
                 }
             }
         }
     }
 
-    .buss-section {
+    .bussSection {
         .containers {
 
-            .buss-flex {
+            .bussFlex {
                 @include flexItem(space-between, column);
                 row-gap: 6rem;
     
-                .buss-txt, .buss-img {
+                .bussTxt, .bussImg {
                     width: 100%;
                     text-align: center;
                 }
 
-                .buss-txt {
+                .bussTxt {
                     h1 {
-                        font-size: 30px
+                        font-size: 30px !important;
                     }
 
                     p , h4{
-                        font-size: 19px;
+                        font-size: 19px !important;
                     }
                 }
             }
         }
     }
 
-    .monitor-section {
+    .monitorSection {
         .containers {
-            .monitor-flex {
+            .monitorFlex {
                 @include flexItem(space-between, column-reverse );
                 row-gap: 6rem;
 
-                .buss-txt, .buss-img {
+                .bussTxt, .bussImg {
                     width: 100%;
                     text-align: center;
                 }
 
-                .buss-txt {
+                .bussTxt {
                     h1 {
-                        font-size: 30px
+                        font-size: 30px !important;
                     }
 
                     p , h4{
-                        font-size: 19px;
+                        font-size: 19px !important;
                     }
                 }
             }
@@ -518,9 +509,9 @@
 
 
 @media (max-width: 920px) {
-    .why-scrybe {
+    .whyScrybe {
         .containers {
-            .card-containers {
+            .cardContainers {
                 .card {
                     width: 45%;
                 }
@@ -530,12 +521,12 @@
 }
 
 @media (max-width: 790px) {
-    .why-scrybe {
+    .whyScrybe {
         .containers {
             p {
                 width: 80%;
             }
-            .card-containers {
+            .cardContainers {
                 .card {
                     width: 55%;
                 }
@@ -545,9 +536,9 @@
 }
 
 @media (max-width: 570px) {
-    .why-scrybe {
+    .whyScrybe {
         .containers {
-            .card-containers {
+            .cardContainers {
                 .card {
                     width: 65%;
                 }
@@ -558,9 +549,9 @@
 
 
 @media (max-width: 550px) {
-    .why-scrybe {
+    .whyScrybe {
         .containers {
-            .card-containers {
+            .cardContainers {
                 .card {
                     width: 100%;
                 }
@@ -570,10 +561,10 @@
 }
 
 @media (max-width: 420px) {
-    .content-section {
+    .contentSection {
         .containers {
-            .flex-items {
-                .txt-item {
+            .flexItems {
+                .txtItem {
                     .btns {
                         flex-direction: column;
                         gap: 2rem;
@@ -584,7 +575,7 @@
     }
 
     .containers {
-        .setblur-containers, .upload-containers {
+        .setblurContainers, .uploadContainers {
             .cont {
                 width: 100%;
             }
