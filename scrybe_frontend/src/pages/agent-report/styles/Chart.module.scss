@@ -20,14 +20,20 @@
     height: 100%;
     object-fit: contain;
     margin: 0px auto;
+    .chartImg {
+      height: 60%;
+      width: 100%;
+    }
     .chartHeader {
+      margin-bottom: 15px;
       & > h1 {
         font-size: 50px;
       }
       .chartText {
         display: flex;
         justify-content: space-between;
-        color:  #6A6A6A;
+        color: #6a6a6a;
+        margin-bottom: 10px;
         .checkbox {
           display: flex;
           justify-content: space-evenly;
