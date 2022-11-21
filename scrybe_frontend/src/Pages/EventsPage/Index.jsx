@@ -1,5 +1,5 @@
 import React from "react";
-import "./Events.scss";
+import Event from "./Events.module.scss";
 
 import filterIcon from "./assets/filter-icon.svg";
 import comingSoon from "./assets/comming-soon.png";
@@ -15,12 +15,16 @@ import communication from "./assets/communication.png";
 import winingWay from "./assets/winning-way.png";
 import business from "./assets/business.png";
 
+import NavBar from "../../components/navBar/index";
+import Footer from "../../components/footer/index";
+
 const Events = () => {
   return (
     <div className="event-section">
-      <div className="header-section">
-        <div className="containers">
-          <div className="event-flex">
+      <NavBar />
+      <div className={Event.headerSection}>
+        <div className={Event.containers}>
+          <div className={Event.eventFlex}>
             <h1>Events</h1>
 
             <button>
@@ -37,16 +41,16 @@ const Events = () => {
           <button>view calender</button>
         </div>
 
-        <div className="comingsoon">
-          <div className="containers">
+        <div className={Event.comingsoon}>
+          <div className={Event.containers}>
             <h1>Coming Soon</h1>
-            <div className="coming-flex">
-              <div className="comin-img">
+            <div className={Event.comingFlex}>
+              <div className={Event.cominImg}>
                 <img src={comingSoon} alt="commingSoon" />
               </div>
-              <div className="comin-txt">
+              <div className={Event.cominTxt}>
                 <p>17th November, 2022</p>
-                <div className="line"></div>
+                <div className={Event.line}></div>
                 <p>Mom Civic Center, Maitama, Abuja</p>
                 <button>Register</button>
               </div>
@@ -55,8 +59,8 @@ const Events = () => {
         </div>
       </div>
 
-      <div className="mission-section">
-        <div className="containers">
+      <div className={Event.missionSection}>
+        <div className={Event.containers}>
           <h1>Our Mission</h1>
           <p>
             We understand the challenges young people looking to be
@@ -70,8 +74,8 @@ const Events = () => {
 
           <h1>Meet Our Speakers</h1>
 
-          <div className="speaker-containers">
-            <div className="speaker">
+          <div className={Event.speakerContainer}>
+            <div className={Event.speaker}>
               <img src={jim} alt="jim" />
               <p>Jim Hampert</p>
               <span>
@@ -79,7 +83,7 @@ const Events = () => {
                 <img src={twitter} alt="twitter" />
               </span>
             </div>
-            <div className="speaker">
+            <div className={Event.speaker}>
               <img src={angela} alt="angela" />
               <p>Angela Brume</p>
               <span>
@@ -87,7 +91,7 @@ const Events = () => {
                 <img src={twitter} alt="twitter" />
               </span>
             </div>
-            <div className="speaker">
+            <div className={Event.speaker}>
               <img src={stanley} alt="stanley" />
               <p>Stanley Hudson</p>
               <span>
@@ -95,7 +99,7 @@ const Events = () => {
                 <img src={twitter} alt="twitter" />
               </span>
             </div>
-            <div className="speaker">
+            <div className={Event.speaker}>
               <img src={kelly} alt="kelly" />
               <p>Kelly Kapoor</p>
               <span>
@@ -105,18 +109,18 @@ const Events = () => {
             </div>
           </div>
 
-          <div className="expect-containers">
+          <div className={Event.expectContainer}>
             <h2>What To Expect?</h2>
-            <div className="expect-talk">
-              <div className="expect">
+            <div className={Event.expectTalk}>
+              <div className={Event.expect}>
                 <img src={expect} alt="expect" />
                 <p>Expert Talks </p>
               </div>
-              <div className="expect">
+              <div className={Event.expect}>
                 <img src={expect} alt="expect" />
                 <p>Interactive Sessions</p>
               </div>
-              <div className="expect">
+              <div className={Event.expect}>
                 <img src={expect} alt="expect" />
                 <p>Networking</p>
               </div>
@@ -127,17 +131,17 @@ const Events = () => {
         </div>
       </div>
 
-      <div className="other-event">
-        <div className="containers">
+      <div className={Event.otherEvent}>
+        <div className={Event.containers}>
           <h2>Other Events In The Month Of November</h2>
 
-          <div className="content-containers">
-            <div className="event-content">
-              <div className="img-content">
+          <div className={Event.contentContainer}>
+            <div className={Event.eventContent}>
+              <div className={Event.imgContent}>
                 <img src={winingWay} alt="winning" />
               </div>
 
-              <div className="txt-content">
+              <div className={Event.txtContent}>
                 <h4>Winning Ways</h4>
                 <p>
                   Bridging the gulf between businesses and stakeholders in a
@@ -147,12 +151,12 @@ const Events = () => {
                 <button>Register</button>
               </div>
             </div>
-            <div className="event-content">
-              <div className="img-content">
+            <div className={Event.eventContent}>
+              <div className={Event.imgContent}>
                 <img src={communication} alt="communication" />
               </div>
 
-              <div className="txt-content">
+              <div className={Event.txtContent}>
                 <h4>Communicating Effectively With Clients</h4>
                 <p>
                   Customer support act as the bridge between your business and
@@ -163,12 +167,12 @@ const Events = () => {
                 <button>Register</button>
               </div>
             </div>
-            <div className="event-content">
-              <div className="img-content">
+            <div className={Event.eventContent}>
+              <div className={Event.imgContent}>
                 <img src={business} alt="communication" />
               </div>
 
-              <div className="txt-content">
+              <div className={Event.txtContent}>
                 <h4>A Good Day To Do Business</h4>
                 <p>
                   Every party to a business transaction has a crucial part to
@@ -183,15 +187,15 @@ const Events = () => {
         </div>
       </div>
 
-      <div className="past-event">
-        <div className="containers">
+      <div className={Event.pastEvent}>
+        <div className={Event.containers}>
           <h1>Past Events</h1>
 
-          <div className="past-content">
-            <div className="past-containers">
+          <div className={Event.pastContent}>
+            <div className={Event.pastContainer}>
               <h2>07/02</h2>
-              <div className="past-card">
-                <p className="right">Highlights</p>
+              <div className={Event.pastCard}>
+                <p className={Event.right}>Highlights</p>
                 <h3>A Word From Our Founder</h3>
                 <p>
                   Every party to a business transaction has a crucial part to
@@ -201,10 +205,10 @@ const Events = () => {
                 <button>Explore</button>
               </div>
             </div>
-            <div className="past-containers">
+            <div className={Event.pastContainer}>
               <h2>08/04</h2>
-              <div className="past-card">
-                <p className="right">Highlights</p>
+              <div className={Event.pastCard}>
+                <p className={Event.right}>Highlights</p>
                 <h3>The Scrybe Story</h3>
                 <p>
                   Every party to a business transaction has a crucial part to
@@ -214,10 +218,10 @@ const Events = () => {
                 <button>Explore</button>
               </div>
             </div>
-            <div className="past-containers">
+            <div className={Event.pastContainer}>
               <h2>07/02</h2>
-              <div className="past-card">
-                <p className="right">Highlights</p>
+              <div className={Event.pastCard}>
+                <p className={Event.right}>Highlights</p>
                 <h3>Building The Future Of</h3>
                 <p>
                   Every party to a business transaction has a crucial part to
@@ -230,6 +234,7 @@ const Events = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
