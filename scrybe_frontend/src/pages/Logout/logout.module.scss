@@ -14,11 +14,11 @@
 //   align-self: flex-start;
 // }
 
-.logout_logo__div img {
+.logo__div img {
   height: pix-rem(24);
 }
 
-.logout_login-form__div {
+.login_form__div {
   form {
     display: flex;
     flex-direction: column;
@@ -59,6 +59,6 @@
   }
 }
 
-.logout_desktop-illustration__div {
+.desktop_illustration__div {
   display: none;
 }

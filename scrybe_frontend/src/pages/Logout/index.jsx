@@ -1,16 +1,16 @@
 import React from "react";
 import logoutIllusration from "./assets/logout-illustration.png";
 import logoWithText from "../../assets/scrybe_logo_with_text.svg";
-import "./logout.scss";
+import logoutStyles from "./logout.module.scss";
 
 function Logout() {
   return (
-    <div className="logout">
-      <div className="logout_logo__div">
+    <div className={logoutStyles.logout}>
+      <div className={logoutStyles.logo__div}>
         <img src={logoWithText} alt="Scrybe logo" />
       </div>
       <div>
-        <div className="logout_login-form__div">
+        <div className={logoutStyles.login_form__div}>
           <form>
             <h1>You’ve succesfully signed out.</h1>
             <p>Please enter your details to login again</p>
@@ -50,7 +50,7 @@ function Logout() {
             <span> Sign up</span>
           </p>
         </div>
-        <div className="logout_desktop-illustration__div">
+        <div className={logoutStyles.desktop_illustration__div}>
           <img src={logoutIllusration} alt="logout vector illustration" />
         </div>
       </div>
