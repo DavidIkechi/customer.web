@@ -24,7 +24,7 @@
   bottom: 0;
   z-index: -1;
   width: 100%;
-  height: 85vh;
+  height: 75vh;
 }
 .HeroSection .Hero1 {
   width: 45%;
@@ -53,11 +53,11 @@
   color: #FFFFFF;
   border-radius: 4px;
 }
-.HeroSection .Hero1 {
-  width: 43%;
-  margin-right: 5%;
+.HeroSection .Hero2 {
+  width: 45%;
+  margin-right: 0%;
 }
-.HeroSection .Hero1 img {
+.HeroSection .Hero2 img {
   width: 100%;
 }
 
@@ -77,4 +77,362 @@
   font-weight: 400;
   font-size: 1.1em;
   line-height: 26px;
+}
+
+@media screen and (max-width: 1200px) {
+  .trySection {
+    width: 100%;
+    margin-bottom: 5vh;
+  }
+  .HeroSection {
+    display: flex;
+    justify-content: space-between;
+    padding: 12vh 6% 18vh;
+  }
+  .HeroSection .backgroundImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    width: 100%;
+    height: 65vh;
+  }
+  .HeroSection .Hero1 {
+    width: 45%;
+  }
+  .HeroSection .Hero1 h3 {
+    font-weight: 600;
+    font-size: 3.2rem;
+    line-height: 72px;
+    padding-top: 2vh;
+    padding-bottom: 6vh;
+  }
+  .HeroSection .Hero1 p {
+    font-weight: 500;
+    font-size: 1.15rem;
+    line-height: 24px;
+    color: #6A6A6A;
+    margin-bottom: 6vh;
+  }
+  .HeroSection .Hero1 .HeroButton {
+    padding: 2vh 20%;
+    font-weight: 500;
+    font-size: 0.85rem;
+    line-height: 24px;
+    text-decoration: none;
+    background: #006CFF;
+    color: #FFFFFF;
+    border-radius: 4px;
+  }
+  .HeroSection .Hero2 {
+    width: 50%;
+  }
+  .HeroSection .Hero2 img {
+    width: 100%;
+  }
+  .downHero {
+    display: flex;
+    gap: 2%;
+    margin-top: 10vh;
+    padding: 0 6%;
+  }
+  .downHero hr {
+    border: 2px solid #006CFF;
+    margin: 1.5vh 0;
+  }
+  .downHero p {
+    color: #6A6A6A;
+    text-align: justify;
+    font-weight: 400;
+    font-size: 1.1em;
+    line-height: 26px;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .trySection {
+    width: 100%;
+    margin-bottom: 5vh;
+  }
+  .HeroSection {
+    display: flex;
+    justify-content: space-between;
+    padding: 12vh 5% 18vh;
+  }
+  .HeroSection .backgroundImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    width: 100%;
+    height: 58vh;
+  }
+  .HeroSection .Hero1 {
+    width: 45%;
+  }
+  .HeroSection .Hero1 h3 {
+    font-weight: 600;
+    font-size: 3rem;
+    line-height: 72px;
+    padding-top: 1vh;
+    padding-bottom: 3vh;
+  }
+  .HeroSection .Hero1 p {
+    font-weight: 500;
+    font-size: 1.1rem;
+    line-height: 24px;
+    color: #6A6A6A;
+    margin-bottom: 5vh;
+  }
+  .HeroSection .Hero1 .HeroButton {
+    padding: 2vh 20%;
+    font-weight: 500;
+    font-size: 0.8rem;
+    line-height: 24px;
+    text-decoration: none;
+    background: #006CFF;
+    color: #FFFFFF;
+    border-radius: 4px;
+  }
+  .HeroSection .Hero2 {
+    width: 50%;
+  }
+  .HeroSection .Hero2 img {
+    width: 100%;
+  }
+  .downHero {
+    display: flex;
+    gap: 2%;
+    margin-top: 7vh;
+    padding: 0 6%;
+  }
+  .downHero hr {
+    border: 2px solid #006CFF;
+    margin: 1.5vh 0;
+  }
+  .downHero p {
+    color: #6A6A6A;
+    text-align: justify;
+    font-weight: 400;
+    font-size: 1em;
+    line-height: 26px;
+  }
+}
+@media screen and (max-width: 800px) {
+  .trySection {
+    width: 100%;
+    margin-bottom: 5vh;
+  }
+  .HeroSection {
+    display: flex;
+    justify-content: space-between;
+    padding: 10vh 5% 18vh;
+  }
+  .HeroSection .backgroundImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    width: 100%;
+    height: 45vh;
+  }
+  .HeroSection .Hero1 {
+    width: 45%;
+  }
+  .HeroSection .Hero1 h3 {
+    font-weight: 600;
+    font-size: 2em;
+    line-height: 50px;
+    padding-top: 0vh;
+    padding-bottom: 1vh;
+  }
+  .HeroSection .Hero1 p {
+    font-weight: 500;
+    font-size: 0.8em;
+    line-height: 20px;
+    color: #6A6A6A;
+    margin-bottom: 3vh;
+  }
+  .HeroSection .Hero1 .HeroButton {
+    padding: 1.3vh 10%;
+    font-weight: 500;
+    font-size: 0.75em;
+    line-height: 24px;
+    text-decoration: none;
+    background: #006CFF;
+    color: #FFFFFF;
+    border-radius: 4px;
+  }
+  .HeroSection .Hero2 {
+    width: 45%;
+  }
+  .HeroSection .Hero2 img {
+    width: 100%;
+  }
+  .downHero {
+    display: flex;
+    gap: 2%;
+    margin-top: 1vh;
+    padding: 0 6%;
+  }
+  .downHero hr {
+    border: 2px solid #006CFF;
+    margin: 1.5vh 0;
+  }
+  .downHero p {
+    color: #6A6A6A;
+    text-align: justify;
+    font-weight: 400;
+    font-size: 1em;
+    line-height: 26px;
+  }
+}
+@media screen and (max-width: 700px) {
+  .trySection {
+    width: 100%;
+    margin-bottom: 5vh;
+  }
+  .HeroSection {
+    display: flex;
+    justify-content: space-between;
+    padding: 10vh 5% 18vh;
+  }
+  .HeroSection .backgroundImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    width: 100%;
+    height: 40vh;
+  }
+  .HeroSection .Hero1 {
+    width: 45%;
+  }
+  .HeroSection .Hero1 h3 {
+    font-weight: 600;
+    font-size: 1.8em;
+    line-height: 40px;
+    padding-top: 0vh;
+    padding-bottom: 1vh;
+  }
+  .HeroSection .Hero1 p {
+    font-weight: 500;
+    font-size: 0.7em;
+    line-height: 20px;
+    color: #6A6A6A;
+    margin-bottom: 3vh;
+  }
+  .HeroSection .Hero1 .HeroButton {
+    padding: 1.3vh 10%;
+    font-weight: 500;
+    font-size: 0.7em;
+    line-height: 24px;
+    text-decoration: none;
+    background: #006CFF;
+    color: #FFFFFF;
+    border-radius: 4px;
+  }
+  .HeroSection .Hero2 {
+    width: 50%;
+  }
+  .HeroSection .Hero2 img {
+    width: 100%;
+  }
+  .downHero {
+    display: flex;
+    gap: 2%;
+    margin-top: 1vh;
+    padding: 0 6%;
+  }
+  .downHero hr {
+    border: 2px solid #006CFF;
+    margin: 1.5vh 0;
+  }
+  .downHero p {
+    color: #6A6A6A;
+    text-align: justify;
+    font-weight: 400;
+    font-size: 1em;
+    line-height: 26px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .trySection {
+    width: 100%;
+    margin-bottom: 5vh;
+  }
+  .HeroSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10vh 2% 18vh;
+  }
+  .HeroSection .backgroundImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    width: 100%;
+    height: 130vh;
+  }
+  .HeroSection .Hero1 {
+    width: 100%;
+  }
+  .HeroSection .Hero1 h3 {
+    font-weight: 600;
+    font-size: 4em;
+    line-height: 72px;
+    padding-top: 0vh;
+    padding-bottom: 4vh;
+  }
+  .HeroSection .Hero1 p {
+    font-weight: 500;
+    font-size: 1.5em;
+    line-height: 30px;
+    color: #6A6A6A;
+    margin-bottom: 10vh;
+  }
+  .HeroSection .Hero1 .HeroButton {
+    padding: 2vh 35%;
+    font-weight: 500;
+    font-size: 1.5em;
+    line-height: 24px;
+    text-decoration: none;
+    background: #006CFF;
+    color: #FFFFFF;
+    border-radius: 4px;
+  }
+  .HeroSection .Hero2 {
+    margin-top: 15vh;
+    width: 100%;
+  }
+  .HeroSection .Hero2 img {
+    width: 100%;
+  }
+  .downHero {
+    display: flex;
+    gap: 2%;
+    margin-top: 1vh;
+    padding: 0 6%;
+  }
+  .downHero hr {
+    border: 2px solid #006CFF;
+    margin: 1.5vh 0;
+  }
+  .downHero p {
+    color: #6A6A6A;
+    text-align: justify;
+    font-weight: 400;
+    font-size: 1em;
+    line-height: 26px;
+  }
 }/*# sourceMappingURL=try_hero.module.css.map */

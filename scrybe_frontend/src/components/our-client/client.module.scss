@@ -1,27 +1,14 @@
-<<<<<<< HEAD
-@use '../../functions.scss' as *;
-
-.container{
-        padding-block: pix-rem(32);
-        padding-inline: pix-rem(20);
-        .logos{
-=======
 @use "../../functions.scss" as *;
 
 .container {
         padding-block: pix-rem(32);
         padding-inline: pix-rem(20);
         .logos {
->>>>>>> 5bfffbd873e08affdc8bc5edfc27fdf11e96a50b
                 margin-top: pix-rem(40);
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 flex-flow: row wrap;
-<<<<<<< HEAD
-        }
-        .title{
-=======
                 @include media(1228px) {
                         display: flex;
                         flex-direction: column;
@@ -29,17 +16,13 @@
                         gap: pix-rem(16);
                 }
         }
-        .title {
->>>>>>> 5bfffbd873e08affdc8bc5edfc27fdf11e96a50b
-                text-align: center;
-                font-size: pix-rem(32);
-                font-weight: 600;
-        }
-<<<<<<< HEAD
-        .display{
-=======
-        .display {
->>>>>>> 5bfffbd873e08affdc8bc5edfc27fdf11e96a50b
-                width: min(100%, pix-rem(200));
-        }
+//         .title {
+// >>>>>>> 5bfffbd873e08affdc8bc5edfc27fdf11e96a50b
+//                 text-align: center;
+//                 font-size: pix-rem(32);
+//                 font-weight: 600;
+//         }
+//         .display {
+//                 width: min(100%, pix-rem(200));
+//         }
 }
