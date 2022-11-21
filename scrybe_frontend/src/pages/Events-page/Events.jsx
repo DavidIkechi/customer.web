@@ -70,7 +70,7 @@ const Events = () => {
 
           <h1>Meet Our Speakers</h1>
 
-          <div className="speaker-containers">
+          <div className="speaker-container">
             <div className="speaker">
               <img src={jim} alt="jim" />
               <p>Jim Hampert</p>
@@ -105,7 +105,7 @@ const Events = () => {
             </div>
           </div>
 
-          <div className="expect-containers">
+          <div className="expect-container">
             <h2>What To Expect?</h2>
             <div className="expect-talk">
               <div className="expect">
@@ -131,7 +131,7 @@ const Events = () => {
         <div className="containers">
           <h2>Other Events In The Month Of November</h2>
 
-          <div className="content-containers">
+          <div className="content-container">
             <div className="event-content">
               <div className="img-content">
                 <img src={winingWay} alt="winning" />
@@ -188,7 +188,7 @@ const Events = () => {
           <h1>Past Events</h1>
 
           <div className="past-content">
-            <div className="past-containers">
+            <div className="past-container">
               <h2>07/02</h2>
               <div className="past-card">
                 <p className="right">Highlights</p>
@@ -201,7 +201,7 @@ const Events = () => {
                 <button>Explore</button>
               </div>
             </div>
-            <div className="past-containers">
+            <div className="past-container">
               <h2>08/04</h2>
               <div className="past-card">
                 <p className="right">Highlights</p>
@@ -214,7 +214,7 @@ const Events = () => {
                 <button>Explore</button>
               </div>
             </div>
-            <div className="past-containers">
+            <div className="past-container">
               <h2>07/02</h2>
               <div className="past-card">
                 <p className="right">Highlights</p>

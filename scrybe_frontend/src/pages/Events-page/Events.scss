@@ -76,6 +76,7 @@
     font-size: 19px;
     line-height: 1.6;
     font-weight: 300;
+    display: block !important;
 }
 
 @mixin  headText {
@@ -146,10 +147,10 @@
             }
 
             .coming-flex {
-                // @include flexItem(flex-start, row, 5rem );
-                display: flex;
-                flex-direction: row;
-                gap: 5rem;
+                @include flexItem(flex-start, row, 5rem );
+                // display: flex;
+                // flex-direction: row;
+                // gap: 5rem;
                 align-items: flex-start;
                 margin-top: 3rem;
 
@@ -303,11 +304,14 @@
                     width: 45%;
 
                     img {
-                        max-width: 100%;
+                        width: 100%;
                     }
                 }
 
                 .txt-content {
+                    display: flex;
+                    align-items: flex-start;
+                    flex-direction: column;
                     h4 {
                         @include headText;
                         font-size: 30px;
@@ -353,8 +357,14 @@
 
         .past-content {
             @include flexItem(space-between, row , 4rem);
+            scroll-snap-type: x proximity;
+            overflow-x: scroll;
+
+            .past-content::-webkit-scrollbar {
+                width: 0;
+            }
             .past-container {
-                width: 35%;
+                min-width: 420px;
                 h2 {
                     @include headText();
                     font-size: 25px;
@@ -375,7 +385,7 @@
 
                     h3 {
                         @include headText;
-                        font-size: 27px;
+                        font-size: 25px;
                         text-align: center;
                         margin-bottom: 60px;
                     }
@@ -398,11 +408,41 @@
 }
 
 @media (max-width: 970px) {
+  .header-section {
     .comingsoon {
         .containers {
             .coming-flex {
-                @include flexItem(space-between, row-reverse, 2rem)
+                @include flexItem(flex-start, column, 5rem );
+                align-items: flex-start;
+
+                .comin-img {
+                    width: 60%;
+                }
             }
         }
     }
+  }
+
+  .mission-section {
+    .containers {
+        .speaker-container {
+            flex-direction: column;
+            gap: 3rem;
+
+            .speaker {
+                width: 50%;
+            }
+        }
+    }
+  }
+
+  .other-event {
+    .containers {
+        .content-container {
+            .event-content {
+                flex-direction: column;
+            }
+        }
+    }
+  }
 }

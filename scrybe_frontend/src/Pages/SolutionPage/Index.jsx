@@ -1,5 +1,8 @@
 import React from "react";
-import "./Solutions.scss";
+import styled from "./Solutions.module.scss";
+
+import NavBar from "../../components/navBar";
+import Footer from "../../components/footer";
 
 import heroImg from "./assets/hero-img.png";
 import durationIcon from "./assets/time-icon.svg";
@@ -20,10 +23,11 @@ import google from "./assets/googole-logo.svg";
 function Solutions() {
   return (
     <div className="solution-section">
-      <div className="content-section">
-        <div className="containers">
-          <div className="flex-items">
-            <div className="txt-item">
+    <NavBar />
+      <div className={styled.contentSection}>
+        <div className={styled.containers}>
+          <div className={styled.flexItems}>
+            <div className={styled.txtItem}>
               <h1>
                 Get In-depth Knowledge of Customer Service Engagement with
                 Scrybe
@@ -33,40 +37,40 @@ function Solutions() {
                 and searchable text and automatically analyze recordings to
                 extract sentiment analysis data
               </p>
-              <div className="btns">
-                <button type="button" className="filled">
+              <div className={styled.btns}>
+                <button type="button" className={styled.filled}>
                   Try Free
                 </button>
-                <button type="button" className="transparent">
+                <button type="button" className={styled.transparent}>
                   Watch Demo
                 </button>
               </div>
             </div>
-            <div className="img-item">
+            <div className={styled.imgItem}>
               <img src={heroImg} alt="group" />
             </div>
           </div>
         </div>
       </div>
 
-      <div className="why-scrybe">
-        <div className="containers">
+      <div className={styled.whyScrybe}>
+        <div className={styled.containers}>
           <h1>Why Scrybe?</h1>
           <p>
             Our product’s-solution cuts across various pain points faced by call
             center/customer support managers. We help you:
           </p>
 
-          <div className="card-containers">
-            <div className="card">
+          <div className={styled.cardContainers}>
+            <div className={styled.card}>
               <img src={durationIcon} alt="duration" />
               <p>Break your audio files into sections using time frames</p>
             </div>
-            <div className="card">
+            <div className={styled.card}>
               <img src={transcribeIcon} alt="transcribe" />
               <p>Transcribe your audio files with your personalized options</p>
             </div>
-            <div className="card">
+            <div className={styled.card}>
               <img src={sentimentsIcon} alt="sentiment" />
               <p>
                 Run sentiment anaylsis on audio files to monitor customer calls
@@ -76,10 +80,10 @@ function Solutions() {
         </div>
       </div>
 
-      <div className="buss-section">
-        <div className="containers">
-          <div className="buss-flex">
-            <div className="buss-txt">
+      <div className={styled.bussSection}>
+        <div className={styled.containers}>
+          <div className={styled.bussFlex}>
+            <div className={styled.bussTxt}>
               <h1>
                 Businesses with call centers know sentiment analysis data is
                 crucial, but finding an accurate service is time-intensive
@@ -97,20 +101,20 @@ function Solutions() {
                 center.
               </h4>
             </div>
-            <div className="buss-img">
+            <div className={styled.bussImg}>
               <img src={uploadImg} alt="upload" />
             </div>
           </div>
         </div>
       </div>
 
-      <div className="monitor-section">
-        <div className="containers">
-          <div className="monitor-flex">
-            <div className="buss-img">
+      <div className={styled.monitorSection}>
+        <div className={styled.containers}>
+          <div className={styled.monitorFlex}>
+            <div className={styled.bussImg}>
               <img src={monitor} alt="upload" className="img" />
             </div>
-            <div className="buss-txt">
+            <div className={styled.bussTxt}>
               <h1>
                 Monitoring customer service conversations and identifying
                 unhappy customers is time-consuming and expensive
@@ -134,19 +138,19 @@ function Solutions() {
         </div>
       </div>
 
-      <div className="containers">
-        <div className="upload-containers">
-          <div className="cont">
+      <div className={styled.containers}>
+        <div className={styled.uploadContainers}>
+          <div className={styled.cont}>
             <h4>Ready to improve your customer support efficiency?</h4>
             <h1>Upload. Transcribe. Analyze.</h1>
             <button type="button">Try for Free</button>
           </div>
         </div>
       </div>
-      <div className="monitor-section">
-        <div className="containers">
-          <div className="monitor-flex row-rev">
-            <div className="buss-txt">
+      <div className={styled.monitorSection}>
+        <div className={styled.containers}>
+          <div className={styled.monitorFlex}>
+            <div className={styled.bussTxt}>
               <h1>
                 The need for precise analytics data is ever-growing; quickly
                 analyze customer interactions, get accurate data, and extract
@@ -168,20 +172,20 @@ function Solutions() {
               </h4>
             </div>
 
-            <div className="buss-img">
+            <div className={styled.bussImg}>
               <img src={dashboard} alt="dashboard" />
             </div>
           </div>
         </div>
       </div>
 
-      <div className="monitor-section">
-        <div className="containers">
-          <div className="monitor-flex">
-            <div className="buss-img">
+      <div className={styled.monitorSection}>
+        <div className={styled.containers}>
+          <div className={styled.monitorFlex}>
+            <div className={styled.bussImg}>
               <img src={sentiment} alt="sentiment" />
             </div>
-            <div className="buss-txt">
+            <div className={styled.bussTxt}>
               <h1>
                 Managing your phone calls can take up a lot of time and telling
                 who is happy and unhappy with your service isn’t easy
@@ -200,9 +204,9 @@ function Solutions() {
         </div>
       </div>
 
-      <div className="containers">
-        <div className="setblur-containers">
-          <div className="cont">
+      <div className={styled.containers}>
+        <div className={styled.setblurContainers}>
+          <div className={styled.cont}>
             <h4>
               If you have any questions about our solutions? Please contact us
               by email: info@scrybe.com.
@@ -213,14 +217,14 @@ function Solutions() {
         </div>
       </div>
 
-      <div className="logo-section">
-        <div className="containers">
+      <div className={styled.logoSection}>
+        <div className={styled.containers}>
           <h1>We are loved by Companies of all sizes</h1>
           <p>
             Companies of all sizes from Startup and Fortune 500 companies use
             Scrybe{" "}
           </p>
-          <div className="logo-flex">
+          <div className={styled.logoFlex}>
             <img src={microsoft} alt="microsoft-logo" />
             <img src={nCast} alt="nCast-logo" />
             <img src={warpWire} alt="warpwire-logo" />
@@ -230,6 +234,8 @@ function Solutions() {
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import "./Services.scss";
+import Styling from "./Services.module.scss";
 
 import weCan from "./assets/what-we-can-do.png";
 import heroImg from "./assets/header-image.png";
@@ -7,13 +7,17 @@ import check from "./assets/checkmark.svg";
 import arrow from "./assets/arrow-right.svg";
 import sentiment from "./assets/sentiment-page.png";
 
+import NavBar from "../../components/navBar";
+import Footer from "../../components/footer";
+
 function Services() {
   return (
     <div className="services-section">
-      <div className="hero-section">
-        <div className="containers">
-          <div className="hero-flex">
-            <div className="text-cont">
+    <NavBar />
+      <div className={Styling.heroSection}>
+        <div className={Styling.containers}>
+          <div className={Styling.heroFlex}>
+            <div className={Styling.textCont}>
               <h1>Services</h1>
               <p>
                 Get the best off your Audio calls.
@@ -21,15 +25,15 @@ function Services() {
               </p>
               <button type="button">Try for free</button>
             </div>
-            <div className="img-cont">
+            <div className={Styling.imgCont}>
               <img src={heroImg} alt="transcribe" />
             </div>
           </div>
         </div>
       </div>
 
-      <div className="offer-section">
-        <div className="containers">
+      <div className={Styling.offerSection}>
+        <div className={Styling.containers}>
           <h1>We offer the best services</h1>
           <p>
             Scrybe makes customer engagement in your business seamless and easy
@@ -39,15 +43,15 @@ function Services() {
         </div>
       </div>
 
-      <div className="we-can-section">
-        <div className="containers">
-          <div className="wecan-flex">
-            <div className="wecan-img">
-              <img src={weCan} alt="wecan" className="we-img" />
+      <div className={Styling.wecanSection}>
+        <div className={Styling.containers}>
+          <div className={Styling.wecanFlex}>
+            <div className={Styling.wecanImg}>
+              <img src={weCan} alt="wecan" className={Styling.weImg} />
             </div>
-            <div className="wecan-txt">
+            <div className={Styling.wecanTxt}>
               <h1>Here Is What We Can Do For You</h1>
-              <li className="list">
+              <li className={Styling.list}>
                 An AI-based customer support attendance that automatically
                 transcribes and analyzes recorded conversations.
               </li>
@@ -61,12 +65,12 @@ function Services() {
         </div>
       </div>
 
-      <div className="transcription-section">
-        <div className="containers">
-          <div className="trans-flex">
-            <div className="trans-txt">
+      <div className={Styling.transcriptionSection}>
+        <div className={Styling.containers}>
+          <div className={Styling.transFlex}>
+            <div className={Styling.transTxt}>
               <h1>Audio-to-text Transcription</h1>
-              <div className="check-containers">
+              <div className={Styling.checkContainers}>
                 <span>
                   <img src={check} alt="checkmark" />
                   <p>Time Stamp</p>
@@ -89,16 +93,16 @@ function Services() {
               <img src={heroImg} alt="transcribe" />
             </div>
           </div>
-          <div className="line" />
+          <div className={Styling.line} />
         </div>
       </div>
 
-      <div className="sentiment-section">
-        <div className="containers">
-          <div className="trans-flex">
-            <div className="trans-txt">
+      <div className={Styling.sentimentSection}>
+        <div className={Styling.containers}>
+          <div className={Styling.transFlex}>
+            <div className={Styling.transTxt}>
               <h1>Sentiment Analysis</h1>
-              <div className="check-containers">
+              <div className={Styling.checkContainers}>
                 <span>
                   <img src={check} alt="checkmark" />
                   <p>Detects unprofessional words</p>
@@ -121,12 +125,12 @@ function Services() {
         </div>
       </div>
 
-      <div className="report-section">
-        <div className="containers">
-          <div className="trans-flex">
-            <div className="trans-txt">
+      <div className={Styling.reportSection}>
+        <div className={Styling.containers}>
+          <div className={Styling.transFlex}>
+            <div className={Styling.transTxt}>
               <h1>Detailed Report</h1>
-              <div className="check-containers">
+              <div className={Styling.checkContainers}>
                 <span>
                   <img src={check} alt="checkmark" />
                   <p>
@@ -139,16 +143,16 @@ function Services() {
                 <img src={arrow} alt="arrow" />
               </button>
             </div>
-            <div className="tras-img">
+            <div className={Styling.trasImg}>
               <img src={heroImg} alt="transcribe" />
             </div>
           </div>
-          <div className="line" />
+          <div className={Styling.line} />
         </div>
       </div>
 
-      <div className="article-section">
-        <div className="containers">
+      <div className={Styling.articleSection}>
+        <div className={Styling.containers}>
           <p>
             We help you inderstand your customers and your customer service.
             Have a feel of our uniqueness!
@@ -156,6 +160,7 @@ function Services() {
           <button type="button">Try For Free</button>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
