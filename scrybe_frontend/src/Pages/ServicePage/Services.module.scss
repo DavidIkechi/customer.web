@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
 @mixin btn {
     font-family: 'Kanit', sans-serif;
     background: #006CFF;
@@ -71,12 +69,12 @@
 @mixin heading {
     color: #1A1818;
     font-weight: 600;
-    font-size: 40px;
+    font-size: 40px !important;
     margin-bottom: 20px;
 }
 
 
-.hero-section {
+.heroSection {
     background: url(./assets/hero-bg.png);
     background-size: cover;
     background-repeat: no-repeat;
@@ -87,25 +85,28 @@
         padding: 4rem 0 7rem 0;
     }
 
-    .hero-flex {
+    .heroFlex {
         display: flex;
         align-items: center;
         justify-content: space-between;
     }
 
-    .text-cont {
+    .textCont {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
         width: 50%;
         h1 {
             color: #1A1818;
             font-weight: 700;
-            font-size: clamp(40px, 55px, 67px);
+            font-size: clamp(40px, 55px, 67px) !important;
             margin-bottom: 30px;
         }
     
         p {
             color: #1A1818;
             font-weight: 500;
-            font-size: clamp(22px, 30px, 37px);
+            font-size: clamp(22px, 30px, 37px) !important;
             line-height: 1.7;
             margin-bottom: 30px;
         }
@@ -119,7 +120,7 @@
         }
     }
 
-    .img-cont {
+    .imgCont {
         width: 50%;
 
         img {
@@ -128,7 +129,7 @@
     }
 }
 
-.offer-section {
+.offerSection {
     padding: 10rem 0;
     .containers {
         @include containers;
@@ -145,7 +146,7 @@
 
     p {
         color: #1A1818;
-        font-size: 35px;
+        font-size: 35px !important;
         text-align: center;
         width: 70%;
         line-height: 1.6;
@@ -163,20 +164,20 @@
     }
 }
 
-.we-can-section {
+.wecanSection {
     background: #E6F0FF;
     padding: 7rem 0;
 
     .containers {
         @include containers;
 
-        .wecan-flex {
+        .wecanFlex {
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
     
-        .wecan-txt {
+        .wecanTxt {
             width: 55%;
     
             h1 {
@@ -184,7 +185,7 @@
             }
     
             li {
-                font-size: 30px;
+                font-size: 30px !important;
                 line-height: 1.6;
                 font-weight: 300;
             }
@@ -194,34 +195,34 @@
             }
         }
     
-        .wecan-img {
+        .wecanImg {
             width: 40%;
             margin: auto;
 
-            .we-img {
+            .weImg {
                 width: 70%
             }
         }
     }
 }
 
-.transcription-section, .sentiment-section, .report-section {
+.transcriptionSection, .sentimentSection, .reportSection {
     .containers {
         @include containers;
 
-        .trans-flex {
+        .transFlex {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 8rem 0;
     
-            .trans-txt {
+            .transTxt {
                 width: 50%;
                 h1 {
                     @include heading;
                 }
     
-                .check-containers {
+                .checkContainers {
                     span {
                         display: flex;
                         align-items: baseline;
@@ -233,7 +234,7 @@
                         }
     
                         p {
-                            font-size: 27px;
+                            font-size: 27px !important;
                             font-weight: 400;
                             line-height: 1.7
                         }
@@ -249,7 +250,7 @@
                 }
             }
 
-            .tras-img {
+            .trasImg {
                 width: 45%;
 
                 img {
@@ -264,13 +265,13 @@
     }
 }
 
-.sentiment-section {
-    .trans-flex {
+.sentimentSection {
+    .transFlex {
         flex-direction: row-reverse;
     }
 }
 
-.article-section {
+.articleSection {
     padding: 6rem 0 20rem 0;
     
     .containers {
@@ -284,7 +285,7 @@
         p {
             color: #1A1818;
             font-weight: 300;
-            font-size: 25px;
+            font-size: 25px !important;
             text-align: center;
             width: 70%;
             line-height: 1.9;
@@ -302,21 +303,22 @@
 }
 
 @media (max-width: 970px) {
-    .hero-section {
-        .hero-flex {
+    .heroSection {
+        .heroFlex {
             flex-direction: column;
             justify-content: center;
             align-items: center;
             gap: 5rem;
 
-            .text-cont, .img-cont {
+            .textCont, .imgCont {
                 width: 100%;
                 text-align: center;
             }
 
-            .text-cont {
+            .textCont {
+                align-items: center;
                 p {
-                    font-size: 3.5vw;
+                    font-size: 3.5vw !important;
                 }
             }
         }
@@ -324,63 +326,63 @@
         
     }
 
-    .offer-section {
+    .offerSection {
         p {
             width: 90%;
-            font-size: 4.5vw;
+            font-size: 4.5vw !important;
         }
 
         h1 {
-            font-size: 5vw;
+            font-size: 5vw !important;
         }
     }
 
-    .we-can-section {
-        .wecan-flex {
+    .wecanSection {
+        .wecanFlex {
             flex-direction: column;
             gap: 4rem;
 
-            .wecan-img, .wecan-txt {
+            .wecanImg, .wecanTxt {
                 width: 100%;
             }
 
-            .wecan-img {
-                .we-img {
+            .wecanImg {
+                .weImg {
                     width: 55%;
                     display: block;
                     margin: auto;
                 }
             }
 
-            .wecan-txt {
+            .wecanTxt {
                 h1 {
                     text-align: center;
-                    font-size: 6vw;
+                    font-size: 6vw !important;
                 }
 
                 li {
-                    font-size: 20px;
+                    font-size: 20px !important;
                     text-align: center;
                 }
             }
         }
     }
 
-    .transcription-section, .sentiment-section, .report-section {
+    .transcriptionSection, .sentimentSection, .reportSection {
         .containers {
-            .trans-flex {
+            .transFlex {
                 flex-direction: column-reverse;
                 gap: 5rem;
     
-                .trans-txt, .tras-img {
+                .transTxt, .trasImg {
                     width: 100%;
                 }
 
-                .trans-txt {
+                .transTxt {
                     h1 {
                         text-align: center;
                     }
-                    .check-containers {
+                    .checkContainers {
                         span {
                             justify-content: center;
                             gap: 1rem;
@@ -401,30 +403,30 @@
 }
 
 @media (max-width: 500px) {
-    .hero-section {
+    .heroSection {
         .containers {
-            .hero-flex {
-                .text-cont {
+            .heroFlex {
+                .textCont {
                     p {
-                        font-size: 22px;
+                        font-size: 22px !important;
                     }
                 }
             }
         }
     }
 
-    .transcription-section, .sentiment-section, .report-section {
+    .transcriptionSection, .sentimentSection, .reportSection {
         .containers {
-            .trans-flex {
-                .trans-txt {
+            .transFlex {
+                .transTxt {
                     h1 {
-                        font-size: 5vw;
+                        font-size: 5vw !important;
                         text-align: center;
                     }
-                    .check-containers {
+                    .checkContainers {
                         span {
                             p {
-                                font-size: 15px;
+                                font-size: 15px !important;
                             }
 
                             img {
@@ -437,17 +439,17 @@
         }
     }
 
-    .wecan-txt {
+    .wecanTxt {
         li {
-            font-size: 15px;
+            font-size: 15px !important;
         }
     }
 
-    .article-section {
+    .articleSection {
         .containers {
             p {
                 width: 90%;
-                font-size: 17px;
+                font-size: 17px !important;
             }
         }
     }

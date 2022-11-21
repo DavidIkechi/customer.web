@@ -73,25 +73,26 @@
 
 @mixin pargraphs {
     color: #3F3F3F;
-    font-size: 19px;
+    font-size: 19px !important;
     line-height: 1.6;
     font-weight: 300;
+    display: block !important;
 }
 
 @mixin  headText {
-    font-size: 72px;
+    font-size: 72px !important;
     font-weight: 600;
     color: #3F3F3F;
     margin-bottom: 20px;
 }
 
-.header-section {
+.headerSection {
     background: #F9FDFF;
     padding: 4rem 0;
     .containers {
         @include container;
 
-        .event-flex {
+        .eventFlex {
             @include flexItem(space-between, row, auto);
 
                 h1 {
@@ -111,7 +112,7 @@
                 font-weight: 400;
                 cursor: pointer;
                 width: 180px;
-                font-size: 18px;
+                font-size: 18px !important;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -142,18 +143,18 @@
             @include container;
             h1 {
                 @include headText;
-                font-size: 47px;
+                font-size: 47px !important;
             }
 
-            .coming-flex {
-                // @include flexItem(flex-start, row, 5rem );
-                display: flex;
-                flex-direction: row;
-                gap: 5rem;
+            .comingFlex {
+                @include flexItem(flex-start, row, 5rem );
+                // display: flex;
+                // flex-direction: row;
+                // gap: 5rem;
                 align-items: flex-start;
                 margin-top: 3rem;
 
-                .comin-img {
+                .cominImg {
                     width: 40%;
 
                     img {
@@ -161,7 +162,7 @@
                     }
                 }
 
-                .comin-txt {
+                .cominTxt {
                     p {
                         @include pargraphs();
                         font-weight: 400;
@@ -187,7 +188,7 @@
     }
 }
 
-.mission-section {
+.missionSection {
     margin-top: 5rem;
     .containers {
         @include container;
@@ -195,7 +196,7 @@
 
         h1 {
             @include headText;
-            font-size: 40px;
+            font-size: 40px !important;
             margin-bottom: 2rem;
         }
 
@@ -206,7 +207,7 @@
             margin-bottom: 3rem;
         }
 
-        .speaker-container {
+        .speakerContainer {
             @include flexItem(space-between, row, 0);
 
             .speaker {
@@ -222,7 +223,7 @@
                     width: 200px;
                     text-align: center;
                     color: #fff;
-                    font-size: 14px;
+                    font-size: 14px !important;
                     border-radius: 3px;
                     margin: 10px auto;
                 }
@@ -246,15 +247,15 @@
             }
         }
 
-        .expect-container {
+        .expectContainer {
             margin-top: 5rem;
             h2 {
                 @include headText;
-                font-size: 30px;
+                font-size: 30px !important;
                 margin-bottom: 3rem;
             }
-            .expect-talk {
-                @include flexItem(space-between, row, 0);
+            .expectTalk {
+                @include flexItem(center, row, 0);
 
                 .expect {
                     width: 40%;
@@ -282,7 +283,7 @@
     }
 }
 
-.other-event {
+.otherEvent {
     margin: 5rem 0;
 
     .containers {
@@ -290,32 +291,35 @@
         padding: 0;
         h2 {
             @include headText();
-            font-size: 40px;
+            font-size: 40px !important;
             margin-bottom: 3rem;
         }
 
-        .content-container {
-            .event-content {
+        .contentContainer {
+            .eventContent {
                 @include flexItem(space-between, row, 4rem);
                 align-items: flex-start;
                 margin-bottom: 5rem;
-                .img-content {
+                .imgContent {
                     width: 45%;
 
                     img {
-                        max-width: 100%;
+                        width: 100%;
                     }
                 }
 
-                .txt-content {
+                .txtContent {
+                    display: flex;
+                    align-items: flex-start;
+                    flex-direction: column;
                     h4 {
                         @include headText;
-                        font-size: 30px;
+                        font-size: 30px !important;
                     }
 
                     p {
                         color: #3F3F3F;
-                        font-size: 17px;
+                        font-size: 17px !important;
                         line-height: 1.6;
                         font-weight: 200;
                         width: 50%;
@@ -336,8 +340,10 @@
     }
 }
 
-.past-event {
+.pastEvent {
     margin-top: 10rem;
+
+    
 
     .containers {
         @include container();
@@ -347,20 +353,27 @@
         h1 {
             @include headText();
             text-align: center;
-            font-size: 30px;
+            font-size: 30px !important;
             margin-bottom: 2rem;
         }
 
-        .past-content {
+        .pastContent::-webkit-scrollbar {
+            display: none;
+        }
+
+        .pastContent {
             @include flexItem(space-between, row , 4rem);
-            .past-container {
-                width: 35%;
+            scroll-snap-type: x proximity;
+            overflow-x: scroll;
+
+            .pastContainer {
+                min-width: 420px;
                 h2 {
                     @include headText();
-                    font-size: 25px;
+                    font-size: 25px !important;
                 }
 
-                .past-card {
+                .pastCard {
                     border: 5px solid #00A4FF;
                     border-radius: 10px;
                     padding: 40px;
@@ -369,13 +382,13 @@
                     .right {
                         text-align: right ;
                         color: #3F3F3FA3;
-                        font-size: 17px;
+                        font-size: 17px !important;
                         margin-bottom: 40px;
                     }
 
                     h3 {
                         @include headText;
-                        font-size: 27px;
+                        font-size: 25px !important;
                         text-align: center;
                         margin-bottom: 60px;
                     }
@@ -398,11 +411,136 @@
 }
 
 @media (max-width: 970px) {
+  .headerSection {
     .comingsoon {
         .containers {
-            .coming-flex {
-                @include flexItem(space-between, row-reverse, 2rem)
+            .comingFlex {
+                @include flexItem(flex-start, column, 5rem );
+                align-items: flex-start;
+
+                .cominImg {
+                    width: 70%;
+                }
+
+                .cominTxt {
+                    width: 80%;
+                }
             }
         }
     }
+  }
+
+  .missionSection {
+    .containers {
+        .speakerContainer {
+            flex-direction: column;
+            gap: 3rem;
+
+            .speaker {
+                width: 50%;
+            }
+        }
+    }
+  }
+
+  .otherEvent {
+    .containers {
+        .contentContainer {
+            .eventContent {
+                flex-direction: column;
+            }
+        }
+    }
+  }
+}
+
+@media (max-width: 765px) {
+    .headerSection {
+        .containers {
+                p {
+                    width: 80%;
+                }
+        }
+        .comingsoon {
+            .containers {
+                .comingFlex {
+                    .cominImg {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+
+    .otherEvent {
+        .containers {
+            .contentContainer {
+                .eventContent {
+                   .imgContent {
+                    width: 90%;
+                   }
+                }
+            }
+        }
+      }
+
+      .missionSection {
+        .expectContainer {
+            .expectTalk {
+                flex-wrap: wrap;
+                @include flexItem(center, row, 0);
+                align-items: center;
+            }
+        }
+      }
+
+}
+
+@media (max-width: 485px) {
+    .headerSection {
+        .containers {
+            .eventFlex {
+                h1 {
+                    font-size: 40px !important;
+                }
+            }
+        }
+    }
+
+    .otherEvent {
+        .containers {
+            .contentContainer {
+                .eventContent {
+                   .imgContent {
+                    width: 100%;
+                   }
+                }
+            }
+        }
+      }
+
+      .missionSection {
+        .containers {
+            .speakerContainer {
+    
+                .speaker {
+                    width: 70%;
+                }
+            }
+        }
+      }
+
+      .otherEvent {
+        .containers {
+            .contentContainer {
+                .eventContent {
+                   .txtContent {
+                    p {
+                        width: 90%;
+                    }
+                   }
+                }
+            }
+        }
+      }
 }
