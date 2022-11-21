@@ -1,0 +1,127 @@
+@use "../../functions.scss" as *;
+
+.nav {
+  &__closed {
+    display: none;
+    position: absolute;
+    @include media(1100px) {
+      display: block;
+      cursor: pointer;
+      position: absolute;
+      top: 60px;
+      right: 78px;
+    }
+  }
+  &__open {
+    display: none;
+    @include media(1100px) {
+      display: block;
+      cursor: pointer;
+    }
+  }
+  padding-block: pix-rem(20);
+  &__mobile {
+    display: flex;
+    justify-content: space-between;
+    width: 68%;
+    height: auto;
+    @include media(1100px) {
+      position: fixed;
+      flex-direction: column;
+      z-index: 4;
+      align-items: center;
+      top: 0;
+      bottom: 0;
+      z-index: 4;
+      background-color: white;
+      inset: 0;
+      left: 0;
+      justify-content: center;
+      width: 100vw;
+      display: none;
+    }
+  }
+  @include media(1100px) {
+    &__active {
+      display: flex;
+      position: fixed;
+      flex-direction: column;
+      z-index: 4;
+      align-items: center;
+      top: 0;
+      bottom: 0;
+      z-index: 4;
+      background-color: white;
+      inset: 0;
+      left: 0;
+      justify-content: center;
+      width: 100vw;
+    }
+  }
+
+  &_content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: min(100%, pix-rem(1264));
+    margin-inline: auto;
+    padding-inline: pix-rem(16);
+    position: relative;
+
+    button {
+      a {
+        color: white;
+        text-decoration: none;
+      }
+    }
+  }
+  &__links {
+    display: flex;
+    gap: pix-rem(24);
+    align-items: center;
+    @include media(1100px) {
+      flex-direction: column;
+      align-items: center;
+    }
+    & > * {
+      all: unset;
+      color: #5e5e5e;
+      font-weight: 300;
+    }
+  }
+  &__img {
+    max-width: pix-rem(172);
+  }
+  &__ctas {
+    display: flex;
+    gap: pix-rem(24);
+    @include media(1100px) {
+      flex-direction: column;
+    }
+    & > * {
+      all: unset;
+      padding: pix-rem(16) pix-rem(32);
+      border-radius: pix-rem(4);
+      @include media(1100px) {
+        text-align: center;
+      }
+      &:nth-child(1) {
+        background-color: transparent;
+        color: #006cff;
+        border: 1px solid #006cff;
+      }
+      &:nth-child(2) {
+        background-color: #006cff;
+        color: white;
+      }
+    }
+
+
+    .nav__signin {
+      a {
+        color: #006cff;
+      }
+    }
+
+  }
+}

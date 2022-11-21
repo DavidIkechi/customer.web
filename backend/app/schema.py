@@ -3,85 +3,84 @@ from enum import Enum
 from typing import List, Optional
 from pydantic import BaseModel, EmailStr
 
-class Company(BaseModel):
+class UserBase(BaseModel):
+    first_name: str
+    last_name: str
+    email: str
+    created_at: datetime
+
+class UserCreate(UserBase):
+    company_name: str
+    password: str
+
+class User(UserBase):
     id: int
+    company_id: int
+    is_active: bool
+    is_admin: bool
+    is_verified: bool
+
+    class Config:
+        orm_mode = True
+
+class JobBase(BaseModel):
+    job_status: str
+
+class JobCreate(JobBase):
+    pass
+
+class Job(JobBase):
+    id: int
+    audio_id: int
+    class Config:
+        orm_mode = True
+
+class AudioBase(BaseModel):
+    audio_path: str
+    transcript: str
+    timestamp: datetime
+    positivity_score: float
+    negativity_score : float
+    neutrality_score : float
+    overall_sentiment: str
+class AudioCreate(AudioBase):
+    pass
+
+class Audio(AudioBase):
+    id: int
+    agent_id: int
+    job : Job
+
+    class Config:
+        orm_mode = True
+
+class AgentBase(BaseModel):
+    first_name: str
+    last_name: str
+
+class AgentCreate(AgentBase):
+    pass
+
+class Agent(AgentBase):
+    id: int
+    company_id: int
+    audios : list[Audio] = []
+
+    class Config:
+        orm_mode = True
+
+class CompanyBase(BaseModel):
     name: str
     size: int
 
-class Users(BaseModel):
+class CompanyCreate(CompanyBase):
+    pass
+
+class Company(CompanyBase):
     id: int
-    firstname: str
-    lastname: str
-    email: EmailStr
-    password: str
-    company_id: int
-    is_verified: bool
-    is_admin: bool
+    users : list[User] = []
+    audios : list[Agent] = []
 
-
-class Agents(BaseModel):
-    id: int
-    first_name: str
-    last_name: str
-    agent_code: int
-    company_id: int
-
-class Audio(BaseModel):
-    id: int
-    audio_path: str
-    upload_date: datetime
-    transcript: str
-    agents_id: int
-
-
-class JobStatus(str, Enum):
-    in_progress = "in_progress"
-    success = "success"
-    failed = "failed"
-
-class Job(BaseModel):
-    id: int
-    created_at: datetime
-    jobStatus: JobStatus.in_progress
-    audio_id: int
-
-class FriendlyAnalysis(BaseModel):
-    id: int
-    score: int
-    start_time: datetime
-    end_time: datetime
-    audio_analysis_id: int
-
-class GrammerAnalysis(BaseModel):
-    id: int
-    start_time: datetime
-    end_time: datetime
-    audio_analysis_id: int
-
-
-class AngerAnalysis(BaseModel):
-    id: int
-    start_time: datetime
-    end_time: datetime
-    audio_analysis_id: int
-
-
-class CallDurationAnalysis(BaseModel):
-    id: int
-    start_time: datetime
-    end_time: datetime
-    audio_analysis_id: int
-
-
-class AudioAnalysis(BaseModel):
-    id: int
-    audio_id: int
-
-class AudioAnalysisSchema(AudioAnalysis):
-    friendly_analysis: List[FriendlyAnalysis]
-    grammatical_analysis: List[GrammerAnalysis]
-    anger_analysis: List[AngerAnalysis]
-    call_duration_analysis: List[CallDurationAnalysis]
-
-
+    class Config:
+        orm_mode = True
 

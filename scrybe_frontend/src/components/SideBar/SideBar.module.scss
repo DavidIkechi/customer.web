@@ -4,8 +4,11 @@
 }
 
 .SideBar {
+  z-index: 999;
+  position: fixed;
   width: 280px;
   height: 100vh;
+  top: 0;
   background-color: #ffffff;
   position: fixed;
   padding: pix-rem(32) 0 0 pix-rem(40);

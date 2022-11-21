@@ -1,0 +1,224 @@
+.main-container {
+  h1 {
+    font-weight: 600;
+  }
+
+  .our-promise {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .careers {
+    padding: 40px 10%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    h1 {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 11px;
+      letter-spacing: -0.02em;
+      margin: 20px 0;
+    }
+    p {
+      font-size: 12px;
+      text-align: justify;
+    }
+
+    .text-container {
+      .careers-button {
+        background: #006cff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 2px;
+        margin-top: 40px;
+        color: white;
+        cursor: pointer;
+      }
+    }
+
+    .img-container {
+      .careers-img {
+        width: 100%;
+        z-index: 100;
+      }
+    }
+  }
+
+  .our-promise-container {
+    background: rgb(224, 223, 223);
+    margin-top: 20px;
+    .our-promise {
+      padding: 20px 10%;
+      h1 {
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 11px;
+        letter-spacing: -0.02em;
+        margin: 20px 0;
+      }
+      p {
+        font-size: 12px;
+      }
+
+      .our-promise-heading {
+        padding-bottom: 5px;
+        border-bottom: 1px solid cyan;
+      }
+
+      .promises {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+
+        .promise {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+    }
+  }
+
+  .currently-hiring {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 5%;
+    margin-bottom: 100px;
+
+    h1 {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 11px;
+      letter-spacing: -0.02em;
+      margin: 20px 0;
+      color: white;
+    }
+
+    p,
+    a {
+      font-size: 12px;
+      color: white;
+    }
+
+    .currently-hiring-heading {
+      color: black;
+    }
+
+    .currently-hiring-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 5px;
+
+      .currently-hiring-grid {
+        background: #006cff;
+        padding: 5px 5px;
+        padding-bottom: 20px;
+        position: relative;
+
+        .see-more-link {
+          position: absolute;
+          bottom: 0px;
+          right: 10px;
+          margin-top: 5px;
+        }
+      }
+    }
+  }
+
+  @media (min-width: 700px) {
+    .careers {
+      margin-top: 100px;
+      flex-direction: row;
+      align-items: center;
+      gap: 40px;
+      h1 {
+        font-size: 42px;
+        font-weight: 700;
+        line-height: 11px;
+        letter-spacing: -0.02em;
+        margin: 20px 0;
+      }
+      p {
+        font-size: 17px;
+      }
+
+      .img-container {
+        width: 100%;
+      }
+    }
+
+    .our-promise-container {
+      margin: 100px 0;
+      padding-bottom: 100px;
+
+      .our-promise {
+        h1 {
+          font-size: 19px;
+          font-weight: 700;
+          letter-spacing: -0.02em;
+          margin: 20px 0;
+        }
+        p {
+          font-size: 17px;
+        }
+
+        .our-promise-heading {
+          font-size: 24px;
+          padding-bottom: 20px;
+          margin-bottom: 40px;
+        }
+        .promises {
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+          gap: 25px;
+        }
+      }
+    }
+
+    .currently-hiring {
+      padding: 0 10%;
+      margin-bottom: 100px;
+      h1,
+      p {
+        color: black;
+      }
+
+      h1 {
+        font-size: 19px;
+        font-weight: 700;
+        line-height: 11px;
+        letter-spacing: -0.02em;
+        margin: 20px 0;
+      }
+      p {
+        font-size: 17px;
+      }
+
+      .currently-hiring-heading {
+        margin: 20px 0;
+        font-size: 24px;
+      }
+
+      .currently-hiring-container {
+        gap: 20px;
+        .currently-hiring-grid {
+          background: white;
+          padding: 25px;
+
+          .see-more-link {
+            bottom: -10px;
+            a {
+              color: #006cff;
+            }
+          }
+        }
+
+        .mid-grid {
+          border-left: 1px solid black;
+          border-right: 1px solid black;
+        }
+      }
+    }
+  }
+}
