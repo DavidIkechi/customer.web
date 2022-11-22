@@ -1,7 +1,7 @@
 import React from "react";
 import NotificationCss from "./NotificationSettings.module.scss";
-import RedirectNav from "../../../../components/SettingsPageRedirectNav/SettingsPageRedirectNav";
-import OverlayEmail from "../../../../components/SettingsPageOverlay/SettingsPageOverlayEmail";
+import RedirectNav from "../../Components/SettingsPageRedirectNav/SettingsPageRedirectNav";
+import OverlayEmail from "../../Components/SettingsPageOverlay/SettingsPageOverlayEmail";
 
 import { Link } from "react-router-dom";
 

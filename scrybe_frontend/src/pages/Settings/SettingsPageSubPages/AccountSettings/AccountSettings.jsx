@@ -1,5 +1,5 @@
 import React from "react";
-import RedirectNav from "../../../../components/SettingsPageRedirectNav/SettingsPageRedirectNav";
+import RedirectNav from "../../Components/SettingsPageRedirectNav/SettingsPageRedirectNav";
 import AccountPageCss from "./AccountSettings.module.scss";
 import { Link } from "react-router-dom";
 

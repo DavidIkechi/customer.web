@@ -3,13 +3,12 @@ import MainPageCss from "./Settings.module.scss";
 import PersonalInformation from "../SettingsPageSubPages/PersonalInformation/PersonalInformationSettings";
 import AccountSetting from "../SettingsPageSubPages/AccountSettings/AccountSettings";
 import Notification from "../SettingsPageSubPages/Notifications/NotificationSettings";
-import Overlay from "../../../components/SettingsPageOverlay/SettingsPageOverlay";
+import Overlay from "../Components/SettingsPageOverlay/SettingsPageOverlay";
 import ProfilePic from "../assets/images/Pic.png";
 import ChevronRight from "../assets/icons/chevron-right.svg";
 import SideBar from "../../../components/SideBar/SideBar";
 import NavBar from "../../../components/navBar/index";
 import Footer from "../../../components/footer/index";
-// import NavBarN from "../../../components/navBar_free/index";
 
 import { Link } from "react-router-dom";
 

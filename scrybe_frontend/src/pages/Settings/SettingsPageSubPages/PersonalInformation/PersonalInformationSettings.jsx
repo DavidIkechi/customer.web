@@ -1,6 +1,6 @@
 import React from "react";
 import PersonalInfo from "./PersonalInformationSettings.module.scss";
-import RedirectNav from "../../../../components/SettingsPageRedirectNav/SettingsPageRedirectNav";
+import RedirectNav from "../../Components/SettingsPageRedirectNav/SettingsPageRedirectNav";
 import ProfilePic from "../../assets/images/Pic.png";
 import BlueEditPen from "../../assets/icons/blue-pencil.png";
 import BlackEditPen from "../../assets/icons/edit.svg";
