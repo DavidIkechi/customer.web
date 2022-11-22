@@ -27,7 +27,7 @@ import Account from "./pages/Account";
 import Signin from "./pages/SignIn/SignIn";
 import Careers from "./pages/Careers";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
-import IndustryArticle from "./components/Industry/industryArticle";
+// import IndustryArticle from "./components/Industry/industryArticle";
 import Signup from "./pages/SignUp/SignUp";
 import Successful from "./pages/Successful/Successful";
 import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
