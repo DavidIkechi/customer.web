@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Grid from "../../components/GridView/Grid";
-import data from "../../HistoryData";
+import data from "./HistoryData";
 import styles from "./history.module.scss";
 import List from "../../components/ListView/List";
 import ListHeader from "../../components/ListHeader/ListHeader";
