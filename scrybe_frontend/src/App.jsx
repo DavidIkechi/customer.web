@@ -27,7 +27,7 @@ import Account from "./pages/Account";
 import Signin from "./pages/SignIn/SignIn";
 import Careers from "./pages/Careers";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
-// import IndustryArticle from "./components/Industry/industryArticle";
+import IndustryArticle from "./components/Industry/industryArticle";
 import Signup from "./pages/SignUp/SignUp";
 import Successful from "./pages/Successful/Successful";
 import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
@@ -90,7 +90,7 @@ function App() {
       {/* industry */}
       <Route path="/industry" element={<Industry />} />
       {/* industry article */}
-      {/* <Route path="/industryarticle" element={<IndustryArticle />} /> */}
+      <Route path="/industryarticle" element={<IndustryArticle />} />
       {/* how it works */}
       <Route path="/how-it-works" element={<HowitWorks />} />
       {/* demo pages */}
