@@ -154,6 +154,7 @@ function App() {
         element={<PasswordResetSuccessful />}
       />
       <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
+      <Route path="/agent-report" element={<AgentReport />} />
     </Routes>
   );
 }
