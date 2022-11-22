@@ -9,10 +9,10 @@ import LandingPage from "./pages/landing-page-a";
 import PageB from "./pages/Landing-page-b";
 import TermsAndCondition from "./pages/TermsAndCondition/TermsOfService";
 import History from "./pages/History/History";
-import Services from "./pages/ServicePage";
-import Solutions from "./pages/SolutionPage";
+import Services from "./pages/Services/Services";
+import Solutions from "./pages/Solutions/Solutions";
 import DashboardOverview from "./pages/DashboardOverview";
-import Events from "./pages/EventsPage";
+import Events from "./pages/Events/Events";
 import HelpSupport from "./pages/HelpAndSupport/HelpSupport";
 import General from "./components/HelpAndSupport/HelpAndSupportGeneral/General";
 import General1 from "./components/HelpAndSupport/general1/General1";
@@ -28,6 +28,7 @@ import Account from "./pages/Account";
 import Signin from "./pages/SignIn/SignIn";
 import Careers from "./pages/Careers";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import IndustryArticle from "./components/Industry/industryArticle";
 import Signup from "./pages/SignUp/SignUp";
 import Successful from "./pages/Successful/Successful";
 import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
@@ -90,6 +91,8 @@ function App() {
       <Route path="/accounts" element={<Account />} />
       {/* industry */}
       <Route path="/industry" element={<Industry />} />
+      {/* industry article */}
+      <Route path="/industryarticle" element={<IndustryArticle />} />
       {/* how it works */}
       <Route path="/how-it-works" element={<HowitWorks />} />
       {/* demo pages */}
