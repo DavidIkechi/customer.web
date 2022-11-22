@@ -9,21 +9,21 @@
 
 // Medium devices
 @mixin md {
-  @media (min-width: #{$screen-md-min}) {
+  @media (min-width: #{bp.$screen-md-min}) {
     @content;
   }
 }
 
 // Large devices
 @mixin lg {
-  @media (min-width: #{$screen-lg-min}) {
+  @media (min-width: #{bp.$screen-lg-min}) {
     @content;
   }
 }
 
 // Extra large devices
 @mixin xl {
-  @media (min-width: #{$screen-xl-min}) {
+  @media (min-width: #{bp.$screen-xl-min}) {
     @content;
   }
 }

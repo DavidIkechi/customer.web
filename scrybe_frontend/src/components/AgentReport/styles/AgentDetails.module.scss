@@ -1,4 +1,4 @@
-@use "./_mixins.scss" as mixins;
+@use "../../../pages/AgentReport/styles/_mixins.scss" as mixins;
 
 .agentDetails {
   max-height: 100%;
@@ -13,7 +13,19 @@
   margin-bottom: 20px;
   @include mixins.sm {
     height: 444px;
-    padding: 20px 15px;
+    padding: 10px 10px;
+    width: 38%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border-radius: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+  @include mixins.md {
+    height: 444px;
+    padding: 10px 15px;
     width: 38%;
     background-color: white;
     display: flex;
@@ -30,28 +42,34 @@
     justify-content: space-evenly;
   }
   .firstp {
-    font-size: 14px;
-    margin-bottom: 10px;
-    color: #3F3F3F;
+    font-size: 0.1rem;
+    margin-bottom: 0.1rem;
+    color: #3f3f3f;
+    @include mixins.sm {
+      font-size: 10px;
+    }
   }
   .secondp {
-    font-size: 16px;
-    color: #3F3F3F;
+    font-size: 0.5rem;
+    color: #3f3f3f;
   }
   .callDetails {
     justify-content: space-between;
     display: flex;
-    margin: 10px 0px 10px 0px;
-    padding: 8px;
+    margin: 0.5rem 0px 0.8rem 0px;
+    padding: 0rem 10px;
     border-radius: 8px;
     background-color: #ececec;
-    gap: 8px;
     @include mixins.sm {
       margin: 0px;
     }
 
     .title {
       width: 48%;
+      @include mixins.sm {
+        width: 48%;
+        font-size: 0.2rem;
+      }
     }
     .number {
       font-weight: bold;

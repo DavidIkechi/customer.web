@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import styles from "../styles/AgentDetails.module.scss";
+import styles from "./styles/AgentDetails.module.scss";
 
 function AgentDetails() {
   return (

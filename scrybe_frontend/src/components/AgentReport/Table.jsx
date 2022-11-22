@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "../styles/Table.module.scss";
-import Icon from "../assets/table-icon.png";
+import styles from "./styles/Table.module.scss";
+import Icon from "../../pages/AgentReport/assets/table-icon.png";
 
 function Table() {
   return (
@@ -15,7 +15,13 @@ function Table() {
         <tbody>
           <tr>
             <td>
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
                 <div className={styles.nameImg}>
                   <img src={Icon} alt="icon" className={styles.img} />
                 </div>
