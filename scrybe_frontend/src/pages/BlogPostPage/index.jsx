@@ -1,13 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
-import DefaultLayout from "../../components/DefaultLayout";
-import image from "../../assets/post.png";
-import blogImage from "../../assets/blog_image.png";
-import arrowLeft from "../../assets/arrow_left.svg";
-import arrowRight from "../../assets/arrow_right.svg";
-import utils from "../../utils.module.scss";
+import DefaultLayout from "./DefaultLayout";
+import image from "./assets/post.png";
+import blogImage from "./assets/blog_image.png";
+import arrowLeft from "./assets/arrow_left.svg";
+import arrowRight from "./assets/arrow_right.svg";
+import utils from "./assets/utils.module.scss";
 import styles from "./styles.module.scss";
-import Button from "../../components/Button";
+import Button from "./Button";
 
 function BlogPostPage() {
   return (

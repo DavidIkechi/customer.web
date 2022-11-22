@@ -3,10 +3,10 @@ import { Routes, Route } from "react-router-dom";
 import SentimentAnalysis from "./pages/SentimentAnalysis";
 import DummyPage from "./pages/DummyPage";
 import TranscribePage from "./pages/TranscribePage/TranscribePage";
-import { FAQs, TermsOfService } from "./pages";
+import FAQs from "./pages/FaqsPage";
+import TermsAndCondition from "./pages/TermsAndCondition";
 import LandingPage from "./pages/landing-page-a";
 import PageB from "./pages/Landing-page-b";
-import TermsAndCondition from "./pages/TermsAndCondition/TermsOfService";
 import History from "./pages/History/History";
 import Services from "./pages/Services/Services";
 import Solutions from "./pages/Solutions/Solutions";
@@ -33,6 +33,9 @@ import Successful from "./pages/Successful/Successful";
 import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
+import Blogs from "./pages/BlogsPage";
+import BlogPostPage from "./pages/BlogPostPage";
+import TermsOfService from "./pages/TermsOfService";
 
 function App() {
   return (
@@ -116,10 +119,11 @@ function App() {
         element={<DummyPage someText="terms of service" />}
       />
       {/* blog */}
-      <Route path="/blog" element={<DummyPage someText="blog" />} />
+      <Route path="/blog" element={<Blogs someText="blog" />} />
+      <Route path="/blog/:id" element={<BlogPostPage someText="blog" />} />
       <Route path="/homeB" element={<PageB />} />
       <Route path="faq" element={<FAQs />} />
-      <Route path="faq-terms-of-service" element={<TermsOfService />} />
+      <Route path="terms-of-service" element={<TermsOfService />} />
       {/* HelpAndSupport */}
       <Route path="/help-support" element={<HelpSupport />} />
       <Route path="/help-support-general" element={<General />}>
