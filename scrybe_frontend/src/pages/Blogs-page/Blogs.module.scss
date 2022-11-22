@@ -7,13 +7,15 @@
   font-family: kanit;
   background: #feffff;
   max-width: 1440px;
+  a {
+    text-decoration: none !important;
+  }
   &__breadcrum {
-     padding: 0 2rem;
+    padding: 0 2rem;
     font-weight: 300;
     font-size: 20px;
     line-height: 26px;
     color: #454545;
-    
 
     a {
       font: inherit;
@@ -69,7 +71,7 @@
     font-weight: 600;
     width: 50%;
     &:first-child {
-      font-size: 4.3rem;
+      font-size: 4.3rem ;
       line-height: 74px;
       margin-right: 2rem;
 
@@ -135,8 +137,8 @@
       }
     }
   }
-  @media (max-width:400px) {
-    div{
+  @media (max-width: 400px) {
+    div {
       width: 90%;
       padding: 0 1rem;
     }
@@ -254,7 +256,7 @@ div a.blogs__navSelected {
   top: 50%;
   z-index: 99;
   @include display();
-  button{
+  button {
     position: absolute;
     border: none;
     padding: 5px 15px;
@@ -263,10 +265,10 @@ div a.blogs__navSelected {
     cursor: pointer;
     background: rgba(129, 128, 128, 0.349);
     color: #fff;
-    &:first-child{
+    &:first-child {
       left: 2rem;
     }
-    &:last-child{
+    &:last-child {
       right: 2rem;
     }
   }

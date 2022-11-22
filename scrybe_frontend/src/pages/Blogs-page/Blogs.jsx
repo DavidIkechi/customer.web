@@ -10,6 +10,7 @@ import styles from "./Blogs.module.scss";
 import utils from "../../utils.module.scss";
 import Card from "../../components/BlogCard/Card";
 import { blogs } from "../../assets/data";
+import FadeInSection from "../../components/FadeInSection";
 
 function Blogs() {
   return (
@@ -40,14 +41,16 @@ function Blogs() {
         </div>
         <div className={styles.blogs__grid}>
           {blogs.map((blog, i) => (
-            <Link to={`/blog/${i}`} key={i + 1}>
-              <Card
-                key={i + 1}
-                imageUrl={blog.img}
-                title={blog.title}
-                date={blog.date}
-                body={blog.content}
-              />
+            <Link to={`/${i}`} key={i + 1}>
+              <FadeInSection key={i + 1}>
+                <Card
+                  key={i + 1}
+                  imageUrl={blog.img}
+                  title={blog.title}
+                  date={blog.date}
+                  body={blog.content}
+                />
+              </FadeInSection>
             </Link>
           ))}
         </div>
