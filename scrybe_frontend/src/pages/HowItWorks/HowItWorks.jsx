@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styles from "../../styles/HowItWorks/HowItWorks.module.css";
-import Image1 from "../../assets/HowItWorks/howitworks1.svg";
-import Image2 from "../../assets/HowItWorks/howitworks2.svg";
-import Image3 from "../../assets/HowItWorks/howitworks3.svg";
-import Image4 from "../../assets/HowItWorks/howitworks4.svg";
+// import styles from "../../styles/HowItWorks/HowItWorks.module.css";
+// import Image1 from "../../assets/HowItWorks/howitworks1.svg";
+// import Image2 from "../../assets/HowItWorks/howitworks2.svg";
+// import Image3 from "../../assets/HowItWorks/howitworks3.svg";
+// import Image4 from "../../assets/HowItWorks/howitworks4.svg";
 
 function HowItWorks() {
   return (

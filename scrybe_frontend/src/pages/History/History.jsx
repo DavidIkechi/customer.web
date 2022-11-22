@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Grid from "../../components/GridView/Grid";
+// import Grid from "../../components/GridView/Grid";
 import data from "./HistoryData";
 import styles from "./history.module.scss";
-import List from "../../components/ListView/List";
-import ListHeader from "../../components/ListHeader/ListHeader";
-import Filter from "../../components/Filter/Filter";
+// import List from "../../components/ListView/List";
+// import ListHeader from "../../components/ListHeader/ListHeader";
+// import Filter from "../../components/Filter/Filter";
 
 export default function History() {
   const recordGrid = data.map((item) => (

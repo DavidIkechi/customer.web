@@ -2,8 +2,8 @@
 /* eslint-disable no-param-reassign */
 import React, { useState } from "react";
 import styles from "./FAQs.module.scss";
-import { FaqComponent } from "../../components/faqComponent";
-import { Hero } from "../../assets";
+// import { FaqComponent } from "../../components/faqComponent";
+// import { Hero } from "../../assets";
 
 function FAQs() {
   const [faqs, setFaqs] = useState([

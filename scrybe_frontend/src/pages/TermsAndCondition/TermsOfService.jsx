@@ -1,5 +1,5 @@
 import React from "react";
-import Content from "../../components/terms and condition/Content";
+// import Content from "../../components/terms and condition/Content";
 import styles from "./termsOfService.module.scss";
 
 function TermsOfService() {
