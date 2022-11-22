@@ -1,7 +1,7 @@
 import React from "react";
 
 import styles from "./industry.module.css";
-import IndustryCard from "../../components/Industry/industryCard";
+import IndustryCard from "./components/IndustryCard";
 
 function Industry() {
   return (

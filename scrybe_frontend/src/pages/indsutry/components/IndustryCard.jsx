@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styles from "../../pages/indsutry/industry.module.css";
-import Image from "../../pages/indsutry/assets/industryImage.png";
+import styles from "./IndustryCard.module.css";
+import Image from "../assets/industryImage.png";
 
 function industryCard() {
   return (
