@@ -1,5 +1,6 @@
 import "./App.scss";
 import { Routes, Route } from "react-router-dom";
+import AgentReport from "./pages/AgentReport";
 import SentimentAnalysis from "./pages/SentimentAnalysis";
 import DummyPage from "./pages/DummyPage";
 import TranscribePage from "./pages/TranscribePage/TranscribePage";
@@ -40,6 +41,7 @@ function App() {
       {/* landing page */}
       <Route path="/" element={<LandingPage />} />
       {/* sentiment analysis */}
+      <Route path="/agent-report" element={<AgentReport />} />
       <Route path="/sentiment-analysis" element={<SentimentAnalysis />} />
       {/* transcriptions */}
       <Route path="/transcriptions" element={<TranscribePage />} />
@@ -152,6 +154,7 @@ function App() {
         element={<PasswordResetSuccessful />}
       />
       <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
+      <Route path="/agent-report" element={<AgentReport />} />
     </Routes>
   );
 }
