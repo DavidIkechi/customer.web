@@ -12,9 +12,11 @@ function Logout() {
       <div>
         <div className={logoutStyles.login_form__div}>
           <form>
-            <h1>You’ve succesfully signed out.</h1>
-            <p>Please enter your details to login again</p>
-            <div>
+            <div className={logoutStyles.login_header__div}>
+              <h1>You’ve succesfully signed out.</h1>
+              <p>Please enter your details to login again</p>
+            </div>
+            <div className={logoutStyles.login_fields__div}>
               <label htmlFor="email">
                 <span>Email</span>
                 <input type="email" id="email" name="email" />
@@ -24,7 +26,7 @@ function Logout() {
                 <input type="password" id="password" name="password" />
               </label>
             </div>
-            <div>
+            <div className={logoutStyles.login_options__div}>
               <label htmlFor="remember-me">
                 <input
                   type="checkbox"
