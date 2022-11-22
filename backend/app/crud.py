@@ -38,7 +38,7 @@ def create_user(db: Session, user: schema.User):
     db.refresh(db_user)
     return db_user
 
-def update_user(db: Session, user: schema.update_user, user_id: int):
+def update_user(db: Session, user: schema.user_update, user_id: int):
     # Getting the current user
     db_user = get_user(
         db = db,

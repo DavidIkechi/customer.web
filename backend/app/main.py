@@ -146,5 +146,5 @@ async def email_verification(request: Request, token: str, db: Session = Depends
             "data" : f"Hello {user.first_name}, your account has been successfully verified"}
 
 @app.patch("/user/update/{user_id}", response_model=schema.user_update)
-def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depends(get_session)):
+def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depends(get_db)):
      return crud.update_user(db=db, user=user, user_id=user_id)

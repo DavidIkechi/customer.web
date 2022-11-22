@@ -9,7 +9,9 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse
 from crud import get_user_by_email
 from sqlalchemy.orm import Session
+from dotenv import load_dotenv
 
+load_dotenv()
 
 config_credentials = dotenv_values('.env')
 
@@ -19,9 +21,9 @@ conf = ConnectionConfig(
     MAIL_FROM = config_credentials['EMAIL'],
     MAIL_PORT = 587,
     MAIL_SERVER = 'smtp.gmail.com',
-    MAIL_STARTTLS = True,
+    MAIL_TLS = True,
     USE_CREDENTIALS = True,
-    MAIL_SSL_TLS= False
+    MAIL_SSL= False
     
 )
 
