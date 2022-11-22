@@ -90,7 +90,7 @@ function App() {
       {/* industry */}
       <Route path="/industry" element={<Industry />} />
       {/* industry article */}
-      <Route path="/industryarticle" element={<IndustryArticle />} />
+      {/* <Route path="/industryarticle" element={<IndustryArticle />} /> */}
       {/* how it works */}
       <Route path="/how-it-works" element={<HowitWorks />} />
       {/* demo pages */}
