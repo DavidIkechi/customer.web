@@ -1,0 +1,546 @@
+@mixin btn {
+    font-family: 'Kanit', sans-serif;
+    background: #006CFF;
+    padding: 15px 20px;
+    color: #fff;
+    border: 0;
+    border-radius: 3px;
+    font-weight: 400;
+    cursor: pointer;
+    display: inline-block;
+    width: 180px;
+    font-size: 18px;
+    position: relative;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+@mixin btnStates {
+    &:hover {
+        background: transparent;
+        border-color: #006CFF;
+        color: #006CFF;
+    }
+
+    &:active {
+        top: 2px;
+    }
+}
+
+@mixin btnTrans {
+    font-family: 'Kanit', sans-serif;
+    padding: 15px 20px;
+    background: transparent;
+    color: #006CFF;
+    border: 1px solid #006CFF;
+    border-radius: 3px;
+    font-weight: 400;
+    cursor: pointer;
+    width: 180px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+    transition: all 0.3s ease;
+}
+@mixin btnTransStates {
+    &:hover {
+        background: #006CFF;
+        border-color: #fff;
+        color: #fff;
+    }
+
+    &:active {
+        top: 3px;
+    }
+}
+
+@mixin container {
+    width: 90%;
+    margin: auto;
+    padding: 0;
+}
+
+@mixin flexItem($justifyContent, $direction, $gap) {
+    display: flex;
+    align-items: center;
+    flex-direction: $direction;
+    justify-content: $justifyContent;
+    gap: $gap;
+}
+
+@mixin pargraphs {
+    color: #3F3F3F;
+    font-size: 19px !important;
+    line-height: 1.6;
+    font-weight: 300;
+    display: block !important;
+}
+
+@mixin  headText {
+    font-size: 72px !important;
+    font-weight: 600;
+    color: #3F3F3F;
+    margin-bottom: 20px;
+}
+
+.headerSection {
+    background: #F9FDFF;
+    padding: 4rem 0;
+    .containers {
+        @include container;
+
+        .eventFlex {
+            @include flexItem(space-between, row, auto);
+
+                h1 {
+                    @include headText;
+                }
+    
+               
+    
+            button {
+                @include flexItem(space-between, row, 1rem);
+                font-family: 'Kanit', sans-serif;
+                padding: 15px 20px;
+                background: transparent;
+                color: #00A4FF;
+                border: 1px solid #00A4FF;
+                border-radius: 3px;
+                font-weight: 400;
+                cursor: pointer;
+                width: 180px;
+                font-size: 18px !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                position: relative;
+                transition: all 0.3s ease;
+            }
+        }
+
+        p {
+            @include pargraphs;
+            margin-bottom: 20px;
+            width: 50%
+        }
+
+        button {
+            @include btnTrans;
+
+            &:hover {
+                @include btnTransStates;
+            }
+        }
+    }
+
+    .comingsoon {
+        margin-top: 5rem;
+        .containers {
+            @include container;
+            h1 {
+                @include headText;
+                font-size: 47px !important;
+            }
+
+            .comingFlex {
+                @include flexItem(flex-start, row, 5rem );
+                // display: flex;
+                // flex-direction: row;
+                // gap: 5rem;
+                align-items: flex-start;
+                margin-top: 3rem;
+
+                .cominImg {
+                    width: 40%;
+
+                    img {
+                        width: 100%
+                    }
+                }
+
+                .cominTxt {
+                    p {
+                        @include pargraphs();
+                        font-weight: 400;
+                        width: 100%;
+                    }
+
+                    .line {
+                        border-bottom: 1px solid #3F3F3F;
+                        margin: 2rem 0;
+                    }
+
+                    button {
+                        margin-top: 2rem;
+                        @include btn();
+
+                        &:hover {
+                            @include btnStates;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.missionSection {
+    margin-top: 5rem;
+    .containers {
+        @include container;
+        text-align: center;
+
+        h1 {
+            @include headText;
+            font-size: 40px !important;
+            margin-bottom: 2rem;
+        }
+
+        p {
+            @include pargraphs;
+            width: 80%;
+            margin: auto;
+            margin-bottom: 3rem;
+        }
+
+        .speakerContainer {
+            @include flexItem(space-between, row, 0);
+
+            .speaker {
+                width: 25%;
+
+                img {
+                    margin: auto;
+                }
+
+                p {
+                    background: #005584;
+                    padding: 3px 10px;
+                    width: 200px;
+                    text-align: center;
+                    color: #fff;
+                    font-size: 14px !important;
+                    border-radius: 3px;
+                    margin: 10px auto;
+                }
+
+                span {
+                    background: #fff;
+                    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.068));
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 200px;
+                    margin: auto;
+                    padding: 5px 10px;
+                    border-radius: 3px;
+
+                    img {
+                        width: 20px;
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+
+        .expectContainer {
+            margin-top: 5rem;
+            h2 {
+                @include headText;
+                font-size: 30px !important;
+                margin-bottom: 3rem;
+            }
+            .expectTalk {
+                @include flexItem(center, row, 0);
+
+                .expect {
+                    width: 40%;
+                    padding: 2rem;
+
+                    img {
+                        margin: auto;
+                        width: 40px;
+                    }
+
+                    p {
+                        margin-top: 15px;
+                    }
+                }
+            }
+
+            button {
+                @include btn;
+
+                &:hover {
+                    @include btnStates();
+                }
+            }
+        }
+    }
+}
+
+.otherEvent {
+    margin: 5rem 0;
+
+    .containers {
+        @include container();
+        padding: 0;
+        h2 {
+            @include headText();
+            font-size: 40px !important;
+            margin-bottom: 3rem;
+        }
+
+        .contentContainer {
+            .eventContent {
+                @include flexItem(space-between, row, 4rem);
+                align-items: flex-start;
+                margin-bottom: 5rem;
+                .imgContent {
+                    width: 45%;
+
+                    img {
+                        width: 100%;
+                    }
+                }
+
+                .txtContent {
+                    display: flex;
+                    align-items: flex-start;
+                    flex-direction: column;
+                    h4 {
+                        @include headText;
+                        font-size: 30px !important;
+                    }
+
+                    p {
+                        color: #3F3F3F;
+                        font-size: 17px !important;
+                        line-height: 1.6;
+                        font-weight: 200;
+                        width: 50%;
+                        margin-bottom: 1rem;
+                    }
+
+                    button {
+                        @include btn;
+                        // margin-top: 1rem;
+
+                        &:hover {
+                            @include btnStates();
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.pastEvent {
+    margin-top: 10rem;
+
+    
+
+    .containers {
+        @include container();
+        padding: 0;
+        margin-bottom: 5rem;
+
+        h1 {
+            @include headText();
+            text-align: center;
+            font-size: 30px !important;
+            margin-bottom: 2rem;
+        }
+
+        .pastContent::-webkit-scrollbar {
+            display: none;
+        }
+
+        .pastContent {
+            @include flexItem(space-between, row , 4rem);
+            scroll-snap-type: x proximity;
+            overflow-x: scroll;
+
+            .pastContainer {
+                min-width: 420px;
+                h2 {
+                    @include headText();
+                    font-size: 25px !important;
+                }
+
+                .pastCard {
+                    border: 5px solid #00A4FF;
+                    border-radius: 10px;
+                    padding: 40px;
+                    text-align: center;
+
+                    .right {
+                        text-align: right ;
+                        color: #3F3F3FA3;
+                        font-size: 17px !important;
+                        margin-bottom: 40px;
+                    }
+
+                    h3 {
+                        @include headText;
+                        font-size: 25px !important;
+                        text-align: center;
+                        margin-bottom: 60px;
+                    }
+
+                    p {
+                        @include pargraphs();
+                        margin-bottom: 30px;
+                    }
+
+                    button {
+                        @include btn();
+                        &:hover {
+                            @include btnStates()
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 970px) {
+  .headerSection {
+    .comingsoon {
+        .containers {
+            .comingFlex {
+                @include flexItem(flex-start, column, 5rem );
+                align-items: flex-start;
+
+                .cominImg {
+                    width: 70%;
+                }
+
+                .cominTxt {
+                    width: 80%;
+                }
+            }
+        }
+    }
+  }
+
+  .missionSection {
+    .containers {
+        .speakerContainer {
+            flex-direction: column;
+            gap: 3rem;
+
+            .speaker {
+                width: 50%;
+            }
+        }
+    }
+  }
+
+  .otherEvent {
+    .containers {
+        .contentContainer {
+            .eventContent {
+                flex-direction: column;
+            }
+        }
+    }
+  }
+}
+
+@media (max-width: 765px) {
+    .headerSection {
+        .containers {
+                p {
+                    width: 80%;
+                }
+        }
+        .comingsoon {
+            .containers {
+                .comingFlex {
+                    .cominImg {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+
+    .otherEvent {
+        .containers {
+            .contentContainer {
+                .eventContent {
+                   .imgContent {
+                    width: 90%;
+                   }
+                }
+            }
+        }
+      }
+
+      .missionSection {
+        .expectContainer {
+            .expectTalk {
+                flex-wrap: wrap;
+                @include flexItem(center, row, 0);
+                align-items: center;
+            }
+        }
+      }
+
+}
+
+@media (max-width: 485px) {
+    .headerSection {
+        .containers {
+            .eventFlex {
+                h1 {
+                    font-size: 40px !important;
+                }
+            }
+        }
+    }
+
+    .otherEvent {
+        .containers {
+            .contentContainer {
+                .eventContent {
+                   .imgContent {
+                    width: 100%;
+                   }
+                }
+            }
+        }
+      }
+
+      .missionSection {
+        .containers {
+            .speakerContainer {
+    
+                .speaker {
+                    width: 70%;
+                }
+            }
+        }
+      }
+
+      .otherEvent {
+        .containers {
+            .contentContainer {
+                .eventContent {
+                   .txtContent {
+                    p {
+                        width: 90%;
+                    }
+                   }
+                }
+            }
+        }
+      }
+}
