@@ -1,10 +1,10 @@
 import React from "react";
-import CustomerSay from "../../components/customersSay";
-import Hero from "../../components/heroSection";
-import OurClient from "../../components/our-client";
-import styles from "./pageB.module.scss";
-import imag3d from "./assets/Other 14.webp";
-import upload from "./assets/Group 1000000932.png";
+// import CustomerSay from "../../components/customersSay";
+// import Hero from "../../components/heroSection";
+// import OurClient from "../../components/our-client";
+// import styles from "./pageB.module.scss";
+// import imag3d from "./assets/Other 14.webp";
+// import upload from "./assets/Group 1000000932.png";
 import NavBar from "../../components/navBar";
 import Footer from "../../components/footer";
 
@@ -12,7 +12,7 @@ function PageB() {
   return (
     <>
       <NavBar />
-      <Hero />
+      {/* <Hero />
       <OurClient />
       <section>
         <div className={styles.getStarted}>
@@ -67,7 +67,7 @@ function PageB() {
           See what our clients are<span> saying</span>{" "}
         </h2>
         <CustomerSay />
-      </section>
+      </section> */}
       <Footer />
     </>
   );

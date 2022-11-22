@@ -1,11 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500;600;700&display=swap');
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  /* border: 1px solid rgb(194, 31, 31); */
-}
 .content-container {
   background-color: #f1f1f1;
   display: grid;
@@ -53,22 +47,22 @@
   padding: 0 20px;
 }
 
-input{
-  width: 100%;
-  border: 2px solid rgba(170, 170, 170, 0.178);
-  padding: 5px 15px;
-  border-radius: 3px;
-  background-color: #ECECEC;
-  outline: none;
-}
+// input{
+//   width: 100%;
+//   border: 2px solid rgba(170, 170, 170, 0.178);
+//   padding: 5px 15px;
+//   border-radius: 3px;
+//   background-color: #ECECEC;
+//   outline: none;
+// }
 
 .InputWithIcon input{
   padding-left: 20px;
 }
 
-select{
-  outline: none;
-}
+// select{
+//   outline: none;
+// }
 
 .right-cotent2-container{
   display: flex;
