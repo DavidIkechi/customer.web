@@ -56,19 +56,19 @@ function FAQs() {
     // },
   ]);
 
-  const toggleFAQ = (index) => {
-    setFaqs(
-      faqs.map((faq, i) => {
-        if (i === index) {
-          faq.open = !faq.open;
-        } else {
-          faq.open = false;
-        }
+  // const toggleFAQ = (index) => {
+  //   setFaqs(
+  //     faqs.map((faq, i) => {
+  //       if (i === index) {
+  //         faq.open = !faq.open;
+  //       } else {
+  //         faq.open = false;
+  //       }
 
-        return faq;
-      })
-    );
-  };
+  //       return faq;
+  //     })
+  //   );
+  // };
 
   return (
     <div className={styles.faq__wrapper}>
@@ -77,9 +77,7 @@ function FAQs() {
           <div>
             Get the answers you're looking for on <span>Scrybe</span>
           </div>
-          <div>
-            <img src={Hero} alt="" />
-          </div>
+          <div>{/* <img src={Hero} alt="" /> */}</div>
         </div>
       </div>
 
@@ -89,7 +87,7 @@ function FAQs() {
           <p>Need Some Answers?</p>
         </div>
         <div className={styles.faq__accordion}>
-          <div className="faqs">
+          {/* <div className="faqs">
             {faqs.map((faq, index) => (
               <FaqComponent
                 faq={faq}
@@ -98,7 +96,7 @@ function FAQs() {
                 toggleFAQ={toggleFAQ}
               />
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

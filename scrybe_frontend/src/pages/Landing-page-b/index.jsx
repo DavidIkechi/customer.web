@@ -12,7 +12,7 @@ function PageB() {
   return (
     <>
       <NavBar />
-      <Hero />
+      {/* <Hero />
       <OurClient />
       <section>
         <div className={styles.getStarted}>
@@ -67,7 +67,7 @@ function PageB() {
           See what our clients are<span> saying</span>{" "}
         </h2>
         <CustomerSay />
-      </section>
+      </section> */}
       <Footer />
     </>
   );

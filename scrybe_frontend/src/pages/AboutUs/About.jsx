@@ -55,7 +55,7 @@ function About() {
             </p>
           </div>
           <div className={`${styles.column__right} ${styles.column}`}>
-            <img src={image1} alt="" />
+            {/* <img src={image1} alt="" /> */}
           </div>
         </div>
       </div>
@@ -68,7 +68,7 @@ function About() {
               <div className={styles.wrap}>
                 <div className={styles.heading__icon}>
                   <h4>Customer Success</h4>
-                  <img src={icon3} alt="" />
+                  {/* <img src={icon3} alt="" /> */}
                 </div>
                 <p>
                   Our number one goal is to see our customers suceed at
@@ -79,7 +79,7 @@ function About() {
               <div className={styles.wrap}>
                 <div className={styles.heading__icon}>
                   <h4>Teamwork</h4>
-                  <img src={icon1} alt="" />
+                  {/* <img src={icon1} alt="" /> */}
                 </div>
                 <p>
                   The foundation of Scrybe is Teamwork. Every person in every
@@ -94,7 +94,7 @@ function About() {
               <div className={styles.wrap}>
                 <div className={styles.heading__icon}>
                   <h4>Creativity</h4>
-                  <img src={icon2} alt="" />
+                  {/* <img src={icon2} alt="" /> */}
                 </div>
                 <p>
                   We are a team of creative and innovative people who think
@@ -105,7 +105,7 @@ function About() {
               <div className={styles.wrap}>
                 <div className={styles.heading__icon}>
                   <h4>Ownership</h4>
-                  <img src={icon4} alt="" />
+                  {/* <img src={icon4} alt="" /> */}
                 </div>
                 <p>
                   We are more than employees at Scrybe. Every person that is a
@@ -131,19 +131,19 @@ function About() {
           </div>
           <div className={styles.row}>
             <div className={styles.companies}>
-              <img src={partner1} alt="" />
+              {/* <img src={partner1} alt="" /> */}
               <h4>HotelsNg</h4>
             </div>
             <div className={styles.companies}>
-              <img src={partner2} alt="" />
+              {/* <img src={partner2} alt="" /> */}
               <h4>HNG i9</h4>
             </div>
             <div className={styles.companies}>
-              <img src={partner3} alt="" />
+              {/* <img src={partner3} alt="" /> */}
               <h4>BrainBox inc.</h4>
             </div>
             <div className={styles.companies}>
-              <img src={partner4} alt="" />
+              {/* <img src={partner4} alt="" /> */}
               <h4>The HNG Internship</h4>
             </div>
           </div>
@@ -164,43 +164,43 @@ function About() {
           <div className={styles.row}>
             <div className={styles.wrap2}>
               <div className={styles.col}>
-                <img src={team1} alt="" />
+                {/* <img src={team1} alt="" /> */}
                 <h5>Mark Essien</h5>
                 <p>Advisor</p>
               </div>
               <div className={styles.col}>
-                <img src={team2} alt="" />
+                {/* <img src={team2} alt="" /> */}
                 <h5>Aigbe Marvelous</h5>
                 <p>Advisor</p>
               </div>
               <div className={styles.col}>
-                <img src={team3} alt="" />
+                {/* <img src={team3} alt="" /> */}
                 <h5>Collins Akpaka</h5>
                 <p>CEO</p>
               </div>
               <div className={styles.col}>
-                <img src={team4} alt="" />
+                {/* <img src={team4} alt="" /> */}
                 <h5>Delphine Ogbonna</h5>
                 <p>Lead designer</p>
               </div>
 
               <div className={styles.col}>
-                <img src={team5} alt="" />
+                {/* <img src={team5} alt="" /> */}
                 <h5>Ugochukwu Odumegwu</h5>
                 <p>Back-End Lead</p>
               </div>
               <div className={styles.col}>
-                <img src={team6} alt="" />
+                {/* <img src={team6} alt="" /> */}
                 <h5>Tochukwu Bedford</h5>
                 <p>Front-End Lead</p>
               </div>
               <div className={styles.col}>
-                <img src={team7} alt="" />
+                {/* <img src={team7} alt="" /> */}
                 <h5>Alice Awobite</h5>
                 <p>Product Designer</p>
               </div>
               <div className={styles.col}>
-                <img src={team8} alt="" />
+                {/* <img src={team8} alt="" /> */}
                 <h5>Favour Mustapha</h5>
                 <p>Product Designer</p>
               </div>

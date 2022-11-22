@@ -10,13 +10,13 @@ import styles from "./HelpSupport.module.scss";
 function HelpSupport() {
   return (
     <div className={styles.body}>
-      <Header />
+      {/* <Header />
       <Input />
       <Cards />
       <div className={styles.article}>
         <Articles />
       </div>
-      <Contact />
+      <Contact /> */}
     </div>
   );
 }

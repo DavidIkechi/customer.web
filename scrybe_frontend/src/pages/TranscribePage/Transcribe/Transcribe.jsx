@@ -6,8 +6,8 @@ import styles from "./Transcribe.module.scss";
 function Transcribe() {
   return (
     <div className={styles.Transcribe}>
-      <TranscriptionHeader />
-      <TranscriptionMain />
+      {/* <TranscriptionHeader />
+      <TranscriptionMain /> */}
     </div>
   );
 }

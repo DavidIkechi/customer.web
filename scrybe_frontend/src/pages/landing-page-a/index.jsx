@@ -14,9 +14,7 @@ function LandingPage() {
     <div>
       <NavBarFree />
       {/* <Hero /> */}
-      <section aria-label="Our Clients">
-        {/* <OurClient /> */}
-      </section>
+      <section aria-label="Our Clients">{/* <OurClient /> */}</section>
 
       <section aria-label="About Us">
         <div className={` ${styles.aboutUs}`}>
