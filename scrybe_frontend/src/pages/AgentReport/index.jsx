@@ -1,7 +1,7 @@
 import React from "react";
-import AgentDetails from "../../components/AgentReport/AgentDetails";
-import AgentRecordings from "../../components/AgentReport/AgentRecordings";
-import Charts from "../../components/AgentReport/Chart";
+import AgentDetails from "./components/AgentDetails";
+import AgentRecordings from "./components/AgentRecordings";
+import Charts from "./components/Chart";
 import styles from "./styles/AgentReport.module.scss";
 
 function AgentReport() {

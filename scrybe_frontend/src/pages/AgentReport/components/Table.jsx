@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./styles/Table.module.scss";
-import Icon from "../../pages/AgentReport/assets/table-icon.png";
+import styles from "../styles/Table.module.scss";
+import Icon from "../assets/table-icon.png";
 
 function Table() {
   return (

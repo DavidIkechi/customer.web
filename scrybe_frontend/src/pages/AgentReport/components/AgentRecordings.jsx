@@ -1,6 +1,6 @@
 import React from "react";
 // import BasicTable from "./BasicTable";
-import styles from "./styles/AgentRecordings.module.scss";
+import styles from "../styles/AgentRecordings.module.scss";
 import Table from "./Table";
 
 function AgentRecordings() {
