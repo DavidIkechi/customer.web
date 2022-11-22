@@ -1,13 +1,14 @@
 from datetime import datetime
 from enum import Enum
 from typing import List, Optional
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Extra
 
 class UserBase(BaseModel):
     first_name: str
     last_name: str
     email: str
     created_at: datetime
+    
 
 class UserCreate(UserBase):
     company_name: str
