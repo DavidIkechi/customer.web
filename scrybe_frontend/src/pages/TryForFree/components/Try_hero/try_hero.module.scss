@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap');
 .trySection{
     font-family: 'Kanit', sans-serif;
     width: 100%;
@@ -26,8 +26,8 @@
         width: 45%;
         
         
-        h3{
-            font-weight: 600;
+        .Hero1 h3{
+            font-weight: 600!important;
             font-size: 3.3rem;
             line-height: 72px;
             padding-top: 2vh;
@@ -111,9 +111,9 @@
             width: 45%;
             
             
-            h3{
+            .try{
                 font-weight: 600;
-                font-size: 3.2rem;
+                font-size: 3.2rem!important;
                 line-height: 72px;
                 padding-top: 2vh;
                 padding-bottom: 6vh;
@@ -194,7 +194,7 @@
             
             h3{
                 font-weight: 600;
-                font-size: 3rem;
+                font-size: 3rem!important;
                 line-height: 72px;
                 padding-top: 1vh;
                 padding-bottom: 3vh;

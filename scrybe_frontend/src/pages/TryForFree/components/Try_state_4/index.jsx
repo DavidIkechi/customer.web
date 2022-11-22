@@ -17,7 +17,7 @@ export default function TryFourth() {
           <div className={styles.recordingImage}>
             <img src={RecordingName} alt="some" />
           </div>
-          <div>
+          <div className={styles.recordingText}>
             <p>Recording 1 name. mp3</p>
             <small>10 mb</small>
           </div>
@@ -71,13 +71,13 @@ export default function TryFourth() {
         <hr />
 
         <div className={styles.overallSentiment}>
-          <h3>Overall Sentiment</h3>
+          <h3 className={styles.h3}>Overall Sentiment</h3>
 
           <div className={styles.overallProgress}>
             <div className={styles.progress}>
               <p>Agent Friendliness</p>
               <div className={styles.spanDiv}>
-                <div className={styles.span1}>.</div>
+                <div className={styles.span1}></div>
                 <p>90%</p>
               </div>
             </div>
@@ -85,7 +85,7 @@ export default function TryFourth() {
             <div className={styles.progress}>
               <p>Customer Satisfaction</p>
               <div className={styles.spanDiv}>
-                <div className={styles.span1}>.</div>
+                <div className={styles.span1}></div>
                 <p>90%</p>
               </div>
             </div>
@@ -93,7 +93,7 @@ export default function TryFourth() {
             <div className={styles.progress}>
               <p>Detected Harsh Words</p>
               <div className={styles.spanDiv}>
-                <div className={styles.span1}>.</div>
+                <div className={styles.span1}></div>
                 <p>90%</p>
               </div>
             </div>

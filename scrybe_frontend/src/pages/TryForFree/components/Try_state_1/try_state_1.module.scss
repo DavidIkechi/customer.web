@@ -6,7 +6,7 @@
     margin: 10vh 15% 3vh;
     display: flex;
     justify-content: center;
-    border: 1px dashed #006CFF;
+    border: 2px dashed #006CFF;
     border-radius: 24px;
     text-align: center;
     background: rgba(205, 225, 237, 0.08);
@@ -48,13 +48,22 @@
 
         div{
             border: 1px solid #706F6F;
-            height: 10vh;
+            height: 11vh;
             transform: rotate(90deg);
-            margin-top: -3vh;
+            margin-top: -2.5vh;
         }
     }
-    button{
+    .selectButton1{
         background: #ECECEC;
+        margin-top: 4vh;
+        border-radius: 4px;
+        padding: 1.8vh 9%;
+        border: 0;
+        // cursor: pointer;
+    }
+    .selectButton2{
+        background: #006CFF;
+        color: #FFFFFF;
         margin-top: 4vh;
         border-radius: 4px;
         padding: 1.8vh 9%;
