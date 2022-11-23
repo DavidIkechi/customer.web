@@ -22,21 +22,20 @@
 .modal_close {
   display: none;
 }
-.modal {
+.uploaded_modal {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background: #fff;
-  padding: 2rem;
+  padding: 1rem;
   border-radius: 5px;
   z-index: 100;
+  height: max-content;
 
   .modalbox {
-    position: relative;
-    border: none !important;
-    height: 150px !important;
-    outline: none !important;
+    border: none;
+    outline: none;
     .close_modal_icon {
       position: absolute;
       top: 0;
@@ -100,6 +99,7 @@
 .uploaded_header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   h1,
   h2 {
@@ -107,6 +107,31 @@
     font-weight: 600;
     font-size: 20px;
     line-height: 24px;
+  }
+
+  .UploadedNavbarRec_btnwrap {
+    background: #006cff;
+    border-radius: 4px;
+    display: block;
+    padding: 12px 32px;
+    width: 143px;
+    display: flex;
+    height: 48px;
+    display: none;
+    img {
+      margin-right: 0.5rem;
+      width: 14px;
+    }
+    .UploadedNavbarRec_btn {
+      display: block;
+      outline: none;
+      border: none;
+      background: none;
+      color: #ffffff;
+      font-family: "Kanit";
+      font-weight: 500;
+      font-size: 14px;
+    }
   }
 }
 .est_time_left_num {
@@ -205,6 +230,7 @@
   .retry {
     color: #006cff !important;
     margin-left: 10px;
+    text-decoration: underline;
   }
 }
 
@@ -271,8 +297,6 @@
     border: none;
     background: #ececec !important;
     cursor: not-allowed;
-  }
-  .processing {
   }
 
   //custom select
@@ -346,6 +370,11 @@
   .uploaded_header {
     h2 {
       display: none !important;
+    }
+    .UploadedNavbarRec_btnwrap {
+      display: flex;
+      padding: 5px 20px;
+      width: 120px;
     }
   }
 
@@ -449,5 +478,53 @@
 
   .modalbox {
     width: 300px !important;
+  }
+}
+
+//ipad styles
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .uploaded_recordings {
+    padding: 1rem 5px !important;
+    width: 100%;
+  }
+  .uploaded_header h1 {
+    font-size: 20px !important;
+    margin-left: 1rem;
+  }
+  .uploaded_header {
+    h2 {
+      display: none !important;
+    }
+    .UploadedNavbarRec_btnwrap {
+      display: flex;
+      padding: 5px 20px;
+      width: 120px;
+    }
+  }
+  .uploaded_table {
+    th,
+    td {
+      font-size: 24px !important;
+    }
+    td {
+      .retry {
+        margin-left: 0px !important;
+        text-decoration: underline;
+        font-size: 16px !important;
+      }
+      strong {
+        font-size: 16px !important;
+      }
+    }
+  }
+  .uploaded_table-row th:nth-child(7) {
+    display: none !important;
+  }
+
+  .uploaded_table tbody {
+    .uploaded_table_body_cell_img,
+    .delete_icon {
+      display: none;
+    }
   }
 }

@@ -3,11 +3,13 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 
+import { PropTypes } from "prop-types";
 import React, { useEffect, useState } from "react";
 import closeModalIcon from "./imgs/close-icon.svg";
 import deleteIcon from "./imgs/delete-icon.svg";
 import notfoundImg from "./imgs/notfound.svg";
 import soundwave from "./imgs/soundwave.svg";
+import uploadBtn_icon from "./imgs/uploadBtnIcon.svg";
 import styles from "./tabledata.module.scss";
 
 // dummy recordings
@@ -79,7 +81,7 @@ const recordings = [
   },
 ];
 
-const TableData = () => {
+const TableData = ({ searchKeyword }) => {
   const [allRecordings, setAllRecordings] = useState(recordings);
   const [recordCheckedList, setRecordCheckedList] = useState([]);
   const [openModal, setOpenModal] = useState(false);
@@ -89,7 +91,6 @@ const TableData = () => {
   };
   const handleClose = () => {
     setOpenModal(false);
-    window.location.reload();
   };
   const timeLeft = 20;
 
@@ -110,7 +111,6 @@ const TableData = () => {
     setAllRecordings(newRecordings);
     setRecordCheckedList([]);
     handleClose();
-    window.location.reload();
   };
 
   const deleteRecording = (id) => {
@@ -118,7 +118,6 @@ const TableData = () => {
     setAllRecordings(newRecordings);
   };
 
-  // returns true if all recordings dont have the Processing status
   const allRecordingsProcessed = () => {
     const allProcessed = allRecordings.every(
       (item) => item.status !== "Processing"
@@ -130,21 +129,29 @@ const TableData = () => {
     }
   };
 
+  const searchRecordings = (allrecords) => {
+    return allrecords.filter((item) => {
+      return JSON.stringify(item.fileName)
+        .toLowerCase()
+        .includes(searchKeyword.toLowerCase());
+    });
+  };
+
   useEffect(() => {
     allRecordingsProcessed();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allRecordings]);
+  }, [allRecordings, searchKeyword]);
   return (
     <div
       className={`${styles.uploaded_recordings} ${
-        allRecordings.length < 1 ? styles.no_items_found : ""
+        searchRecordings(allRecordings).length < 1 ? styles.no_items_found : ""
       } ${recordingsProcessed ? styles.processed : ""}`}
     >
       <div className={styles.overall_table}>
         <div
           className={`${openModal ? styles.modal_open : styles.modal_close}`}
         >
-          <div className={styles.modal}>
+          <div className={styles.uploaded_modal}>
             <div className={styles.modalbox}>
               <div className={styles.close_modal_icon} onClick={handleClose}>
                 <img src={closeModalIcon} alt="close modal icon" />
@@ -177,6 +184,10 @@ const TableData = () => {
             Estimated Time Left:{" "}
             <strong className={styles.est_time_left_num}>{timeLeft}</strong> Min
           </h2>
+          <div className={styles.UploadedNavbarRec_btnwrap}>
+            <img src={uploadBtn_icon} alt="" />
+            <button className={styles.UploadedNavbarRec_btn}>Upload</button>
+          </div>
         </div>
         <div className={styles.uploaded_table_wrap}>
           <table className={styles.uploaded_table}>
@@ -191,9 +202,9 @@ const TableData = () => {
                 <th />
               </tr>
             </thead>
-            {allRecordings.length > 0 ? (
+            {searchRecordings(allRecordings).length > 0 ? (
               <tbody className={styles.uploaded_table_body}>
-                {allRecordings.map((recording) => (
+                {searchRecordings(allRecordings).map((recording) => (
                   <tr key={recording.id}>
                     <td
                       className={styles.uploaded_table_body_checkbox_img_wrap}
@@ -257,7 +268,7 @@ const TableData = () => {
             )}
           </table>
         </div>
-        {allRecordings.length > 0 && (
+        {searchRecordings(allRecordings).length > 0 && (
           <div className={styles.uploaded_recordings_options}>
             <div className={styles.bulkbtn_calbackurl_wrap}>
               <div className={styles.bulkselect_wrap}>
@@ -288,6 +299,10 @@ const TableData = () => {
       </div>
     </div>
   );
+};
+
+TableData.propTypes = {
+  searchKeyword: PropTypes.string.isRequired,
 };
 
 export default TableData;
