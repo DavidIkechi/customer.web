@@ -1,6 +1,7 @@
 from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException
 from routers.sentiment import sentiment
 from routers.transcribe import transcribe_file
+import auth
 import models
 from jwt import (
     main_login
@@ -78,9 +79,14 @@ async def analyse(file: UploadFile=File(...)):
     return {"transcript": transcript, "sentiment_result": sentiment_result}
 
 
+
 @app.post("/new_analyse", tags=['analyse'])
-async def new_analyse(audio: schema.AudioCreate, db: Session = Depends(get_db), file: UploadFile=File(...)):
-    aud = crud.create_audio(db, audio, user_id)
+async def new_analyse(audio: schema.AudioCreate,
+                    history: schema.HistoryRequest,
+                    user: schema.User = Depends(auth.get_current_user),
+                    db: Session = Depends(get_db), 
+                    file: UploadFile=File(...),):
+    aud = crud.create_audio(db, audio, user_id=user.id)
 
     try:
         contents = file.file.read()
@@ -99,6 +105,10 @@ async def new_analyse(audio: schema.AudioCreate, db: Session = Depends(get_db), 
     aud.positivity_score = sentiment_result['positivity_score']
     aud.neutrality_score = sentiment_result['neutrality_score']
     aud.overall_sentiment = sentiment_result['overall_sentiment']
+
+    history_create: schema.HistoryCreate = {**history, "user_id":user.id, "sentiment_result":aud.overall_sentiment}
+
+    crud.create_history(db, history_create)
 
     return {"transcript": transcript, "sentiment_result": sentiment_result}
 
@@ -145,6 +155,12 @@ async def email_verification(request: Request, token: str, db: Session = Depends
             "status" : "ok",
             "data" : f"Hello {user.first_name}, your account has been successfully verified"}
 
-@app.patch("/user/update/{user_id}", response_model=schema.user_update)
-def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depends(get_session)):
+@app.patch("/user/update/{user_id}", response_model=schema.UserUpdate)
+def update_user(user: schema.UserUpdate, user_id: int, db:Session= Depends(get_db)):
      return crud.update_user(db=db, user=user, user_id=user_id)
+
+
+
+@app.get('/history/{user_id}')
+async def get_history(user_id: int):
+    return crud.get_history_by_user_id(user_id)
