@@ -1,0 +1,31 @@
+button {
+  position: absolute;
+  border: none;
+  padding: 5px 15px;
+  font-size: 1.4rem;
+  font-weight: 300;
+  cursor: pointer;
+  background: rgba(129, 128, 128, 0.349);
+  color: #fff;
+  &:first-child {
+    left: 2rem;
+  }
+  &:last-child {
+    right: 2rem;
+  }
+}
+.dot-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  div {
+    font-size: 45px;
+    color: #a9a9a9;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+}
+
+.activeSlide {
+  color: var(--primary-blue);
+}
