@@ -1,0 +1,128 @@
+@import "../../assets/styles/utilities/functionsANDmedia";
+@import "./media";
+
+.page__container {
+  padding: pix-rem(32);
+  display: flex;
+  gap: pix-rem(32);
+  background-color: #f9f9f9;
+  max-width: 4000px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @include mediaQuery(768px) {
+    padding: pix-rem(16);
+  }
+
+  @include mediaQuery(768px) {
+    flex-direction: column;
+  }
+
+  .audio__mobile {
+    display: none;
+    @include mediaQuery(768px) {
+      display: block;
+    }
+  }
+
+  .sentiment__tab__opener {
+    display: none;
+
+    @include mediaQuery(768px) {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5em;
+      font-size: pix-rem(16);
+      font-weight: 300;
+      color: #006cff;
+      align-items: center;
+    }
+
+    .opener__content {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+      cursor: pointer;
+    }
+  }
+
+  .main__container {
+    padding: pix-rem(16);
+    background-color: white;
+    flex: 1 1 pix-rem(734);
+    display: flex;
+    flex-direction: column;
+    gap: pix-rem(24);
+    border-radius: pix-rem(4);
+
+    @include mediaQuery(1200px) {
+      flex: 1 0.2 pix-rem(500);
+    }
+
+    &__top {
+      display: flex;
+      align-items: center;
+      gap: pix-rem(24);
+
+      &__arrow__icon__container {
+        width: pix-rem(24);
+        height: pix-rem(24);
+        cursor: pointer;
+        @include minMediaQuery(2048px) {
+          width: pix-rem(48);
+          height: pix-rem(48);
+        }
+
+        &__image {
+          object-fit: contain;
+          width: 100%;
+        }
+      }
+
+      &__title {
+        font-weight: 500;
+        font-size: pix-rem(20);
+        color: #3f3f3f;
+        @include minMediaQuery(2048px) {
+          font-size: pix-rem(42);
+        }
+      }
+    }
+
+    .analysis__cards {
+      display: flex;
+      flex-direction: column;
+      padding: 0 pix-rem(48);
+      gap: pix-rem(40);
+      width: 100%;
+
+      @include mediaQuery(768px) {
+        padding: 0 pix-rem(10);
+      }
+    }
+  }
+
+  .aside__container {
+    flex: 0.15 1 pix-rem(322);
+    display: flex;
+    flex-direction: column;
+    gap: pix-rem(24);
+
+    @include mediaQuery(768px) {
+      display: none;
+    }
+
+    @include mediaQuery(1200px) {
+      flex: 0.5 1 pix-rem(250);
+    }
+
+    .inner__container {
+      width: 100%;
+      padding: pix-rem(16);
+      display: flex;
+      gap: pix-rem(16);
+      background-color: white;
+      border-radius: pix-rem(4);
+    }
+  }
+}

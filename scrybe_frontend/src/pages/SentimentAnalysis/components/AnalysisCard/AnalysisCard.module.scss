@@ -1,4 +1,5 @@
 @import "../../../../assets/styles/utilities/functionsANDmedia";
+@import "../../media";
 
 .card {
   display: flex;
@@ -9,7 +10,7 @@
   }
 
   .time {
-    font-size: pix-rem(16);
+    font-size: clamp(pix-rem(16), 1vw, pix-rem(32));
     font-weight: 400;
     color: #828282;
   }
@@ -21,7 +22,7 @@
     margin-right: auto;
 
     &__text {
-      font-size: pix-rem(16);
+      font-size: clamp(pix-rem(16), 1vw, pix-rem(32));
       font-weight: 300;
       color: #3f3f3f;
     }
@@ -36,6 +37,7 @@
         .title {
           color: #828282;
           font-weight: 300;
+          font-size: clamp(pix-rem(16), 1vw, pix-rem(32));
         }
 
         .title__line {
@@ -51,7 +53,7 @@
         flex-wrap: wrap;
 
         .metric {
-          font-size: pix-rem(14);
+          font-size: clamp(pix-rem(14), 0.6vw, pix-rem(28));
           border-radius: 0.286em;
           padding: 0.286em 2em;
         }

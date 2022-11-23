@@ -1,0 +1,67 @@
+@use "./_mixins.scss" as mixins;
+@import "../../../assets/styles/utilities/_functionsANDmedia.scss";
+@import "../../../assets/styles/utilities/_variables.scss";
+@import "../../../assets/styles/_reset.scss";
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap");
+
+.container {
+  height: 100%;
+  width: 100%;
+  background-color: #f9f9f9;
+  // padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include mixins.sm {
+    height: 100%;
+    width: 100%;
+    background-color: #f9f9f9;
+    padding: 25px;
+  }
+  .mainWrapper {
+    margin: 0px auto;
+    width: 100%;
+    background-color: #ececec;
+    padding: 1em 1em;
+    @include mixins.sm {
+      max-width: 1160px;
+      height: 90%;
+      background-color: #ececec;
+      padding: 40px;
+    }
+    .topDetailsDiv {
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      @include mixins.sm {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        height: 40%;
+      }
+    }
+  }
+}
+
+// .container {
+//   height: 100%;
+//   width: 100%;
+//   background-color: #f9f9f9;
+//   padding: 30px;
+//   .mainWrapper {
+//     max-width: 1160px;
+//     height: 90%;
+//     background-color: #ececec;
+//     padding: 40px;
+//     .topDetailsDiv {
+//       display: flex;
+//       justify-content: space-between;
+//       margin-bottom: 20px;
+//       height: 40%;
+//     }
+//   }
+// }
