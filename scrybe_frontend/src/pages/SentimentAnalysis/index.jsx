@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "./SentimentAnalysis.module.scss";
 import arrowIcon from "./icons/arrow_back.svg";
 import blueArrowIcon from "./icons/blue_arrow.svg";
@@ -71,13 +72,15 @@ function SentimentAnalysis() {
       <main className={styles.main__container}>
         <span className={styles.main__container__top}>
           <div className={styles.main__container__top__arrow__icon__container}>
-            <img
-              className={
-                styles.main__container__top__arrow__icon__container__image
-              }
-              src={arrowIcon}
-              alt="arrow icon"
-            />
+            <Link to="/transcriptions">
+              <img
+                className={
+                  styles.main__container__top__arrow__icon__container__image
+                }
+                src={arrowIcon}
+                alt="arrow icon"
+              />
+            </Link>
           </div>
           <div className={styles.main__container__top__title}>
             Sentiment analysis
