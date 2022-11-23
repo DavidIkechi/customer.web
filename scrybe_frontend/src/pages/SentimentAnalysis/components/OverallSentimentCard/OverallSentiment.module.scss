@@ -1,0 +1,10 @@
+@import "../../../../assets/styles/utilities/functionsANDmedia";
+
+.overall__sentiment {
+  flex-direction: column;
+  .title {
+    color: #1d1d1d;
+    font-size: clamp(pix-rem(20), 1vw, pix-rem(40));
+    font-weight: 400;
+  }
+}
