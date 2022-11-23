@@ -4,9 +4,9 @@ import downloadIcon from "../../icons/download.svg";
 import dropdownIcon from "../../icons/dropdown.svg";
 import shareIcon from "../../icons/share.svg";
 
-export default function VerdictCard() {
+export default function VerdictCard(props) {
   return (
-    <AsideCard classType={`${styles.verdict}`}>
+    <AsideCard classtype={`${styles.verdict}`} {...props}>
       <div className={styles.verdict__item}>
         <div className={styles.verdict__title}>Agent Friendliness</div>
         <div className={styles.verdict__bar}>
