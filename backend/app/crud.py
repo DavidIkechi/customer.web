@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 import models, schema
 from random import randint
 from passlib.context import CryptContext
+from fastapi import HTTPException 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -38,7 +39,7 @@ def create_user(db: Session, user: schema.User):
     db.refresh(db_user)
     return db_user
 
-def update_user(db: Session, user: schema.update_user, user_id: int):
+def update_user(db: Session, user: schema.UserUpdate, user_id: int):
     # Getting the current user
     db_user = get_user(
         db = db,
@@ -99,4 +100,18 @@ def create_agent(db: Session, agent: schema.Agent, user_id: int):
     db.commit()
     db.refresh(db_agent)
     return db_agent
+
+
+def create_history(db: Session, history: schema.HistoryCreate):
+    db_history = models.History(**history)
+    db.add(db_history)
+    db.commit()
+    db.refresh(db_history)
+    return db_history
+
+
+def get_history_by_user_id(db: Session, user_id: int):
+    return db.query(models.History).filter(models.Agent.user_id == user_id).all()
+
+
 
