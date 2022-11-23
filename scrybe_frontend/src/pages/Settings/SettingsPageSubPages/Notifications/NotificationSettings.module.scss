@@ -198,12 +198,17 @@
 
 @media (min-width: 768px) {
   .NotificationSettings_wrapper {
-    width: 60%;
+     width: 90%;
+     margin: 0 auto 2rem;
   }
 }
 @media (min-width: 1024px) {
   .NotificationSettings_wrapper {
     width: 55%;
+  }
+
+  .subpages_footer {
+    display: none;
   }
 }
 @media (min-width: 1360px) {

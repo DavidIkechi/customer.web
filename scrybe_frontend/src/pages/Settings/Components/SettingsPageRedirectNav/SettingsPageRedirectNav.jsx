@@ -1,6 +1,6 @@
 import React from "react";
 import RedirectNavCss from "./SettingsPageRedirectNav.module.scss";
-import ChevronLeft from "../../pages/Settings/assets/icons/chevron-left.svg";
+import ChevronLeft from "../../assets/icons/chevron-left.svg";
 import { Link } from "react-router-dom";
 
 const RedirectNav = () => {

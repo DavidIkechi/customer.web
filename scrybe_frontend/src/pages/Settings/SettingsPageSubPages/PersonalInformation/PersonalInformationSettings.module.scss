@@ -141,7 +141,8 @@
 
 @media (min-width: 768px) {
   .PersonalInfo_wrapper {
-    width: 60%;
+    width: 90%;
+    margin: 0 auto 2rem;
 
     .formGroup {
       input {
@@ -156,7 +157,6 @@
 }
 @media (min-width: 1024px) {
   .PersonalInfo_wrapper {
-    width: 55%;
     margin-right: 4.5rem;
 
     .formGroup {
@@ -187,12 +187,13 @@
   .formSubmit a {
     text-align: center;
   }
+   .subpages_footer {
+    display: none;
+  }
 }
 
 @media (min-width: 1360px) {
   .PersonalInfo_wrapper {
-    width: 100%;
-
     .PersonalInfo_header {
       .profilePic {
         width: 100px;

@@ -5,6 +5,7 @@ import ProfilePic from "../../assets/images/Pic.png";
 import BlueEditPen from "../../assets/icons/blue-pencil.png";
 import BlackEditPen from "../../assets/icons/edit.svg";
 import { Link } from "react-router-dom";
+import Footer from "../../../../components/footer/index";
 
 const PersonalInformation = () => {
   const handleSubmit = (event) => {
@@ -71,6 +72,9 @@ const PersonalInformation = () => {
               </div>
             </form>
           </div>
+        </div>
+        <div className={PersonalInfo.subpages_footer}>
+          <Footer />
         </div>
       </div>
     </>

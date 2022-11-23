@@ -67,125 +67,129 @@ const MainPage = () => {
 
   return (
     <>
-      {window.innerWidth && <SideBar />}
-      <div className={MainPageCss.mainpage__container}>
-        <NavBar />
-        <div className={MainPageCss.mainpage_container}>
-          <div className={MainPageCss.mainpage_wrapper}>
-            <div className={MainPageCss.mainpage_header}>
-              <h1>Settings</h1>
-            </div>
-            <div className={MainPageCss.mainpage_profileCard}>
-              <div className={MainPageCss.image}>
-                <img src={ProfilePic} alt="profile" className="" />
+      <div className={MainPageCss.mainpage__wrapper}>
+        {window.innerWidth > 768 && <SideBar />}
+        <div className={MainPageCss.mainpage__container}>
+          {window.innerWidth <= 768 && <NavBar />}
+          <div className={MainPageCss.mainpage_container}>
+            <div className={MainPageCss.mainpage_wrapper}>
+              <div className={MainPageCss.mainpage_header}>
+                <h1>Settings</h1>
               </div>
-              <div className={MainPageCss.mainpage_textContent}>
-                <h2>John Doe</h2>
-                <p className={MainPageCss.title}>Administrator</p>
-                <p className={MainPageCss.email}>
-                  johndoe.admin@businessemail.com
-                </p>
+              <div className={MainPageCss.mainpage_profileCard}>
+                <div className={MainPageCss.image}>
+                  <img src={ProfilePic} alt="profile" className="" />
+                </div>
+                <div className={MainPageCss.mainpage_textContent}>
+                  <h2>John Doe</h2>
+                  <p className={MainPageCss.title}>Administrator</p>
+                  <p className={MainPageCss.email}>
+                    johndoe.admin@businessemail.com
+                  </p>
+                </div>
+              </div>
+              <section className={MainPageCss.mainpage_options}>
+                <Link
+                  onClick={() => togglePage(cardDetails[0].title)}
+                  to={window.innerWidth <= 768 ? cardDetails[0].path : ""}
+                >
+                  <div
+                    className={MainPageCss.optionsCard}
+                    style={{
+                      backgroundColor: isPage && !isMobile ? "#e6f0ff" : "",
+                    }}
+                  >
+                    <div className={MainPageCss.header}>
+                      <h2 className={MainPageCss.heading}>
+                        {cardDetails[0].title}
+                      </h2>
+                      <img src={ChevronRight} alt="" />
+                    </div>
+                    <p style={{ color: isPage && !isMobile ? "#002D6B" : "" }}>
+                      {cardDetails[0].description}
+                    </p>
+                  </div>
+                </Link>
+                <Link
+                  onClick={() => togglePage(cardDetails[1].title)}
+                  to={window.innerWidth <= 768 ? cardDetails[1].path : ""}
+                >
+                  <div
+                    className={MainPageCss.optionsCard}
+                    style={{ backgroundColor: isAccountPage ? "#e6f0ff" : "" }}
+                  >
+                    <div className={MainPageCss.header}>
+                      <h2 className={MainPageCss.heading}>
+                        {cardDetails[1].title}
+                      </h2>
+                      <img src={ChevronRight} alt="" />
+                    </div>
+                    <p style={{ color: isAccountPage ? "#002D6B" : "" }}>
+                      {cardDetails[1].description}
+                    </p>
+                  </div>
+                </Link>
+                <Link
+                  onClick={() => togglePage(cardDetails[2].title)}
+                  to={window.innerWidth <= 768 ? cardDetails[2].path : ""}
+                >
+                  <div
+                    className={MainPageCss.optionsCard}
+                    style={{
+                      backgroundColor: isNotificationPage ? "#e6f0ff" : "",
+                    }}
+                  >
+                    <div className={MainPageCss.header}>
+                      <h2 className={MainPageCss.heading}>
+                        {cardDetails[2].title}
+                      </h2>
+                      <img src={ChevronRight} alt="" />
+                    </div>
+                    <p style={{ color: isNotificationPage ? "#002D6B" : "" }}>
+                      {cardDetails[2].description}
+                    </p>
+                  </div>
+                </Link>
+              </section>
+              <div
+                className={MainPageCss.error}
+                onClick={() => setShowModal((prevState) => !prevState)}
+              >
+                <Link to="" className={MainPageCss.errorBtn}>
+                  Delete Account
+                </Link>
               </div>
             </div>
-            <section className={MainPageCss.mainpage_options}>
-              <Link
-                onClick={() => togglePage(cardDetails[0].title)}
-                to={window.innerWidth <= 768 ? cardDetails[0].path : ""}
-              >
-                <div
-                  className={MainPageCss.optionsCard}
-                  style={{
-                    backgroundColor: isPage && !isMobile ? "#e6f0ff" : "",
-                  }}
-                >
-                  <div className={MainPageCss.header}>
-                    <h2 className={MainPageCss.heading}>
-                      {cardDetails[0].title}
-                    </h2>
-                    <img src={ChevronRight} alt="" />
-                  </div>
-                  <p style={{ color: isPage && !isMobile ? "#002D6B" : "" }}>
-                    {cardDetails[0].description}
-                  </p>
-                </div>
-              </Link>
-              <Link
-                onClick={() => togglePage(cardDetails[1].title)}
-                to={window.innerWidth <= 768 ? cardDetails[1].path : ""}
-              >
-                <div
-                  className={MainPageCss.optionsCard}
-                  style={{ backgroundColor: isAccountPage ? "#e6f0ff" : "" }}
-                >
-                  <div className={MainPageCss.header}>
-                    <h2 className={MainPageCss.heading}>
-                      {cardDetails[1].title}
-                    </h2>
-                    <img src={ChevronRight} alt="" />
-                  </div>
-                  <p style={{ color: isAccountPage ? "#002D6B" : "" }}>
-                    {cardDetails[1].description}
-                  </p>
-                </div>
-              </Link>
-              <Link
-                onClick={() => togglePage(cardDetails[2].title)}
-                to={window.innerWidth <= 768 ? cardDetails[2].path : ""}
-              >
-                <div
-                  className={MainPageCss.optionsCard}
-                  style={{
-                    backgroundColor: isNotificationPage ? "#e6f0ff" : "",
-                  }}
-                >
-                  <div className={MainPageCss.header}>
-                    <h2 className={MainPageCss.heading}>
-                      {cardDetails[2].title}
-                    </h2>
-                    <img src={ChevronRight} alt="" />
-                  </div>
-                  <p style={{ color: isNotificationPage ? "#002D6B" : "" }}>
-                    {cardDetails[2].description}
-                  </p>
-                </div>
-              </Link>
-            </section>
+            {showModal && (
+              <Overlay
+                setShowModal={() =>
+                  setShowModal((prevState) => !prevState, window.scrollTo(0, 0))
+                }
+              />
+            )}
+            {window.innerWidth > 768 && isPage && !isMobile && (
+              <div className={MainPageCss.external}>
+                {isPage && !isMobile && <PersonalInformation />}
+              </div>
+            )}
             <div
-              className={MainPageCss.error}
-              onClick={() => setShowModal((prevState) => !prevState)}
+              style={{ display: !isAccountPage ? "none" : "block" }}
+              className={MainPageCss.external}
             >
-              <Link to="" className={MainPageCss.errorBtn}>
-                Delete Account
-              </Link>
+              {isAccountPage && !isMobile && <AccountSetting />}
+            </div>
+            <div
+              style={{ display: !isNotificationPage ? "none" : "block" }}
+              className={MainPageCss.external}
+            >
+              {isNotificationPage && !isMobile && <Notification />}
             </div>
           </div>
-          {showModal && (
-            <Overlay
-              setShowModal={() =>
-                setShowModal((prevState) => !prevState, window.scrollTo(0, 0))
-              }
-            />
-          )}
-          {isPage && !isMobile && (
-            <div className={MainPageCss.external}>
-              {isPage && !isMobile && <PersonalInformation />}
-            </div>
-          )}
-          <div
-            style={{ display: !isAccountPage ? "none" : "block" }}
-            className={MainPageCss.external}
-          >
-            {isAccountPage && !isMobile && <AccountSetting />}
-          </div>
-          <div
-            style={{ display: !isNotificationPage ? "none" : "block" }}
-            className={MainPageCss.external}
-          >
-            {isNotificationPage && !isMobile && <Notification />}
+          <div className={MainPageCss.mainpage_footer}>
+            <Footer />
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

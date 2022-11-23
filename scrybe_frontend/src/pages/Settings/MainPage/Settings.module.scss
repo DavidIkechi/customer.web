@@ -16,16 +16,23 @@ $error: #de3d31;
   align-items: center;
 }
 
+.mainpage__wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .mainpage__container {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .mainpage_wrapper {
   padding: 0 1rem;
 
   h1 {
-    margin: 0 0 0.97rem 0 !important;
+    margin: 1.875rem 0 0.97rem 0 !important;
     font-weight: 600 !important;
     font-size: 2rem !important;
     line-height: 40px !important;
@@ -176,13 +183,13 @@ $error: #de3d31;
 @media (min-width: 768px) {
   .mainpage_container {
     display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
+    justify-content: center;
+    gap: 2rem;
   }
   .external {
-    width: 40%;
+    width: 47%;
     order: 2;
-    margin-right: 2rem;
+    margin-right: 1rem;
     .wrapper {
       margin-left: 0;
     }
@@ -190,7 +197,7 @@ $error: #de3d31;
 
   .mainpage_wrapper {
     order: 1;
-    width: 55%;
+    width: 90%;
     .optionsCard {
       .header {
         .heading {
@@ -206,21 +213,29 @@ $error: #de3d31;
 }
 
 @media (min-width: 1024px) {
+  .mainpage__container {
+    align-items: flex-end;
+  }
   .mainpage_wrapper {
     width: 50%;
   }
   .mainpage_container {
     display: flex;
     gap: 1.5rem;
+    width: 85%;
+  }
+
+  .mainpage_footer {
+    width: 88%;
   }
 }
 
 @media (min-width: 1440px) {
   .external {
-    width: 40%;
+    width: 50%;
   }
   .mainpage_wrapper {
-    width: 32%;
+    width: 35%;
   }
   .mainpage_container {
     display: flex;

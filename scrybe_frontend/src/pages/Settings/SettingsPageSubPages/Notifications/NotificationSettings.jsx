@@ -2,6 +2,7 @@ import React from "react";
 import NotificationCss from "./NotificationSettings.module.scss";
 import RedirectNav from "../../Components/SettingsPageRedirectNav/SettingsPageRedirectNav";
 import OverlayEmail from "../../Components/SettingsPageOverlay/SettingsPageOverlayEmail";
+import Footer from "../../../../components/footer/index";
 
 import { Link } from "react-router-dom";
 
@@ -179,6 +180,9 @@ const Notification = () => {
             </form>
           </div>
         </div>
+      </div>
+      <div className={NotificationCss.subpages_footer}>
+        <Footer />
       </div>
     </div>
   );

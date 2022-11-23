@@ -1,6 +1,7 @@
 import React from "react";
 import RedirectNav from "../../Components/SettingsPageRedirectNav/SettingsPageRedirectNav";
 import AccountPageCss from "./AccountSettings.module.scss";
+import Footer from "../../../../components/footer/index";
 import { Link } from "react-router-dom";
 
 const AccountSettings = () => {
@@ -45,6 +46,9 @@ const AccountSettings = () => {
             <Link to="">Disconnect App</Link>
           </div>
         </div>
+      </div>
+      <div className={AccountPageCss.subpages_footer}>
+        <Footer />
       </div>
     </div>
   );
