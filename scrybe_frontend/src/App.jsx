@@ -1,38 +1,39 @@
 import "./App.scss";
 import { Routes, Route } from "react-router-dom";
+import AgentReport from "./pages/AgentReport";
 import SentimentAnalysis from "./pages/SentimentAnalysis";
 import DummyPage from "./pages/DummyPage";
 import TranscribePage from "./pages/TranscribePage/TranscribePage";
-import { FAQs, TermsOfService } from "./pages";
 import LandingPage from "./pages/landing-page-a";
 import PageB from "./pages/Landing-page-b";
-import TermsAndCondition from "./pages/TermsAndCondition/TermsOfService";
+import TermsAndCondition from "./pages/TermsAndCondition";
 import History from "./pages/History/History";
-import Services from "./pages/services-page/Services";
-import Solutions from "./pages/solutions-page/Solutions";
+import Services from "./pages/Services/Services";
+import Solutions from "./pages/Solutions/Solutions";
 import DashboardOverview from "./pages/DashboardOverview";
-import Events from "./pages/Events-page/Events";
+import Events from "./pages/Events/Events";
 import HelpSupport from "./pages/HelpAndSupport/HelpSupport";
-import General from "./components/HelpAndSupport/HelpAndSupportGeneral/General";
-import General1 from "./components/HelpAndSupport/general1/General1";
-import General2 from "./components/HelpAndSupport/general2/General2";
-import PromotedArticles from "./components/HelpAndSupport/promoted-articles/PromotedArticles";
-import PromotedArticle1 from "./components/HelpAndSupport/PromotedArticle1/PromotedArticle1";
+// import General from "./components/HelpAndSupport/HelpAndSupportGeneral/General";
+// import General1 from "./components/HelpAndSupport/general1/General1";
+// import General2 from "./components/HelpAndSupport/general2/General2";
+// import PromotedArticles from "./components/HelpAndSupport/promoted-articles/PromotedArticles";
+// import PromotedArticle1 from "./components/HelpAndSupport/PromotedArticle1/PromotedArticle1";
 import About from "./pages/AboutUs/About";
 import TryForFree from "./pages/TryForFree";
 import Industry from "./pages/indsutry/industry";
 import HowitWorks from "./pages/HowItWorks/HowItWorks";
-import UploadedRecordings from "./components/UploadRecordings";
+import UploadedRecordings from "./pages/UploadRecordings";
 import Account from "./pages/Account";
 import Signin from "./pages/SignIn/SignIn";
 import Careers from "./pages/Careers";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+// import IndustryArticle from "./components/Industry/industryArticle";
 import Signup from "./pages/SignUp/SignUp";
+import Successful from "./pages/Successful/Successful";
+import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
-import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
-import Successful from "./pages/Successful/Successful";
-import Reviews from "./pages/Reviews/Reviews";
+import FAQs from "./pages/FaqsPage/FaqComponent";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
       {/* landing page */}
       <Route path="/" element={<LandingPage />} />
       {/* sentiment analysis */}
+      <Route path="/agent-report" element={<AgentReport />} />
       <Route path="/sentiment-analysis" element={<SentimentAnalysis />} />
       {/* transcriptions */}
       <Route path="/transcriptions" element={<TranscribePage />} />
@@ -59,14 +61,10 @@ function App() {
       {/* help and support */}
       <Route path="/help" element={<DummyPage someText="help and supprt" />} />
       {/* sign in */}
-      <Route
-        path="/signin"
-        element={<Signin someText="sign-in, sign up, reset password" />}
-      />
+
       {/* career page & legal */}
       <Route path="/careers" element={<Careers />} />
       <Route path="/privacy" element={<PrivacyPolicy />} />
-
       {/* solutions & services */}
       <Route
         path="/services"
@@ -90,11 +88,11 @@ function App() {
       {/* dashboard */}
       <Route path="/dashboard" element={<DashboardOverview />} />
       {/* accounts */}
-
       <Route path="/accounts" element={<Account />} />
-
       {/* industry */}
       <Route path="/industry" element={<Industry />} />
+      {/* industry article */}
+      {/* <Route path="/industryarticle" element={<IndustryArticle />} /> */}
       {/* how it works */}
       <Route path="/how-it-works" element={<HowitWorks />} />
       {/* demo pages */}
@@ -122,45 +120,40 @@ function App() {
       {/* blog */}
       <Route path="/blog" element={<DummyPage someText="blog" />} />
       <Route path="/homeB" element={<PageB />} />
-      <Route path="faq" element={<FAQs />} />
-      <Route path="faq-terms-of-service" element={<TermsOfService />} />
+      <Route path="/faq" element={<FAQs />} />
       {/* HelpAndSupport */}
       <Route path="/help-support" element={<HelpSupport />} />
-      <Route path="/help-support-general" element={<General />}>
+      {/* <Route path="/help-support-general" element={<General />}>
         <Route index element={<General1 />} />
         <Route path="articles" element={<General2 />} />
-      </Route>
-      <Route
+      </Route> */}
+      {/* <Route
         path="/help-support-general/promoted-articles"
         element={<PromotedArticles />}
       >
         <Route index element={<PromotedArticle1 />} />
         <Route path="*" element={<PromotedArticle1 />} />
-      </Route>
-      <Route
+      </Route> */}
+      {/* <Route
         path="/help-support/promoted-articles"
         element={<PromotedArticles />}
       >
         <Route index element={<PromotedArticle1 />} />
         <Route path="*" element={<PromotedArticle1 />} />
-      </Route>
-      {/* uploaded recordings */}
-      <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
-      {/* Sign Up */}
+      </Route> */}
+
+      {/* Sign In, Sign Up and Reset Password  Flow */}
       <Route path="/create-account" element={<Signup />} />
-      {/* Forget Password*/}
+      <Route path="/signin" element={<Signin />} />
+      <Route path="/reset-successful" element={<Successful />} />
+      <Route path="/set-new-password" element={<SetNewPassword />} />
       <Route path="/forget-password" element={<ForgetPassword />} />
-      {/* Password Reset*/}
       <Route
         path="/pw-reset-successful"
         element={<PasswordResetSuccessful />}
       />
-      {/* Set New Password*/}
-      <Route path="/set-new-password" element={<SetNewPassword />} />
-      {/* Password Reset Successful*/}
-      <Route path="/reset-successful" element={<Successful />} />
-      {/* Reviews*/}
-      <Route path="/reviews" element={<Reviews />} />
+      <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
+      <Route path="/agent-report" element={<AgentReport />} />
     </Routes>
   );
 }
