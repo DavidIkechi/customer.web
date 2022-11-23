@@ -35,4 +35,4 @@ If you try committing and get an error from Git:
 
 Ask [Tochi](https://github.com/tochibedford)
 or
-[Bazz](https://github.com/dev-bazz)
+[Bazz](https://github.com/dev-bazz).
