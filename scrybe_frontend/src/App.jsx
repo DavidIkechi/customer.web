@@ -34,6 +34,7 @@ import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
 import FAQs from "./pages/FaqsPage/FaqComponent";
+import LeaderboardPage from "./pages/LeaderBoard/Leaderboard";
 
 function App() {
   return (
@@ -60,15 +61,8 @@ function App() {
       <Route path="/accounts" element={<Account />} />
       <Route path="/industry" element={<Industry />} />
       <Route path="/how-it-works" element={<HowitWorks />} />
-      <Route
-        path="/reviews-and-pricing"
-        element={<DummyPage someText="reviews and pricing" />}
-      />
       {/* leaderboard */}
-      <Route
-        path="/leaderboard"
-        element={<DummyPage someText="leaderboard" />}
-      />
+      <Route path="/leaderboard" element={<LeaderboardPage />} />
       <Route
         path="/terms"
         element={<TermsAndCondition someText="terms and conditions" />}
@@ -126,6 +120,7 @@ function App() {
       <Route path="/help" element={<DummyPage someText="help and supprt" />} />
       <Route path="/demos" element={<DummyPage someText="demo pages" />} />
       <Route path="/blog" element={<DummyPage someText="blog" />} />
+      <Route path="/reviews-and-pricing" element={<DummyPage />} />
     </Routes>
   );
 }
