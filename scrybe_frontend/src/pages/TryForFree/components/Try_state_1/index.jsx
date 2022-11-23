@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-warning-comments
 // TODO disable eslint warning for this todo ;)
 import React, { useState, useRef } from "react";
+import TryState3 from "../Try_state_3/index";
 import styles from "./try_state_1.module.scss";
 import RecordingLogo from "../../assets/Recording-logo.png";
 
@@ -14,6 +15,10 @@ export default function TryState1() {
   const handleDrop = (event) => {
     event.preventDefault();
     setFiles(event.dataTransfer.files);
+  };
+  const [isShown, setIsShown] = useState(false);
+  const handleClick = (event) => {
+    setIsShown((current) => !current);
   };
 
   if (files)
@@ -52,7 +57,11 @@ export default function TryState1() {
               Select another file from your computer
             </p>
 
-            <button className={styles.selectButton2} type="button">
+            <button
+              onClick={handleClick}
+              className={styles.selectButton2}
+              type="button"
+            >
               Transcribe
             </button>
           </div>
@@ -79,6 +88,7 @@ export default function TryState1() {
             </li>
           </ul>
         </div>
+        {isShown && <TryState3 />}
       </div>
     );
 
@@ -91,6 +101,10 @@ export default function TryState1() {
           onDrop={handleDrop}
         >
           <div className={styles.recordingContent}>
+            <div className={styles.recordingImageContainer}>
+              <img src={RecordingLogo} alt="some" />
+            </div>
+
             <h4>Drag and drop agent audio call recordings</h4>
 
             <div className={styles.Or}>
