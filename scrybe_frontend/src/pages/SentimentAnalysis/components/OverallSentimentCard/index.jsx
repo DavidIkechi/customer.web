@@ -4,7 +4,7 @@ import DoughnutChart from "../DoughnutChart";
 import Data from "../DummyData";
 import { useState } from "react";
 
-export default function OverAllSentimentCard() {
+export default function OverAllSentimentCard(props) {
   const [sentimentData] = useState({
     labels: Data.map((item) => item.sentiment),
     datasets: [
@@ -16,7 +16,7 @@ export default function OverAllSentimentCard() {
     ],
   });
   return (
-    <AsideCard classtype={`${styles.overall__sentiment}`}>
+    <AsideCard classtype={`${styles.overall__sentiment}`} {...props}>
       <div className={styles.title}>Overall sentiment</div>
       <DoughnutChart data={sentimentData} />
     </AsideCard>

@@ -13,7 +13,7 @@ function AsideCard(props) {
 
 AsideCard.propTypes = {
   children: PropTypes.node.isRequired,
-  classType: PropTypes.string.isRequired,
+  classtype: PropTypes.string.isRequired,
 };
 
 export default AsideCard;
