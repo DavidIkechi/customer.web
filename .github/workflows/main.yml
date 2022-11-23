@@ -31,7 +31,7 @@ jobs:
       
       - name: docker build, tag and push
         run: |
-          docker build -t vicdam/scrybefrontend:${{ steps.commit.outputs.short }}.
+          docker build -t vicdam/scrybefrontend:${{ steps.commit.outputs.short }} .
           docker push vicdam/scrybefrontend:${{ steps.commit.outputs.short }}
 
       - name: docker build, tag and push
