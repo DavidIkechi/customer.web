@@ -5,7 +5,7 @@ import Data from "../DummyData";
 import { useState } from "react";
 
 export default function OverAllSentimentCard() {
-  const [sentimentData, setSentimentData] = useState({
+  const [sentimentData] = useState({
     labels: Data.map((item) => item.sentiment),
     datasets: [
       {

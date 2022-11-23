@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-
 import styles from "./SentimentAside.module.scss";
 import pieChart from "../../icons/pie_chart.svg";
 import downloadIcon from "../../icons/download.svg";

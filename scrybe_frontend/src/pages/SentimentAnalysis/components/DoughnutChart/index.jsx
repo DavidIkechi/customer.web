@@ -17,19 +17,27 @@ export default function DoughnutChart(props) {
           }}
           {...props}
         />
+        <div className={styles.highest__value}>
+          {Math.max(...data.datasets[0].data)}%
+          <div className={styles.sign}>
+            {data.datasets[0].data[0] > data.datasets[0].data[1]
+              ? "+ve"
+              : "-ve"}
+          </div>
+        </div>
       </div>
       <ul className={styles.sentiment__chart__legend}>
         <li className={styles.chart__legend__item}>
           <div className={`${styles.item__icon} ${styles.positive}`} /> Positive
-          <div className={styles.score}>{data.datasets[0]}%</div>
+          <div className={styles.score}>{data.datasets[0].data[0]}%</div>
         </li>
         <li className={styles.chart__legend__item}>
           <div className={`${styles.item__icon} ${styles.neutral}`} /> Neutral
-          <div className={styles.score}>{data[1]}%</div>
+          <div className={styles.score}>{data.datasets[0].data[1]}%</div>
         </li>
         <li className={styles.chart__legend__item}>
           <div className={`${styles.item__icon} ${styles.negative}`} /> Negative
-          <div className={styles.score}>{data[2]}%</div>
+          <div className={styles.score}>{data.datasets[0].data[2]}%</div>
         </li>
       </ul>
     </>
