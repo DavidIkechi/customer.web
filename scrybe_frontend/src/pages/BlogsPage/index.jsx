@@ -43,7 +43,7 @@ function Blogs() {
         style={{ "--gap": "16px" }}
       >
         <a href="/">Home</a>
-        <a href="#blog" className={styles.blogs__breadcrum_current} disabled>
+        <a href="/#blogs" className={styles.blogs__breadcrum_current} disabled>
           Blog
         </a>
       </div>
@@ -53,7 +53,7 @@ function Blogs() {
         </div>
         <div className={styles.blogs__grid}>
           {blogs.map((blog, i) => (
-            <Link to={`/blog/${i}`} key={i + 1}>
+            <Link to={`/${i}`} key={i + 1}>
               <FadeInSection key={i + 1}>
                 <Card
                   key={i + 1}
