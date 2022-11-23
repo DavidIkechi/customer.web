@@ -7,6 +7,7 @@ import SentimentAside from "./components/SentimentAside";
 import { useState } from "react";
 import OverAllSentimentCard from "./components/OverallSentiment";
 import VerdictCard from "./components/VerdictCard";
+import PhraseTagCard from "./components/PhraseTagCard";
 
 function SentimentAnalysis() {
   const [isMobileAsideOpen, setIsMobileAsideOpen] = useState(false);
@@ -96,30 +97,8 @@ function SentimentAnalysis() {
         <AudioCard />
         <OverAllSentimentCard />
         <VerdictCard />
-        <div className={`${styles.tags} ${styles.inner__container}`}>
-          <div className={styles.title}>Positive phrase tags</div>
-          <ul className={styles.tag__items}>
-            {positiveTags.map((tag) => {
-              return (
-                <li key={String(Math.random()) + String(new Date().getTime())}>
-                  {tag}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <div className={`${styles.tags} ${styles.inner__container}`}>
-          <div className={styles.title}>Negative phrase tags</div>
-          <ul className={styles.tag__items}>
-            {negativeTags.map((tag) => {
-              return (
-                <li key={String(Math.random()) + String(new Date().getTime())}>
-                  {tag}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+        <PhraseTagCard tags={positiveTags} title={"Positive phrase tags"} />
+        <PhraseTagCard tags={negativeTags} title={"Negative phrase tags"} />
       </aside>
     </div>
   );

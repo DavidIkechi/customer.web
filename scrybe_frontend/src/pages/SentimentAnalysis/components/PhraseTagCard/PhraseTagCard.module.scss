@@ -1,0 +1,25 @@
+@import "../../../../assets/styles/utilities/functionsANDmedia";
+
+.tags {
+  flex-direction: column;
+
+  .title {
+    font-size: pix-rem(16);
+    font-weight: 400;
+    color: #535353;
+  }
+
+  .tag__items {
+    display: flex;
+    gap: pix-rem(36);
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    li {
+      padding: pix-rem(2) pix-rem(20);
+      background-color: #e6eef399;
+      border-radius: 1em;
+      cursor: pointer;
+    }
+  }
+}
