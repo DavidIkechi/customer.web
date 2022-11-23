@@ -8,7 +8,7 @@ class UserBase(BaseModel):
     last_name: str
     email: str
     created_at: datetime
-    
+
 
 class UserCreate(UserBase):
     company_name: str
@@ -49,6 +49,7 @@ class AudioBase(BaseModel):
     negativity_score : float
     neutrality_score : float
     overall_sentiment: str
+
 class AudioCreate(AudioBase):
     pass
 
