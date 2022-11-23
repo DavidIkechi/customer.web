@@ -1,5 +1,8 @@
 # Scrybe - customersupport.web
 
+## Deployment Status
+![example workflow](https://github.com/workshopapps/customersupport.web/actions/workflows/main.yml/badge.svg)
+
 ![Scrybe Logo](/scrybe_frontend/src/assets/scrybe_logo_with_text.svg)
 
 ## Current Setup (This project uses:)
