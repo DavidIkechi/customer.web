@@ -9,7 +9,7 @@ export default function OverAllSentimentCard() {
     labels: Data.map((item) => item.sentiment),
     datasets: [
       {
-        label: "My first Data",
+        label: "Sentiment Score",
         data: Data.map((item) => item.score),
         backgroundColor: ["#76C86F", "#FFCE54", "#FF7589"],
       },

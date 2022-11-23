@@ -20,9 +20,13 @@ export default function DoughnutChart(props) {
         <div className={styles.highest__value}>
           {Math.max(...data.datasets[0].data)}%
           <div className={styles.sign}>
-            {data.datasets[0].data[0] > data.datasets[0].data[1]
+            {data.datasets[0].data[0] > data.datasets[0].data[2] &&
+            data.datasets[0].data[0] > data.datasets[0].data[1]
               ? "+ve"
-              : "-ve"}
+              : data.datasets[0].data[2] > data.datasets[0].data[0] &&
+                data.datasets[0].data[2] > data.datasets[0].data[1]
+              ? "-ve"
+              : "Neutral"}
           </div>
         </div>
       </div>

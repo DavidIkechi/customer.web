@@ -1,11 +1,11 @@
+import { useState } from "react";
 import styles from "./SentimentAnalysis.module.scss";
 import arrowIcon from "./icons/arrow_back.svg";
 import blueArrowIcon from "./icons/blue_arrow.svg";
 import AnalysisCard from "./components/AnalysisCard";
 import AudioCard from "./components/AudioCard";
 import SentimentAside from "./components/SentimentAside";
-import { useState } from "react";
-import OverAllSentimentCard from "./components/OverallSentiment";
+import OverAllSentimentCard from "./components/OverallSentimentCard";
 import VerdictCard from "./components/VerdictCard";
 import PhraseTagCard from "./components/PhraseTagCard";
 
