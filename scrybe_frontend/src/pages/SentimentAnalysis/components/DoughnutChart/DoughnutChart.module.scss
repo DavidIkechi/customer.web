@@ -1,0 +1,72 @@
+@import "../../../../assets/styles/utilities/functionsANDmedia";
+@import "../../media";
+
+.sentiment__chart {
+  margin-left: auto;
+  margin-right: auto;
+  width: pix-rem(200);
+  height: pix-rem(200);
+  position: relative;
+
+  @include minMediaQuery(1920px) {
+    width: pix-rem(300);
+    height: pix-rem(300);
+  }
+
+  img {
+    object-fit: contain;
+    width: 100%;
+  }
+
+  .highest__value {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: clamp(pix-rem(32), 1vw, pix-rem(64));
+    transform: translate(-50%, -50%);
+    line-height: 0.85em;
+    color: black;
+
+    .sign {
+      font-size: clamp(pix-rem(16), 1vw, pix-rem(32));
+      color: #6a6a6a;
+      text-align: center;
+    }
+  }
+}
+
+.sentiment__chart__legend {
+  margin: pix-rem(6) 0;
+
+  .chart__legend__item {
+    font-weight: 300;
+    font-size: clamp(pix-rem(18), 1vw, pix-rem(34));
+    color: #535353;
+    display: flex;
+    align-items: center;
+    gap: pix-rem(8);
+
+    .item__icon {
+      width: pix-rem(12);
+      height: pix-rem(12);
+      border-radius: 50%;
+
+      @include minMediaQuery(1920px) {
+        width: pix-rem(20);
+        height: pix-rem(20);
+      }
+    }
+
+    .positive {
+      background-color: #76c86f;
+    }
+
+    .neutral {
+      background-color: #ffce54;
+    }
+
+    .negative {
+      background-color: #ff7589;
+    }
+  }
+}
