@@ -128,8 +128,6 @@ function App() {
       {/* Try Routes */}
       <Route path="/try-processing" element={<TryProcessing />} />
       <Route path="/try-results" element={<TryResults />} />
-
-
     </Routes>
   );
 }
