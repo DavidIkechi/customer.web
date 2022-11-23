@@ -1,18 +1,63 @@
-@function pix-rem($value, $suffix: rem) {
-  $calculate: calc($value/16);
-  @return #{$calculate}#{$suffix};
+@import "../../assets/styles/utilities/functionsANDmedia";
+@import "../../assets/styles/utilities/variables";
+// @import "../../assets/styles/reset";
+
+.sidebar {
+  flex-basis: 1;
+  position: relative;
+  width: 110px;
+  height: 100vh;
+  background-color: white;
+  border-right: 1px solid #dfdede;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition-duration: 300ms;
 }
 
-.SideBar {
-  z-index: 999;
-  position: fixed;
-  width: 280px;
-  height: 100vh;
-  top: 0;
-  background-color: #ffffff;
-  position: fixed;
-  padding: pix-rem(32) 0 0 pix-rem(40);
-  border-right: 1px solid #dfdede;
+.sidebar.open {
+  width: 300px;
+}
+
+.navOpener {
+  position: absolute;
+  right: -16px;
+  top: 32px;
+  border: 2px solid $blue-500;
+  border-radius: 50%;
+  background-color: white;
+  transform: rotate(-90deg);
+  cursor: pointer;
+}
+
+.navOpener.rotate {
+  transform: rotate(90deg);
+}
+
+.logoLink {
+  display: flex;
+  column-gap: pix-rem(10);
+  padding: pix-rem(32) pix-rem(40);
+  text-decoration: none;
+  cursor: pointer;
+
+  p {
+    display: none;
+    transform-origin: left;
+    scale: 0;
+  }
+}
+
+.logoLink.open {
+  p {
+    display: inline;
+    font-weight: 600;
+    font-size: pix-rem(40);
+    line-height: 26px;
+    color: $grey-500;
+    cursor: pointer;
+    scale: none;
+  }
 }
 
 .navLinks {
@@ -21,12 +66,22 @@
 
 .navLink {
   display: flex;
+  justify-content: center;
   column-gap: pix-rem(20);
-  padding: pix-rem(20) 0 pix-rem(20) 0;
+  padding: pix-rem(20) pix-rem(40);
   text-decoration: none;
   cursor: pointer;
 
   p {
+    display: none;
+  }
+}
+
+.navLink.open {
+  justify-content: flex-start;
+
+  p {
+    display: inline;
     font-weight: 300;
     font-size: 20px;
     line-height: 26px;
@@ -35,8 +90,13 @@
   }
 }
 
-@media screen and (max-width: 480px) {
-  .SideBar {
+.navLink.active {
+  background: $blue-50;
+  border-right: 4px solid $blue-400;
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
     display: none;
   }
 }
