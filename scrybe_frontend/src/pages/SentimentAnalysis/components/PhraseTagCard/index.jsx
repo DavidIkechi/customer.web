@@ -4,7 +4,7 @@ import styles from "./PhraseTagCard.module.scss";
 
 function PhraseTagCard({ tags, title }) {
   return (
-    <AsideCard classType={`${styles.tags}`}>
+    <AsideCard classtype={`${styles.tags}`}>
       <div className={styles.title}>{title}</div>
       <ul className={styles.tag__items}>
         {tags.map((tag) => {

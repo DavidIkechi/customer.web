@@ -5,7 +5,7 @@ import AsideCard from "../AsideCard";
 
 function AudioCard() {
   return (
-    <AsideCard classType={styles.audio__file}>
+    <AsideCard classtype={styles.audio__file}>
       <div className={styles.audio__icon__container}>
         <img src={audioIcon} alt="audio icon" />
       </div>

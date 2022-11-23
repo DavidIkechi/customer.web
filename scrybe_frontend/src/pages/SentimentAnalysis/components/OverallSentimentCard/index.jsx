@@ -16,7 +16,7 @@ export default function OverAllSentimentCard() {
     ],
   });
   return (
-    <AsideCard classType={`${styles.overall__sentiment}`}>
+    <AsideCard classtype={`${styles.overall__sentiment}`}>
       <div className={styles.title}>Overall sentiment</div>
       <DoughnutChart data={sentimentData} />
     </AsideCard>
