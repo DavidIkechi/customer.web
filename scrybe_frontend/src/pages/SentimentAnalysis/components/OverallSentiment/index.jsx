@@ -1,28 +1,24 @@
 import styles from "./OverallSentiment.module.scss";
-import pieChart from "../../icons/pie_chart.svg";
 import AsideCard from "../AsideCard";
+import DoughnutChart from "../DoughnutChart";
+import Data from "../DummyData";
+import { useState } from "react";
 
 export default function OverAllSentimentCard() {
+  const [sentimentData, setSentimentData] = useState({
+    labels: Data.map((item) => item.sentiment),
+    datasets: [
+      {
+        label: "My first Data",
+        data: Data.map((item) => item.score),
+        backgroundColor: ["#76C86F", "#FFCE54", "#FF7589"],
+      },
+    ],
+  });
   return (
     <AsideCard classType={`${styles.overall__sentiment}`}>
       <div className={styles.title}>Overall sentiment</div>
-      <div className={styles.sentiment__chart}>
-        <img src={pieChart} alt="pie chart" />
-      </div>
-      <ul className={styles.sentiment__chart__legend}>
-        <li className={styles.chart__legend__item}>
-          <div className={`${styles.item__icon} ${styles.positive}`} /> Positive
-          <div className={styles.score}>15%</div>
-        </li>
-        <li className={styles.chart__legend__item}>
-          <div className={`${styles.item__icon} ${styles.neutral}`} /> Neutral
-          <div className={styles.score}>15%</div>
-        </li>
-        <li className={styles.chart__legend__item}>
-          <div className={`${styles.item__icon} ${styles.negative}`} /> Negative
-          <div className={styles.score}>15%</div>
-        </li>
-      </ul>
+      <DoughnutChart data={sentimentData} />
     </AsideCard>
   );
 }

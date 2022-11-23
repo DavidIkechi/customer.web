@@ -1,0 +1,44 @@
+@import "../../../../assets/styles/utilities/functionsANDmedia";
+
+.sentiment__chart {
+  margin-left: auto;
+  margin-right: auto;
+  width: pix-rem(200);
+  height: pix-rem(200);
+
+  img {
+    object-fit: contain;
+    width: 100%;
+  }
+}
+
+.sentiment__chart__legend {
+  margin: pix-rem(6) 0;
+
+  .chart__legend__item {
+    font-weight: 300;
+    font-size: pix-rem(18);
+    color: #535353;
+    display: flex;
+    align-items: center;
+    gap: pix-rem(8);
+
+    .item__icon {
+      width: pix-rem(12);
+      height: pix-rem(12);
+      border-radius: 50%;
+    }
+
+    .positive {
+      background-color: #76c86f;
+    }
+
+    .neutral {
+      background-color: #ffce54;
+    }
+
+    .negative {
+      background-color: #ff7589;
+    }
+  }
+}
