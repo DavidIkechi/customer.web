@@ -10,6 +10,10 @@
 - Prettier
 - Husky precommits
 
+## Deployment to Live Link
+
+- Repo deploys to scrybe.hng.tech from branch "main"
+
 ## Contributing
 
 - Fork this repo
@@ -31,4 +35,4 @@ If you try committing and get an error from Git:
 
 Ask [Tochi](https://github.com/tochibedford)
 or
-[Bazz](https://github.com/dev-bazz)
+[Bazz](https://github.com/dev-bazz).
