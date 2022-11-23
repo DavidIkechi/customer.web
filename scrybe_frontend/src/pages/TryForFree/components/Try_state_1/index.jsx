@@ -39,9 +39,11 @@ export default function TryState1() {
               ))}
             </div>
             <div className={styles.Or}>
-              <div />
-              <p>OR</p>
-              <div />
+              <div className={styles.orLeft} />
+              <div className={styles.pDiv}>
+                <p>OR</p>
+              </div>
+              <div className={styles.orRight} />
             </div>
             <input
               type="file"
@@ -108,9 +110,11 @@ export default function TryState1() {
             <h4>Drag and drop agent audio call recordings</h4>
 
             <div className={styles.Or}>
-              <div />
-              <p>OR</p>
-              <div />
+              <div className={styles.orLeft} />
+              <div className={styles.pDiv}>
+                <p>OR</p>
+              </div>
+              <div className={styles.orRight} />
             </div>
             <input
               type="file"
