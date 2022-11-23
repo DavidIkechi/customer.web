@@ -36,6 +36,8 @@ import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordRes
 import FAQs from "./pages/FaqsPage/FaqComponent";
 import LeaderboardPage from "./pages/LeaderBoard/Leaderboard";
 import Reviews from "./pages/Reviews/Reviews";
+import TryProcessing from "./pages/TryForFree/tryProcessing";
+import TryResults from "./pages/TryForFree/tryResults";
 
 function App() {
   return (
@@ -122,6 +124,10 @@ function App() {
       <Route path="/demos" element={<DummyPage someText="demo pages" />} />
       <Route path="/blog" element={<DummyPage someText="blog" />} />
       <Route path="/reviews" element={<Reviews />} />
+
+      {/* Try Routes */}
+      <Route path="/try-processing" element={<TryProcessing />} />
+      <Route path="/try-results" element={<TryResults />} />
     </Routes>
   );
 }
