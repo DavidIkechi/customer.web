@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable react/prop-types */
 import React from "react";
-import "./style.scss";
+import "./styles.module.scss";
 
 function FaqComponent({ faq, index, toggleFAQ }) {
   return (

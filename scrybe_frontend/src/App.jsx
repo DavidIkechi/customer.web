@@ -6,7 +6,7 @@ import DummyPage from "./pages/DummyPage";
 import TranscribePage from "./pages/TranscribePage/TranscribePage";
 import LandingPage from "./pages/landing-page-a";
 import PageB from "./pages/Landing-page-b";
-import TermsAndCondition from "./pages/TermsAndCondition/TermsOfService";
+import TermsAndCondition from "./pages/TermsAndCondition";
 import History from "./pages/History/History";
 import Services from "./pages/Services/Services";
 import Solutions from "./pages/Solutions/Solutions";
@@ -33,8 +33,7 @@ import Successful from "./pages/Successful/Successful";
 import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
-import FAQs from "./pages/FAQs-page/FAQs";
-import TermsOfService from "./pages/TermsAndCondition/TermsOfService";
+import FAQs from "./pages/FaqsPage/FaqComponent";
 
 function App() {
   return (
@@ -122,7 +121,6 @@ function App() {
       <Route path="/blog" element={<DummyPage someText="blog" />} />
       <Route path="/homeB" element={<PageB />} />
       <Route path="/faq" element={<FAQs />} />
-      <Route path="/faq-terms-of-service" element={<TermsOfService />} />
       {/* HelpAndSupport */}
       <Route path="/help-support" element={<HelpSupport />} />
       {/* <Route path="/help-support-general" element={<General />}>
