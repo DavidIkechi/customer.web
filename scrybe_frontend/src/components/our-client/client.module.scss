@@ -9,6 +9,8 @@
                 justify-content: space-between;
                 align-items: center;
                 flex-flow: row wrap;
+                max-width: pix-rem(1200);
+                margin-inline: auto;
                 @include media(1228px) {
                         display: flex;
                         flex-direction: column;
@@ -16,13 +18,13 @@
                         gap: pix-rem(16);
                 }
         }
-//         .title {
-// >>>>>>> 5bfffbd873e08affdc8bc5edfc27fdf11e96a50b
-//                 text-align: center;
-//                 font-size: pix-rem(32);
-//                 font-weight: 600;
-//         }
-//         .display {
-//                 width: min(100%, pix-rem(200));
-//         }
+        .title {
+
+                text-align: center;
+                font-size: pix-rem(32);
+                font-weight: 600;
+        }
+        .display {
+                width: min(100%, pix-rem(200));
+        }
 }

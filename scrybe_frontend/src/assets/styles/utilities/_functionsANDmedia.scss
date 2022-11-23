@@ -1,32 +1,15 @@
-<<<<<<< HEAD
-@function pix-rem($value, $suffix: rem) {
-  $calculate: calc($value/16);
-  @return #{$calculate}#{$suffix};
-}
-=======
->>>>>>> 5bfffbd873e08affdc8bc5edfc27fdf11e96a50b
 // This Functions Convert Pix value to Rem or Em
 // Example of using the function
 // with: pix-rem(20,em) -> em
 // height: pix-rem(10) -> rem by default
 
-<<<<<<< HEAD
-@mixin easyMediaQueries($value) {
-  @media ($value) {
-    @content;
-  }
-=======
 @function pix-rem($value, $suffix: rem) {
   $calculate: calc($value/16);
   @return #{$calculate}#{$suffix};
->>>>>>> 5bfffbd873e08affdc8bc5edfc27fdf11e96a50b
 }
 
 // Easy Media Queries for individual Module/Components
 //
-<<<<<<< HEAD
-
-=======
 @mixin easyMediaQueries($value) {
   @media ($value) {
     @content;
@@ -43,14 +26,11 @@
 
   This changes the body color to red at any screensize below 1200px
 */
->>>>>>> 5bfffbd873e08affdc8bc5edfc27fdf11e96a50b
 @mixin mediaQuery($value) {
   @media (max-width: $value) {
     @content;
   }
 }
-<<<<<<< HEAD
-=======
 
 @mixin animate($animation, $duration, $method, $times) {
   animation: $animation $duration $method $times;
@@ -61,4 +41,3 @@
     @content;
   }
 }
->>>>>>> 5bfffbd873e08affdc8bc5edfc27fdf11e96a50b

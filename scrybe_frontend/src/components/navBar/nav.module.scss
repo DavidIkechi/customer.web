@@ -1,9 +1,6 @@
 @use "../../functions.scss" as *;
 
 .nav {
-<<<<<<< HEAD
-  padding-block: pix-rem(20);
-=======
   &__closed {
     display: none;
     position: absolute;
@@ -62,18 +59,14 @@
     }
   }
 
->>>>>>> 5bfffbd873e08affdc8bc5edfc27fdf11e96a50b
   &_content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-<<<<<<< HEAD
-=======
     width: min(100%, pix-rem(1264));
     margin-inline: auto;
     padding-inline: pix-rem(16);
     position: relative;
->>>>>>> 5bfffbd873e08affdc8bc5edfc27fdf11e96a50b
 
     button {
       a {
@@ -86,13 +79,10 @@
     display: flex;
     gap: pix-rem(24);
     align-items: center;
-<<<<<<< HEAD
-=======
     @include media(1100px) {
       flex-direction: column;
       align-items: center;
     }
->>>>>>> 5bfffbd873e08affdc8bc5edfc27fdf11e96a50b
     & > * {
       all: unset;
       color: #5e5e5e;
@@ -105,13 +95,6 @@
   &__ctas {
     display: flex;
     gap: pix-rem(24);
-<<<<<<< HEAD
-    & > * {
-      all: unset;
-      width: fit-content;
-      padding: pix-rem(16) pix-rem(32);
-      border-radius: pix-rem(4);
-=======
     @include media(1100px) {
       flex-direction: column;
     }
@@ -122,7 +105,6 @@
       @include media(1100px) {
         text-align: center;
       }
->>>>>>> 5bfffbd873e08affdc8bc5edfc27fdf11e96a50b
       &:nth-child(1) {
         background-color: transparent;
         color: #006cff;

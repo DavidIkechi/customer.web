@@ -12,12 +12,9 @@
                 position: absolute;
                 inset-block: 14%;
                 inset-inline: 95%;
-<<<<<<< HEAD
-=======
                 @include media(525) {
                         scale: 0.5;
                 }
->>>>>>> 5bfffbd873e08affdc8bc5edfc27fdf11e96a50b
         }
         &[open] > .faq__question::after {
                 content: url(./asset/minus.svg);
@@ -25,15 +22,11 @@
                 aspect-ratio: 1;
                 position: absolute;
                 inset-block: 14%;
-<<<<<<< HEAD
-                inset-inline: 95%;
-=======
 
                 inset-inline: 95%;
                 @include media(525) {
                         scale: 0.5;
                 }
->>>>>>> 5bfffbd873e08affdc8bc5edfc27fdf11e96a50b
         }
 
         &__question {
@@ -46,7 +39,3 @@
                 margin-top: pix-rem(24);
         }
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 5bfffbd873e08affdc8bc5edfc27fdf11e96a50b
