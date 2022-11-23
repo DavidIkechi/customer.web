@@ -211,6 +211,9 @@
 }
 
 @media screen and (max-width: 620px) {
+    .howitworks .banner {
+        width: 80%;
+    }
     .howitworks .banner h1 {
         font-size: 1.875rem;
         line-height: 2rem;
