@@ -2,7 +2,7 @@
 
 .verdict {
   flex-direction: column;
-  font-size: clamp(pix-rem(32), 1vw, pix-rem(37));
+  font-size: clamp(pix-rem(20), 1vw, pix-rem(37));
   font-weight: 300;
   gap: pix-rem(24);
 
@@ -56,7 +56,7 @@
     gap: pix-rem(20);
 
     button {
-      padding: clamp(pix-rem(12), 1vw, pix-rem(24));
+      padding: clamp(pix-rem(12), 0.7vw, pix-rem(24));
       background-color: transparent;
       border-radius: pix-rem(4);
       border: 1px solid #006cff;
