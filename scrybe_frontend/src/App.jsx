@@ -35,6 +35,7 @@ import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
 import FAQs from "./pages/FaqsPage/FaqComponent";
 import LeaderboardPage from "./pages/LeaderBoard/Leaderboard";
+import Reviews from "./pages/Reviews/Reviews";
 
 function App() {
   return (
@@ -120,7 +121,7 @@ function App() {
       <Route path="/help" element={<DummyPage someText="help and supprt" />} />
       <Route path="/demos" element={<DummyPage someText="demo pages" />} />
       <Route path="/blog" element={<DummyPage someText="blog" />} />
-      <Route path="/reviews-and-pricing" element={<DummyPage />} />
+      <Route path="/reviews" element={<Reviews />} />
     </Routes>
   );
 }
