@@ -4,7 +4,7 @@ import Image from "./assets/industryImage.png";
 
 function industryArticle() {
   return (
-    <div className={styles.industryArticle}>
+    <div className={styles.industry}>
       <div className={styles.container}>
         <div className={styles.banner}>
           <h1>Industry</h1>
@@ -15,7 +15,12 @@ function industryArticle() {
         </div>
         <div className={styles.articleBanner}>
           <div className={styles.articleDetails}>
+            <h2>Industry</h2>
+            <h4>
+              <span>Munaike</span>Wednesday 18th Nov. 2022{" "}
+            </h4>
             <h3>Why you should embrace Emotional AI - Analytics insights</h3>
+
             <p>
               We often feel that emotions have no place in business but it is
               the core of what drives it. Humans are emotional and humans build
@@ -24,10 +29,6 @@ function industryArticle() {
               Emotions have a significant impact on business and your
               company&apos;s success
             </p>
-            <h2>Industry</h2>
-            <h4>
-              <span>Munaike</span>Wednesday 18th Nov. 2022{" "}
-            </h4>
           </div>
           <div className={styles.titleCard}>
             <img src={Image} alt="" />

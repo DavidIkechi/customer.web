@@ -1,35 +1,35 @@
 
-a {
+.industryCard a {
     text-decoration: none;
     color: #434342;
 }
 
-.container {
+.industryCard .container {
     max-width: 76rem;
     margin: 0 auto;
 }
 
-.banner {
+.industryCard .banner {
     width: 50%;
     margin: 0 auto;
     text-align: center;
     
 }
 
-.banner h1{
+.industryCard .banner h1{
     font-size: 3rem;
     padding-top: 15%;
     font-weight: 600;
     color: #1D1D1D;
 }
 
-.banner p {
+.industryCard .banner p {
     font-size: 1.25rem;
     font-weight: 300;
     color: #454545;
 }
 
-.card {
+.industryCard .card {
     display: block;
     width: 98%;
     margin: 7% auto;
@@ -38,35 +38,32 @@ a {
     border: 1px solid #C5C5C5;
     border-radius: 8px;
     padding: 3%;
-    box-shadow: 0 8px 8px -4px rgba(197, 197, 197, 0..08);
+    box-shadow: 0 8px 8px -4px rgba(197, 197, 197, 0.08);
     cursor: pointer;
     transition: all 0.5s;
 }
 
-.card:hover {
+.industryCard .card:hover {
     box-shadow: 0 8px 8px -4px rgba(0, 106, 255, 0.5);
 }
 
-.card h2 {
+.industryCard .card h2 {
     font-size: 2rem;
 }
 
-
-
-
-.titleCard {
+.industryCard .titleCard {
     width: 43%;
     height: auto;
     border-radius: 10px;
     color: #FCFAF7;
 }
 
-.titleCard img {
+.industryCard .titleCard img {
     max-width: 100%;
     object-fit: cover;
 }
 
-h2 {
+.industryCard h2 {
     font-size: 1.25rem;
     line-height: 1.625rem;
     text-transform: uppercase;
@@ -74,26 +71,24 @@ h2 {
     padding-bottom: 10px;
 }
 
-/* --------- */
-
-.postDetails {
+.industryCard .postDetails {
     width: 51%;
 }
 
-.postDetails h3 {
+.industryCard .postDetails h3 {
     font-size: 1.75rem;
     font-weight: 400;
     line-height: 2.063rem;
     padding: 2% 0 4%;
 }
 
-.postDetails p {
+.industryCard .postDetails p {
     width: 90%;
     font-size: 1rem;
     line-height: 1.5rem;
 }
 
-p {
+.industryCard p {
     font-size: 1.25rem;
     font-weight: 300;
     display: inline-block;
@@ -101,13 +96,13 @@ p {
     color: #454545;
 }
 
-h4 {
+.industryCard h4 {
     font-size: 1.25rem;
     font-weight: 300;
     color: #434342;
 }
 
-h4 span {
+.industryCard h4 span {
     font-size: 1.25rem;
     color: #434342;
     font-weight: 600;
@@ -115,184 +110,102 @@ h4 span {
 }
 
 
-.articleBanner {
-    display: flex;
-    margin-top: 7%;
-}
-
-.articleDetails h3 {
-    font-size: 1.75rem;
-    font-weight: 700;
-    line-height: 2.0623rem;
-    color: #434342;
-}
-
-.articleDetails {
-    flex: 40%;
-}
-
-.articleDetails h2 {
-    padding: 6% 0 1%;
-}
-
-.articleDetails h3 {
-    padding-bottom: 2%;
-}
-
-.articleBody p {
-    padding-bottom: 2%;
-}
-.articleBody a {
-    font-size: 1.25rem;
-    font-weight: 300;
-    line-height: 1.625rem;
-    color: #006aff;
-    text-decoration: none;
-}
-
-p.bold  {
-    font-weight: 700;
-}
-
-.articleBody ul {
-    padding-left: 1.875rem;
-}
-
-.articleBody ul li {
-    font-size: 1.25rem;
-    font-weight: 300;
-    
-}
-
-
 @media screen and (max-width: 1240px){
-    .container {
+    .industryCard .container {
         padding: 3%;
        
     }
-    .banner h1 {
+    .industryCard .banner h1 {
         font-size: 2.5rem;
     }
-    .banner p {
+    .industryCard .banner p {
         font-size: 1rem;
     }
 
-    .card h2 {
+    .industryCard .card h2 {
         font-size: 1.25rem;
     }
 
 }
 
 @media screen and (max-width: 1024px) {
-    .banner h1 {
+    .industryCard .banner h1 {
         font-size: 2.25rem;
     }
-    .banner p {
+    .industryCard .banner p {
         font-size: 0.875rem;
         line-height: 1.25rem;
     }
-    .card h2 {
+    .industryCard .card h2 {
         font-size: 1rem;
         padding: 0;
     }
-    .postDetails h3 {
+    .industryCard .postDetails h3 {
         font-size: 1.25rem;
         line-height: 1.562rem;
         padding: 2% 0 2%;
     }
-    .postDetails p {
+    .industryCard .postDetails p {
         width: 90%;
         font-size: 0.875rem;
         line-height: 1.25rem;
     }
 
-    h4 {
+    .industryCard h4 {
         font-size: 1rem;
     }
     
-    h4 span {
+    .industryCard h4 span {
         font-size: 1rem;
     }
 
-    .articleDetails {
-        padding-right: 5%;
-    }
-
-    .articleDetails h3 {
-        font-size: 1.375rem;
-        font-weight: 700;
-        line-height: 2.0625rem;
-    }
-
-    .articleDetails h2 {
-        font-size: 1rem;
-    }
-   .articleDetails p {
-    font-size: 1rem;
-   }
-
-   .articleBody p {
-    font-size: 1rem;
-   }
-
-   .articleBody ul {
-    padding-bottom: 3%;
-}
-
-.articleBody ul li {
-    font-size: 1rem;
-    padding-bottom: 10px;
-}
 
 }
 
 @media screen and (max-width: 768px) {
-    .banner h1 {
+    .industryCard .banner h1 {
         font-size: 1.875rem;
     }
 
-    .card h2 {
+    .industryCard .card h2 {
         font-size: 0.875rem;
         padding: 0;
     }
-       .postDetails h3 {
+    .industryCard .postDetails h3 {
         font-size: 1rem;
         line-height: 1.562rem;
         padding: 2% 0 2%;
     }
-    .postDetails p {
+    .industryCard .postDetails p {
         width: 90%;
         font-size: 0.875rem;
         line-height: 1.25rem;
     }
 
-    h4 {
+    .industryCard h4 {
         font-size: 0.875rem;
     }
     
-    h4 span {
+    .industryCard h4 span {
         font-size: 0.875rem;
     }
 
 }
 
 @media screen and (max-width: 620px) {
-    .banner{
+    .industryCard .banner{
         width: 70%;
     }
-    .card {
+    .industryCard .card {
         flex-direction: column;
     }
-    .titleCard {
+    .industryCard .titleCard {
         width: 100%;
     }
 
-    .postDetails {
+    .industryCard .postDetails {
         width: 100%;
     }
 
-    .articleBanner {
-        flex-direction: column;
-        padding-bottom: 5%;
-    }
+    
 }
