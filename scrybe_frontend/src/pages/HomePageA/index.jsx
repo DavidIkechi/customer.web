@@ -4,7 +4,7 @@ import aboutUsimage from "./assets/Group 1000000931.webp";
 import FaqElement from "./FaqElement";
 import Footer from "../../components/footer";
 import NavBarFree from "../../components/navBar_free";
-import Hero from "./heroSection";
+import Hero from "./HeroSection";
 import CustomerReview from "./CustomerReview";
 import BrandsLogo from "./BrandLogos";
 
