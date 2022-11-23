@@ -6,52 +6,52 @@ import React from "react";
 // import TableHead from "@mui/material/TableHead";
 // import TableRow from "@mui/material/TableRow";
 // import Paper from "@mui/material/Paper";
-import styles from "../styles/AgentRecordings.module.scss";
-import Icon from "../assets/table-icon.png";
+// import styles from "../styles/AgentRecordings.module.scss";
+// import Icon from "../assets/table-icon.png";
 
 export default function BasicTable() {
-  function createData(name, length, size, uploaded) {
-    return { name, length, size, uploaded };
-  }
+  // function createData(name, length, size, uploaded) {
+  //   return { name, length, size, uploaded };
+  // }
 
-  const rows = [
-    createData(
-      {
-        title: "Recording1name.mp3",
-        description: "Inactive recharge card, line barred",
-      },
-      "4 mins",
-      "50mb",
-      "13/11/22"
-    ),
-    createData(
-      {
-        title: "Recording1name.mp3",
-        description: "Inactive recharge card, line barred",
-      },
-      "4 mins",
-      "50mb",
-      "13/11/22"
-    ),
-    createData(
-      {
-        title: "Recording1name.mp3",
-        description: "Inactive recharge card, line barred",
-      },
-      "4 mins",
-      "50mb",
-      "13/11/22"
-    ),
-    createData(
-      {
-        title: "Recording1name.mp3",
-        description: "Inactive recharge card, line barred",
-      },
-      "4 mins",
-      "50mb",
-      "13/11/22"
-    ),
-  ];
+  // const rows = [
+  //   createData(
+  //     {
+  //       title: "Recording1name.mp3",
+  //       description: "Inactive recharge card, line barred",
+  //     },
+  //     "4 mins",
+  //     "50mb",
+  //     "13/11/22"
+  //   ),
+  //   createData(
+  //     {
+  //       title: "Recording1name.mp3",
+  //       description: "Inactive recharge card, line barred",
+  //     },
+  //     "4 mins",
+  //     "50mb",
+  //     "13/11/22"
+  //   ),
+  //   createData(
+  //     {
+  //       title: "Recording1name.mp3",
+  //       description: "Inactive recharge card, line barred",
+  //     },
+  //     "4 mins",
+  //     "50mb",
+  //     "13/11/22"
+  //   ),
+  //   createData(
+  //     {
+  //       title: "Recording1name.mp3",
+  //       description: "Inactive recharge card, line barred",
+  //     },
+  //     "4 mins",
+  //     "50mb",
+  //     "13/11/22"
+  //   ),
+  // ];
   return (
     <>
       {/* <TableContainer component={Paper} className={styles.plainTable}>
