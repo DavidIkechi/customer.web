@@ -4,8 +4,8 @@ import AgentReport from "./pages/AgentReport";
 import SentimentAnalysis from "./pages/SentimentAnalysis";
 import DummyPage from "./pages/DummyPage";
 import TranscribePage from "./pages/TranscribePage";
-import LandingPage from "./pages/landing-page-a";
-import PageB from "./pages/Landing-page-b";
+import HomePage from "./pages/HomePageA";
+import HomePageB from "./pages/HomePageB";
 import TermsAndCondition from "./pages/TermsAndCondition";
 import History from "./pages/History/History";
 import Services from "./pages/Services/Services";
@@ -40,7 +40,7 @@ import Reviews from "./pages/Reviews/Reviews";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />} />
+      <Route path="/" element={<HomePage />} />
       <Route path="/agent-report" element={<AgentReport />} />
       <Route path="/sentiment-analysis" element={<SentimentAnalysis />} />
       <Route path="/transcriptions" element={<TranscribePage />} />
@@ -72,7 +72,7 @@ function App() {
         path="/terms-of-service"
         element={<DummyPage someText="terms of service" />}
       />
-      <Route path="/homeB" element={<PageB />} />
+      <Route path="/homeB" element={<HomePageB />} />
       <Route path="/faq" element={<FAQs />} />
       <Route path="/help-support" element={<HelpSupport />} />
       {/* <Route path="/help-support-general" element={<General />}>

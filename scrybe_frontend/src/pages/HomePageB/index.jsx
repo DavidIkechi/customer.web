@@ -1,19 +1,19 @@
 import React from "react";
-// import CustomerSay from "../../components/customersSay";
-// import Hero from "../../components/heroSection";
-// import OurClient from "../../components/our-client";
-// import styles from "./pageB.module.scss";
-// import imag3d from "./assets/Other 14.webp";
-// import upload from "./assets/Group 1000000932.png";
+import styles from "./pageB.module.scss";
+import imag3d from "./assets/Other 14.webp";
+import upload from "./assets/Group 1000000932.png";
 import NavBar from "../../components/navBar";
 import Footer from "../../components/footer";
+import CustomerReview from "../HomePageA/CustomerReview";
+import BrandsLogo from "../HomePageA/BrandLogos";
+import Hero from "../HomePageA/heroSection";
 
-function PageB() {
+function HomePageB() {
   return (
     <>
       <NavBar />
-      {/* <Hero />
-      <OurClient />
+      <Hero />
+      <BrandsLogo />
       <section>
         <div className={styles.getStarted}>
           <h2 className={styles.getStarted__h2}>LETS GET STARTED</h2>
@@ -66,11 +66,11 @@ function PageB() {
         <h2 className={styles.customer__h2}>
           See what our clients are<span> saying</span>{" "}
         </h2>
-        <CustomerSay />
-      </section> */}
+        <CustomerReview />
+      </section>
       <Footer />
     </>
   );
 }
 
-export default PageB;
+export default HomePageB;
