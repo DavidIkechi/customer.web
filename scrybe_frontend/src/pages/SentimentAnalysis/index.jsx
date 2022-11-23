@@ -1,14 +1,12 @@
 import styles from "./SentimentAnalysis.module.scss";
 import arrowIcon from "./icons/arrow_back.svg";
 import blueArrowIcon from "./icons/blue_arrow.svg";
-import downloadIcon from "./icons/download.svg";
-import dropdownIcon from "./icons/dropdown.svg";
-import shareIcon from "./icons/share.svg";
 import AnalysisCard from "./components/AnalysisCard";
 import AudioCard from "./components/AudioCard";
 import SentimentAside from "./components/SentimentAside";
 import { useState } from "react";
 import OverAllSentimentCard from "./components/OverallSentiment";
+import VerdictCard from "./components/VerdictCard";
 
 function SentimentAnalysis() {
   const [isMobileAsideOpen, setIsMobileAsideOpen] = useState(false);
@@ -97,38 +95,7 @@ function SentimentAnalysis() {
       <aside className={styles.aside__container}>
         <AudioCard />
         <OverAllSentimentCard />
-        <div className={`${styles.verdict} ${styles.inner__container}`}>
-          <div className={styles.verdict__item}>
-            <div className={styles.verdict__title}>Agent Friendliness</div>
-            <div className={styles.verdict__bar}>
-              <div className={styles.inner__bar} style={{ width: `${90}%` }} />
-              <div className={styles.bar__text}>90%</div>
-            </div>
-          </div>
-          <div className={styles.verdict__item}>
-            <div className={styles.verdict__title}>Agent Friendliness</div>
-            <div className={styles.verdict__bar}>
-              <div className={styles.inner__bar} style={{ width: `${85}%` }} />
-              <div className={styles.bar__text}>85%</div>
-            </div>
-          </div>
-          <div className={styles.verdict__item}>
-            <div className={styles.verdict__title}>Verdict: </div>
-            <div className={styles.final__verdict}>Customer is Satisfied</div>
-          </div>
-          <div className={styles.verdict__download}>
-            <button type="button" className={styles.download__button}>
-              <img src={downloadIcon} alt="download icon" />
-              Download
-              <div className={styles.dropdown__container}>
-                <img src={dropdownIcon} alt="drop down" />
-              </div>
-            </button>
-            <button type="button" className={styles.share__button}>
-              <img src={shareIcon} alt="share icon" />
-            </button>
-          </div>
-        </div>
+        <VerdictCard />
         <div className={`${styles.tags} ${styles.inner__container}`}>
           <div className={styles.title}>Positive phrase tags</div>
           <ul className={styles.tag__items}>
