@@ -1,5 +1,5 @@
 # pull the official base image
-FROM python:3.10
+FROM python:3.9
 
 # set work directory
 WORKDIR /backend/app
