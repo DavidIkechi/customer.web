@@ -24,7 +24,6 @@ conf = ConnectionConfig(
     MAIL_TLS = True,
     USE_CREDENTIALS = True,
     MAIL_SSL= False
-    
 )
 
 async def send_email(email: List, instance: User):
@@ -37,22 +36,14 @@ async def send_email(email: List, instance: User):
 
 
     template = f"""
-        <DOCTYPE HTML>
-        <html>
-            <head>
-            </head>
-            <body>
-                <div>
+        <div>
                     <h3>Account Verification </h3>
                     <br>
                     <p>Thank you for registering with us. Kindly click on the link below to
                     verify your email and have full acccess to the platform.</p>
 
-                    <a href="http://localhost:8000/verification?token={token}">Verify your email address </a>
-                </div>
-            </body>
-
-        </html>
+                    <a href="http://scrybe.hng.tech:5000/verification?token={token}">Verify your email address </a>
+        </div>
     """
 
     message = MessageSchema(
@@ -70,7 +61,7 @@ async def verify_token(token: str, db: Session):
     try:
         payload = jwt.decode(token, config_credentials['SECRET'], algorithms=['HS256'])
         user = get_user_by_email(db, payload.get("email"))
-        
+
     except Exception as e:
         print(e)
         raise HTTPException(
