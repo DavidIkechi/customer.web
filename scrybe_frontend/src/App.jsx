@@ -35,8 +35,7 @@ import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
 import FAQs from "./pages/FaqsPage/FaqComponent";
 import LeaderboardPage from "./pages/LeaderBoard/Leaderboard";
-import SettingsPage from "./pages/Settings";
-
+import SettingsPage from "./pages/Settings/SettingsIndex";
 function App() {
   return (
     <Routes>

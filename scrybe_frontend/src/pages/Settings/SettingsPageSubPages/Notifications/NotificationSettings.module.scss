@@ -1,8 +1,3 @@
-* {
-  line-height: normal !important;
-  text-transform: none !important;
-}
-
 .NotificationSettings_wrapper {
   padding: 0 1rem;
   color: #3f3f3f !important;
@@ -198,8 +193,8 @@
 
 @media (min-width: 768px) {
   .NotificationSettings_wrapper {
-     width: 90%;
-     margin: 0 auto 2rem;
+    width: 90%;
+    margin: 0 auto 2rem;
   }
 }
 @media (min-width: 1024px) {

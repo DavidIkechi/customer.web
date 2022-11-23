@@ -9,17 +9,10 @@ function Index() {
   return (
     <div className="Index">
       <Routes>
-        <Route path="/" element={<MainPage />}>
-          <Route
-            path="personal-information"
-            element={<PersonalInformation />}
-          />
-          <Route
-            path="settings/account-security"
-            element={<AccountSetting />}
-          />
-          <Route path="settings/notification" element={<Notification />} />
-        </Route>
+        <Route path="/" element={<MainPage />}></Route>
+        <Route path="/personal-information" element={<PersonalInformation />} />
+        <Route path="/account-security" element={<AccountSetting />} />
+        <Route path="/notification" element={<Notification />} />
       </Routes>
     </div>
   );
