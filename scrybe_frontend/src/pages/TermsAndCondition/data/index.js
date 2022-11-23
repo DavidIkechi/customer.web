@@ -1,13 +1,16 @@
+/* eslint-disable quotes */
+/* eslint-disable import/prefer-default-export */
+
 export const termsData = [
   {
     title: "Introduction",
     content:
-      "Welcome to Scrybe (“Company”, “we”, “our”, “us”)! These Terms of Service (“Terms”, “Terms of Service”) govern your use of our website located at scrybe.com.ng (together or individually “Service”) operated by Scrybe. Our Privacy Policy also governs your use of our Service and explains how we collect, safeguard and disclose information that results from your use of our web pages. Your agreement with us includes these Terms and our Privacy Policy (“Agreements”). You acknowledge that you have read and understood Agreements, and agree to be bound by them. If you do not agree with (or cannot comply with) Agreements, then you may not use the Service, but please let us know by emailing at info@scrybe.com so we can try to find a solution. These Terms apply to all visitors, users and others who wish to access or use Service.",
+      'Welcome to Scrybe (“Company”, “we”, “our”, “us”)! These Terms of Service (“Terms”, “Terms of Service”) govern your use of our website located at <a href="#">scrybe.com.ng</a> (together or individually “Service”) operated by Scrybe. Our Privacy Policy also governs your use of our Service and explains how we collect, safeguard and disclose information that results from your use of our web pages. Your agreement with us includes these Terms and our Privacy Policy (“Agreements”). You acknowledge that you have read and understood Agreements, and agree to be bound by them. If you do not agree with (or cannot comply with) Agreements, then you may not use the Service, but please let us know by emailing at <a href="#">info@scrybe.com</a> so we can try to find a solution. These Terms apply to all visitors, users and others who wish to access or use Service.',
   },
   {
     title: "Communications",
     content:
-      "By using our Service, you agree to subscribe to newsletters, marketing or promotional materials and other information we may send. However, you may opt out of receiving any, or all, of these communications from us by following the unsubscribe link or by emailing at info@scrybe.com",
+      'By using our Service, you agree to subscribe to newsletters, marketing or promotional materials and other information we may send. However, you may opt out of receiving any, or all, of these communications from us by following the unsubscribe link or by emailing at <a href="#">info@scrybe.com</a>',
   },
   {
     title: "Content",
@@ -17,12 +20,12 @@ export const termsData = [
   {
     title: "Pricing Terms",
     content:
-      "Subject to the Terms, the Services are provided to you without charge up to certain usage limits, and usage in excess of these limits may require purchase of additional resources and the payment of fees. Please see Scrybe's Pricing Terms at https://www.scrybe.com.ng/pricing for details regarding pricing for the Services.",
+      'Subject to the Terms, the Services are provided to you without charge up to certain usage limits, and usage in excess of these limits may require purchase of additional resources and the payment of fees. Please see Scrybe\'s Pricing Terms at <a href="#">https://www.scrybe.com.ng/pricing for details regarding pricing for the Services.</a>',
   },
   {
     title: "Privacy Policies",
     content:
-      "These Services are provided in accordance with our Privacy Policy, which can be found at https://www.scrybe.com.ng/legal/privacy-policy/. You agree to the use of your User Content and personal information in accordance with these Terms and Scrybe's Privacy Policy.",
+      'These Services are provided in accordance with our Privacy Policy, which can be found at <a href="#">https://www.scrybe.com.ng/legal/privacy-policy/.</a> You agree to the use of your User Content and personal information in accordance with these Terms and Scrybe\'s Privacy Policy.',
   },
   {
     title: "Age Restriction",
@@ -97,6 +100,6 @@ export const termsData = [
   {
     title: "Contact Us",
     content:
-      "Please send your feedback, comments, requests for technical support by email: info@scrybe.com.",
+      'Please send your feedback, comments, requests for technical support by email: <a href="#">info@scrybe.com.</a>',
   },
 ];

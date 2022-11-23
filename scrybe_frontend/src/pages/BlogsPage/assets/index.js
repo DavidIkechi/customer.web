@@ -1,5 +1,4 @@
 /* eslint-disable import/prefer-default-export */
-export { default as Hero } from "./faq_hero.png";
 export { default as BlogHero } from "./blog-hero.svg";
 export { default as image01 } from "./image01.png";
 export { default as image02 } from "./image02.png";

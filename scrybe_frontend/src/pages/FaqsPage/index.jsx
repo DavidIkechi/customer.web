@@ -1,9 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-param-reassign */
 import React, { useState } from "react";
-import styles from "./FAQs.module.scss";
-// import { FaqComponent } from "../../components/faqComponent";
-// import { Hero } from "../../assets";
+import styles from "./style.module.scss";
+import { FaqComponent } from "./FaqComponent";
+import { Hero } from "./assets";
 
 function FAQs() {
   const [faqs, setFaqs] = useState([
@@ -42,33 +42,33 @@ function FAQs() {
         "Audio materials uploaded by the subscriber or recorded with a microphone in the Alrite application, as well as related text files, can only be accessed by the subscriber and (in case of business use) by users associated with the subscriber! The subscriber has the exclusive right to view, download and use the audio and text files for any other purpose. The data may only be accessed for service purposes by specialists authorized by our company, in compliance with strict security regulations. Our company does not use this data to improve the deep learning-based speech recognition and word processing algorithms of the Alrite system, or to develop Alrite for functional purposes - other procedures and publicly available, processable data files are available to for this purpose.Data from our business subscribers using the system's on-premise infrastructure is stored in their internal server environment, ensuring maximum protection of business data.",
       open: false,
     },
-    // {
-    //   question: "Can I see my files while they are being transcribed?",
-    //   answer:
-    //     "Yes. With complex terminology, Scrybe's advanced technology integrates linguistic, auditory.",
-    //   open: false,
-    // },
-    // {
-    //   question: "Is there a minimum duration for files?",
-    //   answer:
-    //     "events to identify the topic of the file and use a database of the most-used words in a manner that results in higher accuracy.",
-    //   open: false,
-    // },
+    {
+      question: "Can I see my files while they are being transcribed?",
+      answer:
+        "Yes. With complex terminology, Scrybe's advanced technology integrates linguistic, auditory.",
+      open: false,
+    },
+    {
+      question: "Is there a minimum duration for files?",
+      answer:
+        "events to identify the topic of the file and use a database of the most-used words in a manner that results in higher accuracy.",
+      open: false,
+    },
   ]);
 
-  // const toggleFAQ = (index) => {
-  //   setFaqs(
-  //     faqs.map((faq, i) => {
-  //       if (i === index) {
-  //         faq.open = !faq.open;
-  //       } else {
-  //         faq.open = false;
-  //       }
+  const toggleFAQ = (index) => {
+    setFaqs(
+      faqs.map((faq, i) => {
+        if (i === index) {
+          faq.open = !faq.open;
+        } else {
+          faq.open = false;
+        }
 
-  //       return faq;
-  //     })
-  //   );
-  // };
+        return faq;
+      })
+    );
+  };
 
   return (
     <div className={styles.faq__wrapper}>
@@ -77,7 +77,9 @@ function FAQs() {
           <div>
             Get the answers you're looking for on <span>Scrybe</span>
           </div>
-          <div>{/* <img src={Hero} alt="" /> */}</div>
+          <div>
+            <mg src={Hero} alt="" />
+          </div>
         </div>
       </div>
 
@@ -87,16 +89,16 @@ function FAQs() {
           <p>Need Some Answers?</p>
         </div>
         <div className={styles.faq__accordion}>
-          {/* <div className="faqs">
-            {faqs.map((faq, index) => (
+          <div className="faqs">
+            {faqs.map((faq, i) => (
               <FaqComponent
                 faq={faq}
-                index={index}
-                key={faq.id}
+                index={i}
+                key={i + 1}
                 toggleFAQ={toggleFAQ}
               />
             ))}
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
