@@ -36,9 +36,11 @@
   border-radius: 4px;
   padding: 1rem 1rem 2rem;
   margin: 20px auto;
+  width: 100%;
   height: 306px;
 }
 .recordings {
+  align-items: center;
   height: 215px;
   margin-top: 3rem;
 
@@ -119,16 +121,19 @@
     color: #6a6a6a;
   }
 }
-
+.subcontent_con {
+  display: flex;
+  justify-content: center;
+}
 .analysis {
-  align-items: center;
+  width: 100%;
   height: 310px;
   margin: 20px auto;
-  padding: 1rem 0 1.5rem;
+  padding: 1rem 1rem 1.5rem;
 
   &__heading {
     display: flex;
-    gap: 1.3rem;
+    justify-content: space-between;
 
     h1 {
       display: flex;
@@ -226,17 +231,18 @@
 }
 
 .leaderboard {
-  align-items: center;
-  height: 300px;
+  // align-items: center;
+  height: 310px;
+  width: 100%;
   margin: 20px auto;
   padding: 1rem 1rem 1.5rem;
 
   &__heading {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    justify-content: space-between;
     h1 {
       display: flex;
+      align-items: center;
       gap: 0.5rem;
       font-weight: 300;
       font-size: 1rem;
@@ -322,10 +328,11 @@
   }
 }
 
-@media screen and (min-width: 64rem) {
+@media screen and (min-width: 59.375rem) {
   .container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
   }
   .recent_recordings {
     caption {
