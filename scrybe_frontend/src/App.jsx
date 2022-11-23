@@ -6,8 +6,6 @@ import DummyPage from "./pages/DummyPage";
 import TranscribePage from "./pages/TranscribePage";
 import HomePage from "./pages/HomePageA";
 import HomePageB from "./pages/HomePageB";
-import LandingPage from "./pages/HomePageA";
-import PageB from "./pages/HomePageB";
 import TermsAndCondition from "./pages/TermsAndCondition";
 import History from "./pages/History/History";
 import Services from "./pages/Services/Services";

@@ -4,7 +4,6 @@ import styles from "./nav.module.scss";
 import logo from "../../assets/scrybe_logo_with_text.svg";
 
 function NavBar() {
-function NavBar() {
   const [clicked, setClicked] = useState(false);
 
   function handleClick() {
