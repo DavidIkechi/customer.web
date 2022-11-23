@@ -48,6 +48,9 @@ jobs:
     steps:
       - name: Checkout master
         uses: actions/checkout@master
+        
+      - id: commit
+        uses: pr-mpt/actions-commit-hash@v1       
 
       - name: Pull from GitHub
         uses: appleboy/ssh-action@master
