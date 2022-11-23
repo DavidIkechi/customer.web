@@ -144,12 +144,14 @@ function DashboardOverview() {
           </div>
 
           <div className={styles.agents_desktop}>
-            <div className={styles.agentL}>
-              <span>
-                <img src={crown} alt="crown" />
-              </span>
-              <img src={agent} alt="agent" />
-              <span className={styles.one}>1</span>
+            <div className={styles.agentLCon}>
+              <div className={styles.agentL}>
+                <span>
+                  <img src={crown} alt="crown" />
+                </span>
+                <img src={agent} alt="agent" />
+                <span className={styles.one}>1</span>
+              </div>
             </div>
             <div className={styles.other_agents}>
               <div>

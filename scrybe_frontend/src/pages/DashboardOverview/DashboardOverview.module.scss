@@ -1,6 +1,7 @@
 .dashboard_overview {
   background: #c5c5c514;
   overflow: hidden;
+  padding: 0;
 }
 .notvisible {
   visibility: hidden;
@@ -156,7 +157,7 @@
   .circles {
     position: relative;
     left: -11rem;
-    top: -1rem;
+    top: -1.5rem;
     font-size: 1.5rem;
     line-height: 40px;
     div {
@@ -199,7 +200,7 @@
   }
 
   .scale {
-    bottom: 17px;
+    bottom: 23px;
     position: absolute;
     display: flex;
 
@@ -252,7 +253,7 @@
     display: flex;
     flex-direction: column;
     gap: 2.188rem;
-    margin-top: 1.25rem;
+    margin-top: 2.25rem;
     div {
       display: flex;
       gap: 9rem;
@@ -318,6 +319,11 @@
 }
 
 @media screen and (min-width: 48rem) {
+  .dashboard_overview {
+    background: #c5c5c514;
+    overflow: hidden;
+    padding: 3rem;
+  }
   .recent_recordings {
     caption {
       padding: 1rem 2rem;
@@ -345,9 +351,15 @@
   .agents_desktop {
     display: block !important;
     margin-top: 1.8rem;
-    .agentL {
+    .agentLCon {
       display: flex;
       justify-content: center;
+    }
+    .agentL {
+      position: relative;
+
+      width: 100px;
+
       img {
         width: 80px;
       }
@@ -355,8 +367,8 @@
         img {
           width: 21.48px;
           position: absolute;
-          left: 8.1rem;
-          top: 3.5rem;
+          left: 28px;
+          top: -16px;
         }
       }
       .one {
@@ -366,8 +378,8 @@
         position: absolute;
         width: 16px;
         height: 16px;
-        left: 8.4rem;
-        top: 9rem;
+        left: 33px;
+        bottom: -6px;
         background: #004db5;
         border-radius: 94.5578px;
         font-weight: 700;
@@ -379,6 +391,7 @@
     .other_agents {
       display: flex;
       flex-direction: column;
+      align-items: center;
       gap: 1rem;
       margin-top: 2.5rem;
       div {
