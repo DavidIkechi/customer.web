@@ -9,7 +9,9 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse
 from crud import get_user_by_email
 from sqlalchemy.orm import Session
+from dotenv import load_dotenv
 
+load_dotenv()
 
 config_credentials = dotenv_values('.env')
 
@@ -17,12 +19,12 @@ conf = ConnectionConfig(
     MAIL_USERNAME = config_credentials['EMAIL'],
     MAIL_PASSWORD = config_credentials['PASS'],
     MAIL_FROM = config_credentials['EMAIL'],
-    MAIL_PORT = 587,
+    MAIL_PORT = 465,
     MAIL_SERVER = 'smtp.gmail.com',
-    MAIL_STARTTLS = True,
+    MAIL_STARTTLS = False,
     USE_CREDENTIALS = True,
-    MAIL_SSL_TLS= False
-    
+    MAIL_SSL_TLS= True,
+    VALIDATE_CERTS = True
 )
 
 async def send_email(email: List, instance: User):
@@ -35,22 +37,14 @@ async def send_email(email: List, instance: User):
 
 
     template = f"""
-        <DOCTYPE HTML>
-        <html>
-            <head>
-            </head>
-            <body>
-                <div>
+        <div>
                     <h3>Account Verification </h3>
                     <br>
                     <p>Thank you for registering with us. Kindly click on the link below to
                     verify your email and have full acccess to the platform.</p>
 
-                    <a href="http://localhost:8000/verification?token={token}">Verify your email address </a>
-                </div>
-            </body>
-
-        </html>
+                    <a href="http://scrybe.hng.tech:5000/verification?token={token}">Verify your email address </a>
+        </div>
     """
 
     message = MessageSchema(
@@ -68,7 +62,7 @@ async def verify_token(token: str, db: Session):
     try:
         payload = jwt.decode(token, config_credentials['SECRET'], algorithms=['HS256'])
         user = get_user_by_email(db, payload.get("email"))
-        
+
     except Exception as e:
         print(e)
         raise HTTPException(

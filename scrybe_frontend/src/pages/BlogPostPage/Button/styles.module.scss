@@ -1,0 +1,29 @@
+.button {
+  font-family: "Kanit";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
+  text-decoration: none;
+  border: none;
+  display: inline-block;
+
+  background-color: #006cff;
+  border-radius: 4px;
+  padding: 16px 32px;
+
+  &__outlined {
+    color: #006cff;
+
+    background-color: transparent;
+    border: 1px solid #006cff;
+  }
+
+  &__icon {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    line-height: 1;
+  }
+}

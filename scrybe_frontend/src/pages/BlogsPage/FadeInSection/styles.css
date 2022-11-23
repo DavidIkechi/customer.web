@@ -1,0 +1,13 @@
+section {
+  opacity: 0;
+  transform: translate(0, 50%);
+  visibility: hidden;
+  transition: opacity 400ms ease-out, transform 400ms ease-out;
+  will-change: opacity, visibility;
+}
+
+.is__visible {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+}

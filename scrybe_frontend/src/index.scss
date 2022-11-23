@@ -12,6 +12,7 @@ section {
 }
 
 * {
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
@@ -56,9 +57,5 @@ section {
   --gray-100: #c5c5c5;
   --primary-blue: #006cff;
   --primary-blue-700: #004db5;
-}
-
-* {
-  font-size: 16px !important;
 }
 

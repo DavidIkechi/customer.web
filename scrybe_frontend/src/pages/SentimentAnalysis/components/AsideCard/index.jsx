@@ -2,15 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import styles from "./AsideCard.module.scss";
 
-function AsideCard({ children, classType }) {
+function AsideCard(props) {
+  const { children, classtype } = props;
   return (
-    <div className={`${classType} ${styles.inner__container}`}>{children}</div>
+    <div className={`${classtype} ${styles.inner__container}`} {...props}>
+      {children}
+    </div>
   );
 }
 
 AsideCard.propTypes = {
   children: PropTypes.node.isRequired,
-  classType: PropTypes.string.isRequired,
+  classtype: PropTypes.string.isRequired,
 };
 
 export default AsideCard;
