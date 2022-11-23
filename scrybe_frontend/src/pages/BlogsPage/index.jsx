@@ -41,7 +41,7 @@ function Blogs() {
         </div>
         <div className={styles.blogs__grid}>
           {blogs.map((blog, i) => (
-            <Link to={`/${i}`} key={i + 1}>
+            <Link to={`/blog/${i}`} key={i + 1}>
               <FadeInSection key={i + 1}>
                 <Card
                   key={i + 1}

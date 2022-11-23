@@ -318,7 +318,7 @@ function BlogPostPage() {
           className={`${utils.d_flex} ${utils.justify_content_space_between}`}
         >
           <div>
-            <Button outlined component="a" href="#prev">
+            <Button component="a" href="#prev">
               <span className={utils.d_flex} style={{ "--gap": "8px" }}>
                 <img src={arrowLeft} alt="previous blog post icon" />
 
@@ -328,7 +328,7 @@ function BlogPostPage() {
           </div>
 
           <div>
-            <Button outlined component="a" href="#prev">
+            <Button component="a" href="#next">
               <span className={utils.d_flex} style={{ "--gap": "8px" }}>
                 <span>Next</span>
 
