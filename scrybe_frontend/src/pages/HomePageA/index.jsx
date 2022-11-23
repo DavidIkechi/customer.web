@@ -1,20 +1,21 @@
 import React from "react";
 import styles from "./landingpage.module.scss";
-
-// import OurClient from "../../components/our-client";
 import aboutUsimage from "./assets/Group 1000000931.webp";
-// import FaqElement from "../../components/faqElement";
-// import Hero from "../../components/heroSection";
-// import CustomerSay from "../../components/customersSay";
+import FaqElement from "./faqElement";
 import Footer from "../../components/footer";
 import NavBarFree from "../../components/navBar_free";
+import Hero from "./heroSection";
+import CustomerReview from "./CustomerReview";
+import BrandsLogo from "./BrandLogos";
 
-function LandingPage() {
+function HomePage() {
   return (
     <div>
       <NavBarFree />
-      {/* <Hero /> */}
-      <section aria-label="Our Clients">{/* <OurClient /> */}</section>
+      <Hero />
+      <section aria-label="Our Clients">
+        <BrandsLogo />
+      </section>
 
       <section aria-label="About Us">
         <div className={` ${styles.aboutUs}`}>
@@ -23,6 +24,9 @@ function LandingPage() {
           </div>
           <div className={styles.aboutUs__content}>
             <h2 className={styles.aboutUs__title}>About Us</h2>
+            <div className={styles.aboutUs__i2}>
+              <img src={aboutUsimage} alt="" srcSet="" />
+            </div>
             <p className={styles.aboutUs__details}>
               Scrybe is a conversation intelligence tool that automatically
               transcribes and analyzes recorded customer support conversations
@@ -2069,7 +2073,7 @@ function LandingPage() {
         <h2 className={styles.customer__h2}>
           See what our clients are<span> saying</span>{" "}
         </h2>
-        {/* <CustomerSay /> */}
+        <CustomerReview />
       </section>
       <section className={styles.faq}>
         <div className="container">
@@ -2077,11 +2081,11 @@ function LandingPage() {
             FREQUENTLY ASKED <span>QUESTIONS</span>{" "}
           </h2>
           <div className={styles.faq_faqs}>
-            {/* <FaqElement question="How do I register on Scrybe?" />
+            <FaqElement question="How do I register on Scrybe?" />
             <FaqElement question="What are the limitations of free package?" />
             <FaqElement question="What format can i use for uploads?" />
             <FaqElement question="Who has access to my data?" />
-            <FaqElement question="How can i have best quality of transcript and analysis?" /> */}
+            <FaqElement question="How can i have best quality of transcript and analysis?" />
           </div>
           <a
             href="https://www.w3schools.com/react/react_css.asp"
@@ -2114,4 +2118,4 @@ function LandingPage() {
   );
 }
 
-export default LandingPage;
+export default HomePage;
