@@ -1,4 +1,5 @@
 import styles from "./DoughnutChart.module.scss";
+// eslint-disable-next-line no-unused-vars
 import { Chart as ChartJs, ArcElement } from "chart.js/auto"; // this automatically registers the elements for the chart, do not remove
 import { Doughnut } from "react-chartjs-2";
 
@@ -10,7 +11,7 @@ export default function DoughnutChart(props) {
         <Doughnut
           data={data}
           options={{
-            cutout: 60,
+            cutout: "70%",
             offset: 0,
             spacing: 0,
             plugins: { legend: { display: false, position: "bottom" } },

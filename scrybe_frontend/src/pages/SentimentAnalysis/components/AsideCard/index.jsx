@@ -2,9 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import styles from "./AsideCard.module.scss";
 
-function AsideCard({ children, classType }) {
+function AsideCard(props) {
+  const { children, classType } = props;
   return (
-    <div className={`${classType} ${styles.inner__container}`}>{children}</div>
+    <div className={`${classType} ${styles.inner__container}`} {...props}>
+      {children}
+    </div>
   );
 }
 

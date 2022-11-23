@@ -9,7 +9,6 @@ import styles from "./try_state_3.module.scss";
 export default function TryThird() {
   return (
     <div className={styles.transcribeProcessingContainer}>
-      
       <div className={styles.transcribeProcess}>
         <div>
           <h3>Please wait while your Transcription is processing</h3>
