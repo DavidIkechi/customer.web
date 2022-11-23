@@ -10,6 +10,10 @@
 - Prettier
 - Husky precommits
 
+## Deployment to Live Link
+
+- Repo deploys to scrybe.hng.tech from branch "main"
+
 ## Contributing
 
 - Fork this repo
