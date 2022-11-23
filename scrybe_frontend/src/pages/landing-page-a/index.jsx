@@ -1,11 +1,11 @@
 import React from "react";
 import styles from "./landingpage.module.scss";
 
-import OurClient from "../../components/our-client";
+// import OurClient from "../../components/our-client";
 import aboutUsimage from "./assets/Group 1000000931.webp";
-import FaqElement from "../../components/faqElement";
-import Hero from "../../components/heroSection";
-import CustomerSay from "../../components/customersSay";
+// import FaqElement from "../../components/faqElement";
+// import Hero from "../../components/heroSection";
+// import CustomerSay from "../../components/customersSay";
 import Footer from "../../components/footer";
 import NavBarFree from "../../components/navBar_free";
 
@@ -13,10 +13,8 @@ function LandingPage() {
   return (
     <div>
       <NavBarFree />
-      <Hero />
-      <section aria-label="Our Clients">
-        <OurClient />
-      </section>
+      {/* <Hero /> */}
+      <section aria-label="Our Clients">{/* <OurClient /> */}</section>
 
       <section aria-label="About Us">
         <div className={` ${styles.aboutUs}`}>
@@ -2071,7 +2069,7 @@ function LandingPage() {
         <h2 className={styles.customer__h2}>
           See what our clients are<span> saying</span>{" "}
         </h2>
-        <CustomerSay />
+        {/* <CustomerSay /> */}
       </section>
       <section className={styles.faq}>
         <div className="container">
@@ -2079,11 +2077,11 @@ function LandingPage() {
             FREQUENTLY ASKED <span>QUESTIONS</span>{" "}
           </h2>
           <div className={styles.faq_faqs}>
-            <FaqElement question="How do I register on Scrybe?" />
+            {/* <FaqElement question="How do I register on Scrybe?" />
             <FaqElement question="What are the limitations of free package?" />
             <FaqElement question="What format can i use for uploads?" />
             <FaqElement question="Who has access to my data?" />
-            <FaqElement question="How can i have best quality of transcript and analysis?" />
+            <FaqElement question="How can i have best quality of transcript and analysis?" /> */}
           </div>
           <a
             href="https://www.w3schools.com/react/react_css.asp"
