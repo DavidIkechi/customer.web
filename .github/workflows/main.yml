@@ -60,9 +60,10 @@ jobs:
           USERNAME: ${{ secrets.USERNAME }}
           KEY: ${{ secrets.KEY }}
           script: |
-            export IMAGE_TAG=${{ steps.commit.outputs.short }}
+            IMAGE_TAG=${{ steps.commit.outputs.short }}
             sudo docker-compose stop
             sudo docker-compose rm -f
+            echo $IMAGE_TAG
             sudo docker-compose pull   
             sudo docker-compose up -d             
             
