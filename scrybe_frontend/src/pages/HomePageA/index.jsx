@@ -1,11 +1,11 @@
 import React from "react";
 import styles from "./landingpage.module.scss";
 import aboutUsimage from "./assets/Group 1000000931.webp";
-import FaqElement from "./faqElement";
+import FaqElement from "./FaqElement";
 import Footer from "../../components/footer";
 import NavBarFree from "../../components/navBar_free";
-import Hero from "./heroSection";
-import CustomerReview from "./CustomerReview";
+import Hero from "./HeroSection";
+// import CustomerReview from "./CustomerReview";
 import BrandsLogo from "./BrandLogos";
 
 function HomePage() {
@@ -2069,12 +2069,12 @@ function HomePage() {
           </div>
         </div>
       </section>
-      <section className={styles.customer}>
+      {/* <section className={styles.customer}>
         <h2 className={styles.customer__h2}>
           See what our clients are<span> saying</span>{" "}
         </h2>
         <CustomerReview />
-      </section>
+      </section> */}
       <section className={styles.faq}>
         <div className="container">
           <h2 className={styles.faq__h2}>

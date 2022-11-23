@@ -1,4 +1,8 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import { Bar } from "react-chartjs-2";
+import { Recordings } from "./Data";
+
 import styles from "./DashboardOverview.module.scss";
 import toneWave from "./assets/tone_wave.svg";
 import chevron from "./assets/chevron_right.svg";
@@ -11,8 +15,43 @@ import agent3 from "./assets/agent3.png";
 import crown from "./assets/crown.svg";
 import second from "./assets/2nd.png";
 import third from "./assets/3rd.png";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+} from "chart.js";
+ChartJS.register(CategoryScale, LinearScale, BarElement);
 
 function DashboardOverview() {
+  const [chartData, setChartData] = useState({
+    datasets: [],
+  });
+  const [chartOptions, setChartOptions] = useState({});
+
+  useEffect(() => {
+    setChartData({
+      label: Recordings.map((data) => data.week),
+      datasets: [
+        {
+          label: "",
+          data: Recordings.map((data) => data.totalRecordings),
+          backgroundColor: ["#B0CAD9", "#005584", "#548DAD", "#004D78"],
+          maxBarThickness: 10,
+          borderSkipped: "start",
+        },
+      ],
+    });
+    setChartOptions({
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false,
+        },
+      },
+    });
+  }, []);
+
   return (
     <section className={styles.dashboard_overview}>
       <div className={styles.container}>
@@ -27,7 +66,8 @@ function DashboardOverview() {
             </h2>
           </div>
           <div className={styles.recordings}>
-            <div>
+            <Bar options={chartOptions} data={chartData} />
+            {/* <div>
               <div className={`${styles.bar} ${styles.one}`}>1</div>
               <div className={`${styles.bar} ${styles.two}`}>2</div>
               <div className={`${styles.bar} ${styles.three}`}>3</div>
@@ -54,7 +94,7 @@ function DashboardOverview() {
                 <li>wk3</li>
                 <li>wk4</li>
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
 

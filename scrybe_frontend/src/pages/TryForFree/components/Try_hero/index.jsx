@@ -11,12 +11,12 @@ export default function tryHero() {
     <section className={styles.trySection}>
       <div className={styles.HeroSection}>
         <div className={styles.Hero1}>
-          <h3>Try for Free</h3>
+          <h3 className={styles.try}>Try for Free</h3>
           <p>
             Experience a touch of Scrybe without committing to our
             subscriptions. Try our other features when you sign up with us.
           </p>
-          <Link to="/auth" className={styles.HeroButton}>
+          <Link to="/signin" className={styles.HeroButton}>
             Sign Up Now
           </Link>
         </div>
