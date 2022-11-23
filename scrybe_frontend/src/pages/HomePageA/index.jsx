@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./landingpage.module.scss";
 import aboutUsimage from "./assets/Group 1000000931.webp";
-import FaqElement from "./faqElement";
+import FaqElement from "./FaqElement";
 import Footer from "../../components/footer";
 import NavBarFree from "../../components/navBar_free";
 import Hero from "./heroSection";
