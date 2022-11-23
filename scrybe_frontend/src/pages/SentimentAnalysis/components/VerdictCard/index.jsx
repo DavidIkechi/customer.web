@@ -6,7 +6,7 @@ import shareIcon from "../../icons/share.svg";
 
 export default function VerdictCard() {
   return (
-    <AsideCard classType={`${styles.verdict}`}>
+    <AsideCard classtype={`${styles.verdict}`}>
       <div className={styles.verdict__item}>
         <div className={styles.verdict__title}>Agent Friendliness</div>
         <div className={styles.verdict__bar}>

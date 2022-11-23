@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import styles from "./AsideCard.module.scss";
 
 function AsideCard(props) {
-  const { children, classType } = props;
+  const { children, classtype } = props;
   return (
-    <div className={`${classType} ${styles.inner__container}`} {...props}>
+    <div className={`${classtype} ${styles.inner__container}`} {...props}>
       {children}
     </div>
   );
