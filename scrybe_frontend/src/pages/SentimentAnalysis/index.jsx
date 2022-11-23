@@ -1,7 +1,6 @@
 import styles from "./SentimentAnalysis.module.scss";
 import arrowIcon from "./icons/arrow_back.svg";
 import blueArrowIcon from "./icons/blue_arrow.svg";
-import pieChart from "./icons/pie_chart.svg";
 import downloadIcon from "./icons/download.svg";
 import dropdownIcon from "./icons/dropdown.svg";
 import shareIcon from "./icons/share.svg";
@@ -9,6 +8,7 @@ import AnalysisCard from "./components/AnalysisCard";
 import AudioCard from "./components/AudioCard";
 import SentimentAside from "./components/SentimentAside";
 import { useState } from "react";
+import OverAllSentimentCard from "./components/OverallSentiment";
 
 function SentimentAnalysis() {
   const [isMobileAsideOpen, setIsMobileAsideOpen] = useState(false);
@@ -96,31 +96,7 @@ function SentimentAnalysis() {
       </main>
       <aside className={styles.aside__container}>
         <AudioCard />
-        <div
-          className={`${styles.overall__sentiment} ${styles.inner__container}`}
-        >
-          <div className={styles.title}>Overall sentiment</div>
-          <div className={styles.sentiment__chart}>
-            <img src={pieChart} alt="pie chart" />
-          </div>
-          <ul className={styles.sentiment__chart__legend}>
-            <li className={styles.chart__legend__item}>
-              <div className={`${styles.item__icon} ${styles.positive}`} />{" "}
-              Positive
-              <div className={styles.score}>15%</div>
-            </li>
-            <li className={styles.chart__legend__item}>
-              <div className={`${styles.item__icon} ${styles.neutral}`} />{" "}
-              Neutral
-              <div className={styles.score}>15%</div>
-            </li>
-            <li className={styles.chart__legend__item}>
-              <div className={`${styles.item__icon} ${styles.negative}`} />{" "}
-              Negative
-              <div className={styles.score}>15%</div>
-            </li>
-          </ul>
-        </div>
+        <OverAllSentimentCard />
         <div className={`${styles.verdict} ${styles.inner__container}`}>
           <div className={styles.verdict__item}>
             <div className={styles.verdict__title}>Agent Friendliness</div>
