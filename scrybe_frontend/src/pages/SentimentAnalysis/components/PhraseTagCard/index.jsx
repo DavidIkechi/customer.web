@@ -2,9 +2,10 @@ import PropTypes from "prop-types";
 import AsideCard from "../AsideCard";
 import styles from "./PhraseTagCard.module.scss";
 
-function PhraseTagCard({ tags, title }) {
+function PhraseTagCard(props) {
+  const { tags, title } = props;
   return (
-    <AsideCard classType={`${styles.tags}`}>
+    <AsideCard classtype={`${styles.tags}`} {...props}>
       <div className={styles.title}>{title}</div>
       <ul className={styles.tag__items}>
         {tags.map((tag) => {
