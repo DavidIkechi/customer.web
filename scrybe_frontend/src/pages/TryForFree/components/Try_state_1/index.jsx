@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-warning-comments
 // TODO disable eslint warning for this todo ;)
 import React, { useState, useRef } from "react";
-import TryState3 from "../Try_state_3/index";
+import { Link } from "react-router-dom";
 import styles from "./try_state_1.module.scss";
 import RecordingLogo from "../../assets/Recording-logo.png";
 
@@ -16,10 +16,10 @@ export default function TryState1() {
     event.preventDefault();
     setFiles(event.dataTransfer.files);
   };
-  const [isShown, setIsShown] = useState(false);
-  const handleClick = (event) => {
-    setIsShown((current) => !current);
-  };
+  // const [isShown, setIsShown] = useState(false);
+  // const handleClick = (event) => {
+  //   setIsShown((current) => !current);
+  // };
 
   if (files)
     return (
@@ -59,13 +59,15 @@ export default function TryState1() {
               Select another file from your computer
             </p>
 
-            <button
-              onClick={handleClick}
-              className={styles.selectButton2}
-              type="button"
-            >
-              Transcribe
-            </button>
+            <Link to="/try-processing">
+              <button
+                // onClick={handleClick}
+                className={styles.selectButton2}
+                type="button"
+              >
+                Transcribe
+              </button>
+            </Link>
           </div>
         </div>
         <div className={styles.tryNote}>
@@ -90,7 +92,7 @@ export default function TryState1() {
             </li>
           </ul>
         </div>
-        {isShown && <TryState3 />}
+        {/* {isShown && <TryState3 />} */}
       </div>
     );
 

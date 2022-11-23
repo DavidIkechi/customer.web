@@ -9,20 +9,22 @@ import styles from "./try_state_3.module.scss";
 export default function TryThird() {
   return (
     <div className={styles.transcribeProcessingContainer}>
+      
       <div className={styles.transcribeProcess}>
         <div>
-          <h3>Please wait while your transcription is processing</h3>
+          <h3>Please wait while your Transcription is processing</h3>
 
           <div className={styles.progress}>
             <div className={styles.color}></div>
           </div>
+          <h4>Processing...</h4>
         </div>
       </div>
 
       <div className={styles.wait}>
         <p>
           Transcription may take up to 3 minutes. Kindly wait or{" "}
-          <Link to="/" className={styles.signUp}>
+          <Link to="/signin" className={styles.signUp}>
             Sign Up
           </Link>
           to use the job ID feature.
