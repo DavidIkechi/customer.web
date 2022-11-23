@@ -1,6 +1,7 @@
 import React from "react";
 import "./styles.css";
-export function FadeInSection({ children }) {
+
+export default function FadeInSection({ children }) {
   const domRef = React.useRef();
 
   const [isVisible, setVisible] = React.useState(false);

@@ -11,8 +11,20 @@ import utils from "./assets/utils.module.scss";
 import Card from "./BlogCard";
 import { blogs } from "./assets/data";
 import FadeInSection from "./FadeInSection";
+import ImageSlider from "./ImageSlider";
 
 function Blogs() {
+  const slides = [
+    {
+      url: insta01,
+    },
+    {
+      url: insta02,
+    },
+    {
+      url: insta03,
+    },
+  ];
   return (
     <div className={styles.blogs}>
       <div className={styles.blogs__hero}>
@@ -41,7 +53,7 @@ function Blogs() {
         </div>
         <div className={styles.blogs__grid}>
           {blogs.map((blog, i) => (
-            <Link to={`/${i}`} key={i + 1}>
+            <Link to={`/blog/${i}`} key={i + 1}>
               <FadeInSection key={i + 1}>
                 <Card
                   key={i + 1}
@@ -56,7 +68,7 @@ function Blogs() {
         </div>
         <div className={styles.blogs__nav} id="#blog">
           <div>
-            <a href="#blog"> &lt;</a>
+            <a href="#blog"> ❮</a>
             <a href="#blog" className={styles.blogs__navSelected}>
               1
             </a>
@@ -64,7 +76,7 @@ function Blogs() {
             <a href="#blog">3</a>
             <a href="#blog">4</a>
             <a href="#blog">5</a>
-            <a href="#blog"> &gt; </a>
+            <a href="#blog"> ❯ </a>
           </div>
         </div>
       </div>
@@ -73,20 +85,7 @@ function Blogs() {
           <h3>Instagram Posts</h3>
         </div>
         <div className={styles.blogs__carousel}>
-          <div className={styles.blogs__carouselBtns}>
-            <button type="button"> &lt; </button>
-            <button type="button"> &gt; </button>
-          </div>
-          <div className={styles.blogs__images}>
-            <img src={insta01} alt="insta" />
-            <img src={insta02} alt="insta" />
-            <img src={insta03} alt="insta" />
-          </div>
-        </div>
-        <div className={styles.blogs__dots}>
-          <button type="button" />
-          <button type="button" />
-          <button type="button" />
+          <ImageSlider slides={slides} />
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap');
 .transcribeAnalysis{
-    font-family: 'Kanit', sans-serif;
+    // font-family: 'Kanit', sans-serif;
 }
 .Analysis{
     margin:  3vh 6%;
@@ -19,24 +19,29 @@
         img{
             width: 100%;
         }
-        p{
-            color: #535353;
-            font-weight: 400;
-            font-size: 1em;
-            line-height: 26px;
+        .recordingText{
+            display: flex;
+            flex-direction: column;
+            p{
+                color: #535353;
+                font-weight: 400;
+                font-size: 1em;
+                line-height: 26px;
+            }
+             small{
+                font-weight: 400;
+                font-size: 0.9em;
+                line-height: 26px;
+                color: #887F7F;
+            }
         }
-         small{
-            font-weight: 400;
-            font-size: 0.9em;
-            line-height: 26px;
-            color: #887F7F;
-        }
+      
     }
 
     h2{
         text-align: center;
         font-weight: 600;
-        font-size: 2.2em;
+        font-size: 2em!important;
         line-height: 56px;
         color: #535353;
         margin-bottom: 1vh;
@@ -71,7 +76,7 @@
 
     h3{
         font-weight: 600;
-        font-size: 1.5em;
+        font-size: 1.5em!important;
         line-height: 32px;
         color: #262626;
         text-align: center;
@@ -159,7 +164,7 @@
 
     hr{
         border: 2px solid #006CFF;
-        margin: 0vh 0 1vh;
+        margin: 1.2vh 0 1.5vh;
     }
     p{
         font-weight: 400;
@@ -364,7 +369,7 @@
     
         hr{
             border: 2px solid #006CFF;
-            margin: 0vh 0 1vh;
+            margin: 1vh 0 1.2vh;
         }
         p{
             font-weight: 400;
@@ -599,7 +604,7 @@
     
         hr{
             border: 2px solid #006CFF;
-            margin: 0vh 0 1vh;
+            margin: 1.2vh 0 1.2vh;
         }
         p{
             font-weight: 400;
@@ -819,7 +824,7 @@
     
         hr{
             border: 2px solid #006CFF;
-            margin: 0vh 0 1vh;
+            margin: 1.5vh 0 1.5vh;
         }
         p{
             font-weight: 400;
