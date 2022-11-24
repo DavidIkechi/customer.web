@@ -6,7 +6,6 @@
   display: flex;
   width: 100vw;
   height: 100%;
-  z-index: 6;
 
   > {
     div:last-of-type {
@@ -26,6 +25,7 @@
     flex-direction: column;
     align-items: center;
     transition-duration: 300ms;
+    z-index: 6;
   }
 
   .sidebar.open {
