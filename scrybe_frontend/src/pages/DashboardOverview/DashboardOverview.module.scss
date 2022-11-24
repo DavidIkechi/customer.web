@@ -16,7 +16,19 @@
   display: flex;
   gap: 0.3rem;
 }
+.dropdown {
+  color: #6a6a6a;
+  font-size: 0.725rem;
+  border: 0.5px solid #a9a9a9;
+  border-radius: 4px;
+  background-color: #fff;
+  padding: 2px 0;
 
+  option {
+    background-color: #fff;
+    color: #252121;
+  }
+}
 .recordings,
 .analysis,
 .leaderboard {
@@ -215,18 +227,17 @@
         color: transparent;
         width: 10px;
         height: 10px;
-
         border-radius: 2px;
       }
     }
-    span:nth-child(1) {
-      background: #005584;
+    .positive {
+      background: #76c86f;
     }
-    span:nth-child(2) {
-      background: #548dad;
+    .neutral {
+      background: #ffce54;
     }
-    span:nth-child(3) {
-      background: #e6eef3;
+    .negative {
+      background: #ff7589;
     }
   }
 }
@@ -334,7 +345,7 @@
   }
 }
 
-@media screen and (min-width: 59.375rem) {
+@media screen and (min-width: 65.625rem) {
   .container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

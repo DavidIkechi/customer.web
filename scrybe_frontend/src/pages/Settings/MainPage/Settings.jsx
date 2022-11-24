@@ -6,7 +6,7 @@ import Notification from "../SettingsPageSubPages/Notifications/NotificationSett
 import Overlay from "../Components/SettingsPageOverlay/SettingsPageOverlay";
 import ProfilePic from "../assets/images/Pic.png";
 import ChevronRight from "../assets/icons/chevron-right.svg";
-import SideBar from "../../../components/SideBar/SideBar";
+// import SideBar from "../../../components/SideBar/SideBar";
 import NavBar from "../../../components/navBar/index";
 import Footer from "../../../components/footer/index";
 
@@ -68,7 +68,7 @@ const MainPage = () => {
   return (
     <>
       <div className={MainPageCss.mainpage__wrapper}>
-        {window.innerWidth > 768 && <SideBar />}
+        {/* {window.innerWidth > 768 && <SideBar />} */}
         <div className={MainPageCss.mainpage__container}>
           {window.innerWidth <= 768 && <NavBar />}
           <div className={MainPageCss.mainpage_container}>
