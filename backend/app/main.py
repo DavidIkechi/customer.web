@@ -13,6 +13,7 @@ from sqlalchemy.orm import Session
 import crud, schema
 
 from emails import send_email, verify_token
+from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
 from auth import get_current_user
@@ -105,6 +106,8 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     finally:
         file.file.close()
 
+    size = audio_details(file.filename)["size"]
+    length = audio_details(file.filname)["mins"]
     transcript = transcribe_file(file.filename)
     transcript = transcript
 
@@ -114,7 +117,7 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     neutrality_score = sentiment_result['neutrality_score']
     overall_sentiment = sentiment_result['overall_sentiment']
 
-    db_audio = models.Audio(audio_path=file.filename, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, agent_id=db_agent.id)
+    db_audio = models.Audio(audio_path=file.filename, size=size, duration=length, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, agent_id=db_agent.id)
 
     db.add(db_audio)
     db.commit()
@@ -128,6 +131,11 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
 
     return {"transcript": transcript, "sentiment_result": sentiment_result}
 
+#get recent recordings
+@app.get("/recent-recordings", response_model=schema.Recordings)
+def get_recent_recordings(skip: int = 0, limit: int = 5,db: Session = Depends(get_db), user: models.User = Depends(get_current_user)):
+    recordings = db.query(models.Audio).filter(models.Audio.company_id == user.company_id).order_by(models.Audio.timestamp.desc()).offset(skip).limit(limit).all()
+    return recordings
 
 # create the endpoint
 @app.post('/login', summary = "create access token for logged in user", tags=['users'])

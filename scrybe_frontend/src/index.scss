@@ -2,10 +2,6 @@
 @use "./functions.scss" as *;
 @import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;800&display=swap");
 
-section {
-  padding-inline: pix-rem(16);
-}
-
 .container {
   width: min(100%, pix-rem(1264));
   margin-inline: auto;
@@ -29,11 +25,9 @@ section {
 
 @media (max-width: 767.98px) {
   :root {
-
     font-size: 12px;
   }
 }
-
 
 @media (max-width: 387.98px) {
   :root {
@@ -58,4 +52,3 @@ section {
   --primary-blue: #006cff;
   --primary-blue-700: #004db5;
 }
-

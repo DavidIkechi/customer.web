@@ -3,6 +3,16 @@
 @import "../../assets/styles/reset";
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
 
+.account__container {
+  nav {
+    display: none;
+
+    @include easyMediaQueries("min-width:1024px"){
+      display: block;
+    }
+  }
+}
+
 .add_agent__div {
   z-index: 9999;
   position: fixed;
@@ -135,11 +145,11 @@
   }
 }
 
-.account {
+.account__div {
   font-family: "Kanit", sans-serif;
   background-color: $grey-50;
   position: relative;
-  width: calc(100% - pix-rem(280));
+  min-height: 100vh;
   margin-left: auto;
   padding: pix-rem(85) pix-rem(16) pix-rem(36) pix-rem(16);
   display: flex;
@@ -148,6 +158,7 @@
 
   @include easyMediaQueries("min-width:1024px") {
     padding: pix-rem(85) pix-rem(40);
+    width: calc(100% - pix-rem(280));
   }
 }
 
@@ -310,12 +321,14 @@
           gap: pix-rem(4);
           font-size: pix-rem(14);
           line-height: pix-rem(20);
+          overflow-wrap: break-word;
 
           p:first-of-type {
             font-weight: 600;
           }
           p:last-of-type {
             font-weight: 300;
+            text-overflow: ellipsis;
           }
         }
       }
