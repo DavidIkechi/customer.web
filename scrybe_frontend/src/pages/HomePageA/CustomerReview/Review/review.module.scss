@@ -5,9 +5,13 @@
                 justify-content: center;
                 align-items: flex-start;
                 gap: pix-rem(36);
-                flex-wrap: wrap;
+                flex-wrap: nowrap;
+                @include media(590px){
+                        flex-wrap: wrap;
+                }
                 position: relative;
                 width: 100%;
+                padding-inline: pix-rem(16);
                 &__img {
                         max-width: pix-rem(331.84);
                 }

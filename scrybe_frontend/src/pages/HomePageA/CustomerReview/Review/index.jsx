@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 export default function Review({ img, author, role, comment }) {
   return (
     <div>
-      <div className={`container ${styles.customer}`}>
+      <div className={`${styles.customer}`}>
         <div className={styles.customer__img}>
           <img src={img} alt="Client" />
         </div>

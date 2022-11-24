@@ -108,7 +108,7 @@ function HomePage() {
         <CustomerReview />
       </section>
       <section className={styles.faq}>
-        <div className="container">
+        <div className={styles.container}>
           <h2 className={styles.faq__h2}>
             FREQUENTLY ASKED <span>QUESTIONS</span>{" "}
           </h2>
@@ -126,7 +126,7 @@ function HomePage() {
       </section>
 
       <section className={styles.subscribe}>
-        <div className="container">
+        <div className={styles.container}>
           <h1 className={styles.subscribe__title}>
             Subscribe To Our Newsletter And Get Newest industry Updates
           </h1>
