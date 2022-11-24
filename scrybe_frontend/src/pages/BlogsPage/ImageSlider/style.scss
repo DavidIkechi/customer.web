@@ -38,13 +38,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  user-select: none;
 }
 
 .dot {
-  font-size: 45px;
+  scale: 2;
+  font-size: 2rem;
   color: #a9a9a9;
   cursor: pointer;
-  margin-right: 10px;
+  margin-right: 1rem;
   transition: all 400ms ease;
 }
 .activeSlide {
