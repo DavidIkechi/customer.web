@@ -10,16 +10,16 @@ from starlette.responses import JSONResponse
 from crud import get_user_by_email
 from sqlalchemy.orm import Session
 from dotenv import load_dotenv
+import os
 
+
+# Load all environment variables
 load_dotenv()
 
-config_credentials = dotenv_values('.env')
-
-
 conf = ConnectionConfig(
-    MAIL_USERNAME = config_credentials['EMAIL'],
-    MAIL_PASSWORD = config_credentials['PASS'],
-    MAIL_FROM = config_credentials['EMAIL'],
+    MAIL_USERNAME = os.getenv('EMAIL'),
+    MAIL_PASSWORD = os.getenv('PASS'),
+    MAIL_FROM = os.getenv('EMAIL'),
     MAIL_PORT = 465,
     MAIL_SERVER = 'smtp.gmail.com',
     MAIL_STARTTLS = False,
@@ -34,7 +34,7 @@ async def send_email(email: List, instance: User):
         # 'username': instance.username
     }
 
-    token = jwt.encode(token_data, config_credentials['SECRET'], algorithm='HS256')
+    token = jwt.encode(token_data, os.getenv('SECRET'), algorithm='HS256')
 
 
     template = f"""
@@ -61,7 +61,7 @@ async def send_email(email: List, instance: User):
 
 async def verify_token(token: str, db: Session):
     try:
-        payload = jwt.decode(token, config_credentials['SECRET'], algorithms=['HS256'])
+        payload = jwt.decode(token, os.getenv('SECRET'), algorithms=['HS256'])
         user = get_user_by_email(db, payload.get("email"))
 
     except Exception as e:
