@@ -1,0 +1,51 @@
+export const UserData = [
+  {
+    id: 1,
+    day: 11,
+    positive: 35,
+    neutral: 45,
+    negative: 85,
+  },
+  {
+    id: 2,
+    day: 12,
+    positive: 53,
+    neutral: 23,
+    negative: 12,
+  },
+  {
+    id: 3,
+    day: 13,
+    positive: 32,
+    neutral: 63,
+    negative: 34,
+  },
+  {
+    id: 4,
+    day: 14,
+    positive: 42,
+    neutral: 24,
+    negative: 45,
+  },
+  {
+    id: 5,
+    day: 15,
+    positive: 45,
+    neutral: 50,
+    negative: 42,
+  },
+  {
+    id: 6,
+    day: 16,
+    positive: 86,
+    neutral: 74,
+    negative: 56,
+  },
+  {
+    id: 7,
+    day: 17,
+    positive: 66,
+    neutral: 44,
+    negative: 36,
+  },
+];

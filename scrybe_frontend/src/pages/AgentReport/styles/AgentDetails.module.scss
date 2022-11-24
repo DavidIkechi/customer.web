@@ -75,6 +75,7 @@
 
     .title {
       width: 48%;
+      color: #313131;
       @include mixins.sm {
         width: 50%;
         font-size: 0.9rem;
