@@ -1,7 +1,3 @@
-// @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap');
-.transcribeAnalysis{
-    // font-family: 'Kanit', sans-serif;
-}
 .Analysis{
     margin:  3vh 6%;
     background: rgba(205, 225, 237, 0.08);
@@ -141,22 +137,6 @@
         }
     }
 }
-// .progressBar{
-//     position: relative;
-//     overflow: hidden;
-//     width: 100%;
-//     height: 10vh;
-//     border-radius: 7px;
-//     background-color: #eee;
-
-//     .progressPercent{
-//         position: absolute;
-//         left: 50%;
-//         top: 25%;
-//         color: #006CFF;
-
-//     }
-// }
 .like{
     display: flex;
     gap: 1.5%;
@@ -346,22 +326,6 @@
             }
         }
     }
-    // .progressBar{
-    //     position: relative;
-    //     overflow: hidden;
-    //     width: 100%;
-    //     height: 10vh;
-    //     border-radius: 7px;
-    //     background-color: #eee;
-    
-    //     .progressPercent{
-    //         position: absolute;
-    //         left: 50%;
-    //         top: 25%;
-    //         color: #006CFF;
-    
-    //     }
-    // }
     .like{
         display: flex;
         gap: 1.5%;
@@ -439,7 +403,7 @@
 // third media query
 @media screen and (max-width: 600px) {
     .Analysis{
-        margin:  3vh 2%;
+        margin:  3vh 5%;
         background: rgba(205, 225, 237, 0.08);
         border-radius: 4px;
         padding: 2vh 3%;
@@ -522,7 +486,7 @@
             text-align: center;
         }
         .overallProgress{
-            padding: 2vh 2%;
+            padding: 2vh 5%;
             margin: 3vh 0%;
             background: #FFFFFF;
             border: 0;
@@ -581,26 +545,10 @@
             }
         }
     }
-    // .progressBar{
-    //     position: relative;
-    //     overflow: hidden;
-    //     width: 100%;
-    //     height: 10vh;
-    //     border-radius: 7px;
-    //     background-color: #eee;
-    
-    //     .progressPercent{
-    //         position: absolute;
-    //         left: 50%;
-    //         top: 25%;
-    //         color: #006CFF;
-    
-    //     }
-    // }
     .like{
         display: flex;
         gap: 0%;
-        margin: 5vh 2% 6vh;
+        margin: 5vh 5% 6vh;
     
         hr{
             border: 2px solid #006CFF;
@@ -617,7 +565,7 @@
     .priceSignup{
         display: flex;
         justify-content: space-between;
-        margin: 0 2% 5vh;
+        margin: 0 5% 5vh;
         gap: 0%;
     
         .button1{
@@ -658,7 +606,7 @@
 // fourth media query
 @media screen and (max-width: 450px) {
     .Analysis{
-        margin:  3vh 2%;
+        margin:  3vh 5%;
         background: rgba(205, 225, 237, 0.08);
         border-radius: 4px;
         padding: 2vh 3%;
@@ -801,26 +749,10 @@
             }
         }
     }
-    // .progressBar{
-    //     position: relative;
-    //     overflow: hidden;
-    //     width: 100%;
-    //     height: 10vh;
-    //     border-radius: 7px;
-    //     background-color: #eee;
-    
-    //     .progressPercent{
-    //         position: absolute;
-    //         left: 50%;
-    //         top: 25%;
-    //         color: #006CFF;
-    
-    //     }
-    // }
     .like{
         display: flex;
         gap: 0%;
-        margin: 5vh 2% 6vh;
+        margin: 5vh 5% 6vh;
     
         hr{
             border: 2px solid #006CFF;
@@ -837,7 +769,7 @@
     .priceSignup{
         display: flex;
         justify-content: space-between;
-        margin: 0 2% 5vh;
+        margin: 0 5% 5vh;
         gap: 0%;
     
         .button1{
