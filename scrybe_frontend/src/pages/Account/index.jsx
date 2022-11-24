@@ -3,7 +3,7 @@ import accountStyles from "./account.module.scss";
 import profileImage from "./assets/images/profile-image.png";
 import chevronLeft from "./assets/icons/chevron-left.svg";
 import plus from "./assets/icons/plus.svg";
-import SideBar from "../../components/SideBar/Sidebar";
+import SideBar from "../../components/SideBar";
 
 function Account() {
   const [accountModalIsActive, setAccountModalIsActive] = useState(false);
@@ -12,7 +12,7 @@ function Account() {
   };
 
   return (
-    <>
+    <div className={accountStyles.account__container}>
       <div
         className={
           accountModalIsActive
@@ -71,7 +71,7 @@ function Account() {
         </div>
       </div>
       <SideBar />
-      <div className={accountStyles.account}>
+      <div className={accountStyles.account__div}>
         <section className={accountStyles.mobile_head__section}>
           <span>
             <img src={chevronLeft} alt="left arrow" />
@@ -187,7 +187,7 @@ function Account() {
           <p>Go unlimited with Pro version</p>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 import React, { useState } from "react";
 import styles from "./style.module.scss";
-import { FaqComponent } from ".";
+import FaqComponent from "./FaqComponent";
 import { Hero } from "./assets";
 
 function FAQs() {
