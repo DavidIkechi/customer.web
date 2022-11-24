@@ -43,7 +43,11 @@ function Blogs() {
         style={{ "--gap": "16px" }}
       >
         <a href="/">Home</a>
-        <a href="/#blogs" className={styles.blogs__breadcrum_current} disabled='true'>
+        <a
+          href="/#blogs"
+          className={styles.blogs__breadcrum_current}
+          disabled={true}
+        >
           Blog
         </a>
       </div>
