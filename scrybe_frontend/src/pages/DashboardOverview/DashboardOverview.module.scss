@@ -1,6 +1,7 @@
 .dashboard_overview {
   background: #c5c5c514;
   overflow: hidden;
+  padding: 0;
 }
 .notvisible {
   visibility: hidden;
@@ -36,10 +37,13 @@
   border-radius: 4px;
   padding: 1rem 1rem 2rem;
   margin: 20px auto;
+  width: 100%;
   height: 306px;
 }
 .recordings {
+  align-items: center;
   height: 215px;
+  margin-top: 3rem;
 
   &__heading {
     display: flex;
@@ -118,16 +122,19 @@
     color: #6a6a6a;
   }
 }
-
+.subcontent_con {
+  display: flex;
+  justify-content: center;
+}
 .analysis {
-  align-items: center;
+  width: 100%;
   height: 310px;
   margin: 20px auto;
-  padding: 1rem 0 1.5rem;
+  padding: 1rem 1rem 1.5rem;
 
   &__heading {
     display: flex;
-    gap: 1.3rem;
+    justify-content: space-between;
 
     h1 {
       display: flex;
@@ -150,7 +157,7 @@
   .circles {
     position: relative;
     left: -11rem;
-    top: -1rem;
+    top: -1.5rem;
     font-size: 1.5rem;
     line-height: 40px;
     div {
@@ -193,7 +200,7 @@
   }
 
   .scale {
-    bottom: 17px;
+    bottom: 23px;
     position: absolute;
     display: flex;
 
@@ -225,17 +232,18 @@
 }
 
 .leaderboard {
-  align-items: center;
-  height: 300px;
+  // align-items: center;
+  height: 310px;
+  width: 100%;
   margin: 20px auto;
   padding: 1rem 1rem 1.5rem;
 
   &__heading {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    justify-content: space-between;
     h1 {
       display: flex;
+      align-items: center;
       gap: 0.5rem;
       font-weight: 300;
       font-size: 1rem;
@@ -245,7 +253,7 @@
     display: flex;
     flex-direction: column;
     gap: 2.188rem;
-    margin-top: 1.25rem;
+    margin-top: 2.25rem;
     div {
       display: flex;
       gap: 9rem;
@@ -311,6 +319,11 @@
 }
 
 @media screen and (min-width: 48rem) {
+  .dashboard_overview {
+    background: #c5c5c514;
+    overflow: hidden;
+    padding: 3rem;
+  }
   .recent_recordings {
     caption {
       padding: 1rem 2rem;
@@ -321,10 +334,11 @@
   }
 }
 
-@media screen and (min-width: 64rem) {
+@media screen and (min-width: 59.375rem) {
   .container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
   }
   .recent_recordings {
     caption {
@@ -337,9 +351,15 @@
   .agents_desktop {
     display: block !important;
     margin-top: 1.8rem;
-    .agentL {
+    .agentLCon {
       display: flex;
       justify-content: center;
+    }
+    .agentL {
+      position: relative;
+
+      width: 100px;
+
       img {
         width: 80px;
       }
@@ -347,8 +367,8 @@
         img {
           width: 21.48px;
           position: absolute;
-          left: 8.1rem;
-          top: 3.5rem;
+          left: 28px;
+          top: -16px;
         }
       }
       .one {
@@ -358,8 +378,8 @@
         position: absolute;
         width: 16px;
         height: 16px;
-        left: 8.4rem;
-        top: 9rem;
+        left: 33px;
+        bottom: -6px;
         background: #004db5;
         border-radius: 94.5578px;
         font-weight: 700;
@@ -371,6 +391,7 @@
     .other_agents {
       display: flex;
       flex-direction: column;
+      align-items: center;
       gap: 1rem;
       margin-top: 2.5rem;
       div {

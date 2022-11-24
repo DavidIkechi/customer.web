@@ -1,0 +1,131 @@
+@use "../../../pages/AgentReport/styles/_mixins.scss" as mixins;
+
+.agentDetails {
+  padding: 2rem 1rem;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  @include mixins.sm {
+    text-overflow: inherit;
+    padding: 1rem 1rem;
+    width: 39%;
+    height: 444px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 10px;
+  }
+  @include mixins.md {
+    height: 444px;
+    padding: 1rem;
+    width: 38%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+  .details {
+    height: 80%;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+  .firstp {
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+    color: #3f3f3f;
+    @include mixins.sm {
+      font-size: 0.9em;
+      line-height: 0.9em;
+    }
+  }
+  .secondp {
+    font-size: 1.1em;
+    color: #3f3f3f;
+    line-height: 1.4em;
+    @include mixins.sm {
+      font-size: 0.85em;
+      text-overflow: inherit;
+      line-height: 1.2em;
+    }
+    @include mixins.md {
+      font-size: 1rem;
+    }
+  }
+  .callDetails {
+    justify-content: space-between;
+    display: flex;
+    margin: 0.5em 0px 0.8rem 0px;
+    padding: 0.5rem 0.6rem;
+    border-radius: 8px;
+    background-color: #ececec;
+    @include mixins.sm {
+      margin: 0px;
+    }
+
+    .title {
+      width: 48%;
+      @include mixins.sm {
+        width: 50%;
+        font-size: 0.9rem;
+      }
+      @include mixins.md {
+
+      }
+    }
+    .number {
+      font-weight: bold;
+      width: 30%;
+      @include mixins.sm {
+        font-size: 0.8rem;
+        width: 28%;
+      }
+      @include mixins.md {
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+// .agentDetails {
+//   max-height: 100%;
+//   padding: 30px 5px;
+//   width: 100%;
+//   background-color: white;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-evenly;
+//   border-radius: 10px;
+//   .firstp {
+//     font-size: 14px;
+//   }
+//   .secondp {
+//     font-size: 20px;
+//   }
+//   .callDetails {
+//     justify-content: space-between;
+//     display: flex;
+//     margin: 10px 0px 10px 0px;
+//     padding: 8px;
+//     border-radius: 8px;
+//     background-color: #ececec;
+//     gap: 8px;
+//     .title {
+//       width: 45%;
+//     }
+//     .number {
+//       font-weight: bold;
+//       width: 30%;
+//     }
+//   }
+// }

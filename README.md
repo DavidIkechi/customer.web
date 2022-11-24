@@ -1,5 +1,8 @@
 # Scrybe - customersupport.web
 
+## Deployment Status
+![example workflow](https://github.com/workshopapps/customersupport.web/actions/workflows/main.yml/badge.svg)
+
 ![Scrybe Logo](/scrybe_frontend/src/assets/scrybe_logo_with_text.svg)
 
 ## Current Setup (This project uses:)
@@ -9,6 +12,10 @@
 - Eslint
 - Prettier
 - Husky precommits
+
+## Deployment to Live Link
+
+- Repo deploys to scrybe.hng.tech from branch "main"
 
 ## Contributing
 
@@ -31,4 +38,4 @@ If you try committing and get an error from Git:
 
 Ask [Tochi](https://github.com/tochibedford)
 or
-[Bazz](https://github.com/dev-bazz)
+[Bazz](https://github.com/dev-bazz).
