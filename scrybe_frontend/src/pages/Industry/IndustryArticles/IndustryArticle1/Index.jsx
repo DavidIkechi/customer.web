@@ -35,7 +35,7 @@ function industryArticle() {
           </div>
         </div>
         <div className={styles.articleBody}>
-          <section className="one">
+          <div className="one">
             <p>
               Additionally, decision-making, planning, negotiation, and creative
               thinking are all impacted by the emotional state of the brain.
@@ -71,8 +71,8 @@ function industryArticle() {
               customers directly depends on how it handles its current
               customers.
             </p>
-          </section>
-          <section>
+          </div>
+          <div>
             <div>
               <p className={styles.bold}>
                 How AI Measures Emotion and Captures It
@@ -113,8 +113,8 @@ function industryArticle() {
                 </li>
               </ul>
             </div>
-          </section>
-          <section>
+          </div>
+          <div>
             <p>
               Hence, real-time emotion AI data may be used by CX leaders to
               determine how strongly a person feels about their products, the
@@ -136,7 +136,7 @@ function industryArticle() {
               the way we do business.
             </p>
             <p>Smart business leaders have keyed in and so should you.</p>
-          </section>
+          </div>
         </div>
       </div>
     </div>
