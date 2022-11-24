@@ -25,7 +25,6 @@ function ImageSlider({ slides }) {
   const goToSlide = (i) => {
     setCurrentIndex(i);
   };
-  setInterval(goToNext, 4000);
 
   return (
     <div className="sliderStyles">
