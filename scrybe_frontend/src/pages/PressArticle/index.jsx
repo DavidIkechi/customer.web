@@ -103,7 +103,7 @@ const index = () => {
                   </p>
                 </div>
                 <div className={styles.article__details}>
-                  <Link className={styles.read__more} to="/PressArticle">
+                  <Link className={styles.read__more} to="/press-article">
                     Read more
                   </Link>
                   <span>
@@ -127,7 +127,7 @@ const index = () => {
                   </p>
                 </div>
                 <div className={styles.article__details}>
-                  <Link className={styles.read__more} to="/PressArticle">
+                  <Link className={styles.read__more} to="/press-article">
                     Read more
                   </Link>
                   <span>
@@ -151,7 +151,7 @@ const index = () => {
                   </p>
                 </div>
                 <div className={styles.article__details}>
-                  <Link className={styles.read__more} to="/PressArticle">
+                  <Link className={styles.read__more} to="/press-article">
                     Read more
                   </Link>
                   <span>
@@ -175,7 +175,7 @@ const index = () => {
                   </p>
                 </div>
                 <div className={styles.article__details}>
-                  <Link className={styles.read__more} to="/PressArticle">
+                  <Link className={styles.read__more} to="/press-article">
                     Read more
                   </Link>
                   <span>
@@ -199,7 +199,7 @@ const index = () => {
                   </p>
                 </div>
                 <div className={styles.article__details}>
-                  <Link className={styles.read__more} to="/PressArticle">
+                  <Link className={styles.read__more} to="/press-article">
                     Read more
                   </Link>
                   <span>
@@ -223,7 +223,7 @@ const index = () => {
                   </p>
                 </div>
                 <div className={styles.article__details}>
-                  <Link className={styles.read__more} to="/PressArticle">
+                  <Link className={styles.read__more} to="/press-article">
                     Read more
                   </Link>
                   <span>
