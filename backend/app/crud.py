@@ -111,7 +111,7 @@ def create_history(db: Session, history: schema.HistoryCreate):
 
 
 def get_history_by_user_id(db: Session, user_id: int):
-    return db.query(models.History).filter(models.Agent.user_id == user_id).all()
+    return db.query(models.History).filter(models.History.user_id == user_id).all()
 
 
 
