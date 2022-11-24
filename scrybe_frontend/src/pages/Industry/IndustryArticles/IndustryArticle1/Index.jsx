@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./industry.module.css";
-import Image from "./assets/industryImage.png";
+import styles from "./Industry.module.scss";
+import Image from "../../assets/industryImage.png";
 
 function industryArticle() {
   return (
@@ -79,17 +79,17 @@ function industryArticle() {
               </p>
               <ul>
                 <li>
-                  People not only express their feelings by what they say but
-                  also through how they say it.
+                  <span>&bull;</span>People not only express their feelings by
+                  what they say but also through how they say it.
                 </li>
                 <li>
-                  Artificial intelligence (AI) can currently assess a
-                  person&apos;s voice volume, speed of speech, body language,
-                  and facial emotions.
+                  <span>&bull;</span>Artificial intelligence (AI) can currently
+                  assess a person&apos;s voice volume, speed of speech, body
+                  language, and facial emotions.
                 </li>
                 <li>
-                  Additionally, it can detect changes in mood during a
-                  conversation.
+                  <span>&bull;</span>Additionally, it can detect changes in mood
+                  during a conversation.
                 </li>
               </ul>
             </div>
@@ -97,19 +97,19 @@ function industryArticle() {
               <p className={styles.bold}>Benefits of emotion-based AI;</p>
               <ul>
                 <li>
-                  Enhanced consumer comprehension: With emotional AI evaluating
-                  human interaction for traits like fear, disgust, irritation,
-                  delight, contentment, and surprise, brands acquire a deeper
-                  grasp of customer mood.
+                  <span>&bull;</span> Enhanced consumer comprehension: With
+                  emotional AI evaluating human interaction for traits like
+                  fear, disgust, irritation, delight, contentment, and surprise,
+                  brands acquire a deeper grasp of customer mood.
                 </li>
                 <li>
-                  Contextual awareness is improved Context is essential to
-                  understanding a customer&apos;s true feelings.
+                  <span>&bull;</span> Contextual awareness is improved Context
+                  is essential to understanding a customer&apos;s true feelings.
                 </li>
                 <li>
-                  A better comprehension of client needs: When a customer&apos;s
-                  mood shifts during a contact, brands can learn a lot about
-                  their particular demands.
+                  &bull; A better comprehension of client needs: When a
+                  customer&apos;s mood shifts during a contact, brands can learn
+                  a lot about their particular demands.
                 </li>
               </ul>
             </div>
@@ -135,7 +135,7 @@ function industryArticle() {
               company. Emotional AI is an emerging platform that aims to change
               the way we do business.
             </p>
-            <p>Smart business leaders have keyed in and should you.</p>
+            <p>Smart business leaders have keyed in and so should you.</p>
           </section>
         </div>
       </div>
