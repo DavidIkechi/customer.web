@@ -139,7 +139,7 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     most_negative_sentences = sentiment_result['most_negative_sentences']
     most_positive_sentences = sentiment_result ['most_postive_sentences']
 
-    db_audio = models.Audio(audio_path=file.filename, size=size, duration=duration, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, most_negative_sentences = most_negative_sentences, most_positive_sentences = most_positive_sentences, agent_id=db_agent.id)
+    db_audio = models.Audio(audio_path=file.filename, user_id=user_id, size=size, duration=duration, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, most_negative_sentences = most_negative_sentences, most_positive_sentences = most_positive_sentences, agent_id=db_agent.id)
 
     db.add(db_audio)
     db.commit()
