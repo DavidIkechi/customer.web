@@ -1,0 +1,297 @@
+
+.transcribeProcessingContainer{
+    margin: 10vh 5%;
+
+    .transcribeProcess{
+        width: 100%;
+        text-align: center;
+        margin: 4vh 0;
+
+        h3{
+            font-weight: 700;
+            font-size: 2em;
+            line-height: 40px;
+            margin-bottom: 5vh;
+            color: #535353;
+        }
+        h4{
+            font-weight: 600;
+            font-size: 1.8em;
+            line-height: 40px;
+            color: #9F9F9F;
+        }
+    }
+
+
+    .progress{
+        width: 50%;
+        margin: 0 25%;
+        padding: 0.3vh 0.2%;
+        border: 2.0958px solid #8AB1C6;
+        border-radius: 25px;
+    }
+    .progress .color{
+        background: #3389FF;
+        opacity: 0.56;
+        width: 0px;
+        height: 4.6vh;
+        border-radius: 25px;
+        animation: progres 2s infinite linear;    
+    }
+    @keyframes progres{
+        0%{
+          width: 0%;
+        }
+        25%{
+            width: 50%;
+        }
+        50%{
+            width: 75%;
+        }
+        75%{
+            width: 85%;
+        }
+        100%{
+            width: 100%;
+        }
+    };
+    .wait{
+        margin: 5vh 0;
+        p{
+            font-weight: 400;
+            font-size: 1.05rem;
+            line-height: 26px;
+            color: #6A6A6A;
+            text-align: center!important;
+        }
+        .signUp{
+            text-decoration: none;
+            color: #006CFF;
+        }
+    }
+}
+
+// first media query
+@media screen and (max-width: 900px) {
+    .transcribeProcessingContainer{
+        margin: 8vh 5%;
+    
+        .transcribeProcess{
+            width: 100%;
+            text-align: center;
+            margin: 4vh 0;
+    
+            h3{
+                font-weight: 700;
+                font-size: 1.6em;
+                line-height: 40px;
+                margin-bottom: 3vh;
+                color: #535353;
+            }
+            h4{
+                font-weight: 600;
+                font-size: 1.3em;
+                line-height: 40px;
+                color: #9F9F9F;
+            }
+        }
+    
+    
+        .progress{
+            width: 70%;
+            margin: 0 15%;
+            padding: 0.3vh 0.5%;
+            border: 2.0958px solid #8AB1C6;
+            border-radius: 25px;
+        }
+        .progress .color{
+            background: #3389FF;
+            opacity: 0.56;
+            width: 0px;
+            height: 4vh;
+            border-radius: 25px;
+            animation: progres 2s infinite linear;    
+        }
+        @keyframes progres{
+            0%{
+              width: 0%;
+            }
+            25%{
+                width: 50%;
+            }
+            50%{
+                width: 75%;
+            }
+            75%{
+                width: 85%;
+            }
+            100%{
+                width: 100%;
+            }
+        };
+        .wait{
+            margin: 2vh 0 0;
+            p{
+                font-weight: 400;
+                font-size: 0.9em;
+                line-height: 26px;
+                color: #6A6A6A;
+                text-align: center!important;
+            }
+            .signUp{
+                text-decoration: none;
+                color: #006CFF;
+            }
+        }
+    }
+}
+
+// second media query
+@media screen and (max-width: 700px) {
+    .transcribeProcessingContainer{
+        margin: 8vh 2% 5vh;
+    
+        .transcribeProcess{
+            width: 100%;
+            text-align: center;
+            margin: 2vh 0;
+    
+            h3{
+                font-weight: 700;
+                font-size: 1.2em;
+                line-height: 25px;
+                margin-bottom: 3vh;
+                color: #535353;
+            }
+            h4{
+                font-weight: 600;
+                font-size: 1.1em;
+                line-height: 40px;
+                color: #9F9F9F;
+            }
+        }
+    
+    
+        .progress{
+            width: 70%;
+            margin: 0 15%;
+            padding: 0.2vh 0.5% 0.2vh;
+            border: 2.0958px solid #8AB1C6;
+            border-radius: 25px;
+        }
+        .progress .color{
+            background: #3389FF;
+            opacity: 0.56;
+            width: 0px;
+            height: 3vh;
+            border-radius: 25px;
+            animation: progres 2s infinite linear;    
+        }
+        @keyframes progres{
+            0%{
+              width: 0%;
+            }
+            25%{
+                width: 50%;
+            }
+            50%{
+                width: 75%;
+            }
+            75%{
+                width: 85%;
+            }
+            100%{
+                width: 100%;
+            }
+        };
+        .wait{
+            margin: 2vh 0 0;
+            p{
+                font-weight: 400;
+                font-size: 0.8em;
+                line-height: 18px;
+                color: #6A6A6A;
+                text-align: center!important;
+            }
+            .signUp{
+                text-decoration: none;
+                color: #006CFF;
+            }
+        }
+    }
+}
+
+// third media query
+@media screen and (max-width: 500px) {
+    .transcribeProcessingContainer{
+        margin: 8vh 2% 5vh;
+    
+        .transcribeProcess{
+            width: 100%;
+            text-align: center;
+            margin: 2vh 0;
+    
+            h3{
+                font-weight: 700;
+                font-size: 1em;
+                line-height: 20px;
+                margin-bottom: 3vh;
+                color: #535353;
+            }
+            h4{
+                font-weight: 600;
+                font-size: 1em;
+                line-height: 40px;
+                color: #9F9F9F;
+            }
+        }
+    
+    
+        .progress{
+            width: 80%;
+            margin: 0 10%;
+            padding: 0.2vh 0.5% 0.2vh;
+            border: 2.0958px solid #8AB1C6;
+            border-radius: 25px;
+        }
+        .progress .color{
+            background: #3389FF;
+            opacity: 0.56;
+            width: 0px;
+            height: 3vh;
+            border-radius: 25px;
+            animation: progres 2s infinite linear;    
+        }
+        @keyframes progres{
+            0%{
+              width: 0%;
+            }
+            25%{
+                width: 50%;
+            }
+            50%{
+                width: 75%;
+            }
+            75%{
+                width: 85%;
+            }
+            100%{
+                width: 100%;
+            }
+        };
+        .wait{
+            margin: 2vh 0 0;
+            p{
+                font-weight: 400;
+                font-size: 0.7em;
+                line-height: 18px;
+                color: #6A6A6A;
+                text-align: center!important;
+            }
+            .signUp{
+                text-decoration: none;
+                color: #006CFF;
+            }
+        }
+    }
+}

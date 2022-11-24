@@ -1,0 +1,530 @@
+.uploaded_recordings {
+  padding: 2rem !important;
+  background: #f9f9f9;
+}
+
+.no_items_found .uploaded_table_wrap {
+  height: 100vh;
+}
+
+.modal_open {
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background: rgba(18, 18, 18, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.modal_close {
+  display: none;
+}
+.uploaded_modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 1rem;
+  border-radius: 5px;
+  z-index: 100;
+  height: max-content;
+
+  .modalbox {
+    border: none;
+    outline: none;
+    .close_modal_icon {
+      position: absolute;
+      top: 0;
+      right: 1rem;
+      cursor: pointer;
+      padding: 1rem;
+      font-size: 1.5rem;
+      color: #000;
+    }
+    .delete_files_options_wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      margin-top: 3rem;
+      p {
+        font-family: "Kanit";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 26px;
+        text-align: center;
+        color: #000000;
+      }
+      .delete_files_btn_options {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2rem;
+        .cancel_delete,
+        .confirm_delete {
+          width: 112px;
+          height: 56px;
+          padding: 16px 32px;
+          border-radius: 4px;
+          font-family: "Kanit";
+          border: none;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 24px;
+          text-align: center;
+          margin-right: 1rem;
+          outline: none;
+          cursor: pointer;
+        }
+        .cancel_delete {
+          color: #00a4ff;
+          background: transparent;
+        }
+        .confirm_delete {
+          color: #ffffff;
+          background: #f44336;
+        }
+      }
+    }
+  }
+}
+
+.uploaded_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1,
+  h2 {
+    font-family: "Kanit";
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .UploadedNavbarRec_btnwrap {
+    background: #006cff;
+    border-radius: 4px;
+    display: block;
+    padding: 12px 32px;
+    width: 143px;
+    display: flex;
+    height: 48px;
+    display: none;
+    img {
+      margin-right: 0.5rem;
+      width: 14px;
+    }
+    .UploadedNavbarRec_btn {
+      display: block;
+      outline: none;
+      border: none;
+      background: none;
+      color: #ffffff;
+      font-family: "Kanit";
+      font-weight: 500;
+      font-size: 14px;
+    }
+  }
+}
+.est_time_left_num {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+
+  color: #006cff;
+}
+
+.uploaded_table_wrap {
+  background: #ffffff;
+  margin-top: 1rem;
+  width: 100%;
+  overflow-x: auto;
+  // overflow-y: hidden;
+  height: fit-content;
+}
+
+.uploaded_table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  width: 100%;
+  background: #ffffff;
+  position: relative;
+}
+.not_found_wrap {
+  margin: 3rem 0;
+  display: grid;
+  place-items: center;
+  place-content: center;
+  position: absolute;
+  // justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  img {
+    // width: 100%;
+    // height: 100%;
+    // position: absolute;
+    margin-bottom: 2rem;
+  }
+  p {
+    font-family: "Kanit";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 26px;
+    /* identical to box height, or 130% */
+
+    color: #000000;
+  }
+}
+
+.uploaded_table thead {
+  text-align: left;
+  border-bottom: 1px solid #a9a9a9;
+}
+
+.uploaded_table thead tr {
+  text-align: left;
+}
+
+.uploaded_table th {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 120%;
+  padding: 20px 15px;
+
+  color: #706f6f;
+  word-wrap: break-word;
+}
+
+.uploaded_table td {
+  font-family: "Kanit";
+  padding: 20px 15px;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 24px;
+
+  color: #535353;
+  .failed {
+    color: #ff291b !important;
+    margin-right: 15px;
+  }
+
+  .processing {
+    color: #feb80a !important;
+  }
+
+  .successful {
+    color: #3bb031 !important;
+  }
+  .retry {
+    color: #006cff !important;
+    margin-left: 10px;
+    text-decoration: underline;
+  }
+}
+
+.delete_icon {
+  cursor: pointer;
+}
+
+.uploaded_table_body_checkbox_img_wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  input {
+    margin-right: 1rem;
+  }
+}
+
+// options for the table styles
+
+.uploaded_recordings_options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem;
+  .bulkbtn_calbackurl_wrap {
+    display: flex !important;
+    margin-left: 2rem;
+    .bulkselect_wrap {
+      margin-right: 2rem;
+    }
+    .calbackurl_wrap {
+      width: 380px;
+      word-wrap: break-word;
+      // display: flex;
+      p {
+        font-family: "Kanit";
+        font-style: normal;
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 24px;
+        /* or 150% */
+
+        color: #434343;
+      }
+      .callback_url {
+        margin-right: 1rem;
+        font-family: "Kanit";
+        span {
+          color: #006cff;
+          border-bottom: 1px solid #006cff;
+        }
+      }
+    }
+  }
+  .view_resultbtn {
+    border-radius: 4px;
+    padding: 15px 25px;
+    font-family: "Kanit";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+
+    color: #c5c5c5;
+    border: none;
+    background: #ececec !important;
+    cursor: not-allowed;
+  }
+
+  //custom select
+  .bulkselect_wrap {
+    position: relative;
+    .bulkselect {
+      width: 200px;
+      height: 60px;
+      border: 1px solid #c5c5c5;
+      border-radius: 4px;
+      padding: 0 1rem;
+      font-family: "Kanit";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      color: #434343;
+      background: #ffffff;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      -ms-appearance: none;
+      -o-appearance: none;
+      background-image: url("./imgs/select-arrow.svg");
+      background-repeat: no-repeat;
+      background-position: right 0.7rem top 50%;
+      background-size: 1rem auto;
+      &:focus {
+        outline: none;
+        // background: #e6f0ff;
+        color: #006cff;
+        border: 1px solid #006cff;
+      }
+      option {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 104px !important;
+        height: 74px !important;
+        padding: 1rem 0;
+        background-color: #ffffff !important;
+        color: #535353;
+        border-bottom: 0.5px solid rgba(18, 18, 18, 0.15);
+        z-index: 1;
+        font-family: "Kanit";
+        font-style: normal;
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 20px;
+      }
+    }
+  }
+}
+
+.processed .view_resultbtn {
+  background: #006cff !important;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  //responsive styles for the table
+  .uploaded_recordings {
+    padding: 1rem 5px !important;
+    width: 100%;
+  }
+  .uploaded_header h1 {
+    font-size: 16px;
+    margin-left: 1rem;
+  }
+  .uploaded_header {
+    h2 {
+      display: none !important;
+    }
+    .UploadedNavbarRec_btnwrap {
+      display: flex;
+      padding: 5px 20px;
+      width: 120px;
+    }
+  }
+
+  .uploaded_table {
+    border: 0;
+    th,
+    td {
+      font-size: 12px !important;
+      padding: 10px 5px !important;
+    }
+    td {
+      .retry {
+        margin-left: 0px !important;
+        text-decoration: underline;
+        font-size: 12px !important;
+      }
+      strong {
+        font-size: 12px !important;
+      }
+    }
+  }
+
+  .not_found_wrap {
+    // width: 80%;
+    img {
+      width: 70%;
+    }
+  }
+  .uploaded_table-row th:nth-child(7) {
+    display: none;
+  }
+
+  .uploaded_table tbody {
+    .uploaded_table_body_cell_img,
+    .delete_icon {
+      display: none;
+    }
+  }
+
+  //responsive styles for options for the table
+  .uploaded_recordings_options {
+    // flex-direction: column;
+    .bulkbtn_calbackurl_wrap {
+      margin-left: 0;
+      .bulkselect_wrap {
+        margin-right: 1rem;
+      }
+      .calbackurl_wrap {
+        display: none;
+        p {
+          font-family: "Kanit";
+          font-style: normal;
+          font-weight: 300;
+          font-size: 16px !important;
+          line-height: 24px;
+          /* or 150% */
+
+          color: #434343;
+        }
+        .callback_url {
+          margin-right: 1rem;
+          font-family: "Kanit";
+          span {
+            color: #006cff;
+            border-bottom: 1px solid #006cff;
+          }
+        }
+      }
+    }
+    .view_resultbtn {
+      border-radius: 4px;
+      padding: 20px;
+      font-family: "Kanit";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      width: max-content;
+      color: #c5c5c5;
+      border: none;
+    }
+    .disabled {
+      background: #ececec;
+      cursor: not-allowed;
+    }
+    .active {
+      background: #006cff;
+      cursor: pointer;
+    }
+
+    //custom select
+    .bulkselect_wrap {
+      position: relative;
+      .bulkselect {
+        width: 180px;
+        height: 50px;
+        padding: 0 2rem 0 1rem;
+      }
+    }
+  }
+
+  .modalbox {
+    width: 300px !important;
+  }
+}
+
+//ipad styles
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .uploaded_recordings {
+    padding: 1rem 5px !important;
+    width: 100%;
+  }
+  .uploaded_header h1 {
+    font-size: 20px !important;
+    margin-left: 1rem;
+  }
+  .uploaded_header {
+    h2 {
+      display: none !important;
+    }
+    .UploadedNavbarRec_btnwrap {
+      display: flex;
+      padding: 5px 20px;
+      width: 120px;
+    }
+  }
+  .uploaded_table {
+    th,
+    td {
+      font-size: 24px !important;
+    }
+    td {
+      .retry {
+        margin-left: 0px !important;
+        text-decoration: underline;
+        font-size: 16px !important;
+      }
+      strong {
+        font-size: 16px !important;
+      }
+    }
+  }
+  .uploaded_table-row th:nth-child(7) {
+    display: none !important;
+  }
+
+  .uploaded_table tbody {
+    .uploaded_table_body_cell_img,
+    .delete_icon {
+      display: none;
+    }
+  }
+}

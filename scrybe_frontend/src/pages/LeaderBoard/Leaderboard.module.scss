@@ -1,0 +1,379 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500;600;700&display=swap');
+
+.content_container {
+  background-color: #f1f1f1;
+  display: grid;
+  grid-template-columns: 0.8fr 2.5fr;
+  font-family: 'Kanit', sans-serif;
+}
+
+.left_section {
+  border-right: 1px solid rgba(207, 207, 207, 0.7);
+  background-color: white;
+
+}
+.left_section nav {
+  height: 100vh;
+  padding-block: 1rem;
+  position: sticky;
+  top: 0;
+  left: 0;
+}
+
+.Scrybe_media{
+  margin-left: -0.3rem;
+  margin-bottom: 2.5rem;
+  margin-top: 1rem;
+  // padding-left: 2rem;
+
+}
+
+.Sidebar_container_content{
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  padding-left: 3.5rem;
+  padding-right: 3.5rem;
+  margin-left: -1rem;
+  margin-right: -1rem;
+  text-decoration: none;
+  cursor: pointer;
+  margin-bottom: 2rem;
+
+}
+
+// .Sidebar_container_content:hover{
+//   background-color: #E6F0FF;
+
+// }
+
+.Sidebar_container_content p{
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 26px;
+    color: #6a6a6a;
+    cursor: pointer;
+
+}
+
+.Sidebar_container_content  select{
+  font-weight: 300;
+    font-size: 20px;
+    line-height: 26px;
+    color: #6a6a6a;
+    cursor: pointer;
+    outline: none;
+    border: none;
+}
+
+
+
+#Sidebar_content_active{
+  background-color: #E6F0FF;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.right_section{
+  background-color: #ECECEC;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.InputWithIcon  {
+   position: relative;
+}
+
+.InputWithIcon img{
+  position: absolute;
+  left: 0;
+  top: 10px;
+  padding: 0 20px;
+}
+
+input{
+  width: 100%;
+  border: 2px solid rgba(170, 170, 170, 0.178);
+  padding: 5px 15px;
+  border-radius: 3px;
+  background-color: #ECECEC;
+  outline: none;
+}
+
+.InputWithIcon input{
+  padding-left: 35px;
+}
+
+select{
+  outline: none;
+  border-radius: 5px;
+  background-color: none;
+}
+
+.right_content2_container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 1rem;
+  padding-right: 3rem;
+  margin-top: 2rem;
+}
+
+.calender_content{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.Agent_img{
+  padding: 20px;
+}
+
+.Profile_container{
+  padding: 25px;
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr;
+  gap: 1.5rem;
+}
+
+.Profile1{
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.Profile_content{
+  background-color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+
+}
+
+.Like_container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.Like_icon_content{
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.Like_content1{
+ gap: 2rem;
+}
+
+.Like_text{
+  font-size: 10px;
+}
+
+.Profile_content h2{
+  font-size: 20px;
+  font-weight: 600;
+  padding-top: 2rem;
+}
+
+.Profile_img img{
+  margin-bottom: -35px;
+  margin-right: auto;
+  margin-left: auto;
+  display: block;
+
+}
+
+
+.Profile_content h1{
+  font-size: 48px;
+  font-weight: 600;
+  color: #006CFF;
+}
+
+.Profile_Tabular{
+  margin: 10px 25px;
+  padding: 15px;
+  background-color: white;
+}
+
+.Profile_Tabular_Content{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.Profile_Tabular_Content1, .Profile_Tabular_Content2{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.Profile_tabular_number{
+  font-size: 14px;
+  font-weight: 600;
+  color: #006CFF;
+}
+
+.Profile_tabular_score{
+  font-size: 14px;
+  font-weight: 600;
+  color: #378a47;
+}
+
+.right_section_top{
+   display: flex;
+   flex-direction: row;
+   background-color: #ffffff;
+   margin-bottom: 2rem;
+   padding-bottom: 0.5rem;
+   padding-top: 1rem;
+   padding-left: 1rem;
+   padding-right: 1rem;
+   justify-content: space-between;
+   margin-left: -1rem;
+   margin-right: -1rem;
+}
+
+.Upload_profile_container{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.Upload_button{
+  border: none;
+  padding: 10px 25px;
+  cursor: pointer;
+  background-color: #00A4ff;
+  color: #ffffff;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.Upload_button img{
+  height: 1.5rem;
+}
+
+.Page_num_container{
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  justify-content: center;
+  gap: 3rem;
+  margin-top: 3rem;
+  margin-bottom: 5rem;
+  padding-bottom: 3rem;
+}
+
+.Page_num_container p{
+  font-size: 16px;
+  color:#C5C5C5;
+  cursor: pointer;
+}
+
+.Page_num_container .page_btn_active{
+   color: black;
+}
+
+.Page_num_container .page_btn_color{
+  background-color: #006CFF;
+  padding: 0 15px;
+  color: #ffffff;
+}
+
+/* Media query*/
+@media screen and (min-width: 950px) and (max-width: 1180px) {
+.left_section{
+  display: none;
+}
+
+.content_container {
+  background-color: #f1f1f1;
+  display: grid;
+  grid-template-columns: 2.5fr;
+  font-family: 'Kanit', sans-serif;
+
+}
+
+}
+
+@media screen and (min-width: 401px) and (max-width: 949px) {
+
+  .left_section{
+    display: none;
+  }
+
+  .content_container {
+    background-color: #f1f1f1;
+    display: grid;
+    grid-template-columns: 2.5fr;
+    font-family: 'Kanit', sans-serif;
+
+  }
+
+  .Profile_container{
+    padding: 25px;
+    display: grid;
+    grid-template-columns: 2fr;
+    gap: 1.5rem;
+  }
+
+  .Page_num_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    margin-bottom: 5rem;
+  }
+
+  #hide_for_mobile{
+    display: none;
+  }
+
+
+}
+
+@media screen and (min-width: 350px) and (max-width: 400px) {
+  .left_section{
+    display: none;
+  }
+
+  .content_container {
+    background-color: #f1f1f1;
+    display: grid;
+    grid-template-columns: 2.5fr;
+    font-family: 'Kanit', sans-serif;
+
+  }
+
+  .Profile_container{
+    padding: 25px;
+    display: grid;
+    grid-template-columns: 2fr;
+    gap: 1.5rem;
+  }
+
+  .Page_num_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    margin-bottom: 5rem;
+  }
+
+  #hide_for_mobile{
+    display: none;
+  }
+
+  .Upload_profile_container{
+    display: flex;
+    flex-direction: row;
+    gap: 6rem;
+  }
+
+}

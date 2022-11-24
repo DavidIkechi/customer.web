@@ -1,0 +1,37 @@
+.default_layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  &__section_title {
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 600;
+    color: #454545;
+    text-align: center;
+
+    @media (min-width: 768px) {
+      font-size: 48px;
+      line-height: 56px;
+    }
+  }
+
+  &__instagram {
+    padding-bottom: 32px;
+  }
+}
+.blogs__carousel {
+  position: relative;
+  width: 500px;
+  height: 280px;
+  margin: 0 auto;
+  transition: all 400ms ease;
+
+  @media (max-width: 515px) {
+    width: 400px;
+  }
+  @media (max-width: 419px) {
+    width: 90%;
+    height: 230px;
+  }
+}
