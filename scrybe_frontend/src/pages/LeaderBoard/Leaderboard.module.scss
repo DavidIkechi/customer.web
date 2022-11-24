@@ -34,8 +34,8 @@
   gap: 1.5rem;
   padding-left: 3.5rem;
   padding-right: 3.5rem;
-  margin-left: -1rem;
-  margin-right: -1rem;
+  margin-left: rem;
+  margin-right: rem;
   text-decoration: none;
   cursor: pointer;
   margin-bottom: 2rem;
@@ -98,10 +98,14 @@ input{
   border-radius: 3px;
   background-color: #ECECEC;
   outline: none;
+  font-size: 16px;
+  font-weight: 400;
 }
 
+
+
 .InputWithIcon input{
-  padding-left: 35px;
+  padding-left: 20px;
 }
 
 select{
@@ -122,7 +126,11 @@ select{
 .calender_content{
   display: flex;
   flex-direction: row;
-  gap: 1rem;
+  gap: 0.5rem;
+}
+
+.calender_content img{
+  width: 1.7rem;
 }
 
 .Agent_img{
@@ -229,8 +237,8 @@ select{
    margin-bottom: 2rem;
    padding-bottom: 0.5rem;
    padding-top: 1rem;
-   padding-left: 1rem;
-   padding-right: 1rem;
+   padding-left: 2rem;
+   padding-right: 2rem;
    justify-content: space-between;
    margin-left: -1rem;
    margin-right: -1rem;
@@ -334,6 +342,9 @@ select{
     display: none;
   }
 
+  input{
+    width: 80%
+   }
 
 }
 
@@ -376,4 +387,43 @@ select{
     gap: 6rem;
   }
 
+  .calender_content img{
+    display: none;
+   }
+
+   .right_section{
+     background-color: #ECECEC;
+     margin-left: 0;
+     margin-right: 0;
+   }
+
+   input{
+    width: 80%;
+   }
+
+   .right_section_top{
+    padding-left: 2.5rem;
+    padding-right: 1rem;
+   }
+
+   .Upload_profile_container img{
+    width: 10rem;
+   }
+
+   .Upload_button{
+    display: none;
+  }
+
+ .right_section{
+    margin-top: -2rem;
+
+  }
+
 }
+
+// @media (max-width: 350px) {
+
+//   .Upload_button{
+//     display: none;
+//   }
+// }
