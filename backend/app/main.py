@@ -243,5 +243,5 @@ def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.Us
 #get recent recordings
 @app.get("/recent-recordings", response_model=list[schema.Recordings])
 def get_recent_recordings(skip: int = 0, limit: int = 5, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    recordings = db.query(models.Audio).filter(models.Audio.user_id == user.user_id).order_by(models.Audio.timestamp.desc()).offset(skip).limit(limit).all()
+    recordings = db.query(models.Audio).filter(models.Audio.user_id == user.id).order_by(models.Audio.timestamp.desc()).offset(skip).limit(limit).all()
     return recordings
