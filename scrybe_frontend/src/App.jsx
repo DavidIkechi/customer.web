@@ -45,7 +45,7 @@ function App() {
       <Route path="/" element={<HomePage />} />
       <Route path="/agent-report" element={<AgentReport />} />
       <Route path="/sentiment-analysis" element={<SentimentAnalysis />} />
-      <Route path="/transcriptions" element={<TranscribePage />} />
+      <Route path="/transcriptions/:userId" element={<TranscribePage />} />
       <Route path="/try" element={<TryForFree />} />
       <Route path="/history" element={<History />} />
       <Route path="/careers" element={<Careers />} />
