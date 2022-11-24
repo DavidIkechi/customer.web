@@ -33,7 +33,10 @@ import Successful from "./pages/Successful/Successful";
 import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
-import FAQs from "./pages/FaqsPage/FaqComponent";
+import FAQs from "./pages/FaqsPage";
+import TermsOfService from "./pages/TermsOfService";
+import Blogs from "./pages/BlogsPage";
+import BlogPostPage from "./pages/BlogPostPage";
 import LeaderboardPage from "./pages/LeaderBoard/Leaderboard";
 import Reviews from "./pages/Reviews/Reviews";
 import TryProcessing from "./pages/TryForFree/tryProcessing";
@@ -72,7 +75,7 @@ function App() {
       />
       <Route
         path="/terms-of-service"
-        element={<DummyPage someText="terms of service" />}
+        element={<TermsOfService someText="terms of service" />}
       />
       <Route path="/homeB" element={<HomePageB />} />
       <Route path="/faq" element={<FAQs />} />
@@ -122,7 +125,8 @@ function App() {
       <Route path="/upload" element={<DummyPage someText="upload pages" />} />
       <Route path="/help" element={<DummyPage someText="help and supprt" />} />
       <Route path="/demos" element={<DummyPage someText="demo pages" />} />
-      <Route path="/blog" element={<DummyPage someText="blog" />} />
+      <Route path="/blog" element={<Blogs someText="blog" />} />
+      <Route path="/blog/:id" element={<BlogPostPage someText="blog" />} />
       <Route path="/reviews" element={<Reviews />} />
 
       {/* Try Routes */}
