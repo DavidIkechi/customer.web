@@ -3,7 +3,7 @@ import accountStyles from "./account.module.scss";
 import profileImage from "./assets/images/profile-image.png";
 import chevronLeft from "./assets/icons/chevron-left.svg";
 import plus from "./assets/icons/plus.svg";
-import SideBar from "../../components/SideBar/Sidebar";
+import SideBar from "../../components/SideBar";
 
 function Account() {
   const [accountModalIsActive, setAccountModalIsActive] = useState(false);

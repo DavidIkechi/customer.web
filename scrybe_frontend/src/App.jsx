@@ -34,7 +34,6 @@ import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
 import FAQs from "./pages/FaqsPage/FaqComponent";
-import SideBar from "./components/SideBar";
 import styles from "./assets/styles/App.module.scss";
 
 function App() {
@@ -42,15 +41,7 @@ function App() {
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/agent-report" element={<AgentReport />} />
-      <Route
-        path="/sentiment-analysis"
-        element={
-          <div className={styles.sidebar__container}>
-            <SideBar />
-            <SentimentAnalysis />
-          </div>
-        }
-      />
+      <Route path="/sentiment-analysis" element={<SentimentAnalysis />} />
       <Route path="/transcriptions" element={<TranscribePage />} />
       <Route path="/try" element={<TryForFree />} />
       <Route path="/history" element={<History />} />
