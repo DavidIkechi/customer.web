@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./TranscribePage.module.scss";
-import SideBar from "../../components/SideBar/Sidebar";
+import SideBar from "../../components/SideBar";
 import Transcribe from "./Transcribe/Transcribe";
 
 function TranscribePage() {

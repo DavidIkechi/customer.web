@@ -1,0 +1,148 @@
+@import "../../assets/styles/utilities/functionsANDmedia";
+@import "../../assets/styles/utilities/variables";
+@import "../../assets/styles/reset";
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+
+.logout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  gap: pix-rem(32);
+  padding: clamp(pix-rem(16), 4%, pix-rem(80));
+
+  @include easyMediaQueries("min-width:1024px") {
+    padding: pix-rem(40) pix-rem(112);
+
+    >{
+      div:last-of-type {
+        display: flex;
+
+        >{
+          *:first-of-type {
+            width: min(50%, 30rem);
+          }
+        }
+      }
+    }
+  }
+}
+
+.logo__div img {
+  height: pix-rem(24);
+
+  @include easyMediaQueries("min-width:1024px") {}
+}
+
+.login_form__div {
+  form {
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+      color: $grey-500;
+      font-weight: 600;
+      font-size: pix-rem(20);
+      line-height: pix-rem(24);
+    }
+    p {
+      color: $grey-200;
+      font-weight: 400;
+      font-size: pix-rem(16);
+      line-height: pix-rem(24);
+    }
+    div:first-of-type {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: pix-rem(4);
+
+    span {
+      color: $grey-400;
+      font-weight: 400;
+      font-size: pix-rem(12);
+      line-height: pix-rem(16);
+    }
+    input {
+      border: 1px solid $blue-500;
+      border-radius: 4px;
+      padding: pix-rem(16);
+    }
+  }
+  label[for="remember-me"] {
+    flex-direction: row;
+    align-items: center;
+  }
+  input[name="signin-btn"] {
+    border: none;
+    background-color: $blue-500;
+    color: white;
+    padding: pix-rem(12) pix-rem(32);
+    margin-bottom: pix-rem(40);
+    height: pix-rem(48);
+    font-weight: 500;
+    font-size: pix-rem(14);
+    line-height: pix-rem(24);
+  }
+  >{
+    p:last-of-type {
+      font-weight: 400;
+      font-size: pix-rem(16);
+      line-height: pix-rem(24);
+      color: $grey-500;
+      text-align: center;
+
+      span {
+        font-weight: 600;
+        color: $blue-500;
+      }
+    }
+  }
+
+  @include easyMediaQueries("min-width:1024px") {}
+}
+
+.login_header__div {
+  display: flex;
+  flex-direction: column;
+  gap: pix-rem(8);
+  margin-bottom: pix-rem(32);
+
+  @include easyMediaQueries("min-width:1024px") {}
+}
+
+.login_fields__div {
+  display: flex;
+  flex-direction: column;
+  gap: pix-rem(24);
+
+  @include easyMediaQueries("min-width:1024px") {}
+}
+
+.login_options__div {
+  display: flex;
+  justify-content: space-between;
+  margin: pix-rem(36) 0;
+
+  button {
+    border: none;
+    background-color: transparent;
+    color: $blue-500;
+    font-weight: 600;
+    font-size: pix-rem(12);
+    line-height: pix-rem(16);
+  }
+
+  @include easyMediaQueries("min-width:1024px") {}
+}
+
+.desktop_illustration__div {
+  display: none;
+
+  @include easyMediaQueries("min-width:1024px") {
+    display: block;
+  }
+}

@@ -1,0 +1,204 @@
+::placeholder {
+  font-family: "Kanit", sans-serif;
+  font-weight: 300 !important;
+  font-size: 14px !important;
+  color: #a9a9a9;
+}
+
+:focus {
+  outline: none;
+}
+
+.PersonalInfo_wrapper {
+  padding: 0 1rem;
+  margin-bottom: 2rem;
+
+  a {
+    text-decoration: none;
+    color: #3f3f3f !important;
+  }
+
+  .PersonalInfo_header {
+    display: flex;
+    align-items: flex-end;
+
+    .profilePic {
+      width: 80px;
+      object-fit: cover;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      font-size: 14px !important;
+    }
+
+    .changeImg {
+      background: #e6f0ff;
+      top: 50%;
+      right: 30%;
+
+      border-radius: 62px;
+      translate: -17% 7%;
+
+      a {
+        font-size: 0.75rem;
+        color: #002d6b !important;
+        display: flex;
+        align-items: end;
+
+        span {
+          padding: 0.4rem 1.25rem 0.4rem 0.25rem;
+          width: 100%;
+          font-size: 0.75rem !important;
+        }
+      }
+    }
+  }
+
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-block: 1.25rem;
+
+    label {
+      font-size: 0.75rem !important;
+    }
+    input {
+      padding: 1rem;
+      border-radius: 4px;
+      border: 1px solid #c5c5c5;
+      width: 100%;
+      font-family: "Kanit", sans-serif;
+
+      &:focus {
+        outline: none;
+        border: 1px solid #006cff;
+      }
+    }
+  }
+  .editInput {
+    position: relative;
+  }
+
+  .edit {
+    text-decoration: none;
+    display: flex;
+    gap: 0.2rem;
+
+    color: #3f3f3f;
+    position: absolute;
+    top: 53%;
+    right: 1.2rem;
+    z-index: 3;
+
+    p {
+      font-size: 0.7rem !important;
+    }
+  }
+
+  .formSubmit {
+    display: flex;
+    align-items: end;
+    gap: 1rem;
+
+    button {
+      background-color: #006cff;
+      padding: 0.8rem 2rem;
+      color: white;
+      border: none;
+      font-size: 0.875rem !important;
+      font-weight: 500 !important;
+      border-radius: 4px;
+      font-family: "Kanit", sans-serif;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #549dff;
+      }
+
+      &:active {
+        background-color: #004db5;
+      }
+    }
+
+    a {
+      text-decoration: none;
+      color: #006cff !important;
+      padding: 0.75rem 2rem;
+      border: 1px solid #006cff;
+      font-size: 0.875rem !important;
+      font-weight: 500 !important;
+      text-align: center;
+      height: fit-content;
+      border-radius: 4px;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .PersonalInfo_wrapper {
+    width: 90%;
+    margin: 0 auto 2rem;
+
+    .formGroup {
+      input {
+        font-size: 0.875rem !important;
+      }
+    }
+  }
+
+  .formSubmit a {
+    text-align: center;
+  }
+}
+@media (min-width: 1024px) {
+  .PersonalInfo_wrapper {
+    margin-right: 4.5rem;
+
+    .formGroup {
+      label {
+        font-size: 0.875rem !important;
+      }
+    }
+    .edit {
+      font-size: 0.875rem !important;
+    }
+  }
+
+  .row {
+    display: flex;
+    gap: 1.5625rem;
+    margin-top: 1.5rem;
+
+    .formGroup {
+      width: 100%;
+      margin-block: 0;
+    }
+  }
+
+  .formSubmit {
+    flex-direction: row;
+  }
+
+  .formSubmit a {
+    text-align: center;
+  }
+  .subpages_footer {
+    display: none;
+  }
+}
+
+@media (min-width: 1360px) {
+  .PersonalInfo_wrapper {
+    .PersonalInfo_header {
+      .profilePic {
+        width: 100px;
+      }
+
+      .changeImg {
+        a {
+          font-size: 0.875rem !important;
+        }
+      }
+    }
+  }
+}

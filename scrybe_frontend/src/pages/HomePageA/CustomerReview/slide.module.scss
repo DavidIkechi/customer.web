@@ -68,10 +68,11 @@
                 position: absolute;
                 top: 50%;
                 translate: 0 -50%;
+                z-index: 4;
                 cursor: pointer;
-                @include media(1058px) {
-                        display: none;
-                }
+               @include media(590px) {
+                display: none;
+               }
         }
         &__right {
                 right: 0;

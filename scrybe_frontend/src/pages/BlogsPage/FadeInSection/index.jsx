@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles.css";
+// import "./styles.css";
 
 export default function FadeInSection({ children }) {
   const domRef = React.useRef();
