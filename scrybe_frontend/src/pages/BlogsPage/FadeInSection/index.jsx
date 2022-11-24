@@ -24,7 +24,11 @@ export default function FadeInSection({ children }) {
   }, []);
 
   return (
-    <section ref={domRef} className={isVisible ? "is__visible" : ""}>
+    <section
+      id="fade-in-section"
+      ref={domRef}
+      className={isVisible ? "is__visible" : ""}
+    >
       {children}
     </section>
   );
