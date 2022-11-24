@@ -7,8 +7,10 @@ import os
 # Load all environment variables
 load_dotenv()
 
-api_key = os.getenv("API_KEY")
-model_key = os.getenv("MODEL_KEY")
+# api_key = os.getenv("API_KEY")
+# model_key = os.getenv("MODEL_KEY")
+api_key = "905d2228-620f-49eb-8dc2-2ef03bd815d2"
+model_key = "gptj"
 
 def transcribe_file(filename):
     with open(filename, "rb") as file:

@@ -13,6 +13,7 @@ from sqlalchemy.orm import Session
 import crud, schema
 
 from emails import send_email, verify_token
+from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
 from auth import get_current_user
@@ -68,7 +69,7 @@ async def analyse(file: UploadFile=File(...)):
         return {"error": "There was an error uploading the file"}
     finally:
         file.file.close()
-
+    
     transcript = transcribe_file(file.filename)
     transcript = transcript
 
@@ -104,6 +105,8 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     finally:
         file.file.close()
 
+    size = audio_details(file.filename)["size"]
+    duration = audio_details(file.filname)["mins"]
     transcript = transcribe_file(file.filename)
     transcript = transcript
 
@@ -115,7 +118,7 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     most_negative_sentences = sentiment_result['most_negative_sentences']
     most_positive_sentences = sentiment_result ['most_positive_sentences']
 
-    db_audio = models.Audio(audio_path=file.filename, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, most_negative_sentences = most_negative_sentences, most_positive_sentences = most_positive_sentences, agent_id=db_agent.id)
+    db_audio = models.Audio(audio_path=file.filename, size=size, duration=duration, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, most_negative_sentences = most_negative_sentences, most_positive_sentences = most_positive_sentences, agent_id=db_agent.id)
 
     db.add(db_audio)
     db.commit()
@@ -202,4 +205,10 @@ def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.Us
                  "most_negative_sentences": most_negative_sentences,
                  }
     return sentiment
+
+#get recent recordings
+@app.get("/recent-recordings", response_model=list[schema.Recordings])
+def get_recent_recordings(skip: int = 0, limit: int = 5, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    recordings = db.query(models.Audio).filter(models.Audio.user_id == user.user_id).order_by(models.Audio.timestamp.desc()).offset(skip).limit(limit).all()
+    return recordings
 
