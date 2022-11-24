@@ -28,7 +28,7 @@ def create_user(db: Session, user: schema.User):
     company_id = randint(0, 1000000)
     while (get_company(db, company_id) is not None):
         company_id = randint(0, 1000000)
-    
+
     # create the company.
     create_company(db, user.company_name, company_id)
     # create the user.
@@ -64,7 +64,7 @@ def get_company(db: Session, company_id: int):
     return db.query(models.Company).filter(models.Company.id == company_id).first()
 
 def create_audio(db: Session, audio: schema.Audio, agent_id: int):
-    db_audio = models.Audio(audio_path=audio.audio_path, transcript=audio.transcript, timestamp=audio.timestamp, positivity_score=audio.positivity_score, 
+    db_audio = models.Audio(audio_path=audio.audio_path, transcript=audio.transcript, timestamp=audio.timestamp, size=audio.size, duration=audio.length, positivity_score=audio.positivity_score,
     negativity_score=audio.negativity_score, neutrality_score=audio.neutrality_score, overall_sentiment=audio.overall_sentiment, agent_id=agent_id)
     db.add(db_audio)
     db.commit()
@@ -93,8 +93,8 @@ def get_agent(db: Session, agent_id: int):
 def get_agents_by_company_id(db: Session, company_id: int):
     return db.query(models.Agent).filter(models.Agent.company_id == company_id).all()
 
-def create_agent(db: Session, agent: schema.Agent, user_id: int):
-    db_agent = models.Agent(first_name=agent.first_name, last_name=agent.last_name, company_id=user_id)
+def create_agent(db: Session, agent: schema.Agent, company_id: int):
+    db_agent = models.Agent(first_name=agent.first_name, last_name=agent.last_name, company_id=company_id)
     db.add(db_agent)
     db.commit()
     db.refresh(db_agent)

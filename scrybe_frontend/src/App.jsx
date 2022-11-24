@@ -4,8 +4,8 @@ import AgentReport from "./pages/AgentReport";
 import SentimentAnalysis from "./pages/SentimentAnalysis";
 import DummyPage from "./pages/DummyPage";
 import TranscribePage from "./pages/TranscribePage";
-import LandingPage from "./pages/landing-page-a";
-import PageB from "./pages/Landing-page-b";
+import HomePage from "./pages/HomePageA";
+import HomePageB from "./pages/HomePageB";
 import TermsAndCondition from "./pages/TermsAndCondition";
 import History from "./pages/History/History";
 import Services from "./pages/Services/Services";
@@ -33,16 +33,22 @@ import Successful from "./pages/Successful/Successful";
 import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
-import FAQs from "./pages/FaqsPage/FaqComponent";
-import styles from "./assets/styles/App.module.scss";
+import FAQs from "./pages/FaqsPage";
+import TermsOfService from "./pages/TermsOfService";
+import Blogs from "./pages/BlogsPage";
+import BlogPostPage from "./pages/BlogPostPage";
+import LeaderboardPage from "./pages/LeaderBoard/Leaderboard";
+import Reviews from "./pages/Reviews/Reviews";
+import TryProcessing from "./pages/TryForFree/tryProcessing";
+import TryResults from "./pages/TryForFree/tryResults";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />} />
+      <Route path="/" element={<HomePage />} />
       <Route path="/agent-report" element={<AgentReport />} />
       <Route path="/sentiment-analysis" element={<SentimentAnalysis />} />
-      <Route path="/transcriptions" element={<TranscribePage />} />
+      <Route path="/transcriptions/:userId" element={<TranscribePage />} />
       <Route path="/try" element={<TryForFree />} />
       <Route path="/history" element={<History />} />
       <Route path="/careers" element={<Careers />} />
@@ -61,24 +67,17 @@ function App() {
       <Route path="/accounts" element={<Account />} />
       <Route path="/industry" element={<Industry />} />
       <Route path="/how-it-works" element={<HowitWorks />} />
-      <Route
-        path="/reviews-and-pricing"
-        element={<DummyPage someText="reviews and pricing" />}
-      />
       {/* leaderboard */}
-      <Route
-        path="/leaderboard"
-        element={<DummyPage someText="leaderboard" />}
-      />
+      <Route path="/leaderboard" element={<LeaderboardPage />} />
       <Route
         path="/terms"
         element={<TermsAndCondition someText="terms and conditions" />}
       />
       <Route
         path="/terms-of-service"
-        element={<DummyPage someText="terms of service" />}
+        element={<TermsOfService someText="terms of service" />}
       />
-      <Route path="/homeB" element={<PageB />} />
+      <Route path="/homeB" element={<HomePageB />} />
       <Route path="/faq" element={<FAQs />} />
       <Route path="/help-support" element={<HelpSupport />} />
       {/* <Route path="/help-support-general" element={<General />}>
@@ -126,7 +125,13 @@ function App() {
       <Route path="/upload" element={<DummyPage someText="upload pages" />} />
       <Route path="/help" element={<DummyPage someText="help and supprt" />} />
       <Route path="/demos" element={<DummyPage someText="demo pages" />} />
-      <Route path="/blog" element={<DummyPage someText="blog" />} />
+      <Route path="/blog" element={<Blogs someText="blog" />} />
+      <Route path="/blog/:id" element={<BlogPostPage someText="blog" />} />
+      <Route path="/reviews" element={<Reviews />} />
+
+      {/* Try Routes */}
+      <Route path="/try-processing" element={<TryProcessing />} />
+      <Route path="/try-results" element={<TryResults />} />
     </Routes>
   );
 }

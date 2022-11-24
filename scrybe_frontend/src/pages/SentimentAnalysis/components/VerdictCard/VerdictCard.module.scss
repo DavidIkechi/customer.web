@@ -2,7 +2,7 @@
 
 .verdict {
   flex-direction: column;
-  font-size: pix-rem(16);
+  font-size: clamp(pix-rem(20), 1vw, pix-rem(37));
   font-weight: 300;
   gap: pix-rem(24);
 
@@ -16,9 +16,9 @@
 
     .verdict__bar {
       width: 80%;
-      font-size: pix-rem(12);
-      line-height: pix-rem(16);
-      height: pix-rem(16);
+      font-size: clamp(pix-rem(12), 1vw, pix-rem(30));
+      line-height: clamp(pix-rem(16), 1vw, pix-rem(38));
+      height: clamp(pix-rem(16), 1vw, pix-rem(38));
       border: 0.5px solid #8ab1c6;
       border-radius: 1em;
       position: relative;
@@ -44,7 +44,7 @@
     }
 
     .final__verdict {
-      font-size: pix-rem(20);
+      font-size: clamp(pix-rem(20), 1vw, pix-rem(40));
       font-weight: 500;
       color: #1d1d1d;
     }
@@ -56,13 +56,19 @@
     gap: pix-rem(20);
 
     button {
-      padding: pix-rem(12);
+      padding: clamp(pix-rem(12), 0.7vw, pix-rem(24));
       background-color: transparent;
       border-radius: pix-rem(4);
       border: 1px solid #006cff;
       color: #006cff;
-      font-size: pix-rem(16);
+      font-size: clamp(pix-rem(16), 1vw, pix-rem(32));
       font-weight: 500;
+      cursor: pointer;
+
+      img {
+        width: clamp(pix-rem(16), 0.7vw, pix-rem(32));
+        height: clamp(pix-rem(16), 0.7vw, pix-rem(32));
+      }
     }
 
     .download__button {

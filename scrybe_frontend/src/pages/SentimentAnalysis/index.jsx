@@ -1,11 +1,12 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "./SentimentAnalysis.module.scss";
 import arrowIcon from "./icons/arrow_back.svg";
 import blueArrowIcon from "./icons/blue_arrow.svg";
 import AnalysisCard from "./components/AnalysisCard";
 import AudioCard from "./components/AudioCard";
 import SentimentAside from "./components/SentimentAside";
-import { useState } from "react";
-import OverAllSentimentCard from "./components/OverallSentiment";
+import OverAllSentimentCard from "./components/OverallSentimentCard";
 import VerdictCard from "./components/VerdictCard";
 import PhraseTagCard from "./components/PhraseTagCard";
 import SideBar from "../../components/SideBar";
@@ -75,13 +76,15 @@ function SentimentAnalysis() {
             <div
               className={styles.main__container__top__arrow__icon__container}
             >
-              <img
-                className={
-                  styles.main__container__top__arrow__icon__container__image
-                }
-                src={arrowIcon}
-                alt="arrow icon"
-              />
+              <Link to="/transcriptions">
+                <img
+                  className={
+                    styles.main__container__top__arrow__icon__container__image
+                  }
+                  src={arrowIcon}
+                  alt="arrow icon"
+                />
+              </Link>
             </div>
             <div className={styles.main__container__top__title}>
               Sentiment analysis

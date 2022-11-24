@@ -8,7 +8,7 @@ class UserBase(BaseModel):
     last_name: str
     email: str
     created_at: datetime
-    
+
 
 class UserCreate(UserBase):
     company_name: str
@@ -49,16 +49,26 @@ class AudioBase(BaseModel):
     negativity_score : float
     neutrality_score : float
     overall_sentiment: str
+
 class AudioCreate(AudioBase):
     pass
 
 class Audio(AudioBase):
     id: int
     agent_id: int
+    size: int
+    duration: int
     job : Job
 
     class Config:
         orm_mode = True
+
+class Recordings(BaseModel):
+    audio_path: str
+    size: int
+    duration: int
+    timestamp: datetime
+
 
 class AgentBase(BaseModel):
     first_name: str
@@ -71,9 +81,15 @@ class Agent(AgentBase):
     id: int
     company_id: int
     audios : list[Audio] = []
+    positivity_scores : list[float] = []
+    negativity_scores : list[float] = []
+    neutral_scores : list[float] = []
+    average : float
 
     class Config:
         orm_mode = True
+
+
 
 class CompanyBase(BaseModel):
     name: str
