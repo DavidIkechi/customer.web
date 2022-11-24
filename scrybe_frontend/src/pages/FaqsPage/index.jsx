@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import styles from "./style.module.scss";
 import FaqComponent from "./FaqComponent";
 import { Hero } from "./assets";
-
+import Footer from "../../components/footer";
+import NavBar from "../../components/navBar";
 function FAQs() {
   const [faqs, setFaqs] = useState([
     {
@@ -72,13 +73,14 @@ function FAQs() {
 
   return (
     <div className={styles.faq__wrapper}>
+      <NavBar />
       <div className={styles.faq__hero}>
         <div className={styles.faqHero__content}>
           <div>
             Get the answers you're looking for on <span>Scrybe</span>
           </div>
           <div>
-            <mg src={Hero} alt="" />
+            <img src={Hero} alt="" />
           </div>
         </div>
       </div>
@@ -101,6 +103,7 @@ function FAQs() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

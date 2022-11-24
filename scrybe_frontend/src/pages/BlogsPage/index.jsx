@@ -6,6 +6,8 @@ import Card from "./BlogCard";
 import { blogs } from "./assets/data";
 import FadeInSection from "./FadeInSection";
 import ImageSlider from "./ImageSlider";
+import NavBar from "../../components/navBar";
+import Footer from "../../components/footer";
 
 function Blogs() {
   const slides = [
@@ -21,6 +23,7 @@ function Blogs() {
   ];
   return (
     <div className={styles.blogs}>
+      <NavBar />
       <div className={styles.blogs__hero}>
         <div className={styles.blogsHero__content}>
           <div>
@@ -86,6 +89,7 @@ function Blogs() {
           <ImageSlider slides={slides} />
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
