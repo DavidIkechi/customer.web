@@ -131,7 +131,7 @@ function HomePage() {
             Subscribe To Our Newsletter And Get Newest industry Updates
           </h1>
           <form className={styles.subscribe__form}>
-            <input type="email" placeholder="Email Address" />
+            <input type="email" placeholder="Email Address" required />
             <button
               type="submit"
               href="https://www.w3schools.com/react/react_css.asp"
