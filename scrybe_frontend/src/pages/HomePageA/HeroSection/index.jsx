@@ -13,7 +13,7 @@ function Hero() {
             <span className={styles.heroAccent}>
               Sentiment Analysis <wbr />
             </span>
-            for yor Business
+            for Your Business
           </h1>
           <div className={styles.heroImageB}>
             <img src={heroImage} alt="" srcSet="" />
