@@ -120,12 +120,14 @@ function App() {
       <Route path="/try-processing" element={<TryProcessing />} />
       <Route path="/try-results" element={<TryResults />} />
 
-
       {/* Settings Pages */}
       <Route path="/settings" element={<SettingsIndex />} />
       <Route path="settings/account-security" element={<AccountSettings />} />
       <Route path="settings/notifications" element={<NotificationSettings />} />
-      <Route path="settings/personal-information" element={<PersonalInformation />} />
+      <Route
+        path="settings/personal-information"
+        element={<PersonalInformation />}
+      />
     </Routes>
   );
 }
