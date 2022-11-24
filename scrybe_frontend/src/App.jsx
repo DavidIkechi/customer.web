@@ -17,9 +17,9 @@ import About from "./pages/AboutUs/About";
 import TryForFree from "./pages/TryForFree";
 import Press from "./pages/PressPage";
 import PressArticle from "./pages/PressArticle";
-// import Industry from "./pages/Industry";
-// import IndustryArticles from "./pages/Industry/IndustryArticles/IndustryArticle1";
-// import HowitWorks from "./pages/HowItWorks";
+import Industry from "./pages/Industry";
+import IndustryArticles from "./pages/Industry/IndustryArticles/IndustryArticle1";
+import HowitWorks from "./pages/HowItWorks";
 import UploadedRecordings from "./pages/UploadRecordings";
 import Account from "./pages/Account";
 import Signin from "./pages/SignIn/SignIn";
@@ -60,9 +60,9 @@ function App() {
       <Route path="/events" element={<Events />} />
       <Route path="/dashboard" element={<DashboardOverview />} />
       <Route path="/accounts" element={<Account />} />
-      {/* <Route path="/industry" exact element={<Industry />} /> */}
-      {/* <Route path="/industry-article" element={<IndustryArticles />} /> */}
-      {/* <Route path="/how-it-works" element={<HowitWorks />} /> */}
+      <Route path="/industry" exact element={<Industry />} />
+      <Route path="/industry-article" element={<IndustryArticles />} />
+      <Route path="/how-it-works" element={<HowitWorks />} />
       {/* leaderboard */}
       <Route path="/leaderboard" element={<LeaderboardPage />} />
       <Route path="/terms" element={<TermsAndCondition />} />
