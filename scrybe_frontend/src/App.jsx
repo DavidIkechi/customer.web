@@ -58,9 +58,9 @@ function App() {
       <Route path="/events" element={<Events />} />
       <Route path="/dashboard" element={<DashboardOverview />} />
       <Route path="/accounts" element={<Account />} />
-      <Route path="/industry" exact element={<Industry />} />
-      <Route path="/industry-article" element={<IndustryArticles />} />
-      <Route path="/how-it-works" element={<HowitWorks />} />
+      {/* <Route path="/industry" exact element={<Industry />} /> */}
+      {/* <Route path="/industry-article" element={<IndustryArticles />} /> */}
+      {/* <Route path="/how-it-works" element={<HowitWorks />} /> */}
       {/* leaderboard */}
       <Route path="/leaderboard" element={<LeaderboardPage />} />
       <Route path="/terms" element={<TermsAndCondition />} />
