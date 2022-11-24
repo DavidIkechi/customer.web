@@ -1,7 +1,7 @@
 from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form
 from routers.sentiment import sentiment
 from routers.transcribe import transcribe_file
-import models
+import models, json
 from jwt import (
     main_login
 )
@@ -188,8 +188,8 @@ def read_sentiment(audio_id: int, db: Session = Depends(get_db)):
         negativity_score = float(db_audio.negativity_score)
         neutrality_score = float(db_audio.neutrality_score)
         overall_sentiment = str(db_audio.overall_sentiment)
-        most_positive_sentences =db_audio. most_positive_sentences
-        most_negative_sentences =db_audio. most_negative_sentences
+        most_positive_sentences = json.loads(db_audio. most_positive_sentences)
+        most_negative_sentences = json.loads(db_audio. most_negative_sentences)
         transcript = db_audio.transcript
     sentiment = {"transcript": transcript,
                  "positivity_score": positivity_score, 
