@@ -14,7 +14,7 @@ function HomePageB() {
       <NavBar />
       <Hero />
       <BrandsLogo />
-      <section>
+      <section className={styles.container}>
         <div className={styles.getStarted}>
           <h2 className={styles.getStarted__h2}>LETS GET STARTED</h2>
           <div className={styles.getStarted__content}>
@@ -54,7 +54,7 @@ function HomePageB() {
           </div>
         </div>
       </section>
-      <section className={styles.upload}>
+      <section className={`${styles.upload} ${styles.container}`}>
         <div className={styles.upload__content}>
           <div className={styles.upload__imag}>
             <img src={upload} alt="upload" />

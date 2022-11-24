@@ -71,6 +71,7 @@
 
 .gettingStarted {
         background-color: #e6f6ff;
+        padding-inline: pix-rem(16);
         padding-block: pix-rem(70);
         & > div {
                 width: min(100%, pix-rem(1264));
