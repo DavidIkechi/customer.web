@@ -1,11 +1,10 @@
 import PropTypes from "prop-types";
-
 import styles from "./SentimentAside.module.scss";
-import pieChart from "../../icons/pie_chart.svg";
 import downloadIcon from "../../icons/download.svg";
 import dropdownIcon from "../../icons/dropdown.svg";
 import shareIcon from "../../icons/share.svg";
 import arrowIcon from "../../icons/arrow_back.svg";
+import OverAllSentimentCard from "../OverallSentimentCard";
 
 function SentimentAside({ isMobileAsideOpen, closeFunction }) {
   const positiveTags = [
@@ -51,29 +50,7 @@ function SentimentAside({ isMobileAsideOpen, closeFunction }) {
           <div className={styles.back__text}>Overall Sentiment</div>
         </div>
       </div>
-      <div
-        className={`${styles.overall__sentiment} ${styles.inner__container}`}
-      >
-        <div className={styles.sentiment__chart}>
-          <img src={pieChart} alt="pie chart" />
-        </div>
-        <ul className={styles.sentiment__chart__legend}>
-          <li className={styles.chart__legend__item}>
-            <div className={`${styles.item__icon} ${styles.positive}`} />{" "}
-            Positive
-            <div className={styles.score}>15%</div>
-          </li>
-          <li className={styles.chart__legend__item}>
-            <div className={`${styles.item__icon} ${styles.neutral}`} /> Neutral
-            <div className={styles.score}>15%</div>
-          </li>
-          <li className={styles.chart__legend__item}>
-            <div className={`${styles.item__icon} ${styles.negative}`} />{" "}
-            Negative
-            <div className={styles.score}>15%</div>
-          </li>
-        </ul>
-      </div>
+      <OverAllSentimentCard />
       <div className={`${styles.verdict} ${styles.inner__container}`}>
         <div className={styles.verdict__item}>
           <div className={styles.verdict__title}>Agent Friendliness</div>

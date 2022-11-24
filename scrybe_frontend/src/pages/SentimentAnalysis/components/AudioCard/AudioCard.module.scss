@@ -1,12 +1,17 @@
 @import "../../../../assets/styles/utilities/functionsANDmedia";
 
 .audio__file {
-  font-size: pix-rem(16);
+  font-size: clamp(pix-rem(16), 1vw, pix-rem(32));
   font-weight: 300;
 
   .audio__icon__container {
-    width: pix-rem(52);
-    height: pix-rem(52);
+    width: clamp(pix-rem(52), 1vw, pix-rem(104));
+    height: 100%;
+    img {
+      object-fit: contain;
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .audio__text {
