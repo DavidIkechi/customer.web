@@ -23,6 +23,11 @@ class User(UserBase):
     class Config:
         orm_mode = True
 
+class user_update(BaseModel):
+    firstname: str
+    lastname: str
+    email: EmailStr
+
 class JobBase(BaseModel):
     job_status: str
 

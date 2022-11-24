@@ -1,6 +1,7 @@
 from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Request
 from routers.sentiment import sentiment
 from routers.transcribe import transcribe_file
+from routers.score import score_count
 import models
 # from jwt import (
 #     main_login
@@ -15,6 +16,7 @@ from sqlalchemy.orm import Session
 import crud, schema
 from emails import send_email, verify_token
 from starlette.requests import Request
+import fastapi as _fastapi
 
 # Dependency
 def get_db():
@@ -76,6 +78,7 @@ async def analyse(file: UploadFile=File(...)):
     aud.positivity_score = sentiment_result['positivity_score']
     aud.neutrality_score = sentiment_result['neutrality_score']
     aud.overall_sentiment = sentiment_result['overall_sentiment']
+    score = score_count(aud.overall_sentiment)
 
     return {"transcript": transcript, "sentiment_result": sentiment_result}
 
@@ -112,6 +115,7 @@ async def new_analyse(audio: schema.AudioCreate, db: Session = Depends(get_db), 
     aud.positivity_score = sentiment_result['positivity_score']
     aud.neutrality_score = sentiment_result['neutrality_score']
     aud.overall_sentiment = sentiment_result['overall_sentiment']
+    score = score_count(aud.overall_sentiment)
 
     return {"transcript": transcript, "sentiment_result": sentiment_result}
 
@@ -156,7 +160,13 @@ async def email_verification(request: Request, token: str, db: Session = Depends
             "status" : "ok",
             "data" : f"Hello {user.first_name}, your account has been successfully verified"}
 
-@app.get("/new_analyse/{id}", response_model=schema.AudioBase, tags=['analysis'])
+
+@app.patch("/user/update/{user_id}", response_model=schema.user_update)
+def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depends(get_db)):
+     return crud.update_user(db=db, user=user, user_id=user_id)
+
+
+@app.get("/new_analysis/{id}", response_model=schema.Analysis, tags=['analysis'])
 def get_sentiment_result(id: int, db: Session = Depends(get_db)):
     """
     Get single analysis

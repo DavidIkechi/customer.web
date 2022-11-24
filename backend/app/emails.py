@@ -14,7 +14,7 @@ from sqlalchemy.orm import Session
 config_credentials = dotenv_values('.env')
 
 #conf = ConnectionConfig(
-    #MAIL_USERNAME = config_credentials['email'],
+    #MAIL_USERNAME = config_credentials['EMAIL'],
     #MAIL_PASSWORD = config_credentials['PASS'],
     #MAIL_FROM = config_credentials['email'],
     #MAIL_PORT = 587,
