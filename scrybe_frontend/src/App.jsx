@@ -32,6 +32,9 @@ import LeaderboardPage from "./pages/LeaderBoard/Leaderboard";
 import Reviews from "./pages/Reviews/Reviews";
 import TryProcessing from "./pages/TryForFree/tryProcessing";
 import TryResults from "./pages/TryForFree/tryResults";
+import TermsOfService from "./pages/TermsOfService";
+import Blogs from "./pages/BlogsPage";
+import BlogPostPage from "./pages/BlogPostPage";
 
 function App() {
   return (
