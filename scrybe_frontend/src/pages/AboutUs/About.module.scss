@@ -217,7 +217,7 @@
       }
   
       @include mobile {
-        width: 100%;
+        width: 35%;
         padding: 10px;
       }
   
@@ -226,7 +226,7 @@
         margin-right: 20px;
   
         @include mobile {
-          width: 30px;
+          width: 20px;
         }
       }
     }
@@ -295,7 +295,7 @@
       @extend %paragraph;
   
       @include mobile {
-        font-size: 16px;
+        font-size: 14px;
       }
     }
     .team__text {
