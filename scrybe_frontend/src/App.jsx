@@ -1,5 +1,5 @@
 import "./App.scss";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import AgentReport from "./pages/AgentReport";
 import SentimentAnalysis from "./pages/SentimentAnalysis";
 import DummyPage from "./pages/DummyPage";
@@ -15,6 +15,8 @@ import Events from "./pages/Events/Events";
 import HelpSupport from "./pages/HelpAndSupport/HelpSupport";
 import About from "./pages/AboutUs/About";
 import TryForFree from "./pages/TryForFree";
+import Press from "./pages/PressPage";
+import PressArticle from "./pages/PressArticle";
 import Industry from "./pages/Industry";
 import IndustryArticles from "./pages/Industry/IndustryArticles/IndustryArticle1";
 import HowitWorks from "./pages/HowItWorks";
@@ -28,7 +30,7 @@ import Successful from "./pages/Successful/Successful";
 import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
-import FAQs from "./pages/FaqsPage/FaqComponent";
+import FAQs from "./pages/FaqsPage";
 import LeaderboardPage from "./pages/LeaderBoard/Leaderboard";
 import Reviews from "./pages/Reviews/Reviews";
 import TryProcessing from "./pages/TryForFree/tryProcessing";
@@ -100,7 +102,6 @@ function App() {
       <Route path="/agent-report" element={<AgentReport />} />
 
       {/* ROutes without working paths */}
-      <Route path="/press" element={<DummyPage someText="press" />} />
 
       <Route
         path="/uploaded"
@@ -125,10 +126,15 @@ function App() {
       <Route path="/settings" element={<SettingsIndex />} />
       <Route path="settings/account-security" element={<AccountSettings />} />
       <Route path="settings/notifications" element={<NotificationSettings />} />
+
       <Route
         path="settings/personal-information"
         element={<PersonalInformation />}
       />
+
+      {/* Press  */}
+      <Route path="press" element={<Press />} />
+      <Route path="press-article" element={<PressArticle />} />
     </Routes>
   );
 }

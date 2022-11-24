@@ -2,14 +2,7 @@ import React from "react";
 import "./style.scss";
 
 function ImageSlider({ slides }) {
-  const [dotColor, setDotColor] = React.useState(null);
   const [currentIndex, setCurrentIndex] = React.useState(0);
-  window.onload = () => {
-    let count = 1;
-    for (let i = 0; i < count; i++) {
-      setDotColor(currentIndex);
-    }
-  };
 
   const slideStyle = {
     borderRadius: "10px",
@@ -23,16 +16,13 @@ function ImageSlider({ slides }) {
     const isFirstSlide = currentIndex === 0;
     const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;
     setCurrentIndex(newIndex);
-    setDotColor(newIndex);
   };
   const goToNext = () => {
     const isLastSlide = currentIndex === slides.length - 1;
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
-    setDotColor(newIndex);
   };
   const goToSlide = (i) => {
-    setDotColor(i);
     setCurrentIndex(i);
   };
 
@@ -51,7 +41,7 @@ function ImageSlider({ slides }) {
           <div
             key={i + 1}
             onClick={() => goToSlide(i)}
-            className={`dot ${dotColor === i && "activeSlide"}`}
+            className={`dot ${currentIndex === i ? "activeSlide" : ""}`}
           >
             •
           </div>

@@ -6,7 +6,6 @@
 .faq__wrapper {
   font-family: kanit;
   max-width: 1440px;
-  @include display();
   flex-direction: column;
 }
 .faq__hero {
@@ -106,6 +105,7 @@
 
 .faq__section {
   margin: 4rem 0;
+  @include display();
 
   flex-direction: column;
 
