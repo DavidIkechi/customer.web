@@ -41,16 +41,16 @@ function Footer() {
               <NavLink to="/">About Us</NavLink>
             </li>
             <li>
-              <NavLink to="/">Blog</NavLink>
+              <NavLink to="/blog">Blog</NavLink>
             </li>
             <li>
               <NavLink to="/">Our Services</NavLink>
             </li>
             <li>
-              <NavLink to="/">Privacy Policy</NavLink>
+              <NavLink to="/privacy">Privacy Policy</NavLink>
             </li>
             <li>
-              <NavLink to="/">How it works</NavLink>
+              <NavLink to="/how-it-works">How it works</NavLink>
             </li>
           </ul>
           <ul>
@@ -71,7 +71,7 @@ function Footer() {
               <NavLink to="/">Career</NavLink>
             </li>
             <li>
-              <NavLink to="/">Faq</NavLink>
+              <NavLink to="/faq">Faq</NavLink>
             </li>
             <li>
               <NavLink to="/">Partnership</NavLink>
