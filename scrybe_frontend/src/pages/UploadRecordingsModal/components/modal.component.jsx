@@ -5,7 +5,7 @@ import uploadIcon from "../images/folderIcon.png";
 import layer from "../images/layer.svg";
 import arrowDown from "../images/arrowdown.png";
 import arrowUp from "../images/arrowup.png";
-import style from "../UploadPages.module.scss";
+import style from "../UploadRecordingsModal.module.scss";
 import PauseIcon from "../images/PauseCircle.png";
 import SolidCloseIcon from "../images/solidcircle.png";
 
@@ -16,20 +16,26 @@ export function UploadModal({ closeModal }) {
 
   return (
     <div className={style["modal-background"]}>
-      <div className={style['modal-container']}>
-        <div className={style['modal-header']}>
+      <div className={style["modal-container"]}>
+        <div className={style["modal-header"]}>
           <h3>Upload audio files</h3>
           <p>Upload agent records to transcribe</p>
           <div className={style.close}>
             <img src={closecircle} alt="" onClick={() => closeModal(false)} />
           </div>
         </div>
-        <div className={style['modal-body-container']}>
-          <div className={style['modal-body']}>
+        <div className={style["modal-body-container"]}>
+          <div className={style["modal-body"]}>
             <DragAndDrop setShowUploadProgress={setShowUploadProgress} />
-            { showUploadProgress && showDropDownIcon && <UploadProgress /> }
-            { showUploadProgress && <DropDown showDropDownIcon={showDropDownIcon} setShowDropDownIcon={setShowDropDownIcon} setShowProgressList={setShowProgressList} />}
-            { showProgressList && !showDropDownIcon && <UploadProgressList /> }
+            {showUploadProgress && showDropDownIcon && <UploadProgress />}
+            {showUploadProgress && (
+              <DropDown
+                showDropDownIcon={showDropDownIcon}
+                setShowDropDownIcon={setShowDropDownIcon}
+                setShowProgressList={setShowProgressList}
+              />
+            )}
+            {showProgressList && !showDropDownIcon && <UploadProgressList />}
           </div>
         </div>
       </div>
@@ -37,26 +43,35 @@ export function UploadModal({ closeModal }) {
   );
 }
 
-function DropDown({setShowDropDownIcon, showDropDownIcon, setShowProgressList}){
-
+function DropDown({
+  setShowDropDownIcon,
+  showDropDownIcon,
+  setShowProgressList,
+}) {
   const action = () => {
     setShowDropDownIcon(!showDropDownIcon);
-    setShowProgressList(true)
-  }
+    setShowProgressList(true);
+  };
 
-  return (<div className={style["files-toggle"]}>
-    <p>All Files</p>
-    <div>
-      {showDropDownIcon && <img src={arrowDown} alt="down-chevron" onClick={() => action()} />}
-      {!showDropDownIcon && <img src={arrowUp} alt="up-chevron" onClick={() => action()} />}
+  return (
+    <div className={style["files-toggle"]}>
+      <p>All Files</p>
+      <div>
+        {showDropDownIcon && (
+          <img src={arrowDown} alt="down-chevron" onClick={() => action()} />
+        )}
+        {!showDropDownIcon && (
+          <img src={arrowUp} alt="up-chevron" onClick={() => action()} />
+        )}
+      </div>
     </div>
-  </div>);
+  );
 }
 
 function DragAndDrop({ setShowUploadProgress }) {
   const showUploadProgress = () => {
     setShowUploadProgress(true);
-  }
+  };
   return (
     <section className={style["drag-and-drop"]}>
       <img src={layer} alt="" />
@@ -73,23 +88,26 @@ function DragAndDrop({ setShowUploadProgress }) {
       {/* <button>Browse Files</button> */}
       <PrimaryButton text="Browse Files" onClick={showUploadProgress} />
     </section>
-  );  
+  );
 }
 
 function UploadProgress() {
-  const progress = 80
+  const progress = 80;
   return (
-    <section className={style['upload-progress']} >
-      <div className={style['upload-progress-wrapper']}>
-        <div className={style['upload-icon']}>
+    <section className={style["upload-progress"]}>
+      <div className={style["upload-progress-wrapper"]}>
+        <div className={style["upload-icon"]}>
           <img src={uploadIcon} alt="folder-icon" />
           <p>12/30</p>
         </div>
-        <div className={style['upload-progress-status']}>
+        <div className={style["upload-progress-status"]}>
           <p>Uploading...</p>
           <p>File name</p>
-          <div className={style['progress-wrapper']}>
-            <div className={style['progress-bar']} style={{width: progress + '%'}}></div>
+          <div className={style["progress-wrapper"]}>
+            <div
+              className={style["progress-bar"]}
+              style={{ width: progress + "%" }}
+            ></div>
           </div>
         </div>
       </div>
@@ -97,16 +115,17 @@ function UploadProgress() {
   );
 }
 
-function UploadProgressList(){
+function UploadProgressList() {
   return (
     <section className={style["upload-progress-list"]}>
-      {[1,2].map((i) => <SubUploadProgress key={i} />)}
+      {[1, 2].map((i) => (
+        <SubUploadProgress key={i} />
+      ))}
     </section>
   );
 }
 
 function SubUploadProgress() {
-  const progress = 10;
   return (
     <div className={style["upload-progress-wrapper"]}>
       <div className={style["upload-icon"]}>
@@ -125,5 +144,3 @@ function SubUploadProgress() {
     </div>
   );
 }
-
-
