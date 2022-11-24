@@ -13,11 +13,6 @@ import Solutions from "./pages/Solutions/Solutions";
 import DashboardOverview from "./pages/DashboardOverview";
 import Events from "./pages/Events/Events";
 import HelpSupport from "./pages/HelpAndSupport/HelpSupport";
-// import General from "./components/HelpAndSupport/HelpAndSupportGeneral/General";
-// import General1 from "./components/HelpAndSupport/general1/General1";
-// import General2 from "./components/HelpAndSupport/general2/General2";
-// import PromotedArticles from "./components/HelpAndSupport/promoted-articles/PromotedArticles";
-// import PromotedArticle1 from "./components/HelpAndSupport/PromotedArticle1/PromotedArticle1";
 import About from "./pages/AboutUs/About";
 import TryForFree from "./pages/TryForFree";
 import Industry from "./pages/indsutry/industry";
@@ -27,7 +22,6 @@ import Account from "./pages/Account";
 import Signin from "./pages/SignIn/SignIn";
 import Careers from "./pages/Careers";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
-// import IndustryArticle from "./components/Industry/industryArticle";
 import Signup from "./pages/SignUp/SignUp";
 import Successful from "./pages/Successful/Successful";
 import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
@@ -50,30 +44,18 @@ function App() {
       <Route path="/history" element={<History />} />
       <Route path="/careers" element={<Careers />} />
       <Route path="/privacy" element={<PrivacyPolicy />} />
-      <Route
-        path="/services"
-        element={<Services someText="solutions and services" />}
-      />
-      <Route
-        path="/solutions"
-        element={<Solutions someText="solutions and services" />}
-      />
-      <Route path="/about-us" element={<About someText="about us" />} />
-      <Route path="/events" element={<Events someText="events" />} />
+      <Route path="/services" element={<Services />} />
+      <Route path="/solutions" element={<Solutions />} />
+      <Route path="/about-us" element={<About />} />
+      <Route path="/events" element={<Events />} />
       <Route path="/dashboard" element={<DashboardOverview />} />
       <Route path="/accounts" element={<Account />} />
       <Route path="/industry" element={<Industry />} />
       <Route path="/how-it-works" element={<HowitWorks />} />
       {/* leaderboard */}
       <Route path="/leaderboard" element={<LeaderboardPage />} />
-      <Route
-        path="/terms"
-        element={<TermsAndCondition someText="terms and conditions" />}
-      />
-      <Route
-        path="/terms-of-service"
-        element={<DummyPage someText="terms of service" />}
-      />
+      <Route path="/terms" element={<TermsAndCondition />} />
+      <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="/homeB" element={<HomePageB />} />
       <Route path="/faq" element={<FAQs />} />
       <Route path="/help-support" element={<HelpSupport />} />
@@ -122,7 +104,8 @@ function App() {
       <Route path="/upload" element={<DummyPage someText="upload pages" />} />
       <Route path="/help" element={<DummyPage someText="help and supprt" />} />
       <Route path="/demos" element={<DummyPage someText="demo pages" />} />
-      <Route path="/blog" element={<DummyPage someText="blog" />} />
+      <Route path="/blog" element={<Blogs />} />
+      <Route path="/blog/:id" element={<BlogPostPage />} />
       <Route path="/reviews" element={<Reviews />} />
 
       {/* Try Routes */}
