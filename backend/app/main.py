@@ -88,6 +88,7 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     # Create Agent
     user_id = user.id
     company_id = user.company_id
+    agent_name = "%s %s" %(first_name, last_name)
     db_agent = models.Agent(first_name=first_name, last_name=last_name, company_id=company_id)
 
     # Add Agent
@@ -118,7 +119,10 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     db.add(db_audio)
     db.commit()
 
-    history_create: schema.HistoryCreate = {**history, "user_id":user.id, "sentiment_result":aud.overall_sentiment}
+    history_create: schema.HistoryCreate = {"user_id":user_id, 
+                                            "sentiment_result":overall_sentiment,
+                                            "agent_name": agent_name,
+                                            "audio_name": file.filename}
 
     crud.create_history(db, history_create)
 
@@ -174,8 +178,6 @@ async def email_verification(request: Request, token: str, db: Session = Depends
 @app.patch("/user/update/{user_id}", response_model=schema.user_update)
 def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depends(get_db)):
      return crud.update_user(db=db, user=user, user_id=user_id)
-
-
 
 
 @app.get('/history/{user_id}')

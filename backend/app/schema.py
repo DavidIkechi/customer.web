@@ -24,7 +24,7 @@ class User(UserBase):
     class Config:
         orm_mode = True
 
-class UserUpdate(BaseModel):
+class user_update(BaseModel):
     firstname: str
     lastname: str
     email: EmailStr
@@ -94,18 +94,15 @@ class Company(CompanyBase):
 
 class HistoryBase(BaseModel):
 
-    audio_name: str
+    user_id: int
+    sentiment_result: str
     agent_name: str
-
-
-class HistoryRequest(HistoryBase):
-    pass
+    audio_name: str
 
 
 class HistoryCreate(HistoryBase):
-    user_id: int
-    sentiment_result: str
-
+    pass
+   
 
 
 class History(HistoryBase):
