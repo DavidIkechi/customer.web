@@ -74,3 +74,17 @@ class Job(Base):
     audio_id = Column(Integer, ForeignKey("audios.id"))
 
     audio = relationship("Audio", back_populates="job")
+
+class Analysis(Base):
+    __tablename__ = "analysis"
+
+    id = Column(Integer, primary_key=True, index=True)
+    audio_path = Column(String, index=True)
+    timestamp = Column(DateTime, index=True)
+    transcript = Column(String, index=True)
+    positivity_score = Column(Float, index=True)
+    negativity_score = Column(Float, index=True)
+    neutrality_score = Column(Float, index=True)
+    overall_sentiment = Column(Enum("Positive", "Negative", "Neutral"), index=True)
+
+    agent_id = Column(Integer, ForeignKey("agents.id"))
