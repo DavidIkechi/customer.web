@@ -74,15 +74,15 @@ async def get_active_user(db: Session = Depends(_services.get_session), token: s
         A boolean that tells if the user is active.
     """
     # get the user email from the database.
-    user_email = await get_current_user(db, token)
-    if not user_email.is_active:
+    user = await get_current_user(db, token)
+    if not user.is_active:
         raise HTTPException(
             status_code=status.HTTP_423_LOCKED,
             detail="User is not active",
             headers={"WWW-Authenticate": "Bearer"},
         )
     
-    return user_email.is_active
+    return user
 
 async def get_admin(db: Session = Depends(_services.get_session), token: str = Depends(oauth2_scheme)) -> bool:
     """ This function checks if a user is admin.
