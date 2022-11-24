@@ -1,15 +1,15 @@
 import React from "react";
-// import { Link } from "react-router-dom";
-// import styles from "../../styles/HowItWorks/HowItWorks.module.css";
-// import Image1 from "../../assets/HowItWorks/howitworks1.svg";
-// import Image2 from "../../assets/HowItWorks/howitworks2.svg";
-// import Image3 from "../../assets/HowItWorks/howitworks3.svg";
-// import Image4 from "../../assets/HowItWorks/howitworks4.svg";
+import { Link } from "react-router-dom";
+import styles from "./HowItWorks.module.scss";
+import Image1 from "./assets/howitworks1.svg";
+import Image2 from "./assets/howitworks2.svg";
+import Image3 from "./assets/howitworks3.svg";
+import Image4 from "./assets/howitworks4.svg";
 
 function HowItWorks() {
   return (
-    <>
-      {/* <div className={styles.container}>
+    <div className={styles.howitworks}>
+      <div className={styles.container}>
         <div className={styles.banner}>
           <h1>
             How <span>Scrybe</span> works
@@ -36,8 +36,8 @@ function HowItWorks() {
               <h3>Upload Recordings or Audio files of Conversation</h3>
               <p>Scrybe will analyze the conversation to produce:</p>
               <ul>
-                <li>a readable and searchable text file</li>
-                <li>A Sentiment Analysis report</li>
+                <li>&bull; A readable and searchable text file</li>
+                <li>&bull; A Sentiment Analysis report</li>
               </ul>
               <p>
                 Scrybe automatically transcribes and analyzes your file within
@@ -68,7 +68,7 @@ function HowItWorks() {
               </p>
             </div>
             <div className={styles.cardImage}>
-              <img src={Image3} alt="" />
+              <img src={Image3} alt="" className={styles.makeLarge} />
             </div>
           </div>
           <div className={`${styles.card} ${styles.right}`}>
@@ -85,7 +85,7 @@ function HowItWorks() {
               </p>
             </div>
             <div className={styles.cardImage}>
-              <img src={Image4} alt="" />
+              <img src={Image4} alt="" className={styles.makeLarge} />
             </div>
           </div>
         </section>
@@ -97,8 +97,8 @@ function HowItWorks() {
             Try for Free
           </Link>
         </section>
-      </div> */}
-    </>
+      </div>
+    </div>
   );
 }
 
