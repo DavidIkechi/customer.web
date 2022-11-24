@@ -95,3 +95,14 @@ class Company(CompanyBase):
     class Config:
         orm_mode = True
 
+class Analysis(AudioBase):
+    pass
+
+class Recordings(BaseModel):
+    audio_path: str
+    size: int
+    duration: int
+    timestamp: datetime
+
+    class Config:
+        orm_mode = True
