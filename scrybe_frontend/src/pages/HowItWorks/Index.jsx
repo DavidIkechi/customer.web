@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styles from "./HowItWorks.module.css";
+import styles from "./HowItWorks.module.scss";
 import Image1 from "./assets/howitworks1.svg";
 import Image2 from "./assets/howitworks2.svg";
 import Image3 from "./assets/howitworks3.svg";
