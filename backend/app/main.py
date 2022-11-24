@@ -1,4 +1,4 @@
-from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException
+from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form
 from routers.sentiment import sentiment
 from routers.transcribe import transcribe_file
 import models
@@ -10,9 +10,11 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from db import Base, engine, SessionLocal
 from sqlalchemy.orm import Session
 import crud, schema
+
 from emails import send_email, verify_token
 from starlette.requests import Request
 import fastapi as _fastapi
+from auth import get_current_user
 
 # Dependency
 def get_db():
@@ -67,20 +69,29 @@ async def analyse(file: UploadFile=File(...)):
         file.file.close()
 
     transcript = transcribe_file(file.filename)
-    aud.transcript = transcript
+    transcript = transcript
 
     sentiment_result = sentiment(transcript)
-    aud.negativity_score = sentiment_result['negativity_score']
-    aud.positivity_score = sentiment_result['positivity_score']
-    aud.neutrality_score = sentiment_result['neutrality_score']
-    aud.overall_sentiment = sentiment_result['overall_sentiment']
+    negativity_score = sentiment_result['negativity_score']
+    positivity_score = sentiment_result['positivity_score']
+    neutrality_score = sentiment_result['neutrality_score']
+    overall_sentiment = sentiment_result['overall_sentiment']
 
     return {"transcript": transcript, "sentiment_result": sentiment_result}
 
 
 @app.post("/new_analyse", tags=['analyse'])
-async def new_analyse(audio: schema.AudioCreate, db: Session = Depends(get_db), file: UploadFile=File(...)):
-    aud = crud.create_audio(db, audio, user_id)
+async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Session = Depends(get_db), file: UploadFile=File(...), user: models.User = Depends(get_current_user)):
+
+    # Create Agent
+    user_id = user.id
+    company_id = user.company_id
+    db_agent = models.Agent(first_name=first_name, last_name=last_name, company_id=company_id)
+
+    # Add Agent
+    db.add(db_agent)
+    db.commit()
+    db.refresh(db_agent)
 
     try:
         contents = file.file.read()
@@ -92,13 +103,18 @@ async def new_analyse(audio: schema.AudioCreate, db: Session = Depends(get_db), 
         file.file.close()
 
     transcript = transcribe_file(file.filename)
-    aud.transcript = transcript
+    transcript = transcript
 
     sentiment_result = sentiment(transcript)
-    aud.negativity_score = sentiment_result['negativity_score']
-    aud.positivity_score = sentiment_result['positivity_score']
-    aud.neutrality_score = sentiment_result['neutrality_score']
-    aud.overall_sentiment = sentiment_result['overall_sentiment']
+    negativity_score = sentiment_result['negativity_score']
+    positivity_score = sentiment_result['positivity_score']
+    neutrality_score = sentiment_result['neutrality_score']
+    overall_sentiment = sentiment_result['overall_sentiment']
+
+    db_audio = models.Audio(audio_path=file.filename, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, agent_id=db_agent.id)
+
+    db.add(db_audio)
+    db.commit()
 
     return {"transcript": transcript, "sentiment_result": sentiment_result}
 
@@ -112,7 +128,9 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
 @app.post("/users/", response_model=schema.User, tags=['users'])
 async def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
+
     await send_email([user.email], user)
+
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
     return crud.create_user(db=db, user=user)
@@ -136,7 +154,9 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
 
 @app.get('/verification')
 async def email_verification(request: Request, token: str, db: Session = Depends(get_db)):
+
     user = await verify_token(token, db)
+
 
     if user and not user.is_active:
         user.is_active = True

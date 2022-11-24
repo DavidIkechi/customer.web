@@ -19,11 +19,12 @@ conf = ConnectionConfig(
     MAIL_USERNAME = config_credentials['EMAIL'],
     MAIL_PASSWORD = config_credentials['PASS'],
     MAIL_FROM = config_credentials['EMAIL'],
-    MAIL_PORT = 587,
+    MAIL_PORT = 465,
     MAIL_SERVER = 'smtp.gmail.com',
-    MAIL_TLS = True,
+    MAIL_STARTTLS = False,
     USE_CREDENTIALS = True,
-    MAIL_SSL= False
+    MAIL_SSL_TLS= True,
+    VALIDATE_CERTS = True
 )
 
 async def send_email(email: List, instance: User):
