@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styles from "./pricing.module.css";
+import styles from "./pricing.module.scss";
 import heroImage from "./assets/heroimage.svg";
 import startUpIcon from "./assets/star.svg";
 import growingIcon from "./assets/auto_graph.svg";
@@ -31,9 +31,7 @@ function Pricing() {
         </div>
       </section>
       <section className={styles.CTA}>
-        <h2 className={styles.aboutUs__title}>
-          Choose a plan that fits your needs
-        </h2>
+        <h2 className={styles.CTAtitle}>Choose a plan that fits your needs</h2>
         <div className={styles.CTAs}>
           <a href="/dashboard" className={styles.ctaDemo}>
             Monthly
