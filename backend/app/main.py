@@ -126,7 +126,7 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
         file.file.close()
 
     size = audio_details(file.filename)["size"]
-    duration = audio_details(file.filname)["mins"]
+    duration = audio_details(file.filename)["mins"]
     transcript = transcribe_file(file.filename)
     transcript = transcript
 
@@ -137,7 +137,7 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     neutrality_score = sentiment_result['neutrality_score']
     overall_sentiment = sentiment_result['overall_sentiment']
     most_negative_sentences = sentiment_result['most_negative_sentences']
-    most_positive_sentences = sentiment_result ['most_positive_sentences']
+    most_positive_sentences = sentiment_result ['most_postive_sentences']
 
     db_audio = models.Audio(audio_path=file.filename, size=size, duration=duration, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, most_negative_sentences = most_negative_sentences, most_positive_sentences = most_positive_sentences, agent_id=db_agent.id)
 
