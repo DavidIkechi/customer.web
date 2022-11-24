@@ -6,7 +6,7 @@ import Image from "../../assets/industryImage.png";
 function industryCard() {
   return (
     <div className={styles.industryCard}>
-      <Link to="/industryarticle">
+      <Link to="/industry-article">
         <div className={styles.card}>
           <div className={styles.titleCard}>
             <img src={Image} alt="" />

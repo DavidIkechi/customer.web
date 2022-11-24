@@ -18,12 +18,21 @@
                 justify-content: space-between;
                 flex-wrap: wrap;
                 gap: pix-rem(16);
+                &>*{
+                        &:nth-child(1){
+                                flex-grow: 3;
+                        }
+                        &:nth-child(2){
+                                flex-grow: 2;
+                        }
+                }
         }
         &__middle {
                 display: flex;
 
                 justify-content: space-between;
                 gap: pix-rem(80);
+
                 flex-wrap: wrap;
                 & > ul > li {
                         font-weight: 300;
