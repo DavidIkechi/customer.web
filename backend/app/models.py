@@ -1,5 +1,5 @@
 # models for database [SQLAlchemy]
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Enum, Float
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Enum, Float, JSON
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from datetime import datetime
@@ -54,6 +54,8 @@ class Audio(Base):
     negativity_score = Column(Float, index=True)
     neutrality_score = Column(Float, index=True)
     overall_sentiment = Column(Enum("Positive", "Negative", "Neutral"), index=True)
+    most_positive_sentences = Column(JSON, index =True, nullable = True)
+    most_negative_sentences = Column(JSON, index =True, nullable = True)
 
     agent_id = Column(Integer, ForeignKey("agents.id"))
     job = relationship("Job", back_populates="audio", uselist=False)

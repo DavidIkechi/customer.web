@@ -49,6 +49,8 @@ class AudioBase(BaseModel):
     negativity_score : float
     neutrality_score : float
     overall_sentiment: str
+    most_positive_sentences: list
+    most_negative_sentences: list
 
 class AudioCreate(AudioBase):
     pass

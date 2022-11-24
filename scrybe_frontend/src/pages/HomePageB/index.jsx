@@ -2,11 +2,11 @@ import React from "react";
 import styles from "./pageB.module.scss";
 import imag3d from "./assets/Other 14.webp";
 import upload from "./assets/Group 1000000932.png";
-import NavBar from "../../components/navBar";
-import Footer from "../../components/footer";
-import CustomerReview from "../HomePageA/CustomerReview";
-import BrandsLogo from "../HomePageA/BrandLogos";
-import Hero from "../HomePageA/HeroSection";
+import NavBar from "../../components/navBar/index.jsx";
+import Footer from "../../components/footer/index.jsx";
+import CustomerReview from "../HomePageA/CustomerReview/index.jsx";
+import BrandsLogo from "../HomePageA/BrandLogos/index.jsx";
+import Hero from "../HomePageA/heroSection/index.jsx";
 
 function HomePageB() {
   return (
@@ -14,7 +14,7 @@ function HomePageB() {
       <NavBar />
       <Hero />
       <BrandsLogo />
-      <section>
+      <section className={styles.container}>
         <div className={styles.getStarted}>
           <h2 className={styles.getStarted__h2}>LETS GET STARTED</h2>
           <div className={styles.getStarted__content}>
@@ -54,7 +54,7 @@ function HomePageB() {
           </div>
         </div>
       </section>
-      <section className={styles.upload}>
+      <section className={`${styles.upload} ${styles.container}`}>
         <div className={styles.upload__content}>
           <div className={styles.upload__imag}>
             <img src={upload} alt="upload" />

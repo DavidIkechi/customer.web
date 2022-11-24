@@ -27,14 +27,14 @@ import Successful from "./pages/Successful/Successful";
 import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
-import FAQs from "./pages/FaqsPage";
-import TermsOfService from "./pages/TermsOfService";
-import Blogs from "./pages/BlogsPage";
-import BlogPostPage from "./pages/BlogPostPage";
+import FAQs from "./pages/FaqsPage/FaqComponent";
 import LeaderboardPage from "./pages/LeaderBoard/Leaderboard";
 import Reviews from "./pages/Reviews/Reviews";
 import TryProcessing from "./pages/TryForFree/tryProcessing";
 import TryResults from "./pages/TryForFree/tryResults";
+import TermsOfService from "./pages/TermsOfService";
+import Blogs from "./pages/BlogsPage";
+import BlogPostPage from "./pages/BlogPostPage";
 
 function App() {
   return (
