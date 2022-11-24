@@ -11,10 +11,21 @@
         margin-inline: auto;
         @include media(1100px) {
                 align-items: center;
-                flex-flow: column-reverse;
+                flex-flow: column;
         }
         &__img {
+                
                 width: min(100%, pix-rem(600.85));
+                @include media(1100px){
+                        display: none;
+                }
+        }
+        &__i2 {
+                display: none;
+                @include media(1100px){
+                        width: min(100%, pix-rem(600.85));
+                        display: block;
+                }
         }
         &__content {
                 width: min(100%, pix-rem(590));
@@ -160,6 +171,14 @@
                 margin-inline: auto;
                 margin-top: pix-rem(60);
                 gap: pix-rem(8);
+                @include media(500px) {
+                        flex-direction: column;
+                        align-items: center;
+                        &>* {
+                                width: 100%;
+                                max-width: 100%;
+                        }
+                }
                 & > * {
                         &:nth-child(1) {
                                 flex: 2 1 0;
@@ -168,6 +187,9 @@
                                 padding-block: pix-rem(16);
                                 padding-inline: pix-rem(32);
                                 border-radius: pix-rem(4);
+                                @include media(4500px) {
+                                        flex: 2 2 0;
+                                }
                         }
                         &:nth-child(2) {
                                 flex: 1 1 0;

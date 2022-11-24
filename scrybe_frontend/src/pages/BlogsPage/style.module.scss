@@ -7,6 +7,7 @@
   font-family: kanit;
   background: #feffff;
   max-width: 1440px;
+  margin-bottom: 3rem;
   a {
     text-decoration: none !important;
   }
@@ -71,7 +72,7 @@
     font-weight: 600;
     width: 50%;
     &:first-child {
-      font-size: 4.3rem ;
+      font-size: 4.3rem;
       line-height: 74px;
       margin-right: 2rem;
 
@@ -249,57 +250,16 @@ div a.blogs__navSelected {
 }
 .blogs__carousel {
   position: relative;
-}
-.blogs__carouselBtns {
-  position: absolute;
-  width: 100%;
-  top: 50%;
-  z-index: 99;
-  @include display();
-  button {
-    position: absolute;
-    border: none;
-    padding: 5px 15px;
-    font-size: 1.4rem;
-    font-weight: 300;
-    cursor: pointer;
-    background: rgba(129, 128, 128, 0.349);
-    color: #fff;
-    &:first-child {
-      left: 2rem;
-    }
-    &:last-child {
-      right: 2rem;
-    }
-  }
-}
+  width: 500px;
+  height: 280px;
+  margin: 0 auto;
+  transition: all 400ms ease;
 
-.blogs__images {
-  @include display();
-
-  img {
-    margin-right: 1.2rem;
-    height: 200px;
+  @media (max-width: 515px) {
     width: 400px;
-    &:last-child {
-      margin-right: 0;
-    }
   }
-}
-.blogs__dots {
-  @include display();
-  margin: 2rem 0;
-  button {
-    width: 15px;
-    height: 15px;
-    background: #a9a9a9;
-    border-radius: 50%;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    margin-right: 10px;
-    &:first-child {
-      background: var(--primary-blue);
-    }
+  @media (max-width: 419px) {
+    width: 90%;
+    height: 230px;
   }
 }

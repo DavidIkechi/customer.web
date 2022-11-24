@@ -1,0 +1,48 @@
+
+.sliderStyles {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  transition: all 400ms ease;
+}
+.slideStyle {
+  height: 100%;
+  width: 100%;
+}
+
+.rightArrowStyles,
+.leftArrowStyles {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  font-size: 45px;
+  z-index: 1;
+  background: rgba(94, 92, 92, 0.278);
+  padding: 0 20px;
+  cursor: pointer;
+  color: #fff;
+}
+.rightArrowStyles {
+  right: 10px;
+}
+
+.leftArrowStyles {
+  left: 10px;
+}
+
+.dot-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dot {
+  font-size: 45px;
+  color: #a9a9a9;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: all 400ms ease;
+}
+.activeSlide {
+  color: var(--primary-blue);
+}

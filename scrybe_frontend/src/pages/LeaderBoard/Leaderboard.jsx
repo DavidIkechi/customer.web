@@ -1,12 +1,13 @@
-import "./Leaderboard.module.scss";
+import styles from "./Leaderboard.module.scss";
 import React from "react";
+import { NavLink } from "react-router-dom";
 import Logo from "./images/Scrybe-logo.svg";
-import MyScrybe from "./images/My-scrybe.svg";
-import Analysis from "./images/Analysis.svg";
-import Insight from "./images/Insight.svg";
-import LeaderBoard from "./images/Leader-board.svg";
-import MonthlyAnalysis from "./images/Monthly-Analysis.svg";
-import Settings from "./images/Settings.svg";
+import MyScrybe from "./images/dashboard.svg";
+import Analysis from "./images/graphic.svg";
+import Insight from "./images/history.svg";
+import LeaderBoard from "./images/leaderboard.svg";
+import MonthlyAnalysis from "./images/analytics.svg";
+import Settings from "./images/Setting.svg";
 import Agent from "./images/Agent-leaderboard.svg";
 import SearchIcon from "./images/search-icon.svg";
 import Calender from "./images/Calendar.svg";
@@ -33,30 +34,70 @@ import UploadIcon from "./images/Upload-icon.svg";
 
 function Leaderboard() {
   return (
-    <div className="content-container">
-      <section class="left_section">
+    <div className={styles.content_container}>
+      <section className={styles.left_section}>
         <nav>
-          <img src={Logo} className="Scrybe_logo" alt="hero img" />
-
-          <img src={MyScrybe} className="" alt="hero img" />
-
-          <img src={Analysis} className="" alt="hero img" />
-
-          <img src={Insight} className="" alt="hero img" />
-
-          <div className="Leader-logo">
-            <img src={LeaderBoard} className="" alt="hero img" />
+          <div className={styles.Sidebar_container_content}>
+            <img src={Logo} className={styles.Scrybe_media} alt="hero img" />
           </div>
 
-          <img src={MonthlyAnalysis} className="" alt="hero img" />
+          <NavLink
+            to="/myScrybe"
+            className={styles.Sidebar_container_content}
+            id={styles.SpacingLink}
+          >
+            <img src={MyScrybe} className="" alt="hero img" />
+            <p>Scrybe</p>
+          </NavLink>
 
-          <img src={Settings} className="" alt="hero img" />
+          <NavLink
+            to="/"
+            className={styles.Sidebar_container_content}
+            id={styles.SpacingLink}
+          >
+            <img src={Analysis} className="" alt="hero img" />
+            <p>Analysis</p>
+          </NavLink>
+
+          <NavLink
+            to="/"
+            className={styles.Sidebar_container_content}
+            id={styles.SpacingLink}
+          >
+            <img src={Insight} className="" alt="hero img" />
+            <select id="calender-value" name="insight">
+              <option value="Insight">Insight</option>
+            </select>
+          </NavLink>
+
+          <NavLink
+            to="/"
+            className={styles.Sidebar_container_content}
+            id={styles.Sidebar_content_active}
+          >
+            <img src={LeaderBoard} className="" alt="hero img" />
+            <p>Leaderboard</p>
+          </NavLink>
+
+          <NavLink
+            to="/"
+            className={styles.Sidebar_container_content}
+            id={styles.SpacingLink}
+          >
+            <img src={MonthlyAnalysis} className="" alt="hero img" />
+            <p>Monthly analysis</p>
+          </NavLink>
+
+          <NavLink to="/" className={styles.Sidebar_container_content}>
+            <img src={Settings} className="" alt="hero img" />
+            <p>Settings</p>
+          </NavLink>
         </nav>
       </section>
 
       <section>
-        <div className="right-section-top">
-          <div className="InputWithIcon" id="hide-for-mobile">
+        <div className={styles.right_section_top}>
+          <div className={styles.InputWithIcon} id={styles.hide_for_mobile}>
             <img src={SearchIcon} className="" alt="hero img" />
             <input
               type="text"
@@ -67,20 +108,20 @@ function Leaderboard() {
             />
           </div>
 
-          <div className="Upload-profile-container">
+          <div className={styles.Upload_profile_container}>
             <img src={ProfileUpload} className="" alt="hero img" />
-            <button className="Upload-button">
+            <button className={styles.Upload_button}>
               <img src={UploadIcon} className="" alt="hero img" /> &nbsp; &nbsp;
               upload
             </button>
           </div>
         </div>
 
-        <div className="right-section">
-          <img src={Agent} className="Agent-img" alt="hero img" />
+        <div className={styles.right_section}>
+          <img src={Agent} className={styles.Agent_img} alt="hero img" />
 
-          <div className="right-cotent2-container">
-            <div className="InputWithIcon">
+          <div className={styles.right_content2_container}>
+            <div className={styles.InputWithIcon}>
               <img src={SearchIcon} className="" alt="hero img" />
               <input
                 type="text"
@@ -91,12 +132,11 @@ function Leaderboard() {
               />
             </div>
 
-            <p id="hide-for-mobile">
-              {" "}
+            <p id={styles.hide_for_mobile}>
               1-20 <span> of 100</span>
             </p>
 
-            <div className="calender-content">
+            <div className={styles.calender_content}>
               <img src={Calender} className="" alt="hero img" />
               <select id="calender-value" name="calender">
                 <option value="monthly">monthly</option>
@@ -104,307 +144,307 @@ function Leaderboard() {
             </div>
           </div>
 
-          <div className="Profile-container">
-            <div className="Profile1">
-              <div className="Profile-img">
+          <div className={styles.Profile_container}>
+            <div className={styles.Profile1}>
+              <div className={styles.Profile_img}>
                 <img src={Profile1} className="" alt="profile1" />
               </div>
-              <div className="Profile-content">
+              <div className={styles.Profile_content}>
                 <h2>Awesome Lily</h2>
                 <h1> 10</h1>
                 <p>Calls Received</p>
-                <div className="Like-container">
-                  <div className="Like-content1">
-                    <div className="Like-icon-content">
+                <div className={styles.Like_container}>
+                  <div className={styles.Like_content1}>
+                    <div className={styles.Like_icon_content}>
                       <img src={GreenLike} className="" alt="profile1" />
                       <p> 31.k</p>
                     </div>
-                    <p className="Like-text"> POS.CALLS</p>
+                    <p className={styles.Like_text}> POS.CALLS</p>
                   </div>
 
-                  <div className="Like-content1">
-                    <div className="Like-icon-content">
+                  <div className={styles.Like_content1}>
+                    <div className={styles.Like_icon_content}>
                       <img src={BlackLike} className="" alt="profile1" />
                       <p> .4k</p>
                     </div>
-                    <p className="Like-text"> NEU.CALLS</p>
+                    <p className={styles.Like_text}> NEU.CALLS</p>
                   </div>
 
-                  <div className="Like-content1">
-                    <div className="Like-icon-content">
+                  <div className={styles.Like_content1}>
+                    <div className={styles.Like_icon_content}>
                       <img src={GreenLike} className="" alt="profile1" />
                       <p> .7k</p>
                     </div>
-                    <p className="Like-text">NEG.CALLS</p>
+                    <p className={styles.Like_text}>NEG.CALLS</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="Profile1">
-              <div className="Profile-img">
+            <div className={styles.Profile1}>
+              <div className={styles.Profile_img}>
                 <img src={Profile2} className="" alt="profile1" />
               </div>
-              <div className="Profile-content">
+              <div className={styles.Profile_content}>
                 <h2>Simidi Ade</h2>
                 <h1> 8.9</h1>
                 <p>Calls Received</p>
-                <div className="Like-container">
-                  <div className="Like-content1">
-                    <div className="Like-icon-content">
+                <div className={styles.Like_container}>
+                  <div className={styles.Like_content1}>
+                    <div className={styles.Like_icon_content}>
                       <img src={GreenLike} className="" alt="profile1" />
                       <p> 2.1k</p>
                     </div>
-                    <p className="Like-text"> POS.CALLS</p>
+                    <p className={styles.Like_text}> POS.CALLS</p>
                   </div>
 
-                  <div className="Like-content1">
-                    <div className="Like-icon-content">
+                  <div className={styles.Like_content1}>
+                    <div className={styles.Like_icon_content}>
                       <img src={BlackLike} className="" alt="profile1" />
                       <p> .670k</p>
                     </div>
-                    <p className="Like-text"> NEU.CALLS</p>
+                    <p className={styles.Like_text}> NEU.CALLS</p>
                   </div>
 
-                  <div className="Like-content1">
-                    <div className="Like-icon-content">
+                  <div className={styles.Like_content1}>
+                    <div className={styles.Like_icon_content}>
                       <img src={GreenLike} className="" alt="profile1" />
                       <p> .9k</p>
                     </div>
-                    <p className="Like-text"> NEG.CALLS</p>
+                    <p className={styles.Like_text}> NEG.CALLS</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="Profile1">
-              <div className="Profile-img">
+            <div className={styles.Profile1}>
+              <div className={styles.Profile_img}>
                 <img src={Profile3} className="" alt="profile1" />
               </div>
-              <div className="Profile-content">
+              <div className={styles.Profile_content}>
                 <h2>Delphine Ogbonna</h2>
                 <h1> 7.6 </h1>
                 <p>Calls Received</p>
-                <div className="Like-container">
-                  <div className="Like-content1">
-                    <div className="Like-icon-content">
+                <div className={styles.Like_container}>
+                  <div className={styles.Like_content1}>
+                    <div className={styles.Like_icon_content}>
                       <img src={GreenLike} className="" alt="profile1" />
                       <p> 1.9k</p>
                     </div>
-                    <p className="Like-text"> POS.CALLS</p>
+                    <p className={styles.Like_text}> POS.CALLS</p>
                   </div>
 
-                  <div className="Like-content1">
-                    <div className="Like-icon-content">
+                  <div className={styles.Like_content1}>
+                    <div className={styles.Like_icon_content}>
                       <img src={BlackLike} className="" alt="profile1" />
                       <p> .4k</p>
                     </div>
-                    <p className="Like-text"> NEU.CALLS</p>
+                    <p className={styles.Like_text}> NEU.CALLS</p>
                   </div>
 
-                  <div className="Like-content1">
-                    <div className="Like-icon-content">
+                  <div className={styles.Like_content1}>
+                    <div className={styles.Like_icon_content}>
                       <img src={GreenLike} className="" alt="profile1" />
                       <p> .7k</p>
                     </div>
-                    <p className="Like-text"> NEG.CALLS</p>
+                    <p className={styles.Like_text}> NEG.CALLS</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="Profile-Tabular">
-            <div className="Profile-Tabular-Content">
-              <div className="Profile-Tabular-Content1">
+          <div className={styles.Profile_Tabular}>
+            <div className={styles.Profile_Tabular_Content}>
+              <div className={styles.Profile_Tabular_Content1}>
                 <img src={ProfileName} className="" alt="profile1" />
                 <p> Ruth Sandra</p>
               </div>
 
-              <div className="Profile-Tabular-Content2">
-                <p className="Profile-tabular-number"> 7 </p>
-                <p className="Profile-tabular-score"> AVG Score</p>
+              <div className={styles.Profile_Tabular_Content2}>
+                <p className={styles.Profile_tabular_number}> 7 </p>
+                <p className={styles.Profile_tabular_score}> AVG Score</p>
               </div>
             </div>
           </div>
 
-          <div className="Profile-Tabular">
-            <div className="Profile-Tabular-Content">
-              <div className="Profile-Tabular-Content1">
+          <div className={styles.Profile_Tabular}>
+            <div className={styles.Profile_Tabular_Content}>
+              <div className={styles.Profile_Tabular_Content1}>
                 <img src={ProfileName5} className="" alt="profile1" />
                 <p> Kelvin O.</p>
               </div>
 
-              <div className="Profile-Tabular-Content2">
-                <p className="Profile-tabular-number"> 6.7 </p>
-                <p className="Profile-tabular-score"> AVG Score</p>
+              <div className={styles.Profile_Tabular_Content2}>
+                <p className={styles.Profile_tabular_number}> 6.7 </p>
+                <p className={styles.Profile_tabular_score}> AVG Score</p>
               </div>
             </div>
           </div>
 
-          <div className="Profile-Tabular">
-            <div className="Profile-Tabular-Content">
-              <div className="Profile-Tabular-Content1">
+          <div className={styles.Profile_Tabular}>
+            <div className={styles.Profile_Tabular_Content}>
+              <div className={styles.Profile_Tabular_Content1}>
                 <img src={ProfileName6} className="" alt="profile1" />
                 <p> T. Black</p>
               </div>
 
-              <div className="Profile-Tabular-Content2">
-                <p className="Profile-tabular-number"> 6.3 </p>
-                <p className="Profile-tabular-score"> AVG Score</p>
+              <div className={styles.Profile_Tabular_Content2}>
+                <p className={styles.Profile_tabular_number}> 6.3 </p>
+                <p className={styles.Profile_tabular_score}> AVG Score</p>
               </div>
             </div>
           </div>
 
-          <div className="Profile-Tabular">
-            <div className="Profile-Tabular-Content">
-              <div className="Profile-Tabular-Content1">
+          <div className={styles.Profile_Tabular}>
+            <div className={styles.Profile_Tabular_Content}>
+              <div className={styles.Profile_Tabular_Content1}>
                 <img src={ProfileName7} className="" alt="profile1" />
-                <p> Victor</p>
+                <p> Victor </p>
               </div>
 
-              <div className="Profile-Tabular-Content2">
-                <p className="Profile-tabular-number"> 6 </p>
-                <p className="Profile-tabular-score"> AVG Score</p>
+              <div className={styles.Profile_Tabular_Content2}>
+                <p className={styles.Profile_tabular_number}> 6 </p>
+                <p className={styles.Profile_tabular_score}> AVG Score</p>
               </div>
             </div>
           </div>
 
-          <div className="Profile-Tabular">
-            <div className="Profile-Tabular-Content">
-              <div className="Profile-Tabular-Content1">
+          <div className={styles.Profile_Tabular}>
+            <div className={styles.Profile_Tabular_Content}>
+              <div className={styles.Profile_Tabular_Content1}>
                 <img src={ProfileName8} className="" alt="profile1" />
                 <p> Mike</p>
               </div>
 
-              <div className="Profile-Tabular-Content2">
-                <p className="Profile-tabular-number"> 5.8 </p>
-                <p className="Profile-tabular-score"> AVG Score</p>
+              <div className={styles.Profile_Tabular_Content2}>
+                <p className={styles.Profile_tabular_number}> 5.8 </p>
+                <p className={styles.Profile_tabular_score}> AVG Score</p>
               </div>
             </div>
           </div>
 
-          <div className="Profile-Tabular">
-            <div className="Profile-Tabular-Content">
-              <div className="Profile-Tabular-Content1">
+          <div className={styles.Profile_Tabular}>
+            <div className={styles.Profile_Tabular_Content}>
+              <div className={styles.Profile_Tabular_Content1}>
                 <img src={ProfileName9} className="" alt="profile1" />
                 <p> Bello. C</p>
               </div>
 
-              <div className="Profile-Tabular-Content2">
-                <p className="Profile-tabular-number"> 5.5 </p>
-                <p className="Profile-tabular-score"> AVG Score</p>
+              <div className={styles.Profile_Tabular_Content2}>
+                <p className={styles.Profile_tabular_number}> 5.5 </p>
+                <p className={styles.Profile_tabular_score}> AVG Score</p>
               </div>
             </div>
           </div>
 
-          <div className="Profile-Tabular">
-            <div className="Profile-Tabular-Content">
-              <div className="Profile-Tabular-Content1">
+          <div className={styles.Profile_Tabular}>
+            <div className={styles.Profile_Tabular_Content}>
+              <div className={styles.Profile_Tabular_Content1}>
                 <img src={ProfileName10} className="" alt="profile1" />
                 <p> Elizabeth</p>
               </div>
 
-              <div className="Profile-Tabular-Content2">
-                <p className="Profile-tabular-number"> 5.4 </p>
-                <p className="Profile-tabular-score"> AVG Score</p>
+              <div className={styles.Profile_Tabular_Content2}>
+                <p className={styles.Profile_tabular_number}> 5.4 </p>
+                <p className={styles.Profile_tabular_score}> AVG Score</p>
               </div>
             </div>
           </div>
 
-          <div className="Profile-Tabular">
-            <div className="Profile-Tabular-Content">
-              <div className="Profile-Tabular-Content1">
+          <div className={styles.Profile_Tabular}>
+            <div className={styles.Profile_Tabular_Content}>
+              <div className={styles.Profile_Tabular_Content1}>
                 <img src={ProfileName11} className="" alt="profile1" />
                 <p> Lucas</p>
               </div>
 
-              <div className="Profile-Tabular-Content2">
-                <p className="Profile-tabular-number"> 5.3 </p>
-                <p className="Profile-tabular-score"> AVG Score</p>
+              <div className={styles.Profile_Tabular_Content2}>
+                <p className={styles.Profile_tabular_number}> 5.3 </p>
+                <p className={styles.Profile_tabular_score}> AVG Score</p>
               </div>
             </div>
           </div>
 
-          <div className="Profile-Tabular">
-            <div className="Profile-Tabular-Content">
-              <div className="Profile-Tabular-Content1">
+          <div className={styles.Profile_Tabular}>
+            <div className={styles.Profile_Tabular_Content}>
+              <div className={styles.Profile_Tabular_Content1}>
                 <img src={ProfileName12} className="" alt="profile1" />
                 <p> Violet. W</p>
               </div>
 
-              <div className="Profile-Tabular-Content2">
-                <p className="Profile-tabular-number"> 5.2 </p>
-                <p className="Profile-tabular-score"> AVG Score</p>
+              <div className={styles.Profile_Tabular_Content2}>
+                <p className={styles.Profile_tabular_number}> 5.2 </p>
+                <p className={styles.Profile_tabular_score}> AVG Score</p>
               </div>
             </div>
           </div>
 
-          <div className="Profile-Tabular">
-            <div className="Profile-Tabular-Content">
-              <div className="Profile-Tabular-Content1">
+          <div className={styles.Profile_Tabular}>
+            <div className={styles.Profile_Tabular_Content}>
+              <div className={styles.Profile_Tabular_Content1}>
                 <img src={ProfileName13} className="" alt="profile1" />
                 <p> Khloe. F</p>
               </div>
 
-              <div className="Profile-Tabular-Content2">
-                <p className="Profile-tabular-number"> 5.0 </p>
-                <p className="Profile-tabular-score"> AVG Score</p>
+              <div className={styles.Profile_Tabular_Content2}>
+                <p className={styles.Profile_tabular_number}> 5.0 </p>
+                <p className={styles.Profile_tabular_score}> AVG Score</p>
               </div>
             </div>
           </div>
 
-          <div className="Profile-Tabular">
-            <div className="Profile-Tabular-Content">
-              <div className="Profile-Tabular-Content1">
+          <div className={styles.Profile_Tabular}>
+            <div className={styles.Profile_Tabular_Content}>
+              <div className={styles.Profile_Tabular_Content1}>
                 <img src={ProfileName14} className="" alt="profile1" />
                 <p> Donald E.</p>
               </div>
 
-              <div className="Profile-Tabular-Content2">
-                <p className="Profile-tabular-number"> 4.9 </p>
-                <p className="Profile-tabular-score"> AVG Score</p>
+              <div className={styles.Profile_Tabular_Content2}>
+                <p className={styles.Profile_tabular_number}> 4.9 </p>
+                <p className={styles.Profile_tabular_score}> AVG Score</p>
               </div>
             </div>
           </div>
 
-          <div className="Profile-Tabular">
-            <div className="Profile-Tabular-Content">
-              <div className="Profile-Tabular-Content1">
+          <div className={styles.Profile_Tabular}>
+            <div className={styles.Profile_Tabular_Content}>
+              <div className={styles.Profile_Tabular_Content1}>
                 <img src={ProfileName15} className="" alt="profile1" />
                 <p> Gozie</p>
               </div>
 
-              <div className="Profile-Tabular-Content2">
-                <p className="Profile-tabular-number"> 4.9 </p>
-                <p className="Profile-tabular-score"> AVG Score</p>
+              <div className={styles.Profile_Tabular_Content2}>
+                <p className={styles.Profile_tabular_number}> 4.9 </p>
+                <p className={styles.Profile_tabular_score}> AVG Score</p>
               </div>
             </div>
           </div>
 
-          <div className="Profile-Tabular">
-            <div className="Profile-Tabular-Content">
-              <div className="Profile-Tabular-Content1">
+          <div className={styles.Profile_Tabular}>
+            <div className={styles.Profile_Tabular_Content}>
+              <div className={styles.Profile_Tabular_Content1}>
                 <img src={ProfileName16} className="" alt="profile1" />
                 <p> Adaobi A.</p>
               </div>
 
-              <div className="Profile-Tabular-Content2">
-                <p className="Profile-tabular-number"> 4.6 </p>
-                <p className="Profile-tabular-score"> AVG Score</p>
+              <div className={styles.Profile_Tabular_Content2}>
+                <p className={styles.Profile_tabular_number}> 4.6 </p>
+                <p className={styles.Profile_tabular_score}> AVG Score</p>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="Page-num-container">
-          <p className="page-btn-start-page">Previous</p>
-          <p className="page-btn-active">1</p>
-          <p className="page-btn">2</p>
-          <p className="page-btn">3</p>
-          <p className="page-btn">4</p>
-          <p className="page-btn">5</p>
-          <p className="page-btn-color">Next</p>
+          <div className={styles.Page_num_container}>
+            <p className={styles.page_btn_start_page}>Previous</p>
+            <p className={styles.page_btn_active}>1</p>
+            <p className={styles.page_btn}>2</p>
+            <p className={styles.page_btn}>3</p>
+            <p className={styles.page_btn}>4</p>
+            <p className={styles.page_btn}>5</p>
+            <p className={styles.page_btn_color}>Next</p>
+          </div>
         </div>
       </section>
     </div>

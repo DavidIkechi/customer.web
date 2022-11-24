@@ -1,15 +1,25 @@
 @use "../../functions.scss" as *;
 
 .nav {
+  background-color: white;
+  &__ctl {
+    display: none;
+    @include media(1100px) {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding-inline: pix-rem(16);
+      position: absolute;
+      top: 0;
+      padding-block: pix-rem(20);
+    }
+  }
   &__closed {
     display: none;
-    position: absolute;
     @include media(1100px) {
       display: block;
       cursor: pointer;
-      position: absolute;
-      top: 60px;
-      right: 78px;
     }
   }
   &__open {
@@ -54,7 +64,8 @@
       background-color: white;
       inset: 0;
       left: 0;
-      justify-content: center;
+      justify-content: flex-start;
+      padding-top: pix-rem(80);
       width: 100vw;
     }
   }
@@ -79,9 +90,11 @@
     display: flex;
     gap: pix-rem(24);
     align-items: center;
+    cursor: pointer;
     @include media(1100px) {
       flex-direction: column;
       align-items: center;
+      cursor: pointer;
     }
     & > * {
       all: unset;
@@ -91,19 +104,26 @@
   }
   &__img {
     max-width: pix-rem(172);
+    @include media(1100px) {
+      max-width: pix-rem(86);
+    }
   }
   &__ctas {
     display: flex;
     gap: pix-rem(24);
     @include media(1100px) {
+      padding-top: pix-rem(40);
       flex-direction: column;
     }
     & > * {
       all: unset;
       padding: pix-rem(16) pix-rem(32);
       border-radius: pix-rem(4);
+      
       @include media(1100px) {
         text-align: center;
+        max-width: pix-rem(178);
+        flex: 1;
       }
       &:nth-child(1) {
         background-color: transparent;
