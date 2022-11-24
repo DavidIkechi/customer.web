@@ -54,7 +54,7 @@ class Audio(Base):
     negativity_score = Column(Float, index=True)
     neutrality_score = Column(Float, index=True)
     overall_sentiment = Column(Enum("Positive", "Negative", "Neutral"), index=True)
-    most_postive_sentences = Column(JSON, index =True, nullable = True)
+    most_positive_sentences = Column(JSON, index =True, nullable = True)
     most_negative_sentences = Column(JSON, index =True, nullable = True)
 
     agent_id = Column(Integer, ForeignKey("agents.id"))

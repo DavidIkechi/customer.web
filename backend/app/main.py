@@ -2,6 +2,7 @@ from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, F
 from routers.sentiment import sentiment
 from routers.transcribe import transcribe_file
 import models, json
+from auth import get_active_user
 from jwt import (
     main_login
 )
@@ -82,7 +83,7 @@ async def analyse(file: UploadFile=File(...)):
 
 
 @app.post("/new_analyse", tags=['analyse'])
-async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Session = Depends(get_db), file: UploadFile=File(...), user: models.User = Depends(get_current_user)):
+async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Session = Depends(get_db), file: UploadFile=File(...), user: models.User = Depends(get_active_user)):
 
     # Create Agent
     user_id = user.id
@@ -112,12 +113,13 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     neutrality_score = sentiment_result['neutrality_score']
     overall_sentiment = sentiment_result['overall_sentiment']
     most_negative_sentences = sentiment_result['most_negative_sentences']
-    most_postive_sentences = sentiment_result ['most_postive_sentences']
+    most_positive_sentences = sentiment_result ['most_positive_sentences']
 
-    db_audio = models.Audio(audio_path=file.filename, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, most_negative_sentences = most_negative_sentences, most_postive_sentences = most_postive_sentences, agent_id=db_agent.id)
+    db_audio = models.Audio(audio_path=file.filename, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, most_negative_sentences = most_negative_sentences, most_positive_sentences = most_positive_sentences, agent_id=db_agent.id)
 
     db.add(db_audio)
     db.commit()
+    db.refresh(db_audio)
 
     return {"transcript": transcript, "sentiment_result": sentiment_result}
 
@@ -178,8 +180,8 @@ def read_audios(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return audios
 
 
-@app.get('/audios/{audio_id}/sentiment', response_model=schema.AudioBase, tags=['audios'])
-def read_sentiment(audio_id: int, db: Session = Depends(get_db)):
+@app.get('/audios/{audio_id}/sentiment')
+def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     db_audio = crud.get_audio(db, audio_id=audio_id)
     if db_audio is None:
         raise HTTPException(status_code=404, detail="Sentiment does not exist")
