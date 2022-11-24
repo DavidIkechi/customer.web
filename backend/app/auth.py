@@ -82,7 +82,7 @@ async def get_active_user(db: Session = Depends(_services.get_session), token: s
             headers={"WWW-Authenticate": "Bearer"},
         )
     
-    return user_email.is_active
+    return user_email
 
 async def get_admin(db: Session = Depends(_services.get_session), token: str = Depends(oauth2_scheme)) -> bool:
     """ This function checks if a user is admin.
@@ -116,6 +116,6 @@ async def get_admin(db: Session = Depends(_services.get_session), token: str = D
                 headers={"WWW-Authenticate": "Bearer"},
             )
     
-    return user_email.is_admin
+    return user_email
 
          
