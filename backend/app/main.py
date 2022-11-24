@@ -12,6 +12,7 @@ from sqlalchemy.orm import Session
 import crud, schema
 
 from emails import send_email, verify_token
+from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
 from auth import get_current_user
@@ -118,6 +119,11 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
 
     return {"transcript": transcript, "sentiment_result": sentiment_result}
 
+#get recent recordings
+@app.get("/recent-recordings", response_model=schema.Recordings)
+def get_recent_recordings(skip: int = 0, limit: int = 5,db: Session = Depends(get_db), user: models.User = Depends(get_current_user)):
+    recordings = db.query(models.Audio).filter(models.Audio.company_id == user.company_id).order_by(models.Audio.timestamp.desc()).offset(skip).limit(limit).all()
+    return recordings
 
 # create the endpoint
 @app.post('/login', summary = "create access token for logged in user", tags=['users'])

@@ -61,6 +61,13 @@ class Audio(AudioBase):
     class Config:
         orm_mode = True
 
+class Recordings(BaseModel):
+    audio_path: str
+    size: int
+    duration: int
+    timestamp: datetime
+
+
 class AgentBase(BaseModel):
     first_name: str
     last_name: str
@@ -72,9 +79,15 @@ class Agent(AgentBase):
     id: int
     company_id: int
     audios : list[Audio] = []
+    positivity_scores : list[float] = []
+    negativity_scores : list[float] = []
+    neutral_scores : list[float] = []
+    average : float
 
     class Config:
         orm_mode = True
+
+
 
 class CompanyBase(BaseModel):
     name: str
