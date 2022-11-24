@@ -126,15 +126,15 @@ function App() {
       <Route path="/settings" element={<SettingsIndex />} />
       <Route path="settings/account-security" element={<AccountSettings />} />
       <Route path="settings/notifications" element={<NotificationSettings />} />
-      
+
       <Route
         path="settings/personal-information"
         element={<PersonalInformation />}
       />
 
       {/* Press  */}
-      <Route path="press" element={<Press/>} />
-      <Route path="press-article" element={<PressArticle/>} />
+      <Route path="press" element={<Press />} />
+      <Route path="press-article" element={<PressArticle />} />
     </Routes>
   );
 }
