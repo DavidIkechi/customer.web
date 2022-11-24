@@ -3,7 +3,7 @@ from routers.sentiment import sentiment
 from routers.transcribe import transcribe_file
 import auth
 import models, json
-from auth import get_active_user
+from auth import get_active_user, get_current_user
 from jwt import (
     main_login
 )
@@ -16,7 +16,6 @@ import crud, schema
 from emails import send_email, verify_token
 from starlette.requests import Request
 import fastapi as _fastapi
-from auth import get_current_user
 
 # Dependency
 def get_db():
