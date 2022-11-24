@@ -190,7 +190,7 @@ def read_sentiment(audio_id: int, db: Session = Depends(get_db)):
         overall_sentiment = str(db_audio.overall_sentiment)
         most_positive_sentences =db_audio. most_positive_sentences
         most_negative_sentences =db_audio. most_negative_sentences
-        transcript = str(db_audio.transcript)
+        transcript = db_audio.transcript
     sentiment = {"transcript": transcript,
                  "positivity_score": positivity_score, 
                  "negativity_score": negativity_score, 
