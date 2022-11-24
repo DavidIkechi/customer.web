@@ -1,3 +1,4 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import { BlogHero, insta01, insta02, insta03 } from "./assets";
 import styles from "./style.module.scss";
@@ -6,8 +7,14 @@ import Card from "./BlogCard";
 import { blogs } from "./assets/data";
 import FadeInSection from "./FadeInSection";
 import ImageSlider from "./ImageSlider";
+import NavBar from "../../components/navBar";
+import Footer from "../../components/footer";
 
 function Blogs() {
+  React.useEffect(() => {
+    // 👇️ scroll to top on page load
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
   const slides = [
     {
       url: insta01,
@@ -21,6 +28,7 @@ function Blogs() {
   ];
   return (
     <div className={styles.blogs}>
+      <NavBar />
       <div className={styles.blogs__hero}>
         <div className={styles.blogsHero__content}>
           <div>
@@ -86,6 +94,7 @@ function Blogs() {
           <ImageSlider slides={slides} />
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
