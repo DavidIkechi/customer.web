@@ -188,6 +188,6 @@ def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depe
      return crud.update_user(db=db, user=user, user_id=user_id)
 
 
-@app.get('/history/{user_id}')
-async def get_history(user_id: int):
-    return crud.get_history_by_user_id(user_id)
+@app.get('/history/')
+async def get_history(user: models.User = Depends(get_current_user)):
+    return crud.get_history_by_user_id(user.id)
