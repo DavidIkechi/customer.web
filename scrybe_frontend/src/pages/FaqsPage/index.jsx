@@ -7,6 +7,10 @@ import { Hero } from "./assets";
 import Footer from "../../components/footer";
 import NavBar from "../../components/navBar";
 function FAQs() {
+  React.useEffect(() => {
+    // 👇️ scroll to top on page load
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
   const [faqs, setFaqs] = useState([
     {
       question: "How can I register?",
