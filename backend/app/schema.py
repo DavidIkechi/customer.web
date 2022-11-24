@@ -56,6 +56,8 @@ class AudioCreate(AudioBase):
 class Audio(AudioBase):
     id: int
     agent_id: int
+    size: int
+    duration: int
     job : Job
 
     class Config:
