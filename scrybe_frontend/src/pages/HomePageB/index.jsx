@@ -6,7 +6,7 @@ import NavBar from "../../components/navBar/index.jsx";
 import Footer from "../../components/footer/index.jsx";
 import CustomerReview from "../HomePageA/CustomerReview/index.jsx";
 import BrandsLogo from "../HomePageA/BrandLogos/index.jsx";
-import Hero from "../HomePageA/heroSection/index.jsx";
+import Hero from "../HomePageA/HeroSection/index.jsx";
 
 function HomePageB() {
   return (

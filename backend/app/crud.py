@@ -100,3 +100,12 @@ def create_agent(db: Session, agent: schema.Agent, company_id: int):
     db.refresh(db_agent)
     return db_agent
 
+def create_analysis(db, result= schema.Audio, user_id=int):
+    db_analysis = models.Audio(transcript = result.transcript, positivity_score= result.positivity_score, negativity_score= result.negativity_score, overall_sentiment= result.overall_sentiment)
+    db.add(db_analysis)
+    db.commit()
+    db.refresh(db_analysis)
+    return db_analysis
+
+def get_analysis(db: Session, analysis_id = int):
+    return db.query(models.Analysis).filter(models.Analysis == analysis_id).first()
