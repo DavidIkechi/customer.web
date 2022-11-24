@@ -15,6 +15,7 @@ load_dotenv()
 
 config_credentials = dotenv_values('.env')
 
+
 conf = ConnectionConfig(
     MAIL_USERNAME = config_credentials['EMAIL'],
     MAIL_PASSWORD = config_credentials['PASS'],

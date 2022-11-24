@@ -5,7 +5,7 @@ import PersonalInformation from "./SettingsPageSubPages/PersonalInformation/Pers
 import AccountSetting from "./SettingsPageSubPages/AccountSettings/AccountSettings";
 import Notification from "./SettingsPageSubPages/Notifications/NotificationSettings";
 
-function Index() {
+function SettingsIndex() {
   return (
     <div className="Index">
       <Routes>
@@ -18,4 +18,4 @@ function Index() {
   );
 }
 
-export default Index;
+export default SettingsIndex;
