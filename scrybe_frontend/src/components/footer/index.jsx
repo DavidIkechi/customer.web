@@ -1,37 +1,81 @@
 import React from "react";
 import styles from "./footer.module.scss";
-import social from "./assets/brand logo.png";
 import locate from "./assets/carbon_location.png";
 import email from ".//assets/clarity_email-line.png";
 import call from ".//assets/fluent_call-connecting-20-regular.png";
+import { NavLink } from "react-router-dom";
+import logo from "./assets/white_logo.png";
+import ig from "./assets/instagram.png";
+import fb from "./assets/facebook.png";
+import twitter from "./assets/twitter.png";
 
 function Footer() {
   return (
     <div className={styles.footer}>
       <div className={styles.footer__content}>
         <div className={styles.footer__left}>
-          <img src={social} alt="" srcset="" />
+          <img src={logo} alt="" srcset="" />
+          <p style={{ marginTop: "1.3rem" }}>Join Our Community</p>
+          <div className={styles.socials}>
+            <a href="www.hng.tech">
+              <img src={ig} alt="" srcset="" />
+            </a>
+            <a href="www.hng.tech">
+              <img src={fb} alt="" srcset="" />
+            </a>
+            <a href="www.hng.tech">
+              <img src={twitter} alt="" srcset="" />
+            </a>
+          </div>
         </div>
         <div className={styles.footer__middle}>
           <ul>
-            <h4>Explore</h4>
-            <li>Home</li>
-            <li>Why Scrybe</li>
-            <li>About Us</li>
-            <li>Blog</li>
-            <li>Our Services</li>
-            <li>Privacy Policy</li>
-            <li>How it works</li>
+            <h4> Explore</h4>
+            <li>
+              <NavLink to="/">Home</NavLink>
+            </li>
+            <li>
+              <NavLink to="/">Why Scrybe</NavLink>
+            </li>
+            <li>
+              <NavLink to="/">About Us</NavLink>
+            </li>
+            <li>
+              <NavLink to="/blog">Blog</NavLink>
+            </li>
+            <li>
+              <NavLink to="/">Our Services</NavLink>
+            </li>
+            <li>
+              <NavLink to="/privacy">Privacy Policy</NavLink>
+            </li>
+            <li>
+              <NavLink to="/how-it-works">How it works</NavLink>
+            </li>
           </ul>
           <ul>
             <h4>Quick links</h4>
-            <li>Authentication</li>
-            <li>Billing and pricing</li>
-            <li>Accounts</li>
-            <li>Events</li>
-            <li>Career</li>
-            <li>Faq</li>
-            <li>Partnership</li>
+            <li>
+              <NavLink to="/">Authentication</NavLink>
+            </li>
+            <li>
+              <NavLink to="/">Billing and pricing</NavLink>
+            </li>
+            <li>
+              <NavLink to="/">Accounts</NavLink>
+            </li>
+            <li>
+              <NavLink to="/">Events</NavLink>
+            </li>
+            <li>
+              <NavLink to="/">Career</NavLink>
+            </li>
+            <li>
+              <NavLink to="/faq">Faq</NavLink>
+            </li>
+            <li>
+              <NavLink to="/">Partnership</NavLink>
+            </li>
           </ul>
         </div>
         <div className={styles.footer__right}>

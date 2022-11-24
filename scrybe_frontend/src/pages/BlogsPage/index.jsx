@@ -1,9 +1,3 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable prettier/prettier */
-/* eslint-disable react/no-unescaped-entities */
-import React from "react";
 import { Link } from "react-router-dom";
 import { BlogHero, insta01, insta02, insta03 } from "./assets";
 import styles from "./style.module.scss";

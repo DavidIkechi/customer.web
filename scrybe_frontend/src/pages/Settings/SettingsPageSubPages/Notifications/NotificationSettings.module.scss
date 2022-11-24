@@ -1,0 +1,213 @@
+.NotificationSettings_wrapper {
+  padding: 0 1rem;
+  color: #3f3f3f !important;
+  margin-bottom: 2rem;
+
+  h2 {
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 0.2rem;
+    padding: 0 !important;
+  }
+
+  .card {
+    background-color: #0062e8;
+    border-radius: 4px;
+
+    padding: 1.5rem 1rem;
+    margin-bottom: 2.5rem;
+
+    p {
+      font-size: 1rem !important;
+      font-weight: 300 !important;
+      color: white !important;
+    }
+
+    h3 {
+      font-size: 1.1rem !important;
+      font-weight: 600 !important;
+      color: white !important;
+    }
+
+    a {
+      color: white !important;
+      font-size: 0.875rem !important;
+      text-decoration: underline;
+      text-underline-offset: 0.2rem;
+    }
+  }
+
+  .NotificationSettings_options {
+    h3 {
+      font-size: 1.25rem !important;
+      font-weight: 600 !important;
+    }
+  }
+
+  .NotificationSettings_optionCard {
+    padding: 1.25rem 1rem;
+    background: #fefefd;
+    box-shadow: 0px 20px 24px -4px rgba(197, 197, 197, 0.08),
+      0px 8px 8px -4px rgba(197, 197, 197, 0.03);
+    border-radius: 4px;
+    margin-block: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h3 {
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+      }
+    }
+
+    p {
+      font-size: 0.875rem !important;
+      font-weight: 300 !important;
+    }
+  }
+}
+
+.NotificationSettings_form {
+  .toggle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 40px;
+    height: 24px;
+
+    input {
+      width: 0;
+      height: 0;
+      opacity: 0;
+    }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      cursor: pointer;
+      border: 2px solid #c5c5c5;
+      border-radius: 20px;
+
+      &::before {
+        position: absolute;
+        content: "";
+        background-color: #c5c5c5;
+        width: 16px;
+        height: 16px;
+        left: 4px;
+        bottom: 2px;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+    }
+
+    input:checked + .slider {
+      background-color: white;
+
+      border: 2px solid #006cff;
+    }
+    input:checked + .slider::before {
+      translate: 13px;
+      background: #006cff;
+    }
+  }
+
+  button {
+    color: white;
+    padding: 1rem 2rem;
+    background: #006cff;
+    border-radius: 4px;
+    border: none;
+    font-family: "Kanit", sans-serif;
+    font-weight: 500 !important;
+    margin-top: 1rem;
+    cursor: pointer;
+  }
+
+  .message {
+    p {
+      font-size: 0.875rem !important;
+      font-weight: 300 !important;
+      color: #3f3f3f !important;
+    }
+  }
+
+  .optMessage {
+    .messageDesc {
+      width: 70%;
+    }
+
+    p {
+      color: #6a6a6a !important;
+    }
+
+    label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    input {
+      height: 24px;
+      width: 24px;
+    }
+
+    .message {
+      margin-block: 32px;
+      display: none;
+    }
+  }
+}
+
+.emailInput {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 1.25rem;
+
+  label {
+    font-size: 0.75rem !important;
+    color: #6a6a6a !important;
+    margin-top: 1.25rem;
+  }
+
+  .email {
+    width: 100% !important;
+    height: 100% !important;
+    padding: 1rem;
+    border: 1px solid #c5c5c5;
+    border-radius: 4px;
+    font-family: "Kanit", sans-serif;
+
+    &:focus {
+      outline: #006cff !important;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .NotificationSettings_wrapper {
+    width: 90%;
+    margin: 0 auto 2rem;
+  }
+}
+@media (min-width: 1024px) {
+  .NotificationSettings_wrapper {
+    width: 55%;
+  }
+
+  .subpages_footer {
+    display: none;
+  }
+}
+@media (min-width: 1360px) {
+  .NotificationSettings_wrapper {
+    width: 100%;
+  }
+}

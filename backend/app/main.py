@@ -2,7 +2,8 @@ from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, F
 from routers.sentiment import sentiment
 from routers.transcribe import transcribe_file
 import auth
-import models
+import models, json
+from auth import get_active_user
 from jwt import (
     main_login
 )
@@ -13,7 +14,6 @@ from sqlalchemy.orm import Session
 import crud, schema
 
 from emails import send_email, verify_token
-from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
 from auth import get_current_user
@@ -78,13 +78,14 @@ async def analyse(file: UploadFile=File(...)):
     positivity_score = sentiment_result['positivity_score']
     neutrality_score = sentiment_result['neutrality_score']
     overall_sentiment = sentiment_result['overall_sentiment']
+   
 
     return {"transcript": transcript, "sentiment_result": sentiment_result}
 
 
 
 @app.post("/new_analyse", tags=['analyse'])
-async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Session = Depends(get_db), file: UploadFile=File(...), user: models.User = Depends(get_current_user)):
+async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Session = Depends(get_db), file: UploadFile=File(...), user: models.User = Depends(get_active_user)):
 
     # Create Agent
     user_id = user.id
@@ -106,8 +107,6 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     finally:
         file.file.close()
 
-    size = audio_details(file.filename)["size"]
-    length = audio_details(file.filname)["mins"]
     transcript = transcribe_file(file.filename)
     transcript = transcript
 
@@ -116,11 +115,21 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     positivity_score = sentiment_result['positivity_score']
     neutrality_score = sentiment_result['neutrality_score']
     overall_sentiment = sentiment_result['overall_sentiment']
+    most_negative_sentences = sentiment_result['most_negative_sentences']
+    most_positive_sentences = sentiment_result ['most_positive_sentences']
 
-    db_audio = models.Audio(audio_path=file.filename, size=size, duration=length, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, agent_id=db_agent.id)
+    db_audio = models.Audio(audio_path=file.filename, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, most_negative_sentences = most_negative_sentences, most_positive_sentences = most_positive_sentences, agent_id=db_agent.id)
 
     db.add(db_audio)
     db.commit()
+    db.refresh(db_audio)
+
+    history_create: schema.HistoryCreate = {"user_id":user_id, 
+                                            "sentiment_result":overall_sentiment,
+                                            "agent_name": agent_name,
+                                            "audio_name": file.filename}
+
+    crud.create_history(db, history_create)
 
     history_create: schema.HistoryCreate = {"user_id":user_id, 
                                             "sentiment_result":overall_sentiment,
@@ -131,11 +140,6 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
 
     return {"transcript": transcript, "sentiment_result": sentiment_result}
 
-#get recent recordings
-@app.get("/recent-recordings", response_model=schema.Recordings)
-def get_recent_recordings(skip: int = 0, limit: int = 5,db: Session = Depends(get_db), user: models.User = Depends(get_current_user)):
-    recordings = db.query(models.Audio).filter(models.Audio.company_id == user.company_id).order_by(models.Audio.timestamp.desc()).offset(skip).limit(limit).all()
-    return recordings
 
 # create the endpoint
 @app.post('/login', summary = "create access token for logged in user", tags=['users'])
@@ -191,3 +195,33 @@ def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depe
 @app.get('/history/')
 async def get_history(user: models.User = Depends(get_current_user)):
     return crud.get_history_by_user_id(user.id)
+
+@app.get("/audios/", response_model=list[schema.Audio], tags=['audios'])
+def read_audios(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    audios = crud.get_audios(db, skip=skip, limit=limit)
+    return audios
+
+
+@app.get('/audios/{audio_id}/sentiment')
+def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    db_audio = crud.get_audio(db, audio_id=audio_id)
+    if db_audio is None:
+        raise HTTPException(status_code=404, detail="Sentiment does not exist")
+    else:
+        positivity_score = float(db_audio.positivity_score)
+        negativity_score = float(db_audio.negativity_score)
+        neutrality_score = float(db_audio.neutrality_score)
+        overall_sentiment = str(db_audio.overall_sentiment)
+        most_positive_sentences = json.loads(db_audio. most_positive_sentences)
+        most_negative_sentences = json.loads(db_audio. most_negative_sentences)
+        transcript = db_audio.transcript
+    sentiment = {"transcript": transcript,
+                 "positivity_score": positivity_score, 
+                 "negativity_score": negativity_score, 
+                 "neutrality_score": neutrality_score, 
+                 "overall_sentiment": overall_sentiment,
+                 "most_positive_sentences": most_positive_sentences,
+                 "most_negative_sentences": most_negative_sentences,
+                 }
+    return sentiment
+
