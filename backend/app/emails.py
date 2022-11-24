@@ -1,7 +1,7 @@
 from fastapi import (BackgroundTasks, UploadFile,File, Form, Depends, HTTPException, status)
 from fastapi_mail import FastMail, ConnectionConfig, MessageSchema
 from typing import List
-#from jose import jwt
+from jose import jwt
 from fastapi.exceptions import HTTPException
 from dotenv import dotenv_values
 from models import User
