@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { UserContext } from "../../context/UserContext";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
@@ -7,29 +6,6 @@ import footerImg from "./assets/signup-img.svg";
 import styles from "./SignUp.module.scss";
 
 function Signup() {
-  // Login SetUp
-  const [myEmail, setEmail] = useState("");
-  const [myPassword, setPassword] = useState("");
-  const [, setToken] = useContext(UserContext);
-
-  // Submit Registration
-  const submitRegistration = async () => {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: email, hashed_password: password }),
-    };
-
-    const response = await fetch("/api/users", requestOptions);
-    const data = await response.json();
-
-    if (!response.ok) {
-      <p className={styles.errorMsg}>{errors.password?.message}</p>;
-    } else {
-      setToken(data.access_token);
-    }
-  };
-
   const {
     register,
     handleSubmit,
@@ -43,7 +19,6 @@ function Signup() {
     console.log(data);
     setUserInfo(data);
     console.log(errors);
-    submitRegistration();
   };
 
   // Watch event for disable button
@@ -83,7 +58,6 @@ function Signup() {
                 type="email"
                 name="email"
                 id="email"
-                value={email}
                 placeholder="Enter your company email"
                 className={`${errors.email && styles.errorInput} `}
                 {...register("email", {
@@ -114,7 +88,6 @@ function Signup() {
                 type="password"
                 name="password"
                 id="password"
-                value={password}
                 placeholder="Enter your password"
                 className={`${errors.password && styles.errorInput} `}
                 {...register("password", {
@@ -137,8 +110,8 @@ function Signup() {
                 <input type="checkbox" name="" id="" />
                 <span>
                   I have read and agree to{" "}
-                  <NavLink to={"/terms"}>Terms of Service</NavLink> and{" "}
-                  <NavLink to={"/privacy"}>Privacy Policy</NavLink>
+                  <NavLink to={""}>Terms of Service</NavLink> and{" "}
+                  <NavLink to={""}>Privacy Policy</NavLink>
                   <br />
                   Already have an account?{" "}
                   <NavLink to={"/signin"}>Sign in</NavLink>
