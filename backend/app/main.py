@@ -155,13 +155,6 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
 
     crud.create_history(db, history_create)
 
-    history_create: schema.HistoryCreate = {"user_id":user_id, 
-                                            "sentiment_result":overall_sentiment,
-                                            "agent_name": agent_name,
-                                            "audio_name": file.filename}
-
-    crud.create_history(db, history_create)
-
     return {"transcript": transcript, "sentiment_result": sentiment_result}
 
 
