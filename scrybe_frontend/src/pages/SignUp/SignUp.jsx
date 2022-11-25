@@ -12,7 +12,7 @@ function Signup() {
     watch,
     formState: { errors },
   } = useForm();
-  
+
   /* eslint-disable no-unused-vars */
   const [userInfo, setUserInfo] = useState();
   /* eslint-enable no-unused-vars */
