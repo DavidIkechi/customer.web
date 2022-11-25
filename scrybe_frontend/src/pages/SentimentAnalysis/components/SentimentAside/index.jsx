@@ -1,12 +1,10 @@
 import PropTypes from "prop-types";
 import styles from "./SentimentAside.module.scss";
-import downloadIcon from "../../icons/download.svg";
-import dropdownIcon from "../../icons/dropdown.svg";
-import shareIcon from "../../icons/share.svg";
 import arrowIcon from "../../icons/arrow_back.svg";
 import OverAllSentimentCard from "../OverallSentimentCard";
+import VerdictCard from "../VerdictCard";
 
-function SentimentAside({ isMobileAsideOpen, closeFunction, sentimentData }) {
+function SentimentAside({ isMobileAsideOpen, closeFunction, senti }) {
   const positiveTags = [
     "brave",
     "good",
@@ -50,39 +48,30 @@ function SentimentAside({ isMobileAsideOpen, closeFunction, sentimentData }) {
           <div className={styles.back__text}>Overall Sentiment</div>
         </div>
       </div>
-      <OverAllSentimentCard sentimentData={sentimentData} />
-      <div className={`${styles.verdict} ${styles.inner__container}`}>
-        <div className={styles.verdict__item}>
-          <div className={styles.verdict__title}>Agent Friendliness</div>
-          <div className={styles.verdict__bar}>
-            <div className={styles.inner__bar} style={{ width: `${90}%` }} />
-            <div className={styles.bar__text}>90%</div>
-          </div>
-        </div>
-        <div className={styles.verdict__item}>
-          <div className={styles.verdict__title}>Agent Friendliness</div>
-          <div className={styles.verdict__bar}>
-            <div className={styles.inner__bar} style={{ width: `${85}%` }} />
-            <div className={styles.bar__text}>85%</div>
-          </div>
-        </div>
-        <div className={styles.verdict__item}>
-          <div className={styles.verdict__title}>Verdict: </div>
-          <div className={styles.final__verdict}>Customer is Satisfied</div>
-        </div>
-        <div className={styles.verdict__download}>
-          <button type="button" className={styles.download__button}>
-            <img src={downloadIcon} alt="download icon" />
-            Download
-            <div className={styles.dropdown__container}>
-              <img src={dropdownIcon} alt="drop down" />
-            </div>
-          </button>
-          <button type="button" className={styles.share__button}>
-            <img src={shareIcon} alt="share icon" />
-          </button>
-        </div>
-      </div>
+      {senti &&
+        (() => {
+          const total = {
+            positivity_score: 0,
+            neutrality_score: 0,
+            negativity_score: 0,
+          };
+          senti.forEach((data) => {
+            total.positivity_score += data.positivity_score;
+            total.neutrality_score += data.neutrality_score;
+            total.negativity_score += data.negativity_score;
+          });
+          total.positivity_score /= senti.length;
+          total.neutrality_score /= senti.length;
+          total.negativity_score /= senti.length;
+
+          const sentimentData = { ...total };
+          return (
+            <>
+              <OverAllSentimentCard sentimentData={sentimentData} />
+              <VerdictCard sentimentData={sentimentData} />
+            </>
+          );
+        })()}
       <div className={`${styles.tags} ${styles.inner__container}`}>
         <div className={styles.title}>Positive phrase tags</div>
         <ul className={styles.tag__items}>
@@ -114,7 +103,7 @@ function SentimentAside({ isMobileAsideOpen, closeFunction, sentimentData }) {
 SentimentAside.propTypes = {
   isMobileAsideOpen: PropTypes.bool.isRequired,
   closeFunction: PropTypes.func.isRequired,
-  sentimentData: PropTypes.object.isRequired,
+  senti: PropTypes.array.isRequired,
 };
 
 export default SentimentAside;
