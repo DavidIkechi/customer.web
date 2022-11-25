@@ -13,19 +13,24 @@ import whiteArrowleft from "./assets/whiteArrowleft.png";
 import logoText from "./assets/logoText.png";
 import bannerImage from "./assets/bannerImage.png";
 import cardlogo from "./assets/cardlogo.png";
+import NavBar from "../../components/navBar";
+import Footer from "../../components/footer";
 
 const index = () => {
   return (
     <div>
+      <div>
+        <NavBar />
+      </div>
       <section className={styles.section__one}>
         <div className={styles.sect__container}>
           <div className={styles.hero__heading}>
             <h1 className={styles.hero__head}>
               <span className={styles.hero__inline}>News</span>room
-              <span>
-                <img src={headDot} alt="Full stop" />
-              </span>
             </h1>
+            <div className={styles.head__dot}>
+              <img src={headDot} alt="Full stop" />
+            </div>
           </div>
           <div className={styles.hero__subhead}>
             <p className={styles.hero__subtext}>
@@ -59,7 +64,7 @@ const index = () => {
             </div>
             <div className={styles.right__ban}>
               <div className={styles.banner__details}>
-                <Link className={styles.banner__read} to="/PressArticle">
+                <Link className={styles.banner__read} to="/press-article">
                   Read more
                 </Link>
                 <span>
@@ -87,30 +92,30 @@ const index = () => {
                   satisfaction
                 </p>
               </div>
-              <div className={styles.three__bottom}>
+              <div className={styles.threemobile__bottom}>
                 <div className={styles.three__flex}>
                   <div className={styles.three__each}>
                     <p className={styles.three__head}>2022</p>
                     <p className={styles.three__text}>Founded</p>
                   </div>
                   <div className={styles.three__each}>
-                    <p className={styles.three__head}>20+</p>
-                    <p className={styles.three__text}>Active Users</p>
+                    <p className={styles.three__head}>200+</p>
+                    <p className={styles.three__text}>Employees</p>
+                  </div>
+                  <div className={styles.three__each}>
+                    <p className={styles.three__head}>Get in touch</p>
+                    <p className={styles.three__text}>info@scrybe.co.za</p>
                   </div>
                 </div>
                 <div className={styles.three__flex}>
                   <div className={styles.three__each}>
-                    <p className={styles.three__head}>200+</p>
-                    <p className={styles.three__text}>Employees</p>
+                    <p className={styles.three__head}>20+</p>
+                    <p className={styles.three__text}>Active Users</p>
                   </div>
                   <div className={styles.three__each}>
                     <p className={styles.three__head}>Headquartered</p>
                     <p className={styles.three__text}>in Abuja Nigeria</p>
                   </div>
-                </div>
-                <div className={styles.three__sep}>
-                  <p className={styles.three__head}>Get in touch</p>
-                  <p className={styles.three__text}>info@scrybe.co.za</p>
                 </div>
               </div>
             </div>
@@ -121,29 +126,31 @@ const index = () => {
                   satisfaction
                 </p>
               </div>
-              <div className={styles.three__bottom}>
+              <div className={styles.threedesk__bottom}>
                 <div className={styles.three__flex}>
                   <div className={styles.three__each}>
                     <p className={styles.three__head}>2022</p>
                     <p className={styles.three__text}>Founded</p>
                   </div>
                   <div className={styles.three__each}>
+                    <p className={styles.three__head}>200+</p>
+                    <p className={styles.three__text}>Employees</p>
+                  </div>
+                </div>
+                <div className={styles.three__flex}>
+                  <div className={styles.three__each}>
                     <p className={styles.three__head}>20+</p>
                     <p className={styles.three__text}>Active Users</p>
                   </div>
                   <div className={styles.three__each}>
-                    <p className={styles.three__head}>Get in touch</p>
-                    <p className={styles.three__text}>info@scrybe.co.za</p>
-                  </div>
-                </div>
-                <div className={styles.three__flexed}>
-                  <div className={styles.three__sep}>
-                    <p className={styles.three__head}>200+</p>
-                    <p className={styles.three__text}>Employees</p>
-                  </div>
-                  <div className={styles.three__sep}>
                     <p className={styles.three__head}>Headquartered</p>
                     <p className={styles.three__text}>in Abuja Nigeria</p>
+                  </div>
+                </div>
+                <div className={styles.three__flex}>
+                  <div className={styles.three__each}>
+                    <p className={styles.three__head}>Get in touch</p>
+                    <p className={styles.three__text}>info@scrybe.co.za</p>
                   </div>
                 </div>
               </div>
@@ -209,7 +216,10 @@ const index = () => {
                 <div className={styles.card__logo}>
                   <img src={cardlogo} alt="Logo of scrybe and hotel ng" />
                 </div>
-                <div className={styles.banner__details}>
+                <div
+                  className={styles.banner__details}
+                  style={{ marginTop: "1em" }}
+                >
                   <Link className={styles.banner__read} to="/">
                     Learn more
                   </Link>
@@ -298,9 +308,7 @@ const index = () => {
         <div className={styles.sect__container}>
           <div className={styles.five__top}>
             <div className={styles.five__links}>
-              <a href="/" className={styles.point__link}>
-                Latest news
-              </a>
+              <p className={styles.point__link}>Latest news</p>
             </div>
             <div className={styles.five__pointlinks}>
               <a href="/" className={styles.point__link}>
@@ -636,6 +644,9 @@ const index = () => {
           </div>
         </div>
       </section>
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 };

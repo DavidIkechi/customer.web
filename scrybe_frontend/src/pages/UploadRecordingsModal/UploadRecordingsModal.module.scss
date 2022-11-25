@@ -1,0 +1,371 @@
+.upload-button {
+    font-size: 1rem;
+    background-color: #006CFF;
+    border-radius: 4px;
+    font-size: 1rem;
+    border-radius: 20px;
+    padding: 1.5em 3em;
+    margin: 3em 4em;
+    color: white;
+    border: none;
+    color: white;
+    border: none;
+}
+
+.modal-background {
+  background-color: rgba(64, 64, 64, 0.6);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  overflow-y: auto;
+  top: 0;
+  left: 0;
+}
+
+.modal-container {
+  background-color: #fefefd;
+  border: 0;
+  border-radius: 1rem;
+  margin: 0.5em auto;
+  padding: 0;
+  width: 50%;
+  font-family: 'Kanit';
+}
+
+.modal-header {
+  position: relative;
+  text-align: center;
+  padding-top: 2em;
+}
+
+.modal-header h3 {
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 32px;
+  color: #1D1D1C;
+  margin-bottom: 0.5em;
+}
+
+.modal-header p {
+  margin-bottom: 3.25em;
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 24px;
+  color: #454545;
+}
+
+.close img {
+  top: 1rem;
+  right: 3rem;
+  position: absolute;
+  cursor: pointer;
+}
+
+.modal-body-container {
+  padding: 0 3.5em 1em;
+}
+
+.modal-body-container h3 {
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 24px;
+}
+
+.modal-body {
+  /* padding: 2rem; */
+  margin: 0;
+  /* padding: 1em; */
+  margin-bottom: 1em;
+}
+
+.drag-and-drop {
+  text-align: center;
+  border: dashed 1px grey;
+  border-radius: 1rem;
+  padding-inline: 0;
+  padding: 1em 0;
+  margin-bottom: 2em;
+  background-color: #FBF9F6;
+}
+
+.drag-and-drop .or {
+  background-color: #FEFEFD;
+  padding: 0 0.5em;
+  margin: -16px auto 0; 
+  width: fit-content; 
+  display: block;
+}
+
+.drag-and-drop .small-text {
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 24px;
+  color: #6a6a6a;
+}
+
+.drag-and-drop > img {
+  width: 20%;
+  min-width: 110px;
+  display: inline;
+}
+
+.or-wrapper {
+  padding: 1em 15em;
+  margin: .2em 0;
+}
+
+.primary-button {
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 24px;
+  text-align: center;
+  background-color: #006CFF;
+  border-radius: 4px;
+  width: 154px;
+  height: 56px;
+  color: white;
+  border: none;
+  margin-top: 1.5em;
+}
+
+.progress-wrapper {
+  background-color: grey;
+  height: 3px;
+  width: 100%;
+}
+.progress-wrapper .progress-bar {
+  background-color: #0062E8;
+  height: 100%;
+}
+
+/* .upload-progress {
+  border: 1px solid #e2e2e2; 
+  border-radius: 5px;
+} */
+
+.upload-progress {
+  padding-inline: 0;
+}
+
+.upload-progress-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  /* border: 1px solid #e2e2e2;  */
+  border-radius: 5px;
+  margin-bottom: 10px;
+  /* padding: 0 10px; */
+}
+
+.upload-icon {
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  /* width: 20%; */
+}
+
+.upload-progress-status1, 
+.upload-progress-status2 {
+  width: 80%;
+}
+
+.files-toggle {
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.section-p-0 {
+    padding-inline: 0;
+}
+
+.text-bold {
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 16px;
+  padding:0
+}
+
+.upload-progress-list {
+  padding-inline: 0;
+}
+
+.action-wrapper {
+  display: flex;
+}
+
+.small-text-light {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #909090;
+}
+
+
+@media screen and (max-width: 1300px) {
+  .or-wrapper {
+    padding: 1em 12em;
+  }
+}
+
+
+@media screen and (max-width: 1024px) {
+.close img {
+  top: 1.5rem;
+  right: 3rem;
+}
+
+.or-wrapper {
+  padding: 1em 8em;
+}
+
+.upload-progress-status1, 
+.upload-progress-status2 {
+    width: 70%;
+}
+
+}
+
+@media screen and (max-width: 850px) {
+.close img {
+  top: 1rem;
+  right: 1.5rem;
+}
+
+.modal-header h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.3em;
+}
+
+.modal-header p {
+    margin-bottom: 2.8em;
+    font-size: .9rem;
+  }
+
+.modal-body-container h3 {
+    font-size: 1rem;
+}
+
+.or-wrapper {
+  padding: 1em 6em;
+}
+
+.drag-and-drop .small-text {
+    font-size: .875rem;
+  }
+
+.primary-button {
+    font-size: .875rem;
+    width: 130px;
+    height: 50px;
+}
+}
+
+@media screen and (max-width: 768px) {
+.modal-container {
+    width: 70%;
+  }
+
+  .modal-body-container h3 {
+    font-size: 1rem;
+}
+
+.modal-body {
+    margin: -15px;
+}
+
+.or-wrapper {
+    padding: 1em 5em;
+}
+
+.primary-button {
+    font-size: .875rem;
+    width: 130px;
+    height: 50px;
+}
+}
+
+@media screen and (max-width: 610px) {
+.modal-container {
+    width: 70%;
+  }
+
+  .close img {
+  top: 1rem;
+  right: 1.3rem;
+}
+
+.modal-header h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.2em;
+}
+
+.modal-header p {
+    margin-bottom: 2.8em;
+    font-size: .75rem;
+  }
+
+.modal-body-container h3 {
+    font-size: .85rem;
+}
+
+.or-wrapper {
+  padding: 1em 4em;
+}
+
+.drag-and-drop .small-text {
+    font-size: .7rem;
+  }
+
+.primary-button {
+    font-size: .8rem;
+    width: 110px;
+    height: 40px;
+}
+
+.upload-progress-status1, 
+.upload-progress-status2 {
+    width: 60%;
+}
+
+.upload-progress-status1 p {
+    font-size: .9rem;
+}
+
+.upload-icon img {
+  width: 90%;
+}
+.upload-icon p {
+  font-size: .9rem;
+}
+
+.files-toggle p {
+  font-size: .9rem;
+}
+
+.text-bold {
+    font-size: .625rem;
+}
+
+}
+
+@media screen and (max-width: 500px) {
+.modal-container {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 425px) {
+.modal-container {
+    width: 85%;
+}
+
+}
+@media screen and (max-width: 320px) {
+.modal-container {
+    width: 90%;
+}
+
+}

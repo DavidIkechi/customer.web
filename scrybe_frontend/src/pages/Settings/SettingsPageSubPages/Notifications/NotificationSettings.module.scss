@@ -184,30 +184,21 @@
     border: 1px solid #c5c5c5;
     border-radius: 4px;
     font-family: "Kanit", sans-serif;
+    background-color: white !important;
 
     &:focus {
-      outline: #006cff !important;
+      border:1px solid #006cff !important;
     }
   }
 }
 
 @media (min-width: 768px) {
   .NotificationSettings_wrapper {
-    width: 90%;
-    margin: 0 auto 2rem;
+    margin: 0 0 2rem;
   }
 }
 @media (min-width: 1024px) {
-  .NotificationSettings_wrapper {
-    width: 55%;
-  }
-
   .subpages_footer {
     display: none;
-  }
-}
-@media (min-width: 1360px) {
-  .NotificationSettings_wrapper {
-    width: 100%;
   }
 }
