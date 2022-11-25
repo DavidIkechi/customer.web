@@ -1,5 +1,6 @@
 
 from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form
+from fastapi_pagination import Page, paginate
 from routers.sentiment import sentiment
 from routers.transcribe import transcribe_file
 import auth
@@ -215,9 +216,9 @@ def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depe
      return crud.update_user(db=db, user=user, user_id=user_id)
 
 
-@app.get('/history/')
+@app.get('/history/', response_model=Page[schema.History])
 async def get_history(user: models.User = Depends(get_current_user)):
-    return crud.get_history_by_user_id(user.id)
+    return paginate(crud.get_history_by_user_id(user.id))
 
     
 @app.get("/new_analysis/{id}", response_model=schema.Analysis, tags=['analysis'])
