@@ -22,14 +22,6 @@ from starlette.requests import Request
 import fastapi as _fastapi
 from auth import get_current_user
 
-from fastapi import FastAPI,UploadFile, File
-import banana_dev as banana
-from dotenv import load_dotenv
-from io import BytesIO
-import base64
-import shutil
-import os
-
 # Dependency
 def get_db():
     db = SessionLocal()
@@ -225,12 +217,12 @@ def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depe
 
 @app.get("/leaderboard", tags=['Agent Leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db)):
-    results = db.execute("""SELECT agent_id, 
-        SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score, 
-        SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score, 
+    results = db.execute("""SELECT agent_id,
+        SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score,
+        SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score,
         SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
-        (positivity_score/(positivity_score+negativity_score+neutrality_score) * 10) AS Avergae_score 
-    FROM audios GROUP BY agent_id 
+        (positivity_score/(positivity_score+negativity_score+neutrality_score) * 10) AS Avergae_score
+    FROM audios GROUP BY agent_id
     ORDER BY Positive_score DESC""")
     leaderboard = [dict(r) for r in results]
     return {"Agents Leaderboard": leaderboard}
