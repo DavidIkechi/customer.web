@@ -3,6 +3,7 @@ import styles from "../styles/Chart.module.scss";
 import DownArrow from "../assets/chevron_right.svg";
 import Chart from "./Chart";
 import { UserData } from "./Data";
+import Icon from "../assets/table-icon.png";
 
 function Charts() {
   const [userDataDaily, setUserData] = useState({
@@ -33,7 +34,10 @@ function Charts() {
       <div className={styles.chartWrap}>
         <div className={styles.chartHeader}>
           <div className={styles.chartText}>
-            <p>Total calls recieved</p>
+            <p className={styles.callText}>
+              <img src={Icon} alt="icon" className={styles.callIcon} /> Total
+              calls recieved
+            </p>
             <p className={styles.checkbox}>
               Daily{" "}
               <img
