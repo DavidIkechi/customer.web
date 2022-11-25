@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 import models, schema
 from random import randint
 from passlib.context import CryptContext
+from fastapi import HTTPException 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -64,7 +65,7 @@ def get_company(db: Session, company_id: int):
     return db.query(models.Company).filter(models.Company.id == company_id).first()
 
 def create_audio(db: Session, audio: schema.Audio, agent_id: int):
-    db_audio = models.Audio(audio_path=audio.audio_path, transcript=audio.transcript, timestamp=audio.timestamp, positivity_score=audio.positivity_score,
+    db_audio = models.Audio(audio_path=audio.audio_path, size=audio.size, duration=audio.duration, transcript=audio.transcript, timestamp=audio.timestamp, positivity_score=audio.positivity_score,
     negativity_score=audio.negativity_score, neutrality_score=audio.neutrality_score, overall_sentiment=audio.overall_sentiment, most_positive_sentences =audio.most_positive_sentences, most_negative_sentences = audio.most_negative_sentences, agent_id=agent_id)
     db.add(db_audio)
     db.commit()
@@ -99,6 +100,20 @@ def create_agent(db: Session, agent: schema.Agent, company_id: int):
     db.commit()
     db.refresh(db_agent)
     return db_agent
+
+
+def create_history(db: Session, history: schema.HistoryCreate):
+    db_history = models.History(**history)
+    db.add(db_history)
+    db.commit()
+    db.refresh(db_history)
+    return db_history
+
+
+def get_history_by_user_id(db: Session, user_id: int):
+    return db.query(models.History).filter(models.History.user_id == user_id).all()
+
+
 
 def create_analysis(db, result= schema.Audio, user_id=int):
     db_analysis = models.Audio(transcript = result.transcript, positivity_score= result.positivity_score, negativity_score= result.negativity_score, overall_sentiment= result.overall_sentiment)

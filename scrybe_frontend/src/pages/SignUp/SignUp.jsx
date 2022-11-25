@@ -12,6 +12,7 @@ function Signup() {
     watch,
     formState: { errors },
   } = useForm();
+
   /* eslint-disable no-unused-vars */
   const [userInfo, setUserInfo] = useState();
   /* eslint-enable no-unused-vars */
@@ -27,10 +28,10 @@ function Signup() {
   const company = watch("company");
   const password = watch("password");
 
-  console.log("fullname", fullname);
-  console.log("email", email);
-  console.log("company", company);
-  console.log("password", password);
+  // console.log("fullname", fullname);
+  // console.log("email", email);
+  // console.log("company", company);
+  // console.log("password", password);
 
   const isValid = fullname && email && company && password;
 

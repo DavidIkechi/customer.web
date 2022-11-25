@@ -7,7 +7,7 @@ class UserBase(BaseModel):
     first_name: str
     last_name: str
     email: str
-    created_at: datetime
+    # created_at: datetime
 
 
 class UserCreate(UserBase):
@@ -44,6 +44,8 @@ class Job(JobBase):
 class AudioBase(BaseModel):
     audio_path: str
     transcript: str
+    size: int
+    duration: int
     timestamp: datetime
     positivity_score: float
     negativity_score : float
@@ -93,5 +95,36 @@ class Company(CompanyBase):
     class Config:
         orm_mode = True
 
+
+class HistoryBase(BaseModel):
+
+    user_id: int
+    sentiment_result: str
+    agent_name: str
+    audio_name: str
+
+
+class HistoryCreate(HistoryBase):
+    pass
+   
+
+
+class History(HistoryBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+
 class Analysis(AudioBase):
     pass
+
+class Recordings(BaseModel):
+    audio_path: str
+    size: int
+    duration: int
+    timestamp: datetime
+
+    class Config:
+        orm_mode = True
