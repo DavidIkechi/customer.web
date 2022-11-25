@@ -5,8 +5,9 @@ import dropdownIcon from "../../icons/dropdown.svg";
 import shareIcon from "../../icons/share.svg";
 import arrowIcon from "../../icons/arrow_back.svg";
 import OverAllSentimentCard from "../OverallSentimentCard";
+import { useEffect } from "react";
 
-function SentimentAside({ isMobileAsideOpen, closeFunction, sentimentData }) {
+function SentimentAside({ isMobileAsideOpen, closeFunction, senti }) {
   const positiveTags = [
     "brave",
     "good",
@@ -50,7 +51,25 @@ function SentimentAside({ isMobileAsideOpen, closeFunction, sentimentData }) {
           <div className={styles.back__text}>Overall Sentiment</div>
         </div>
       </div>
-      <OverAllSentimentCard sentimentData={sentimentData} />
+      {senti &&
+        (() => {
+          const total = {
+            positivity_score: 0,
+            neutrality_score: 0,
+            negativity_score: 0,
+          };
+          senti.forEach((data) => {
+            total.positivity_score += data.positivity_score;
+            total.neutrality_score += data.neutrality_score;
+            total.negativity_score += data.negativity_score;
+          });
+          total.positivity_score /= senti.length;
+          total.neutrality_score /= senti.length;
+          total.negativity_score /= senti.length;
+
+          const sentimentData = { ...total };
+          return <OverAllSentimentCard sentimentData={sentimentData} />;
+        })()}
       <div className={`${styles.verdict} ${styles.inner__container}`}>
         <div className={styles.verdict__item}>
           <div className={styles.verdict__title}>Agent Friendliness</div>
@@ -60,7 +79,7 @@ function SentimentAside({ isMobileAsideOpen, closeFunction, sentimentData }) {
           </div>
         </div>
         <div className={styles.verdict__item}>
-          <div className={styles.verdict__title}>Agent Friendliness</div>
+          <div className={styles.verdict__title}>Agent Unfriendliness</div>
           <div className={styles.verdict__bar}>
             <div className={styles.inner__bar} style={{ width: `${85}%` }} />
             <div className={styles.bar__text}>85%</div>
@@ -114,7 +133,7 @@ function SentimentAside({ isMobileAsideOpen, closeFunction, sentimentData }) {
 SentimentAside.propTypes = {
   isMobileAsideOpen: PropTypes.bool.isRequired,
   closeFunction: PropTypes.func.isRequired,
-  sentimentData: PropTypes.object.isRequired,
+  senti: PropTypes.array.isRequired,
 };
 
 export default SentimentAside;
