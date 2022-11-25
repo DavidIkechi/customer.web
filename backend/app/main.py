@@ -57,7 +57,6 @@ app = FastAPI(
     description=description,
     version="0.0.1",
     openapi_tags=tags_metadata,
-    # root_path="/api"
 )
 
 
@@ -110,18 +109,6 @@ async def analyse(file: UploadFile=File(...)):
 
 
     return {"transcript": transcript, "sentiment_result": sentiment_result}
-
-# create the endpoint
-#@app.post('/login', summary = "create access token for logged in user")
-#async def login(form_data: OAuth2PasswordRequestForm = Depends(), session: Session = Depends(get_session)):
-    # return token once the user has been successfully authenticated, or it returns an error.
-    #return await main_login(form_data, session)
-
-# # create the endpoint
-# @app.post('/login', summary = "create access token for logged in user")
-# async def login(form_data: OAuth2PasswordRequestForm = Depends(), session: Session = Depends(get_session)):
-#     # return token once the user has been successfully authenticated, or it returns an error.
-#     return await main_login(form_data, session)
 
 
 @app.post("/api/new_analyse", tags=['analyse'])
@@ -183,6 +170,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
     # return token once the user has been successfully authenticated, or it returns an error.
     return await main_login(form_data, db)
 
+
 @app.post("/users/", response_model=schema.User, tags=['users'])
 async def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
@@ -238,9 +226,7 @@ async def get_history(user: models.User = Depends(get_current_user), db: Session
         )
     return user_history
 
-        
 
-    
 @app.get("/api/new_analysis/{id}", response_model=schema.Analysis, tags=['analysis'])
 def get_sentiment_result(id: int, db: Session = Depends(get_db)):
     """
@@ -253,6 +239,7 @@ def get_sentiment_result(id: int, db: Session = Depends(get_db)):
             detail="The analysis doesn't exist",
         )
     return analysis
+
 
 @app.get("/api/audios/", response_model=list[schema.Audio], tags=['audios'])
 def read_audios(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
@@ -283,11 +270,13 @@ def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.Us
                  }
     return sentiment
 
+
 #get recent recordings
 @app.get("/api/recent-recordings", response_model=list[schema.Recordings])
 def get_recent_recordings(skip: int = 0, limit: int = 5, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     recordings = db.query(models.Audio).filter(models.Audio.user_id == user.id).order_by(models.Audio.timestamp.desc()).offset(skip).limit(limit).all()
     return recordings
+
 
 @app.get("/api/leaderboard", tags=['Agent Leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db)):
@@ -301,8 +290,8 @@ def get_agents_leaderboard(db: Session = Depends(get_db)):
     leaderboard = [dict(r) for r in results]
     return {"Agents Leaderboard": leaderboard}
 
+
 @app.get("/account")
 async def my_profile (db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     user_id = user.id
     return crud.get_user_profile(db, user_id)
-
