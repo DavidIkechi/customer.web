@@ -1,6 +1,6 @@
 
 from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form
-from fastapi_pagination import Page, paginate
+from fastapi_pagination import Page, paginate, Params
 from fastapi.middleware.cors import CORSMiddleware
 from routers.sentiment import sentiment
 from routers.transcribe import transcribe_file
@@ -228,8 +228,8 @@ def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depe
 
 
 @app.get('/history/', response_model=Page[schema.History])
-async def get_history(user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
-    user_history = paginate(crud.get_history_by_user_id(db, user.id))
+async def get_history(user: models.User = Depends(get_current_user), db: Session = Depends(get_db), params: Params = Depends()):
+    user_history = paginate(crud.get_history_by_user_id(db, user.id), params)
     if not user_history:
             raise HTTPException(
             status_code=404,
