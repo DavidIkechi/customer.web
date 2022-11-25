@@ -1,16 +1,9 @@
 import React, { useContext, useState } from "react";
-import { UserContext } from "../../context/UserContext";
 import { NavLink } from "react-router-dom";
 import styles from "./nav.module.scss";
 import logo from "../../assets/scrybe_logo_with_text.svg";
 
 function NavBar() {
-  const [token, setToken] = useContext(UserContext);
-
-  const handleLogout = () => {
-    setToken(null);
-  };
-
   const [clicked, setClicked] = useState(false);
 
   function handleClick() {
