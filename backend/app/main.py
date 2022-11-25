@@ -228,8 +228,16 @@ def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depe
 
 
 @app.get('/history/', response_model=Page[schema.History])
-async def get_history(user: models.User = Depends(get_current_user)):
-    return paginate(crud.get_history_by_user_id(user.id))
+async def get_history(user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    user_history = paginate(crud.get_history_by_user_id(db, user.id))
+    if not user_history:
+            raise HTTPException(
+            status_code=404,
+            detail="The user's history doesn't exist",
+        )
+    return user_history
+
+        
 
     
 @app.get("/new_analysis/{id}", response_model=schema.Analysis, tags=['analysis'])
