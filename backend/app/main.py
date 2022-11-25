@@ -23,24 +23,6 @@ import fastapi as _fastapi
 from auth import get_current_user
 
 
-origins = [
-    "http://localhost",
-    "http://localhost:80",
-    "http://localhost:3000",
-    "http://localhost:8000",
-    "https://scrybe.hng.tech",
-    "https://scrybe.hng.tech:80",
-    "https://scrybe.hng.tech:3000",
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 # Dependency
 def get_db():
     db = SessionLocal()
@@ -74,6 +56,25 @@ app = FastAPI(
     description=description,
     version="0.0.1",
     openapi_tags=tags_metadata,
+)
+
+
+origins = [
+    "http://localhost",
+    "http://localhost:80",
+    "http://localhost:3000",
+    "http://localhost:8000",
+    "https://scrybe.hng.tech",
+    "https://scrybe.hng.tech:80",
+    "https://scrybe.hng.tech:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
