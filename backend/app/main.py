@@ -57,6 +57,7 @@ app = FastAPI(
     description=description,
     version="0.0.1",
     openapi_tags=tags_metadata,
+    root_path="/api"
 )
 
 
