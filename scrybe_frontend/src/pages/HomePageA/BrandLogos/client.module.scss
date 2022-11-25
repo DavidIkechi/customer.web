@@ -11,14 +11,25 @@
                 flex-flow: row wrap;
                 max-width: pix-rem(1200);
                 margin-inline: auto;
-                @include media(1228px) {
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        gap: pix-rem(16);
+                gap: pix-rem(16);
+                &> * {
+                        flex: 0 1 pix-rem(200);
                 }
+                @include media(890px){
+                        flex-basis: pix-rem(250);
+                }
+                @include media(484px){
+                align-items: center;
+                gap: pix-rem(20);
+                justify-content: flex-start;
+                max-width: pix-rem(160);
+                justify-content: flex-start;
+                
+                }
+        
         }
         .title {
+
                 text-align: center;
                 font-size: pix-rem(32);
                 font-weight: 600;

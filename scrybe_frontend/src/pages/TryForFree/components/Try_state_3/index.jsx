@@ -1,5 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, Navigate } from "react-router-dom";
+
 // eslint-disable-next-line no-warning-comments
 // TODO disable eslint warning for this todo ;)
 import styles from "./try_state_3.module.scss";
@@ -7,7 +8,11 @@ import styles from "./try_state_3.module.scss";
 // import TranscribeLogo from "../../assets/file-transcribing.png";
 
 export default function TryThird() {
-  return (
+  const [redirectNow, setRedirectNow] = useState(false);
+  setTimeout(() => setRedirectNow(true), 5000);
+  return redirectNow ? (
+    <Navigate to="/try-results" />
+  ) : (
     <div className={styles.transcribeProcessingContainer}>
       <div className={styles.transcribeProcess}>
         <div>

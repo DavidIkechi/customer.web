@@ -1,6 +1,12 @@
 @use "../../functions.scss" as *;
 
-@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700&display=swap");
+
+
+.container {
+          width: min(100%, pix-rem(1264));
+        margin-inline: auto;
+        padding-inline: pix-rem(16);
+}
 
 .aboutUs {
         padding-block: pix-rem(40);
@@ -14,16 +20,18 @@
                 flex-flow: column;
         }
         &__img {
-                
                 width: min(100%, pix-rem(600.85));
-                @include media(1100px){
+                @include media(1250px) {
+                        width: min(100%, pix-rem(500));
+                }
+                @include media(1100px) {
                         display: none;
                 }
         }
         &__i2 {
                 display: none;
-                @include media(1100px){
-                        width: min(100%, pix-rem(600.85));
+                @include media(1100px) {
+                        width: min(100%, pix-rem(400.85));
                         display: block;
                 }
         }
@@ -34,14 +42,15 @@
                         display: flex;
                         flex-direction: column;
                         align-items: center;
+                        padding-inline: pix-rem(16);
                 }
         }
         &__title {
-                font-size: pix-rem(32);
+                font-size: clamp(1.5rem, 1.318rem + 0.91vw, 2rem);
         }
         &__details {
                 margin-top: pix-rem(38);
-                font-size: pix-rem(24);
+                font-size: clamp(1.25rem, 1.159rem + 0.45vw, 1.5rem);
                 color: #313131;
                 font-weight: 400;
                 @include media(1100px) {
@@ -63,6 +72,7 @@
 
 .gettingStarted {
         background-color: #e6f6ff;
+        padding-inline: pix-rem(16);
         padding-block: pix-rem(70);
         & > div {
                 width: min(100%, pix-rem(1264));
@@ -76,12 +86,12 @@
 
         &__card {
                 &_title {
-                        font-size: pix-rem(32);
+                        font-size: clamp(1.5rem, 1.318rem + 0.91vw, 2rem);
                         font-weight: 600;
                         margin-top: pix-rem(46);
                 }
                 &_detail {
-                        font-size: pix-rem(20);
+                        font-size: clamp(1rem, 0.909rem + 0.45vw, 1.25rem);
                         font-weight: 300;
                         color: #313131;
                         margin-top: pix-rem(8);
@@ -132,13 +142,16 @@
 }
 
 .faq {
+        &_container{
+                max-width: 79rem;
+        }
         padding-block: pix-rem(24);
         &__h2 {
-                font-size: pix-rem(32);
+                font-size: clamp(1.5rem, 1.318rem + 0.91vw, 2rem);
                 text-align: center;
                 & > span {
                         color: #0095e8;
-                        font-size: pix-rem(32);
+                        font-size: clamp(1.5rem, 1.318rem + 0.91vw, 2rem);
                 }
         }
         &_faqs {
@@ -174,7 +187,7 @@
                 @include media(500px) {
                         flex-direction: column;
                         align-items: center;
-                        &>* {
+                        & > * {
                                 width: 100%;
                                 max-width: 100%;
                         }
@@ -197,6 +210,11 @@
                                 padding-block: pix-rem(16);
                                 padding-inline: pix-rem(32);
                                 background-color: #006cff;
+                                cursor: pointer;
+                                @include media(494px) {
+                                        max-width: 100%;
+                                        width: 100%;
+                                }
                                 color: white;
                                 border: none;
                                 border-radius: pix-rem(4);
@@ -204,7 +222,7 @@
                 }
         }
         &__title {
-                font-size: pix-rem(48);
+                font-size: clamp(1.25rem, 0.614rem + 3.18vw, 3rem);
                 text-align: center;
                 max-width: 24ch;
                 margin-inline: auto;

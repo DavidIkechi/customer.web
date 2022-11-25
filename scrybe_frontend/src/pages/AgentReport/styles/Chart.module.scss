@@ -6,8 +6,10 @@
   background-color: white;
   border-radius: 10px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: stretch;
+  padding: 0.2rem;
+  // justify-content: space-between;
   @include mixins.sm {
     width: 58%;
     height: 444px;
@@ -15,38 +17,64 @@
     border-radius: 10px;
   }
   .chartWrap {
-    padding: 15px;
-    width: 95%;
-    height: 100%;
-    object-fit: contain;
-    margin: 0px auto;
-    .chartImg {
-      height: 60%;
-      width: 100%;
+    padding: 0.6rem;
+    width: 100%;
+    // overflow: hidden;
+    @include mixins.sm {
+      padding: 0.8rem;
+    }
+    @include mixins.md {
+      padding: 1.8rem;
     }
     .chartHeader {
-      margin-bottom: 15px;
-      & > h1 {
-        font-size: 50px;
+      margin-bottom: 0.5rem;
+      & > p {
+        font-size: 2rem;
+        // display: inline;
       }
       .chartText {
         display: flex;
         justify-content: space-between;
         color: #6a6a6a;
-        margin-bottom: 10px;
+        font-size: 0.9rem;
+        align-items: center;
+        // margin-bottom: 0.1rem;
         .checkbox {
           display: flex;
-          justify-content: space-evenly;
+          justify-content: space-between;
           align-items: center;
-          width: 100px;
+          width: 22%;
           border: 0.5px solid rgb(207, 203, 203);
           border-radius: 10px;
           color: #6a6a6a;
+          padding: 0.2rem 0.6rem;
           .textIcon {
             height: 15px;
             width: 15px;
           }
         }
+      }
+    }
+    .chartImg {
+      object-fit: contain;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 70%;
+      width: 100%;
+      // overflow: hidden;
+      @include mixins.sm {
+        height: 90%;
+        width: 95%;
+        overflow: hidden;
+      }
+      @include mixins.md {
+        width: 100%;
+        height: 100%;
+      }
+      .chartImg > img {
+        max-width: 100%;
+        max-height: 100%;
       }
     }
   }
