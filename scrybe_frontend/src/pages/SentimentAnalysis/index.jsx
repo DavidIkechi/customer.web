@@ -10,9 +10,17 @@ import OverAllSentimentCard from "./components/OverallSentimentCard";
 import VerdictCard from "./components/VerdictCard";
 import PhraseTagCard from "./components/PhraseTagCard";
 import SideBar from "../../components/SideBar";
+import { useMockAuthAndReadSentiment } from "./hooks";
+import { useEffect } from "react";
 
 function SentimentAnalysis() {
   const [isMobileAsideOpen, setIsMobileAsideOpen] = useState(false);
+  const sentimentData = useMockAuthAndReadSentiment(1);
+
+  useEffect(() => {
+    console.log(sentimentData);
+  }, [sentimentData]);
+
   const positiveTags = [
     "brave",
     "good",
