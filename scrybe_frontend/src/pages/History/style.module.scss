@@ -1,0 +1,5 @@
+@import "./component/SideBar/SideBar.module.scss";
+
+.sidebar.open ~ .history__content{
+  margin-left: 250px;
+}

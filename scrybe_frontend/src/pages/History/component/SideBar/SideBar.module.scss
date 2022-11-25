@@ -1,0 +1,143 @@
+@import "./assets/utilities/functionsANDmedia";
+@import "./assets/utilities/variables";
+$sidebarWidth: 250px;
+.sidebar__container {
+  position: absolute;
+  z-index: 2;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 1px 10px rgba(0,0,0,0.2);
+
+  > {
+    div:last-of-type,
+    section:last-of-type,
+    p:last-of-type {
+      overflow-y: scroll;
+      width: fit-content;
+      width: 100px;
+    }
+  }
+
+  .sidebar {
+    position: relative;
+    height: 100vh;
+    // border-right: 1px solid #dfdede;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition-duration: 400ms;
+    z-index: 6;
+  }
+
+  .sidebar.open {
+    width: $sidebarWidth;
+  }
+
+  .navOpener {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    border: 2px solid $blue-500;
+    border-radius: 50%;
+    background-color: white;
+    transform: rotate(-90deg);
+    cursor: pointer;
+    z-index: 99;
+  }
+
+  .navOpener.rotate {
+    transform: rotate(90deg);
+  }
+
+  .logoLink {
+    display: flex;
+    column-gap: pix-rem(10);
+
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 9;
+    // padding: pix-rem(32) pix-rem(40);
+    text-decoration: none;
+    cursor: pointer;
+    // background: rgba(0, 0, 0, 0.342);
+    p {
+      display: none;
+      transform-origin: left;
+      scale: 0;
+    }
+  }
+
+  .logoLink.open {
+    justify-content: center;
+    align-items: center;
+    p {
+      display: inline;
+      font-weight: 600;
+      font-size: pix-rem(40);
+      line-height: 26px;
+      color: $grey-500;
+      cursor: pointer;
+      scale: none;
+    }
+  }
+
+  .navLinks {
+    margin: pix-rem(100) 0 0 0;
+
+    width: 100%;
+  }
+
+  .navLink {
+    display: flex;
+    justify-content: center;
+    // column-gap: pix-rem(20);
+    padding: pix-rem(20) pix-rem(20);
+    text-decoration: none;
+    cursor: pointer;
+
+    p {
+      display: none;
+    }
+    img {
+      width: 30px !important;
+      padding-right: 20px;
+    }
+  }
+
+  .navLink.open {
+    justify-content: flex-start;
+
+    p {
+      display: inline;
+      font-weight: 300;
+      font-size: 20px;
+      line-height: 26px;
+      color: #6a6a6a;
+      cursor: pointer;
+    }
+  }
+
+  .navLink.active {
+    background: $blue-50;
+    border-right: 4px solid $blue-400;
+  }
+
+  @include mediaQuery(768px) {
+    .sidebar {
+      position: fixed;
+      transform: translateX(-85%);
+      opacity: 0.3;
+      transition: transform 0.3s, opacity 0.8s cubic-bezier(0, 0, 0.9, 1);
+    }
+
+    .sidebar.open {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .navOpener {
+      scale: 1.2;
+    }
+  }
+}
