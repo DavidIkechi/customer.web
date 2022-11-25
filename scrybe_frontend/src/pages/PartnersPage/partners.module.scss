@@ -7,12 +7,16 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
 }
 
 .sect__container {
-    width: 90%;
+    width: 95%;
     max-width: 1024px;
     margin: 0 auto;
 }
 
 /* Styling of the first section */
+
+.first__sect {
+  margin-top: 2em;
+}
 
 .first__heading {
   margin: 1em 0;
@@ -61,6 +65,7 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
   margin-bottom: 1em;
   outline: none;
   border: 1px solid #cccc;
+  background-color: #FFFFFF;
   border-radius: .2rem;
   font-size: .7rem;
   color: #e2e2e2;
@@ -77,7 +82,7 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
   outline: none;
   border: none;
   border-radius: .2rem;
-  font-size: .7rem;
+  font-size: .8rem;
   color: #FFFFFF;
   font-weight: 500;
   font-style: medium;
@@ -268,26 +273,42 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
   margin: 0 auto;
 }
 
+.input__flex {
+  position: relative;
+}
+
+.ctrl__input {
+  position: absolute;
+  right: 3%;
+  bottom: 8%;
+}
+
+.input__ctrlicon {
+  width: 1rem;
+} 
+
 .label__name {
   display: flex;
   flex-direction: column;
-  font-size: .6rem;
+  font-size: .7rem;
   color: #6A6A6A;
   font-weight: 400;
   font-style: normal;
   fill: solid;
   line-height: 1rem;
-  margin-bottom: 1em;
+  margin-bottom: 1.2em;
 }
 
 .company__name, .company__email, .employees__number, .customer__number, .customer__address, .city, .state {
   font-weight: 300;
-  border: 1px solid #eeee;
+  border: 1px solid #cccc;
+  background-color: #FFFFFF;
   border-radius: .3rem;
   padding: .8em .8em;
   color: #A9A9A9;
-  font-size: .7rem;
+  font-size: .6rem;
   outline: none;
+  width: 100%;
 }
 
 .input__btn {
@@ -400,7 +421,7 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
 
 
 
-@media (min-width: 768px), (min-width: 1440px) {
+@media (min-width: 820px), (min-width: 1440px) {
 
     /* Styling of the first section */
 
@@ -424,8 +445,8 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
     }
 
     .first__head {
-        font-size: 3rem;
-        line-height: 3.5rem;
+        font-size: 3.2rem;
+        line-height: 1.8rem;
     }
 
     .first__subhead {
@@ -508,6 +529,28 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
         width: 50%;
     }
 
+    .third__section .btm__left {
+      width: 15%;
+    }
+
+    .third__section .btm__right {
+      width: 85%;
+    }
+
+    .third__section .third__head {
+      font-size: 3rem;
+    }
+
+    .third__section .btm__subhead {
+      width: 85%;
+      padding-left: 1em;
+    }
+
+    .third__section .btm__head {
+      font-size: 1rem;
+      margin-left: 1.1em;
+    }
+
     /* Styling of the fourth section */
 
     .fourth__content {
@@ -569,6 +612,7 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
       box-shadow: 0px -1px 5px 0px rgb(0 0 0 / 0.1), 0 8px 8px -8px rgba(255, 225, 225, 0.37), 10px 0 5px -1px #E5E4E2;
       margin-bottom: 3em;
       padding: .5em .6em;
+      left: 7.5%;
     }
 
     .fifth__btm .fifth__content {
@@ -624,10 +668,19 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
         width: 52%;
     }
 
+    .ctrl__input {
+        right: 4%;
+        top: 33%;
+    }
+
+    .footer__container {
+      margin-top: 10em;
+    }
+
 }
 
 
-@media (min-width: 1240px), (min-width: 2000px) {
+@media (min-width: 1100px), (min-width: 2000px) {
 
     .fifth__btm {
       width: 80%;
@@ -635,7 +688,7 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
       box-shadow: 0px -1px 5px 0px rgb(0 0 0 / 0.1), 0 8px 8px -8px rgba(255, 225, 225, 0.37), 10px 0 5px -1px #E5E4E2;
       margin-bottom: 3em;
       padding: .5em .6em;
-      left: 9%;
+      left: 10.1%;
     }
 }
 
