@@ -29,6 +29,10 @@ function Checkbox({ label, checked, ...props }) {
   );
 }
 function TermsAndCondition() {
+  React.useEffect(() => {
+    // 👇️ scroll to top on page load
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
   return (
     <div className={styles.terms__wrapper}>
       <div className={styles.terms__title}>

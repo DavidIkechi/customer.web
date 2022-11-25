@@ -1,4 +1,4 @@
-section {
+.fade-in-section {
   opacity: 0;
   transform: translate(0, 50%);
   visibility: hidden;

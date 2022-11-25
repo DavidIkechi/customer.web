@@ -1,7 +1,9 @@
 # models for database [SQLAlchemy]
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Enum, Float, ARRAY
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Enum, Float, JSON
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+from datetime import datetime
+
 from datetime import datetime
 
 from db import Base
@@ -14,7 +16,6 @@ class Company(Base):
     size = Column(Integer)
 
     users = relationship("User", back_populates="company")
-    audios = relationship("Audio", back_populates="company")
     agents = relationship("Agent", back_populates="company")
 
 class User(Base):
@@ -32,6 +33,7 @@ class User(Base):
     created_at = Column(DateTime(timezone=True), default=datetime.now())
 
     company = relationship("Company", back_populates="users")
+    audios = relationship("Audio", back_populates="user")
 
 class Agent(Base):
     __tablename__ = "agents"
@@ -40,12 +42,8 @@ class Agent(Base):
     first_name = Column(String, index=True)
     last_name = Column(String, index=True)
     company_id = Column(Integer, ForeignKey("companies.id"))
-    positivity_scores = Column(ARRAY(Float), index=True)
-    negativity_scores = Column(ARRAY(Float), index=True)
-    neutral_scores = Column(ARRAY(Float), index=True)
-    average = Column(Float, index=True)
 
-    audios = relationship("Audio", back_populates="agent")
+    audios = relationship("Audio")
     company = relationship("Company", back_populates="agents")
 
 class Audio(Base):
@@ -61,13 +59,13 @@ class Audio(Base):
     negativity_score = Column(Float, index=True)
     neutrality_score = Column(Float, index=True)
     overall_sentiment = Column(Enum("Positive", "Negative", "Neutral"), index=True)
+    most_positive_sentences = Column(JSON, index =True, nullable = True)
+    most_negative_sentences = Column(JSON, index =True, nullable = True)
+
     agent_id = Column(Integer, ForeignKey("agents.id"))
-    company_id = Column(Integer, ForeignKey("companies.id"))
-
-    agent = relationship("Agent", back_populates="audios")
-    company = relationship("Company", back_populates="audio")
+    user_id = Column(Integer, ForeignKey("users.id"))
     job = relationship("Job", back_populates="audio", uselist=False)
-
+    user = relationship("User", back_populates="audios")
 
 class Job(Base):
     __tablename__ = "jobs"
@@ -78,3 +76,32 @@ class Job(Base):
     audio_id = Column(Integer, ForeignKey("audios.id"))
 
     audio = relationship("Audio", back_populates="job")
+
+
+
+class History(Base):
+    __tablename__ = "history"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    audio_name = Column(String, index=True)
+    agent_name = Column(String, index=True)
+    sentiment_result = Column(String, index=True)
+    date_uploaded = Column(DateTime, default=datetime.utcnow(), index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+
+
+    
+class Analysis(Base):
+    __tablename__ = "analysis"
+
+    id = Column(Integer, primary_key=True, index=True)
+    audio_path = Column(String, index=True)
+    timestamp = Column(DateTime, index=True)
+    transcript = Column(String, index=True)
+    positivity_score = Column(Float, index=True)
+    negativity_score = Column(Float, index=True)
+    neutrality_score = Column(Float, index=True)
+    overall_sentiment = Column(Enum("Positive", "Negative", "Neutral"), index=True)
+
+    agent_id = Column(Integer, ForeignKey("agents.id"))
