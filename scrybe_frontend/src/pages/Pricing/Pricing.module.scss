@@ -1,3 +1,8 @@
+.pricing {
+  width: min(100%, 75.25rem);
+  margin-inline: auto;
+}
+
 .pricing .hero {
   background-color: #e6f0ff;
   padding: 1rem;
@@ -43,13 +48,13 @@
 
 .pricing .CTA .CTAs {
   display: flex;
-  gap: 3.125rem;
+  gap: 1.125rem;
   margin: 3rem auto;
   background-color: #e6f0ff;
   padding: 1rem;
 }
-.pricing .CTA .CTAs .ctaDemo,
-.pricing .CTA .CTAs .ctaStarter {
+.pricing .CTA .CTAs .ctaMonth,
+.pricing .CTA .CTAs .ctaYear {
   text-decoration: none;
   padding-block: 1rem;
   padding-inline: 1rem;
@@ -57,16 +62,16 @@
   width: 7.75rem;
   text-align: center;
 }
-.pricing .CTA .CTAs .ctaDemo {
+.pricing .CTA .CTAs .ctaMonth {
   border: 0.0625rem solid #006cff;
   color: #006cff;
 }
-.pricing .CTA .CTAs .ctaDemo:active {
+.pricing .CTA .CTAs .ctaMonth:active {
   color: #004cb3;
   border: 0.0625rem solid #004cb3;
 }
-.pricing .CTA .CTAs .ctaStarter {
-  background-color: #006cff;
+.pricing .CTA .CTAs .ctaYear {
+  background-color: #004DB5;
   color: white;
 }
 .pricing .CTA .CTAs .ctaStarter:active {
@@ -74,4 +79,73 @@
 }
 .pricing .CTAtitle {
   font-size: 2rem;
+}
+
+.pricing .plans {
+  display: flex;
+  gap: 23px;
+}
+
+.plansCard {
+  flex: 1;
+  background-color: #e6f0ff;
+  color: #3f3f3f;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  border: 0.89px solid #002f49;
+
+}
+
+.FtnBtn {
+  height: 19rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.plansCard.enterprise {
+  background-color: #002F49;
+  color: #fff;
+}
+.plansCard.enterprise p {
+   color: #fff;
+}
+
+.plansCardIcon {
+  width: 26px;
+}
+.plansCard p {
+  color: #454545;
+  font-size: 1rem;
+}
+
+.plansCardTitle,
+.plansPricingFigure,
+.pricingFeaturesItem {
+  display: flex;
+  align-items: center;
+}
+.plansPricingCurrency {
+  width: 3.125rem;
+}
+.pricingFeaturesItem img, .plansCardIcon {
+  padding-right: 11px;
+}
+.plansPricingFigure h4 {
+  font-size: 4.5rem;
+  font-weight: 600;
+}
+
+.pricingFeatures {
+  padding: 1.5rem 0;
+}
+.plansCard a {
+ display: block;
+color: #fff;
+text-align: center;
+font-size: 1rem;
+padding: 1rem 2rem;
+margin-top: 2rem;
+background-color: #006cff;
+border-radius: 4px;
 }

@@ -1,0 +1,598 @@
+img {
+  max-width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
+  font-family: 'Kanit', sans-serif;
+}
+
+.sect__container {
+    width: 90%;
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+
+// Styling of the section one
+
+.section__one {
+    margin-top: 3em;
+
+    .hero__head{
+        font-size: 1.25rem;
+        color: #313131;
+        font-weight: 600;
+        fill: solid;
+        line-height: 2.5rem;
+    }
+
+    .hero__head .hero__inline {
+        color: #0062E8;
+    }
+
+    .hero__subhead {
+        margin-bottom: .5em;
+    }
+
+    .hero__subhead .hero__subtext {
+        font-size: .8rem;
+        color: #313131;
+        font-weight: 300;
+        font-style: light;
+        fill: solid;
+        line-height: 1.25rem;
+    }
+}
+
+// Styling of the section two
+
+.section__two {
+    position: relative;
+
+    .banner__flex {
+        position: absolute;
+        bottom: 15%;
+    }
+
+    .right__ban {
+        margin-top: .5em;
+    }
+
+    .ban__heading .ban__head {
+        font-size: 1rem;
+        color: #FEFEFE;
+        font-weight: 600;
+        font-style: bold;
+        fill: solid;
+        line-height: 2.5rem;
+    }
+
+    .ban__subhead .ban__subtext {
+        font-size: .7rem;
+        color: #FEFEFE;
+        font-weight: 300;
+        font-style: light;
+        fill: solid;
+        line-height: 1rem;
+    }
+
+    .banner__details {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        right: 3%;
+    }
+
+    .banner__details .banner__read {
+        font-size: .6rem;
+        color: #FEFEFE;
+        font-weight: 600;
+        font-style: bold;
+        fill: solid;
+        line-height: 1rem;
+        text-decoration: none;
+        list-style: none;
+    }
+
+    .banner__details .arrowpoint {
+        width: .7rem;
+        margin-left: .2em;
+    }
+
+}
+
+
+// Styling of the section three
+
+.section__three {
+
+    .three__desktop {
+        display: none;
+    }
+
+    .three__left {
+        display: none;
+    }
+
+    .three__top {
+        margin: 1em 0;
+        width: 80%;
+    }
+
+    .three__heading {
+        font-size: .7rem;
+        color: #313131;
+        font-weight: 600;
+        font-style: bold;
+        fill: solid;
+        line-height: 1.2rem;
+    }
+
+    .three__bottom {
+        width: 58%;
+        margin: 0 auto;
+    }
+
+    .three__sep {
+        width: 50%;
+        margin-left: .8em;
+    }
+
+    .three__bottom .three__flex {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1em;
+        width: 70%;
+    }
+
+    .three__each {
+        width: 45%;
+        border-bottom: 1px solid #ECECEC;
+        text-align: center;
+    }
+
+    .three__each .three__sep {
+        border-bottom: 1px solid #ECECEC;
+    }
+
+    .three__each .three__head, .three__sep .three__head {
+        font-size: .8rem;
+        color: #313131;
+        font-weight: 600;
+        font-style: bold;
+        fill: solid;
+        line-height: 1.2rem;
+    }
+
+    .three__each .three__text, .three__sep .three__text {
+        padding-bottom: 1em;
+        font-size: .6rem;
+        color: #313131;
+        font-weight: 300;
+        font-style: light;
+        fill: solid;
+        line-height: 1.2rem;
+    }
+}
+
+// Styling of the section four
+
+.section__four {
+    margin-top: 3em;
+
+    .four__heading {
+        margin-bottom: 1em;
+    }
+
+    .four__heading .four__head {
+        font-size: .9rem;
+        color: #313131;
+        font-weight: 600;
+        font-style: bold;
+        fill: solid;
+        line-height: 1.2rem;
+    }
+
+    .four__cards {
+        width: 60%;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .four__cards .card__container {
+        margin-bottom: 1.1em;
+        position: relative;
+    }
+
+    .card__content {
+        position: absolute;
+        padding: 2em 1em 1em;
+    }
+
+    .card__heading .card__head {
+        font-size: 1.3rem;
+        color: #FFFFFF;
+        font-weight: 700;
+        font-style: bold;
+        fill: solid;
+        line-height: 1.8rem;
+    }
+
+    .card__subhead, .card__logo {
+        margin-top: 1em;
+    }
+
+    .card__subhead .card__subtext {
+        font-size: .7rem;
+        color: #FFFFFF;
+        font-weight: 300;
+        font-style: light;
+        fill: solid;
+        line-height: 1.2rem;
+    }
+
+    .banner__details {
+        margin-top: .4em;
+        position: absolute;
+        right: 5%;
+    }
+
+    .banner__details .banner__read {
+        font-size: .6rem;
+        color: #FEFEFE;
+        font-weight: 300;
+        font-style: light;
+        fill: solid;
+        line-height: 1rem;
+        text-decoration: none;
+        list-style: none;
+    }
+
+    .banner__details .arrowpoint {
+        width: .7rem;
+        margin-left: .2em;
+    }
+
+    
+}
+
+// Styling of the section five
+
+.section__five {
+    margin-top: 3em;
+
+    .five__desktop {
+        display: none;
+    }
+
+    .five__top {
+        display: flex;
+        margin-bottom: 1em;
+    }
+
+    .five__top .point__link {
+        font-size: .8rem;
+        color: #313131;
+        font-weight: 600;
+        font-style: bold;
+        fill: solid;
+        line-height: 1.2rem;
+    }
+
+    .five__top .five__pointlinks {
+        display: none;
+        margin-left: 1em;
+    }
+
+    .five__bottom {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 4em;
+    }
+
+    .five__bottom .five__articles {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        flex-basis: 45%;
+    }
+
+    .five__bottom .five__articles .each__icon {
+        width: 100%;
+    }
+
+    .five__bottom .five__articles .five__heading {
+        margin-top: .5em;
+        width: 100%;
+    }
+
+    .five__bottom .five__articles .five__head {
+        font-size: .7rem;
+        color: #313131;
+        font-weight: 600;
+        font-style: bold;
+        fill: solid;
+        line-height: 1.2rem;
+    }
+
+    .five__bottom .five__articles .five__subtext {
+        margin-top: .5em;
+        width: 100%;
+    }
+
+    .five__bottom .five__articles .five__texts {
+        font-size: .6rem;
+        color: #313131;
+        font-weight: 300;
+        font-style: light;
+        fill: solid;
+        line-height: 1rem;
+    }
+
+    .five__bottom .five__articles .more__details {
+        display: flex;
+        align-items: center;
+    }
+
+    .five__bottom .five__articles .read__more {
+        font-size: .5rem;
+        color: #313131;
+        font-weight: 300;
+        font-style: light;
+        fill: solid;
+        line-height: 1rem;
+        text-decoration: none;
+        list-style: none;
+    }
+
+    .five__bottom .five__articles .arrowleft {
+        width: .7rem;
+        margin-left: .2em;
+    }
+}
+
+
+
+
+@media (min-width: 825px) {
+
+    // Styling of the section one
+
+    .section__one {
+        margin-top: 3em;
+
+        .hero__head{
+            font-size: 2rem;
+        }
+
+        .hero__subhead .hero__subtext {
+            font-size: .8rem;
+            font-weight: 500;
+            font-style: medium;
+        }
+    }
+
+
+    // Styling of the section two
+
+    .section__two {
+
+        .banner__flex {
+            bottom: 10%;
+        }
+
+        .left__ban {
+            width: 60%;
+        }
+
+        .ban__heading .ban__head {
+            font-size: 2.5rem;
+            line-height: 2.5rem;
+        }
+
+        .ban__subhead {
+            margin-top: 1em;
+        }
+
+        .ban__subhead .ban__subtext {
+            font-size: 1rem;
+            font-weight: 600;
+            font-style: bold;
+            line-height: 1.5rem;
+        }
+
+        .banner__details {
+            right: 1%;
+            bottom: 7%;
+        }
+
+        .banner__details .banner__read {
+            font-size: .8rem;
+        }
+
+        .banner__details .arrowpoint {
+            width: 1rem;
+        }
+    }
+
+
+    // Styling of the section three
+
+    .section__three {
+
+        margin-top: 3em;
+
+        .three__right {
+            display: none;
+        }
+
+        .three__desktop {
+            display: block;
+            margin-top: .9em;
+        }
+
+        .three__center {
+            display: flex;
+            justify-content: space-between;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        .three__left {
+            display: block;
+            width: 30%;
+        }
+
+        .three__right, .three__desktop {
+            width: 60%;
+        }
+
+        .three__top {
+            margin: 1em 0;
+            width: 100%;
+        }
+
+        .three__heading {
+            font-size: 1rem;
+            color: #313131;
+            font-weight: 600;
+            font-style: bold;
+            fill: solid;
+            line-height: 1.2rem;
+        }
+
+        .three__bottom {
+            width: 100%;
+            margin: 0;
+        }
+
+        .three__bottom .three__flex {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .three__each {
+            width: 30%;
+            border-bottom: 1px solid #ECECEC;
+        }
+
+        .three__flexed {
+            display: flex;
+        }
+
+        .three__sep {
+            text-align: center;
+        }
+
+        .three__each .three__head, .three__sep .three__head {
+            font-size: 1rem;
+        }
+
+        .three__each .three__text, .three__sep .three__text {
+            font-size: .8rem;
+            padding-bottom: 1em;
+        }
+    }
+
+
+
+    // Styling of the section four
+
+    .section__four {
+        margin-top: 3em;
+
+        .four__heading {
+            margin-bottom: 1em;
+        }
+
+        .four__cards {
+            width: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .four__cards .card__container {
+            margin-bottom: 0;
+            width: 15%;
+        }
+    }
+
+    // Styling of the section five
+
+        .section__five {
+
+            .five__bottom {
+                display: none;
+            }
+
+            .five__desktop {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                margin-bottom: 4em;
+            }
+
+            .five__desktop .five__articles {
+                display: flex;
+                flex-direction: column;
+                flex: 0 1 22%;
+                margin-bottom: 1em;
+            }
+
+            .five__desktop .five__articles .each__icon {
+                width: 100%;
+            }
+
+            .five__desktop .five__articles .five__heading {
+                margin-top: .5em;
+                width: 100%;
+            }
+
+            .five__desktop .five__articles .five__head {
+                font-size: .7rem;
+                color: #313131;
+                font-weight: 600;
+                font-style: bold;
+                fill: solid;
+                line-height: 1.2rem;
+            }
+
+            .five__desktop .five__articles .five__subtext {
+                margin-top: .5em;
+                width: 100%;
+            }
+
+            .five__desktop .five__articles .five__texts {
+                font-size: .6rem;
+                color: #313131;
+                font-weight: 300;
+                font-style: light;
+                fill: solid;
+                line-height: 1rem;
+            }
+
+            .five__desktop .five__articles .more__details {
+                display: flex;
+                align-items: center;
+            }
+
+            .five__desktop .five__articles .read__more {
+                font-size: .5rem;
+                color: #313131;
+                font-weight: 300;
+                font-style: light;
+                fill: solid;
+                line-height: 1rem;
+            }
+            
+            .five__desktop .five__articles .arrowleft {
+                width: .7rem;
+                margin-left: .2em;
+            }
+
+        }
+
+}

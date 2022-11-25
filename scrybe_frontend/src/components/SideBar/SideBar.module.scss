@@ -4,14 +4,11 @@
 .sidebar__container {
   position: absolute;
   display: flex;
-  width: 100vw;
+  width: 100%;
   height: 100%;
 
-  > {
-    div:last-of-type {
-      overflow-y: scroll;
-      width: fit-content;
-    }
+  > *:last-child {
+    overflow-y: scroll;
   }
 
   .sidebar {
@@ -25,6 +22,7 @@
     flex-direction: column;
     align-items: center;
     transition-duration: 300ms;
+    z-index: 6;
   }
 
   .sidebar.open {
@@ -49,7 +47,7 @@
   .logoLink {
     display: flex;
     column-gap: pix-rem(10);
-    padding: pix-rem(32) pix-rem(40);
+    padding: pix-rem(32) 0;
     text-decoration: none;
     cursor: pointer;
 
@@ -61,6 +59,7 @@
   }
 
   .logoLink.open {
+    padding: pix-rem(32) pix-rem(40);
     p {
       display: inline;
       font-weight: 600;
@@ -81,7 +80,7 @@
     display: flex;
     justify-content: center;
     column-gap: pix-rem(20);
-    padding: pix-rem(20) pix-rem(40);
+    padding: pix-rem(20) 0;
     text-decoration: none;
     cursor: pointer;
 
@@ -91,6 +90,7 @@
   }
 
   .navLink.open {
+    padding: pix-rem(20) pix-rem(40);
     justify-content: flex-start;
 
     p {
