@@ -157,7 +157,7 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     db.commit()
     db.refresh(db_audio)
 
-    history_create: schema.HistoryCreate = {"user_id":user_id, 
+    history_create: schema.HistoryCreate = {"user_id":user_id,
                                             "sentiment_result":overall_sentiment,
                                             "agent_name": agent_name,
                                             "audio_name": file.filename}
@@ -174,7 +174,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
     return await main_login(form_data, db)
 
 
-@app.post("/users/", summary = "create/register a user", response_model=schema.User, tags=['users'])
+@app.post("/api/users", summary = "create/register a user", response_model=schema.User, tags=['users'])
 async def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
 
@@ -185,7 +185,7 @@ async def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):
     return crud.create_user(db=db, user=user)
 
 
-@app.get("/api/users/", summary = "get all users", response_model=list[schema.User], tags=['users'])
+@app.get("/api/users", summary = "get all users", response_model=list[schema.User], tags=['users'])
 def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     users = crud.get_users(db, skip=skip, limit=limit)
     return users
@@ -219,7 +219,7 @@ def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depe
      return crud.update_user(db=db, user=user, user_id=user_id)
 
 
-@app.get('/api/history/', summary = "get user history", response_model=Page[schema.History])
+@app.get('/api/history', summary = "get user history", response_model=Page[schema.History])
 async def get_history(user: models.User = Depends(get_current_user), db: Session = Depends(get_db), params: Params = Depends()):
     user_history = paginate(crud.get_history_by_user_id(db, user.id), params)
     if not user_history:
@@ -244,7 +244,7 @@ def get_sentiment_result(id: int, db: Session = Depends(get_db)):
     return analysis
 
 
-@app.get("/api/audios/", summary = "get all audio uploads", response_model=list[schema.Audio], tags=['audios'])
+@app.get("/api/audios", summary = "get all audio uploads", response_model=list[schema.Audio], tags=['audios'])
 def read_audios(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     audios = crud.get_audios(db, skip=skip, limit=limit)
     return audios
@@ -294,7 +294,7 @@ def get_agents_leaderboard(db: Session = Depends(get_db)):
     return {"Agents Leaderboard": leaderboard}
 
 
-@app.get("/account", summary = "get user profile details", tags=['users'])
+@app.get("/api/account", summary = "get user profile details", tags=['users'])
 async def my_profile (db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     user_id = user.id
     return crud.get_user_profile(db, user_id)
