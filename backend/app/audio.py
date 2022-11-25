@@ -21,7 +21,9 @@ def audio_details(filename):
         audio_file = MP4(filename)
     elif filename[-3:] == "m4a":
         audio_file = MP4(filename)
-    
+    else:
+        raise Exception ("File format not supported")
+
 
     audio_info = audio_file.info
     length = int(audio_info.length)

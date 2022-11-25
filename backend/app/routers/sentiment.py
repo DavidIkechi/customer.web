@@ -4,6 +4,8 @@ from nltk.tokenize import sent_tokenize
 import json
 
 def sentiment(transcript):
+    nltk.download('vader_lexicon')
+    nltk.download('punkt')
     sentences = sent_tokenize(transcript)
     negative_sentences = []
     postive_sentences = []
@@ -23,7 +25,7 @@ def sentiment(transcript):
         overall_sentiment = "Positive"
     else:
         overall_sentiment = "Neutral"
-    sentiment = { 
+    sentiment = {
             "transcript": transcript,
             "positivity_score": sentiment['pos'],
             "negativity_score": sentiment['neg'],
