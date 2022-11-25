@@ -1,4 +1,4 @@
-from fastapi import FastAPI,UploadFile, File
+from fastapi import FastAPI,UploadFile, File, HTTPException
 import banana_dev as banana
 from dotenv import load_dotenv
 from io import BytesIO
@@ -26,13 +26,13 @@ async def free_trial(file: UploadFile = File(...)):
     ###### transcribing the file
     with open(f'{file.filename}', "rb") as file:
         if not file:
-            return {"message": "No file sent"}
+            raise HTTPException(status_code = 406, detail="No File Selected")
         elif getSize > fileSize :
-            return {"message": "File Must not be lager than 5MB"}
+            raise HTTPException(status_code = 406, detail="File Must Not Be More Than 5MB")
         else:
             ######### Load audio file
             mp3bytes = BytesIO(file.read())
             mp3 = base64.b64encode(mp3bytes.getvalue()).decode("ISO-8859-1")
             model_payload = {"mp3BytesString": mp3}
             out = banana.run(api_key, model_key, model_payload)
-            return out['modelOutputs'][0]['text']
+            return {'detail': out['modelOutputs'][0]['text'] }
