@@ -308,6 +308,10 @@
       border: 1px solid #c5c5c5;
       border-radius: 4px;
       padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      // flex-direction: column;
       font-family: "Kanit";
       font-style: normal;
       font-weight: 500;
@@ -321,33 +325,63 @@
       -moz-appearance: none;
       -ms-appearance: none;
       -o-appearance: none;
-      background-image: url("./imgs/select-arrow.svg");
-      background-repeat: no-repeat;
-      background-position: right 0.7rem top 50%;
-      background-size: 1rem auto;
-      &:focus {
-        outline: none;
-        // background: #e6f0ff;
-        color: #006cff;
-        border: 1px solid #006cff;
+      img {
+        width: 20px;
+        transition: all 0.3s ease-in-out;
+        -webkit-transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -ms-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
       }
-      option {
+      .rotateIcon {
+        transition: all 0.3s ease-in-out;
+        -webkit-transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -ms-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transform: rotate(180deg);
+      }
+      .selectActive {
+        color: #006cff;
+      }
+      .bulkselect_children {
         position: absolute;
-        top: 100%;
+        top: 0;
         left: 0;
-        width: 104px !important;
-        height: 74px !important;
-        padding: 1rem 0;
+        width: max-content;
+        height: max-content;
+        padding: 1rem;
         background-color: #ffffff !important;
         color: #535353;
-        border-bottom: 0.5px solid rgba(18, 18, 18, 0.15);
+        border: 0.5px solid rgba(18, 18, 18, 0.15);
+        border-radius: 4px;
         z-index: 1;
         font-family: "Kanit";
         font-style: normal;
         font-weight: 300;
         font-size: 14px;
         line-height: 20px;
+        display: none;
+        p {
+          padding: 2px 0;
+          font-family: "Kanit";
+          font-style: normal;
+          font-weight: 300;
+          font-size: 14px;
+          line-height: 20px;
+          color: #535353;
+        }
+        :nth-child(1) {
+          border-bottom: 0.5px solid rgba(18, 18, 18, 0.1);
+        }
       }
+      .openPopup {
+        display: block;
+      }
+    }
+    .selectionActive {
+      background: #e6f0ff;
+      border: 1px solid #006cff;
     }
   }
 }
@@ -471,7 +505,7 @@
       .bulkselect {
         width: 180px;
         height: 50px;
-        padding: 0 2rem 0 1rem;
+        padding: 0 1rem;
       }
     }
   }
