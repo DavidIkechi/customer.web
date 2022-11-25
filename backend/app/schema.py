@@ -7,7 +7,7 @@ class UserBase(BaseModel):
     first_name: str
     last_name: str
     email: str
-    created_at: datetime
+    # created_at: datetime
 
 
 class UserCreate(UserBase):
@@ -94,6 +94,28 @@ class Company(CompanyBase):
 
     class Config:
         orm_mode = True
+
+
+class HistoryBase(BaseModel):
+
+    user_id: int
+    sentiment_result: str
+    agent_name: str
+    audio_name: str
+
+
+class HistoryCreate(HistoryBase):
+    pass
+   
+
+
+class History(HistoryBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
 
 class Analysis(AudioBase):
     pass

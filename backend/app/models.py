@@ -4,6 +4,8 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from datetime import datetime
 
+from datetime import datetime
+
 from db import Base
 
 class Company(Base):
@@ -75,6 +77,21 @@ class Job(Base):
 
     audio = relationship("Audio", back_populates="job")
 
+
+
+class History(Base):
+    __tablename__ = "history"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    audio_name = Column(String, index=True)
+    agent_name = Column(String, index=True)
+    sentiment_result = Column(String, index=True)
+    date_uploaded = Column(DateTime, default=datetime.utcnow(), index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+
+
+    
 class Analysis(Base):
     __tablename__ = "analysis"
 
