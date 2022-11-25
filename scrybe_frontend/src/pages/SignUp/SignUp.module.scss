@@ -1,6 +1,5 @@
 .signUpWrapper {
     width: 100vw;
-    height: 100vh;
     padding: 3% 8% 5%;
     display: flex;
     flex-direction: column;
@@ -79,6 +78,7 @@
           border: thin solid #C5C5C5;
           margin-bottom: 1rem;
           outline: none;
+          background-color: transparent;
         }
   
       input[type=checkbox] {
@@ -107,6 +107,7 @@
       input:-webkit-autofill:hover, 
       input:-webkit-autofill:focus, 
       input:-webkit-autofill:active{
+        box-shadow: 0 0 0 30px white inset !important;
       -webkit-box-shadow: 0 0 0 30px white inset !important;
       }
   

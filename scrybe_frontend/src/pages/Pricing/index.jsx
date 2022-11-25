@@ -7,6 +7,7 @@ import growingIcon from "./assets/auto_graph.svg";
 import enterpriseIcon from "./assets/corporate_fare.svg";
 import checkIcon from "./assets/check.svg";
 import currency from "./assets/naira.svg";
+import BenefitsImage from "./assets/benefitsimage.svg";
 
 function Pricing() {
   return (
@@ -183,6 +184,184 @@ function Pricing() {
             </div>
             <Link to="/try">Get Started</Link>
           </div>
+        </div>
+      </div>
+      <div className={styles.features}>
+        <h2 className={styles.Featurestitle}>Features</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Overview</th>
+              <th>Startup</th>
+              <th>Growing</th>
+              <th>Enterprise</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ai-Powered call transcriptions</td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+            </tr>
+            <tr>
+              <td>Call Tracking & Recording</td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+            </tr>
+            <tr>
+              <td> Business Hours</td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+            </tr>
+            <tr>
+              <td>Email & Chat Support</td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+            </tr>
+            <tr>
+              <td>API & Webhook Access</td>
+              <td></td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+            </tr>
+            <tr>
+              <td>Custom Workflows</td>
+              <td></td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+            </tr>
+            <tr>
+              <td>Dedicated Account Manager</td>
+              <td></td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+            </tr>
+            <tr>
+              <td>Priority Support</td>
+              <td></td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+            </tr>
+            <tr>
+              <td>Agent Assist</td>
+              <td></td>
+              <td></td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+            </tr>
+            <tr>
+              <td>Professional Services</td>
+              <td></td>
+              <td></td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+            </tr>
+            <tr>
+              <td>Custom Analytics & Reports</td>
+              <td></td>
+              <td></td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+            </tr>
+            <tr>
+              <td>Personalized Onboarding Support</td>
+              <td></td>
+              <td></td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+            </tr>
+            <tr>
+              <td>Agent Coaching & Call Scoring</td>
+              <td></td>
+              <td></td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+            </tr>
+            <tr>
+              <td> Dedicated Technical Support</td>
+              <td></td>
+              <td></td>
+              <td>
+                <img src={checkIcon} alt="check-mark icon" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className={styles.benefits}>
+        <div className={styles.benefitdescription}>
+          <h3>Benefits of using Scrybe</h3>
+          <ul>
+            <li>
+              <span>&bull;</span>Converts recorded calls in MP3 format into
+              readable and searchable text.
+            </li>
+            <li>
+              <span>&bull;</span>Automatically analyzes the transcribed text to
+              give each transcription a positive, negative, or neutral sentiment
+              score.
+            </li>
+            <li>
+              <span>&bull;</span>Intelligent reporting on customers&apos;
+              engagement and call agents' efficiency.
+            </li>
+          </ul>
+          <div className={styles.benefitCTA}>
+            <Link>Try for Free</Link>
+            <Link>Schedule a Demo</Link>
+          </div>
+        </div>
+        <div className={styles.BenefitsImage}>
+          <img src={BenefitsImage} alt="" />
         </div>
       </div>
     </div>

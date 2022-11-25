@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
@@ -20,14 +21,20 @@ function Signin() {
     console.log(data);
     setUserInfo(data);
     console.log(errors);
+
+    axios
+      .post("http://scrybe.hng.tech:5000/login", data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // Watch event for disable button
   const email = watch("email");
   const password = watch("password");
-
-  console.log("email", email);
-  console.log("password", password);
 
   const isValid = email && password;
 
@@ -44,7 +51,6 @@ function Signin() {
               <label htmlFor="email">Email</label>
               <input
                 type="email"
-                name="email"
                 id="email"
                 placeholder="Enter your company email"
                 className={`${errors.email && styles.errorInput}} `}
