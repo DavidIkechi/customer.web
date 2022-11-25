@@ -2,6 +2,7 @@ from datetime import datetime
 from enum import Enum
 from typing import List, Optional
 from pydantic import BaseModel, EmailStr, Extra
+from uuid import UUID, uuid1
 
 class UserBase(BaseModel):
     first_name: str
@@ -82,6 +83,7 @@ class Agent(AgentBase):
 
 class CompanyBase(BaseModel):
     name: str
+    address: str
     size: int
 
 class CompanyCreate(CompanyBase):
@@ -128,3 +130,11 @@ class Recordings(BaseModel):
 
     class Config:
         orm_mode = True
+
+class UserProfile(BaseModel):
+    id: str
+    phone_number: str
+    company_address: str
+    email: str
+    company_id: int
+    api_key: UUID = uuid1()
