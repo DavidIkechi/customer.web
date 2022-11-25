@@ -7,7 +7,7 @@ function Dummy() {
 
   const fetchData = () => {
     axios
-      .get(`https://api.mocki.io/v2/fc2a0cd8/transcription`)
+      .get("https://api.mocki.io/v2/fc2a0cd8/transcription")
       .then((newRes) => {
         setFormattedData(generateArray(newRes.data));
       })

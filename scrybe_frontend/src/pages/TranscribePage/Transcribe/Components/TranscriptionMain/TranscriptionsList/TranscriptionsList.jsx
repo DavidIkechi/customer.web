@@ -35,7 +35,7 @@ function TranscriptionsList() {
         emptyString = emptyString + " " + word;
         counter++;
       }
-      if (counter == 30) {
+      if (counter === 30) {
         objectID++;
         time = time + 30;
         const formatedTime = timeFormatter(time);
