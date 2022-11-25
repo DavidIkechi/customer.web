@@ -1,12 +1,14 @@
 
 from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form
+from fastapi_pagination import Page, paginate, Params
 from fastapi.middleware.cors import CORSMiddleware
 from routers.sentiment import sentiment
 from routers.transcribe import transcribe_file
+import auth
 from routers.score import score_count
 
 import models, json
-from auth import get_active_user
+from auth import get_active_user, get_current_user
 from jwt import (
     main_login
 )
@@ -20,7 +22,6 @@ from emails import send_email, verify_token
 from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
-from auth import get_current_user
 
 
 # Dependency
@@ -121,12 +122,14 @@ async def analyse(file: UploadFile=File(...)):
 #     # return token once the user has been successfully authenticated, or it returns an error.
 #     return await main_login(form_data, session)
 
+
 @app.post("/new_analyse", tags=['analyse'])
 async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Session = Depends(get_db), file: UploadFile=File(...), user: models.User = Depends(get_active_user)):
 
     # Create Agent
     user_id = user.id
     company_id = user.company_id
+    agent_name = "%s %s" %(first_name, last_name)
     db_agent = models.Agent(first_name=first_name, last_name=last_name, company_id=company_id)
 
     # Add Agent
@@ -162,6 +165,13 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     db.add(db_audio)
     db.commit()
     db.refresh(db_audio)
+
+    history_create: schema.HistoryCreate = {"user_id":user_id, 
+                                            "sentiment_result":overall_sentiment,
+                                            "agent_name": agent_name,
+                                            "audio_name": file.filename}
+
+    crud.create_history(db, history_create)
 
     return {"transcript": transcript, "sentiment_result": sentiment_result}
 
@@ -216,6 +226,20 @@ async def email_verification(request: Request, token: str, db: Session = Depends
 def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depends(get_db)):
      return crud.update_user(db=db, user=user, user_id=user_id)
 
+
+@app.get('/history/', response_model=Page[schema.History])
+async def get_history(user: models.User = Depends(get_current_user), db: Session = Depends(get_db), params: Params = Depends()):
+    user_history = paginate(crud.get_history_by_user_id(db, user.id), params)
+    if not user_history:
+            raise HTTPException(
+            status_code=404,
+            detail="The user's history doesn't exist",
+        )
+    return user_history
+
+        
+
+    
 @app.get("/new_analysis/{id}", response_model=schema.Analysis, tags=['analysis'])
 def get_sentiment_result(id: int, db: Session = Depends(get_db)):
     """
