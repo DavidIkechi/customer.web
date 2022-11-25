@@ -5,6 +5,36 @@ import Chart from "./Chart";
 import { UserData } from "./Data";
 import Icon from "../assets/table-icon.png";
 
+export const options = {
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+  },
+  plugins: {
+    title: {
+      display: false,
+      text: "Agent Report",
+    },
+    legend: {
+      title: {
+        font: {
+          size: 16,
+        },
+      },
+      position: "bottom",
+      labels: {
+        boxWidth: 10,
+        useBorderRadius: true,
+        borderRadius: 4,
+      },
+    },
+  },
+  responsive: true,
+};
+
 function Charts() {
   const [userDataDaily, setUserData] = useState({
     labels: UserData.map((data) => data.day),
@@ -58,6 +88,7 @@ function Charts() {
             className={styles.chartpic}
           /> */}
           <Chart
+            options={options}
             chartData={userDataDaily}
             style={{ height: "100%", width: "100%" }}
           />
