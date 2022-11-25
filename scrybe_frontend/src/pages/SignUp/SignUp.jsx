@@ -7,6 +7,29 @@ import footerImg from "./assets/signup-img.svg";
 import styles from "./SignUp.module.scss";
 
 function Signup() {
+  // Login SetUp
+  const [myEmail, setEmail] = useState("");
+  const [myPassword, setPassword] = useState("");
+  const [, setToken] = useContext(UserContext);
+
+  // Submit Registration
+  const submitRegistration = async () => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, hashed_password: password }),
+    };
+
+    const response = await fetch("/api/users", requestOptions);
+    const data = await response.json();
+
+    if (!response.ok) {
+      <p className={styles.errorMsg}>{errors.password?.message}</p>;
+    } else {
+      setToken(data.access_token);
+    }
+  };
+
   const {
     register,
     handleSubmit,
@@ -20,6 +43,7 @@ function Signup() {
     console.log(data);
     setUserInfo(data);
     console.log(errors);
+    submitRegistration();
   };
 
   // Watch event for disable button
@@ -35,28 +59,6 @@ function Signup() {
 
   const isValid = fullname && email && company && password;
 
-  // Login SetUp
-  const [myEmail, setEmail] = useState("");
-  const [myPassword, setPassword] = useState("");
-  const [, setToken] = useContext(UserContext);
-
-  // Submit Registration
-  const submitRegistration = async () => {
-    const requestOptions = {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({email: email, hashed_password: password})
-    }
-      const response = await fetch("/api/users", requestOptions);
-      const data = await response.json();
-
-      if (!response.ok) {
-        setErrorMessage(data.detail);
-      } else {
-        setToken(data.access_token)
-      }
-  }
-
   return (
     <>
       <main className={styles.signUpWrapper}>
@@ -64,7 +66,7 @@ function Signup() {
           <div className={styles.first}>
             <h1>Create an account</h1>
             <h3>Let’s get you started</h3>
-            <form onSubmit={handleSubmit(onSubmit)} >
+            <form onSubmit={handleSubmit(onSubmit)}>
               <label htmlFor="fullname">Full name</label>
               <input
                 type="text"
@@ -91,7 +93,7 @@ function Signup() {
                     message: "Please enter a correct company email address",
                   },
                 })}
-               />
+              />
               <p className={styles.errorMsg}>{errors.email?.message}</p>
 
               <label htmlFor="company">Company</label>
@@ -122,7 +124,7 @@ function Signup() {
                     message: "Password must be at least 8 characters",
                   },
                 })}
-                onChange={(e) => setPassword(e.target.value)} />
+              />
               <p className={styles.errorMsg}>{errors.password?.message}</p>
 
               <input
@@ -135,8 +137,8 @@ function Signup() {
                 <input type="checkbox" name="" id="" />
                 <span>
                   I have read and agree to{" "}
-                  <NavLink to={""}>Terms of Service</NavLink> and{" "}
-                  <NavLink to={""}>Privacy Policy</NavLink>
+                  <NavLink to={"/terms"}>Terms of Service</NavLink> and{" "}
+                  <NavLink to={"/privacy"}>Privacy Policy</NavLink>
                   <br />
                   Already have an account?{" "}
                   <NavLink to={"/signin"}>Sign in</NavLink>
