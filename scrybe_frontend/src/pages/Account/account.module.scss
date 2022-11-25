@@ -4,21 +4,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
 
 .account__container {
-  nav {
-    display: none;
-
-    @include easyMediaQueries("min-width:1024px"){
-      display: block;
-    }
-  }
+  width: 100%;
 }
 
 .add_agent__div {
   z-index: 9999;
-  position: fixed;
+  position: absolute;
   width: 100vw;
   height: 100vh;
   top: 0;
+  left: 0;
   display: none;
   justify-content: center;
   align-items: center;
@@ -33,6 +28,7 @@
 .add_agent_modal__div {
   display: flex;
   flex-direction: column;
+  align-items: center;
   background-color: $neutral-100;
   padding: pix-rem(24);
   border-radius: pix-rem(16);
@@ -55,20 +51,24 @@
     flex-direction: column;
     gap: pix-rem(16);
     color: $grey-400;
+    width: 100%;
 
     label {
       display: flex;
       flex-direction: column;
       gap: pix-rem(4);
+      width: 100%;
     }
     label[for="consent-to-email"] {
       flex-direction: row;
+      cursor: pointer;
     }
     label[for="consent-to-email"]>span {
       color: $text;
     }
     input {
       height: pix-rem(52);
+      width: 100%;
       padding: pix-rem(16);
       border: pix-rem(1) solid $blue-500;
       border-radius: pix-rem(4);
@@ -85,6 +85,7 @@
       border: 1px solid $grey-100;
       border-radius: pix-rem(4.8);
       overflow: hidden;
+      cursor: pointer;
     }
     input[type="checkbox"]:checked {
       border: none;
@@ -93,7 +94,7 @@
       position: relative;
     }
     input[type="checkbox"]:checked::before {
-      content: url("../icons/checkmark.svg");
+      content: url("./assets/icons/checkmark.svg");
       width: fit-content;
       height: fit-content;
       position: absolute;
@@ -107,10 +108,12 @@
       font-weight: 500;
       font-size: pix-rem(14);
       line-height: pix-rem(24);
+      cursor: pointer;
     }
     input[name="cancel-btn"] {
       border: none;
       background-color: transparent;
+      cursor: pointer;
     }
     span {
       font-weight: 400;
@@ -121,6 +124,8 @@
       height: pix-rem(8);
     }
     div:last-of-type {
+      width: clamp(pix-rem(250), 100%, pix-rem(450));
+      align-self: center;
       display: flex;
       flex-direction: column;
       gap: pix-rem(16);
@@ -132,6 +137,8 @@
       }
       div:last-of-type {
         flex-direction: row;
+        width: min-content;
+        align-self: flex-start;
 
         input[name="submit-btn"] {
           padding: pix-rem(16) pix-rem(32);
@@ -141,6 +148,7 @@
   }
 
   @include easyMediaQueries("min-width:1024px") {
+    align-items: flex-start;
     padding: pix-rem(40) pix-rem(60);
   }
 }
@@ -150,7 +158,6 @@
   background-color: $grey-50;
   position: relative;
   min-height: 100vh;
-  margin-left: auto;
   padding: pix-rem(85) pix-rem(16) pix-rem(36) pix-rem(16);
   display: flex;
   flex-direction: column;
@@ -158,7 +165,6 @@
 
   @include easyMediaQueries("min-width:1024px") {
     padding: pix-rem(85) pix-rem(40);
-    width: calc(100% - pix-rem(280));
   }
 }
 
@@ -481,11 +487,13 @@
           }
           button {
             border: none;
+            align-self: flex-start;
             color: $blue-500;
             background-color: transparent;
             font-weight: 500;
             font-size: pix-rem(14);
             line-height: pix-rem(24);
+            cursor: pointer;
           }
         }
       }
