@@ -41,6 +41,7 @@ function Signup() {
           <div className={styles.first}>
             <h1>Create an account</h1>
             <h3>Let’s get you started</h3>
+
             <form onSubmit={handleSubmit(onSubmit)}>
               <label htmlFor="fullname">Full name</label>
               <input

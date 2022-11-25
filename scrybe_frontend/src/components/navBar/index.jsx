@@ -30,22 +30,16 @@ function NavBar() {
               <NavLink to="/about-us">About Us</NavLink>
             </div>
             <div className={styles.nav__ctas}>
-              {!token ? (
-                <>
-                  <NavLink to="/signin">
-                    <button type="button" className="firstBtn">
-                      Login
-                    </button>
-                  </NavLink>
-                  <NavLink to="/terms">
-                    <button type="button" className="secondBtn">
-                      Upgrade Plan
-                    </button>
-                  </NavLink>
-                </>
-              ) : (
-                token && <button onClick={handleLogout}>Logout</button>
-              )}
+              <NavLink to="/signin">
+                <button type="button" className="firstBtn">
+                  Login
+                </button>
+              </NavLink>
+              <NavLink to="/terms">
+                <button type="button" className="secondBtn">
+                  Upgrade Plan
+                </button>
+              </NavLink>
             </div>
 
             <div className={styles.nav__ctl}>
