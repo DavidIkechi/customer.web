@@ -11,10 +11,16 @@ import oneIcon from "./assets/one__icon.png";
 import twoIcon from "./assets/two__icon.png";
 import threeIcon from "./assets/three__icon.png";
 import fourIcon from "./assets/four__icon.png";
+import NavBar from "../../components/navBar";
+import Footer from "../../components/footer";
+import input__ctrl from "../PartnersPage/assets/input__ctrl.png";
 
-const index = () => {
+const PartnersPage = () => {
   return (
     <div>
+      <div>
+        <NavBar />
+      </div>
       <section className={styles.first__sect}>
         <div className={styles.sect__container}>
           <div className={styles.first__flex}>
@@ -277,6 +283,13 @@ const index = () => {
                           placeholder="E.g:  24"
                         />
                       </label>
+                      <span className={styles.ctrl__input}>
+                        <img
+                          src={input__ctrl}
+                          alt="Input control"
+                          className={styles.input__ctrlicon}
+                        />
+                      </span>
                     </div>
                     <div className={styles.input__flex}>
                       <label
@@ -291,6 +304,13 @@ const index = () => {
                           placeholder="E.g:  24"
                         />
                       </label>
+                      <span className={styles.ctrl__input}>
+                        <img
+                          src={input__ctrl}
+                          alt="Input control"
+                          className={styles.input__ctrlicon}
+                        />
+                      </span>
                     </div>
                   </div>
                   <div>
@@ -377,8 +397,11 @@ const index = () => {
           </div>
         </div>
       </section>
+      <div className={styles.footer__container}>
+        <Footer />
+      </div>
     </div>
   );
 };
 
-export default index;
+export default PartnersPage;
