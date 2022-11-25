@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./SentimentAnalysis.module.scss";
+import { Link } from "react-router-dom";
 
 function SentimentAnalysis() {
   return (
@@ -20,9 +21,11 @@ function SentimentAnalysis() {
               fill="white"
             />
           </svg>
-          <a href="/sentiment-analysis" target="_blank" rel="noreferrer">
-            View analysis
-          </a>
+          <Link to="/sentiment-analysis">
+            <a href="/sentiment-analysis" target="_blank" rel="noreferrer">
+              View analysis
+            </a>
+          </Link>
         </button>
         <div className={styles.downloadButton}>
           <svg
@@ -53,21 +56,23 @@ function SentimentAnalysis() {
         </div>
       </div>
       <div className={styles.mobileSentimentAnalysis}>
-        <div className={styles.mobileContainer}>
-          <h5>sentiment analysis</h5>
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 12 12"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M5.99967 0.916829L11.083 6.00016L5.99967 11.0835L5.28301 10.3668L9.16634 6.50016L0.916341 6.50016V5.50016L9.16634 5.50016L5.28301 1.6335L5.99967 0.916829Z"
-              fill="#006CFF"
-            />
-          </svg>
-        </div>
+        <Link to="/sentiment-analysis">
+          <div className={styles.mobileContainer}>
+            <h5>sentiment analysis</h5>
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5.99967 0.916829L11.083 6.00016L5.99967 11.0835L5.28301 10.3668L9.16634 6.50016L0.916341 6.50016V5.50016L9.16634 5.50016L5.28301 1.6335L5.99967 0.916829Z"
+                fill="#006CFF"
+              />
+            </svg>
+          </div>
+        </Link>
       </div>
     </div>
   );
