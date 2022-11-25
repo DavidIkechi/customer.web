@@ -7,7 +7,6 @@
   font-family: kanit;
   background: #feffff;
   max-width: 1440px;
-  margin-bottom: 3rem;
   a {
     text-decoration: none !important;
   }
@@ -253,4 +252,17 @@ div a.blogs__navSelected {
   width: 500px;
   height: 280px;
   margin: 0 auto;
+  margin-bottom: 3rem;
+  transition: all 400ms ease;
+
+  @media (min-width: 619px) {
+    width: 600px;
+  }
+  @media (max-width: 515px) {
+    width: 400px;
+  }
+  @media (max-width: 419px) {
+    width: 90%;
+    height: 230px;
+  }
 }

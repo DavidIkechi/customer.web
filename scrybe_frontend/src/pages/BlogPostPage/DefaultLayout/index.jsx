@@ -1,13 +1,23 @@
 import PropTypes from "prop-types";
 import React from "react";
 import utils from "../assets/utils.module.scss";
-import slideLeft from "../assets/slide_left.svg";
-import slideRight from "../assets/slide_right.svg";
-import sliderImage from "../assets/slider.png";
 import styles from "./styles.module.scss";
-
+import { insta01, insta02, insta03 } from "../../BlogsPage/assets";
+import ImageSlider from "../../BlogsPage/ImageSlider";
+import Footer from "../../../components/footer";
 function DefaultLayout(props) {
   const { children } = props;
+  const slides = [
+    {
+      url: insta01,
+    },
+    {
+      url: insta02,
+    },
+    {
+      url: insta03,
+    },
+  ];
 
   return (
     <div className={styles.default_layout}>
@@ -22,47 +32,12 @@ function DefaultLayout(props) {
           </div>
 
           {/* slider */}
-          <div className={utils.d_grid} style={{ "--gap": "32px" }}>
-            {/* images */}
-            <div className={styles.slider__images}>
-              <img src={sliderImage} alt="slider illustration" />
-              <img src={sliderImage} alt="slider illustration" />
-              <img src={sliderImage} alt="slider illustration" />
-            </div>
-
-            {/* content */}
-            <div className={styles.slider__content}>
-              <div>
-                <button
-                  className={`${styles.slider__button} ${utils.d_none} ${utils.md_d_block}`}
-                  type="button"
-                >
-                  <img src={slideLeft} alt="slide left icon" />
-                </button>
-              </div>
-              <div>
-                <button
-                  className={`${styles.slider__button} ${utils.d_none} ${utils.md_d_block}`}
-                  type="button"
-                >
-                  <img src={slideRight} alt="slide right icon" />
-                </button>
-              </div>
-            </div>
-
-            <div
-              className={`${utils.d_flex} ${utils.justify_content_center}`}
-              style={{ "--gap": "8px" }}
-            >
-              <span className={styles.slider__indicator} />
-              <span
-                className={`${styles.slider__indicator} ${styles["slider__indicator--current"]}`}
-              />
-              <span className={styles.slider__indicator} />
-            </div>
+          <div className={styles.blogs__carousel}>
+            <ImageSlider slides={slides} />
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

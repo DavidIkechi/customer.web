@@ -26,20 +26,19 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}          
           password: ${{ secrets.DOCKERHUB_TOKEN }}
             
-      - name: Get Current Date 
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d--%M-%S')"
+      - id: commit
+        uses: pr-mpt/actions-commit-hash@v1
       
       - name: docker build, tag and push
         run: |
-          docker build -t vicdam/scrybefrontend:latest .
-          docker push vicdam/scrybefrontend:latest
+          docker build -t vicdam/scrybefrontend:${{ steps.commit.outputs.short }} .
+          docker push vicdam/scrybefrontend:${{ steps.commit.outputs.short }}
 
       - name: docker build, tag and push
         run: |
           cd ../backend/app
-          docker build -t vicdam/scrybebackend:latest .
-          docker push vicdam/scrybebackend:latest             
+          docker build -t vicdam/scrybebackend:${{ steps.commit.outputs.short }} .
+          docker push vicdam/scrybebackend:${{ steps.commit.outputs.short }}             
 
 
   Deploy: 
@@ -49,6 +48,9 @@ jobs:
     steps:
       - name: Checkout master
         uses: actions/checkout@master
+        
+      - id: commit
+        uses: pr-mpt/actions-commit-hash@v1       
 
       - name: Pull from GitHub
         uses: appleboy/ssh-action@master
@@ -58,10 +60,11 @@ jobs:
           USERNAME: ${{ secrets.USERNAME }}
           KEY: ${{ secrets.KEY }}
           script: |
-            sudo docker-compose stop
-            sudo docker-compose rm -f
-            sudo docker-compose pull   
-            sudo docker-compose up -d             
+            echo IMAGE_TAG=${{ steps.commit.outputs.short }} > .env
+            docker-compose stop
+            docker-compose rm -f
+            docker-compose pull   
+            docker-compose up -d             
             
 
 

@@ -64,8 +64,8 @@ def get_company(db: Session, company_id: int):
     return db.query(models.Company).filter(models.Company.id == company_id).first()
 
 def create_audio(db: Session, audio: schema.Audio, agent_id: int):
-    db_audio = models.Audio(audio_path=audio.audio_path, transcript=audio.transcript, timestamp=audio.timestamp, positivity_score=audio.positivity_score,
-    negativity_score=audio.negativity_score, neutrality_score=audio.neutrality_score, overall_sentiment=audio.overall_sentiment, agent_id=agent_id)
+    db_audio = models.Audio(audio_path=audio.audio_path, size=audio.size, duration=audio.duration, transcript=audio.transcript, timestamp=audio.timestamp, positivity_score=audio.positivity_score,
+    negativity_score=audio.negativity_score, neutrality_score=audio.neutrality_score, overall_sentiment=audio.overall_sentiment, most_positive_sentences =audio.most_positive_sentences, most_negative_sentences = audio.most_negative_sentences, agent_id=agent_id)
     db.add(db_audio)
     db.commit()
     db.refresh(db_audio)
@@ -100,3 +100,12 @@ def create_agent(db: Session, agent: schema.Agent, company_id: int):
     db.refresh(db_agent)
     return db_agent
 
+def create_analysis(db, result= schema.Audio, user_id=int):
+    db_analysis = models.Audio(transcript = result.transcript, positivity_score= result.positivity_score, negativity_score= result.negativity_score, overall_sentiment= result.overall_sentiment)
+    db.add(db_analysis)
+    db.commit()
+    db.refresh(db_analysis)
+    return db_analysis
+
+def get_analysis(db: Session, analysis_id = int):
+    return db.query(models.Analysis).filter(models.Analysis == analysis_id).first()

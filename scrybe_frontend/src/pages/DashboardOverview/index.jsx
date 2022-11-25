@@ -5,7 +5,7 @@ import { Recordings } from "./Data";
 
 import styles from "./DashboardOverview.module.scss";
 import toneWave from "./assets/tone_wave.svg";
-import chevron from "./assets/chevron_right.svg";
+// import chevron from "./assets/chevron_right.svg";
 import analysis from "./assets/analytics.svg";
 import leaderboard from "./assets/leaderboard.svg";
 import agent from "./assets/agent.png";
@@ -61,9 +61,14 @@ function DashboardOverview() {
             <h1>
               <img src={toneWave} alt="" /> Total Recordings
             </h1>
-            <h2 className={styles.thismonth}>
+            <select className={styles.dropdown}>
+              <option value="week">This week</option>
+              <option value="month">This month</option>
+              <option value="year">This year</option>
+            </select>
+            {/* <h2 className={styles.thismonth}>
               This month <img src={chevron} alt="" />
-            </h2>
+            </h2> */}
           </div>
           <div className={styles.recordings}>
             <Bar options={chartOptions} data={chartData} />
@@ -76,9 +81,14 @@ function DashboardOverview() {
             <h1>
               <img src={analysis} alt="Total recording" /> Total Analysis
             </h1>
-            <h2 className={styles.thismonth}>
+            <select className={styles.dropdown}>
+              <option value="week">This week</option>
+              <option value="month">This month</option>
+              <option value="year">This year</option>
+            </select>
+            {/* <h2 className={styles.thismonth}>
               This month <img src={chevron} alt="analysis" />
-            </h2>
+            </h2> */}
           </div>
           <div className={styles.subcontent_con}>
             <div className={styles.circles}>
@@ -88,14 +98,14 @@ function DashboardOverview() {
             </div>
             <div className={styles.scale}>
               <h3>
-                <span>1</span> Positive
+                <span className={styles.positive}>1</span> Positive
               </h3>
               <h3>
                 {" "}
-                <span>1</span>Neutral
+                <span className={styles.neutral}>1</span>Neutral
               </h3>
               <h3>
-                <span>1</span> Negative
+                <span className={styles.negative}>1</span> Negative
               </h3>
             </div>
           </div>
@@ -109,9 +119,14 @@ function DashboardOverview() {
               <img src={leaderboard} alt="leader board" />
               Agents Leaderboard
             </h1>
-            <h2 className={styles.thismonth}>
+            <select className={styles.dropdown}>
+              <option value="week">This week</option>
+              <option value="month">This month</option>
+              <option value="year">This year</option>
+            </select>
+            {/* <h2 className={styles.thismonth}>
               This month <img src={chevron} alt="analysis" />
-            </h2>
+            </h2> */}
           </div>
           <div className={styles.subcontent_con}>
             <div className={styles.agents_mobile}>

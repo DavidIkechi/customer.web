@@ -1,10 +1,11 @@
 @use "../../functions.scss" as *;
 
 .nav {
+  $mobile : 950px;
   background-color: white;
   &__ctl {
     display: none;
-    @include media(1100px) {
+    @include media($mobile) {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -17,14 +18,14 @@
   }
   &__closed {
     display: none;
-    @include media(1100px) {
+    @include media($mobile) {
       display: block;
       cursor: pointer;
     }
   }
   &__open {
     display: none;
-    @include media(1100px) {
+    @include media($mobile) {
       display: block;
       cursor: pointer;
     }
@@ -34,8 +35,11 @@
     display: flex;
     justify-content: space-between;
     width: 68%;
+    @include media(1150px){
+      width: 84%;
+    }
     height: auto;
-    @include media(1100px) {
+    @include media($mobile) {
       position: fixed;
       flex-direction: column;
       z-index: 4;
@@ -51,7 +55,7 @@
       display: none;
     }
   }
-  @include media(1100px) {
+  @include media($mobile) {
     &__active {
       display: flex;
       position: fixed;
@@ -91,7 +95,7 @@
     gap: pix-rem(24);
     align-items: center;
     cursor: pointer;
-    @include media(1100px) {
+    @include media($mobile) {
       flex-direction: column;
       align-items: center;
       cursor: pointer;
@@ -104,23 +108,23 @@
   }
   &__img {
     max-width: pix-rem(172);
-    @include media(1100px) {
+    @include media(1150px) {
       max-width: pix-rem(86);
     }
   }
   &__ctas {
     display: flex;
     gap: pix-rem(24);
-    @include media(1100px) {
+    @include media($mobile) {
       padding-top: pix-rem(40);
       flex-direction: column;
     }
     & > * {
       all: unset;
-      padding: pix-rem(16) pix-rem(32);
+      padding: pix-rem(16,em) pix-rem(32,em);
       border-radius: pix-rem(4);
       
-      @include media(1100px) {
+      @include media($mobile) {
         text-align: center;
         max-width: pix-rem(178);
         flex: 1;
@@ -129,11 +133,14 @@
         background-color: transparent;
         color: #006cff;
         border: 1px solid #006cff;
+        font-size: clamp(0.625rem, 0.489rem + 0.68vw, 1rem);
       }
       &:nth-child(2) {
         background-color: #006cff;
         color: white;
+        font-size: clamp(0.625rem, 0.489rem + 0.68vw, 1rem);
       }
     }
   }
 }
+

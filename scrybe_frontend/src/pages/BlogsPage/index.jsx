@@ -1,8 +1,3 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable prettier/prettier */
-/* eslint-disable react/no-unescaped-entities */
 import React from "react";
 import { Link } from "react-router-dom";
 import { BlogHero, insta01, insta02, insta03 } from "./assets";
@@ -12,8 +7,14 @@ import Card from "./BlogCard";
 import { blogs } from "./assets/data";
 import FadeInSection from "./FadeInSection";
 import ImageSlider from "./ImageSlider";
+import NavBar from "../../components/navBar";
+import Footer from "../../components/footer";
 
 function Blogs() {
+  React.useEffect(() => {
+    // 👇️ scroll to top on page load
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
   const slides = [
     {
       url: insta01,
@@ -27,6 +28,7 @@ function Blogs() {
   ];
   return (
     <div className={styles.blogs}>
+      <NavBar />
       <div className={styles.blogs__hero}>
         <div className={styles.blogsHero__content}>
           <div>
@@ -43,7 +45,11 @@ function Blogs() {
         style={{ "--gap": "16px" }}
       >
         <a href="/">Home</a>
-        <a href="#blog" className={styles.blogs__breadcrum_current} disabled>
+        <a
+          href="/#blogs"
+          className={styles.blogs__breadcrum_current}
+          disabled={true}
+        >
           Blog
         </a>
       </div>
@@ -88,6 +94,7 @@ function Blogs() {
           <ImageSlider slides={slides} />
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

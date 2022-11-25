@@ -2,10 +2,15 @@
 /* eslint-disable no-param-reassign */
 import React, { useState } from "react";
 import styles from "./style.module.scss";
-import { FaqComponent } from ".";
+import FaqComponent from "./FaqComponent";
 import { Hero } from "./assets";
-
+import Footer from "../../components/footer";
+import NavBar from "../../components/navBar";
 function FAQs() {
+  React.useEffect(() => {
+    // 👇️ scroll to top on page load
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
   const [faqs, setFaqs] = useState([
     {
       question: "How can I register?",
@@ -72,13 +77,14 @@ function FAQs() {
 
   return (
     <div className={styles.faq__wrapper}>
+      <NavBar />
       <div className={styles.faq__hero}>
         <div className={styles.faqHero__content}>
           <div>
             Get the answers you're looking for on <span>Scrybe</span>
           </div>
           <div>
-            <mg src={Hero} alt="" />
+            <img src={Hero} alt="" />
           </div>
         </div>
       </div>
@@ -101,6 +107,7 @@ function FAQs() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

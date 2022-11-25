@@ -1,31 +1,54 @@
-button {
+.sliderStyles {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  transition: all 400ms ease;
+}
+.slideStyle {
+  height: 100%;
+  width: 100%;
+}
+
+.rightArrowStyles,
+.leftArrowStyles {
   position: absolute;
-  border: none;
-  padding: 5px 15px;
-  font-size: 1.4rem;
-  font-weight: 300;
+  top: 50%;
+  translate: 0 -50%;
+  font-size: 45px;
+  z-index: 1;
+  background: rgba(94, 92, 92, 0.278);
+  border-radius: 10px;
+  padding: 0 20px;
   cursor: pointer;
-  background: rgba(129, 128, 128, 0.349);
   color: #fff;
-  &:first-child {
-    left: 2rem;
-  }
-  &:last-child {
-    right: 2rem;
+  transform: all 400ms ease;
+  &:hover {
+    scale: 1.05;
   }
 }
+.rightArrowStyles {
+  right: 10px;
+}
+
+.leftArrowStyles {
+  left: 10px;
+}
+
 .dot-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  div {
-    font-size: 45px;
-    color: #a9a9a9;
-    cursor: pointer;
-    margin-right: 10px;
-  }
+  user-select: none;
 }
 
+.dot {
+  scale: 2;
+  font-size: 2rem;
+  color: #a9a9a9;
+  cursor: pointer;
+  margin-right: 1rem;
+  transition: all 400ms ease;
+}
 .activeSlide {
   color: var(--primary-blue);
 }

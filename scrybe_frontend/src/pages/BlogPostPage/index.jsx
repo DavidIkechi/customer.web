@@ -8,10 +8,16 @@ import arrowRight from "./assets/arrow_right.svg";
 import utils from "./assets/utils.module.scss";
 import styles from "./styles.module.scss";
 import Button from "./Button";
+import NavBar from "../../components/navBar_free";
 
 function BlogPostPage() {
+  React.useEffect(() => {
+    // 👇️ scroll to top on page load
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
   return (
     <DefaultLayout>
+      <NavBar />
       <div
         className={`${styles.blogPostPage} ${utils.container} ${utils.d_grid}`}
         style={{ "--gap": "32px" }}
@@ -162,10 +168,12 @@ function BlogPostPage() {
 
           <h2>Market Research is:</h2>
 
-          <p>
-            Market research is the process of gathering information about the
-            market, typically in the form of direct questions. These details
-            could include, but are not limited to:
+          <div>
+            <p>
+              Market research is the process of gathering information about the
+              market, typically in the form of direct questions. These details
+              could include, but are not limited to:
+            </p>
             <ul>
               <li>Size of a market that can be served</li>
               <li>Marketing encroachment</li>
@@ -174,10 +182,12 @@ function BlogPostPage() {
               <li>Competitors</li>
               <li>gap or needs in the market</li>
             </ul>
-            General market research findings give a broad overview of a consumer
-            demographic. Brands utilize this data for a variety of purposes,
-            including deciding which markets to target and what products to
-            create next.
+            <p>
+              General market research findings give a broad overview of a
+              consumer demographic. Brands utilize this data for a variety of
+              purposes, including deciding which markets to target and what
+              products to create next.
+            </p>
             <br />
             Why is it important?
             <br />
@@ -185,7 +195,7 @@ function BlogPostPage() {
             frequently used as a follow-up to market research initiatives. If
             the analysis has recommendations and a story, you have insights.
             Actionable insights will result in growth.
-          </p>
+          </div>
 
           <p>
             General market research findings give a broad overview of a consumer
@@ -203,19 +213,21 @@ function BlogPostPage() {
 
           <h2 id="how-to-gather">Consumer Insights: How to Gather Them.</h2>
 
-          <p>
-            Raw data is the basis for all insights. When it comes to consumer
-            insights, you are analyzing raw customer data rather than market
-            trends or competitors. These open-ended data and often voice, text,
-            or video-based are analyzed by more sophisticated software to find
-            consumer insights. These data are gathered through;
+          <div>
+            <p>
+              Raw data is the basis for all insights. When it comes to consumer
+              insights, you are analyzing raw customer data rather than market
+              trends or competitors. These open-ended data and often voice,
+              text, or video-based are analyzed by more sophisticated software
+              to find consumer insights. These data are gathered through;
+            </p>
             <ul>
               <li>Interviews, chats, customer support recaps</li>
               <li>Monitoring website analytics</li>
               <li>Survey campaigns</li>
               <li>Social media input</li>
             </ul>
-          </p>
+          </div>
 
           <h2 id="use-consumer-insights">How to Use Consumer Insights.</h2>
 
