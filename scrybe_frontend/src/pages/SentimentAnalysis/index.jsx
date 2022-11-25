@@ -77,6 +77,7 @@ function SentimentAnalysis() {
           <SentimentAside
             isMobileAsideOpen={isMobileAsideOpen}
             closeFunction={closeSentimentTab}
+            sentimentData={sentimentData}
           />
         </div>
         <main className={styles.main__container}>
@@ -100,11 +101,15 @@ function SentimentAnalysis() {
           </span>
           <div className={styles.analysis__cards}>
             <AnalysisCard sentimentData={sentimentData} />
+            <AnalysisCard sentimentData={sentimentData} />
+            <AnalysisCard sentimentData={sentimentData} />
+            <AnalysisCard sentimentData={sentimentData} />
+            <AnalysisCard sentimentData={sentimentData} />
           </div>
         </main>
         <aside className={styles.aside__container}>
           <AudioCard />
-          <OverAllSentimentCard />
+          <OverAllSentimentCard sentimentData={sentimentData} />
           <VerdictCard />
           <PhraseTagCard tags={positiveTags} title={"Positive phrase tags"} />
           <PhraseTagCard tags={negativeTags} title={"Negative phrase tags"} />

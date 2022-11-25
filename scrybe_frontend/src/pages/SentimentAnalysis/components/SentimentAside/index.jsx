@@ -6,7 +6,7 @@ import shareIcon from "../../icons/share.svg";
 import arrowIcon from "../../icons/arrow_back.svg";
 import OverAllSentimentCard from "../OverallSentimentCard";
 
-function SentimentAside({ isMobileAsideOpen, closeFunction }) {
+function SentimentAside({ isMobileAsideOpen, closeFunction, sentimentData }) {
   const positiveTags = [
     "brave",
     "good",
@@ -50,7 +50,7 @@ function SentimentAside({ isMobileAsideOpen, closeFunction }) {
           <div className={styles.back__text}>Overall Sentiment</div>
         </div>
       </div>
-      <OverAllSentimentCard />
+      <OverAllSentimentCard sentimentData={sentimentData} />
       <div className={`${styles.verdict} ${styles.inner__container}`}>
         <div className={styles.verdict__item}>
           <div className={styles.verdict__title}>Agent Friendliness</div>
@@ -114,6 +114,7 @@ function SentimentAside({ isMobileAsideOpen, closeFunction }) {
 SentimentAside.propTypes = {
   isMobileAsideOpen: PropTypes.bool.isRequired,
   closeFunction: PropTypes.func.isRequired,
+  sentimentData: PropTypes.object.isRequired,
 };
 
 export default SentimentAside;

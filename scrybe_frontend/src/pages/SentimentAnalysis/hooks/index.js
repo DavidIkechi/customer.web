@@ -14,6 +14,9 @@ const useMockAuthAndReadSentiment = (id) => {
         .get(`http://scrybe.hng.tech:5000/audios/${id}/sentiment`, { headers })
         .then((newRes) => {
           setSentimentData(newRes.data);
+        })
+        .catch((err) => {
+          console.log(err);
         });
     });
   }, []);
