@@ -1,12 +1,14 @@
 
 from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form
+from fastapi_pagination import Page, paginate, Params
 from fastapi.middleware.cors import CORSMiddleware
 from routers.sentiment import sentiment
 from routers.transcribe import transcribe_file
+import auth
 from routers.score import score_count
 
 import models, json
-from auth import get_active_user
+from auth import get_active_user, get_current_user
 from jwt import (
     main_login
 )
@@ -20,7 +22,6 @@ from emails import send_email, verify_token
 from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
-from auth import get_current_user
 
 
 # Dependency
@@ -121,12 +122,14 @@ async def analyse(file: UploadFile=File(...)):
 #     # return token once the user has been successfully authenticated, or it returns an error.
 #     return await main_login(form_data, session)
 
+
 @app.post("/new_analyse", tags=['analyse'])
 async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Session = Depends(get_db), file: UploadFile=File(...), user: models.User = Depends(get_active_user)):
 
     # Create Agent
     user_id = user.id
     company_id = user.company_id
+    agent_name = "%s %s" %(first_name, last_name)
     db_agent = models.Agent(first_name=first_name, last_name=last_name, company_id=company_id)
 
     # Add Agent
@@ -162,6 +165,13 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     db.add(db_audio)
     db.commit()
     db.refresh(db_audio)
+
+    history_create: schema.HistoryCreate = {"user_id":user_id, 
+                                            "sentiment_result":overall_sentiment,
+                                            "agent_name": agent_name,
+                                            "audio_name": file.filename}
+
+    crud.create_history(db, history_create)
 
     return {"transcript": transcript, "sentiment_result": sentiment_result}
 
@@ -215,6 +225,68 @@ async def email_verification(request: Request, token: str, db: Session = Depends
 @app.patch("/user/update/{user_id}", response_model=schema.user_update)
 def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depends(get_db)):
      return crud.update_user(db=db, user=user, user_id=user_id)
+
+
+@app.get('/history/', response_model=Page[schema.History])
+async def get_history(user: models.User = Depends(get_current_user), db: Session = Depends(get_db), params: Params = Depends()):
+    user_history = paginate(crud.get_history_by_user_id(db, user.id), params)
+    if not user_history:
+            raise HTTPException(
+            status_code=404,
+            detail="The user's history doesn't exist",
+        )
+    return user_history
+
+        
+
+    
+@app.get("/new_analysis/{id}", response_model=schema.Analysis, tags=['analysis'])
+def get_sentiment_result(id: int, db: Session = Depends(get_db)):
+    """
+    Get single analysis
+    """
+    analysis = crud.get_analysis(db, id)
+    if not analysis:
+        raise HTTPException(
+            status_code=404,
+            detail="The analysis doesn't exist",
+        )
+    return analysis
+
+@app.get("/audios/", response_model=list[schema.Audio], tags=['audios'])
+def read_audios(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    audios = crud.get_audios(db, skip=skip, limit=limit)
+    return audios
+
+
+@app.get('/audios/{audio_id}/sentiment')
+def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    db_audio = crud.get_audio(db, audio_id=audio_id)
+    if db_audio is None:
+        raise HTTPException(status_code=404, detail="Sentiment does not exist")
+    else:
+        positivity_score = float(db_audio.positivity_score)
+        negativity_score = float(db_audio.negativity_score)
+        neutrality_score = float(db_audio.neutrality_score)
+        overall_sentiment = str(db_audio.overall_sentiment)
+        most_positive_sentences = json.loads(db_audio. most_positive_sentences)
+        most_negative_sentences = json.loads(db_audio. most_negative_sentences)
+        transcript = db_audio.transcript
+    sentiment = {"transcript": transcript,
+                 "positivity_score": positivity_score,
+                 "negativity_score": negativity_score,
+                 "neutrality_score": neutrality_score,
+                 "overall_sentiment": overall_sentiment,
+                 "most_positive_sentences": most_positive_sentences,
+                 "most_negative_sentences": most_negative_sentences,
+                 }
+    return sentiment
+
+#get recent recordings
+@app.get("/recent-recordings", response_model=list[schema.Recordings])
+def get_recent_recordings(skip: int = 0, limit: int = 5, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    recordings = db.query(models.Audio).filter(models.Audio.user_id == user.id).order_by(models.Audio.timestamp.desc()).offset(skip).limit(limit).all()
+    return recordings
 
 @app.get("/leaderboard", tags=['Agent Leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db)):

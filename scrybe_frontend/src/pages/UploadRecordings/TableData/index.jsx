@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import closeModalIcon from "./imgs/close-icon.svg";
 import deleteIcon from "./imgs/delete-icon.svg";
 import notfoundImg from "./imgs/notfound.svg";
+import dropdownIcon from "./imgs/select-arrow.svg";
 import soundwave from "./imgs/soundwave.svg";
 import uploadBtn_icon from "./imgs/uploadBtnIcon.svg";
 import styles from "./tabledata.module.scss";
@@ -86,6 +87,7 @@ const TableData = ({ searchKeyword }) => {
   const [recordCheckedList, setRecordCheckedList] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [recordingsProcessed, setRecordingsProcessed] = useState(false);
+  const [openDeletePopup, setOpenDeletePopup] = useState(false);
   const handleOpen = () => {
     setOpenModal(true);
   };
@@ -111,6 +113,7 @@ const TableData = ({ searchKeyword }) => {
     setAllRecordings(newRecordings);
     setRecordCheckedList([]);
     handleClose();
+    setOpenDeletePopup(false);
   };
 
   const deleteRecording = (id) => {
@@ -272,19 +275,43 @@ const TableData = ({ searchKeyword }) => {
           <div className={styles.uploaded_recordings_options}>
             <div className={styles.bulkbtn_calbackurl_wrap}>
               <div className={styles.bulkselect_wrap}>
-                <select
-                  name=""
-                  id=""
-                  className={styles.bulkselect}
-                  onChange={handleOpen}
+                <div
+                  className={`${styles.bulkselect} ${
+                    recordCheckedList.length > 0 && styles.selectionActive
+                  }`}
                 >
-                  <option value="">
-                    {recordCheckedList.length > 0
-                      ? `${recordCheckedList.length} Files Selected`
-                      : " Bulk Actions"}
-                  </option>
-                  {allRecordings.length > 2 && <option value="">Delete</option>}
-                </select>
+                  <div>
+                    {recordCheckedList.length > 0 ? (
+                      <p className={styles.selectActive}>
+                        {recordCheckedList.length} File(s) Selected
+                      </p>
+                    ) : (
+                      " Bulk Actions"
+                    )}
+                  </div>
+                  {recordCheckedList.length > 0 && (
+                    <img
+                      className={openDeletePopup ? styles.rotateIcon : ""}
+                      src={dropdownIcon}
+                      alt="down-arrow"
+                      onClick={() => setOpenDeletePopup(!openDeletePopup)}
+                    />
+                  )}
+                  {
+                    <div
+                      className={`${styles.bulkselect_children} ${
+                        openDeletePopup && styles.openPopup
+                      }`}
+                    >
+                      <p>
+                        {recordCheckedList.length > 0
+                          ? `${recordCheckedList.length} File(s) Selected`
+                          : " Bulk Actions"}
+                      </p>
+                      <p onClick={handleOpen}>Delete</p>
+                    </div>
+                  }
+                </div>
               </div>
               <div className={styles.calbackurl_wrap}>
                 <p>This process might take up to 20 minutes. </p>
