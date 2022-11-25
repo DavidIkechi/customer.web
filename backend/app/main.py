@@ -22,6 +22,13 @@ from starlette.requests import Request
 import fastapi as _fastapi
 from auth import get_current_user
 
+from fastapi import FastAPI,UploadFile, File
+import banana_dev as banana
+from dotenv import load_dotenv
+from io import BytesIO
+import base64
+import shutil
+import os
 
 # Dependency
 def get_db():
@@ -216,50 +223,14 @@ async def email_verification(request: Request, token: str, db: Session = Depends
 def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depends(get_db)):
      return crud.update_user(db=db, user=user, user_id=user_id)
 
-@app.get("/new_analysis/{id}", response_model=schema.Analysis, tags=['analysis'])
-def get_sentiment_result(id: int, db: Session = Depends(get_db)):
-    """
-    Get single analysis
-    """
-    analysis = crud.get_analysis(db, id)
-    if not analysis:
-        raise HTTPException(
-            status_code=404,
-            detail="The analysis doesn't exist",
-        )
-    return analysis
-
-@app.get("/audios/", response_model=list[schema.Audio], tags=['audios'])
-def read_audios(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    audios = crud.get_audios(db, skip=skip, limit=limit)
-    return audios
-
-
-@app.get('/audios/{audio_id}/sentiment')
-def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    db_audio = crud.get_audio(db, audio_id=audio_id)
-    if db_audio is None:
-        raise HTTPException(status_code=404, detail="Sentiment does not exist")
-    else:
-        positivity_score = float(db_audio.positivity_score)
-        negativity_score = float(db_audio.negativity_score)
-        neutrality_score = float(db_audio.neutrality_score)
-        overall_sentiment = str(db_audio.overall_sentiment)
-        most_positive_sentences = json.loads(db_audio. most_positive_sentences)
-        most_negative_sentences = json.loads(db_audio. most_negative_sentences)
-        transcript = db_audio.transcript
-    sentiment = {"transcript": transcript,
-                 "positivity_score": positivity_score,
-                 "negativity_score": negativity_score,
-                 "neutrality_score": neutrality_score,
-                 "overall_sentiment": overall_sentiment,
-                 "most_positive_sentences": most_positive_sentences,
-                 "most_negative_sentences": most_negative_sentences,
-                 }
-    return sentiment
-
-#get recent recordings
-@app.get("/recent-recordings", response_model=list[schema.Recordings])
-def get_recent_recordings(skip: int = 0, limit: int = 5, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    recordings = db.query(models.Audio).filter(models.Audio.user_id == user.id).order_by(models.Audio.timestamp.desc()).offset(skip).limit(limit).all()
-    return recordings
+@app.get("/leaderboard", tags=['Agent Leaderboard'])
+def get_agents_leaderboard(db: Session = Depends(get_db)):
+    results = db.execute("""SELECT agent_id, 
+        SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score, 
+        SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score, 
+        SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
+        (positivity_score/(positivity_score+negativity_score+neutrality_score) * 10) AS Avergae_score 
+    FROM audios GROUP BY agent_id 
+    ORDER BY Positive_score DESC""")
+    leaderboard = [dict(r) for r in results]
+    return {"Agents Leaderboard": leaderboard}
