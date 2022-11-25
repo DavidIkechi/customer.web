@@ -44,6 +44,8 @@ class Job(JobBase):
 class AudioBase(BaseModel):
     audio_path: str
     transcript: str
+    size: int
+    duration: int
     timestamp: datetime
     positivity_score: float
     negativity_score : float
@@ -95,3 +97,12 @@ class Company(CompanyBase):
 
 class Analysis(AudioBase):
     pass
+
+class Recordings(BaseModel):
+    audio_path: str
+    size: int
+    duration: int
+    timestamp: datetime
+
+    class Config:
+        orm_mode = True

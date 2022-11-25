@@ -1,0 +1,123 @@
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&display=swap");
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
+  font-family: "Kanit", sans-serif;
+}
+
+.sect__container {
+  width: 90%;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.first__section {
+  margin-top: 3em;
+}
+.first__section .first__heading {
+  width: 100%;
+}
+.first__section .first__heading .first__head {
+  font-size: 1rem;
+  color: #313131;
+  font-weight: 600;
+  fill: solid;
+  line-height: 1.5rem;
+}
+
+.second__section {
+  margin-top: 1em;
+}
+.second__section .left__container .left__hero {
+  text-align: center;
+}
+.second__section .left__container .left__date {
+  margin-bottom: 0.5em;
+}
+.second__section .left__container .date__month, .second__section .left__subtext .left__text {
+  font-size: 0.7rem;
+  color: #313131;
+  font-weight: 300;
+  font-style: light;
+  fill: solid;
+  line-height: 1rem;
+}
+.second__section .desktop__text {
+  display: none;
+}
+.second__section .left__subtext {
+  margin-bottom: 2em;
+}
+.second__section hr {
+  background-color: #eee;
+  border: 0 none;
+  color: #eee;
+  height: 1px;
+}
+
+.desktop__view {
+  display: none;
+}
+
+.right__container {
+  margin: 1em auto 3em;
+  width: 95%;
+}
+.right__container .right__heading {
+  margin-bottom: 2em;
+}
+.right__container .right__heading .right__head {
+  font-size: 1.2rem;
+  color: #313131;
+  font-weight: 500;
+  font-style: medium;
+  fill: solid;
+  line-height: 1rem;
+}
+.right__container .article__container {
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: column;
+}
+.right__container .article__heading .article__head {
+  font-size: 0.9rem;
+  color: #313131;
+  font-weight: 600;
+  font-style: bold;
+  fill: solid;
+  line-height: 1.2rem;
+}
+.right__container .article__subtext .article__text {
+  font-size: 0.7rem;
+  color: #313131;
+  font-weight: 300;
+  font-style: light;
+  fill: solid;
+  line-height: 1.2rem;
+}
+.right__container .article__details {
+  display: flex;
+  align-items: center;
+}
+.right__container .article__details .read__more {
+  font-size: 0.6rem;
+  color: #313131;
+  font-weight: 400;
+  font-style: light;
+  fill: solid;
+  line-height: 1rem;
+}
+.right__container .article__details .arrowleft {
+  width: 0.7rem;
+  margin-left: 0.2em;
+}/*# sourceMappingURL=pressArticle.module.css.map */

@@ -1,14 +1,10 @@
 
 from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form
+from fastapi.middleware.cors import CORSMiddleware
 from routers.sentiment import sentiment
 from routers.transcribe import transcribe_file
 from routers.score import score_count
-# from jwt import (
-#     main_login
-# )
-#from jwt import (
-#    main_login
-#)
+
 import models, json
 from auth import get_active_user
 from jwt import (
@@ -21,9 +17,11 @@ from sqlalchemy.orm import Session
 import crud, schema
 
 from emails import send_email, verify_token
+from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
 from auth import get_current_user
+
 
 # Dependency
 def get_db():
@@ -61,6 +59,27 @@ app = FastAPI(
 )
 
 
+origins = [
+    "http://localhost",
+    "http://localhost:80",
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "http://localhost:8000",
+    "https://scrybe.hng.tech",
+    "https://scrybe.hng.tech:80",
+    "https://scrybe.hng.tech:3000",
+    "https://scrybe.hng.tech:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 @app.get("/")
 async def ping():
     return {"message": "Scrybe Up"}
@@ -86,7 +105,7 @@ async def analyse(file: UploadFile=File(...)):
     positivity_score = sentiment_result['positivity_score']
     neutrality_score = sentiment_result['neutrality_score']
     overall_sentiment = sentiment_result['overall_sentiment']
-   
+
 
     return {"transcript": transcript, "sentiment_result": sentiment_result}
 
@@ -124,6 +143,8 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     finally:
         file.file.close()
 
+    size = audio_details(file.filename)["size"]
+    duration = audio_details(file.filename)["mins"]
     transcript = transcribe_file(file.filename)
     transcript = transcript
 
@@ -134,9 +155,9 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     neutrality_score = sentiment_result['neutrality_score']
     overall_sentiment = sentiment_result['overall_sentiment']
     most_negative_sentences = sentiment_result['most_negative_sentences']
-    most_positive_sentences = sentiment_result ['most_positive_sentences']
+    most_positive_sentences = sentiment_result ['most_postive_sentences']
 
-    db_audio = models.Audio(audio_path=file.filename, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, most_negative_sentences = most_negative_sentences, most_positive_sentences = most_positive_sentences, agent_id=db_agent.id)
+    db_audio = models.Audio(audio_path=file.filename, user_id=user_id, size=size, duration=duration, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, most_negative_sentences = most_negative_sentences, most_positive_sentences = most_positive_sentences, agent_id=db_agent.id)
 
     db.add(db_audio)
     db.commit()
@@ -157,7 +178,7 @@ async def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):
 
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
-    
+
     await send_email([user.email], user)
     return crud.create_user(db=db, user=user)
 
@@ -173,7 +194,7 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     db_user = crud.get_user(db, user_id=user_id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
-  
+
     return db_user
 
 
@@ -228,23 +249,17 @@ def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.Us
         most_negative_sentences = json.loads(db_audio. most_negative_sentences)
         transcript = db_audio.transcript
     sentiment = {"transcript": transcript,
-                 "positivity_score": positivity_score, 
-                 "negativity_score": negativity_score, 
-                 "neutrality_score": neutrality_score, 
+                 "positivity_score": positivity_score,
+                 "negativity_score": negativity_score,
+                 "neutrality_score": neutrality_score,
                  "overall_sentiment": overall_sentiment,
                  "most_positive_sentences": most_positive_sentences,
                  "most_negative_sentences": most_negative_sentences,
                  }
     return sentiment
 
-@app.get("/leaderboard")
-def get_agents_leaderboard(db: Session = Depends(get_db)):
-    results = db.execute("""SELECT agent_id, 
-        SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score, 
-        SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score, 
-        SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
-        (positivity_score/(positivity_score+negativity_score+neutrality_score) * 10) AS Avergae_score 
-    FROM audios GROUP BY agent_id 
-    ORDER BY Positive_score DESC""")
-    leaderboard = [dict(r) for r in results]
-    return {"Agents Leaderboard": leaderboard}
+#get recent recordings
+@app.get("/recent-recordings", response_model=list[schema.Recordings])
+def get_recent_recordings(skip: int = 0, limit: int = 5, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    recordings = db.query(models.Audio).filter(models.Audio.user_id == user.id).order_by(models.Audio.timestamp.desc()).offset(skip).limit(limit).all()
+    return recordings
