@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&display=swap');
+
+*, *::before, *::after {
+    margin: 0;
+	padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
+  font-family: 'Kanit', sans-serif;
+}
+
+.sect__container {
+    width: 90%;
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+// Styling of the section one
+
+.first__section {
+    margin-top: 3em;
+
+    .first__heading {
+        width: 100%;
+    }
+
+    .first__heading .first__head {
+        font-size: 1rem;
+        color: #313131;
+        font-weight: 600;
+        fill: solid;
+        line-height: 1.5rem;
+    }
+}
+
+
+// Styling of the section two
+
+// Styling of the left container of section two
+
+.second__section {
+    margin-top: 1em;
+    
+
+    .left__container .left__hero {
+        text-align: center;
+    }
+
+    .left__container .left__date {
+        margin-bottom: .5em;
+    }
+
+    .left__container .date__month, .left__subtext .left__text {
+        font-size: .7rem;
+        color: #313131;
+        font-weight: 300;
+        font-style: light;
+        fill: solid;
+        line-height: 1rem;
+    }
+
+    .desktop__text {
+        display: none;
+    }
+
+    .left__subtext {
+        margin-bottom: 2em;
+    }
+
+    hr {
+        background-color: #eee;
+        border: 0 none;
+        color: #eee;
+        height: 1px;
+    }
+}
+
+
+// Styling of the right container of section two
+
+.desktop__view {
+    display: none;
+}
+
+.right__container {
+    margin: 1em auto 3em;
+    width: 95%;
+
+    .right__heading {
+        margin-bottom: 2em;
+    }
+
+    .right__heading .right__head {
+        font-size: 1.2rem;
+        color: #313131;
+        font-weight: 500;
+        font-style: medium;
+        fill: solid;
+        line-height: 1rem;
+    }
+
+    .article__container {
+        margin-bottom: 1em;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .article__heading .article__head {
+        font-size: .9rem;
+        color: #313131;
+        font-weight: 600;
+        font-style: bold;
+        fill: solid;
+        line-height: 1.2rem;
+    }
+
+    .article__subtext .article__text {
+        font-size: .7rem;
+        color: #313131;
+        font-weight: 300;
+        font-style: light;
+        fill: solid;
+        line-height: 1.2rem;
+    }
+
+    .article__details {
+        display: flex;
+        align-items: center;
+    }
+
+    .article__details .read__more {
+        font-size: .6rem;
+        color: #313131;
+        font-weight: 400;
+        font-style: normal;
+        fill: solid;
+        line-height: 1rem;
+        text-decoration: none;
+        list-style: none;
+    }
+
+    .article__details .arrowleft {
+        width: .7rem;
+        margin-left: .2em;
+    }
+}
+
+
+
+@media (min-width: 768px) {
+    // Styling of the section one
+
+    .first__section {
+        margin-top: 3em;
+
+        .first__heading {
+            width: 65%;
+        }
+
+        .first__heading .first__head {
+            font-size: 1.3rem;
+        }
+    }
+
+
+    // Styling of the section two
+
+    .second__section {
+
+        .desktop__text {
+            display: inherit;
+            white-space: none;
+        }
+
+        .second__flex {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .left__container {
+            width: 60%;
+            margin-top: 1em;
+        }
+
+        .right__container {
+            width: 30%;
+            border: 1px solid #eeee;
+            padding: 2em 0 0 .8em;
+        }
+
+        .left__container .left__hero {
+            text-align: unset;
+        }
+
+        .left__hero .hero__icon {
+            width: 100%;
+        }
+
+        hr {
+            visibility: none;
+        }
+
+        // Styling of the right container of section two
+
+        .desktop__view {
+            display: inline-block;
+            margin-bottom: .5em;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article__container {
+            margin-bottom: .5em;
+        }
+
+        .right__heading {
+            margin-bottom: 1em;
+        }
+
+        .right__heading .right__head {
+            font-size: .9rem;
+        }
+
+        .article__heading .article__head {
+            font-size: .8rem;
+        }
+
+        .article__details .read__more {
+            font-size: .6.5rem;
+            font-weight: 300;
+        }
+    }
+}

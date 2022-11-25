@@ -9,6 +9,7 @@
   box-shadow: -2px 0px 20px rgba(48, 48, 48, 0.205);
   transform: translateX(100%);
   transition: transform 0.3s ease-in-out;
+  color: black;
   cursor: auto;
 
   @include mediaQuery(768px) {

@@ -1,13 +1,14 @@
 from datetime import datetime
 from enum import Enum
 from typing import List, Optional
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Extra
 
 class UserBase(BaseModel):
     first_name: str
     last_name: str
     email: str
     created_at: datetime
+
 
 class UserCreate(UserBase):
     company_name: str
@@ -22,6 +23,11 @@ class User(UserBase):
 
     class Config:
         orm_mode = True
+
+class user_update(BaseModel):
+    firstname: str
+    lastname: str
+    email: EmailStr
 
 class JobBase(BaseModel):
     job_status: str
@@ -38,11 +44,16 @@ class Job(JobBase):
 class AudioBase(BaseModel):
     audio_path: str
     transcript: str
+    size: int
+    duration: int
     timestamp: datetime
     positivity_score: float
     negativity_score : float
     neutrality_score : float
     overall_sentiment: str
+    most_positive_sentences: list
+    most_negative_sentences: list
+
 class AudioCreate(AudioBase):
     pass
 
@@ -84,3 +95,14 @@ class Company(CompanyBase):
     class Config:
         orm_mode = True
 
+class Analysis(AudioBase):
+    pass
+
+class Recordings(BaseModel):
+    audio_path: str
+    size: int
+    duration: int
+    timestamp: datetime
+
+    class Config:
+        orm_mode = True

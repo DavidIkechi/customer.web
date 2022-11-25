@@ -28,11 +28,27 @@ def create_user(db: Session, user: schema.User):
     company_id = randint(0, 1000000)
     while (get_company(db, company_id) is not None):
         company_id = randint(0, 1000000)
-    
+
     # create the company.
     create_company(db, user.company_name, company_id)
     # create the user.
     db_user = models.User(first_name=user.first_name, last_name=user.last_name, email=user.email, password=pwd_context.hash(user.password), company_id = company_id)
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+def update_user(db: Session, user: schema.user_update, user_id: int):
+    # Getting the current user
+    db_user = get_user(
+        db = db,
+        user_id=user_id
+        )
+    if not db_user:
+        raise HTTPException(status_code=404, detail="user not found")
+    user_data = user.dict(exclude_unset=True)
+    for key, value in user_data.items():
+            setattr(db_user, key, value)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
@@ -48,8 +64,8 @@ def get_company(db: Session, company_id: int):
     return db.query(models.Company).filter(models.Company.id == company_id).first()
 
 def create_audio(db: Session, audio: schema.Audio, agent_id: int):
-    db_audio = models.Audio(audio_path=audio.audio_path, transcript=audio.transcript, timestamp=audio.timestamp, positivity_score=audio.positivity_score, 
-    negativity_score=audio.negativity_score, neutrality_score=audio.neutrality_score, overall_sentiment=audio.overall_sentiment, agent_id=agent_id)
+    db_audio = models.Audio(audio_path=audio.audio_path, size=audio.size, duration=audio.duration, transcript=audio.transcript, timestamp=audio.timestamp, positivity_score=audio.positivity_score,
+    negativity_score=audio.negativity_score, neutrality_score=audio.neutrality_score, overall_sentiment=audio.overall_sentiment, most_positive_sentences =audio.most_positive_sentences, most_negative_sentences = audio.most_negative_sentences, agent_id=agent_id)
     db.add(db_audio)
     db.commit()
     db.refresh(db_audio)
@@ -77,10 +93,19 @@ def get_agent(db: Session, agent_id: int):
 def get_agents_by_company_id(db: Session, company_id: int):
     return db.query(models.Agent).filter(models.Agent.company_id == company_id).all()
 
-def create_agent(db: Session, agent: schema.Agent, user_id: int):
-    db_agent = models.Agent(first_name=agent.first_name, last_name=agent.last_name, company_id=user_id)
+def create_agent(db: Session, agent: schema.Agent, company_id: int):
+    db_agent = models.Agent(first_name=agent.first_name, last_name=agent.last_name, company_id=company_id)
     db.add(db_agent)
     db.commit()
     db.refresh(db_agent)
     return db_agent
 
+def create_analysis(db, result= schema.Audio, user_id=int):
+    db_analysis = models.Audio(transcript = result.transcript, positivity_score= result.positivity_score, negativity_score= result.negativity_score, overall_sentiment= result.overall_sentiment)
+    db.add(db_analysis)
+    db.commit()
+    db.refresh(db_analysis)
+    return db_analysis
+
+def get_analysis(db: Session, analysis_id = int):
+    return db.query(models.Analysis).filter(models.Analysis == analysis_id).first()

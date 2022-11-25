@@ -1,0 +1,72 @@
+@use "../../../../functions.scss" as *;
+
+.customer {
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                gap: pix-rem(36);
+                padding-inline: pix-rem(16);
+                flex-wrap: nowrap;
+                @include media(1000px){
+                        flex-wrap: wrap;
+                }
+                position: relative;
+                width: 100%;
+                padding-inline: pix-rem(16);
+                &__img {
+                        max-width: pix-rem(331.84);
+                }
+                &__details {
+                        position: relative;
+                        &__quote_r {
+                                position: absolute;
+                                right: 0;
+                                bottom: pix-rem(-40);
+                        }
+                        &__quote_l {
+                                position: absolute;
+                                left: pix-rem(-32);
+                                @include media(1058px) {
+                                        top: pix-rem(-24);
+                                        left: pix-rem(16);
+                                }
+                        }
+                        padding-top: pix-rem(15);
+                        max-width: pix-rem(700);
+                        &__msg {
+                                padding-top: pix-rem(60);
+                                font-size: clamp(0.875rem, 0.693rem + 0.91vw, 1.375rem);
+                                white-space: normal;
+                                @include media(1100px){
+                                        padding-top: 0;
+                                }
+                        }
+                        &__author {
+                                font-size: pix-rem(20);
+                                font-weight: bold;
+                        }
+                        &__role {
+                                font-weight: bold;
+                                color: #0095e8;
+                                font-size: pix-rem(24);
+                                display: block;
+                        }
+                        .indicators {
+                                display: flex;
+                                gap: pix-rem(16);
+                                justify-content: center;
+                                & > * {
+                                        width: pix-rem(24);
+                                        background-color: grey;
+                                        aspect-ratio: 1;
+                                        border-radius: 50%;
+                                }
+                                &__active {
+                                        width: pix-rem(42);
+                                        aspect-ratio: 2/1;
+                                        border-radius: pix-rem(18);
+                                        background-color: #54a4ff;
+                                }
+                        }
+                }
+        }

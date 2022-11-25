@@ -1,0 +1,26 @@
+@import "../../../../assets/styles/utilities/functionsANDmedia";
+
+.tags {
+  flex-direction: column;
+
+  .title {
+    font-size: clamp(pix-rem(16), 1vw, pix-rem(36));
+    font-weight: 400;
+    color: #535353;
+  }
+
+  .tag__items {
+    display: flex;
+    gap: pix-rem(36);
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    li {
+      font-size: clamp(pix-rem(16), 0.7vw, pix-rem(32));
+      padding: pix-rem(2) pix-rem(20);
+      background-color: #e6eef399;
+      border-radius: 1em;
+      cursor: pointer;
+    }
+  }
+}
