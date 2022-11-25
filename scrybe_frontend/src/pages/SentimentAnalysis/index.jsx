@@ -11,7 +11,6 @@ import VerdictCard from "./components/VerdictCard";
 import PhraseTagCard from "./components/PhraseTagCard";
 import SideBar from "../../components/SideBar";
 import { useMockEnd } from "./hooks";
-import { useEffect } from "react";
 
 function SentimentAnalysis() {
   const [isMobileAsideOpen, setIsMobileAsideOpen] = useState(false);
@@ -128,9 +127,13 @@ function SentimentAnalysis() {
               total.negativity_score /= senti.length;
 
               const sentimentData = { ...total };
-              return <OverAllSentimentCard sentimentData={sentimentData} />;
+              return (
+                <>
+                  <OverAllSentimentCard sentimentData={sentimentData} />
+                  <VerdictCard sentimentData={sentimentData} />
+                </>
+              );
             })()}
-          <VerdictCard />
           <PhraseTagCard tags={positiveTags} title={"Positive phrase tags"} />
           <PhraseTagCard tags={negativeTags} title={"Negative phrase tags"} />
         </aside>
