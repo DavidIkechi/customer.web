@@ -5,8 +5,9 @@
                 justify-content: center;
                 align-items: flex-start;
                 gap: pix-rem(36);
+                padding-inline: pix-rem(16);
                 flex-wrap: nowrap;
-                @include media(590px){
+                @include media(1000px){
                         flex-wrap: wrap;
                 }
                 position: relative;
