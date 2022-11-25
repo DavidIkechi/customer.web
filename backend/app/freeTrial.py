@@ -12,8 +12,6 @@ app = FastAPI()
 
 load_dotenv()
 
-api_key = os.getenv("API_KEY")
-model_key = os.getenv("MODEL_KEY")
 
 @app.post("/tryForFree")
 async def free_trial(file: UploadFile = File(...)):
