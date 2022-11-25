@@ -1,12 +1,12 @@
 import React from "react";
 
-// import styles from "../../styles/Industry/industry.module.css";
-// import IndustryCard from "../../components/Industry/industryCard";
+import styles from "./industry.module.scss";
+import IndustryCard from "./components/IndustryCard";
 
 function Industry() {
   return (
-    <>
-      {/* <div className={styles.container}>
+    <div className={styles.industry}>
+      <div className={styles.container}>
         <div className={styles.navbar}>
           <img src="" alt="" />
         </div>
@@ -18,8 +18,8 @@ function Industry() {
           </p>
         </div>
         <IndustryCard />
-    </div> */}
-    </>
+      </div>
+    </div>
   );
 }
 

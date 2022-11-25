@@ -1,5 +1,5 @@
 import "./App.scss";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import AgentReport from "./pages/AgentReport";
 import SentimentAnalysis from "./pages/SentimentAnalysis";
 import DummyPage from "./pages/DummyPage";
@@ -15,8 +15,11 @@ import Events from "./pages/Events/Events";
 import HelpSupport from "./pages/HelpAndSupport/HelpSupport";
 import About from "./pages/AboutUs/About";
 import TryForFree from "./pages/TryForFree";
-import Industry from "./pages/indsutry/industry";
-import HowitWorks from "./pages/HowItWorks/HowItWorks";
+import Press from "./pages/PressPage";
+import PressArticle from "./pages/PressArticle";
+import Industry from "./pages/Industry";
+import IndustryArticles from "./pages/Industry/IndustryArticles/IndustryArticle1";
+import HowitWorks from "./pages/HowItWorks";
 import UploadedRecordings from "./pages/UploadRecordings";
 import Account from "./pages/Account";
 import Signin from "./pages/SignIn/SignIn";
@@ -27,7 +30,7 @@ import Successful from "./pages/Successful/Successful";
 import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
-import FAQs from "./pages/FaqsPage/FaqComponent";
+import FAQs from "./pages/FaqsPage";
 import LeaderboardPage from "./pages/LeaderBoard/Leaderboard";
 import Reviews from "./pages/Reviews/Reviews";
 import TryProcessing from "./pages/TryForFree/tryProcessing";
@@ -35,6 +38,10 @@ import TryResults from "./pages/TryForFree/tryResults";
 import TermsOfService from "./pages/TermsOfService";
 import Blogs from "./pages/BlogsPage";
 import BlogPostPage from "./pages/BlogPostPage";
+import SettingsIndex from "./pages/Settings/SettingsIndex";
+import AccountSettings from "./pages/Settings/SettingsPageSubPages/AccountSettings/AccountSettings";
+import NotificationSettings from "./pages/Settings/SettingsPageSubPages/Notifications/NotificationSettings";
+import PersonalInformation from "./pages/Settings/SettingsPageSubPages/PersonalInformation/PersonalInformationSettings";
 
 function App() {
   return (
@@ -53,7 +60,8 @@ function App() {
       <Route path="/events" element={<Events />} />
       <Route path="/dashboard" element={<DashboardOverview />} />
       <Route path="/accounts" element={<Account />} />
-      <Route path="/industry" element={<Industry />} />
+      <Route path="/industry" exact element={<Industry />} />
+      <Route path="/industry-article" element={<IndustryArticles />} />
       <Route path="/how-it-works" element={<HowitWorks />} />
       {/* leaderboard */}
       <Route path="/leaderboard" element={<LeaderboardPage />} />
@@ -94,8 +102,7 @@ function App() {
       <Route path="/agent-report" element={<AgentReport />} />
 
       {/* ROutes without working paths */}
-      <Route path="/press" element={<DummyPage someText="press" />} />
-      <Route path="/settings" element={<DummyPage someText="settings" />} />
+
       <Route
         path="/uploaded"
         element={<DummyPage someText="uploaded recordings" />}
@@ -114,6 +121,20 @@ function App() {
       {/* Try Routes */}
       <Route path="/try-processing" element={<TryProcessing />} />
       <Route path="/try-results" element={<TryResults />} />
+
+      {/* Settings Pages */}
+      <Route path="/settings" element={<SettingsIndex />} />
+      <Route path="settings/account-security" element={<AccountSettings />} />
+      <Route path="settings/notifications" element={<NotificationSettings />} />
+
+      <Route
+        path="settings/personal-information"
+        element={<PersonalInformation />}
+      />
+
+      {/* Press  */}
+      <Route path="press" element={<Press />} />
+      <Route path="press-article" element={<PressArticle />} />
     </Routes>
   );
 }

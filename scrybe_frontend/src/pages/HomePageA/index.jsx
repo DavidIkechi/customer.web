@@ -3,10 +3,10 @@ import styles from "./landingpage.module.scss";
 import aboutUsimage from "./assets/Group 1000000931.webp";
 import Footer from "../../components/footer";
 import NavBarFree from "../../components/navBar_free";
-import Hero from "./heroSection";
+import Hero from "./HeroSection";
 import CustomerReview from "./CustomerReview";
 import BrandsLogo from "./BrandLogos";
-import FaqElement from "./faqElement";
+import FaqElement from "./FaqElement";
 import upLoadAudio from "./assets/upload-photo.svg";
 import sentiment from "./assets/rafiki.svg";
 import transcribe from "./assets/transcrib-text.svg";
@@ -112,7 +112,7 @@ function HomePage() {
           <h2 className={styles.faq__h2}>
             FREQUENTLY ASKED <span>QUESTIONS</span>{" "}
           </h2>
-          <div className={styles.faq_faqs}>
+          <div className={`${styles.faq_faqs} ${styles.faq_container}`}>
             <FaqElement question="How do I register on Scrybe?" />
             <FaqElement question="What are the limitations of free package?" />
             <FaqElement question="What format can i use for uploads?" />
@@ -131,7 +131,7 @@ function HomePage() {
             Subscribe To Our Newsletter And Get Newest industry Updates
           </h1>
           <form className={styles.subscribe__form}>
-            <input type="text" />
+            <input type="email" placeholder="Email Address" required />
             <button
               type="submit"
               href="https://www.w3schools.com/react/react_css.asp"

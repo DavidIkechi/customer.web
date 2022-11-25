@@ -6,7 +6,7 @@ import Footer from "../../../../components/footer/index";
 
 import { Link } from "react-router-dom";
 
-const Notification = () => {
+const NotificationSettings = () => {
   const cardDetails = [
     {
       title: "Stay Up-to-date",
@@ -188,4 +188,4 @@ const Notification = () => {
   );
 };
 
-export default Notification;
+export default NotificationSettings;

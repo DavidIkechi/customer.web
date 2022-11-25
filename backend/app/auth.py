@@ -116,6 +116,6 @@ async def get_admin(db: Session = Depends(_services.get_session), token: str = D
                 headers={"WWW-Authenticate": "Bearer"},
             )
     
-    return user_email.is_admin
+    return user_email
 
          
