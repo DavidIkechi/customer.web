@@ -1,30 +1,30 @@
 import React from "react";
 import styles from "./About.module.scss";
-import Footer from "../../components/footer"
-import NavBar from "../../components/navBar"
+import Footer from "../../components/footer";
+import NavBar from "../../components/navBar";
 
- import image1 from "./assets/image1.svg";
+import image1 from "./assets/image1.svg";
 import icon1 from "./assets/icon1.svg";
- import icon2 from "./assets/icon2.svg";
- import icon3 from "./assets/icon3.svg";
- import icon4 from "./assets/icon4.svg";
- import partner1 from "./assets/partner1.svg";
- import partner2 from "./assets/partner2.svg";
- import partner3 from "./assets/partner3.svg";
- import partner4 from "./assets/partner4.svg";
- import team1 from "./assets/team1.png";
- import team2 from "./assets/team2.png";
- import team3 from "./assets/team3.png";
- import team4 from "./assets/team4.png";
- import team5 from "./assets/team5.png";
- import team6 from "./assets/team6.png";
- import team7 from "./assets/team7.png";
- import team8 from "./assets/team8.png";
+import icon2 from "./assets/icon2.svg";
+import icon3 from "./assets/icon3.svg";
+import icon4 from "./assets/icon4.svg";
+import partner1 from "./assets/partner1.svg";
+import partner2 from "./assets/partner2.svg";
+import partner3 from "./assets/partner3.svg";
+import partner4 from "./assets/partner4.svg";
+import team1 from "./assets/team1.png";
+import team2 from "./assets/team2.png";
+import team3 from "./assets/team3.png";
+import team4 from "./assets/team4.png";
+import team5 from "./assets/team5.png";
+import team6 from "./assets/team6.png";
+import team7 from "./assets/team7.png";
+import team8 from "./assets/team8.png";
 
 function About() {
   return (
     <div className="App" data-testid="app-container">
-   <NavBar/>
+      <NavBar />
       <div className={`${styles.container} ${styles.hero}`}>
         <div className={styles.row}>
           <div className={styles.contain}>
@@ -85,7 +85,7 @@ function About() {
                 <div className={styles.heading__icon}>
                   <h4>Teamwork</h4>
                   {/* <img src={icon1} alt="" /> */}
-                  <img src={icon1} alt="" /> 
+                  <img src={icon1} alt="" />
                 </div>
                 <p>
                   The foundation of Scrybe is Teamwork. Every person in every
@@ -101,7 +101,7 @@ function About() {
                 <div className={styles.heading__icon}>
                   <h4>Creativity</h4>
                   {/* <img src={icon2} alt="" /> */}
-                  <img src={icon2} alt="" /> 
+                  <img src={icon2} alt="" />
                 </div>
                 <p>
                   We are a team of creative and innovative people who think
@@ -202,7 +202,7 @@ function About() {
 
               <div className={styles.col}>
                 {/* <img src={team5} alt="" /> */}
-                <img src={team5} alt="" /> 
+                <img src={team5} alt="" />
                 <h5>Ugochukwu Odumegwu</h5>
                 <p>Back-End Lead</p>
               </div>
@@ -229,7 +229,7 @@ function About() {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
