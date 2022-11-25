@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import dummyData from "./DummyData";
 import accountStyles from "./account.module.scss";
 import profileImage from "./assets/images/profile-image.png";
 import chevronLeft from "./assets/icons/chevron-left.svg";
@@ -10,6 +12,24 @@ function Account() {
   const toggleAccountModal = () => {
     setAccountModalIsActive((current) => !current);
   };
+
+  const [accountUser, setAccountUser] = useState(null);
+
+  async function getUser() {
+    let user;
+    try {
+      const response = await axios.get("http://scrybe.hng.tech:5000/account");
+      user = response;
+    } catch (error) {
+      user = dummyData;
+    } finally {
+      setAccountUser(user);
+    }
+  }
+
+  useEffect(() => {
+    getUser();
+  });
 
   return (
     <div className={accountStyles.account__container}>
