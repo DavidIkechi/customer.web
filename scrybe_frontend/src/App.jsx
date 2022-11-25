@@ -60,7 +60,7 @@ function App() {
       <Route path="/about-us" element={<About />} />
       <Route path="/events" element={<Events />} />
       <Route path="/dashboard" element={<DashboardOverview />} />
-      <Route path="/accounts" element={<Account />} />
+      <Route path="/account" element={<Account />} />
       <Route path="/industry" exact element={<Industry />} />
       <Route path="/industry-article" element={<IndustryArticles />} />
       <Route path="/how-it-works" element={<HowitWorks />} />
