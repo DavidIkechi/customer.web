@@ -23,20 +23,20 @@ function Signin() {
     console.log(errors);
 
     axios
-        .post(`http://scrybe.hng.tech:5000/login`, data)
-        .then((res) => {
-          console.log(res)
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      .post("http://scrybe.hng.tech:5000/login", data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // Watch event for disable button
-  const username = watch("username");
+  const email = watch("email");
   const password = watch("password");
 
-  const isValid = username && password;
+  const isValid = email && password;
 
   return (
     <>
@@ -48,13 +48,13 @@ function Signin() {
             <h1>Welcome back, Scryber!</h1>
             <h3>Please enter your details</h3>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <label htmlFor="username">Email</label>
+              <label htmlFor="email">Email</label>
               <input
                 type="email"
-                id="username"
+                id="email"
                 placeholder="Enter your company email"
-                className={`${errors.username && styles.errorInput}} `}
-                {...register("username", {
+                className={`${errors.email && styles.errorInput}} `}
+                {...register("email", {
                   required: "Email is required",
                   pattern: {
                     value: /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i,
@@ -62,7 +62,7 @@ function Signin() {
                   },
                 })}
               />
-              <p className={styles.errorMsg}>{errors.username?.message}</p>
+              <p className={styles.errorMsg}>{errors.email?.message}</p>
               <label htmlFor="password">Password</label>
               <input
                 type="password"

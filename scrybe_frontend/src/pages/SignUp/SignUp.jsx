@@ -8,25 +8,28 @@ import styles from "./SignUp.module.scss";
 // import { useMockUser } from "./hooks/hook";
 
 function Signup() {
-
-  const { register, handleSubmit, watch, formState: { errors },
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
   } = useForm();
 
   /* eslint-disable no-unused-vars */
   const [userInfo, setUserInfo] = useState();
   /* eslint-enable no-unused-vars */
-  const onSubmit = (data) => {    
+  const onSubmit = (data) => {
     console.log(data);
     setUserInfo(data);
     console.log(errors);
     axios
-        .post(`http://scrybe.hng.tech:5000/users/`, data)
-        .then((res) => {
-          console.log(res)
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      .post("http://scrybe.hng.tech:5000/users/", data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // Watch event for disable button
@@ -53,7 +56,9 @@ function Signup() {
                 id="first_name"
                 placeholder="Enter your first name"
                 className={`${errors.first_name && styles.errorInput} `}
-                {...register("first_name", { required: "First Name is required" })}
+                {...register("first_name", {
+                  required: "First Name is required",
+                })}
               />
               <p className={styles.errorMsg}>{errors.first_name?.message}</p>
 
@@ -63,7 +68,9 @@ function Signup() {
                 id="last_name"
                 placeholder="Enter your last name"
                 className={`${errors.last_name && styles.errorInput} `}
-                {...register("last_name", { required: "Last Name is required" })}
+                {...register("last_name", {
+                  required: "Last Name is required",
+                })}
               />
               <p className={styles.errorMsg}>{errors.last_name?.message}</p>
 
