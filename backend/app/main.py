@@ -21,6 +21,7 @@ from sqlalchemy.orm import Session
 import crud, schema
 
 from emails import send_email, verify_token
+from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
 from auth import get_current_user
@@ -76,7 +77,7 @@ async def analyse(file: UploadFile=File(...)):
         return {"error": "There was an error uploading the file"}
     finally:
         file.file.close()
-
+    
     transcript = transcribe_file(file.filename)
     transcript = transcript
 
@@ -124,6 +125,8 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     finally:
         file.file.close()
 
+    size = audio_details(file.filename)["size"]
+    duration = audio_details(file.filename)["mins"]
     transcript = transcribe_file(file.filename)
     transcript = transcript
 
@@ -134,9 +137,9 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     neutrality_score = sentiment_result['neutrality_score']
     overall_sentiment = sentiment_result['overall_sentiment']
     most_negative_sentences = sentiment_result['most_negative_sentences']
-    most_positive_sentences = sentiment_result ['most_positive_sentences']
+    most_positive_sentences = sentiment_result ['most_postive_sentences']
 
-    db_audio = models.Audio(audio_path=file.filename, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, most_negative_sentences = most_negative_sentences, most_positive_sentences = most_positive_sentences, agent_id=db_agent.id)
+    db_audio = models.Audio(audio_path=file.filename, user_id=user_id, size=size, duration=duration, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, most_negative_sentences = most_negative_sentences, most_positive_sentences = most_positive_sentences, agent_id=db_agent.id)
 
     db.add(db_audio)
     db.commit()
@@ -237,14 +240,8 @@ def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.Us
                  }
     return sentiment
 
-@app.get("/leaderboard")
-def get_agents_leaderboard(db: Session = Depends(get_db)):
-    results = db.execute("""SELECT agent_id, 
-        SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score, 
-        SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score, 
-        SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
-        (positivity_score/(positivity_score+negativity_score+neutrality_score) * 10) AS Avergae_score 
-    FROM audios GROUP BY agent_id 
-    ORDER BY Positive_score DESC""")
-    leaderboard = [dict(r) for r in results]
-    return {"Agents Leaderboard": leaderboard}
+#get recent recordings
+@app.get("/recent-recordings", response_model=list[schema.Recordings])
+def get_recent_recordings(skip: int = 0, limit: int = 5, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    recordings = db.query(models.Audio).filter(models.Audio.user_id == user.id).order_by(models.Audio.timestamp.desc()).offset(skip).limit(limit).all()
+    return recordings
