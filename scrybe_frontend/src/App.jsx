@@ -17,7 +17,6 @@ import About from "./pages/AboutUs/About";
 import TryForFree from "./pages/TryForFree";
 import Press from "./pages/PressPage";
 import PressArticle from "./pages/PressArticle";
-import PartnersPage from "./pages/PartnersPage";
 import Industry from "./pages/Industry";
 import IndustryArticles from "./pages/Industry/IndustryArticles/IndustryArticle1";
 import HowitWorks from "./pages/HowItWorks";
@@ -136,7 +135,6 @@ function App() {
       {/* Press  */}
       <Route path="press" element={<Press />} />
       <Route path="press-article" element={<PressArticle />} />
-      <Route path="partners" element={<PartnersPage />} />
     </Routes>
   );
 }
