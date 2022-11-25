@@ -1,9 +1,24 @@
 .uploadedRecordingsParent {
   width: 100%;
   display: flex;
-  // background: #000;
+  position: relative;
 
   .uploadedRecordingsCol {
     width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow-y: scroll;
   }
+}
+
+.sidebaroverlay {
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  background: rgba(18, 18, 18, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }

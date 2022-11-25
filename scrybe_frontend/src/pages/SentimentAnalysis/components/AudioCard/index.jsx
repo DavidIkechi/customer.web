@@ -3,9 +3,9 @@ import styles from "./AudioCard.module.scss";
 import audioIcon from "../../icons/audio_icon.svg";
 import AsideCard from "../AsideCard";
 
-function AudioCard() {
+function AudioCard(props) {
   return (
-    <AsideCard classType={styles.audio__file}>
+    <AsideCard classtype={styles.audio__file} {...props}>
       <div className={styles.audio__icon__container}>
         <img src={audioIcon} alt="audio icon" />
       </div>
