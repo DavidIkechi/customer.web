@@ -10,9 +10,17 @@ import OverAllSentimentCard from "./components/OverallSentimentCard";
 import VerdictCard from "./components/VerdictCard";
 import PhraseTagCard from "./components/PhraseTagCard";
 import SideBar from "../../components/SideBar";
+import { useMockAuthAndReadSentiment } from "./hooks";
+import { useEffect } from "react";
 
 function SentimentAnalysis() {
   const [isMobileAsideOpen, setIsMobileAsideOpen] = useState(false);
+  const sentimentData = useMockAuthAndReadSentiment(1);
+
+  useEffect(() => {
+    console.log(sentimentData);
+  }, [sentimentData]);
+
   const positiveTags = [
     "brave",
     "good",
@@ -69,6 +77,7 @@ function SentimentAnalysis() {
           <SentimentAside
             isMobileAsideOpen={isMobileAsideOpen}
             closeFunction={closeSentimentTab}
+            sentimentData={sentimentData}
           />
         </div>
         <main className={styles.main__container}>
@@ -91,18 +100,16 @@ function SentimentAnalysis() {
             </div>
           </span>
           <div className={styles.analysis__cards}>
-            <AnalysisCard />
-            <AnalysisCard />
-            <AnalysisCard />
-            <AnalysisCard />
-            <AnalysisCard />
-            <AnalysisCard />
-            <AnalysisCard />
+            <AnalysisCard sentimentData={sentimentData} />
+            <AnalysisCard sentimentData={sentimentData} />
+            <AnalysisCard sentimentData={sentimentData} />
+            <AnalysisCard sentimentData={sentimentData} />
+            <AnalysisCard sentimentData={sentimentData} />
           </div>
         </main>
         <aside className={styles.aside__container}>
           <AudioCard />
-          <OverAllSentimentCard />
+          <OverAllSentimentCard sentimentData={sentimentData} />
           <VerdictCard />
           <PhraseTagCard tags={positiveTags} title={"Positive phrase tags"} />
           <PhraseTagCard tags={negativeTags} title={"Negative phrase tags"} />
