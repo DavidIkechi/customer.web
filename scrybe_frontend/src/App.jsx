@@ -13,7 +13,7 @@ import Solutions from "./pages/Solutions/Solutions";
 import DashboardOverview from "./pages/DashboardOverview";
 import Events from "./pages/Events/Events";
 import HelpSupport from "./pages/HelpAndSupport/HelpSupport";
-import About from "./pages/AboutUs/About";
+import About from "./pages/AboutUs";
 import TryForFree from "./pages/TryForFree";
 import Press from "./pages/PressPage";
 import PressArticle from "./pages/PressArticle";
@@ -42,6 +42,7 @@ import SettingsIndex from "./pages/Settings/SettingsIndex";
 import AccountSettings from "./pages/Settings/SettingsPageSubPages/AccountSettings/AccountSettings";
 import NotificationSettings from "./pages/Settings/SettingsPageSubPages/Notifications/NotificationSettings";
 import PersonalInformation from "./pages/Settings/SettingsPageSubPages/PersonalInformation/PersonalInformationSettings";
+import PartnersPage from "./pages/PartnersPage";
 
 function App() {
   return (
@@ -59,7 +60,7 @@ function App() {
       <Route path="/about-us" element={<About />} />
       <Route path="/events" element={<Events />} />
       <Route path="/dashboard" element={<DashboardOverview />} />
-      <Route path="/accounts" element={<Account />} />
+      <Route path="/account" element={<Account />} />
       <Route path="/industry" exact element={<Industry />} />
       <Route path="/industry-article" element={<IndustryArticles />} />
       <Route path="/how-it-works" element={<HowitWorks />} />
@@ -134,6 +135,7 @@ function App() {
 
       {/* Press  */}
       <Route path="press" element={<Press />} />
+      <Route path="/partners" element={<PartnersPage />} />
       <Route path="press-article" element={<PressArticle />} />
     </Routes>
   );

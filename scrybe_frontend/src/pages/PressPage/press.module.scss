@@ -7,7 +7,7 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
 }
 
 .sect__container {
-    width: 90%;
+    width: 95%;
     max-width: 1024px;
     margin: 0 auto;
 }
@@ -18,8 +18,17 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
 .section__one {
     margin-top: 3em;
 
+    .hero__heading {
+        display: flex;
+        align-items: center;
+    }
+
+    .hero__heading .head__dot {
+        margin-top: .8em;
+    }
+
     .hero__head{
-        font-size: 1.25rem;
+        font-size: 1.5rem;
         color: #313131;
         font-weight: 600;
         fill: solid;
@@ -59,7 +68,7 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
     }
 
     .ban__heading .ban__head {
-        font-size: 1rem;
+        font-size: 1.5rem;
         color: #FEFEFE;
         font-weight: 600;
         font-style: bold;
@@ -68,7 +77,7 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
     }
 
     .ban__subhead .ban__subtext {
-        font-size: .7rem;
+        font-size: .8rem;
         color: #FEFEFE;
         font-weight: 300;
         font-style: light;
@@ -115,12 +124,13 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
     }
 
     .three__top {
-        margin: 1em 0;
-        width: 80%;
+        display: flex;
+        justify-content: center;
+        margin: 1.5em 0;
     }
 
     .three__heading {
-        font-size: .7rem;
+        font-size: 1rem;
         color: #313131;
         font-weight: 600;
         font-style: bold;
@@ -128,34 +138,26 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
         line-height: 1.2rem;
     }
 
-    .three__bottom {
-        width: 58%;
+    .threemobile__bottom {
+        display: flex;
+        justify-content: space-between;
+        width: 60%;
         margin: 0 auto;
     }
 
-    .three__sep {
-        width: 50%;
-        margin-left: .8em;
-    }
-
-    .three__bottom .three__flex {
+    .threemobile__bottom .three__flex {
         display: flex;
-        justify-content: space-between;
-        margin-bottom: 1em;
-        width: 70%;
+        flex-direction: column;
+        width: 40%;
     }
 
     .three__each {
-        width: 45%;
         border-bottom: 1px solid #ECECEC;
         text-align: center;
+        margin-bottom: 1em;
     }
 
-    .three__each .three__sep {
-        border-bottom: 1px solid #ECECEC;
-    }
-
-    .three__each .three__head, .three__sep .three__head {
+    .three__each .three__head {
         font-size: .8rem;
         color: #313131;
         font-weight: 600;
@@ -164,7 +166,7 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
         line-height: 1.2rem;
     }
 
-    .three__each .three__text, .three__sep .three__text {
+    .three__each .three__text {
         padding-bottom: 1em;
         font-size: .6rem;
         color: #313131;
@@ -194,8 +196,9 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
     }
 
     .four__cards {
-        width: 60%;
-        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         position: relative;
     }
 
@@ -234,7 +237,9 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
     .banner__details {
         margin-top: .4em;
         position: absolute;
-        right: 5%;
+        right: 10%;
+        display: flex;
+        align-items: center;
     }
 
     .banner__details .banner__read {
@@ -354,19 +359,23 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
 
 
 
-@media (min-width: 825px) {
+@media (min-width: 805px) {
 
     // Styling of the section one
 
     .section__one {
         margin-top: 3em;
 
+        .hero__heading .head__dot {
+        margin-top: 1.5em;
+    }
+
         .hero__head{
-            font-size: 2rem;
+            font-size: 2.5rem;
         }
 
         .hero__subhead .hero__subtext {
-            font-size: .8rem;
+            font-size: 1.2rem;
             font-weight: 500;
             font-style: medium;
         }
@@ -386,7 +395,7 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
         }
 
         .ban__heading .ban__head {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             line-height: 2.5rem;
         }
 
@@ -407,7 +416,7 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
         }
 
         .banner__details .banner__read {
-            font-size: .8rem;
+            font-size: 1rem;
         }
 
         .banner__details .arrowpoint {
@@ -453,7 +462,7 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
         }
 
         .three__heading {
-            font-size: 1rem;
+            font-size: 1.5rem;
             color: #313131;
             font-weight: 600;
             font-style: bold;
@@ -461,37 +470,26 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
             line-height: 1.2rem;
         }
 
-        .three__bottom {
-            width: 100%;
-            margin: 0;
+        .threedesk__bottom {
+            display: flex;
+            justify-content: space-around;
         }
 
         .three__bottom .three__flex {
             display: flex;
-            justify-content: space-between;
-            width: 100%;
+            flex-direction: column;
         }
 
         .three__each {
-            width: 30%;
             border-bottom: 1px solid #ECECEC;
         }
 
-        .three__flexed {
-            display: flex;
+        .three__each .three__head {
+            font-size: 1.2rem;
         }
 
-        .three__sep {
-            text-align: center;
-        }
-
-        .three__each .three__head, .three__sep .three__head {
-            font-size: 1rem;
-        }
-
-        .three__each .three__text, .three__sep .three__text {
-            font-size: .8rem;
-            padding-bottom: 1em;
+        .three__each .three__text {
+            font-size: .9rem;
         }
     }
 
@@ -506,10 +504,13 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
             margin-bottom: 1em;
         }
 
+        .four__heading .four__head {
+            font-size: 1.5rem;
+        }
+
         .four__cards {
-            width: 100%;
-            margin: 0;
             display: flex;
+            flex-direction: row;
             justify-content: space-between;
         }
 
@@ -522,6 +523,10 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
     // Styling of the section five
 
         .section__five {
+
+            .five__top .point__link {
+                font-size: 1.5rem;
+            }
 
             .five__bottom {
                 display: none;
@@ -552,7 +557,7 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
             }
 
             .five__desktop .five__articles .five__head {
-                font-size: .7rem;
+                font-size: 1rem;
                 color: #313131;
                 font-weight: 600;
                 font-style: bold;
@@ -561,12 +566,12 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
             }
 
             .five__desktop .five__articles .five__subtext {
-                margin-top: .5em;
+                margin-top: .7em;
                 width: 100%;
             }
 
             .five__desktop .five__articles .five__texts {
-                font-size: .6rem;
+                font-size: .8rem;
                 color: #313131;
                 font-weight: 300;
                 font-style: light;
@@ -577,10 +582,11 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
             .five__desktop .five__articles .more__details {
                 display: flex;
                 align-items: center;
+                margin-top: 1em;
             }
 
             .five__desktop .five__articles .read__more {
-                font-size: .5rem;
+                font-size: .8rem;
                 color: #313131;
                 font-weight: 300;
                 font-style: light;
@@ -595,4 +601,12 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
 
         }
 
+}
+
+@media (min-width: 950px), (min-width: 1440px) {
+    .section__two {
+        .banner__details {
+            right: -7%;
+        }
+    }
 }
