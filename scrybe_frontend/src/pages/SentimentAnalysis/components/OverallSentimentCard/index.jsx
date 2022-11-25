@@ -6,8 +6,7 @@ import PropTypes from "prop-types";
 
 function OverAllSentimentCard(props) {
   const { sentimentData } = props;
-  const [sentimentDataFormatted, setSentimentDataFormatted] = useState();
-
+  const [sentimentDataFormatted, setSentimentDataFormatted] = useState({});
   useEffect(() => {
     setSentimentDataFormatted({
       labels: ["Positive", "Neutral", "Negative"],
@@ -28,7 +27,10 @@ function OverAllSentimentCard(props) {
   return (
     <AsideCard classtype={`${styles.overall__sentiment}`}>
       <div className={styles.title}>Overall sentiment</div>
-      {Object.keys(sentimentData).length > 0 ? (
+      {!isNaN(sentimentData.positivity_score) &&
+      !isNaN(sentimentData.neutrality_score) &&
+      !isNaN(sentimentData.negativity_score) &&
+      sentimentDataFormatted["datasets"] !== undefined ? (
         <DoughnutChart data={sentimentDataFormatted} />
       ) : (
         ""

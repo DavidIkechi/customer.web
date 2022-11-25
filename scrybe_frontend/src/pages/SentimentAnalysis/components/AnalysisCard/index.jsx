@@ -4,7 +4,15 @@ import styles from "./AnalysisCard.module.scss";
 function AnalysisCard({ sentimentData }) {
   return (
     <div className={styles.card}>
-      <div className={styles.time}>00:00</div>
+      <div className={styles.time}>
+        {parseInt(sentimentData.time / 60)
+          .toString()
+          .padStart(2, "0") +
+          ":" +
+          Math.round(sentimentData.time % 60)
+            .toString()
+            .padEnd(2, "0")}
+      </div>
       <div className={styles.content}>
         <div className={styles.content__text}>{sentimentData.transcript}</div>
         <div className={styles.content__analysis}>
