@@ -63,10 +63,12 @@ origins = [
     "http://localhost",
     "http://localhost:80",
     "http://localhost:3000",
+    "http://localhost:5173",
     "http://localhost:8000",
     "https://scrybe.hng.tech",
     "https://scrybe.hng.tech:80",
     "https://scrybe.hng.tech:3000",
+    "https://scrybe.hng.tech:5173",
 ]
 
 app.add_middleware(
