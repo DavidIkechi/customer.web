@@ -15,7 +15,7 @@ import NavBar from "../../components/navBar";
 import Footer from "../../components/footer";
 import input__ctrl from "../PartnersPage/assets/input__ctrl.png";
 
-const index = () => {
+const PartnersPage = () => {
   return (
     <div>
       <div>
@@ -404,4 +404,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default PartnersPage;
