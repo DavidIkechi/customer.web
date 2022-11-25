@@ -1,5 +1,5 @@
 import "./App.scss";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import AgentReport from "./pages/AgentReport";
 import SentimentAnalysis from "./pages/SentimentAnalysis";
 import DummyPage from "./pages/DummyPage";
@@ -17,9 +17,9 @@ import About from "./pages/AboutUs";
 import TryForFree from "./pages/TryForFree";
 import Press from "./pages/PressPage";
 import PressArticle from "./pages/PressArticle";
-import Industry from "./pages/Industry";
-import IndustryArticles from "./pages/Industry/IndustryArticles/IndustryArticle1";
-import HowitWorks from "./pages/HowItWorks";
+// import Industry from "./pages/Industry";
+// import IndustryArticles from "./pages/Industry/IndustryArticles/IndustryArticle1";
+// import HowitWorks from "./pages/HowItWorks";
 import UploadedRecordings from "./pages/UploadRecordings";
 import Account from "./pages/Account";
 import Signin from "./pages/SignIn/SignIn";
@@ -42,6 +42,7 @@ import SettingsIndex from "./pages/Settings/SettingsIndex";
 import AccountSettings from "./pages/Settings/SettingsPageSubPages/AccountSettings/AccountSettings";
 import NotificationSettings from "./pages/Settings/SettingsPageSubPages/Notifications/NotificationSettings";
 import PersonalInformation from "./pages/Settings/SettingsPageSubPages/PersonalInformation/PersonalInformationSettings";
+import PartnersPage from "./pages/PartnersPage";
 
 function App() {
   return (
@@ -59,10 +60,10 @@ function App() {
       <Route path="/about-us" element={<About />} />
       <Route path="/events" element={<Events />} />
       <Route path="/dashboard" element={<DashboardOverview />} />
-      <Route path="/accounts" element={<Account />} />
-      <Route path="/industry" exact element={<Industry />} />
-      <Route path="/industry-article" element={<IndustryArticles />} />
-      <Route path="/how-it-works" element={<HowitWorks />} />
+      <Route path="/account" element={<Account />} />
+      {/* <Route path="/industry" exact element={<Industry />} /> */}
+      {/* <Route path="/industry-article" element={<IndustryArticles />} />
+      <Route path="/how-it-works" element={<HowitWorks />} /> */}
       {/* leaderboard */}
       <Route path="/leaderboard" element={<LeaderboardPage />} />
       <Route path="/terms" element={<TermsAndCondition />} />
@@ -134,6 +135,7 @@ function App() {
 
       {/* Press  */}
       <Route path="press" element={<Press />} />
+      <Route path="/partners" element={<PartnersPage />} />
       <Route path="press-article" element={<PressArticle />} />
     </Routes>
   );
