@@ -3,10 +3,15 @@ import { Link } from "react-router-dom";
 import styles from "./pressArticle.module.scss";
 import pressArtIcon from "./assets/pressArtIcon.png";
 import arrowLeft from "./assets/arrow__left.png";
+import NavBar from "../../components/navBar";
+import Footer from "../../components/footer";
 
 const index = () => {
   return (
     <div>
+      <div>
+        <NavBar />
+      </div>
       <section className={styles.first__section}>
         <div className={styles.sect__container}>
           <div className={styles.first__heading}>
@@ -239,6 +244,9 @@ const index = () => {
           </div>
         </div>
       </section>
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 };
