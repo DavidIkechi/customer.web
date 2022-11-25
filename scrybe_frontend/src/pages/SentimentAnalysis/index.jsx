@@ -99,13 +99,7 @@ function SentimentAnalysis() {
             </div>
           </span>
           <div className={styles.analysis__cards}>
-            <AnalysisCard />
-            <AnalysisCard />
-            <AnalysisCard />
-            <AnalysisCard />
-            <AnalysisCard />
-            <AnalysisCard />
-            <AnalysisCard />
+            <AnalysisCard sentimentData={sentimentData} />
           </div>
         </main>
         <aside className={styles.aside__container}>
