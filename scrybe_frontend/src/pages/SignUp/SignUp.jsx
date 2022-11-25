@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
@@ -34,6 +35,28 @@ function Signup() {
 
   const isValid = fullname && email && company && password;
 
+  // Login SetUp
+  const [myEmail, setEmail] = useState("");
+  const [myPassword, setPassword] = useState("");
+  const [, setToken] = useContext(UserContext);
+
+  // Submit Registration
+  const submitRegistration = async () => {
+    const requestOptions = {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({email: email, hashed_password: password})
+    }
+      const response = await fetch("/api/users", requestOptions);
+      const data = await response.json();
+
+      if (!response.ok) {
+        setErrorMessage(data.detail);
+      } else {
+        setToken(data.access_token)
+      }
+  }
+
   return (
     <>
       <main className={styles.signUpWrapper}>
@@ -41,7 +64,7 @@ function Signup() {
           <div className={styles.first}>
             <h1>Create an account</h1>
             <h3>Let’s get you started</h3>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} >
               <label htmlFor="fullname">Full name</label>
               <input
                 type="text"
@@ -58,6 +81,7 @@ function Signup() {
                 type="email"
                 name="email"
                 id="email"
+                value={email}
                 placeholder="Enter your company email"
                 className={`${errors.email && styles.errorInput} `}
                 {...register("email", {
@@ -67,7 +91,7 @@ function Signup() {
                     message: "Please enter a correct company email address",
                   },
                 })}
-              />
+               />
               <p className={styles.errorMsg}>{errors.email?.message}</p>
 
               <label htmlFor="company">Company</label>
@@ -88,6 +112,7 @@ function Signup() {
                 type="password"
                 name="password"
                 id="password"
+                value={password}
                 placeholder="Enter your password"
                 className={`${errors.password && styles.errorInput} `}
                 {...register("password", {
@@ -97,7 +122,7 @@ function Signup() {
                     message: "Password must be at least 8 characters",
                   },
                 })}
-              />
+                onChange={(e) => setPassword(e.target.value)} />
               <p className={styles.errorMsg}>{errors.password?.message}</p>
 
               <input

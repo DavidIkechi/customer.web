@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { UserContext } from "../../context/UserContext";
 import { NavLink } from "react-router-dom";
 import styles from "./nav.module.scss";
 import logo from "../../assets/scrybe_logo_with_text.svg";
 
 function NavBar() {
+  const [token, setToken] = useContext(UserContext);
+
+  const handleLogout = () => {
+    setToken(null);
+  }
+
   const [clicked, setClicked] = useState(false);
 
   function handleClick() {
     setClicked((pre) => !pre);
   }
   return (
+    <>
     <nav className={styles.nav}>
       <div className={` ${styles.nav_content}`}>
         <div className={styles.nav__img}>
@@ -25,14 +33,19 @@ function NavBar() {
             <NavLink to="/services">Service</NavLink>
             <NavLink to="/solutions">Solutions</NavLink>
             <NavLink to="/"> Pricing </NavLink>
-            <NavLink to="/"> Industry</NavLink>
-            <NavLink to="/">About Us</NavLink>
+            <NavLink to="/industry"> Industry</NavLink>
+            <NavLink to="/about-us">About Us</NavLink>
           </div>
           <div className={styles.nav__ctas}>
-            <button type="button">Login</button>
-            <button type="button">
-              <NavLink to="/terms">Upgrade Plan</NavLink>
-            </button>
+            {
+            !token ? (
+              <>
+              <NavLink to="/signin"><button type="button" className="firstBtn">Login</button></NavLink>
+              <NavLink to="/terms"><button type="button" className="secondBtn">Upgrade Plan</button></NavLink>
+              </>
+            ) : (
+              token && (<button onClick={handleLogout}>Logout</button>)
+            )}
           </div>
 
           <div className={styles.nav__ctl}>
@@ -73,6 +86,7 @@ function NavBar() {
         </svg>
       </div>
     </nav>
+    </>
   );
 }
 
