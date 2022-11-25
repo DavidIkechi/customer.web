@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
@@ -20,16 +21,22 @@ function Signin() {
     console.log(data);
     setUserInfo(data);
     console.log(errors);
+
+    axios
+        .post(`http://scrybe.hng.tech:5000/login`, data)
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err) => {
+          console.log(err);
+        });
   };
 
   // Watch event for disable button
-  const email = watch("email");
+  const username = watch("username");
   const password = watch("password");
 
-  console.log("email", email);
-  console.log("password", password);
-
-  const isValid = email && password;
+  const isValid = username && password;
 
   return (
     <>
@@ -41,14 +48,13 @@ function Signin() {
             <h1>Welcome back, Scryber!</h1>
             <h3>Please enter your details</h3>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <label htmlFor="email">Email</label>
+              <label htmlFor="username">Email</label>
               <input
                 type="email"
-                name="email"
-                id="email"
+                id="username"
                 placeholder="Enter your company email"
-                className={`${errors.email && styles.errorInput}} `}
-                {...register("email", {
+                className={`${errors.username && styles.errorInput}} `}
+                {...register("username", {
                   required: "Email is required",
                   pattern: {
                     value: /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i,
@@ -56,7 +62,7 @@ function Signin() {
                   },
                 })}
               />
-              <p className={styles.errorMsg}>{errors.email?.message}</p>
+              <p className={styles.errorMsg}>{errors.username?.message}</p>
               <label htmlFor="password">Password</label>
               <input
                 type="password"
