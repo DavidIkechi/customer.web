@@ -222,3 +222,15 @@ async def email_verification(request: Request, token: str, db: Session = Depends
 @app.patch("/user/update/{user_id}", response_model=schema.user_update)
 def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depends(get_db)):
      return crud.update_user(db=db, user=user, user_id=user_id)
+
+@app.get("/leaderboard", tags=['Agent Leaderboard'])
+def get_agents_leaderboard(db: Session = Depends(get_db)):
+    results = db.execute("""SELECT agent_id, 
+        SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score, 
+        SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score, 
+        SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
+        (positivity_score/(positivity_score+negativity_score+neutrality_score) * 10) AS Avergae_score 
+    FROM audios GROUP BY agent_id 
+    ORDER BY Positive_score DESC""")
+    leaderboard = [dict(r) for r in results]
+    return {"Agents Leaderboard": leaderboard}
