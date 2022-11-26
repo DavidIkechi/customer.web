@@ -1,20 +1,39 @@
-from io import BytesIO
-import base64
-import banana_dev as banana
+import requests
+from . import utility as utils
 from dotenv import load_dotenv
 import os
 
-# Load all environment variables
 load_dotenv()
 
-api_key = os.getenv("API_KEY")
-model_key = os.getenv("MODEL_KEY")
-
 def transcribe_file(filename):
-    with open(filename, "rb") as file:
-        # Load audio file
-        mp3bytes = BytesIO(file.read())
-        mp3 = base64.b64encode(mp3bytes.getvalue()).decode("ISO-8859-1")
-        model_payload = {"mp3BytesString": mp3}
-        out = banana.run(api_key, model_key, model_payload)
-        return out['modelOutputs'][0]['text']
+    # Create header with authorization along with content-type
+   audio_to_word = get_transcript(filename)
+   
+   return audio_to_word 
+    
+    
+    
+def get_transcript(filename):
+    header = {
+        'authorization': os.getenv("ASSEMBLY_KEY"),
+        'content-type': 'application/json'
+    }
+    upload_url = utils.upload_file(filename, header)
+     # Request a transcription
+    transcript_response = utils.request_transcript(upload_url, header)
+
+    # Create a polling endpoint that will let us check when the transcription is complete
+    polling_endpoint = utils.make_polling_endpoint(transcript_response)
+    # Wait until the transcription is complete
+    utils.wait_for_completion(polling_endpoint, header)
+
+    # Request the paragraphs of the transcript
+    paragraphs = utils.get_paragraphs(polling_endpoint, header)
+
+    # Save and print transcript
+    new_paragraph = ""
+    for para in paragraphs:
+        new_paragraph += para['text'] + " "
+    
+
+    return new_paragraph

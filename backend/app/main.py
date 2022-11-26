@@ -57,9 +57,9 @@ app = FastAPI(
     description=description,
     version="0.0.1",
     openapi_tags=tags_metadata,
-    docs_url="/api/docs",
-    redoc_url="/api/redoc",
-    openapi_url="/api/openapi.json"
+    docs_url="/docs",
+    redoc_url="/redoc",
+    openapi_url="/openapi.json"
 )
 
 
@@ -84,12 +84,12 @@ app.add_middleware(
 )
 
 
-@app.get("/api")
+@app.get("/")
 async def ping():
     return {"message": "Scrybe Up"}
 
 
-@app.post("/api/analyse", tags=['analyse'])
+@app.post("/analyse", tags=['analyse'])
 async def analyse(file: UploadFile=File(...)):
     try:
         contents = file.file.read()
@@ -114,7 +114,7 @@ async def analyse(file: UploadFile=File(...)):
     return {"transcript": transcript, "sentiment_result": sentiment_result}
 
 
-@app.post("/api/new_analyse", tags=['analyse'])
+@app.post("/new_analyse", tags=['analyse'])
 async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Session = Depends(get_db), file: UploadFile=File(...), user: models.User = Depends(get_active_user)):
 
     # Create Agent
@@ -168,13 +168,13 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
 
 
 # create the endpoint
-@app.post('/api/login', summary = "create access token for logged in user", tags=['users'])
+@app.post('/login', summary = "create access token for logged in user", tags=['users'])
 async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     # return token once the user has been successfully authenticated, or it returns an error.
     return await main_login(form_data, db)
 
 
-@app.post("/api/users", summary = "create/register a user", response_model=schema.User, tags=['users'])
+@app.post("/users", summary = "create/register a user", response_model=schema.User, tags=['users'])
 async def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
 
@@ -185,13 +185,13 @@ async def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):
     return crud.create_user(db=db, user=user)
 
 
-@app.get("/api/users", summary = "get all users", response_model=list[schema.User], tags=['users'])
+@app.get("/users", summary = "get all users", response_model=list[schema.User], tags=['users'])
 def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     users = crud.get_users(db, skip=skip, limit=limit)
     return users
 
 
-@app.get("/api/users/{user_id}", summary = "get user by id", response_model=schema.User, tags=['users'])
+@app.get("/users/{user_id}", summary = "get user by id", response_model=schema.User, tags=['users'])
 def read_user(user_id: int, db: Session = Depends(get_db)):
     db_user = crud.get_user(db, user_id=user_id)
     if db_user is None:
@@ -200,7 +200,7 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     return db_user
 
 
-@app.get('/api/verification', summary = "verify a user by email", tags=['users'])
+@app.get('/verification', summary = "verify a user by email", tags=['users'])
 async def email_verification(request: Request, token: str, db: Session = Depends(get_db)):
 
     user = await verify_token(token, db)
@@ -214,12 +214,12 @@ async def email_verification(request: Request, token: str, db: Session = Depends
             "data" : f"Hello {user.first_name}, your account has been successfully verified"}
 
 
-@app.patch("/api/user/update/{user_id}", summary = "update user details", response_model=schema.user_update, tags=['users'])
+@app.patch("/user/update/{user_id}", summary = "update user details", response_model=schema.user_update, tags=['users'])
 def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depends(get_db)):
      return crud.update_user(db=db, user=user, user_id=user_id)
 
 
-@app.get('/api/history', summary = "get user history", response_model=Page[schema.History])
+@app.get('/history', summary = "get user history", response_model=Page[schema.History])
 async def get_history(user: models.User = Depends(get_current_user), db: Session = Depends(get_db), params: Params = Depends()):
     user_history = paginate(crud.get_history_by_user_id(db, user.id), params)
     if not user_history:
@@ -230,7 +230,7 @@ async def get_history(user: models.User = Depends(get_current_user), db: Session
     return user_history
 
 
-@app.get("/api/new_analysis/{id}", summary = "get result of a sentiment analysis", response_model=schema.Analysis, tags=['analysis'])
+@app.get("/new_analysis/{id}", summary = "get result of a sentiment analysis", response_model=schema.Analysis, tags=['analysis'])
 def get_sentiment_result(id: int, db: Session = Depends(get_db)):
     """
     Get single analysis
@@ -244,13 +244,13 @@ def get_sentiment_result(id: int, db: Session = Depends(get_db)):
     return analysis
 
 
-@app.get("/api/audios", summary = "get all audio uploads", response_model=list[schema.Audio], tags=['audios'])
+@app.get("/audios", summary = "get all audio uploads", response_model=list[schema.Audio], tags=['audios'])
 def read_audios(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     audios = crud.get_audios(db, skip=skip, limit=limit)
     return audios
 
 
-@app.get('/api/audios/{audio_id}/sentiment')
+@app.get('/audios/{audio_id}/sentiment')
 def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     db_audio = crud.get_audio(db, audio_id=audio_id)
     if db_audio is None:
@@ -275,13 +275,13 @@ def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.Us
 
 
 #get recent recordings
-@app.get("/api/recent-recordings", summary = "get user recent recording upload", response_model=list[schema.Recordings])
+@app.get("/recent-recordings", summary = "get user recent recording upload", response_model=list[schema.Recordings])
 def get_recent_recordings(skip: int = 0, limit: int = 5, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     recordings = db.query(models.Audio).filter(models.Audio.user_id == user.id).order_by(models.Audio.timestamp.desc()).offset(skip).limit(limit).all()
     return recordings
 
 
-@app.get("/api/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
+@app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db)):
     results = db.execute("""SELECT agent_id,
         SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score,
@@ -294,7 +294,7 @@ def get_agents_leaderboard(db: Session = Depends(get_db)):
     return {"Agents Leaderboard": leaderboard}
 
 
-@app.get("/api/account", summary = "get user profile details", tags=['users'])
+@app.get("/account", summary = "get user profile details", tags=['users'])
 async def my_profile (db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     user_id = user.id
     return crud.get_user_profile(db, user_id)

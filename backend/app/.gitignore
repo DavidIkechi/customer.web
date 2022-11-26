@@ -143,3 +143,4 @@ cython_debug/
 #to allow frontend and backend see which code might break with github workflow
 
 .circleci
+*.db
