@@ -18,12 +18,14 @@ function Signin() {
   /* eslint-enable no-unused-vars */
 
   const onSubmit = (data) => {
+    data.preventDefault();
+
     console.log(data);
     setUserInfo(data);
     console.log(errors);
 
     axios
-      .post("http://scrybe.hng.tech:5000/login", data)
+      .post("http://scrybe.hng.tech/api/login", data)
       .then((res) => {
         console.log(res);
       })
@@ -33,10 +35,10 @@ function Signin() {
   };
 
   // Watch event for disable button
-  const email = watch("email");
+  const username = watch("username");
   const password = watch("password");
 
-  const isValid = email && password;
+  const isValid = username && password;
 
   return (
     <>
@@ -48,13 +50,13 @@ function Signin() {
             <h1>Welcome back, Scryber!</h1>
             <h3>Please enter your details</h3>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <label htmlFor="email">Email</label>
+              <label htmlFor="username">Email</label>
               <input
                 type="email"
-                id="email"
+                id="username"
                 placeholder="Enter your company email"
                 className={`${errors.email && styles.errorInput}} `}
-                {...register("email", {
+                {...register("username", {
                   required: "Email is required",
                   pattern: {
                     value: /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i,
