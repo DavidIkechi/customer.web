@@ -40,7 +40,7 @@ def get_transcript(filename):
 
 transcript_router = APIRouter(
     prefix="/transcription",
-    tags=["TRANSCRIPTION"]
+    tags=["transcription"]
 )
 
 
@@ -49,12 +49,12 @@ def transcribe_file(filename):
    audio_to_word = get_transcript(filename)
     # Create header with authorization along with content-type
    audio_to_word = get_transcript(filename)
-   return audio_to_word 
-    
-    
-    
+   return audio_to_word
 
-        
+
+
+
+
 # """ Please Note that these endpoints are subject to change as the query would be better suited to retrieve transcripts from the transcript table by transcript_id and
 #     not Audio by audio_id.
 #     If the transcript table is available, the code will be refractored to implement changes and queries to the transcript table """
@@ -78,5 +78,5 @@ def get_transcripts(db: Session = Depends(_services.get_session), current_user: 
     transcripts = db.query(models.Audio).filter(models.Audio.transcript).limit(limit).offset(skip).all()
     return transcripts
 
-    
+
 
