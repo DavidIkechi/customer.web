@@ -7,17 +7,17 @@ from routers.transcribe import transcribe_file
 import auth
 from routers.score import score_count
 
+from routers.transcribe import transcript_router
+from routers.score import score_count
 import models, json
 from auth import get_active_user, get_current_user
 from jwt import (
     main_login
-)
+    )
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-
 from db import Base, engine, SessionLocal
 from sqlalchemy.orm import Session
 import crud, schema
-
 from emails import send_email, verify_token
 from audio import audio_details
 from starlette.requests import Request
@@ -65,6 +65,7 @@ app = FastAPI(
     openapi_url="/openapi.json"
 )
 
+app.include_router(transcript_router)
 
 origins = [
     "http://localhost",
@@ -240,6 +241,8 @@ async def free_trial(file: UploadFile = File(...)):
         return{"transcript": transcript}
 
 
+
+
 @app.get('/history', summary = "get user history", response_model=Page[schema.History])
 async def get_history(user: models.User = Depends(get_current_user), db: Session = Depends(get_db), params: Params = Depends()):
     user_history = paginate(crud.get_history_by_user_id(db, user.id), params)
@@ -319,3 +322,4 @@ def get_agents_leaderboard(db: Session = Depends(get_db)):
 async def my_profile (db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     user_id = user.id
     return crud.get_user_profile(db, user_id)
+

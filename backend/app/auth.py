@@ -5,13 +5,13 @@ from crud import get_user_by_email
 from jose import jwt, JWTError
 import os
 import services as _services
-
 from dotenv import load_dotenv
 from jwt import (
-    TokenData,
+    TokenData, 
     Token
-)
+    )
 from sqlalchemy.orm import Session
+
 # load environment variables
 load_dotenv()
 # set some constants
