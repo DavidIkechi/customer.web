@@ -23,6 +23,9 @@ from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
 
+import shutil
+import os
+
 
 # Dependency
 def get_db():
@@ -217,6 +220,24 @@ async def email_verification(request: Request, token: str, db: Session = Depends
 @app.patch("/user/update/{user_id}", summary = "update user details", response_model=schema.user_update, tags=['users'])
 def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depends(get_db)):
      return crud.update_user(db=db, user=user, user_id=user_id)
+
+@app.post("/tryForFree")
+async def free_trial(file: UploadFile = File(...)):
+    ####### saving the audio file
+    with open(f'{file.filename}', "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+    fileSize = 5242880
+    getSize = os.path.getsize(file.filename)
+    ###### transcribing the file
+    if not file:
+        raise HTTPException(status_code = 406, detail="No File Selected")
+    elif getSize > fileSize :
+        raise HTTPException(status_code = 406, detail="File Must Not Be More Than 5MB")
+    else:
+        ######### Load audio file
+        transcript = transcribe_file(file.filename)
+        transcript = transcript
+        return{"transcript": transcript}
 
 
 @app.get('/history', summary = "get user history", response_model=Page[schema.History])
