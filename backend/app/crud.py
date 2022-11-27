@@ -162,6 +162,7 @@ def get_user_profile_by_email(db: Session, email: str):
 def update_password(db: Session, new_password: str, user):
     update_db = "UPDATE users SET password={} WHERE email={}".format(pwd_context.hash(new_password), user.email)
     #update_db = models.User(first_name=user.first_name, last_name=user.last_name, email=user.email, password=pwd_context.hash(new_password), company_id = user.company_id)
-    db.execute(update_db)                                   db.commit()
+    db.execute(update_db)                                   
+    db.commit()
     db.refresh(update_db)
     return "Success"

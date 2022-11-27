@@ -107,11 +107,13 @@ async def send_password_reset_email(email: List, instance: User):
 
 async def verify_reset_token(token: str, db: Session):
     try:
-        payload = jwt.decode(token, os.getenv('SECRET_P'), algorithms=['HS256'])                                        user = get_user_by_email(db, payload.get("email"))
+        payload = jwt.decode(token, os.getenv('SECRET_P'), algorithms=['HS256'])                                        
+        user = get_user_by_email(db, payload.get("email"))
 
     except Exception as e:
         print(e)
-        raise HTTPException(                                        status_code=status.HTTP_401_UNAUTHORIZED,
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid or expired token",
             headers={"WWW.Authenticate": "Bearer"}
         )
