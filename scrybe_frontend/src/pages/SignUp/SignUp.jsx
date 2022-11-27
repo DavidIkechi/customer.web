@@ -19,7 +19,7 @@ function Signup() {
       last_name: last_name,
       email: email,
       company_name: company_name,
-      password: password
+      password: password,
     };
     axios
       .post("http://scrybe.hng.tech:5000/users", data)
