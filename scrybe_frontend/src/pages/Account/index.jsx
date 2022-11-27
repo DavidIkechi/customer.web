@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import axios from "axios";
 import dummyData from "./DummyData";
 import accountStyles from "./account.module.scss";
@@ -8,6 +9,7 @@ import plus from "./assets/icons/plus.svg";
 import SideBar from "../../components/SideBar";
 
 function Account() {
+
   const [accountModalIsActive, setAccountModalIsActive] = useState(false);
   const toggleAccountModal = () => {
     setAccountModalIsActive((current) => !current);
