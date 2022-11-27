@@ -325,25 +325,25 @@ async def my_profile (db: Session = Depends(get_db), user: models.User = Depends
     return crud.get_user_profile(db, user_id)
 
  
-@app.post("/forgot_password")
+@app.post("/forgot_password", tags=['users'])
 async def forgot_password(email: str, db: Session = Depends(get_db)):
     user_exist = crud.get_user_by_email(db, email)
     if not user_exist:
         raise HTTPException(status_code=404, detail="User not Found")
     #if not user_exist.is_verified:
         #raise HTTPException(status_code=404, detail="You need to be verified to reset your password!!!")
-    await send_password_reset_email([user_exist.email], user_exist)
-    return user_exist.email
+    token = await send_password_reset_email([user_exist.email], user_exist)
+    return token
     
     
-@app.post("/reset_password")
+@app.post("/reset_password", tags=['users'])
 async def reset_password(token: str, password1: str, password2: str, db: Session = Depends(get_db)):
     if (password1 != password2):
-        raise HTTPException(status_code=404, detail="Password doesnot match")
+        raise HTTPException(status_code=404, detail="Passwords does not match")
     #decode the token
     user = await verify_reset_token(token, db)
     check = await main_reset_password(password1, user, db)
     if not check:
-        raise HTTPException(status_code=404, detail="password must be different from old")
+        raise HTTPException(status_code=404, detail="New password must be different from old")
     return check
 

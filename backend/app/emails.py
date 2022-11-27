@@ -80,7 +80,7 @@ async def send_password_reset_email(email: List, instance: User):
         # 'username': instance.username
     }
 
-    token = jwt.encode(token_data, config_credentials['SECRET_P'], algorithm='HS256')
+    token = jwt.encode(token_data, os.getenv('SECRET_P'), algorithm='HS256')
 
 
     template = f"""
@@ -104,6 +104,7 @@ async def send_password_reset_email(email: List, instance: User):
 
     fm =FastMail(conf)
     await fm.send_message(message=message)
+    return token
 
 
 async def verify_reset_token(token: str, db: Session):
