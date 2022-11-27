@@ -108,7 +108,7 @@ async def send_password_reset_email(email: List, instance: User):
 
 async def verify_reset_token(token: str, db: Session):
     try:
-        payload = jwt.decode(token, config_credentials['SECRET_P'], algorithms=['HS256'])
+        payload = jwt.decode(token, os.getenv('SECRET_P'), algorithms=['HS256'])                                        
         user = get_user_by_email(db, payload.get("email"))
 
     except Exception as e:
