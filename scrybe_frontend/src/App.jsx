@@ -44,10 +44,10 @@ import NotificationSettings from "./pages/Settings/SettingsPageSubPages/Notifica
 import PersonalInformation from "./pages/Settings/SettingsPageSubPages/PersonalInformation/PersonalInformationSettings";
 import PartnersPage from "./pages/PartnersPage";
 import React, { useState } from "react";
+import Cookies from "js-cookie";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
-import Cookies from "js-cookie";
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -65,13 +65,16 @@ function App() {
 
   return (
     <>
-    <AuthApi.Provider value={{ auth, setAuth }}>
+      <AuthApi.Provider value={{ auth, setAuth }}>
         <TokenApi.Provider value={{ token, setToken }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/agent-report" element={<AgentReport />} />
             <Route path="/sentiment-analysis" element={<SentimentAnalysis />} />
-            <Route path="/transcriptions/:userId" element={<TranscribePage />} />
+            <Route
+              path="/transcriptions/:userId"
+              element={<TranscribePage />}
+            />
             <Route path="/try" element={<TryForFree />} />
             <Route path="/history" element={<History />} />
             <Route path="/careers" element={<Careers />} />
@@ -120,7 +123,10 @@ function App() {
               path="/pw-reset-successful"
               element={<PasswordResetSuccessful />}
             />
-            <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
+            <Route
+              path="/uploaded-recordings"
+              element={<UploadedRecordings />}
+            />
             <Route path="/agent-report" element={<AgentReport />} />
 
             {/* ROutes without working paths */}
@@ -133,9 +139,18 @@ function App() {
               path="/report"
               element={<DummyPage someText="report and performance" />}
             />
-            <Route path="/upload" element={<DummyPage someText="upload pages" />} />
-            <Route path="/help" element={<DummyPage someText="help and supprt" />} />
-            <Route path="/demos" element={<DummyPage someText="demo pages" />} />
+            <Route
+              path="/upload"
+              element={<DummyPage someText="upload pages" />}
+            />
+            <Route
+              path="/help"
+              element={<DummyPage someText="help and supprt" />}
+            />
+            <Route
+              path="/demos"
+              element={<DummyPage someText="demo pages" />}
+            />
             <Route path="/blog" element={<Blogs />} />
             <Route path="/blog/:id" element={<BlogPostPage />} />
             <Route path="/reviews" element={<Reviews />} />
@@ -146,8 +161,14 @@ function App() {
 
             {/* Settings Pages */}
             <Route path="/settings" element={<SettingsIndex />} />
-            <Route path="settings/account-security" element={<AccountSettings />} />
-            <Route path="settings/notifications" element={<NotificationSettings />} />
+            <Route
+              path="settings/account-security"
+              element={<AccountSettings />}
+            />
+            <Route
+              path="settings/notifications"
+              element={<NotificationSettings />}
+            />
 
             <Route
               path="settings/personal-information"

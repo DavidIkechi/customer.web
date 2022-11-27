@@ -5,6 +5,8 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import footerImg from "./assets/signup-img.svg";
 import styles from "./SignIn.module.scss";
+import AuthApi from "../../App";
+import Cookies from "js-cookie";
 
 function Signin() {
   const Auth = React.useContext(AuthApi);
@@ -54,7 +56,7 @@ function Signin() {
                 placeholder="Enter your company email"
                 className={`${styles.errorInput}} `}
                 value={name}
-                onChange={(e) => setName(e.target.value)}                
+                onChange={(e) => setName(e.target.value)}
               />
               {/* <p className={styles.errorMsg}>{errors.email?.message}</p> */}
               <label htmlFor="password">Password</label>

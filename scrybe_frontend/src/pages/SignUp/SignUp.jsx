@@ -23,10 +23,9 @@ function Signup() {
       .then((response) => {
         console.log(response);
       })
-      .catch((error) => {
-      });
+      .catch((error) => {});
   };
-  
+
   return (
     <>
       <main className={styles.signUpWrapper}>
