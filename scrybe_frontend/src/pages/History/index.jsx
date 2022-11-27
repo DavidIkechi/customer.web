@@ -164,32 +164,34 @@ export default function History() {
               <>
                 {width >= 768 ? (
                   <>
-                    <div className={styles.list__header}>
-                      <div className={styles.header__title}>
-                        <p>File Name</p>
-                        <p>Agent</p>
-                        <p>Sentiment Result</p>
-                        <p>Date Update</p>
-                        <p>Length</p>
+                    <div>
+                      <div className={styles.list__header}>
+                        <div className={styles.header__title}>
+                          <p>File Name</p>
+                          <p>Agent</p>
+                          <p>Sentiment Result</p>
+                          <p>Date Update</p>
+                          <p>Length</p>
+                        </div>
                       </div>
+                      {data.slice(0, 20).map((item, i) => (
+                        <ListView
+                          title={item.name}
+                          name={item.agent}
+                          review={item.analysis}
+                          date={`${item.date}, ${item.time}`}
+                          length={item.lenght}
+                          color={
+                            item.analysis.toLowerCase() === "positive"
+                              ? "#dbeabb"
+                              : item.analysis.toLowerCase() === "negative"
+                              ? "#ffc2cb"
+                              : "#ececec"
+                          }
+                          key={i + 1}
+                        />
+                      ))}
                     </div>
-                    {data.slice(0, 20).map((item, i) => (
-                      <ListView
-                        title={item.name}
-                        name={item.agent}
-                        review={item.analysis}
-                        date={`${item.date}, ${item.time}`}
-                        length={item.lenght}
-                        color={
-                          item.analysis.toLowerCase() === "positive"
-                            ? "#dbeabb"
-                            : item.analysis.toLowerCase() === "negative"
-                            ? "#ffc2cb"
-                            : "#ececec"
-                        }
-                        key={i + 1}
-                      />
-                    ))}
                   </>
                 ) : (
                   <>

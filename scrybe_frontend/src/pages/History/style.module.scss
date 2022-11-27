@@ -132,9 +132,11 @@ $blue-500: #006cff;
 .list__header {
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: 100%;
   .header__title {
     width: 100%;
-    padding-bottom: 1rem;
+    padding: 1rem 0;
     border-bottom: 1px solid #cccccc;
     display: flex;
     justify-content: space-between;
@@ -145,6 +147,9 @@ $blue-500: #006cff;
         margin-left: 3rem;
         margin-right: 1rem;
       }
+      &:last-child {
+        margin-right: 1.5rem;
+      }
       &:nth-child(2) {
         width: 200px;
       }
@@ -152,8 +157,8 @@ $blue-500: #006cff;
   }
 }
 .history__list {
-  width: 100%;
-  background: rgb(255, 255, 255);
+  background: #ffffff;
+  margin: 0 1.2rem;
 }
 .margin__bottom {
   margin-bottom: 3rem;
