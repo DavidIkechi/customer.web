@@ -23,7 +23,7 @@ function Signup() {
     setUserInfo(data);
     console.log(errors);
     axios
-      .post("http://scrybe.hng.tech:5000/users/", data)
+      .post("https://scrybe.hng.tech/users", data)
       .then((res) => {
         console.log(res);
       })

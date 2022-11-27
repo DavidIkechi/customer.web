@@ -17,6 +17,7 @@ import About from "./pages/AboutUs";
 import TryForFree from "./pages/TryForFree";
 import Press from "./pages/PressPage";
 import PressArticle from "./pages/PressArticle";
+import { RequireToken } from "./Auth";
 // import Industry from "./pages/Industry";
 // import IndustryArticles from "./pages/Industry/IndustryArticles/IndustryArticle1";
 // import HowitWorks from "./pages/HowItWorks";
@@ -60,7 +61,14 @@ function App() {
       <Route path="/about-us" element={<About />} />
       <Route path="/events" element={<Events />} />
       <Route path="/dashboard" element={<DashboardOverview />} />
-      <Route path="/account" element={<Account />} />
+      <Route
+        path="/account"
+        element={
+          <RequireToken>
+            <Account />
+          </RequireToken>
+        }
+      />
       {/* <Route path="/industry" exact element={<Industry />} /> */}
       {/* <Route path="/industry-article" element={<IndustryArticles />} />
       <Route path="/how-it-works" element={<HowitWorks />} /> */}
