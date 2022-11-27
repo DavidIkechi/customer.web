@@ -164,4 +164,3 @@ def update_password(db: Session, new_password, user):
     #update_db = models.User(first_name=user.first_name, last_name=user.last_name, email=user.email, password=pwd_context.hash(new_password), company_id = user.company_id)
     db.execute(update_db)
     db.commit()
-    return "Success"
