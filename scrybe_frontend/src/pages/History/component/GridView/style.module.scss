@@ -1,0 +1,55 @@
+.grid__view {
+  max-width: 1440px;
+}
+
+.grid__container {
+  background: #ffffff;
+  width: 300px;
+  padding: 1.5rem;
+  border-radius: 15px;
+  transition: all 1s ease;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  @media (max-width: 1100px) {
+    min-width: 100%;
+  }
+}
+.grid__image {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  img {
+    width: 45px;
+    height: 45px;
+    background: #e6f6ff;
+    border-radius: 50%;
+    padding: 10px;
+  }
+  h3 {
+    font-weight: 600;
+    color: #454545;
+  }
+  p {
+    color: #828282;
+    font-size: 14px;
+  }
+}
+
+.grid__btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  button {
+    text-transform: capitalize !important;
+    background: #dbeab8;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    padding: 3px 8px;
+  }
+  span {
+    font-weight: 600;
+    font-size: 11px;
+    color: #828282;
+  }
+}

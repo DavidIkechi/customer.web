@@ -2,10 +2,11 @@
 @import "./assets/utilities/variables";
 $sidebarWidth: 250px;
 $trans: all 400ms ease;
-.sidebar__container {
+.sidebarMobile__container {
   position: fixed;
   z-index: 2;
-  background: #fff;
+  background: #ffffff;
+  transition: all 1s ease;
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
 
   > {
@@ -13,15 +14,69 @@ $trans: all 400ms ease;
     section:last-of-type,
     p:last-of-type {
       overflow-y: auto;
-      width: fit-content;
-      width: 100px;
+      will-change: width;
+      transition: width 1s ease;
+      width: $sidebarWidth;
+    }
+  }
+  .inputWithIcon {
+    position: absolute;
+    top: 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    input {
+      width: calc($sidebarWidth - 20px);
+      border: 1px solid rgba(170, 170, 170, 0.178);
+      padding: 12px 15px;
+      padding-left: 3rem;
+      font-weight: 300;
+      font-size: 16px;
+      border-radius: 3px;
+      outline: none;
+      background: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: transparent url("../../assets/images/search-icon.svg")
+        no-repeat 10px center;
     }
   }
 
+  .profile {
+    position: absolute;
+    width: 100%;
+    bottom: 3rem;
+    .profileSidebar {
+      padding: 0 10px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+      span {
+        rotate: 90deg;
+        font-weight: bold;
+        font-size: 1.4rem;
+        position: absolute;
+        right: 1rem;
+        top: 0;
+        cursor: pointer;
+      }
+      p {
+        color: #6a6a6a;
+        font-weight: 300;
+      }
+    }
+  }
   .sidebar {
     position: relative;
     height: 100vh;
-    // border-right: 1px solid #dfdede;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -30,8 +85,8 @@ $trans: all 400ms ease;
     z-index: 6;
   }
 
-  .sidebar.open {
-    width: $sidebarWidth;
+  .sidebar.close {
+    width: 0px;
   }
 
   .navOpener {
@@ -39,52 +94,44 @@ $trans: all 400ms ease;
     right: 10px;
     top: 12px;
     border: 2px solid $blue-500;
+    padding: 5px;
     border-radius: 50%;
     background-color: white;
-    transform: rotate(-90deg);
     cursor: pointer;
     z-index: 99;
-  }
-
-  .navOpener.rotate {
-    transform: rotate(90deg);
+    transition: scale 400ms ease;
+    &:where(:hover) {
+      scale: 1.1;
+    }
   }
 
   .logoLink {
     display: flex;
-    // column-gap: pix-rem(10);
-
     position: absolute;
     top: 10px;
     left: 10px;
     z-index: 9;
-    // padding: pix-rem(32) pix-rem(40);
     text-decoration: none;
     cursor: pointer;
-    // background: rgba(0, 0, 0, 0.342);
-    p {
-      display: none;
-      transform-origin: left;
-      transition: $trans;
-    }
   }
 
-  .logoLink.open {
+  .logoLink {
     justify-content: center;
     align-items: center;
     p {
       display: inline;
       font-weight: 600;
-      font-size: pix-rem(40);
+      font-size: pix-rem(30);
       line-height: 26px;
       color: $grey-500;
       cursor: pointer;
+      margin-left: 10px;
       scale: none;
     }
   }
 
   .navLinks {
-    margin: pix-rem(100) 0 0 0;
+    margin: pix-rem(10) 0 0 0;
 
     width: 100%;
     .navLink {
@@ -99,8 +146,7 @@ $trans: all 400ms ease;
   .navLink {
     display: flex;
     justify-content: center;
-    // column-gap: pix-rem(20);
-    padding: pix-rem(20) 0;
+    padding: pix-rem(10) 0;
     text-decoration: none;
     cursor: pointer;
 
@@ -113,7 +159,7 @@ $trans: all 400ms ease;
     }
   }
 
-  .navLink.open {
+  .navLink {
     justify-content: flex-start;
     padding-left: 10px;
 
@@ -135,24 +181,5 @@ $trans: all 400ms ease;
   .navLink.active {
     background: $blue-50;
     border-right: 4px solid $blue-400;
-  }
-
-  @include mediaQuery(768px) {
-    .sidebar {
-      position: fixed;
-      transform: translateX(-85%);
-      background: #fff;
-      opacity: 0.6;
-      transition: transform 0.3s, opacity 0.4s cubic-bezier(0, 0, 0.9, 1);
-    }
-
-    .sidebar.open {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .navOpener {
-      scale: 1.2;
-    }
   }
 }

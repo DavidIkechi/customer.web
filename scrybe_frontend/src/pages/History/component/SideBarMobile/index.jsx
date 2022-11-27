@@ -1,26 +1,38 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
-import styles from "./SideBar.module.scss";
+import styles from "./SideBarMobile.module.scss";
 import logoSVG from "./assets/logo.svg";
-import arrowDown from "./assets/icons/arrow-down.svg";
+import { analysisIcon, closeIcon, profileSibar } from "../../assets/images";
 import myScrybe from "./assets/icons/my-scrybe.svg";
-import analysis from "./assets/icons/analysis.svg";
 import insight from "./assets/icons/insight.svg";
 import leaderboard from "./assets/icons/leaderboard.svg";
 import monthlyAnalysis from "./assets/icons/monthly-analysis.svg";
 import settings from "./assets/icons/settings.svg";
 
-const SideBar = React.forwardRef(({ children }, ref) => {
+const SideBar = React.forwardRef(({ children }, refed) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className={styles.sidebar__container}>
-      <div className={`${styles.sidebar} ${sidebarOpen ? styles.open : ""}`}>
+    <div className={styles.sidebarMobile__container}>
+      <div className={`${styles.sidebar} ${sidebarOpen ? styles.close : ""}`}>
+        <div className={styles.inputWithIcon}>
+          <input type="text" name="" id="search-bar" placeholder="Search" />
+        </div>
+        <div className={styles.profile}>
+          <div className={styles.profileSidebar}>
+            <img src={profileSibar} alt="" />
+            <div className="name">
+              <h3>Jane Doe</h3>
+              <p>Office workspace</p>
+            </div>
+            <span>❯</span>
+          </div>
+        </div>
         <div className={styles.logo__con}>
           <img
-            src={arrowDown}
-            ref={ref}
+            src={closeIcon}
+            ref={refed}
             alt="arrow icon"
             className={`${styles.navOpener} ${
               sidebarOpen ? styles.rotate : ""
@@ -29,6 +41,7 @@ const SideBar = React.forwardRef(({ children }, ref) => {
               setSidebarOpen(!sidebarOpen);
             }}
           />
+
           <NavLink
             to="/history"
             className={
@@ -38,7 +51,7 @@ const SideBar = React.forwardRef(({ children }, ref) => {
             }
           >
             <img src={logoSVG} alt="Scrybe logo" />
-            <p>Scrybe</p>
+            <p>Heed</p>
           </NavLink>
         </div>
         <div className={styles.navLinks}>
@@ -69,7 +82,7 @@ const SideBar = React.forwardRef(({ children }, ref) => {
                   }`
             }
           >
-            <img src={analysis} alt="analysis icon" />
+            <img src={analysisIcon} alt="analysis icon" />
             <p>Analysis</p>
           </NavLink>
           <NavLink
@@ -134,6 +147,7 @@ const SideBar = React.forwardRef(({ children }, ref) => {
           </NavLink>
         </div>
       </div>
+
       {children}
     </div>
   );
