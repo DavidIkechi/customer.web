@@ -1,3 +1,6 @@
 {
-	"cSpell.words": ["mainpage"]
+	"cSpell.words": [
+		"mainpage"
+	],
+	"git.ignoreLimitWarning": true
 }

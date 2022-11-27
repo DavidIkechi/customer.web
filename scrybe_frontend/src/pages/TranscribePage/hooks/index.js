@@ -14,9 +14,6 @@ const useMockAuthAndReadSentiment = (id) => {
         .get(`http://scrybe.hng.tech:5000/audios/${id}/sentiment`, { headers })
         .then((newRes) => {
           setSentimentData(newRes.data);
-        })
-        .catch((err) => {
-          console.log(err);
         });
     });
   }, []);
@@ -24,20 +21,4 @@ const useMockAuthAndReadSentiment = (id) => {
   return sentimentData;
 };
 
-const useMockEnd = (amount) => {
-  const [sentimentData, setSentimentData] = useState([]);
-  useEffect(() => {
-    axios
-      .get("https://mockend.com/tochibedford/MockendData/Audios")
-      .then((res) => {
-        setSentimentData(res.data.slice(0, amount));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  return sentimentData;
-};
-
-export { useMockAuthAndReadSentiment, useMockEnd };
+export { useMockAuthAndReadSentiment };
