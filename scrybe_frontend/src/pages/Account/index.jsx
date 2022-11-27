@@ -9,7 +9,6 @@ import plus from "./assets/icons/plus.svg";
 import SideBar from "../../components/SideBar";
 
 function Account() {
-
   const [accountModalIsActive, setAccountModalIsActive] = useState(false);
   const toggleAccountModal = () => {
     setAccountModalIsActive((current) => !current);

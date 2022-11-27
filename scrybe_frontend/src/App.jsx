@@ -61,11 +61,14 @@ function App() {
       <Route path="/about-us" element={<About />} />
       <Route path="/events" element={<Events />} />
       <Route path="/dashboard" element={<DashboardOverview />} />
-      <Route path="/account" element={
-        <RequireToken>
-          <Account />
-        </RequireToken>
-      } />
+      <Route
+        path="/account"
+        element={
+          <RequireToken>
+            <Account />
+          </RequireToken>
+        }
+      />
       {/* <Route path="/industry" exact element={<Industry />} /> */}
       {/* <Route path="/industry-article" element={<IndustryArticles />} />
       <Route path="/how-it-works" element={<HowitWorks />} /> */}
