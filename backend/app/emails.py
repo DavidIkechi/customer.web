@@ -82,7 +82,6 @@ async def send_password_reset_email(email: List, instance: User):
 
     token = jwt.encode(token_data, os.getenv('SECRET_P'), algorithm='HS256')
 
-
     template = f"""
         <div>
                     <h3>Password Reset </h3>
@@ -90,7 +89,6 @@ async def send_password_reset_email(email: List, instance: User):
                     <p>Hi {instance.first_name}, You requested to reset your password. Click the link below to change your password.</p>
                     <br>
                     <p>Kindly ignore this message if you did not make the request. </p>
-
                     <a href="http://scrybe.hng.tech:5000/reset_password?token={token}">Reset Password </a>
         </div>
     """
@@ -120,3 +118,4 @@ async def verify_reset_token(token: str, db: Session):
             headers={"WWW.Authenticate": "Bearer"}
         )
     return user
+

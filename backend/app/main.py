@@ -13,14 +13,15 @@ import models, json
 from auth import get_active_user, get_current_user
 from jwt import (
     main_login, main_reset_password
+
 )
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from db import Base, engine, SessionLocal
 from sqlalchemy.orm import Session
 import crud, schema
-from audio import audio_details
 
 from emails import send_email, verify_token, send_password_reset_email, verify_reset_token
+from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
 
@@ -324,7 +325,6 @@ async def my_profile (db: Session = Depends(get_db), user: models.User = Depends
     user_id = user.id
     return crud.get_user_profile(db, user_id)
 
- 
 @app.post("/forgot_password", tags=['users'])
 async def forgot_password(email: str, db: Session = Depends(get_db)):
     user_exist = crud.get_user_by_email(db, email)
@@ -334,7 +334,7 @@ async def forgot_password(email: str, db: Session = Depends(get_db)):
         #raise HTTPException(status_code=404, detail="You need to be verified to reset your password!!!")
     token = await send_password_reset_email([user_exist.email], user_exist)
     return token
-    
+
     
 @app.post("/reset_password", tags=['users'])
 async def reset_password(token: str, password1: str, password2: str, db: Session = Depends(get_db)):
@@ -346,4 +346,3 @@ async def reset_password(token: str, password1: str, password2: str, db: Session
     if not check:
         raise HTTPException(status_code=404, detail="New password must be different from old")
     return check
-

@@ -164,7 +164,7 @@ async def refresh(refresh_token, db):
     user = get_user_by_email(db, email=token_data.email)
     if user is None:
         raise user_not_found_exception
-    
+
 
 async def main_reset_password(password1, user, db):
     #check if its not in DB
