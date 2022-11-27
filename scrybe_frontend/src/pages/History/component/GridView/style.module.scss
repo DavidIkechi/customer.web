@@ -10,6 +10,15 @@
   transition: all 0.7s ease;
   cursor: default;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  translate: 0 100px;
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+  @keyframes fadeIn {
+    100% {
+      translate: 0 0;
+      opacity: 1;
+    }
+  }
   &:hover {
     scale: 1.1;
   }
