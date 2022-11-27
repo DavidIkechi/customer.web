@@ -72,3 +72,50 @@ async def verify_token(token: str, db: Session):
             headers={"WWW.Authenticate": "Bearer"}
         )
     return user
+
+
+async def send_password_reset_email(email: List, instance: User):
+    token_data = {
+        'email': instance.email,
+        # 'username': instance.username
+    }
+
+    token = jwt.encode(token_data, config_credentials['SECRET_P'], algorithm='HS256')
+
+
+    template = f"""
+        <div>
+                    <h3>Password Reset </h3>
+                    <br>
+                    <p>Hi {instance.first_name}, You requested to reset your password. Click the link below to change your password.</p>
+                    <br>
+                    <p>Kindly ignore this message if you did not make the request. </p>
+
+                    <a href="http://scrybe.hng.tech:5000/reset_password?token={token}">Reset Password </a>
+        </div>
+    """
+
+    message = MessageSchema(
+        subject = "Password Reset",
+        recipients =email,
+        body = template,
+        subtype = "html"
+    )
+
+    fm =FastMail(conf)
+    await fm.send_message(message=message)
+
+
+async def verify_reset_token(token: str, db: Session):
+    try:
+        payload = jwt.decode(token, config_credentials['SECRET_P'], algorithms=['HS256'])
+        user = get_user_by_email(db, payload.get("email"))
+
+    except Exception as e:
+        print(e)
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or expired token",
+            headers={"WWW.Authenticate": "Bearer"}
+        )
+    return user
