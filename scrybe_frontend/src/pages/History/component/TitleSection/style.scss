@@ -1,5 +1,8 @@
 .title__Section {
   margin: 2rem;
+  @media (max-width: 510px) {
+    margin: 10px;
+  }
 }
 
 .filter__container {
@@ -9,6 +12,9 @@
   padding-bottom: 1rem;
   margin-top: 2rem;
   user-select: none;
+  @media (max-width: 768px) {
+    justify-content: space-evenly;
+  }
 }
 .filter {
   display: flex;
@@ -24,6 +30,16 @@
   select {
     border: none;
     outline: none;
+    background: transparent;
+    cursor: pointer;
+  }
+}
+.filter__md {
+  position: relative;
+  button {
+    border: none;
+    border: 1px solid #eee;
+    padding: 7px 20px;
     background: transparent;
     cursor: pointer;
   }
@@ -47,4 +63,56 @@ option {
       margin-right: 0;
     }
   }
+}
+.filterComponent__md {
+  position: absolute;
+  padding: 10px;
+  margin-top: 1.5rem;
+  right: -3.2rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.24);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  translate: 0 100px;
+  transition: all 1s ease;
+  opacity: 0;
+  animation: fadeIn 0.4s ease forwards;
+  @keyframes fadeIn {
+    100% {
+      translate: 0 0;
+      opacity: 1;
+    }
+  }
+  .filter {
+    margin-bottom: 1rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  &::before {
+    content: "❯";
+    position: absolute;
+    top: -2rem;
+    rotate: -90deg;
+    font-size: 3rem;
+    color: #fff;
+    font-weight: 900;
+    z-index: -1;
+
+    @media (max-width: 430px) {
+      right: 2rem;
+    }
+  }
+  @media (max-width: 500px) {
+    right: -2rem;
+  }
+  @media (max-width: 430px) {
+    right: -1rem;
+  }
+}
+.display__none {
+  display: none;
 }

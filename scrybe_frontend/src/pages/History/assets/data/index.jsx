@@ -8,23 +8,23 @@ export const data = [
     agent: "Damilola Frances",
   },
   {
-    name: "Call Record 100.mp3",
+    name: "Call Record 99.mp3",
     lenght: "3:05",
-    analysis: "Positive",
+    analysis: "Negative",
     date: "Nov 16, 2022",
     time: "11:06am",
     agent: "David Austin",
   },
   {
-    name: "Call Record 100.mp3",
+    name: "Call Record 98.mp3",
     lenght: "3:05",
-    analysis: "Negative",
+    analysis: "Neutral",
     date: "Nov 16, 2022",
     time: "11:06am",
     agent: "Charles Desmond",
   },
   {
-    name: "Call Record 100.mp3",
+    name: "Call Record 97.mp3",
     lenght: "3:05",
     analysis: "Positive",
     date: "Nov 16, 2022",
@@ -32,23 +32,23 @@ export const data = [
     agent: "Simisola Okunade",
   },
   {
-    name: "Call Record 100.mp3",
+    name: "Call Record 96.mp3",
     lenght: "3:05",
-    analysis: "Positive",
+    analysis: "Neutral",
     date: "Nov 16, 2022",
     time: "11:06am",
     agent: "Bright Kennedy",
   },
   {
-    name: "Call Record 100.mp3",
+    name: "Call Record 95.mp3",
     lenght: "3:05",
-    analysis: "Positive",
+    analysis: "Negative",
     date: "Nov 16, 2022",
     time: "11:06am",
     agent: "Julius Samuel",
   },
   {
-    name: "Call Record 100.mp3",
+    name: "Call Record 94.mp3",
     lenght: "3:05",
     analysis: "Positive",
     date: "Nov 16, 2022",
@@ -56,7 +56,7 @@ export const data = [
     agent: "Okon Esther",
   },
   {
-    name: "Call Record 100.mp3",
+    name: "Call Record 93.mp3",
     lenght: "3:05",
     analysis: "Negative",
     date: "Nov 16, 2022",
@@ -64,7 +64,7 @@ export const data = [
     agent: "Bimbo Idris",
   },
   {
-    name: "Call Record 100.mp3",
+    name: "Call Record 92.mp3",
     lenght: "3:05",
     analysis: "Positive",
     date: "Nov 16, 2022",
@@ -72,7 +72,7 @@ export const data = [
     agent: "Favour Amarachi",
   },
   {
-    name: "Call Record 100.mp3",
+    name: "Call Record 91.mp3",
     lenght: "3:05",
     analysis: "Positive",
     date: "Nov 16, 2022",
@@ -80,7 +80,7 @@ export const data = [
     agent: "Stella Matthew",
   },
   {
-    name: "Call Record 100.mp3",
+    name: "Call Record 90.mp3",
     lenght: "3:05",
     analysis: "Positive",
     date: "Nov 16, 2022",
@@ -88,7 +88,7 @@ export const data = [
     agent: "James Ade",
   },
   {
-    name: "Call Record 100.mp3",
+    name: "Call Record 89.mp3",
     lenght: "3:05",
     analysis: "Negative",
     date: "Nov 16, 2022",
@@ -96,7 +96,7 @@ export const data = [
     agent: "Felicia Iyana",
   },
   {
-    name: "Call Record 100.mp3",
+    name: "Call Record 88.mp3",
     lenght: "3:05",
     analysis: "Positive",
     date: "Nov 16, 2022",
@@ -104,7 +104,7 @@ export const data = [
     agent: "Okoro Stephen",
   },
   {
-    name: "Call Record 100.mp3",
+    name: "Call Record 87.mp3",
     lenght: "3:05",
     analysis: "Positive",
     date: "Nov 16, 2022",
@@ -112,7 +112,7 @@ export const data = [
     agent: "Chichi Oluchi",
   },
   {
-    name: "Call Record 100.mp3",
+    name: "Call Record 86.mp3",
     lenght: "3:05",
     analysis: "Positive",
     date: "Nov 16, 2022",
@@ -120,7 +120,7 @@ export const data = [
     agent: "Debby King",
   },
   {
-    name: "Call Record 100.mp3",
+    name: "Call Record 85.mp3",
     lenght: "3:05",
     analysis: "Positive",
     date: "Nov 16, 2022",
@@ -128,7 +128,7 @@ export const data = [
     agent: "Abbie Lucky",
   },
   {
-    name: "Call Record 100.mp3",
+    name: "Call Record 84.mp3",
     lenght: "3:05",
     analysis: "Positive",
     date: "Nov 16, 2022",
@@ -136,7 +136,7 @@ export const data = [
     agent: "Yusuf Oladeji",
   },
   {
-    name: "Call Record 100.mp3",
+    name: "Call Record 83.mp3",
     lenght: "3:05",
     analysis: "Positive",
     date: "Nov 16, 2022",
@@ -144,7 +144,7 @@ export const data = [
     agent: "Utuk Effiong",
   },
   {
-    name: "Call Record 100.mp3",
+    name: "Call Record 82.mp3",
     lenght: "3:05",
     analysis: "Positive",
     date: "Nov 16, 2022",
@@ -152,7 +152,7 @@ export const data = [
     agent: "Chibuzor Agnes",
   },
   {
-    name: "Call Record 100.mp3",
+    name: "Call Record 81.mp3",
     lenght: "3:05",
     analysis: "Positive",
     date: "Nov 16, 2022",
@@ -160,7 +160,7 @@ export const data = [
     agent: "Mary Joy",
   },
   {
-    name: "Call Record 100.mp3",
+    name: "Call Record 80.mp3",
     lenght: "3:05",
     analysis: "Positive",
     date: "Nov 16, 2022",

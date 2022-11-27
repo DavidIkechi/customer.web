@@ -44,6 +44,17 @@ export default function History() {
     }, [ref, refed]);
     return isClicked;
   }
+  function changeColor(item) {
+    if (item.analysis.toLowercase() === "positve") {
+      return "0ff";
+    }
+    if (item.analysis.toLowercase() === "negative") {
+      return "orange";
+    }
+    if (item.analysis.toLowercase() === "neutral") {
+      return "pink";
+    }
+  }
   // const recordList = data.map((item) => (
   //   <List
   //     name={item.name}
@@ -114,15 +125,38 @@ export default function History() {
 
         <TitleSection />
         <div className={styles.history__grids}>
-          {data.map((item, i) => (
-            <GridView
-              title={item.name}
-              name={item.agent}
-              review={item.analysis}
-              date={item.date}
-              key={i + 1}
-            />
-          ))}
+          {width >= 768 ? (
+            <>
+              {data.slice(0, 20).map((item, i) => (
+                <GridView
+                  title={item.name}
+                  name={item.agent}
+                  review={item.analysis}
+                  date={item.date}
+                  color={
+                    item.analysis.toLowerCase() === "positive"
+                      ? "#dbeabb"
+                      : item.analysis.toLowerCase() === "negative"
+                      ? "ffc2cb"
+                      : "#ececec"
+                  }
+                  key={i + 1}
+                />
+              ))}
+            </>
+          ) : (
+            <>
+              {data.slice(0, 10).map((item, i) => (
+                <GridView
+                  title={item.name}
+                  name={item.agent}
+                  review={item.analysis}
+                  date={item.date}
+                  key={i + 1}
+                />
+              ))}
+            </>
+          )}
         </div>
       </div>
       {/* <Filter onClose={() => setShow(false)} show={show} />

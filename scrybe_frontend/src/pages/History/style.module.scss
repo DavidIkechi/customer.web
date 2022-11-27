@@ -129,6 +129,14 @@ $blue-500: #006cff;
   @media (max-width: 1100px) {
     grid-template-columns: auto auto;
   }
+  @media (max-width: 600px) {
+    grid-template-columns: auto;
+    margin: 1rem;
+    margin-top: 2rem;
+  }
+  @media (max-width: 460px) {
+    margin: 2rem 0;
+  }
 }
 
 .margin__bottom {
