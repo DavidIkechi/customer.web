@@ -4,11 +4,14 @@ import { GridView, ListView, TitleSection, SideBarMobile } from "./component";
 import { profileUpload, uploadIcon, buggerMenu } from "./assets/images";
 import SideBar from "./component/SideBar";
 import styles from "./style.module.scss";
+import { HistoryContext } from "./Contexts/HistoryContext";
 
 export default function History() {
   const ref = React.useRef(null);
   const refed = React.useRef(null);
   const btnSideClick = ListenForClicks(ref, refed);
+  const [isList, setIsList] = useState(false);
+  const [isGrid, setIsGrid] = useState(true);
   const [show, setShow] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
 
@@ -43,17 +46,6 @@ export default function History() {
       };
     }, [ref, refed]);
     return isClicked;
-  }
-  function changeColor(item) {
-    if (item.analysis.toLowercase() === "positve") {
-      return "0ff";
-    }
-    if (item.analysis.toLowercase() === "negative") {
-      return "orange";
-    }
-    if (item.analysis.toLowercase() === "neutral") {
-      return "pink";
-    }
   }
   // const recordList = data.map((item) => (
   //   <List
@@ -122,48 +114,114 @@ export default function History() {
             </div>
           )}
         </div>
-
-        <TitleSection />
-        <div className={styles.history__grids}>
-          {width >= 768 ? (
-            <>
-              {data.slice(0, 20).map((item, i) => (
-                <GridView
-                  title={item.name}
-                  name={item.agent}
-                  review={item.analysis}
-                  date={item.date}
-                  color={
-                    item.analysis.toLowerCase() === "positive"
-                      ? "#dbeabb"
-                      : item.analysis.toLowerCase() === "negative"
-                      ? "ffc2cb"
-                      : "#ececec"
-                  }
-                  key={i + 1}
-                />
-              ))}
-            </>
-          ) : (
-            <>
-              {data.slice(0, 10).map((item, i) => (
-                <GridView
-                  title={item.name}
-                  name={item.agent}
-                  review={item.analysis}
-                  date={item.date}
-                  key={i + 1}
-                />
-              ))}
-            </>
+        <HistoryContext.Provider value={{ setIsGrid, setIsList }}>
+          <TitleSection />
+          {isGrid && (
+            <div className={styles.history__grids}>
+              {width >= 768 ? (
+                <>
+                  {data.slice(0, 20).map((item, i) => (
+                    <GridView
+                      title={item.name}
+                      name={item.agent}
+                      review={item.analysis}
+                      date={item.date}
+                      color={
+                        item.analysis.toLowerCase() === "positive"
+                          ? "#dbeabb"
+                          : item.analysis.toLowerCase() === "negative"
+                          ? "#ffc2cb"
+                          : "#ececec"
+                      }
+                      key={i + 1}
+                    />
+                  ))}
+                </>
+              ) : (
+                <>
+                  {data.slice(0, 10).map((item, i) => (
+                    <GridView
+                      title={item.name}
+                      name={item.agent}
+                      review={item.analysis}
+                      date={item.date}
+                      key={i + 1}
+                      color={
+                        item.analysis.toLowerCase() === "positive"
+                          ? "#dbeabb"
+                          : item.analysis.toLowerCase() === "negative"
+                          ? "ffc2cb"
+                          : "#ececec"
+                      }
+                    />
+                  ))}
+                </>
+              )}
+            </div>
           )}
-        </div>
+          <div className={styles.history__list}>
+            {isList && (
+              <>
+                {width >= 768 ? (
+                  <>
+                    <div className={styles.list__header}>
+                      <div className={styles.header__title}>
+                        <p>File Name</p>
+                        <p>Agent</p>
+                        <p>Sentiment Result</p>
+                        <p>Date Update</p>
+                        <p>Length</p>
+                      </div>
+                    </div>
+                    {data.slice(0, 20).map((item, i) => (
+                      <ListView
+                        title={item.name}
+                        name={item.agent}
+                        review={item.analysis}
+                        date={`${item.date}, ${item.time}`}
+                        length={item.lenght}
+                        color={
+                          item.analysis.toLowerCase() === "positive"
+                            ? "#dbeabb"
+                            : item.analysis.toLowerCase() === "negative"
+                            ? "#ffc2cb"
+                            : "#ececec"
+                        }
+                        key={i + 1}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    <div className={styles.list__header}>
+                      <div className={styles.header__title}>
+                        <p>File Name</p>
+                        <p>Agent</p>
+                        <p>Sentiment Result</p>
+                      </div>
+                    </div>
+                    {data.slice(0, 10).map((item, i) => (
+                      <ListView
+                        title={item.name}
+                        name={item.agent}
+                        review={item.analysis}
+                        color={
+                          item.analysis.toLowerCase() === "positive"
+                            ? "#dbeabb"
+                            : item.analysis.toLowerCase() === "negative"
+                            ? "#ffc2cb"
+                            : "#ececec"
+                        }
+                        key={i + 1}
+                      />
+                    ))}
+                  </>
+                )}
+              </>
+            )}
+          </div>
+        </HistoryContext.Provider>
       </div>
-      {/* <Filter onClose={() => setShow(false)} show={show} />
-      <div className={styles.record}>{recordGrid}</div>
-      <div className={styles.list__div}>
-        {recordList}
-      </div> */}
     </div>
   );
 }

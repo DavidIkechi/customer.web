@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { gridIcon } from "../../assets/images";
 import "./style.scss";
+import { HistoryContext } from "../../Contexts/HistoryContext";
 
 export default function TitleSection() {
+  const { setIsList, setIsGrid } = useContext(HistoryContext);
   const [show, setShow] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
   const updateDimensions = () => {
@@ -12,6 +14,23 @@ export default function TitleSection() {
     window.addEventListener("resize", updateDimensions);
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
+  const viewOptions = [
+    { value: "grid", text: "Grid" },
+    { value: "list", text: "List" },
+  ];
+  const [isView, setIsView] = useState(viewOptions[0].value);
+  function changeView(e) {
+    console.log(e.target.value);
+    setIsView(e.target.value);
+    if (e.target.value === "list") {
+      setIsList(true);
+      setIsGrid(false);
+    }
+    if (e.target.value === "grid") {
+      setIsGrid(true);
+      setIsList(false);
+    }
+  }
 
   return (
     <div className="title__Section">
@@ -21,9 +40,12 @@ export default function TitleSection() {
       <div className="filter__container">
         <div className="filter">
           <img src={gridIcon} alt="" />
-          <select name="grid" id="grid">
-            <option value="grid">Grid</option>
-            <option value="list">List</option>
+          <select value={isView} onChange={changeView}>
+            {viewOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.text}
+              </option>
+            ))}
           </select>
         </div>
         {width >= 768 ? (
