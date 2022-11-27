@@ -22,10 +22,10 @@ function Signin() {
     };
     const news = async () => {
       let res = await axios
-        .post("http://127.0.0.1:8000/login", data)
+        .post("http://scrybe.hng.tech:5000/login", data)
         .then((response) => {
           console.log(response);
-          Cookies.set("token", response.data.access_token);
+          // Cookies.set("token", response.data.access_token);
           return response;
         })
         .catch((error) => {
