@@ -12,7 +12,7 @@ function SignUpVerify() {
             className={`${styles.first} ${styles.signin} ${styles.otherThanSignup}`}
           >
             <h1>Verify your Account</h1>
-            <h3>We sent a token link to verify your account</h3>
+            <h3>We sent a link to your mail to verify your account</h3>
             <form action="">
               <input type="submit" value="Open email" className="success-btn" />
               <p className="successful-p">
