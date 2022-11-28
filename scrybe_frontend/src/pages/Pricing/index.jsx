@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./Pricing.module.scss";
 import heroImage from "./assets/heroimage.svg";
+import curves from "./assets/Vector 13.webp"
 import startUpIcon from "./assets/star.svg";
 import growingIcon from "./assets/auto_graph.svg";
 import enterpriseIcon from "./assets/corporate_fare.svg";
@@ -30,6 +31,7 @@ function Pricing() {
             <img src={heroImage} alt="" srcSet="" />
           </div>
         </div>
+        <img src={curves} alt="" srcset="" className={styles.curves} />
       </div>
       <div className={styles.CTA}>
         <h2 className={styles.CTAtitle}>Choose a plan that fits your needs</h2>

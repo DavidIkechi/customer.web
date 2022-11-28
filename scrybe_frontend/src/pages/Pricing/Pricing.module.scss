@@ -1,5 +1,7 @@
+@use "../../functions.scss" as *;
+
+
 .pricing {
-  width: min(100%, 75.25rem);
   margin-inline: auto;
 }
 
@@ -8,6 +10,7 @@
   padding: 1rem;
   min-height: 95vh;
   overflow-x: visible;
+  margin-bottom: pix-rem(280);
 }
 
 .pricing .hero .container {
@@ -37,6 +40,18 @@
 .pricing .hero .container .heroImage {
   width: min(100%, 38.3125rem);
 }
+
+.pricing .hero .curves {
+  position: absolute;
+  top: pix-rem(-160);
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: -1;
+  height: pix-rem(830);
+  max-height: pix-rem(1700);
+
+  }
 
 .pricing .CTA {
   width: 80%;
@@ -89,7 +104,9 @@
 .pricing .plans {
   display: flex;
   gap: 23px;
-}
+   width: min(100%, 75.25rem);
+   margin-inline: auto;
+  }
 
 .plansCard {
   flex: 1;
@@ -142,6 +159,8 @@
 }
 .pricing .features{
   margin-block: 4rem;
+   width: min(100%, 75.25rem);
+   margin-inline: auto;
 }
 
 .pricingFeatures {
@@ -161,6 +180,7 @@ table {
   border-collapse: collapse;
   width: 100%;
   padding-block: 2rem;
+  
 }
 th,
 td {
@@ -183,7 +203,8 @@ tr img {
   border-radius: 1rem;
   display: flex;
   gap: 30px;
-  margin-block: 6rem;
+  margin: 6rem auto;
+   width: min(100%, 75.25rem);
 }
 
 .pricing .benefits .benefitdescription {
