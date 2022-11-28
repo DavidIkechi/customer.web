@@ -16,16 +16,16 @@ function Signin() {
     if (evt) {
       evt.preventDefault();
     }
-    // 
-    
+    //
+
     let formData = new FormData();
 
-    formData.append('username', name);
-    formData.append('password', password);
+    formData.append("username", name);
+    formData.append("password", password);
 
     const config = {
-      headers: {'content-type': 'multipart/form-data'}
-    }
+      headers: { "content-type": "multipart/form-data" },
+    };
 
     const news = async () => {
       let res = await axios
