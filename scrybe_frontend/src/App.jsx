@@ -46,6 +46,7 @@ import PersonalInformation from "./pages/Settings/SettingsPageSubPages/PersonalI
 import PartnersPage from "./pages/PartnersPage";
 import React, { useState } from "react";
 import Cookies from "js-cookie";
+import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -113,6 +114,7 @@ function App() {
         <Route path="/create-account" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/reset-successful" element={<Successful />} />
+        <Route path="/verify-signup" element={<SignUpVerify />} />
         <Route path="/set-new-password" element={<SetNewPassword />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route

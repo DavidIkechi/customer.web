@@ -34,7 +34,7 @@ function Signup() {
   };
 
   if (navigate) {
-    return <Navigate to="/signin" />;
+    return <Navigate to="/verify-signup" />;
   }
 
   return (
