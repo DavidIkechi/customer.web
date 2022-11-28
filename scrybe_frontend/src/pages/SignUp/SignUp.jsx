@@ -1,25 +1,28 @@
 import React from "react";
 import axios from "axios";
-import { useForm } from "react-hook-form";
+// import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import footerImg from "./assets/signup-img.svg";
 import styles from "./SignUp.module.scss";
-// import { useMockUser } from "./hooks/hook";
 
 function Signup() {
-  const [name, setName] = useState("");
-  const [company, setCompany] = useState("");
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [company_name, setCompany] = useState("");
   const [password, setPassword] = useState("");
   const handleSubmit = (evt) => {
     evt.preventDefault();
     const data = {
-      username: name,
-      company: company,
+      first_name: first_name,
+      last_name: last_name,
+      email: email,
+      company_name: company_name,
       password: password,
     };
     axios
-      .post("http://scrybe.hng.tech:5000/users/", data)
+      .post("http://scrybe.hng.tech:5000/users", data)
       .then((response) => {
         console.log(response);
       })
@@ -41,8 +44,8 @@ function Signup() {
                 id="first_name"
                 placeholder="Enter your first name"
                 className={`${styles.errorInput} `}
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={first_name}
+                onChange={(e) => setFirstName(e.target.value)}
               />
               {/* <p className={styles.errorMsg}>{errors.first_name?.message}</p> */}
 
@@ -52,6 +55,8 @@ function Signup() {
                 id="last_name"
                 placeholder="Enter your last name"
                 className={`${styles.errorInput} `}
+                value={last_name}
+                onChange={(e) => setLastName(e.target.value)}
               />
               {/* <p className={styles.errorMsg}>{errors.last_name?.message}</p> */}
 
@@ -61,6 +66,8 @@ function Signup() {
                 id="email"
                 placeholder="Enter your company email"
                 className={`${styles.errorInput} `}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               {/* <p className={styles.errorMsg}>{errors.email?.message}</p> */}
 
@@ -70,7 +77,7 @@ function Signup() {
                 id="company_name"
                 placeholder="Enter your company name"
                 className={`${styles.errorInput} `}
-                value={company}
+                value={company_name}
                 onChange={(e) => setCompany(e.target.value)}
               />
               {/* <p className={styles.errorMsg}>{errors.company_name?.message}</p> */}
