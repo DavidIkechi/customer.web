@@ -11,7 +11,7 @@ import SideBar from "../../components/SideBar";
 function Account() {
   useEffect(() => {
     (async () => {
-      const response = await axios.get("http://scrybe.hng.tech:5000/account");
+      const response = await axios.get("account");
     })();
   }, []);
   const [accountModalIsActive, setAccountModalIsActive] = useState(false);

@@ -30,7 +30,7 @@ function Signin() {
     };
 
     const response = await axios
-      .post("http://scrybe.hng.tech:5000/login", formData, config)
+      .post("login", formData, config)
       .then((response) => {
         console.log(response);
         axios.defaults.headers.common[

@@ -25,7 +25,7 @@ function Signup() {
       password: password,
     };
     await axios
-      .post("http://scrybe.hng.tech:5000/users", data)
+      .post("users", data)
       .then((response) => {
         console.log(response);
         setNavigate(true);
