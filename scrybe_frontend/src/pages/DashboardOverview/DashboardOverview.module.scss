@@ -2,6 +2,7 @@
   background: #c5c5c514;
   overflow: hidden;
   padding: 0;
+  width: 100%;
 }
 .notvisible {
   visibility: hidden;
@@ -179,7 +180,6 @@
 }
 
 .leaderboard {
-  // align-items: center;
   height: 310px;
   width: 100%;
   margin: 20px auto;
@@ -307,12 +307,18 @@
     background: rgba(33, 104, 204, 0.801);
   }
 }
+@media screen and (max-width: 48rem) {
+  .recordings_container {
+    margin-left: 1.3rem;
+  }
+}
 
 @media screen and (min-width: 48rem) {
   .dashboard_overview {
     background: #c5c5c514;
     overflow: hidden;
     padding: 3rem;
+    width: 100%;
   }
   .recent_recordings {
     caption {
@@ -342,12 +348,7 @@
     width: 771px;
   }
 }
-@media screen and (max-width: 48rem) and (min-width: 30.625rem) {
-  .dashboard_overview {
-    width: 100%;
-  }
-}
-@media screen and (min-width: 65.625rem) {
+@media screen and (min-width: 81.063rem) {
   .container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
