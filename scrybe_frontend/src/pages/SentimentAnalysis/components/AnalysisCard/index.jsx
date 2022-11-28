@@ -1,18 +1,20 @@
-import React from "react";
+import PropTypes from "prop-types";
 import styles from "./AnalysisCard.module.scss";
 
-export default function AnalysisCard() {
+function AnalysisCard({ sentimentData }) {
   return (
     <div className={styles.card}>
-      <div className={styles.time}>00:00</div>
+      <div className={styles.time}>
+        {parseInt(sentimentData.time / 60)
+          .toString()
+          .padStart(2, "0") +
+          ":" +
+          Math.round(sentimentData.time % 60)
+            .toString()
+            .padEnd(2, "0")}
+      </div>
       <div className={styles.content}>
-        <div className={styles.content__text}>
-          The meeting was a success. We discussed at length about the
-          intricacies of how the software will run. Text analytics software can
-          be difficult to use, expensive, and time-consuming. Sentiment analysis
-          is a much more difficult task and takes a lot of time to build up a
-          training dataset.
-        </div>
+        <div className={styles.content__text}>{sentimentData.transcript}</div>
         <div className={styles.content__analysis}>
           <div className={styles.content__analysis__top}>
             <div className={styles.title}>Analysis</div>
@@ -20,13 +22,13 @@ export default function AnalysisCard() {
           </div>
           <div className={styles.content__analysis__metrics}>
             <div className={`${styles.metric} ${styles.positive}`}>
-              Positive - 60%
+              Positive - {(sentimentData.positivity_score * 100).toFixed(2)}%
             </div>
             <div className={`${styles.metric} ${styles.neutral}`}>
-              Neutral - 30%
+              Neutral - {(sentimentData.neutrality_score * 100).toFixed(2)}%
             </div>
             <div className={`${styles.metric} ${styles.negative}`}>
-              Negative - 10%
+              Negative - {(sentimentData.negativity_score * 100).toFixed(2)}%
             </div>
           </div>
         </div>
@@ -34,3 +36,9 @@ export default function AnalysisCard() {
     </div>
   );
 }
+
+AnalysisCard.propTypes = {
+  sentimentData: PropTypes.object.isRequired,
+};
+
+export default AnalysisCard;

@@ -71,7 +71,7 @@
   border: 0.0625rem solid #004cb3;
 }
 .pricing .CTA .CTAs .ctaYear {
-  background-color: #004DB5;
+  background-color: #004db5;
   color: white;
 }
 .pricing .CTA .CTAs .ctaStarter:active {
@@ -79,6 +79,11 @@
 }
 .pricing .CTAtitle {
   font-size: 2rem;
+}
+.pricing .Featurestitle {
+  font-size: 2rem;
+  text-align: center;
+  padding-block: 2rem;
 }
 
 .pricing .plans {
@@ -93,7 +98,6 @@
   padding: 2rem;
   border-radius: 1.5rem;
   border: 0.89px solid #002f49;
-
 }
 
 .FtnBtn {
@@ -104,11 +108,11 @@
 }
 
 .plansCard.enterprise {
-  background-color: #002F49;
+  background-color: #002f49;
   color: #fff;
 }
 .plansCard.enterprise p {
-   color: #fff;
+  color: #fff;
 }
 
 .plansCardIcon {
@@ -128,24 +132,96 @@
 .plansPricingCurrency {
   width: 3.125rem;
 }
-.pricingFeaturesItem img, .plansCardIcon {
+.pricingFeaturesItem img,
+.plansCardIcon {
   padding-right: 11px;
 }
 .plansPricingFigure h4 {
   font-size: 4.5rem;
   font-weight: 600;
 }
+.pricing .features{
+  margin-block: 4rem;
+}
 
 .pricingFeatures {
   padding: 1.5rem 0;
 }
 .plansCard a {
- display: block;
-color: #fff;
-text-align: center;
-font-size: 1rem;
-padding: 1rem 2rem;
-margin-top: 2rem;
-background-color: #006cff;
-border-radius: 4px;
+  display: block;
+  color: #fff;
+  text-align: center;
+  font-size: 1rem;
+  padding: 1rem 2rem;
+  margin-top: 2rem;
+  background-color: #006cff;
+  border-radius: 4px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  padding-block: 2rem;
+}
+th,
+td {
+  padding: 0.75rem;
+
+}
+tr th:first-child {
+   text-align: left;
+}
+tr td:first-child {
+  text-align: left;
+}
+tr img {
+  margin-inline: auto;
+}
+
+.pricing .benefits {
+  padding: 32px;
+  background-color: #E6F6FF;
+  border-radius: 1rem;
+  display: flex;
+  gap: 30px;
+  margin-block: 6rem;
+}
+
+.pricing .benefits .benefitdescription {
+  flex: 1;
+}
+.pricing .benefits .BenefitsImage {
+  flex: 1;
+}
+.pricing .benefits .BenefitsImage img {
+ width: 100%;
+}
+
+.pricing .benefits ul li {
+  font-size: 1.25rem;
+  font-weight: 300;
+  padding-bottom: 10px;
+  color: #454545;
+}
+.pricing .benefits ul li span {
+  color: #454545;
+  padding-right: 10px;
+}
+
+.pricing .benefits .benefitCTA {
+  display: flex;
+  margin-top: 2rem;
+}
+.pricing .benefits .benefitCTA a {
+  text-decoration: none;
+  padding-block: 1rem;
+  padding-inline: 1rem;
+  border: 1px solid #006cff;
+  border-radius: 0.25rem;
+  text-align: center;
+  margin-right: 2rem;
+}
+
+.pricing .benefits .benefitCTA a:first-child {
+  background-color: #006cff;
+  color: #fff;
 }

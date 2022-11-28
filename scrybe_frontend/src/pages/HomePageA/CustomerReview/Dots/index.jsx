@@ -8,7 +8,7 @@ export default function Dot({ activeIndex, onClick, slider }) {
       {slider.map((_, index) => (
         <span
           key={index}
-          className={` dot ${activeIndex === index ? "active-dot " : ""}`}
+          className={` dot-zz ${activeIndex === index ? "active-dot-zz " : ""}`}
           onClick={() => onClick(index)}
         ></span>
       ))}

@@ -32,18 +32,14 @@
   // the header list items
   .UploadedSidebar_header_lists {
     width: 100%;
-    margin-top: 1rem;
+    margin-top: 3rem;
     // padding: 0 1rem;
     a {
       font-family: "Kanit";
       font-style: normal;
       font-weight: 300;
-      font-size: 16px;
+      font-size: 20px;
       line-height: 24px;
-      /* identical to box height, or 150% */
-
-      /* Grey/grey-400 */
-
       color: #6a6a6a;
     }
     .sidebar_link_active {
@@ -56,8 +52,12 @@
       // align-items: center;
       // padding: 16px 24px;
       padding-left: 1rem;
+      .sidebar_link_active_a {
+        margin-left: 5px;
+        color: #3389ff;
+      }
       img {
-        margin-right: 5px;
+        // margin-right: 5px;
         width: 32px;
       }
     }
@@ -90,6 +90,14 @@
       }
       .sidebarDropDownListWrap {
         display: flex;
+        p {
+          font-family: "Kanit";
+          font-style: normal;
+          font-weight: 300;
+          font-size: 20px;
+          line-height: 26px;
+          color: #6a6a6a;
+        }
       }
       img {
         margin-right: 8px;
@@ -104,6 +112,14 @@
         -ms-transition: all 0.3s ease-in-out;
         -o-transition: all 0.3s ease-in-out;
         display: none;
+        a {
+          font-family: "Kanit";
+          font-style: normal;
+          font-weight: 300;
+          font-size: 16px;
+          line-height: 24px;
+          color: #6a6a6a;
+        }
         .sidebarDropDownList {
           display: flex;
           margin-bottom: 1rem;

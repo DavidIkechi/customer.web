@@ -1,38 +1,33 @@
 import React from "react";
-import { useForm } from "react-hook-form";
-import { useState } from "react";
+import axios from "axios";
+// import { useForm } from "react-hook-form";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import footerImg from "./assets/signup-img.svg";
 import styles from "./SignUp.module.scss";
 
 function Signup() {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
-  /* eslint-disable no-unused-vars */
-  const [userInfo, setUserInfo] = useState();
-  /* eslint-enable no-unused-vars */
-  const onSubmit = (data) => {
-    console.log(data);
-    setUserInfo(data);
-    console.log(errors);
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [company_name, setCompany] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    const data = {
+      first_name: first_name,
+      last_name: last_name,
+      email: email,
+      company_name: company_name,
+      password: password,
+    };
+    axios
+      .post("http://scrybe.hng.tech:5000/users", data)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {});
   };
-
-  // Watch event for disable button
-  const fullname = watch("fullname");
-  const email = watch("email");
-  const company = watch("company");
-  const password = watch("password");
-
-  console.log("fullname", fullname);
-  console.log("email", email);
-  console.log("company", company);
-  console.log("password", password);
-
-  const isValid = fullname && email && company && password;
 
   return (
     <>
@@ -41,47 +36,51 @@ function Signup() {
           <div className={styles.first}>
             <h1>Create an account</h1>
             <h3>Let’s get you started</h3>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <label htmlFor="fullname">Full name</label>
+
+            <form onSubmit={handleSubmit}>
+              <label htmlFor="first_name">First Name</label>
               <input
                 type="text"
-                name="fullname"
-                id="fullname"
-                placeholder="Enter your full name"
-                className={`${errors.fullname && styles.errorInput} `}
-                {...register("fullname", { required: "Name is required" })}
+                id="first_name"
+                placeholder="Enter your first name"
+                className={`${styles.errorInput} `}
+                value={first_name}
+                onChange={(e) => setFirstName(e.target.value)}
               />
-              <p className={styles.errorMsg}>{errors.fullname?.message}</p>
+              {/* <p className={styles.errorMsg}>{errors.first_name?.message}</p> */}
+
+              <label htmlFor="last_name">Last Name</label>
+              <input
+                type="text"
+                id="last_name"
+                placeholder="Enter your last name"
+                className={`${styles.errorInput} `}
+                value={last_name}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+              {/* <p className={styles.errorMsg}>{errors.last_name?.message}</p> */}
 
               <label htmlFor="email">Email</label>
               <input
                 type="email"
-                name="email"
                 id="email"
                 placeholder="Enter your company email"
-                className={`${errors.email && styles.errorInput} `}
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i,
-                    message: "Please enter a correct company email address",
-                  },
-                })}
+                className={`${styles.errorInput} `}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
-              <p className={styles.errorMsg}>{errors.email?.message}</p>
+              {/* <p className={styles.errorMsg}>{errors.email?.message}</p> */}
 
-              <label htmlFor="company">Company</label>
+              <label htmlFor="company_name">Company</label>
               <input
                 type="text"
-                name="company"
-                id="company"
+                id="company_name"
                 placeholder="Enter your company name"
-                className={`${errors.company && styles.errorInput} `}
-                {...register("company", {
-                  required: "Company name is required",
-                })}
+                className={`${styles.errorInput} `}
+                value={company_name}
+                onChange={(e) => setCompany(e.target.value)}
               />
-              <p className={styles.errorMsg}>{errors.company?.message}</p>
+              {/* <p className={styles.errorMsg}>{errors.company_name?.message}</p> */}
 
               <label htmlFor="password">Password</label>
               <input
@@ -89,22 +88,16 @@ function Signup() {
                 name="password"
                 id="password"
                 placeholder="Enter your password"
-                className={`${errors.password && styles.errorInput} `}
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 8,
-                    message: "Password must be at least 8 characters",
-                  },
-                })}
+                className={`${styles.errorInput} `}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
-              <p className={styles.errorMsg}>{errors.password?.message}</p>
+              {/* <p className={styles.errorMsg}>{errors.password?.message}</p> */}
 
               <input
                 type="submit"
-                disabled={!isValid}
                 value="Create an account"
-                className={`${isValid && styles.submitValid}`}
+                className={`${styles.submitValid}`}
               />
               <div className={`${styles.accept} ${styles.up}`}>
                 <input type="checkbox" name="" id="" />

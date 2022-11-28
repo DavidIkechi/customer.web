@@ -12,7 +12,7 @@ import monthlyAnalysis from "./assets/icons/monthly-analysis.svg";
 import settings from "./assets/icons/settings.svg";
 
 function SideBar({ children }) {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className={styles.sidebar__container}>

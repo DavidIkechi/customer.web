@@ -4,6 +4,7 @@ import utils from "../assets/utils.module.scss";
 import styles from "./styles.module.scss";
 import { insta01, insta02, insta03 } from "../../BlogsPage/assets";
 import ImageSlider from "../../BlogsPage/ImageSlider";
+import Footer from "../../../components/footer";
 function DefaultLayout(props) {
   const { children } = props;
   const slides = [
@@ -36,6 +37,7 @@ function DefaultLayout(props) {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
