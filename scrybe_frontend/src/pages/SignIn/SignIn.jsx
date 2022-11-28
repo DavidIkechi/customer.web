@@ -14,7 +14,7 @@ function Signin() {
   const [password, setPassword] = useState("");
   const [navigate, setNavigate] = useState(false);
 
-  const handleSubmit = async evt => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
 
     let formData = new FormData();
@@ -24,25 +24,28 @@ function Signin() {
 
     const config = {
       withCredentials: true,
-      headers: { 
-        "content-type": "multipart/form-data" },
+      headers: {
+        "content-type": "multipart/form-data",
+      },
     };
 
     const response = await axios
-        .post("http://scrybe.hng.tech:5000/login", formData, config)
-        .then((response) => {
-          console.log(response);
-          axios.defaults.headers.common['Authorization'] = `Bearer ${response.data['access_token']}`;
-          setNavigate(true);
-        })
-        .catch((error) => {});
-      };
-          // console.log(response.data);
-          // Cookies.set("token", response.data.access_token);          
+      .post("http://scrybe.hng.tech:5000/login", formData, config)
+      .then((response) => {
+        console.log(response);
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${response.data["access_token"]}`;
+        setNavigate(true);
+      })
+      .catch((error) => {});
+  };
+  // console.log(response.data);
+  // Cookies.set("token", response.data.access_token);
 
-      if(navigate) {
-        return <Navigate to='/account' />;
-      }
+  if (navigate) {
+    return <Navigate to="/account" />;
+  }
 
   return (
     <>

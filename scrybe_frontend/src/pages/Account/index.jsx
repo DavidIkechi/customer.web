@@ -9,13 +9,10 @@ import plus from "./assets/icons/plus.svg";
 import SideBar from "../../components/SideBar";
 
 function Account() {
-
   useEffect(() => {
-      (
-        async () => {
-          const response = await axios.get("http://scrybe.hng.tech:5000/account");
-        }
-      )()
+    (async () => {
+      const response = await axios.get("http://scrybe.hng.tech:5000/account");
+    })();
   }, []);
   const [accountModalIsActive, setAccountModalIsActive] = useState(false);
   const toggleAccountModal = () => {

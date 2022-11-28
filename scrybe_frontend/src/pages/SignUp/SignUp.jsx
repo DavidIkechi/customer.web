@@ -14,8 +14,8 @@ function Signup() {
   const [company_name, setCompany] = useState("");
   const [password, setPassword] = useState("");
   const [navigate, setNavigate] = useState(false);
-  
-  const handleSubmit = async evt => {
+
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
     const data = {
       first_name: first_name,
@@ -33,8 +33,8 @@ function Signup() {
       .catch((error) => {});
   };
 
-  if(navigate) {
-    return <Navigate to='/signin' />
+  if (navigate) {
+    return <Navigate to="/signin" />;
   }
 
   return (
