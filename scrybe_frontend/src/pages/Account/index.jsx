@@ -9,6 +9,14 @@ import plus from "./assets/icons/plus.svg";
 import SideBar from "../../components/SideBar";
 
 function Account() {
+
+  useEffect(() => {
+      (
+        async () => {
+          const response = await axios.get("http://scrybe.hng.tech:5000/account");
+        }
+      )()
+  }, []);
   const [accountModalIsActive, setAccountModalIsActive] = useState(false);
   const toggleAccountModal = () => {
     setAccountModalIsActive((current) => !current);
@@ -130,11 +138,11 @@ function Account() {
                   <div>
                     <div>
                       <p>Company name</p>
-                      <p>{accountUser.company.name}</p>
+                      {/* <p>{accountUser.company.name}</p> */}
                     </div>
                     <div>
                       <p>Address</p>
-                      <p>{accountUser.company.address}</p>
+                      {/* <p>{accountUser.company.address}</p> */}
                     </div>
                   </div>
                 </div>
@@ -150,7 +158,7 @@ function Account() {
                     </button>
                   </span>
                   <div>
-                    <ul>
+                    {/* <ul>
                       {accountUser.company.agents.map((agent, index) => {
                         return (
                           <li key={index}>
@@ -159,7 +167,7 @@ function Account() {
                           </li>
                         );
                       })}
-                    </ul>
+                    </ul> */}
                   </div>
                 </div>
                 <div className={accountStyles.developer_tools__div}>
