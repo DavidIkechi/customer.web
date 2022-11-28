@@ -1,0 +1,37 @@
+.body {
+    background-color: #FBF9F6;
+    P, h1, h2 , h3, h4, h5 {
+        line-height: normal;
+    }
+    img, picture {
+        max-width: none;
+    }
+}
+.general {
+    padding: 0 5rem;
+}
+
+.contact {
+    text-align: center;
+    margin: 5rem 0;
+    font-size: 18px;
+
+    p {
+        font-weight: 300;
+    }
+
+    a {
+        text-decoration: none;
+        color: #002D6B;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    
+    .general {
+        padding: 0 1rem;
+    }
+    
+    
+    
+}

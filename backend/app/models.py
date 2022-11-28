@@ -4,13 +4,23 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from datetime import datetime
 
+from datetime import datetime
+
 from db import Base
+
+from sqlalchemy.dialects.postgresql import UUID
+import uuid
+
+def generate_uuid():
+    return str(uuid.uuid4())
+
 
 class Company(Base):
     __tablename__ = 'companies'
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
+    address = Column(String, index=True)
     size = Column(Integer)
 
     users = relationship("User", back_populates="company")
@@ -75,6 +85,21 @@ class Job(Base):
 
     audio = relationship("Audio", back_populates="job")
 
+
+
+class History(Base):
+    __tablename__ = "history"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    audio_name = Column(String, index=True)
+    agent_name = Column(String, index=True)
+    sentiment_result = Column(String, index=True)
+    date_uploaded = Column(DateTime, default=datetime.utcnow(), index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+
+
+    
 class Analysis(Base):
     __tablename__ = "analysis"
 
@@ -88,3 +113,13 @@ class Analysis(Base):
     overall_sentiment = Column(Enum("Positive", "Negative", "Neutral"), index=True)
 
     agent_id = Column(Integer, ForeignKey("agents.id"))
+
+class UserProfile(Base):
+    __tablename__ = "Accounts"
+
+    id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    phone_number = Column(String)
+    company_address = Column(String)
+    email = Column(String, nullable=True)
+    company_id= Column(String, ForeignKey("companies.id"))
+    api_key = Column(String, name="uuid", primary_key=True, default=generate_uuid)

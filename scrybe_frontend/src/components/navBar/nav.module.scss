@@ -16,6 +16,7 @@
       padding-block: pix-rem(20);
     }
   }
+
   &__closed {
     display: none;
     @include media($mobile) {
@@ -87,6 +88,7 @@
       a {
         color: white;
         text-decoration: none;
+        cursor: pointer;
       }
     }
   }
@@ -134,11 +136,27 @@
         color: #006cff;
         border: 1px solid #006cff;
         font-size: clamp(0.625rem, 0.489rem + 0.68vw, 1rem);
+        cursor: pointer;
+
+        button {
+          background-color: transparent;
+          border: none;
+          color: #006cff;
+          cursor: pointer;
+        }
       }
       &:nth-child(2) {
         background-color: #006cff;
         color: white;
         font-size: clamp(0.625rem, 0.489rem + 0.68vw, 1rem);
+        cursor: pointer;
+
+        button {
+          background-color: transparent;
+          border: none;
+          color: #FFFFFF;
+          cursor: pointer;
+        }
       }
     }
   }
