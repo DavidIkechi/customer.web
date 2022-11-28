@@ -16,13 +16,20 @@ function Signin() {
     if (evt) {
       evt.preventDefault();
     }
-    const data = {
-      username: name,
-      password: password,
-    };
+    // 
+    
+    let formData = new FormData();
+
+    formData.append('username', name);
+    formData.append('password', password);
+
+    const config = {
+      headers: {'content-type': 'multipart/form-data'}
+    }
+
     const news = async () => {
       let res = await axios
-        .post("http://scrybe.hng.tech:5000/login", data)
+        .post("http://scrybe.hng.tech:5000/login", formData, config)
         .then((response) => {
           console.log(response);
           // Cookies.set("token", response.data.access_token);
