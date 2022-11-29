@@ -2,6 +2,11 @@
   background: #c5c5c514;
   overflow: hidden;
   padding: 0;
+  width: 100%;
+}
+.subcontent_con {
+  display: flex;
+  justify-content: center;
 }
 .notvisible {
   visibility: hidden;
@@ -29,6 +34,7 @@
     color: #252121;
   }
 }
+// recordings
 .recordings,
 .analysis,
 .leaderboard {
@@ -69,11 +75,7 @@
     }
   }
 }
-
-.subcontent_con {
-  display: flex;
-  justify-content: center;
-}
+// analysis
 .analysis {
   width: 100%;
   height: 310px;
@@ -177,9 +179,8 @@
     }
   }
 }
-
+// leaderboard
 .leaderboard {
-  // align-items: center;
   height: 310px;
   width: 100%;
   margin: 20px auto;
@@ -222,7 +223,7 @@
     display: none;
   }
 }
-
+// recent_recordings
 .recent_recordings {
   width: 100%;
   caption {
@@ -307,12 +308,18 @@
     background: rgba(33, 104, 204, 0.801);
   }
 }
+@media screen and (max-width: 48rem) {
+  .recordings_container {
+    margin-left: 1.3rem;
+  }
+}
 
 @media screen and (min-width: 48rem) {
   .dashboard_overview {
     background: #c5c5c514;
     overflow: hidden;
     padding: 3rem;
+    width: 100%;
   }
   .recent_recordings {
     caption {
