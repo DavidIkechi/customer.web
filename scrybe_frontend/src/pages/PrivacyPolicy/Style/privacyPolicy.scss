@@ -1,5 +1,8 @@
+.privacy{
+  background: rgb(230, 240, 255);
+}
 .container {
-  padding: 100px 5%;
+  padding: 2vh 15%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,11 +34,11 @@
     li {
       text-align: justify;
     }
-    ul {
-      list-style: inside;
+    ul li {
+      list-style: disc;
     }
 
-    ol {
+    ol li{
       list-style-type: decimal;
     }
 
@@ -43,10 +46,18 @@
     ol {
       padding-left: 20px;
     }
+    .link, a{
+      color: #0095E8;
+    }
   }
 
   @media (min-width: 700px) {
-    padding: 0 150px;
+    .container{
+      padding: 2vh 15%;
+    }
+    .sub-container{
+      margin: 5vh 0;
+    }
 
     .sub-container {
       ul,
@@ -56,3 +67,19 @@
     }
   }
 }
+@media (max-width: 700px) {
+  .container{
+    padding: 0vh 5%;
+  }
+  .sub-container{
+    margin: 0vh 0;
+  }
+
+  .sub-container {
+    ul,
+    ol {
+      padding-left: 30px;
+    }
+  }
+}
+
