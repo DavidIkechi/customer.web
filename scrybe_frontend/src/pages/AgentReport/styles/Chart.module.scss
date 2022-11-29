@@ -9,6 +9,7 @@
   flex-direction: column;
   align-items: center;
   padding: 0.2rem;
+
   // justify-content: space-between;
   @include mixins.sm {
     width: 58%;
@@ -16,65 +17,96 @@
     background-color: white;
     border-radius: 10px;
   }
+
   .chartWrap {
     padding: 0.6rem;
     width: 100%;
+
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: space-between;
     // overflow: hidden;
     @include mixins.sm {
       padding: 0.8rem;
     }
+
     @include mixins.md {
       padding: 1.8rem;
     }
+
     .chartHeader {
-      margin-bottom: 0.5rem;
-      & > p {
+      margin-bottom: 0.1rem;
+
+      &>p {
         font-size: 2rem;
         // display: inline;
       }
+
       .chartText {
         display: flex;
         justify-content: space-between;
         color: #6a6a6a;
         font-size: 0.9rem;
         align-items: center;
+
+        .callText {
+          font-size: 1rem;
+          display: flex;
+          align-items: center;
+          .callIcon {
+            margin-right: 0.5rem;
+            height: 1rem;
+            width: 1rem;
+          }
+        }
+
         // margin-bottom: 0.1rem;
         .checkbox {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          width: 22%;
+          cursor: pointer;
           border: 0.5px solid rgb(207, 203, 203);
           border-radius: 10px;
           color: #6a6a6a;
-          padding: 0.2rem 0.6rem;
+          padding: 0.3rem 1rem;
+          font-size: 1rem;
+
           .textIcon {
             height: 15px;
             width: 15px;
+            margin-left: 0.5rem;
           }
         }
       }
     }
+
     .chartImg {
       object-fit: contain;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 70%;
+      height: 67%;
       width: 100%;
-      // overflow: hidden;
+      min-width: 60%;
+      padding-bottom: 0.2rem;
+
       @include mixins.sm {
         height: 90%;
+        min-height: 90%;
+        min-width: 90%;
         width: 95%;
         overflow: hidden;
       }
+
       @include mixins.md {
-        width: 100%;
+        width: 95%;
         height: 100%;
       }
-      .chartImg > img {
-        max-width: 100%;
-        max-height: 100%;
+
+      .chartImg>img {
+        width: 100%;
+        min-height: 100%;
       }
     }
   }

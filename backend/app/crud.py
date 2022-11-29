@@ -1,8 +1,10 @@
 # crud operations for the backend app
 from sqlalchemy.orm import Session
+from fastapi import HTTPException
 import models, schema
 from random import randint
 from passlib.context import CryptContext
+from fastapi import HTTPException 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -36,6 +38,7 @@ def create_user(db: Session, user: schema.User):
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
+    create_user_profile(db, company_id, user.email)
     return db_user
 
 def update_user(db: Session, user: schema.user_update, user_id: int):
@@ -100,6 +103,20 @@ def create_agent(db: Session, agent: schema.Agent, company_id: int):
     db.refresh(db_agent)
     return db_agent
 
+
+def create_history(db: Session, history: schema.HistoryCreate):
+    db_history = models.History(**history)
+    db.add(db_history)
+    db.commit()
+    db.refresh(db_history)
+    return db_history
+
+
+def get_history_by_user_id(db: Session, user_id: int):
+    return db.query(models.History).filter(models.History.user_id == user_id).all()
+
+
+
 def create_analysis(db, result= schema.Audio, user_id=int):
     db_analysis = models.Audio(transcript = result.transcript, positivity_score= result.positivity_score, negativity_score= result.negativity_score, overall_sentiment= result.overall_sentiment)
     db.add(db_analysis)
@@ -109,3 +126,34 @@ def create_analysis(db, result= schema.Audio, user_id=int):
 
 def get_analysis(db: Session, analysis_id = int):
     return db.query(models.Analysis).filter(models.Analysis == analysis_id).first()
+
+def create_user_profile(db: Session, company_id: int, user_email: str):
+    user = get_user_by_email(db, user_email)
+    user_id = user.id
+    db_profile = models.UserProfile(id=user_id, company_id = company_id)
+    db.add(db_profile)
+    db.commit()
+    db.refresh(db_profile)
+    return db_profile
+
+def get_user_profile(db: Session, user_id: int):
+    agents = []
+    user_profile = db.query(models.UserProfile).filter(models.User.id == user_id).first()
+    company = db.query(models.Company).filter(models.Company.id ==user_profile.company_id).first()
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    for agent in db.query(models.Agent).filter(models.Agent.company_id == user_profile.company_id).all():
+        agents.append(agent.first_name + " " + agent.last_name)
+
+    return {
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "company_name": company.name,
+        "agents": agents,
+        "phone_number": user_profile.phone_number,
+        "email": user.email,
+        "company_address": company.address,
+        "api_key": user_profile.api_key
+    }
+
+def get_user_profile_by_email(db: Session, email: str):
+    return db.query(models.User).filter(models.User.email == email).first()

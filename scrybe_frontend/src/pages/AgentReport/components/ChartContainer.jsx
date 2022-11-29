@@ -3,6 +3,37 @@ import styles from "../styles/Chart.module.scss";
 import DownArrow from "../assets/chevron_right.svg";
 import Chart from "./Chart";
 import { UserData } from "./Data";
+import Icon from "../assets/table-icon.png";
+
+export const options = {
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+  },
+  plugins: {
+    title: {
+      display: false,
+      text: "Agent Report",
+    },
+    legend: {
+      title: {
+        font: {
+          size: 16,
+        },
+      },
+      position: "bottom",
+      labels: {
+        boxWidth: 10,
+        useBorderRadius: true,
+        borderRadius: 4,
+      },
+    },
+  },
+  responsive: true,
+};
 
 function Charts() {
   const [userDataDaily, setUserData] = useState({
@@ -33,7 +64,10 @@ function Charts() {
       <div className={styles.chartWrap}>
         <div className={styles.chartHeader}>
           <div className={styles.chartText}>
-            <p>Total calls recieved</p>
+            <p className={styles.callText}>
+              <img src={Icon} alt="icon" className={styles.callIcon} /> Total
+              calls recieved
+            </p>
             <p className={styles.checkbox}>
               Daily{" "}
               <img
@@ -54,6 +88,7 @@ function Charts() {
             className={styles.chartpic}
           /> */}
           <Chart
+            options={options}
             chartData={userDataDaily}
             style={{ height: "100%", width: "100%" }}
           />
