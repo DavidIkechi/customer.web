@@ -147,9 +147,9 @@
         transform-origin: 50% 50%;
     }
 
-    .loadingContainer:hover .loading {
-        border-color: transparent #E45635 transparent #E45635;
-    }
+    // .loadingContainer:hover .loading {
+    //     border-color: transparent #E45635 transparent #E45635;
+    // }
     .loadingContainer:hover .loading,
     .loadingContainer .loading {
         -webkit-transition: all 0.5s ease-in-out;
