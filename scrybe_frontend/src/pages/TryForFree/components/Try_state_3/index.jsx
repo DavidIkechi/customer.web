@@ -9,7 +9,7 @@ import styles from "./try_state_3.module.scss";
 
 export default function TryThird() {
   const [redirectNow, setRedirectNow] = useState(false);
-  setTimeout(() => setRedirectNow(true), 5000);
+  setTimeout(() => setRedirectNow(true), 5000000);
   return redirectNow ? (
     <Navigate to="/try-results" />
   ) : (
@@ -18,10 +18,14 @@ export default function TryThird() {
         <div>
           <h3>Please wait while your Transcription is processing</h3>
 
-          <div className={styles.progress}>
+          {/* <div className={styles.progress}>
             <div className={styles.color}></div>
           </div>
-          <h4>Processing...</h4>
+          <h4>Processing...</h4> */}
+          <div class={styles.loadingContainer}>
+            <div class={styles.loading}></div>
+            <div id={styles.loadingText}>Processing...</div>
+          </div>
         </div>
       </div>
 

@@ -1,11 +1,20 @@
 // eslint-disable-next-line no-warning-comments
 // TODO disable eslint warning for this todo ;)
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import styles from "./try_state_1.module.scss";
 import RecordingLogo from "../../assets/Recording-logo.png";
 
 export default function TryState1() {
+  const [transcribe, setTranscribe] = useState([]);
+
+  useEffect(() => {
+    axios.post(
+      "http://scrybe.hng.tech:5000/docs#/default/free_trial_tryForFree_post"
+    );
+  });
+
   const [files, setFiles] = useState(null);
   const inputRef = useRef();
 
@@ -60,11 +69,7 @@ export default function TryState1() {
             </p>
 
             <Link to="/try-processing">
-              <button
-                // onClick={handleClick}
-                className={styles.selectButton2}
-                type="button"
-              >
+              <button className={styles.selectButton2} type="button">
                 Transcribe
               </button>
             </Link>

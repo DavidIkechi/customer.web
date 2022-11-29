@@ -4,7 +4,7 @@ import React from "react";
 import ProgressBar from "../ProgressBar/index";
 import { Link } from "react-router-dom";
 import styles from "./try_state_4.module.scss";
-// import RecordingName from "../../assets/recording-name-1.png";
+import RecordingName from "../../assets/recording-name-1.png";
 
 export default function TryFourth() {
   return (
@@ -12,7 +12,7 @@ export default function TryFourth() {
       <div className={styles.Analysis}>
         <h2>Transcription and Sentiment Analysis</h2>
 
-        {/* <div className={styles.recordingName}>
+        <div className={styles.recordingName}>
           <div className={styles.recordingImage}>
             <img src={RecordingName} alt="some" />
           </div>
@@ -20,7 +20,7 @@ export default function TryFourth() {
             <p>Recording 1 name. mp3</p>
             <small>10 mb</small>
           </div>
-        </div> */}
+        </div>
 
         <div className={styles.allWords}>
           <p>
@@ -48,12 +48,12 @@ export default function TryFourth() {
 
             <div className={styles.progress}>
               <p>Customer Satisfaction</p>
-              <ProgressBar bgcolor="#B0CAD9" progress="40" height={25} />
+              <ProgressBar bgcolor="#B0CAD9" progress="70" height={25} />
             </div>
 
             <div className={styles.progress}>
               <p>Detected Harsh Words</p>
-              <ProgressBar bgcolor="#B0CAD9" progress="10" height={25} />
+              <ProgressBar bgcolor="#B0CAD9" progress="5" height={25} />
             </div>
 
             <div className={styles.verdict}>
@@ -66,7 +66,7 @@ export default function TryFourth() {
       <div className={styles.like}>
         <hr />
         <p>
-          Do you like Scrybe? Track the performance of your customer support
+          Do you like Heed? Track the performance of your customer support
           team with our easy to use sentiment analysis tool. Get access to more
           features when you sign up your company.
         </p>
