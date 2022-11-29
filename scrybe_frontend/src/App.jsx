@@ -21,6 +21,7 @@ import { RequireToken } from "./Auth";
 // import Industry from "./pages/Industry";
 // import IndustryArticles from "./pages/Industry/IndustryArticles/IndustryArticle1";
 // import HowitWorks from "./pages/HowItWorks";
+import Pricing from "./pages/Pricing";
 import UploadedRecordings from "./pages/UploadRecordings";
 import Account from "./pages/Account";
 import Signin from "./pages/SignIn/SignIn";
@@ -86,6 +87,7 @@ function App() {
             <Route path="/events" element={<Events />} />
             <Route path="/dashboard" element={<DashboardOverview />} />
             <Route path="/account" element={<Account />} />
+            <Route path="/pricing" element={<Pricing />} />
             {/* <Route path="/industry" exact element={<Industry />} /> */}
             {/* <Route path="/industry-article" element={<IndustryArticles />} />
             <Route path="/how-it-works" element={<HowitWorks />} /> */}
