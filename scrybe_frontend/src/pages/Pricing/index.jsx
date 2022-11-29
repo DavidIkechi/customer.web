@@ -197,154 +197,156 @@ function Pricing() {
         </div>
         <div className={styles.features}>
           <h2 className={styles.Featurestitle}>Features</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Overview</th>
-                <th>Startup</th>
-                <th>Growing</th>
-                <th>Enterprise</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Ai-Powered call transcriptions</td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-              </tr>
-              <tr>
-                <td>Call Tracking & Recording</td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-              </tr>
-              <tr>
-                <td> Business Hours</td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-              </tr>
-              <tr>
-                <td>Email & Chat Support</td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-              </tr>
-              <tr>
-                <td>API & Webhook Access</td>
-                <td></td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-              </tr>
-              <tr>
-                <td>Custom Workflows</td>
-                <td></td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-              </tr>
-              <tr>
-                <td>Dedicated Account Manager</td>
-                <td></td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-              </tr>
-              <tr>
-                <td>Priority Support</td>
-                <td></td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-              </tr>
-              <tr>
-                <td>Agent Assist</td>
-                <td></td>
-                <td></td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-              </tr>
-              <tr>
-                <td>Professional Services</td>
-                <td></td>
-                <td></td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-              </tr>
-              <tr>
-                <td>Custom Analytics & Reports</td>
-                <td></td>
-                <td></td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-              </tr>
-              <tr>
-                <td>Personalized Onboarding Support</td>
-                <td></td>
-                <td></td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-              </tr>
-              <tr>
-                <td>Agent Coaching & Call Scoring</td>
-                <td></td>
-                <td></td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-              </tr>
-              <tr>
-                <td> Dedicated Technical Support</td>
-                <td></td>
-                <td></td>
-                <td>
-                  <img src={checkIcon} alt="check-mark icon" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div className={styles.tableWrapper}>
+            <table>
+              <thead>
+                <tr>
+                  <th>Overview</th>
+                  <th>Startup</th>
+                  <th>Growing</th>
+                  <th>Enterprise</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Ai-Powered call transcriptions</td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Call Tracking & Recording</td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                </tr>
+                <tr>
+                  <td> Business Hours</td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Email & Chat Support</td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>API & Webhook Access</td>
+                  <td></td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Custom Workflows</td>
+                  <td></td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Dedicated Account Manager</td>
+                  <td></td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Priority Support</td>
+                  <td></td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Agent Assist</td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Professional Services</td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Custom Analytics & Reports</td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Personalized Onboarding Support</td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Agent Coaching & Call Scoring</td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                </tr>
+                <tr>
+                  <td> Dedicated Technical Support</td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <img src={checkIcon} alt="check-mark icon" />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <div className={styles.benefits}>
           <div className={styles.benefitdescription}>

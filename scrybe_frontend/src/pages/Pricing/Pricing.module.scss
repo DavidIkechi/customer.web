@@ -93,6 +93,9 @@
   margin: 3rem auto;
   background-color: #e6f0ff;
   padding: 1rem;
+    @include media(520px) {
+   flex-direction: column;
+  }
 }
 .pricing .CTA .CTAs .ctaMonth,
 .pricing .CTA .CTAs .ctaYear {
@@ -134,13 +137,13 @@
   margin-inline: auto;
   @include media(1220px) {
     width: pix-rem(390);
-    margin-inline: auto;
     flex-direction: column;
     justify-content: center;
   }
 
   @include media(420px) {
-    width: 100%;
+    width: 95%;
+    margin-inline: auto;
   }
 }
 
@@ -197,6 +200,7 @@
   margin-block: 4rem;
   width: min(100%, 75.25rem);
   margin-inline: auto;
+
 }
 
 .pricingFeatures {
@@ -212,16 +216,24 @@
   background-color: #006cff;
   border-radius: 4px;
 }
+
+.tableWrapper {
+  overflow-x: scroll;
+}
 table {
   border-collapse: collapse;
   width: 100%;
   padding-block: 2rem;
   width: 95%;
   margin-inline: auto;
-  overflow-x: auto;
+ 
   @include media(1220px) {
     width: pix-rem(1024);
   }
+     @include media(768px) {
+    width:  pix-rem(700);
+  }
+
 }
 thead {
   background-color: #005584;
@@ -233,11 +245,28 @@ th,
 td {
   padding: 0.75rem;
 }
-tr th:first-child {
+tr th:first-child, tr td:first-child {
   text-align: left;
+   position: sticky;
+  left: 0;
+;
+    @include media(768px) {
+    width: 30%;
+  }
 }
 tr td:first-child {
-  text-align: left;
+
+    @include media(768px) {
+      background-color: #fff;
+  }
+ 
+}
+tr th:first-child {
+
+    @include media(768px) {
+      background-color: #005584;
+  }
+ 
 }
 tr img {
   margin-inline: auto;
