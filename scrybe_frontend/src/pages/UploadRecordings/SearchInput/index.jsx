@@ -12,8 +12,6 @@ import styles from "./searchinput.module.scss";
 
 const SearchInput = ({ className, inputValue }) => {
   const [searchValue, setSearchValue] = React.useState("");
-  // console.log(`searchValue: ${searchValue}`);
-  // console.log(`search in searchInput: ${search}`);
 
   const getSearchValue = (e) => {
     setSearchValue(e.target.value);

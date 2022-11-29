@@ -17,7 +17,7 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
 }
 
 .sect__container {
-    width: 90%;
+    width: 95%;
     max-width: 1024px;
     margin: 0 auto;
 }
@@ -181,7 +181,8 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
 
         .second__flex {
             display: flex;
-            justify-content: flex-start;
+            justify-content: space-between;
+            // justify-content: flex-start;
         }
 
         .left__container {
@@ -190,7 +191,7 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
         }
 
         .right__container {
-            width: 30%;
+            width: 35%;
             border: 1px solid #eeee;
             padding: 2em 0 0 .8em;
         }
@@ -210,7 +211,6 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
         // Styling of the right container of section two
 
         .desktop__view {
-            display: inline-block;
             margin-bottom: .5em;
             display: flex;
             flex-direction: column;
@@ -229,11 +229,19 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
         }
 
         .article__heading .article__head {
-            font-size: .8rem;
+            font-size: 1rem;
+        }
+
+        .article__subtext .article__text {
+            font-size: .7rem;
+        }
+
+        .article__details {
+            margin-top: .5em;
         }
 
         .article__details .read__more {
-            font-size: .6.5rem;
+            font-size: .7rem;
             font-weight: 300;
         }
     }

@@ -16,8 +16,8 @@
 
     .verdict__bar {
       width: 80%;
-      font-size: clamp(pix-rem(12), 1vw, pix-rem(30));
-      line-height: clamp(pix-rem(16), 1vw, pix-rem(38));
+      font-size: clamp(pix-rem(12), 0.5vw, pix-rem(30));
+      line-height: clamp(pix-rem(12), 0.6vw, pix-rem(30));
       height: clamp(pix-rem(16), 1vw, pix-rem(38));
       border: 0.5px solid #8ab1c6;
       border-radius: 1em;

@@ -1,2 +1,4 @@
-# Local Netlify folder
 .netlify
+__pycache__
+.env
+venv

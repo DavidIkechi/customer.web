@@ -2,6 +2,11 @@
   background: #c5c5c514;
   overflow: hidden;
   padding: 0;
+  width: 100%;
+}
+.subcontent_con {
+  display: flex;
+  justify-content: center;
 }
 .notvisible {
   visibility: hidden;
@@ -29,6 +34,7 @@
     color: #252121;
   }
 }
+// recordings
 .recordings,
 .analysis,
 .leaderboard {
@@ -69,75 +75,7 @@
     }
   }
 }
-.vmeter {
-  position: relative;
-  top: 16px;
-  left: -30px;
-  width: 300px;
-  height: 24px;
-  z-index: 100;
-  li {
-    position: relative;
-    left: 11px;
-    height: 2.5rem;
-    list-style: none;
-    div {
-      position: absolute;
-      width: 0px;
-      font-size: 1rem;
-      left: 25px;
-      display: flex;
-      padding-top: 55px;
-      color: #6a6a6a;
-      text-align: right;
-    }
-  }
-}
-
-.bar {
-  color: transparent;
-  width: 8px;
-  height: 4.75rem;
-  position: absolute;
-  left: 10%;
-  bottom: 5px;
-  z-index: 1000;
-  margin: 0 40px;
-}
-.one {
-  background: #b0cad9;
-}
-.two {
-  left: 25%;
-  height: 6.438rem;
-  background: #005584;
-}
-.three {
-  left: 40%;
-  height: 5rem;
-  background: #548dad;
-}
-.four {
-  left: 55%;
-  height: 7.25rem;
-  background: #004d78;
-}
-.tmeter {
-  position: absolute;
-  bottom: -1.2rem;
-  left: 3.8rem;
-  display: flex;
-  gap: 1.4rem;
-  li {
-    list-style: none;
-    font-size: 0.7rem;
-    color: #6a6a6a;
-  }
-}
-.subcontent_con {
-  display: flex;
-  justify-content: center;
-}
+// analysis
 .analysis {
   width: 100%;
   height: 310px;
@@ -241,9 +179,8 @@
     }
   }
 }
-
+// leaderboard
 .leaderboard {
-  // align-items: center;
   height: 310px;
   width: 100%;
   margin: 20px auto;
@@ -286,7 +223,7 @@
     display: none;
   }
 }
-
+// recent_recordings
 .recent_recordings {
   width: 100%;
   caption {
@@ -329,11 +266,60 @@
   }
 }
 
+.empty_state_mobile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  padding: 0 1rem;
+  margin-top: 6.25rem;
+  margin-bottom: 15.75rem;
+}
+.empty_state_desktop {
+  display: none;
+}
+.empty_state_header {
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 24px;
+  color: #313131;
+  margin-bottom: 0.5rem;
+  margin-top: 2rem;
+}
+.empty_state_paragraph {
+  font-weight: 300;
+  font-size: 0.8rem;
+  line-height: 20px;
+  color: #454545;
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+.empty_state_btn {
+  display: flex;
+  align-items: center;
+  gap: 0.813rem;
+  padding: 0.5rem 2rem;
+  background: #006cff;
+  color: #ffffff;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    background: rgba(33, 104, 204, 0.801);
+  }
+}
+@media screen and (max-width: 48rem) {
+  .recordings_container {
+    margin-left: 1.3rem;
+  }
+}
+
 @media screen and (min-width: 48rem) {
   .dashboard_overview {
     background: #c5c5c514;
     overflow: hidden;
     padding: 3rem;
+    width: 100%;
   }
   .recent_recordings {
     caption {
@@ -343,8 +329,31 @@
   .analysis {
     padding: 1rem 1.5rem 1.5rem;
   }
+  .empty_state_mobile {
+    display: none;
+  }
+  .empty_state_desktop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0 1rem;
+    margin-top: 6.25rem;
+    margin-bottom: 15.75rem;
+  }
+  .empty_state_header {
+    font-size: 1.5rem;
+  }
+  .empty_state_paragraph {
+    font-size: 1.5rem;
+    width: 771px;
+  }
 }
-
+@media screen and (max-width: 48rem) and (min-width: 30.625rem) {
+  .dashboard_overview {
+    width: 100%;
+  }
+}
 @media screen and (min-width: 65.625rem) {
   .container {
     display: grid;
