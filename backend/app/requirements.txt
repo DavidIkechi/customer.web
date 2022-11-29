@@ -16,3 +16,4 @@ python-multipart==0.0.5
 fastapi-mail==1.2.1
 mutagen==1.46.0
 fastapi-pagination==0.10.0
+
