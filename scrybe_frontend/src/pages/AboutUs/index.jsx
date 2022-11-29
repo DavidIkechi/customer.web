@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./About.module.scss";
 import Footer from "../../components/footer";
 import NavBar from "../../components/navBar";
-
 import image1 from "./assets/image1.svg";
 import icon1 from "./assets/icon1.svg";
 import icon2 from "./assets/icon2.svg";
@@ -29,9 +28,8 @@ function About() {
         <div className={styles.row}>
           <div className={styles.contain}>
             <h1 className={styles.heading}>
-              Scrybe helps businesses to make informed decisions{" "}
+              Heed helps businesses to make informed decisions{" "}
               <span>faster </span>
-              <div className={styles.line}></div>
             </h1>
           </div>
         </div>
@@ -39,13 +37,13 @@ function About() {
         <div className={`${styles.row} ${styles.row1}`}>
           <div className={`${styles.column__left} ${styles.column}`}>
             <p>
-              At Scrybe, we transcribe call recordings between customer support
+              At Heed, we transcribe call recordings between customer support
               agents and customers to give sentimental analysis as we analyze
               transcriptions to give sentiment score of the conversation
               (Positive, Neutral or Negative)
             </p>
             <p>
-              At Scrybe, our mission is to provide businesses with intelligent,
+              At Heed, our mission is to provide businesses with intelligent,
               accurate, and precise intent analysis to improve customer
               experience. We believe that through the power of artificial
               intelligence, we can make a real difference in the way businesses
@@ -64,63 +62,65 @@ function About() {
         </div>
       </div>
 
-      <div className={`${styles.container} ${styles.container__values} `}>
-        <div className={styles.row__col}>
-          <h1 className={styles.heading}>Our core values</h1>
-          <div className={styles.row}>
-            <div className={`${styles.column__left} ${styles.column}`}>
-              <div className={styles.wrap}>
-                <div className={styles.heading__icon}>
-                  <h4>Customer Success</h4>
-                  {/* <img src={icon3} alt="" /> */}
-                  <img src={icon3} alt="" />
+      <div className={styles.overall__value}>
+        <div className={`${styles.container} ${styles.container__values} `}>
+          <div className={styles.row__col}>
+            <h1 className={styles.heading}>Our core values</h1>
+            <div className={styles.row}>
+              <div className={`${styles.column__left} ${styles.column}`}>
+                <div className={styles.wrap}>
+                  <div className={styles.heading__icon}>
+                    <h4>Customer Success</h4>
+                    {/* <img src={icon3} alt="" /> */}
+                    <img src={icon3} alt="" />
+                  </div>
+                  <p>
+                    Our number one goal is to see our customers suceed at
+                    business. We will go above and beyond to assist businesses
+                    to ensure they are getting the best service from us.
+                  </p>
                 </div>
-                <p>
-                  Our number one goal is to see our customers suceed at
-                  business. We will go above and beyond to assist businesses to
-                  ensure they are getting the best service from us.
-                </p>
-              </div>
-              <div className={styles.wrap}>
-                <div className={styles.heading__icon}>
-                  <h4>Teamwork</h4>
-                  {/* <img src={icon1} alt="" /> */}
-                  <img src={icon1} alt="" />
+                <div className={styles.wrap}>
+                  <div className={styles.heading__icon}>
+                    <h4>Teamwork</h4>
+                    {/* <img src={icon1} alt="" /> */}
+                    <img src={icon1} alt="" />
+                  </div>
+                  <p>
+                    The foundation of Heed is Teamwork. Every person in every
+                    position allows us to be as great as we are. No one position
+                    is greater than the other as we are all needed to achieve
+                    our mission.
+                  </p>
                 </div>
-                <p>
-                  The foundation of Scrybe is Teamwork. Every person in every
-                  position allows us to be as great as we are. No one position
-                  is greater than the other as we are all needed to achieve our
-                  mission.
-                </p>
               </div>
-            </div>
 
-            <div className={`${styles.column__right} ${styles.column}`}>
-              <div className={styles.wrap}>
-                <div className={styles.heading__icon}>
-                  <h4>Creativity</h4>
-                  {/* <img src={icon2} alt="" /> */}
-                  <img src={icon2} alt="" />
+              <div className={`${styles.column__right} ${styles.column}`}>
+                <div className={styles.wrap}>
+                  <div className={styles.heading__icon}>
+                    <h4>Creativity</h4>
+                    {/* <img src={icon2} alt="" /> */}
+                    <img src={icon2} alt="" />
+                  </div>
+                  <p>
+                    We are a team of creative and innovative people who think
+                    outside of the box and we take unconventional approaches to
+                    assist our customers to operate at high levels of efficacy.
+                  </p>
                 </div>
-                <p>
-                  We are a team of creative and innovative people who think
-                  outside of the box and we take unconventional approaches to
-                  assist our customers to operate at high levels of efficacy.
-                </p>
-              </div>
-              <div className={styles.wrap}>
-                <div className={styles.heading__icon}>
-                  <h4>Ownership</h4>
-                  {/* <img src={icon4} alt="" /> */}
-                  <img src={icon4} alt="" />
+                <div className={styles.wrap}>
+                  <div className={styles.heading__icon}>
+                    <h4>Ownership</h4>
+                    {/* <img src={icon4} alt="" /> */}
+                    <img src={icon4} alt="" />
+                  </div>
+                  <p>
+                    We are more than employees at Heed. Every person that is a
+                    part of team Scrybe owns the role. We only want team members
+                    who fully believe in our vision and are committed to make it
+                    a reality.
+                  </p>
                 </div>
-                <p>
-                  We are more than employees at Scrybe. Every person that is a
-                  part of team Scrybe owns the role. We only want team members
-                  who fully believe in our vision and are committed to make it a
-                  reality.
-                </p>
               </div>
             </div>
           </div>
@@ -132,8 +132,8 @@ function About() {
             <h1 className={styles.heading}>Partners</h1>
             <p>
               Great Success, they say, is never achieved alone. This is also
-              true for us at Scrybe. In order to achieve our goals and to offer
-              a better service all customers, we have partnered with a number of
+              true for us at Heed. In order to achieve our goals and to offer a
+              better service all customers, we have partnered with a number of
               brands to achieve these goals.{" "}
             </p>
           </div>
@@ -170,7 +170,7 @@ function About() {
               We are improving at a breakneck speed and are across all tech
               departments. We research and deploy advanced machine learning and
               deep learning technologies. Here are the key members that make up
-              the team behind Scrybe.
+              the team behind Heed.
             </p>
           </div>
           <div className={styles.row}>
