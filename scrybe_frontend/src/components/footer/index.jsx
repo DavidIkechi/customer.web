@@ -48,7 +48,7 @@ function Footer() {
                 <NavLink to="/privacy">Privacy Policy</NavLink>
               </li>
             </ul>
-            
+
             <ul>
               <h4>Quick links</h4>
               <li>
