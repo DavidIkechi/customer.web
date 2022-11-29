@@ -51,7 +51,6 @@ const AuthApi = React.createContext();
 const TokenApi = React.createContext();
 
 function App() {
-
   return (
     <>
       <Routes>
