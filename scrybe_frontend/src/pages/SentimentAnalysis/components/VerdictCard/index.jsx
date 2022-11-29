@@ -3,22 +3,37 @@ import styles from "./VerdictCard.module.scss";
 import downloadIcon from "../../icons/download.svg";
 import dropdownIcon from "../../icons/dropdown.svg";
 import shareIcon from "../../icons/share.svg";
+import PropTypes from "prop-types";
 
-export default function VerdictCard(props) {
+function VerdictCard({ sentimentData }) {
   return (
-    <AsideCard classtype={`${styles.verdict}`} {...props}>
+    <AsideCard classtype={`${styles.verdict}`}>
       <div className={styles.verdict__item}>
         <div className={styles.verdict__title}>Agent Friendliness</div>
         <div className={styles.verdict__bar}>
-          <div className={styles.inner__bar} style={{ width: `${90}%` }} />
-          <div className={styles.bar__text}>90%</div>
+          <div
+            className={styles.inner__bar}
+            style={{
+              width: `${(sentimentData.positivity_score * 100).toFixed(0)}%`,
+            }}
+          />
+          <div className={styles.bar__text}>
+            {(sentimentData.positivity_score * 100).toFixed(2)}%
+          </div>
         </div>
       </div>
       <div className={styles.verdict__item}>
-        <div className={styles.verdict__title}>Agent Friendliness</div>
+        <div className={styles.verdict__title}>Agent Unfriendliness</div>
         <div className={styles.verdict__bar}>
-          <div className={styles.inner__bar} style={{ width: `${85}%` }} />
-          <div className={styles.bar__text}>85%</div>
+          <div
+            className={styles.inner__bar}
+            style={{
+              width: `${(sentimentData.negativity_score * 100).toFixed(0)}%`,
+            }}
+          />
+          <div className={styles.bar__text}>
+            {(sentimentData.negativity_score * 100).toFixed(2)}%
+          </div>
         </div>
       </div>
       <div className={styles.verdict__item}>
@@ -40,3 +55,9 @@ export default function VerdictCard(props) {
     </AsideCard>
   );
 }
+
+VerdictCard.propTypes = {
+  sentimentData: PropTypes.object.isRequired,
+};
+
+export default VerdictCard;

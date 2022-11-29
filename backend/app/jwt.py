@@ -1,13 +1,12 @@
 from datetime import datetime, timedelta
 from typing import Union
-
 from fastapi import Depends, FastAPI, HTTPException, status
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
-
 import models
+
 from crud import get_user_by_email
 # from db import engine, SessionLocal
 
@@ -20,7 +19,7 @@ load_dotenv()
 JWT_ACCESS_SECRET_KEY = os.getenv("JWT_ACCESS_SECRET_KEY")
 JWT_REFRESH_SECRET_KEY = os.getenv("JWT_REFRESH_SECRET_KEY")
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 5 #5 mins
+ACCESS_TOKEN_EXPIRE_MINUTES = 120 #120 mins
 REFRESH_TOKEN_EXPIRE_MINUTES = 20 # 20 mins
 
 #Exceptions

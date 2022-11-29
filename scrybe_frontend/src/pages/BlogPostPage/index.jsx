@@ -8,6 +8,7 @@ import arrowRight from "./assets/arrow_right.svg";
 import utils from "./assets/utils.module.scss";
 import styles from "./styles.module.scss";
 import Button from "./Button";
+import NavBar from "../../components/navBar_free";
 
 function BlogPostPage() {
   React.useEffect(() => {
@@ -16,6 +17,7 @@ function BlogPostPage() {
   }, []);
   return (
     <DefaultLayout>
+      <NavBar />
       <div
         className={`${styles.blogPostPage} ${utils.container} ${utils.d_grid}`}
         style={{ "--gap": "32px" }}

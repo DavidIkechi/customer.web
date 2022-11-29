@@ -45,7 +45,7 @@ const UploadedSidebar = ({ closeSidebar, toggleSidebar, getValue }) => {
           </div>
           <div className={` ${styles.sidebar_link_active}`}>
             <img src={analysisIcon} alt="" />
-            <Link to="#" className={styles.sidebar_link_active}>
+            <Link to="#" className={styles.sidebar_link_active_a}>
               Analysis
             </Link>
           </div>

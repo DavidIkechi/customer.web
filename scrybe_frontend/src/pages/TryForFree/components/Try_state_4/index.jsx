@@ -4,7 +4,7 @@ import React from "react";
 import ProgressBar from "../ProgressBar/index";
 import { Link } from "react-router-dom";
 import styles from "./try_state_4.module.scss";
-import RecordingName from "../../assets/recording-name-1.png";
+// import RecordingName from "../../assets/recording-name-1.png";
 
 export default function TryFourth() {
   return (

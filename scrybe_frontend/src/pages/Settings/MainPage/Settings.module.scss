@@ -17,9 +17,7 @@ $error: #de3d31;
 }
 
 .mainpage__wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+  width: 100% !important;
 }
 
 
@@ -39,7 +37,7 @@ a {
 }
 
   h1 {
-    margin: 1.875rem 0 0.97rem 0 !important;
+    margin: 1.875rem 0 0.97rem 1.7rem !important;
     font-weight: 600 !important;
     font-size: 2rem !important;
     line-height: 40px !important;
@@ -102,10 +100,12 @@ a {
 
       .image {
         width: 50%;
+        display: flex;
+        justify-content: center;
         margin-bottom: 1rem;
       }
 
-      .textContent {
+      .mainpage_textContent {
         width: 100%;
         text-align: center;
       }
@@ -220,26 +220,36 @@ a {
 }
 
 @media (min-width: 1024px) {
+  .mainpage__wrapper {
+    width: 90% !important;
+  }
   .mainpage__container {
     align-items: flex-end;
+  
   }
   .mainpage_wrapper {
-    width: 50%;
+    width: 40%;
+
+    h1{
+      margin-left: 0 !important;
+    }
   }
   .mainpage_container {
+  padding: 0 2rem;
     display: flex;
+    justify-content: space-between;
     gap: 1.5rem;
-    width: 85%;
+    width: 100%;
   }
 
   .mainpage_footer {
-    width: 88%;
+    width: 100%;
   }
 }
 
 @media (min-width: 1440px) {
   .external {
-    width: 50%;
+    width: 60%;
   }
   .mainpage_wrapper {
     width: 35%;

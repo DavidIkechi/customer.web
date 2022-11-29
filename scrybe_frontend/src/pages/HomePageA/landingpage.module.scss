@@ -42,6 +42,7 @@
                         display: flex;
                         flex-direction: column;
                         align-items: center;
+                        padding-inline: pix-rem(16);
                 }
         }
         &__title {
@@ -141,6 +142,9 @@
 }
 
 .faq {
+        &_container{
+                max-width: 79rem;
+        }
         padding-block: pix-rem(24);
         &__h2 {
                 font-size: clamp(1.5rem, 1.318rem + 0.91vw, 2rem);
@@ -206,6 +210,7 @@
                                 padding-block: pix-rem(16);
                                 padding-inline: pix-rem(32);
                                 background-color: #006cff;
+                                cursor: pointer;
                                 @include media(494px) {
                                         max-width: 100%;
                                         width: 100%;

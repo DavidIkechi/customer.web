@@ -1,21 +1,39 @@
 import React from "react";
 import styles from "./TranscriptionMain.module.scss";
-import TranscriptionsList from "./TranscriptionsList/TranscriptionsList";
+// import TranscriptionsList from "./TranscriptionsList/TranscriptionsList";
+import Dummy from "./TranscriptionsList/test";
 import TranscriptionRightBar from "./TranscriptionRightBar/TranscriptionRightBar";
-// import { useLocation } from "react-router-dom";
 
 function TranscriptionMain() {
-  // const extractID = () => {
-  //   const { pathname } = useLocation();
-  //   const currentID = pathname.substring(16, pathname.length);
+  // const [transcribedText, setTranscribedText] = useState("");
+  // const [formattedData, setFormattedData] = useState([]);
+
+  // //get custom Id from current window url
+  // const getAudioID = () => {
+  //   const currentURL = window.location.href
+  //     .toString()
+  //     .split(window.location.host)[1];
+  //   const currentID = currentURL.substring(16, currentURL.length);
+  //   console.log(currentID);
   //   return currentID;
   // };
 
-  // const transcriptionID = extractID();
+  // //query backend to get transcribed data
+  // const loadTranscription = (str) => {
+  //   const apiReference = "";
+  //   fetch(`${apiReference}/${str}`)
+  //     .then((response) => response.json())
+  //     .then((data) => setTranscribedText(data));
+  // };
 
-  // // Function name: generateArray
-  // // params: a long str
-  // // returns: an array of objects, each object has an id, timeslot, and text for 30secs
+  // const loadTest = () => {
+  //   const apiReference = "https://www.boredapi.com/api/activity";
+  //   fetch(`${apiReference}`)
+  //     .then((response) => response.json())
+  //     .then((data) => console.log(data));
+  // };
+
+  // //cleanup the data gotten
   // const generateArray = (str) => {
   //   const cleanedData = [];
   //   const wordArray = str.split(" ");
@@ -48,6 +66,7 @@ function TranscriptionMain() {
   //   return cleanedData;
   // };
 
+  // //format time function
   // const timeFormatter = (num) => {
   //   const divisor_for_minutes = num % (60 * 60);
   //   const minutes = Math.floor(divisor_for_minutes / 60);
@@ -58,9 +77,16 @@ function TranscriptionMain() {
   //   if (formatedTime.length === 3) return `0${minutes}:${seconds}0`;
   // };
 
+  // useEffect(() => {
+  //   loadTest();
+  //   // const idQuery = getAudioID();
+  //   // loadTranscription(idQuery);
+  //   // setFormattedData(generateArray(transcribedText));
+  // }, []);
+
   return (
     <div className={styles.TranscriptionMain}>
-      <TranscriptionsList />
+      <Dummy />
       <TranscriptionRightBar />
     </div>
   );
