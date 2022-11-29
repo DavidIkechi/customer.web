@@ -1,5 +1,5 @@
 import "./App.scss";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, Link } from "react-router-dom";
 import AgentReport from "./pages/AgentReport";
 import SentimentAnalysis from "./pages/SentimentAnalysis";
 import DummyPage from "./pages/DummyPage";
@@ -46,143 +46,126 @@ import PersonalInformation from "./pages/Settings/SettingsPageSubPages/PersonalI
 import PartnersPage from "./pages/PartnersPage";
 import React, { useState } from "react";
 import Cookies from "js-cookie";
+import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
 
 function App() {
-  const [auth, setAuth] = useState(false);
-  const [token, setToken] = useState("");
-  const readCookie = () => {
-    let token = Cookies.get("token");
-    if (token) {
-      setAuth(true);
-      setToken(token);
-    }
-  };
-  React.useEffect(() => {
-    readCookie();
-  }, []);
+  // const [auth, setAuth] = useState(false);
+  // const [token, setToken] = useState("");
+  // const readCookie = () => {
+  //   let token = Cookies.get("token");
+  //   if (token) {
+  //     setAuth(true);
+  //     setToken(token);
+  //   }
+  // };
+  // React.useEffect(() => {
+  //   readCookie();
+  // }, []);
 
   return (
     <>
-      <AuthApi.Provider value={{ auth, setAuth }}>
-        <TokenApi.Provider value={{ token, setToken }}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/agent-report" element={<AgentReport />} />
-            <Route path="/sentiment-analysis" element={<SentimentAnalysis />} />
-            <Route
-              path="/transcriptions/:userId"
-              element={<TranscribePage />}
-            />
-            <Route path="/try" element={<TryForFree />} />
-            <Route path="/history" element={<History />} />
-            <Route path="/careers" element={<Careers />} />
-            <Route path="/privacy" element={<PrivacyPolicy />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/solutions" element={<Solutions />} />
-            <Route path="/about-us" element={<About />} />
-            <Route path="/events" element={<Events />} />
-            <Route path="/dashboard" element={<DashboardOverview />} />
-            <Route path="/account" element={<Account />} />
-            {/* <Route path="/industry" exact element={<Industry />} /> */}
-            {/* <Route path="/industry-article" element={<IndustryArticles />} />
-            <Route path="/how-it-works" element={<HowitWorks />} /> */}
-            {/* leaderboard */}
-            <Route path="/leaderboard" element={<LeaderboardPage />} />
-            <Route path="/terms" element={<TermsAndCondition />} />
-            <Route path="/terms-of-service" element={<TermsOfService />} />
-            <Route path="/homeB" element={<HomePageB />} />
-            <Route path="/faq" element={<FAQs />} />
-            <Route path="/help-support" element={<HelpSupport />} />
-            {/* <Route path="/help-support-general" element={<General />}>
-              <Route index element={<General1 />} />
-              <Route path="articles" element={<General2 />} />
-            </Route> */}
-            {/* <Route
-              path="/help-support-general/promoted-articles"
-              element={<PromotedArticles />}
-            >
-              <Route index element={<PromotedArticle1 />} />
-              <Route path="*" element={<PromotedArticle1 />} />
-            </Route> */}
-            {/* <Route
-              path="/help-support/promoted-articles"
-              element={<PromotedArticles />}
-            >
-              <Route index element={<PromotedArticle1 />} />
-              <Route path="*" element={<PromotedArticle1 />} />
-            </Route> */}
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/agent-report" element={<AgentReport />} />
+        <Route path="/sentiment-analysis" element={<SentimentAnalysis />} />
+        <Route path="/transcriptions/:userId" element={<TranscribePage />} />
+        <Route path="/try" element={<TryForFree />} />
+        <Route path="/history" element={<History />} />
+        <Route path="/careers" element={<Careers />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/solutions" element={<Solutions />} />
+        <Route path="/about-us" element={<About />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/dashboard" element={<DashboardOverview />} />
+        <Route path="/account" element={<Account />} />
+        {/* <Route path="/industry" exact element={<Industry />} /> */}
+        {/* <Route path="/industry-article" element={<IndustryArticles />} />
+        <Route path="/how-it-works" element={<HowitWorks />} /> */}
+        {/* leaderboard */}
+        <Route path="/leaderboard" element={<LeaderboardPage />} />
+        <Route path="/terms" element={<TermsAndCondition />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/homeB" element={<HomePageB />} />
+        <Route path="/faq" element={<FAQs />} />
+        <Route path="/help-support" element={<HelpSupport />} />
+        {/* <Route path="/help-support-general" element={<General />}>
+          <Route index element={<General1 />} />
+          <Route path="articles" element={<General2 />} />
+        </Route> */}
+        {/* <Route
+          path="/help-support-general/promoted-articles"
+          element={<PromotedArticles />}
+        >
+          <Route index element={<PromotedArticle1 />} />
+          <Route path="*" element={<PromotedArticle1 />} />
+        </Route> */}
+        {/* <Route
+          path="/help-support/promoted-articles"
+          element={<PromotedArticles />}
+        >
+          <Route index element={<PromotedArticle1 />} />
+          <Route path="*" element={<PromotedArticle1 />} />
+        </Route> */}
 
-            <Route path="/create-account" element={<Signup />} />
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/reset-successful" element={<Successful />} />
-            <Route path="/set-new-password" element={<SetNewPassword />} />
-            <Route path="/forget-password" element={<ForgetPassword />} />
-            <Route
-              path="/pw-reset-successful"
-              element={<PasswordResetSuccessful />}
-            />
-            <Route
-              path="/uploaded-recordings"
-              element={<UploadedRecordings />}
-            />
-            <Route path="/agent-report" element={<AgentReport />} />
+        <Route path="/create-account" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/reset-successful" element={<Successful />} />
+        <Route path="/verify-signup" element={<SignUpVerify />} />
+        <Route path="/set-new-password" element={<SetNewPassword />} />
+        <Route path="/forget-password" element={<ForgetPassword />} />
+        <Route
+          path="/pw-reset-successful"
+          element={<PasswordResetSuccessful />}
+        />
+        <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
+        <Route path="/agent-report" element={<AgentReport />} />
 
-            {/* ROutes without working paths */}
+        {/* ROutes without working paths */}
 
-            <Route
-              path="/uploaded"
-              element={<DummyPage someText="uploaded recordings" />}
-            />
-            <Route
-              path="/report"
-              element={<DummyPage someText="report and performance" />}
-            />
-            <Route
-              path="/upload"
-              element={<DummyPage someText="upload pages" />}
-            />
-            <Route
-              path="/help"
-              element={<DummyPage someText="help and supprt" />}
-            />
-            <Route
-              path="/demos"
-              element={<DummyPage someText="demo pages" />}
-            />
-            <Route path="/blog" element={<Blogs />} />
-            <Route path="/blog/:id" element={<BlogPostPage />} />
-            <Route path="/reviews" element={<Reviews />} />
+        <Route
+          path="/uploaded"
+          element={<DummyPage someText="uploaded recordings" />}
+        />
+        <Route
+          path="/report"
+          element={<DummyPage someText="report and performance" />}
+        />
+        <Route path="/upload" element={<DummyPage someText="upload pages" />} />
+        <Route
+          path="/help"
+          element={<DummyPage someText="help and supprt" />}
+        />
+        <Route path="/demos" element={<DummyPage someText="demo pages" />} />
+        <Route path="/blog" element={<Blogs />} />
+        <Route path="/blog/:id" element={<BlogPostPage />} />
+        <Route path="/reviews" element={<Reviews />} />
 
-            {/* Try Routes */}
-            <Route path="/try-processing" element={<TryProcessing />} />
-            <Route path="/try-results" element={<TryResults />} />
+        {/* Try Routes */}
+        <Route path="/try-processing" element={<TryProcessing />} />
+        <Route path="/try-results" element={<TryResults />} />
 
-            {/* Settings Pages */}
-            <Route path="/settings" element={<SettingsIndex />} />
-            <Route
-              path="settings/account-security"
-              element={<AccountSettings />}
-            />
-            <Route
-              path="settings/notifications"
-              element={<NotificationSettings />}
-            />
+        {/* Settings Pages */}
+        <Route path="/settings" element={<SettingsIndex />} />
+        <Route path="settings/account-security" element={<AccountSettings />} />
+        <Route
+          path="settings/notifications"
+          element={<NotificationSettings />}
+        />
 
-            <Route
-              path="settings/personal-information"
-              element={<PersonalInformation />}
-            />
+        <Route
+          path="settings/personal-information"
+          element={<PersonalInformation />}
+        />
 
-            {/* Press  */}
-            <Route path="press" element={<Press />} />
-            <Route path="/partners" element={<PartnersPage />} />
-            <Route path="press-article" element={<PressArticle />} />
-          </Routes>
-        </TokenApi.Provider>
-      </AuthApi.Provider>
+        {/* Press  */}
+        <Route path="press" element={<Press />} />
+        <Route path="/partners" element={<PartnersPage />} />
+        <Route path="press-article" element={<PressArticle />} />
+      </Routes>
     </>
   );
 }
