@@ -1,29 +1,45 @@
 import React, { useState, useEffect } from "react";
 import styles from "./TranscriptionsList.module.scss";
-import { useMockAuthAndReadSentiment } from "../../../../hooks/index";
+import axios from "axios";
 
-function TranscriptionsList() {
+function Dummy() {
   const [formattedData, setFormattedData] = useState([]);
-  const sentimentData = useMockAuthAndReadSentiment(1);
+
+  const fetchData = () => {
+    axios
+      .get("https://api.mocki.io/v2/fc2a0cd8/transcription")
+      .then((newRes) => {
+        setFormattedData(generateArray(newRes.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // const fetchData = async () => {
+  //   return fetch("https://api.mocki.io/v2/fc2a0cd8/transcription")
+  //     .then((res) => res.json())
+  //     .then((data) => console.log(data));
+  // };
+
+  // const loadTranscription = () => {
+  //   const apiReference = "https://api.mocki.io/v2/fc2a0cd8/transcription";
+  //   fetch(apiReference)
+  //     .then((response) => response.json())
+  //     // .then((data) => setFormattedData(generateArray(data[0].transcript)));
+  //     .then((data) => console.log(data));
+  // };
 
   useEffect(() => {
     console.log("fired");
-    setFormattedData(generateArray(sentimentData.transcript));
+    fetchData();
   }, []);
 
-  console.log(formattedData);
+  // console.log(formattedData);
 
-  // cleanup the data gotten
   const generateArray = (str) => {
     const cleanedData = [];
-    if (console.log(str) === undefined)
-      return [
-        {
-          id: 1,
-          timeCount: "00:00",
-          stringText: "Loading Transcription",
-        },
-      ];
+
     const wordArray = str.split(" ");
     let time = -30;
     let objectID = -1;
@@ -31,11 +47,11 @@ function TranscriptionsList() {
     let counter = 0;
 
     wordArray.map((word) => {
-      if (counter < 30) {
+      if (counter < 50) {
         emptyString = emptyString + " " + word;
         counter++;
       }
-      if (counter === 30) {
+      if (counter == 50) {
         objectID++;
         time = time + 30;
         const formatedTime = timeFormatter(time);
@@ -95,4 +111,4 @@ function TranscriptionsList() {
   );
 }
 
-export default TranscriptionsList;
+export default Dummy;
