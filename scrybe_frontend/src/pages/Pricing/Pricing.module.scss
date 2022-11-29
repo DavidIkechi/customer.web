@@ -67,7 +67,7 @@
 
 .pricing .hero .curves {
   position: absolute;
-  top: pix-rem(-160);
+  top: pix-rem(140);
   left: 0;
   right: 0;
   width: 100%;
@@ -75,7 +75,7 @@
   height: pix-rem(830);
   max-height: pix-rem(1700);
   @include media(1220px) {
-    top: pix-rem(-260);
+    top: pix-rem(260);
   }
 }
 
