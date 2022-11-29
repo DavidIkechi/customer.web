@@ -45,31 +45,17 @@ import NotificationSettings from "./pages/Settings/SettingsPageSubPages/Notifica
 import PersonalInformation from "./pages/Settings/SettingsPageSubPages/PersonalInformation/PersonalInformationSettings";
 import PartnersPage from "./pages/PartnersPage";
 import React, { useState } from "react";
-import Cookies from "js-cookie";
 import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
 
 function App() {
-  // const [auth, setAuth] = useState(false);
-  // const [token, setToken] = useState("");
-  // const readCookie = () => {
-  //   let token = Cookies.get("token");
-  //   if (token) {
-  //     setAuth(true);
-  //     setToken(token);
-  //   }
-  // };
-  // React.useEffect(() => {
-  //   readCookie();
-  // }, []);
 
   return (
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/agent-report" element={<AgentReport />} />
         <Route path="/sentiment-analysis" element={<SentimentAnalysis />} />
         <Route path="/transcriptions/:userId" element={<TranscribePage />} />
         <Route path="/try" element={<TryForFree />} />
