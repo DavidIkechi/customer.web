@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import styles from "./TranscriptionsList.module.scss";
 // import axios from "axios";
 
@@ -24,8 +25,24 @@ function Dummy({ formattedData }) {
         {formattedData.map((list) => {
           return (
             <div className={styles.listItem} key={list.id}>
-              <h4>{list.timeCount}</h4>
-              <p>{list.stringText}</p>
+              <h4
+                className={
+                  list.isActive
+                    ? styles.listItemActive
+                    : styles.listItemInActiveh4
+                }
+              >
+                {list.timeCount}
+              </h4>
+              <p
+                className={
+                  list.isActive
+                    ? styles.listItemActive
+                    : styles.listItemInActiveP
+                }
+              >
+                {list.stringText}
+              </p>
             </div>
           );
         })}
