@@ -14,6 +14,7 @@ import DashboardOverview from "./pages/DashboardOverview";
 import Events from "./pages/Events/Events";
 import HelpSupport from "./pages/HelpAndSupport/HelpSupport";
 import About from "./pages/AboutUs";
+import Pricing from "./pages/Pricing";
 import TryForFree from "./pages/TryForFree";
 import Press from "./pages/PressPage";
 import PressArticle from "./pages/PressArticle";
@@ -150,6 +151,7 @@ function App() {
         <Route path="press" element={<Press />} />
         <Route path="/partners" element={<PartnersPage />} />
         <Route path="press-article" element={<PressArticle />} />
+        <Route path="pricing" element={<Pricing />} />
       </Routes>
     </>
   );
