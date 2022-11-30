@@ -1,35 +1,51 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import axios from "axios";
+// import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import footerImg from "./assets/signup-img.svg";
 import styles from "./SignIn.module.scss";
+import AuthApi from "../../App";
+import { Navigate } from "react-router-dom";
 
 function Signin() {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
-  /* eslint-disable no-unused-vars */
-  const [userInfo, setUserInfo] = useState();
-  /* eslint-enable no-unused-vars */
+  const Auth = React.useContext(AuthApi);
+  const [username, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [navigate, setNavigate] = useState(false);
 
-  const onSubmit = (data) => {
-    console.log(data);
-    setUserInfo(data);
-    console.log(errors);
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
+
+    let formData = new FormData();
+
+    formData.append("username", username);
+    formData.append("password", password);
+
+    const config = {
+      withCredentials: true,
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+
+    const response = await axios
+      .post("login", formData, config)
+      .then((response) => {
+        console.log(response);
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${response.data["access_token"]}`;
+        setNavigate(true);
+      })
+      .catch((error) => {});
   };
+  // console.log(response.data);
+  // Cookies.set("token", response.data.access_token);
 
-  // Watch event for disable button
-  const email = watch("email");
-  const password = watch("password");
-
-  console.log("email", email);
-  console.log("password", password);
-
-  const isValid = email && password;
+  if (navigate) {
+    return <Navigate to="/account" />;
+  }
 
   return (
     <>
@@ -40,40 +56,28 @@ function Signin() {
           >
             <h1>Welcome back, Scryber!</h1>
             <h3>Please enter your details</h3>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit}>
               <label htmlFor="email">Email</label>
               <input
                 type="email"
-                name="email"
                 id="email"
                 placeholder="Enter your company email"
-                className={`${errors.email && styles.errorInput}} `}
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i,
-                    message: "Please enter a correct company email address",
-                  },
-                })}
+                className={`${styles.errorInput}} `}
+                value={username}
+                onChange={(e) => setName(e.target.value)}
               />
-              <p className={styles.errorMsg}>{errors.email?.message}</p>
+              {/* <p className={styles.errorMsg}>{errors.email?.message}</p> */}
               <label htmlFor="password">Password</label>
               <input
                 type="password"
                 name="password"
                 id="password"
                 placeholder="Password at least 8 characters"
-                className={`${errors.password && styles.errorInput} `}
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 8,
-                    message:
-                      "Password you input is different from your current password",
-                  },
-                })}
+                className={`${styles.errorInput} `}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
-              <p className={styles.errorMsg}>{errors.password?.message}</p>
+              {/* <p className={styles.errorMsg}>{errors.password?.message}</p> */}
               <div className={`${styles.accept} ${styles.remember}`}>
                 <div className={styles.rememberMe}>
                   <input type="checkbox" name="" id="" />
@@ -88,9 +92,8 @@ function Signin() {
               </div>
               <input
                 type="submit"
-                disabled={!isValid}
                 value="Sign in"
-                className={`${isValid && styles.submitValid}`}
+                className={`${styles.submitValid}`}
               />
               <p>
                 Don’t have an account? <NavLink to={"/"}>Sign up</NavLink>

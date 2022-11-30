@@ -1,7 +1,7 @@
 @use "../../functions.scss" as *;
 
 .nav {
-  $mobile : 950px;
+  $mobile: 950px;
   background-color: white;
   &__ctl {
     display: none;
@@ -16,6 +16,7 @@
       padding-block: pix-rem(20);
     }
   }
+
   &__closed {
     display: none;
     @include media($mobile) {
@@ -35,7 +36,7 @@
     display: flex;
     justify-content: space-between;
     width: 68%;
-    @include media(1150px){
+    @include media(1150px) {
       width: 84%;
     }
     height: auto;
@@ -87,6 +88,7 @@
       a {
         color: white;
         text-decoration: none;
+        cursor: pointer;
       }
     }
   }
@@ -121,9 +123,9 @@
     }
     & > * {
       all: unset;
-      padding: pix-rem(16,em) pix-rem(32,em);
+      padding: pix-rem(16, em) pix-rem(32, em);
       border-radius: pix-rem(4);
-      
+
       @include media($mobile) {
         text-align: center;
         max-width: pix-rem(178);
@@ -131,16 +133,33 @@
       }
       &:nth-child(1) {
         background-color: transparent;
-        color: #006cff;
+        a {
+          color: #006cff;
+        }
         border: 1px solid #006cff;
         font-size: clamp(0.625rem, 0.489rem + 0.68vw, 1rem);
+        cursor: pointer;
+
+        button {
+          background-color: transparent;
+          border: none;
+          color: #006cff;
+          cursor: pointer;
+        }
       }
       &:nth-child(2) {
         background-color: #006cff;
         color: white;
         font-size: clamp(0.625rem, 0.489rem + 0.68vw, 1rem);
+        cursor: pointer;
+
+        button {
+          background-color: transparent;
+          border: none;
+          color: #ffffff;
+          cursor: pointer;
+        }
       }
     }
   }
 }
-

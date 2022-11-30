@@ -1,10 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap");
 
 .Transcribe {
-  width: calc(100vw - 280px);
   font-family: "Kanit", sans-serif;
-  position: absolute;
-  left: 280px;
 }
 
 @media screen and (max-width: 480px) {

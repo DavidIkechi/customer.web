@@ -2,16 +2,16 @@
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import status, HTTPException, Depends
 from crud import get_user_by_email
-from jose import jwt
+from jose import jwt, JWTError
 import os
 import services as _services
-
 from dotenv import load_dotenv
 from jwt import (
-    TokenData,
+    TokenData, 
     Token
-)
+    )
 from sqlalchemy.orm import Session
+
 # load environment variables
 load_dotenv()
 # set some constants
@@ -74,15 +74,15 @@ async def get_active_user(db: Session = Depends(_services.get_session), token: s
         A boolean that tells if the user is active.
     """
     # get the user email from the database.
-    user_email = await get_current_user(db, token)
-    if not user_email.is_active:
+    user = await get_current_user(db, token)
+    if not user.is_active:
         raise HTTPException(
             status_code=status.HTTP_423_LOCKED,
             detail="User is not active",
             headers={"WWW-Authenticate": "Bearer"},
         )
     
-    return user_email
+    return user
 
 async def get_admin(db: Session = Depends(_services.get_session), token: str = Depends(oauth2_scheme)) -> bool:
     """ This function checks if a user is admin.
