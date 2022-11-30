@@ -10,11 +10,32 @@ import { Navigate } from "react-router-dom";
 import { useCallback } from "react";
 
 function Signin() {
+  const emailTest = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
+  const passwordTest = new RegExp(/^[a-zA-Z]{8,}$/);
   const Auth = React.useContext(AuthApi);
   const [username, setName] = useState("");
   const [password, setPassword] = useState("");
   const [navigate, setNavigate] = useState(false);
   const [isValid, setIsValid] = useState(true);
+  const [emailStateTest, setEmailStateTest] = useState(false);
+  const [passStateTest, setPassStateTest] = useState(false);
+
+  const tester = (e, reg, func) => {
+    if (reg.test(e.target.value)) {
+      func(true);
+    } else {
+      func(false);
+    }
+    console.log(emailStateTest);
+  };
+  const testerB = (e, reg, func) => {
+    if (reg.test(e.target.value)) {
+      func(true);
+    } else {
+      func(false);
+    }
+    console.log(passStateTest);
+  };
 
   const validate = useCallback(() => {
     if (username.length >= 1 && password.length >= 1) {
@@ -24,9 +45,11 @@ function Signin() {
 
   const handleInputUserName = (e) => {
     setName(e.target.value);
+    tester(e, emailTest, setEmailStateTest);
   };
   const handleInputPassword = (e) => {
     setPassword(e.target.value);
+    testerB(e, passwordTest, setPassStateTest);
   };
 
   useEffect(() => {
@@ -76,12 +99,23 @@ function Signin() {
             <h1>Welcome back, Scryber!</h1>
             <h3>Please enter your details</h3>
             <form onSubmit={handleSubmit}>
-              <label htmlFor="email">Email</label>
+              <label
+                data-error-msg="Please enter a correct company email address"
+                className={styles.email_label}
+                htmlFor="email"
+              >
+                Email
+              </label>
               <input
                 type="email"
+                pattern=""
                 id="email"
                 placeholder="Enter your company email"
-                className={`${styles.errorInput}} `}
+                className={
+                  emailStateTest
+                    ? ` ${styles.email_input}`
+                    : `${styles.email_input_invalid}`
+                }
                 value={username}
                 onChange={handleInputUserName}
                 required
