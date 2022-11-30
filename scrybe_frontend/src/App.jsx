@@ -7,7 +7,7 @@ import TranscribePage from "./pages/TranscribePage";
 import HomePage from "./pages/HomePageA";
 import HomePageB from "./pages/HomePageB";
 import TermsAndCondition from "./pages/TermsAndCondition";
-import History from "./pages/History/History";
+import History from "./pages/History";
 import Services from "./pages/Services/Services";
 import Solutions from "./pages/Solutions/Solutions";
 import DashboardOverview from "./pages/DashboardOverview";
