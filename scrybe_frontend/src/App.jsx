@@ -47,6 +47,7 @@ import PersonalInformation from "./pages/Settings/SettingsPageSubPages/PersonalI
 import PartnersPage from "./pages/PartnersPage";
 import React, { useState } from "react";
 import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
+import Error from "./pages/Error/Error";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -155,6 +156,9 @@ function App() {
         <Route path="/partners" element={<PartnersPage />} />
         <Route path="press-article" element={<PressArticle />} />
         <Route path="pricing" element={<Pricing />} />
+
+        {/* Error page */}
+        <Route path="*" element={<Error />} />
       </Routes>
     </>
   );
