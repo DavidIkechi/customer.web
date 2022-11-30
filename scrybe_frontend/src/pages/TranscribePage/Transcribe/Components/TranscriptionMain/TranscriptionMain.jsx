@@ -105,7 +105,6 @@ function TranscriptionMain() {
   return (
     <div className={styles.TranscriptionMain}>
       <Dummy formattedData={formattedData} />
-      <button onClick={PlayPause}>Click me</button>
       <TranscriptionRightBar
         audioElem={audioElem}
         isPlaying={isPlaying}
