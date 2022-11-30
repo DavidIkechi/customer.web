@@ -13,12 +13,15 @@
   "plugins": ["react", "prettier"],
   "rules": {
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
-    "quotes": ["error", "double"],
-
+    "quotes": [
+      "error",
+      "double",
+      {
+        "allowTemplateLiterals": true
+      }
+    ],
 
     "semi": ["error", "always"],
     "prettier/prettier": ["error", { "endOfLine": "auto" }]
-
-
   }
 }

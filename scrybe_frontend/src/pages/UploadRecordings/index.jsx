@@ -1,8 +1,9 @@
 import React from "react";
+import SideBar from "../../components/SideBar";
 import TableData from "./TableData";
 import UploadedNavbar from "./UploadedNavbar";
 import styles from "./uploadedRecordings.module.scss";
-import UploadedSidebar from "./UploadedSidebar";
+// import UploadedSidebar from "./UploadedSidebar";
 
 function UploadedRecordings() {
   const [toggleSidebar, setToggleSidebar] = React.useState(false);
@@ -12,11 +13,12 @@ function UploadedRecordings() {
   };
   return (
     <div className={`${styles.uploadedRecordingsParent} `}>
-      <UploadedSidebar
+      {/* <UploadedSidebar
         getValue={(e) => setterFn(e)}
         toggleSidebar={toggleSidebar}
         closeSidebar={() => setToggleSidebar(!toggleSidebar)}
-      />
+      /> */}
+      <SideBar />
       <div className={styles.uploadedRecordingsCol}>
         <div className={styles.uploadedRecordingsSideBar}>
           <UploadedNavbar
