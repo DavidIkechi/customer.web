@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import styles from "./nav.module.scss";
 import logo from "../../assets/heed_logo_with_text.svg";
+import styles from "./nav.module.scss";
 
 function NavBar() {
   const [clicked, setClicked] = useState(false);
@@ -25,7 +25,7 @@ function NavBar() {
             <NavLink to="/services">Service</NavLink>
             <NavLink to="/solutions">Solutions</NavLink>
             <NavLink to="/pricing"> Pricing </NavLink>
-            <NavLink to="/industry"> Industry</NavLink>
+            {/* <NavLink to="/industry"> Industry</NavLink> */}
             <NavLink to="/about-us">About Us</NavLink>
           </div>
           <div className={styles.nav__ctas}>

@@ -1,7 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import styles from "./nav.module.scss";
 import logo from "../../assets/scrybe_logo_with_text.svg";
+import styles from "./nav.module.scss";
 
 function NavBar() {
   const [clicked, setClicked] = useState(false);
@@ -25,21 +25,17 @@ function NavBar() {
               <NavLink to="/"> Home </NavLink>
               <NavLink to="/services">Service</NavLink>
               <NavLink to="/solutions">Solutions</NavLink>
-              <NavLink to="/"> Pricing </NavLink>
-              <NavLink to="/industry"> Industry</NavLink>
+              <NavLink to="/pricing"> Pricing </NavLink>
+              {/* <NavLink to="/industry"> Industry</NavLink> */}
               <NavLink to="/about-us">About Us</NavLink>
             </div>
             <div className={styles.nav__ctas}>
-              <NavLink to="/signin">
-                <button type="button" className="firstBtn">
-                  Login
-                </button>
-              </NavLink>
-              <NavLink to="/terms">
-                <button type="button" className="secondBtn">
-                  Upgrade Plan
-                </button>
-              </NavLink>
+              <button type="button" className="firstBtn">
+                <NavLink to="/signin">Login</NavLink>
+              </button>
+              <button type="button" className="secondBtn">
+                <NavLink to="/terms">Upgrade Plan</NavLink>
+              </button>
             </div>
 
             <div className={styles.nav__ctl}>
