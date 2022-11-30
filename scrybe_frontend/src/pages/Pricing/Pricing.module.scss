@@ -105,21 +105,18 @@
   border-radius: 0.25rem;
   width: 7.75rem;
   text-align: center;
+  border: 0.0625rem solid #004db5;
+  color: #004db5;
+  background-color: transparent;
+  cursor: pointer;
 }
-.pricing .CTA .CTAs .ctaMonth {
-  border: 0.0625rem solid #006cff;
-  color: #006cff;
-}
-.pricing .CTA .CTAs .ctaMonth:active {
-  color: #004cb3;
-  border: 0.0625rem solid #004cb3;
-}
-.pricing .CTA .CTAs .ctaYear {
+
+.active {
   background-color: #004db5;
   color: white;
 }
-.pricing .CTA .CTAs .ctaStarter:active {
-  background-color: #004cb3;
+.hidden {
+  display: none;
 }
 .pricing .CTAtitle {
   font-size: 2rem;
@@ -129,7 +126,7 @@
   text-align: center;
   padding-block: 2rem;
 }
-
+//
 .pricing .plans {
   display: flex;
   gap: 23px;
@@ -199,6 +196,7 @@
   font-size: 4.5rem;
   font-weight: 600;
 }
+//
 .pricing .features {
   margin-block: 4rem;
   width: min(100%, 75.25rem);
