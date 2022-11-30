@@ -16,7 +16,7 @@ function Pricing() {
   const [showMonth, setshowMonth] = useState(true);
   const [showYear, setshowYear] = useState(false);
   const handleChange = () => {
-    plansRef.current.classList.toggle("active");
+    plansRef.current.classList.add("active");
   };
   const toggleYear = () => {
     if (showMonth) {
@@ -49,8 +49,8 @@ function Pricing() {
                 </span>
               </h1>
               <p className={styles.heroText}>
-                We help businesses unlock insights and extract meaningful data
-                from your customer support conversations{" "}
+                Whether your audio files are large or small, we are here to take
+                the stress off you{" "}
               </p>
             </div>
             <div className={styles.heroImage}>
@@ -65,7 +65,7 @@ function Pricing() {
           </h2>
           <div className={styles.CTAs}>
             <button
-              className={styles.ctaMonth}
+              className={`${styles.ctaMonth} ${styles.active}`}
               onClick={() => {
                 toggleMonth();
                 handleChange();
@@ -259,8 +259,8 @@ function Pricing() {
               </li>
             </ul>
             <div className={styles.benefitCTA}>
-              <Link>Try for Free</Link>
-              <Link>Schedule a Demo</Link>
+              <Link to="/try">Try for Free</Link>
+              <Link to="/demos">Schedule a Demo</Link>
             </div>
           </div>
           <div className={styles.BenefitsImage}>

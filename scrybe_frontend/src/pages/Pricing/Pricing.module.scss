@@ -111,7 +111,7 @@
   cursor: pointer;
 }
 
-.active {
+.pricing button .ctaMonth.active {
   background-color: #004db5;
   color: white;
 }
@@ -324,6 +324,7 @@ tr img {
   border-radius: 0.25rem;
   text-align: center;
   margin-right: 2rem;
+  color: #006CFF;
   @include media(1220px) {
     margin-block: pix-rem(20);
   }

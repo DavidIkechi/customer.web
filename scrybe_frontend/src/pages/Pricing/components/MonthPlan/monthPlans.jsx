@@ -50,7 +50,7 @@ function MonthPlans({ monthState }) {
                 <p>Email & Chat Support</p>
               </div>
             </div>
-            <Link to="/try">Get Started</Link>
+            <Link to="/create-account">Get Started</Link>
           </div>
         </div>
         {/* --------------Grouwing --------- */}
@@ -96,7 +96,7 @@ function MonthPlans({ monthState }) {
                 <p>Priority Support</p>
               </div>
             </div>
-            <Link to="/try">Get Started</Link>
+            <Link to="/create-account">Get Started</Link>
           </div>
         </div>
         {/* --------------Enterprise --------- */}
@@ -150,7 +150,7 @@ function MonthPlans({ monthState }) {
                 <p> Dedicated Technical Support</p>
               </div>
             </div>
-            <Link to="/try">Get Started</Link>
+            <Link to="/create-account">Get Started</Link>
           </div>
         </div>
       </div>
