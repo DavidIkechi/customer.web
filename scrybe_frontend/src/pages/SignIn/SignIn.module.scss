@@ -173,24 +173,20 @@
     outline: 1px solid #006cff !important;
     border: 1px solid #006cff !important;
   }
-  &_invalid{
+  &_invalid:focus {
     outline: 1px solid #f44336 !important;
     border: 1px solid #f44336 !important;
   }
 }
-.email_label{
 
+.fieldss{
   position: relative;
-  &::after{
-    content: attr(data-error-msg);
-    width: max-content;
+  .erro_msg_bazz{
+    font-size: 12px;
     position: absolute;
-    bottom: 0;
-    left: 0;
-    translate: 0 78px ;
-    color: #f44336;
+    bottom: -18px;
+    color: #f44336 !important;
   }
-  
 }
 
 // Media Query 800px

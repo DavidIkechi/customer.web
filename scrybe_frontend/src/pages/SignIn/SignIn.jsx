@@ -99,40 +99,56 @@ function Signin() {
             <h1>Welcome back, Scryber!</h1>
             <h3>Please enter your details</h3>
             <form onSubmit={handleSubmit}>
-              <label
-                data-error-msg="Please enter a correct company email address"
-                className={styles.email_label}
-                htmlFor="email"
+              <div
+                className={styles.fieldss}
+                onClick={() => setEmailStateTest(true)}
               >
-                Email
-              </label>
-              <input
-                type="email"
-                pattern=""
-                id="email"
-                placeholder="Enter your company email"
-                className={
-                  emailStateTest
-                    ? ` ${styles.email_input}`
-                    : `${styles.email_input_invalid}`
-                }
-                value={username}
-                onChange={handleInputUserName}
-                required
-              />
+                <label
+                  data-error-msg="Please enter a correct company email address"
+                  className={styles.email_label}
+                  htmlFor="email"
+                >
+                  Email
+                </label>
+                <input
+                  type="email"
+                  pattern=""
+                  id="email"
+                  placeholder="Enter your company email"
+                  className={
+                    emailStateTest
+                      ? ` ${styles.email_input}`
+                      : `${styles.email_input_invalid}`
+                  }
+                  value={username}
+                  onChange={handleInputUserName}
+                  required
+                />
+
+                {emailStateTest && (
+                  <p className={styles.erro_msg_bazz}>
+                    Please enter a correct company email address
+                  </p>
+                )}
+              </div>
               {/* <p className={styles.errorMsg}>{errors.email?.message}</p> */}
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="Password at least 8 characters"
-                className={`${styles.errorInput} `}
-                value={password}
-                onChange={handleInputPassword}
-                required
-              />
-              {/* <p className={styles.errorMsg}>{errors.password?.message}</p> */}
+              <div className={styles.fieldss}>
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Password at least 8 characters"
+                  className={`${styles.errorInput} `}
+                  value={password}
+                  onChange={handleInputPassword}
+                  required
+                />
+                <p className={styles.erro_msg_bazz}>
+                  Password must be at least 8 characters
+                </p>
+                {/* <p className={styles.errorMsg}>{errors.password?.message}</p> */}
+              </div>
               <div className={`${styles.accept} ${styles.remember}`}>
                 <div className={styles.rememberMe}>
                   <input type="checkbox" name="" id="" />
