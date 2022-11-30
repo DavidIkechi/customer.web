@@ -15,6 +15,7 @@
   "dependencies": {
     "axios": "^1.2.0",
     "chart.js": "^4.0.1",
+    "js-cookie": "^3.0.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
@@ -22,6 +23,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.39.4",
     "react-icons": "^4.6.0",
+    "react-router": "^6.4.3",
     "react-router-dom": "^6.4.3",
     "sass": "^1.56.1"
   },
