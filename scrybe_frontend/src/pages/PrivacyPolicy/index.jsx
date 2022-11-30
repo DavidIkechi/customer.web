@@ -1,3 +1,5 @@
+import Header from "../../components/navBar_free/index";
+import Footer from "../../components/footer/index"
 import Analytics from "./Components/Analytics.jsx";
 import Changes from "./Components/Changes.jsx";
 import CiCdTools from "./Components/CiCdTools.jsx";
@@ -22,33 +24,37 @@ import "./Style/privacyPolicy.scss";
 
 function PrivacyPolicy() {
   return (
-    <div className="container">
-      <div className="heading">
-        <h1>PRIVACY POLICY</h1>
-        <p>Effective date: 22-11-16</p>
+    <section className="privacy">
+      <Header />
+      <div className="container">
+        <div className="heading">
+          <h1>PRIVACY POLICY</h1>
+          <p>Effective date: 22-11-16</p>
+        </div>
+        <div>
+          <Introduction />
+          <Definitions />
+          <InformationCollectionUse />
+          <DataCollected />
+          <UseOfData />
+          <RetentionOfData />
+          <TransferOfData />
+          <DisclosureOfData />
+          <SecurityOfData />
+          <YourRights />
+          <LawfulBasis />
+          <DataProtectionRights />
+          <ServiceProviders />
+          <Analytics />
+          <CiCdTools />
+          <Payments />
+          <LinksToOtherSites />
+          <Changes />
+          <ContactUs />
+        </div>
       </div>
-      <div>
-        <Introduction />
-        <Definitions />
-        <InformationCollectionUse />
-        <DataCollected />
-        <UseOfData />
-        <RetentionOfData />
-        <TransferOfData />
-        <DisclosureOfData />
-        <SecurityOfData />
-        <YourRights />
-        <LawfulBasis />
-        <DataProtectionRights />
-        <ServiceProviders />
-        <Analytics />
-        <CiCdTools />
-        <Payments />
-        <LinksToOtherSites />
-        <Changes />
-        <ContactUs />
-      </div>
-    </div>
+      <Footer />
+    </section>
   );
 }
 

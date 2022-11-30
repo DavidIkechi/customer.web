@@ -94,7 +94,8 @@ function DataProtectionRights() {
       </p>
       <p>
         To exercise your Nigeria data protection rights described above, please
-        send your request(s) by email: <a href="/"> info@scrybe.com.</a>
+        send your request(s) by email:{" "}
+        <a href="mailto:info@heed.com"> info@heed.com.</a>
       </p>
       <p>
         Your data protection rights, described above, are covered by the NDPR,

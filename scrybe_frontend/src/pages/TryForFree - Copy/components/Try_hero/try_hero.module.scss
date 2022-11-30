@@ -1,0 +1,649 @@
+
+.trySection {
+  width: 100%;
+  margin-bottom: 5vh;
+}
+.HeroSection {
+  display: flex;
+  justify-content: space-between;
+  padding: 10vh 6% 18vh;
+
+  .backgroundImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    width: 100%;
+    height: 90vh;
+  }
+
+  .Hero1 {
+    width: 45%;
+
+    .try {
+      font-weight: 600;
+      font-size: 3.3rem !important;
+      line-height: 72px;
+      padding-top: 2vh;
+      padding-bottom: 6vh;
+    }
+    p {
+      font-weight: 500;
+      font-size: 1.3rem;
+      line-height: 24px;
+      color: #6a6a6a;
+      margin-bottom: 10vh;
+    }
+    .HeroButton {
+      padding: 2vh 20%;
+      font-weight: 500;
+      font-size: 0.9rem;
+      line-height: 24px;
+      text-decoration: none;
+      background: #006cff;
+      color: #ffffff;
+      border-radius: 4px;
+    }
+    .HeroButton:hover {
+      opacity: 0.7;
+    }
+  }
+  .Hero2 {
+    width: 45%;
+    margin-right: 0%;
+
+    img {
+      width: 100%;
+    }
+  }
+  .HeroButtonMobile {
+    display: none;
+  }
+}
+.downHero {
+  display: flex;
+  gap: 2%;
+  margin-top: 10vh;
+  padding: 0 6%;
+
+  hr {
+    border: 2px solid #006cff;
+    margin: 1.5vh 0;
+  }
+  p {
+    color: #6a6a6a;
+    text-align: left;
+    font-weight: 400;
+    font-size: 1.1em;
+    line-height: 26px;
+  }
+}
+
+// first media query 
+@media screen and (max-width: 1200px) {
+  .trySection {
+    width: 100%;
+    margin-bottom: 5vh;
+  }
+  .HeroSection {
+    display: flex;
+    justify-content: space-between;
+    padding: 7vh 6% 18vh;
+
+    .backgroundImage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      width: 100%;
+      height: 75vh;
+    }
+
+    .Hero1 {
+      width: 45%;
+
+      .try {
+        font-weight: 600;
+        font-size: 3.2rem !important;
+        line-height: 72px;
+        padding-top: 2vh;
+        padding-bottom: 6vh;
+      }
+      p {
+        font-weight: 500;
+        font-size: 1.15rem;
+        line-height: 24px;
+        color: #6a6a6a;
+        margin-bottom: 6vh;
+      }
+      .HeroButton {
+        padding: 2vh 20%;
+        font-weight: 500;
+        font-size: 0.85rem;
+        line-height: 24px;
+        text-decoration: none;
+        background: #006cff;
+        color: #ffffff;
+        border-radius: 4px;
+      }
+    }
+    .Hero2 {
+      width: 50%;
+      img {
+        width: 100%;
+      }
+    }
+  }
+  .downHero {
+    display: flex;
+    gap: 2%;
+    margin-top: 10vh;
+    padding: 0 6%;
+
+    hr {
+      border: 2px solid #006cff;
+      margin: 1.5vh 0;
+    }
+    p {
+      color: #6a6a6a;
+      text-align: left;
+      font-weight: 400;
+      font-size: 1.1em;
+      line-height: 26px;
+    }
+  }
+}
+
+// second media query
+@media screen and (max-width: 1000px) {
+  .trySection {
+    width: 100%;
+    margin-bottom: 5vh;
+  }
+  .HeroSection {
+    display: flex;
+    justify-content: space-between;
+    padding: 7vh 5% 18vh;
+
+    .backgroundImage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      width: 100%;
+      height: 70vh;
+    }
+
+    .Hero1 {
+      width: 45%;
+
+      .try {
+        font-weight: 600;
+        font-size: 3rem !important;
+        line-height: 72px;
+        padding-top: 1vh;
+        padding-bottom: 3vh;
+      }
+      p {
+        font-weight: 500;
+        font-size: 1.1rem;
+        line-height: 24px;
+        color: #6a6a6a;
+        margin-bottom: 5vh;
+      }
+      .HeroButton {
+        padding: 2vh 20%;
+        font-weight: 500;
+        font-size: 0.8rem;
+        line-height: 24px;
+        text-decoration: none;
+        background: #006cff;
+        color: #ffffff;
+        border-radius: 4px;
+      }
+    }
+    .Hero2 {
+      width: 50%;
+      img {
+        width: 100%;
+      }
+    }
+  }
+  .downHero {
+    display: flex;
+    gap: 2%;
+    margin-top: 7vh;
+    padding: 0 6%;
+
+    hr {
+      border: 2px solid #006cff;
+      margin: 1.5vh 0;
+    }
+    p {
+      color: #6a6a6a;
+      text-align: left;
+      font-weight: 400;
+      font-size: 1em;
+      line-height: 26px;
+    }
+  }
+}
+
+// third media query
+@media screen and (max-width: 800px) {
+  .trySection {
+    width: 100%;
+    margin-bottom: 5vh;
+  }
+  .HeroSection {
+    display: flex;
+    justify-content: space-between;
+    padding: 5vh 5% 18vh;
+
+    .backgroundImage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      width: 100%;
+      height: 60vh;
+    }
+
+    .Hero1 {
+      width: 45%;
+
+      .try {
+        font-weight: 600;
+        font-size: 2em!important;
+        line-height: 50px;
+        padding-top: 0vh;
+        padding-bottom: 1vh;
+      }
+      p {
+        font-weight: 500;
+        font-size: 0.8em;
+        line-height: 20px;
+        color: #6a6a6a;
+        margin-bottom: 3vh;
+      }
+      .HeroButton {
+        padding: 1.3vh 10%;
+        font-weight: 500;
+        font-size: 0.75em;
+        line-height: 24px;
+        text-decoration: none;
+        background: #006cff;
+        color: #ffffff;
+        border-radius: 4px;
+      }
+    }
+    .Hero2 {
+      width: 45%;
+      img {
+        width: 100%;
+      }
+    }
+  }
+  .downHero {
+    display: flex;
+    gap: 2%;
+    margin-top: 1vh;
+    padding: 0 6%;
+
+    hr {
+      border: 2px solid #006cff;
+      margin: 1.5vh 0;
+    }
+    p {
+      color: #6a6a6a;
+      text-align: left;
+      font-weight: 400;
+      font-size: 1em;
+      line-height: 26px;
+    }
+  }
+}
+// fourth media query
+@media screen and (max-width: 700px) {
+  .trySection {
+    width: 100%;
+    margin-bottom: 5vh;
+  }
+  .HeroSection {
+    display: flex;
+    justify-content: space-between;
+    padding: 5vh 5% 18vh;
+
+    .backgroundImage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      width: 100%;
+      height: 55vh;
+    }
+
+    .Hero1 {
+      width: 45%;
+
+      .try {
+        font-weight: 600;
+        font-size: 1.8em!important;
+        line-height: 40px;
+        padding-top: 0vh;
+        padding-bottom: 1vh;
+      }
+      p {
+        font-weight: 500;
+        font-size: 0.7em;
+        line-height: 20px;
+        color: #6a6a6a;
+        margin-bottom: 3vh;
+      }
+      .HeroButton {
+        padding: 1.3vh 10%;
+        font-weight: 500;
+        font-size: 0.7em;
+        line-height: 24px;
+        text-decoration: none;
+        background: #006cff;
+        color: #ffffff;
+        border-radius: 4px;
+      }
+    }
+    .Hero2 {
+      width: 50%;
+      img {
+        width: 100%;
+      }
+    }
+  }
+  .downHero {
+    display: flex;
+    gap: 2%;
+    margin-top: 1vh;
+    padding: 0 6%;
+
+    hr {
+      border: 2px solid #006cff;
+      margin: 1.5vh 0;
+    }
+    p {
+      color: #6a6a6a;
+      text-align: left;
+      font-weight: 400;
+      font-size: 1em;
+      line-height: 26px;
+    }
+  }
+}
+
+// fifth media query
+@media screen and (max-width: 600px) {
+  .trySection {
+    width: 100%;
+    margin-bottom: 5vh;
+  }
+  .HeroSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5vh 5% 18vh;
+
+    .backgroundImage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      width: 100%;
+      height: 135vh;
+    }
+
+    .Hero1 {
+      width: 100%;
+
+      .try {
+        font-weight: 600;
+        font-size: 3.5em!important;
+        line-height: 72px;
+        padding-top: 0vh;
+        padding-bottom: 4vh;
+      }
+      p {
+        font-weight: 500;
+        font-size: 1.5em;
+        line-height: 30px;
+        color: #6a6a6a;
+        margin-bottom: 7vh;
+      }
+      .HeroButton {
+        display: none;
+      }
+    }
+    .Hero2 {
+      margin-top: 0vh;
+      margin-bottom: 7vh;
+      width: 100%;
+      img {
+        width: 100%;
+      }
+    }
+
+    .HeroButtonMobile {
+      display: block;
+      padding: 2.5vh 30%;
+      font-weight: 500;
+      font-size: 1.5em;
+      line-height: 24px;
+      text-decoration: none;
+      background: #006cff;
+      color: #ffffff;
+      border-radius: 4px;
+    }
+  }
+  .downHero {
+    display: flex;
+    gap: 0%;
+    margin-top: 15vh;
+    padding: 0 5%;
+
+    hr {
+      border: 2px solid #006cff;
+      margin: 1.5vh 0;
+    }
+    p {
+      color: #6a6a6a;
+      text-align: left;
+      font-weight: 400;
+      font-size: 1em;
+      line-height: 26px;
+      margin-left: 5%;
+    }
+  }
+}
+
+// sixth media query
+@media screen and (max-width: 450px) {
+  .trySection {
+    width: 100%;
+    margin-bottom: 5vh;
+  }
+  .HeroSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3vh 5% 18vh;
+
+    .backgroundImage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      width: 100%;
+      height: 113vh;
+    }
+
+    .Hero1 {
+      width: 100%;
+
+      .try {
+        font-weight: 600;
+        font-size: 2.7em!important;
+        line-height: 72px;
+        padding-top: 0vh;
+        padding-bottom: 2vh;
+      }
+      p {
+        font-weight: 500;
+        font-size: 1em;
+        line-height: 30px;
+        color: #6a6a6a;
+        margin-bottom: 5vh;
+      }
+      .HeroButton {
+        display: none;
+      }
+    }
+    .Hero2 {
+      margin-top: 0vh;
+      margin-bottom: 7vh;
+      width: 100%;
+      img {
+        width: 100%;
+      }
+    }
+
+    .HeroButtonMobile {
+      display: block;
+      padding: 2vh 20%;
+      font-weight: 500;
+      text-align: center;
+      font-size: 1.1em;
+      line-height: 24px;
+      text-decoration: none;
+      background: #006cff;
+      color: #ffffff;
+      border-radius: 4px;
+    }
+  }
+  .downHero {
+    display: flex;
+    gap: 0%;
+    margin-top: 12vh;
+    padding: 0 5%;
+
+    hr {
+      border: 2px solid #006cff;
+      margin: 1.5vh 0;
+    }
+    p {
+      color: #6a6a6a;
+      text-align: left;
+      font-weight: 400;
+      font-size: 1.05 em;
+      line-height: 26px;
+      margin-left: 5%;
+    }
+  }
+}
+
+// seventh media query
+@media screen and (max-width: 350px) {
+  .trySection {
+    width: 100%;
+    margin-bottom: 5vh;
+  }
+  .HeroSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3vh 5% 18vh;
+
+    .backgroundImage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      width: 100%;
+      height: 120vh;
+    }
+
+    .Hero1 {
+      width: 100%;
+
+      .try {
+        font-weight: 600;
+        font-size: 2.3em!important;
+        line-height: 72px;
+        padding-top: 0vh;
+        padding-bottom: 2vh;
+      }
+      p {
+        font-weight: 500;
+        font-size: 0.9em;
+        line-height: 30px;
+        color: #6a6a6a;
+        margin-bottom: 2vh;
+      }
+      .HeroButton {
+        display: none;
+      }
+    }
+    .Hero2 {
+      margin-top: 0vh;
+      margin-bottom: 7vh;
+      width: 100%;
+      img {
+        width: 100%;
+      }
+    }
+
+    .HeroButtonMobile {
+      display: block;
+      padding: 1.7vh 20%;
+      font-weight: 500;
+      text-align: center;
+      font-size: 1.1em;
+      line-height: 24px;
+      text-decoration: none;
+      background: #006cff;
+      color: #ffffff;
+      border-radius: 4px;
+    }
+  }
+  .downHero {
+    display: flex;
+    gap: 0%;
+    margin-top: 10vh;
+    padding: 0 5%;
+
+    hr {
+      border: 2px solid #006cff;
+      margin: 1.5vh 0;
+    }
+    p {
+      color: #6a6a6a;
+      text-align: left;
+      font-weight: 400;
+      font-size: 1em;
+      line-height: 26px;
+      margin-left: 5%;
+    }
+  }
+}
