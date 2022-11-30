@@ -56,7 +56,10 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/sentiment-analysis" element={<SentimentAnalysis />} />
+        <Route
+          path="/sentiment-analysis/:AudioId"
+          element={<SentimentAnalysis />}
+        />
         <Route path="/transcriptions/:userId" element={<TranscribePage />} />
         <Route path="/try" element={<TryForFree />} />
         <Route path="/history" element={<History />} />
