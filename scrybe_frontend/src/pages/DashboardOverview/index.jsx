@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
-import { ThisWeekRecordings } from "./Data";
+import { UserData } from "./Data";
 import { useMockAuthAndGetRecording } from "./hooks";
 import SideBar from "../../components/SideBar";
 import styles from "./DashboardOverview.module.scss";
@@ -31,21 +31,26 @@ function DashboardOverview() {
   const recentRecording = useMockAuthAndGetRecording();
 
   useEffect(() => {
-    console.log(recentRecording);
+    // console.log(recentRecording);
   }, [recentRecording]);
 
   const [chartData, setChartData] = useState({
     datasets: [],
   });
   const [chartOptions, setChartOptions] = useState({});
+  const [selected, setSelected] = useState([]);
+
+  useEffect(() => {
+    setSelected(UserData.weeks);
+  }, []);
 
   useEffect(() => {
     setChartData({
-      labels: ThisWeekRecordings.map((data) => data.day),
+      labels: selected.map((data) => data.time),
       datasets: [
         {
           label: "",
-          data: ThisWeekRecordings.map((data) => data.totalRecordings),
+          data: selected.map((data) => data.totalRecordings),
           backgroundColor: ["#B0CAD9", "#005584", "#548DAD", "#004D78"],
           maxBarThickness: 10,
           borderSkipped: "start",
@@ -60,8 +65,11 @@ function DashboardOverview() {
         },
       },
     });
-  }, []);
+  }, [selected]);
 
+  function timeStampFunc(e) {
+    setSelected(UserData[e.target.value]);
+  }
   return (
     <SideBar>
       <section className={styles.dashboard_overview}>
@@ -72,10 +80,13 @@ function DashboardOverview() {
               <h1>
                 <img src={toneWave} alt="" /> Total Recordings
               </h1>
-              <select className={styles.dropdown}>
-                <option value="week">This week</option>
-                <option value="month">This month</option>
-                <option value="year">This year</option>
+              <select
+                className={styles.dropdown}
+                id="timeStamp"
+                onChange={timeStampFunc}
+              >
+                <option value="weeks">This week</option>
+                <option value="months">This month</option>
               </select>
               {/* <h2 className={styles.thismonth}>
               This month <img src={chevron} alt="" />
