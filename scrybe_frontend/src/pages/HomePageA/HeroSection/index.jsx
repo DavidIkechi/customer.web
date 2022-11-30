@@ -9,11 +9,8 @@ function Hero() {
       <div className={styles.container}>
         <div className={styles.content}>
           <h1 className={styles.heroH1}>
-            World class Transcription and{" "}
-            <span className={styles.heroAccent}>
-              Sentiment Analysis <wbr />
-            </span>
-            for Your Business
+            Analyze and extract data from your customer support interactions to
+            drive higher customer satisfaction.
           </h1>
           <div className={styles.heroImageB}>
             <img src={heroImage} alt="" srcSet="" />
