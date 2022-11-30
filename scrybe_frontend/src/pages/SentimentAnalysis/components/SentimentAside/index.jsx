@@ -4,7 +4,7 @@ import arrowIcon from "../../icons/arrow_back.svg";
 import OverAllSentimentCard from "../OverallSentimentCard";
 import VerdictCard from "../VerdictCard";
 
-function SentimentAside({ isMobileAsideOpen, closeFunction, senti }) {
+function SentimentAside({ isMobileAsideOpen, closeFunction, sentimentData }) {
   const positiveTags = [
     "brave",
     "good",
@@ -48,30 +48,9 @@ function SentimentAside({ isMobileAsideOpen, closeFunction, senti }) {
           <div className={styles.back__text}>Overall Sentiment</div>
         </div>
       </div>
-      {senti &&
-        (() => {
-          const total = {
-            positivity_score: 0,
-            neutrality_score: 0,
-            negativity_score: 0,
-          };
-          senti.forEach((data) => {
-            total.positivity_score += data.positivity_score;
-            total.neutrality_score += data.neutrality_score;
-            total.negativity_score += data.negativity_score;
-          });
-          total.positivity_score /= senti.length;
-          total.neutrality_score /= senti.length;
-          total.negativity_score /= senti.length;
+      <OverAllSentimentCard sentimentData={sentimentData} />
+      <VerdictCard sentimentData={sentimentData} />
 
-          const sentimentData = { ...total };
-          return (
-            <>
-              <OverAllSentimentCard sentimentData={sentimentData} />
-              <VerdictCard sentimentData={sentimentData} />
-            </>
-          );
-        })()}
       <div className={`${styles.tags} ${styles.inner__container}`}>
         <div className={styles.title}>Positive phrase tags</div>
         <ul className={styles.tag__items}>
@@ -103,7 +82,7 @@ function SentimentAside({ isMobileAsideOpen, closeFunction, senti }) {
 SentimentAside.propTypes = {
   isMobileAsideOpen: PropTypes.bool.isRequired,
   closeFunction: PropTypes.func.isRequired,
-  senti: PropTypes.array.isRequired,
+  sentimentData: PropTypes.object.isRequired,
 };
 
 export default SentimentAside;
