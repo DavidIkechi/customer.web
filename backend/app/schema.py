@@ -138,3 +138,12 @@ class UserProfile(BaseModel):
     email: str
     company_id: int
     api_key: UUID = uuid1()
+
+
+class ForgetPassword(BaseModel):
+    email: str
+
+
+class UpdatePassword(BaseModel):
+    password: str
+
