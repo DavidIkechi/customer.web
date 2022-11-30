@@ -1,11 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Definitions() {
   return (
     <div className="sub-container">
       <h1>2. Definitions</h1>
       <p>
-        <span>SERVICE</span> means the scrybe.com.ng website operated by Scrybe.
+        <span>SERVICE</span> means the{" "}
+        <Link to="/" className="link">
+          heed.com.ng
+        </Link>{" "}
+        website operated by Heed.
       </p>
       <p>
         <span> PERSONAL DATA</span> means data about a living individual who can

@@ -33,49 +33,38 @@ function Footer() {
             <ul>
               <h4> Explore</h4>
               <li>
-                <NavLink to="/">Home</NavLink>
+                <NavLink to="/solutions">Why Scrybe</NavLink>
               </li>
               <li>
-                <NavLink to="/">Why Scrybe</NavLink>
-              </li>
-              <li>
-                <NavLink to="/">About Us</NavLink>
+                <NavLink to="/about-us">About Us</NavLink>
               </li>
               <li>
                 <NavLink to="/blog">Blog</NavLink>
               </li>
               <li>
-                <NavLink to="/">Our Services</NavLink>
+                <NavLink to="/services">Our Services</NavLink>
               </li>
               <li>
                 <NavLink to="/privacy">Privacy Policy</NavLink>
               </li>
-              <li>
-                <NavLink to="/how-it-works">How it works</NavLink>
-              </li>
             </ul>
+
             <ul>
               <h4>Quick links</h4>
               <li>
-                <NavLink to="/">Authentication</NavLink>
+                <NavLink to="/pricing">Billing and pricing</NavLink>
               </li>
               <li>
-                <NavLink to="/">Billing and pricing</NavLink>
+                <NavLink to="/events">Events</NavLink>
               </li>
               <li>
-                <NavLink to="/">Accounts</NavLink>
-              </li>
-              <li>
-                <NavLink to="/">Events</NavLink>
-              </li>
-              <li>
-                <NavLink to="/">Career</NavLink>
+                <NavLink to="/careers">Career</NavLink>
               </li>
               <li>
                 <NavLink to="/faq">Faq</NavLink>
               </li>
               <li>
-                <NavLink to="/">Partnership</NavLink>
+                <NavLink to="/reviews">Reviews</NavLink>
               </li>
             </ul>
             <div className={styles.footer__right}>
