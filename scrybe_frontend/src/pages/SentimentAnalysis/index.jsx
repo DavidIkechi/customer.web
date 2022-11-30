@@ -11,7 +11,6 @@ import VerdictCard from "./components/VerdictCard";
 import PhraseTagCard from "./components/PhraseTagCard";
 import SideBar from "../../components/SideBar";
 import { useMockEnd, useMockAuthAndReadSentiment } from "./hooks";
-import { useEffect } from "react";
 
 function SentimentAnalysis() {
   const [isMobileAsideOpen, setIsMobileAsideOpen] = useState(false);
@@ -72,6 +71,7 @@ function SentimentAnalysis() {
       : [];
   return (
     <SideBar>
+      {console.log(sentimentData)}
       <div className={styles.page__container}>
         <div className={styles.audio__mobile}>
           <AudioCard />

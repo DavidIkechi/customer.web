@@ -8,3 +8,21 @@
     font-weight: 400;
   }
 }
+
+@include keyframes(skeleton-loading) {
+  from {
+    background-color: hsl(200, 20%, 70%);
+  }
+
+  to {
+    background-color: hsl(200, 20%, 95%);
+  }
+}
+
+.skeleton__chart {
+  opacity: 0.3;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  animation: skeleton-loading 1s ease-in-out infinite alternate;
+}
