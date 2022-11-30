@@ -66,8 +66,8 @@ export default function TryFourth() {
       <div className={styles.like}>
         <hr />
         <p>
-          Do you like Heed? Track the performance of your customer support
-          team with our easy to use sentiment analysis tool. Get access to more
+          Do you like Heed? Track the performance of your customer support team
+          with our easy to use sentiment analysis tool. Get access to more
           features when you sign up your company.
         </p>
       </div>

@@ -22,7 +22,6 @@ import { RequireToken } from "./Auth";
 // import Industry from "./pages/Industry";
 // import IndustryArticles from "./pages/Industry/IndustryArticles/IndustryArticle1";
 // import HowitWorks from "./pages/HowItWorks";
-import Pricing from "./pages/Pricing";
 import UploadedRecordings from "./pages/UploadRecordings";
 import Account from "./pages/Account";
 import Signin from "./pages/SignIn/SignIn";
