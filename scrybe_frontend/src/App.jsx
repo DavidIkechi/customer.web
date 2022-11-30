@@ -46,6 +46,7 @@ import PersonalInformation from "./pages/Settings/SettingsPageSubPages/PersonalI
 import PartnersPage from "./pages/PartnersPage";
 import React, { useState } from "react";
 import Cookies from "js-cookie";
+import Error from "./pages/Error/Error";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -180,6 +181,9 @@ function App() {
             <Route path="press" element={<Press />} />
             <Route path="/partners" element={<PartnersPage />} />
             <Route path="press-article" element={<PressArticle />} />
+
+            {/* Error page */}
+            <Route path="*" element={<Error />} />
           </Routes>
         </TokenApi.Provider>
       </AuthApi.Provider>
