@@ -22,7 +22,7 @@ import TryForFree from "./pages/TryForFree";
 // import IndustryArticles from "./pages/Industry/IndustryArticles/IndustryArticle1";
 // import HowitWorks from "./pages/HowItWorks";
 import React from "react";
-import WithAuth from "./HOC/withAuth";
+import WithAuth from "./HOC";
 import Account from "./pages/Account";
 import BlogPostPage from "./pages/BlogPostPage";
 import Blogs from "./pages/BlogsPage";
@@ -67,7 +67,16 @@ function App() {
         <Route path="/about-us" element={<About />} />
         <Route path="/events" element={<Events />} />
         <Route path="/dashboard" element={<DashboardOverview />} />
-        <Route path="/account" element={<Account />} />
+        <Route
+          path="/account"
+          element={
+            <WithAuth>
+              {" "}
+              <Account />{" "}
+            </WithAuth>
+          }
+        />
+
         {/* <Route path="/industry" exact element={<Industry />} /> */}
         {/* <Route path="/industry-article" element={<IndustryArticles />} />
         <Route path="/how-it-works" element={<HowitWorks />} /> */}
@@ -96,15 +105,7 @@ function App() {
           <Route index element={<PromotedArticle1 />} />
           <Route path="*" element={<PromotedArticle1 />} />
         </Route> */}
-
-        <Route
-          path="/create-account"
-          element={
-            <WithAuth>
-              <Signup />
-            </WithAuth>
-          }
-        />
+        <Route path="/create-account" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/reset-successful" element={<Successful />} />
         <Route path="/verify-signup" element={<SignUpVerify />} />
@@ -116,9 +117,7 @@ function App() {
         />
         <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
         <Route path="/agent-report" element={<AgentReport />} />
-
         {/* ROutes without working paths */}
-
         <Route
           path="/uploaded"
           element={<DummyPage someText="uploaded recordings" />}
@@ -136,11 +135,9 @@ function App() {
         <Route path="/blog" element={<Blogs />} />
         <Route path="/blog/:id" element={<BlogPostPage />} />
         <Route path="/reviews" element={<Reviews />} />
-
         {/* Try Routes */}
         <Route path="/try-processing" element={<TryProcessing />} />
         <Route path="/try-results" element={<TryResults />} />
-
         {/* Settings Pages */}
         <Route path="/settings" element={<SettingsIndex />} />
         <Route path="settings/account-security" element={<AccountSettings />} />
@@ -148,12 +145,10 @@ function App() {
           path="settings/notifications"
           element={<NotificationSettings />}
         />
-
         <Route
           path="settings/personal-information"
           element={<PersonalInformation />}
         />
-
         {/* Press  */}
         <Route path="press" element={<Press />} />
         <Route path="/partners" element={<PartnersPage />} />
