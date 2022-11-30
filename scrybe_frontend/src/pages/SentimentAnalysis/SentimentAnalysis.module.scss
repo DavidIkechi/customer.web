@@ -10,6 +10,7 @@
   margin-left: auto;
   margin-right: auto;
   height: max-content;
+  transition-duration: 0.5s;
   @include mediaQuery(768px) {
     padding: pix-rem(16);
   }

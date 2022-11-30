@@ -18,7 +18,9 @@ function VerdictCard({ sentimentData }) {
             }}
           />
           <div className={styles.bar__text}>
-            {(sentimentData.positivity_score * 100).toFixed(2)}%
+            {sentimentData.positivity_score
+              ? (sentimentData.positivity_score * 100).toFixed(2) + "%"
+              : ""}
           </div>
         </div>
       </div>
@@ -32,7 +34,9 @@ function VerdictCard({ sentimentData }) {
             }}
           />
           <div className={styles.bar__text}>
-            {(sentimentData.negativity_score * 100).toFixed(2)}%
+            {sentimentData.negativity_score
+              ? (sentimentData.negativity_score * 100).toFixed(2) + "%"
+              : ""}
           </div>
         </div>
       </div>
