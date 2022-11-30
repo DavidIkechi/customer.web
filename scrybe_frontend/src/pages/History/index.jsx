@@ -64,7 +64,7 @@ export default function History() {
     <div className={styles.history}>
       {show && <SideBarMobile ref={refed} />}
 
-      {width >= 768 ? (
+      {width >= 790 ? (
         <div className={styles.history__sidebar}>
           <SideBar ref={ref} />
         </div>
@@ -79,7 +79,7 @@ export default function History() {
         }
       >
         <div className={styles.history__listHeader}>
-          {width >= 768 ? (
+          {width >= 790 ? (
             <>
               <div className={styles.inputWithIcon}>
                 <input
@@ -101,6 +101,7 @@ export default function History() {
             <div className={styles.upload__md}>
               <img
                 src={buggerMenu}
+                className={styles.upload__bugger}
                 alt="icon"
                 ref={ref}
                 onClick={handleClick}
@@ -145,12 +146,12 @@ export default function History() {
                       name={item.agent}
                       review={item.analysis}
                       date={item.date}
-                      key={i + 1}
+                      key={i.toLocaleString()}
                       color={
                         item.analysis.toLowerCase() === "positive"
                           ? "#dbeabb"
                           : item.analysis.toLowerCase() === "negative"
-                          ? "ffc2cb"
+                          ? "#ffc2cb"
                           : "#ececec"
                       }
                     />
@@ -162,7 +163,7 @@ export default function History() {
           <div className={styles.history__list}>
             {isList && (
               <>
-                {width >= 768 ? (
+                {width >= 790 ? (
                   <>
                     <div>
                       <div className={styles.list__header}>

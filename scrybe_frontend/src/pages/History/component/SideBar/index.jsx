@@ -38,7 +38,7 @@ const SideBar = React.forwardRef(({ children }, ref) => {
             }
           >
             <img src={logoSVG} alt="Scrybe logo" />
-            <p>Scrybe</p>
+            <p>Heed</p>
           </NavLink>
         </div>
         <div className={styles.navLinks}>

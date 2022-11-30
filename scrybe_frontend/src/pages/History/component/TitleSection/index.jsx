@@ -48,7 +48,7 @@ export default function TitleSection() {
             ))}
           </select>
         </div>
-        {width >= 768 ? (
+        {width >= 790 ? (
           <>
             <div className="filter__2">
               <div className="filter__2__number">

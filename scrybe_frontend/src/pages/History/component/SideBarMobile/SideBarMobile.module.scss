@@ -4,10 +4,10 @@ $sidebarWidth: 250px;
 $trans: all 400ms ease;
 .sidebarMobile__container {
   position: fixed;
-  z-index: 2;
+  z-index: 99;
   background: #ffffff;
   transition: all 1s ease;
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 151px 60px rgba(0, 0, 0, 0.226);
 
   > {
     div:last-of-type,
@@ -29,7 +29,7 @@ $trans: all 400ms ease;
     input {
       width: calc($sidebarWidth - 20px);
       border: 1px solid rgba(170, 170, 170, 0.178);
-      padding: 12px 15px;
+      padding: 10px 15px;
       padding-left: 3rem;
       font-weight: 300;
       font-size: 16px;
@@ -54,8 +54,8 @@ $trans: all 400ms ease;
       display: flex;
       align-items: center;
       img {
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
         margin-right: 10px;
       }
@@ -71,6 +71,9 @@ $trans: all 400ms ease;
       p {
         color: #6a6a6a;
         font-weight: 300;
+      }
+      h3 {
+        font-size: 16px;
       }
     }
   }
@@ -121,11 +124,11 @@ $trans: all 400ms ease;
     p {
       display: inline;
       font-weight: 600;
-      font-size: pix-rem(30);
+      font-size: 2rem;
       line-height: 26px;
       color: $grey-500;
       cursor: pointer;
-      margin-left: 10px;
+      margin-left: 20px;
       scale: none;
     }
   }
@@ -171,6 +174,12 @@ $trans: all 400ms ease;
       color: #6a6a6a;
       cursor: pointer;
       transition: $trans;
+    }
+    @media (max-width: 400px) {
+      p {
+        font-size: 14px;
+        font-weight: 400;
+      }
     }
     img {
       width: 40px;
