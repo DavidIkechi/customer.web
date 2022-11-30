@@ -59,7 +59,6 @@ function SentimentAnalysis() {
 
   return (
     <SideBar>
-      {console.log(sentimentData)}
       <div className={styles.page__container}>
         <div className={styles.audio__mobile}>
           <AudioCard />
