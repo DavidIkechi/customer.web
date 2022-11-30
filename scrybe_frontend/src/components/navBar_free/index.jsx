@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./nav.module.scss";
-import logo from "../../assets/scrybe_logo_with_text.svg";
+import logo from "../../assets/heed_logo_with_text.svg";
 
 function NavBar() {
   const [clicked, setClicked] = useState(false);
