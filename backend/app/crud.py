@@ -157,3 +157,16 @@ def get_user_profile(db: Session, user_id: int):
 
 def get_user_profile_by_email(db: Session, email: str):
     return db.query(models.User).filter(models.User.email == email).first()
+
+
+def reset_password(db: Session, password: str, user: models.User):
+
+    user.password = pwd_context.hash(password)
+
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+    return user
+
+
+
