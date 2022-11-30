@@ -24,14 +24,16 @@ function NavBar() {
             <NavLink to="/"> Home </NavLink>
             <NavLink to="/services">Service</NavLink>
             <NavLink to="/solutions">Solutions</NavLink>
-            <NavLink to="/"> Pricing </NavLink>
-            <NavLink to="/"> Industry</NavLink>
-            <NavLink to="/">About Us</NavLink>
+            <NavLink to="/pricing"> Pricing </NavLink>
+            <NavLink to="/industry"> Industry</NavLink>
+            <NavLink to="/about-us">About Us</NavLink>
           </div>
           <div className={styles.nav__ctas}>
-            <button type="button">Login</button>
             <button type="button">
-              <NavLink to="/terms">Try for Free</NavLink>
+              <NavLink to="/signin">Login</NavLink>
+            </button>
+            <button type="button">
+              <NavLink to="/try">Try for Free</NavLink>
             </button>
           </div>
 
