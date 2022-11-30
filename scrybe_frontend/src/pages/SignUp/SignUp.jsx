@@ -157,7 +157,7 @@ function Signup() {
                 {/* <p className={styles.errorMsg}>{errors.first_name?.message}</p> */}
                 {!nameStateTest && (
                   <p className={styles.erro_msg_bazz}>
-                    Please enter a correct email address
+                    Please enter your first name
                   </p>
                 )}
               </div>
@@ -185,6 +185,11 @@ function Signup() {
                   value={last_name}
                   onChange={handleUserLastName}
                 />
+                {!lastStateTest && (
+                  <p className={styles.erro_msg_bazz}>
+                    Please enter your last name
+                  </p>
+                )}
                 {/* <p className={styles.errorMsg}>{errors.last_name?.message}</p> */}
               </div>
 
@@ -211,6 +216,11 @@ function Signup() {
                   value={email}
                   onChange={handleUserEmail}
                 />
+                {!emailStateTest && (
+                  <p className={styles.erro_msg_bazz}>
+                    Please enter a valid email
+                  </p>
+                )}
                 {/* <p className={styles.errorMsg}>{errors.email?.message}</p> */}
               </div>
 
@@ -237,6 +247,11 @@ function Signup() {
                   value={company_name}
                   onChange={handleUserCompany}
                 />
+                {!companyStateTest && (
+                  <p className={styles.erro_msg_bazz}>
+                    Please enter your Companys' name
+                  </p>
+                )}
                 {/* <p className={styles.errorMsg}>{errors.company_name?.message}</p> */}
               </div>
 
@@ -264,6 +279,11 @@ function Signup() {
                   value={password}
                   onChange={handleUserPassword}
                 />
+                {!passStateTest && (
+                  <p className={styles.erro_msg_bazz}>
+                    Your Password must be more than 8 character
+                  </p>
+                )}
                 {/* <p className={styles.errorMsg}>{errors.password?.message}</p> */}
               </div>
 
