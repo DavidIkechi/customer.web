@@ -38,7 +38,12 @@ function Signin() {
   };
 
   const validate = useCallback(() => {
-    if (username.length >= 1 && password.length >= 1) {
+    if (
+      username.length >= 1 &&
+      password.length >= 1 &&
+      passStateTest &&
+      emailStateTest
+    ) {
       return true;
     }
   }, [username, password]);
