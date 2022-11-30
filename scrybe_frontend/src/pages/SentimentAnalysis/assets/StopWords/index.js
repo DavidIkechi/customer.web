@@ -571,6 +571,6 @@ const stopwords = {
     "z",
     "zero",
   ],
-};
+}; // extracted from https://github.com/6/stopwords-json/blob/master/stopwords-all.json
 
 export default stopwords;
