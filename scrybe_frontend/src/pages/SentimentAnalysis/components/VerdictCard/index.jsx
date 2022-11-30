@@ -48,9 +48,6 @@ function VerdictCard({ sentimentData }) {
         <button type="button" className={styles.download__button}>
           <img src={downloadIcon} alt="download icon" />
           Download
-          <div className={styles.dropdown__container}>
-            <img src={dropdownIcon} alt="drop down" />
-          </div>
         </button>
         <button type="button" className={styles.share__button}>
           <img src={shareIcon} alt="share icon" />
