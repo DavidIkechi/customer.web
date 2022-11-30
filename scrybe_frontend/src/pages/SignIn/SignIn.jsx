@@ -116,7 +116,6 @@ function Signin() {
                 </label>
                 <input
                   type="email"
-                  pattern=""
                   id="email"
                   placeholder="Enter your company email"
                   className={
