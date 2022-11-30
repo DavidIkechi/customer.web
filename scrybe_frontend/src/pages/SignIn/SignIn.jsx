@@ -105,7 +105,11 @@ function Signin() {
               >
                 <label
                   data-error-msg="Please enter a correct company email address"
-                  className={styles.email_label}
+                  className={
+                    emailStateTest
+                      ? styles.email_label
+                      : styles.email_label_error
+                  }
                   htmlFor="email"
                 >
                   Email
@@ -125,28 +129,46 @@ function Signin() {
                   required
                 />
 
-                {emailStateTest && (
+                {!emailStateTest && (
                   <p className={styles.erro_msg_bazz}>
-                    Please enter a correct company email address
+                    Please enter a correct email address
                   </p>
                 )}
               </div>
               {/* <p className={styles.errorMsg}>{errors.email?.message}</p> */}
-              <div className={styles.fieldss}>
-                <label htmlFor="password">Password</label>
+              <div
+                className={styles.fieldss}
+                onClick={() => setPassStateTest(true)}
+              >
+                <label
+                  className={
+                    passStateTest
+                      ? styles.email_label
+                      : styles.email_label_error
+                  }
+                  htmlFor="password"
+                >
+                  Password
+                </label>
                 <input
                   type="password"
                   name="password"
                   id="password"
                   placeholder="Password at least 8 characters"
-                  className={`${styles.errorInput} `}
+                  className={
+                    passStateTest
+                      ? ` ${styles.email_input}`
+                      : `${styles.email_input_invalid}`
+                  }
                   value={password}
                   onChange={handleInputPassword}
                   required
                 />
-                <p className={styles.erro_msg_bazz}>
-                  Password must be at least 8 characters
-                </p>
+                {!passStateTest && (
+                  <p className={styles.erro_msg_bazz}>
+                    Password must be at least 8 characters
+                  </p>
+                )}
                 {/* <p className={styles.errorMsg}>{errors.password?.message}</p> */}
               </div>
               <div className={`${styles.accept} ${styles.remember}`}>

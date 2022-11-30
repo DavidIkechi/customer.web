@@ -181,12 +181,21 @@
 
 .fieldss{
   position: relative;
-  .erro_msg_bazz{
+.erro_msg_bazz{
     font-size: 12px;
     position: absolute;
     bottom: -18px;
+    visibility: hidden;
     color: #f44336 !important;
   }
+  &:focus-within > .email_label_error{
+    color: #f44336;
+  }
+
+  &:focus-within > .erro_msg_bazz{
+    visibility: visible;
+  }
+  
 }
 
 // Media Query 800px
