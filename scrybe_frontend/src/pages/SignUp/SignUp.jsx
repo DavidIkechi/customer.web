@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import footerImg from "./assets/signup-img.svg";
 import styles from "./SignUp.module.scss";
+import { Navigate } from "react-router-dom";
 
 function Signup() {
   const [first_name, setFirstName] = useState("");
@@ -12,7 +13,9 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [company_name, setCompany] = useState("");
   const [password, setPassword] = useState("");
-  const handleSubmit = (evt) => {
+  const [navigate, setNavigate] = useState(false);
+
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
     const data = {
       first_name: first_name,
@@ -21,13 +24,18 @@ function Signup() {
       company_name: company_name,
       password: password,
     };
-    axios
-      .post("http://scrybe.hng.tech:5000/users", data)
+    await axios
+      .post("users", data)
       .then((response) => {
         console.log(response);
+        setNavigate(true);
       })
       .catch((error) => {});
   };
+
+  if (navigate) {
+    return <Navigate to="/verify-signup" />;
+  }
 
   return (
     <>

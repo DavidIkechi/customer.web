@@ -56,7 +56,7 @@ function YourRights() {
       <p>
         NITDA’s website has a wealth of useful information in respect of your
         rights over your personal data. If you wish to exercise your rights, you
-        may write to us at <a href="/"> info@scrybe.com. </a>
+        may write to us at <a href="mailto:info@heed.com"> info@heed.com.</a>
       </p>
     </div>
   );

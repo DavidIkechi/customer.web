@@ -6,38 +6,46 @@ import { NavLink } from "react-router-dom";
 import footerImg from "./assets/signup-img.svg";
 import styles from "./SignIn.module.scss";
 import AuthApi from "../../App";
-import Cookies from "js-cookie";
+import { Navigate } from "react-router-dom";
 
 function Signin() {
   const Auth = React.useContext(AuthApi);
-  const [name, setName] = useState("");
+  const [username, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [navigate, setNavigate] = useState(false);
+
   const handleSubmit = async (evt) => {
-    if (evt) {
-      evt.preventDefault();
-    }
-    const data = {
-      username: name,
-      password: password,
+    evt.preventDefault();
+
+    let formData = new FormData();
+
+    formData.append("username", username);
+    formData.append("password", password);
+
+    const config = {
+      withCredentials: true,
+      headers: {
+        "content-type": "multipart/form-data",
+      },
     };
-    const news = async () => {
-      let res = await axios
-        .post("http://scrybe.hng.tech:5000/login", data)
-        .then((response) => {
-          console.log(response);
-          // Cookies.set("token", response.data.access_token);
-          return response;
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-      return res;
-    };
-    let x = await news();
-    if (x) {
-      window.location.reload();
-    }
+
+    const response = await axios
+      .post("login", formData, config)
+      .then((response) => {
+        console.log(response);
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${response.data["access_token"]}`;
+        setNavigate(true);
+      })
+      .catch((error) => {});
   };
+  // console.log(response.data);
+  // Cookies.set("token", response.data.access_token);
+
+  if (navigate) {
+    return <Navigate to="/account" />;
+  }
 
   return (
     <>
@@ -55,7 +63,7 @@ function Signin() {
                 id="email"
                 placeholder="Enter your company email"
                 className={`${styles.errorInput}} `}
-                value={name}
+                value={username}
                 onChange={(e) => setName(e.target.value)}
               />
               {/* <p className={styles.errorMsg}>{errors.email?.message}</p> */}
