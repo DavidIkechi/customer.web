@@ -70,12 +70,14 @@
     .submitValid {
       background: #006cff;
       color: #ffffff !important;
+      cursor: pointer;
       &:hover {
         background-color: darken($color:#006cff, $amount: 10);
       }
       &:disabled {
         background-color: #ececec;
         color: #c5c5c5 !important;
+        cursor: not-allowed;
       }
     }
 
