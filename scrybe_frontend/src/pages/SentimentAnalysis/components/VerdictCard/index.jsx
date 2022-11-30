@@ -1,7 +1,6 @@
 import AsideCard from "../AsideCard";
 import styles from "./VerdictCard.module.scss";
 import downloadIcon from "../../icons/download.svg";
-import dropdownIcon from "../../icons/dropdown.svg";
 import shareIcon from "../../icons/share.svg";
 import PropTypes from "prop-types";
 
