@@ -6,7 +6,6 @@ import { Link, useNavigate } from "react-router-dom";
 const Error = () => {
   const navigate = useNavigate();
   return (
-    // <div className={styles.errorCont}>
     <div className={styles.contentCont}>
       <img src={error} alt="error" />
       <div className={styles.msgCont}>
@@ -22,7 +21,6 @@ const Error = () => {
         </div>
       </div>
     </div>
-    // </div>
   );
 };
 

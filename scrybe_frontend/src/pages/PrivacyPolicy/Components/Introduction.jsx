@@ -1,13 +1,15 @@
+import { Link } from "react-router-dom";
 function Introduction() {
   return (
     <div className="sub-container">
       <h1>1. Introduction</h1>
+      <p>Welcome to Heed</p>
       <p>
-        Welcome to <span>Scrybe</span>
-      </p>
-      <p>
-        Our Privacy Policy governs your visit to <span> scrybe.com.ng</span>,
-        and explains how we collect, safeguard and disclose information that
+        Our Privacy Policy governs your visit to{" "}
+        <Link to="/" className="link">
+          heed.com.ng
+        </Link>
+        , and explains how we collect, safeguard and disclose information that
         results from your use of our Service.
       </p>
       <p>
