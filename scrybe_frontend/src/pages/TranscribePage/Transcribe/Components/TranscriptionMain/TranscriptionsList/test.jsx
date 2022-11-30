@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styles from "./TranscriptionsList.module.scss";
-import axios from "axios";
+// import axios from "axios";
 
 function Dummy({ formattedData }) {
   return (
