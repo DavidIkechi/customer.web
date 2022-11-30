@@ -57,7 +57,7 @@ function Signin() {
         ] = `Bearer ${response.data["access_token"]}`;
         setNavigate(true);
       })
-      .catch((error) => { });
+      .catch((error) => {});
   };
   // console.log(response.data);
   // Cookies.set("token", response.data.access_token);
