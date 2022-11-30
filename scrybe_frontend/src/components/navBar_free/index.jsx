@@ -29,9 +29,11 @@ function NavBar() {
             <NavLink to="/">About Us</NavLink>
           </div>
           <div className={styles.nav__ctas}>
-            <button type="button">Login</button>
+            <NavLink to="/signin" className={styles.signinDesign}>
+              Login
+            </NavLink>
             <button type="button">
-              <NavLink to="/terms">Try for Free</NavLink>
+              <NavLink to="/try">Try for Free</NavLink>
             </button>
           </div>
 

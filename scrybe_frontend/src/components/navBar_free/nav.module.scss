@@ -16,6 +16,9 @@
       padding-block: pix-rem(20);
     }
   }
+  .signinDesign{
+    cursor: pointer;
+  }
   &__closed {
     display: none;
     @include media($mobile) {
@@ -123,7 +126,7 @@
       all: unset;
       padding: pix-rem(16,em) pix-rem(32,em);
       border-radius: pix-rem(4);
-      
+
       @include media($mobile) {
         text-align: center;
         max-width: pix-rem(178);
