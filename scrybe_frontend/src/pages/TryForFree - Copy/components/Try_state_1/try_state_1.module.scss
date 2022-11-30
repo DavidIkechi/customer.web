@@ -1,0 +1,466 @@
+
+.recordingSection {
+
+  .recordingDrag {
+    margin: 10vh 15% 3vh;
+    display: flex;
+    justify-content: center;
+    border: 2px dashed #006cff;
+    border-radius: 24px;
+    text-align: center;
+    background: rgba(205, 225, 237, 0.08);
+    padding: 20vh 10% 5vh;
+
+    .recordingContent {
+      width: 50%;
+
+      .recordingImageContainer {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        img {
+          width: 20%;
+        }
+      }
+      h4 {
+        font-weight: 700;
+        font-size: 1.1rem;
+        line-height: 26px;
+        margin-top: 4vh;
+      }
+
+      .Or {
+        color: #706f6f;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 1vh;
+
+        .orLeft {
+          width: 25%;
+          display: flex;
+          align-items: center;
+          border-top: 2px solid #706f6f;
+          margin-top: 1vh;
+          margin-right: 3%;
+        }
+        .pDiv {
+          display: flex;
+          align-items: center;
+        }
+        p {
+          color: #706f6f;
+          font-weight: 500;
+          font-size: 0.85em;
+          line-height: 18px;
+        }
+        .orRight {
+          width: 25%;
+          display: flex;
+          align-items: center;
+          border-top: 2px solid #706f6f;
+          margin-top: 1vh;
+          margin-left: 3%;
+        }
+      }
+      .Upload {
+        color: #006cff;
+        text-decoration: underline;
+        cursor: pointer;
+        margin-top: 1vh;
+      }
+      .selectButton1 {
+        background: #ececec;
+        color: #c5c5c5;
+        margin-top: 2vh;
+        border-radius: 4px;
+        padding: 1.8vh 9%;
+        border: 0;
+      }
+      .selectButton2 {
+        background: #006cff;
+        color: #ffffff;
+        margin-top: 2vh;
+        border-radius: 4px;
+        padding: 1.8vh 9%;
+        border: 0;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .tryNote {
+    color: #6a6a6a;
+    font-weight: 400;
+    font-size: 1.1rem;
+    line-height: 26px;
+    padding: 0 6%;
+    margin-bottom: 5vh;
+    margin-top: 10vh;
+
+    p {
+      padding-bottom: 1vh;
+    }
+    ul {
+      margin-left: 4%;
+    }
+    li {
+      padding-bottom: 0.8vh;
+      list-style: disc;
+    }
+  }
+}
+@media screen and (max-width: 1000px) {
+    .recordingSection {
+    
+        .recordingDrag {
+          margin: 10vh 15% 3vh;
+          display: flex;
+          justify-content: center;
+          border: 2px dashed #006cff;
+          border-radius: 24px;
+          text-align: center;
+          background: rgba(205, 225, 237, 0.08);
+          padding: 15vh 10% 3vh;
+      
+          .recordingContent {
+            width: 60%;
+      
+            .recordingImageContainer {
+              width: 100%;
+              display: flex;
+              justify-content: center;
+      
+              img {
+                width: 20%;
+              }
+            }
+            h4 {
+              font-weight: 700;
+              font-size: 1rem;
+              line-height: 20px;
+              margin-top: 3vh;
+            }
+      
+            .Or {
+              color: #706f6f;
+              width: 100%;
+              display: flex;
+              justify-content: center;
+              margin-top: 1vh;
+      
+              .orLeft {
+                width: 25%;
+                display: flex;
+                align-items: center;
+                border-top: 2px solid #706f6f;
+                margin-top: 0.8vh;
+                margin-right: 3%;
+              }
+              .pDiv {
+                display: flex;
+                align-items: center;
+              }
+              p {
+                color: #706f6f;
+                font-weight: 500;
+                font-size: 0.85em;
+                line-height: 18px;
+              }
+              .orRight {
+                width: 25%;
+                display: flex;
+                align-items: center;
+                border-top: 2px solid #706f6f;
+                margin-top: 0.8vh;
+                margin-left: 3%;
+              }
+            }
+            .Upload {
+              color: #006cff;
+              font-weight: 400;
+              text-decoration: underline;
+              cursor: pointer;
+              margin-top: 1vh;
+            }
+            .selectButton1 {
+              background: #ececec;
+              color: #c5c5c5;
+              margin-top: 2vh;
+              border-radius: 4px;
+              padding: 1.5vh 9%;
+              border: 0;
+              // cursor: pointer;
+            }
+            .selectButton2 {
+              background: #006cff;
+              color: #ffffff;
+              margin-top: 2vh;
+              border-radius: 4px;
+              padding: 1.5vh 9%;
+              border: 0;
+              cursor: pointer;
+            }
+          }
+        }
+      
+        .tryNote {
+          color: #6a6a6a;
+          font-weight: 400;
+          font-size: 1.1rem;
+          line-height: 26px;
+          padding: 0 6%;
+          margin-bottom: 5vh;
+          margin-top: 10vh;
+      
+          p {
+            padding-bottom: 1vh;
+          }
+          ul {
+            margin-left: 5%;
+          }
+          li {
+            padding-bottom: 0.8vh;
+            list-style: disc;
+          }
+        }
+      }
+}
+// second media query
+@media screen and (max-width: 710px) {
+    .recordingSection {
+    
+        .recordingDrag {
+          margin: 10vh 5% 3vh;
+          display: flex;
+          justify-content: center;
+          border: 2px dashed #006cff;
+          border-radius: 24px;
+          text-align: center;
+          background: rgba(205, 225, 237, 0.08);
+          padding: 11vh 10% 3vh;
+      
+          .recordingContent {
+            width: 80%;
+      
+            .recordingImageContainer {
+              width: 100%;
+              display: flex;
+              justify-content: center;
+      
+              img {
+                width: 20%;
+              }
+            }
+            h4 {
+              font-weight: 700;
+              font-size: 1rem;
+              line-height: 20px;
+              margin-top: 3vh;
+            }
+      
+            .Or {
+              color: #706f6f;
+              width: 100%;
+              display: flex;
+              justify-content: center;
+              margin-top: 1vh;
+      
+              .orLeft {
+                width: 25%;
+                display: flex;
+                align-items: center;
+                border-top: 2px solid #706f6f;
+                margin-top: 1vh;
+                margin-right: 3%;
+              }
+              .pDiv {
+                display: flex;
+                align-items: center;
+              }
+              p {
+                color: #706f6f;
+                font-weight: 500;
+                font-size: 0.85em;
+                line-height: 18px;
+              }
+              .orRight {
+                width: 25%;
+                display: flex;
+                align-items: center;
+                border-top: 2px solid #706f6f;
+                margin-top: 1vh;
+                margin-left: 3%;
+              }
+            }
+            .Upload {
+              color: #006cff;
+              font-weight: 400;
+              text-decoration: underline;
+              cursor: pointer;
+              margin-top: 1vh;
+            }
+            .selectButton1 {
+              background: #ececec;
+              color: #c5c5c5;
+              margin-top: 2vh;
+              border-radius: 4px;
+              padding: 1.5vh 9%;
+              border: 0;
+            }
+            .selectButton2 {
+              background: #006cff;
+              color: #ffffff;
+              margin-top: 2vh;
+              border-radius: 4px;
+              padding: 1.5vh 9%;
+              border: 0;
+              cursor: pointer;
+            }
+          }
+        }
+      
+        .tryNote {
+          color: #6a6a6a;
+          font-weight: 400;
+          font-size: 1.1rem;
+          line-height: 26px;
+          padding: 0 6%;
+          margin-bottom: 5vh;
+          margin-top: 10vh;
+      
+          p {
+            padding-bottom: 1vh;
+          }
+          ul {
+            margin-left: 5%;
+          }
+          li {
+            padding-bottom: 0.8vh;
+            list-style: disc;
+          }
+        }
+      }
+}
+
+// third media query
+@media screen and (max-width: 400px) {
+    .recordingSection {
+    
+        .recordingDrag {
+          margin: 10vh 5% 3vh;
+          display: flex;
+          justify-content: center;
+          border: 2px dashed #006cff;
+          border-radius: 24px;
+          text-align: center;
+          background: rgba(205, 225, 237, 0.08);
+          padding: 11vh 10% 3vh;
+      
+          .recordingContent {
+            width: 90%;
+      
+            .recordingImageContainer {
+              width: 100%;
+              display: flex;
+              justify-content: center;
+      
+              img {
+                width: 30%;
+              }
+            }
+            h4 {
+              font-weight: 700;
+              font-size: 0.8rem;
+              line-height: 20px;
+              margin-top: 3vh;
+            }
+      
+            .Or {
+              color: #706f6f;
+              width: 100%;
+              display: flex;
+              justify-content: center;
+              margin-top: 1vh;
+      
+              .orLeft {
+                width: 25%;
+                display: flex;
+                align-items: center;
+                border-top: 2px solid #706f6f;
+                margin-top: 1vh;
+                margin-right: 3%;
+              }
+              .pDiv {
+                display: flex;
+                align-items: center;
+              }
+              p {
+                color: #706f6f;
+                font-weight: 500;
+                font-size: 0.7em;
+                line-height: 18px;
+              }
+              .orRight {
+                width: 25%;
+                display: flex;
+                align-items: center;
+                border-top: 2px solid #706f6f;
+                margin-top: 1.4vh;
+                margin-left: 3%;
+              }
+            }
+            .Upload {
+              color: #006cff;
+              font-size: 0.8em;
+              font-weight: 400;
+              text-decoration: underline;
+              cursor: pointer;
+              margin-top: 1.4vh;
+            }
+            .selectButton1 {
+              background: #ececec;
+              color: #c5c5c5;
+              margin-top: 2vh;
+              font-size: 0.8em;
+              border-radius: 4px;
+              padding: 1.2vh 9%;
+              border: 0;
+            }
+            .selectButton2 {
+              background: #006cff;
+              color: #ffffff;
+              margin-top: 2vh;
+              font-size: 0.8em;
+              border-radius: 4px;
+              padding: 1.2vh 9%;
+              border: 0;
+              cursor: pointer;
+            }
+          }
+        }
+      
+        .tryNote {
+          color: #6a6a6a;
+          font-weight: 400;
+          font-size: 0.8em;
+          line-height: 23px;
+          padding: 0 2%;
+          margin-bottom: 5vh;
+          margin-top: 7vh;
+      
+          p {
+            padding-bottom: 1vh;
+          }
+          ul {
+            margin-left: 10%;
+          }
+          li {
+            padding-bottom: 0.5vh;
+            list-style: disc;
+          }
+        }
+      }
+}
+
