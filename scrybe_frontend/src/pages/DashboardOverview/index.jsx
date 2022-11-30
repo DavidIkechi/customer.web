@@ -70,6 +70,7 @@ function DashboardOverview() {
   function timeStampFunc(e) {
     setSelected(UserData[e.target.value]);
   }
+
   return (
     <SideBar>
       <section className={styles.dashboard_overview}>
