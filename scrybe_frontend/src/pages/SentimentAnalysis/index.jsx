@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import styles from "./SentimentAnalysis.module.scss";
-import arrowIcon from "./icons/arrow_back.svg";
-import blueArrowIcon from "./icons/blue_arrow.svg";
+import arrowIcon from "./assets/icons/arrow_back.svg";
+import blueArrowIcon from "./assets/icons/blue_arrow.svg";
 import AnalysisCard from "./components/AnalysisCard";
 import AudioCard from "./components/AudioCard";
 import SentimentAside from "./components/SentimentAside";
@@ -103,8 +103,16 @@ function SentimentAnalysis() {
           <AudioCard />
           <OverAllSentimentCard sentimentData={sentimentData} />
           <VerdictCard sentimentData={sentimentData} />
-          <PhraseTagCard tags={positiveTags} title={"Positive phrase tags"} />
-          <PhraseTagCard tags={negativeTags} title={"Negative phrase tags"} />
+          <PhraseTagCard
+            tags={positiveTags}
+            title={"Positive phrase tags"}
+            sentimentData={sentimentData}
+          />
+          <PhraseTagCard
+            tags={negativeTags}
+            title={"Negative phrase tags"}
+            sentimentData={sentimentData}
+          />
         </aside>
       </div>
     </SideBar>

@@ -1,7 +1,7 @@
 import AsideCard from "../AsideCard";
 import styles from "./VerdictCard.module.scss";
-import downloadIcon from "../../icons/download.svg";
-import shareIcon from "../../icons/share.svg";
+import downloadIcon from "../../assets/icons/download.svg";
+import shareIcon from "../../assets/icons/share.svg";
 import PropTypes from "prop-types";
 import { useRef } from "react";
 

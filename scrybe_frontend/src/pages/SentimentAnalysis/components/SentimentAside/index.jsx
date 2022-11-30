@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import styles from "./SentimentAside.module.scss";
-import arrowIcon from "../../icons/arrow_back.svg";
+import arrowIcon from "../../assets/icons/arrow_back.svg";
 import OverAllSentimentCard from "../OverallSentimentCard";
 import VerdictCard from "../VerdictCard";
 
