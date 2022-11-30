@@ -18,7 +18,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from db import Base, engine, SessionLocal
 from sqlalchemy.orm import Session
 import crud, schema
-from emails import send_email, verify_token
+from emails import send_email, verify_token, send_password_reset_email, password_verif_token
 from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
@@ -322,4 +322,42 @@ def get_agents_leaderboard(db: Session = Depends(get_db)):
 async def my_profile (db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     user_id = user.id
     return crud.get_user_profile(db, user_id)
+
+
+
+@app.post('/forget-password', summary = "get token for password reset", tags=['users'])
+async def forget_password(email: schema.ForgetPassword, db: Session = Depends(get_db)):
+    user: models.User = crud.get_user_by_email(db, email)
+
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    
+    await send_password_reset_email([email], user)
+
+    return {'success': 'Email sent'}
+
+
+
+@app.patch('/reset-password', summary = "reset password", tags=['users'])
+async def reset_password(token: str, new_password: schema.UpdatePassword, db: Session = Depends(get_db)):
+    email = password_verif_token(token)
+    user: models.User = crud.get_user_by_email(db, email)
+        
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    reset_done = crud.reset_password(db, new_password.password, user)
+
+    if not reset_done:
+        raise HTTPException(status_code=500)
+    
+    return reset_done
+
+    
+
+
+
+
+
 
