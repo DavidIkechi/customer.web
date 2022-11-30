@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 // import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -7,13 +7,32 @@ import footerImg from "./assets/signup-img.svg";
 import styles from "./SignIn.module.scss";
 import AuthApi from "../../App";
 import { Navigate } from "react-router-dom";
+import { useCallback } from "react";
 
 function Signin() {
   const Auth = React.useContext(AuthApi);
   const [username, setName] = useState("");
   const [password, setPassword] = useState("");
   const [navigate, setNavigate] = useState(false);
+  const [isValid, setIsValid] = useState(true);
 
+  const validate = useCallback(() => {
+    if (username.length >= 1 && password.length >= 1) {
+      return true;
+    }
+  }, [username, password]);
+
+  const handleInputUserName = (e) => {
+    setName(e.target.value);
+  };
+  const handleInputPassword = (e) => {
+    setPassword(e.target.value);
+  };
+
+  useEffect(() => {
+    const isValid = validate();
+    setIsValid(isValid);
+  }, [validate]);
   const handleSubmit = async (evt) => {
     evt.preventDefault();
 
@@ -38,7 +57,7 @@ function Signin() {
         ] = `Bearer ${response.data["access_token"]}`;
         setNavigate(true);
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
   // console.log(response.data);
   // Cookies.set("token", response.data.access_token);
@@ -64,7 +83,8 @@ function Signin() {
                 placeholder="Enter your company email"
                 className={`${styles.errorInput}} `}
                 value={username}
-                onChange={(e) => setName(e.target.value)}
+                onChange={handleInputUserName}
+                required
               />
               {/* <p className={styles.errorMsg}>{errors.email?.message}</p> */}
               <label htmlFor="password">Password</label>
@@ -75,7 +95,8 @@ function Signin() {
                 placeholder="Password at least 8 characters"
                 className={`${styles.errorInput} `}
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={handleInputPassword}
+                required
               />
               {/* <p className={styles.errorMsg}>{errors.password?.message}</p> */}
               <div className={`${styles.accept} ${styles.remember}`}>
@@ -94,6 +115,7 @@ function Signin() {
                 type="submit"
                 value="Sign in"
                 className={`${styles.submitValid}`}
+                disabled={!isValid}
               />
               <p>
                 Don’t have an account? <NavLink to={"/"}>Sign up</NavLink>

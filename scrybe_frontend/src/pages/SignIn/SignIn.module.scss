@@ -6,7 +6,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
+
   h1 {
     font-weight: 600;
     font-size: 2rem;
@@ -19,7 +19,7 @@
     font-weight: 400;
     font-size: 20px;
     line-height: 26px;
-    color: #A9A9A9;
+    color: #a9a9a9;
     margin-bottom: 1rem;
   }
 
@@ -27,14 +27,14 @@
     font-weight: 400;
     font-size: 12px;
     line-height: 16px;
-    color: #6A6A6A;
+    color: #6a6a6a;
   }
 
   input::placeholder {
     font-weight: 300;
     font-size: 16px;
     line-height: 24px;
-    color: #A9A9A9;
+    color: #a9a9a9;
   }
 
   .second img {
@@ -50,118 +50,124 @@
     position: relative;
     width: 100%;
 
-    .first, .second {
-        flex-basis: 45%;
+    .first,
+    .second {
+      flex-basis: 45%;
     }
 
     .errorInput {
       // border: 1px solid #F44336 !important;
     }
-    
+
     .errorMsg {
       font-size: 12px;
       line-height: 16px;
-      color: #F44336 !important;
+      color: #f44336 !important;
       text-align: left !important;
       margin-bottom: 0.5rem;
     }
-    
+
     .submitValid {
-      background: #006CFF !important;
+      background: #006cff;
       color: #ffffff !important;
+      &:disabled {
+        background-color: #ececec;
+        color: #c5c5c5 !important;
+      }
     }
 
     input {
-        display: block;
-        width: 100%;
-        border-radius: 4px;
-        padding: 1rem;
-        border: thin solid #C5C5C5;
-        margin-bottom: 1rem;
-        outline: none;
-      }
-
-    input[type=checkbox] {
-    width: fit-content;
-    margin-bottom: 0;
-    padding: 0;
+      display: block;
+      width: 100%;
+      border-radius: 4px;
+      padding: 1rem;
+      border: thin solid #c5c5c5;
+      margin-bottom: 1rem;
+      outline: none;
     }
 
-    input[type=submit] {
-    font-size: 1rem;
-    line-height: 1.5rem;font-weight: 500;
-    color: #C5C5C5;
-    // background-color: #ECECEC;
-    background-color: #006CFF;
-    cursor: pointer;
-    margin-top: 1rem;
-    border: none;
+    input[type="checkbox"] {
+      width: fit-content;
+      margin-bottom: 0;
+      padding: 0;
+    }
+
+    input[type="submit"] {
+      font-size: 1rem;
+      line-height: 1.5rem;
+      font-weight: 500;
+      color: #c5c5c5;
+      // background-color: #ECECEC;
+      background-color: #006cff;
+      cursor: pointer;
+      margin-top: 1rem;
+      border: none;
     }
 
     a {
-      color: #006CFF;
+      color: #006cff;
       font-weight: 600;
     }
 
     /* Chrome's Autofill Autocomplete */
     input:-webkit-autofill,
-    input:-webkit-autofill:hover, 
-    input:-webkit-autofill:focus, 
-    input:-webkit-autofill:active{
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 30px white inset !important;
     }
 
     input:focus {
-        border: 1px solid #006CFF;
-      }
-
-    .accept {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-
-        span {
-            text-align: center;
-            font-weight: 400;
-        }
+      border: 1px solid #006cff;
     }
 
     .accept {
-        &.remember {
-          display: flex;
-          justify-content: space-between;
-          margin: 1rem 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      span {
+        text-align: center;
+        font-weight: 400;
+      }
+    }
+
+    .accept {
+      &.remember {
+        display: flex;
+        justify-content: space-between;
+        margin: 1rem 0;
 
         .rememberMe {
-            display: flex;
+          display: flex;
 
-            span {
-                margin-left: 0.5rem;
-                color: #454545;
-                font-weight: 400;
-              }
+          span {
+            margin-left: 0.5rem;
+            color: #454545;
+            font-weight: 400;
           }
+        }
       }
     }
-    
+
     .otherThanSignup {
       margin-top: 6rem;
     }
 
     .first {
       &.signin {
-          p {
-              color: #454545;
-              text-align: center;
-              margin-top: 1rem;
-          }
+        p {
+          color: #454545;
+          text-align: center;
+          margin-top: 1rem;
+        }
       }
     }
   }
 }
 
 // Media Query 800px
-@media screen and (max-width:800px) {
+@media screen and (max-width: 800px) {
   .signup {
     flex-direction: column;
 
@@ -191,13 +197,11 @@
         align-items: baseline;
       }
     }
-
-    
   }
 }
 
 // Media Query 486px
-@media screen and (max-width:486px) {
+@media screen and (max-width: 486px) {
   .signUpWrapper {
     padding: 5%;
 
@@ -211,7 +215,7 @@
       line-height: 1.5rem;
     }
 
-    input[type=submit] {
+    input[type="submit"] {
       font-size: 0.875rem;
       line-height: 1.2rem;
     }
