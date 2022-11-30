@@ -62,17 +62,15 @@ function AnalysisCard({ sentimentData }) {
             ) : (
               //loading skeleton
               <>
-                <div className={`${styles.metric} ${styles.positive}`}>
-                  Positive - {(sentimentData.positivity_score * 100).toFixed(2)}
-                  %
-                </div>
-                <div className={`${styles.metric} ${styles.neutral}`}>
-                  Neutral - {(sentimentData.neutrality_score * 100).toFixed(2)}%
-                </div>
-                <div className={`${styles.metric} ${styles.negative}`}>
-                  Negative - {(sentimentData.negativity_score * 100).toFixed(2)}
-                  %
-                </div>
+                <div
+                  className={`${styles.metric} ${styles.positive} ${styles.skeleton__generic}`}
+                ></div>
+                <div
+                  className={`${styles.metric} ${styles.neutral} ${styles.skeleton__generic}`}
+                ></div>
+                <div
+                  className={`${styles.metric} ${styles.negative} ${styles.skeleton__generic}`}
+                ></div>
               </>
             )}
           </div>
