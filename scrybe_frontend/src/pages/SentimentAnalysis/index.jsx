@@ -81,7 +81,7 @@ function SentimentAnalysis() {
             <div
               className={styles.main__container__top__arrow__icon__container}
             >
-              <Link to="/transcriptions">
+              <Link to={`/transcriptions/${params.AudioId}`}>
                 <img
                   className={
                     styles.main__container__top__arrow__icon__container__image
