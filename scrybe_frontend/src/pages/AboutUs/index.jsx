@@ -56,8 +56,7 @@ function About() {
             </p>
           </div>
           <div className={`${styles.column__right} ${styles.column}`}>
-            {/* <img src={image1} alt="" /> */}
-            <img src={image1} alt="" />
+            <img src={image1} alt="hero figure" />
           </div>
         </div>
       </div>
@@ -71,7 +70,6 @@ function About() {
                 <div className={styles.wrap}>
                   <div className={styles.heading__icon}>
                     <h4>Customer Success</h4>
-                    {/* <img src={icon3} alt="" /> */}
                     <img src={icon3} alt="" />
                   </div>
                   <p>
@@ -139,23 +137,19 @@ function About() {
           </div>
           <div className={styles.row}>
             <div className={styles.companies}>
-              {/* <img src={partner1} alt="" /> */}
-              <img src={partner1} alt="" />
+              <img src={partner1} alt="companies icon" />
               <h4>HotelsNg</h4>
             </div>
             <div className={styles.companies}>
-              {/* <img src={partner2} alt="" /> */}
-              <img src={partner2} alt="" />
+              <img src={partner2} alt="companies icon" />
               <h4>HNG i9</h4>
             </div>
             <div className={styles.companies}>
-              {/* <img src={partner3} alt="" /> */}
-              <img src={partner3} alt="" />
+              <img src={partner3} alt="companies icon" />
               <h4>BrainBox inc.</h4>
             </div>
             <div className={styles.companies}>
-              {/* <img src={partner4} alt="" /> */}
-              <img src={partner4} alt="" />
+              <img src={partner4} alt="companies icon" />
               <h4>The HNG Internship</h4>
             </div>
           </div>
@@ -176,51 +170,43 @@ function About() {
           <div className={styles.row}>
             <div className={styles.wrap2}>
               <div className={styles.col}>
-                {/* <img src={team1} alt="" /> */}
-                <img src={team1} alt="" />
+                <img src={team1} alt="team members" />
                 <h5>Mark Essien</h5>
                 <p>Advisor</p>
               </div>
               <div className={styles.col}>
-                {/* <img src={team2} alt="" /> */}
-                <img src={team2} alt="" />
+                <img src={team2} alt="team members" />
                 <h5>Aigbe Marvelous</h5>
                 <p>Advisor</p>
               </div>
               <div className={styles.col}>
-                {/* <img src={team3} alt="" /> */}
-                <img src={team3} alt="" />
+                <img src={team3} alt="team members" />
                 <h5>Collins Akpaka</h5>
                 <p>CEO</p>
               </div>
               <div className={styles.col}>
-                {/* <img src={team4} alt="" /> */}
-                <img src={team4} alt="" />
+                <img src={team4} alt="team members" />
                 <h5>Delphine Ogbonna</h5>
                 <p>Lead designer</p>
               </div>
 
               <div className={styles.col}>
-                {/* <img src={team5} alt="" /> */}
-                <img src={team5} alt="" />
+                <img src={team5} alt="team members" />
                 <h5>Ugochukwu Odumegwu</h5>
                 <p>Back-End Lead</p>
               </div>
               <div className={styles.col}>
-                {/* <img src={team6} alt="" /> */}
-                <img src={team6} alt="" />
+                <img src={team6} alt="team members" />
                 <h5>Tochukwu Bedford</h5>
                 <p>Front-End Lead</p>
               </div>
               <div className={styles.col}>
-                {/* <img src={team7} alt="" /> */}
-                <img src={team7} alt="" />
+                <img src={team7} alt="team members" />
                 <h5>Alice Awobite</h5>
                 <p>Product Designer</p>
               </div>
               <div className={styles.col}>
-                {/* <img src={team8} alt="" /> */}
-                <img src={team8} alt="" />
+                <img src={team8} alt="team members" />
                 <h5>Favour Mustapha</h5>
                 <p>Product Designer</p>
               </div>

@@ -62,44 +62,33 @@
   }
   
   .container {
-    // background-color: white;
     width: 95%;
     max-width: 1440px;
     margin: 0 auto;
   
-    // .line {
-    //   width: 100%;
-    //   height: 1px;
-    //   background-color: $blue;
-    //   margin-top: 30px;
-    // }
-  
     .heading {
       font-size: 48px;
       font-weight: 600;
-      line-height: 56px;
       text-align: center;
       color: $text;
-      // padding-bottom: 40px;
-      // margin-bottom: 2.5em;
   
       @include mobile {
         font-size: 24px;
-        line-height: 32px;
       }
     }
     .contain {
       width: 60%;
-      margin: 5em auto;
+      margin: 4.5em auto;
       border-bottom: 1px solid #B0CAD9;
   
       @include tablet {
+        width: 95%;
         padding-left: 0px;
         padding-right: 0px;
       }
       @include mobile {
-        padding-left: 0px;
-        padding-right: 0px;
+        width: 95%;
+        margin: 2.5em auto;
       }
   
       .heading {
@@ -127,7 +116,6 @@
       }
       @include mobile {
         width: 100%;
-        padding: 40px 0px;
       }
     }
     @include tablet {
@@ -148,6 +136,10 @@
   .overall__value {
       background-color: $blue-bg;
       padding-top: 2.5em;
+
+      @include mobile {
+        padding-top: 0em;
+      }
   }
   
   .container__values {
@@ -156,6 +148,13 @@
       display: flex;
       flex-direction: column;
     }
+
+    .row {
+      @include mobile {
+        margin-top: 1em;
+      }
+    }
+
     .column__right,
     .column__left {
       @include mobile {
@@ -206,6 +205,10 @@
 
     .row__col {
       margin-top: 3.5em;
+
+      @include mobile {
+        margin-top: 1em;
+      }
     }
 
     .row {
@@ -250,15 +253,17 @@
       }
     }
     .partners__text {
-      // padding: 0px 150px;
       width: 60%;
       margin: 0 auto;
   
       @include tablet {
-        padding: 20px;
+        width: 95%;
+        margin: 0 auto;
       }
       @include mobile {
         padding: 0px;
+        width: 95%;
+        margin: 0 auto;
       }
     }
   }
@@ -331,15 +336,16 @@
     .team__text {
       width: 60%;
       margin: 0 auto;
-      // padding: 0px 150px;
-      // margin-bottom: 50px;
       text-align: center;
   
       @include mobile {
         padding: 0px;
+        width: 95%;
+        margin: 0 auto;
       }
       @include tablet {
-        padding: 20px;
+        width: 95%;
+        margin: 0 auto;
       }
     }
   }
@@ -348,14 +354,12 @@
   .hero {
     .row {
       margin-bottom: 3em;
-      // padding-top: 100px;
-      // padding-bottom: 100px;
       @include tablet {
         padding-top: 0px;
       }
       @include mobile {
         padding-top: 0px;
-        padding-bottom: 50px;
+        margin-bottom: 0em;
       }
     }
 
@@ -365,14 +369,12 @@
 
     h1 {
       @include mobile {
-        padding: 0px 50px;
       }
      
        
       }
       .heading{
         @include mobile{
-          padding-bottom: 20px;
         }
     }
   }
