@@ -46,6 +46,7 @@ import PersonalInformation from "./pages/Settings/SettingsPageSubPages/PersonalI
 import PartnersPage from "./pages/PartnersPage";
 import React, { useState } from "react";
 import Cookies from "js-cookie";
+import { UploadModal } from "./pages/UploadRecordingsModal";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -129,6 +130,7 @@ function App() {
               element={<UploadedRecordings />}
             />
             <Route path="/agent-report" element={<AgentReport />} />
+            <Route path="/upload-new-file" element={<UploadModal />} />
 
             {/* ROutes without working paths */}
 
