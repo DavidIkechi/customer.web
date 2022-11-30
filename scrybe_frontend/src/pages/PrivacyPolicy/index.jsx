@@ -1,5 +1,5 @@
 import Header from "../../components/navBar_free/index";
-import Footer from "../../components/footer/index"
+import Footer from "../../components/footer/index";
 import Analytics from "./Components/Analytics.jsx";
 import Changes from "./Components/Changes.jsx";
 import CiCdTools from "./Components/CiCdTools.jsx";
