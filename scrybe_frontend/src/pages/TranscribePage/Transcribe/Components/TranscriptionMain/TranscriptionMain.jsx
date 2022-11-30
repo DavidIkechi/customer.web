@@ -30,9 +30,15 @@ function TranscriptionMain() {
   };
   const updateTranscribedText = () => {
     setTimeUpdateTracker(true);
-    // you can declare your function here now TimeRanges.
-    // declare this based on the timeUpdateTracker state
     if (timeUpdateTracker) console.log(`tracker is true`);
+    formattedData[Math.floor(currentTime / 5)].isActive = true;
+    for (
+      let i = Math.floor(currentTime / 5) + 1;
+      i < formattedData.length;
+      i++
+    ) {
+      formattedData[i].isActive = false;
+    }
   };
   useEffect(() => {
     if (isPlaying) {
@@ -48,9 +54,6 @@ function TranscriptionMain() {
     }
     fetchAudio();
   }, []);
-  const PlayPause = () => {
-    setIsPlaying(!isPlaying);
-  };
 
   //fetch data from custom API for now.
   const fetchData = () => {
@@ -70,7 +73,7 @@ function TranscriptionMain() {
     const cleanedData = [];
 
     const wordArray = str.split(" ");
-    let time = -10;
+    let time = -5;
     let objectID = -1;
     let emptyString = "";
     let counter = 0;
@@ -82,13 +85,14 @@ function TranscriptionMain() {
       }
       if (counter == 20) {
         objectID++;
-        time = time + 10;
+        time = time + 5;
         const formatedTime = timeFormatter(time);
         const object = {
           id: objectID,
+          time: time,
           timeCount: formatedTime,
           stringText: emptyString,
-          isActive: true,
+          isActive: false,
         };
         cleanedData.push(object);
         emptyString = "";
