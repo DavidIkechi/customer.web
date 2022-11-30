@@ -1,52 +1,52 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.scss";
-import { Routes, Route, Navigate, Link } from "react-router-dom";
+import About from "./pages/AboutUs";
 import AgentReport from "./pages/AgentReport";
-import SentimentAnalysis from "./pages/SentimentAnalysis";
-import DummyPage from "./pages/DummyPage";
-import TranscribePage from "./pages/TranscribePage";
-import HomePage from "./pages/HomePageA";
-import HomePageB from "./pages/HomePageB";
-import TermsAndCondition from "./pages/TermsAndCondition";
-import History from "./pages/History/History";
-import Services from "./pages/Services/Services";
-import Solutions from "./pages/Solutions/Solutions";
 import DashboardOverview from "./pages/DashboardOverview";
+import DummyPage from "./pages/DummyPage";
 import Events from "./pages/Events/Events";
 import HelpSupport from "./pages/HelpAndSupport/HelpSupport";
-import About from "./pages/AboutUs";
-import Pricing from "./pages/Pricing";
-import TryForFree from "./pages/TryForFree";
-import Press from "./pages/PressPage";
+import History from "./pages/History/History";
+import HomePage from "./pages/HomePageA";
+import HomePageB from "./pages/HomePageB";
 import PressArticle from "./pages/PressArticle";
-import { RequireToken } from "./Auth";
+import Press from "./pages/PressPage";
+import Pricing from "./pages/Pricing";
+import SentimentAnalysis from "./pages/SentimentAnalysis";
+import Services from "./pages/Services/Services";
+import Solutions from "./pages/Solutions/Solutions";
+import TermsAndCondition from "./pages/TermsAndCondition";
+import TranscribePage from "./pages/TranscribePage";
+import TryForFree from "./pages/TryForFree";
 // import Industry from "./pages/Industry";
 // import IndustryArticles from "./pages/Industry/IndustryArticles/IndustryArticle1";
 // import HowitWorks from "./pages/HowItWorks";
-import UploadedRecordings from "./pages/UploadRecordings";
+import React from "react";
+import WithAuth from "./HOC/withAuth";
 import Account from "./pages/Account";
-import Signin from "./pages/SignIn/SignIn";
-import Careers from "./pages/Careers";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import Signup from "./pages/SignUp/SignUp";
-import Successful from "./pages/Successful/Successful";
-import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
-import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
-import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
-import FAQs from "./pages/FaqsPage";
-import LeaderboardPage from "./pages/LeaderBoard/Leaderboard";
-import Reviews from "./pages/Reviews/Reviews";
-import TryProcessing from "./pages/TryForFree/tryProcessing";
-import TryResults from "./pages/TryForFree/tryResults";
-import TermsOfService from "./pages/TermsOfService";
-import Blogs from "./pages/BlogsPage";
 import BlogPostPage from "./pages/BlogPostPage";
+import Blogs from "./pages/BlogsPage";
+import Careers from "./pages/Careers";
+import FAQs from "./pages/FaqsPage";
+import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
+import LeaderboardPage from "./pages/LeaderBoard/Leaderboard";
+import PartnersPage from "./pages/PartnersPage";
+import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Reviews from "./pages/Reviews/Reviews";
+import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
 import SettingsIndex from "./pages/Settings/SettingsIndex";
 import AccountSettings from "./pages/Settings/SettingsPageSubPages/AccountSettings/AccountSettings";
 import NotificationSettings from "./pages/Settings/SettingsPageSubPages/Notifications/NotificationSettings";
 import PersonalInformation from "./pages/Settings/SettingsPageSubPages/PersonalInformation/PersonalInformationSettings";
-import PartnersPage from "./pages/PartnersPage";
-import React, { useState } from "react";
+import Signin from "./pages/SignIn/SignIn";
+import Signup from "./pages/SignUp/SignUp";
 import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
+import Successful from "./pages/Successful/Successful";
+import TermsOfService from "./pages/TermsOfService";
+import TryProcessing from "./pages/TryForFree/tryProcessing";
+import TryResults from "./pages/TryForFree/tryResults";
+import UploadedRecordings from "./pages/UploadRecordings";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -97,7 +97,14 @@ function App() {
           <Route path="*" element={<PromotedArticle1 />} />
         </Route> */}
 
-        <Route path="/create-account" element={<Signup />} />
+        <Route
+          path="/create-account"
+          element={
+            <WithAuth>
+              <Signup />
+            </WithAuth>
+          }
+        />
         <Route path="/signin" element={<Signin />} />
         <Route path="/reset-successful" element={<Successful />} />
         <Route path="/verify-signup" element={<SignUpVerify />} />
