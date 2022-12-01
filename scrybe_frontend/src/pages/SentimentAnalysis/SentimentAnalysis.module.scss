@@ -6,10 +6,12 @@
   display: flex;
   gap: pix-rem(32);
   background-color: #f9f9f9;
+  width: 100%;
   max-width: 4000px;
   margin-left: auto;
   margin-right: auto;
   height: max-content;
+  transition-duration: 0.5s;
   @include mediaQuery(768px) {
     padding: pix-rem(16);
   }

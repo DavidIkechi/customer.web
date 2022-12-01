@@ -6,7 +6,7 @@ from routers.sentiment import sentiment
 from routers.transcribe import transcribe_file
 import auth
 from routers.score import score_count
-
+import uvicorn
 from routers.transcribe import transcript_router
 from routers.score import score_count
 import models, json
@@ -26,6 +26,9 @@ import fastapi as _fastapi
 import shutil
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Dependency
 def get_db():
@@ -73,10 +76,11 @@ origins = [
     "http://localhost:3000",
     "http://localhost:5173",
     "http://localhost:8000",
-    "https://scrybe.hng.tech",
-    "https://scrybe.hng.tech:80",
-    "https://scrybe.hng.tech:3000",
-    "https://scrybe.hng.tech:5173",
+    "https://heed.hng.tech",
+    "http://heed.hng.tech",
+    "https://heed.hng.tech:80",
+    "https://heed.hng.tech:3000",
+    "https://heed.hng.tech:5173",
 ]
 
 app.add_middleware(
@@ -86,6 +90,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+def main() -> None:
+    uvicorn.run(
+        "main:app", 
+        host=os.getenv("HOST"), 
+        port=int(os.getenv("PORT")), 
+        reload=os.getenv("RELOAD")
+    )
 
 
 @app.get("/")
@@ -327,4 +339,7 @@ def get_agents_leaderboard(db: Session = Depends(get_db),user: models.User = Dep
 async def my_profile (db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     user_id = user.id
     return crud.get_user_profile(db, user_id)
+
+if __name__ == "__main__":
+    main()
 
