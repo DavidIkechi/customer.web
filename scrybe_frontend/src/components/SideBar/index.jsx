@@ -17,8 +17,6 @@ import styles from "./SideBar.module.scss";
  * getValue is a function that returns the value of the search input field
  * @name getValue
  * @useage getValue={(e) => console.log(e)} you will get the value of the search input field
- * @param {needSearchGeneral} boolean
- * use this prop to determine if the search input field should be rendered or not!
  * @param {needSearchMobile} boolean
  * use this prop to determine if the search input field should be rendered on mobile screens or not!
  * @param {needSearchDesktop} boolean
