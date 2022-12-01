@@ -1,5 +1,6 @@
-
-from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form
+from typing import List
+from models import Audio
+from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form, Query
 from fastapi_pagination import Page, paginate, Params
 from fastapi.middleware.cors import CORSMiddleware
 from routers.sentiment import sentiment
@@ -143,6 +144,7 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     db.add(db_agent)
     db.commit()
     db.refresh(db_agent)
+    
 
     try:
         contents = file.file.read()
@@ -279,13 +281,10 @@ def get_sentiment_result(id: int, db: Session = Depends(get_db)):
             detail="The analysis doesn't exist",
         )
     return analysis
-
-
 @app.get("/audios", summary = "get all audio uploads", response_model=list[schema.Audio], tags=['audios'])
 def read_audios(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     audios = crud.get_audios(db, skip=skip, limit=limit)
     return audios
-
 
 @app.get('/audios/{audio_id}/sentiment')
 def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
@@ -345,3 +344,15 @@ async def create_agent(agent: schema.AgentCreate, db: Session = Depends(get_db),
     company_id = user.company_id
     return crud.create_agent(db, agent, company_id)
 
+#delete single and multiple audios
+@app.delete("/audios/delete")
+def delete_audios(audios: List[int] = Query(None), db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    deleted_audios = []
+    for audio_id in audios:
+        db_audio = crud.get_audio(db, audio_id=audio_id)
+        if db_audio:
+            db.delete(db_audio)
+            db.commit()
+            deleted_audios.append(db_audio.audio_path)
+    return {"message": "operation successful", "deleted audion(s)": deleted_audios}
+            
