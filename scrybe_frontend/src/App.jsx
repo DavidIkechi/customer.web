@@ -1,52 +1,54 @@
-import { Route, Routes } from "react-router-dom";
 import "./App.scss";
-import About from "./pages/AboutUs";
+import { Routes, Route, Navigate, Link } from "react-router-dom";
 import AgentReport from "./pages/AgentReport";
-import DashboardOverview from "./pages/DashboardOverview";
+import SentimentAnalysis from "./pages/SentimentAnalysis";
 import DummyPage from "./pages/DummyPage";
-import Events from "./pages/Events/Events";
-import HelpSupport from "./pages/HelpAndSupport/HelpSupport";
-import History from "./pages/History/History";
+import TranscribePage from "./pages/TranscribePage";
 import HomePage from "./pages/HomePageA";
 import HomePageB from "./pages/HomePageB";
-import PressArticle from "./pages/PressArticle";
-import Press from "./pages/PressPage";
-import Pricing from "./pages/Pricing";
-import SentimentAnalysis from "./pages/SentimentAnalysis";
+import TermsAndCondition from "./pages/TermsAndCondition";
+import History from "./pages/History";
 import Services from "./pages/Services/Services";
 import Solutions from "./pages/Solutions/Solutions";
-import TermsAndCondition from "./pages/TermsAndCondition";
-import TranscribePage from "./pages/TranscribePage";
+import DashboardOverview from "./pages/DashboardOverview";
+import Events from "./pages/Events/Events";
+import HelpSupport from "./pages/HelpAndSupport/HelpSupport";
+import About from "./pages/AboutUs";
+import Pricing from "./pages/Pricing";
 import TryForFree from "./pages/TryForFree";
+import Press from "./pages/PressPage";
+import PressArticle from "./pages/PressArticle";
+import { RequireToken } from "./Auth";
 // import Industry from "./pages/Industry";
 // import IndustryArticles from "./pages/Industry/IndustryArticles/IndustryArticle1";
 // import HowitWorks from "./pages/HowItWorks";
-import React from "react";
-import WithAuth from "./HOC";
+import UploadedRecordings from "./pages/UploadRecordings";
 import Account from "./pages/Account";
-import BlogPostPage from "./pages/BlogPostPage";
-import Blogs from "./pages/BlogsPage";
+import Signin from "./pages/SignIn/SignIn";
 import Careers from "./pages/Careers";
-import FAQs from "./pages/FaqsPage";
-import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
-import LeaderboardPage from "./pages/LeaderBoard/Leaderboard";
-import PartnersPage from "./pages/PartnersPage";
-import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
-import Reviews from "./pages/Reviews/Reviews";
+import Signup from "./pages/SignUp/SignUp";
+import Successful from "./pages/Successful/Successful";
 import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
+import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
+import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
+import FAQs from "./pages/FaqsPage";
+import LeaderboardPage from "./pages/LeaderBoard/Leaderboard";
+import Reviews from "./pages/Reviews/Reviews";
+import TryProcessing from "./pages/TryForFree/tryProcessing";
+import TryResults from "./pages/TryForFree/tryResults";
+import TermsOfService from "./pages/TermsOfService";
+import Blogs from "./pages/BlogsPage";
+import BlogPostPage from "./pages/BlogPostPage";
 import SettingsIndex from "./pages/Settings/SettingsIndex";
 import AccountSettings from "./pages/Settings/SettingsPageSubPages/AccountSettings/AccountSettings";
 import NotificationSettings from "./pages/Settings/SettingsPageSubPages/Notifications/NotificationSettings";
 import PersonalInformation from "./pages/Settings/SettingsPageSubPages/PersonalInformation/PersonalInformationSettings";
-import Signin from "./pages/SignIn/SignIn";
-import Signup from "./pages/SignUp/SignUp";
+import PartnersPage from "./pages/PartnersPage";
+import React, { useState } from "react";
 import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
-import Successful from "./pages/Successful/Successful";
-import TermsOfService from "./pages/TermsOfService";
-import TryProcessing from "./pages/TryForFree/tryProcessing";
-import TryResults from "./pages/TryForFree/tryResults";
-import UploadedRecordings from "./pages/UploadRecordings";
+import Error from "./pages/Error/Error";
+import WithAuth from "./HOC";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -56,7 +58,10 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/sentiment-analysis" element={<SentimentAnalysis />} />
+        <Route
+          path="/sentiment-analysis/:AudioId"
+          element={<SentimentAnalysis />}
+        />
         <Route path="/transcriptions/:userId" element={<TranscribePage />} />
         <Route path="/try" element={<TryForFree />} />
         <Route path="/history" element={<History />} />
@@ -71,12 +76,10 @@ function App() {
           path="/account"
           element={
             <WithAuth>
-              {" "}
               <Account />{" "}
             </WithAuth>
           }
         />
-
         {/* <Route path="/industry" exact element={<Industry />} /> */}
         {/* <Route path="/industry-article" element={<IndustryArticles />} />
         <Route path="/how-it-works" element={<HowitWorks />} /> */}
@@ -154,6 +157,9 @@ function App() {
         <Route path="/partners" element={<PartnersPage />} />
         <Route path="press-article" element={<PressArticle />} />
         <Route path="pricing" element={<Pricing />} />
+
+        {/* Error page */}
+        <Route path="*" element={<Error />} />
       </Routes>
     </>
   );
