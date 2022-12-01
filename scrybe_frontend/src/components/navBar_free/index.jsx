@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import logo from "../../assets/scrybe_logo_with_text.svg";
+import logo from "../../assets/heed_logo_with_text.svg";
 import styles from "./nav.module.scss";
 
 function NavBar() {
@@ -33,7 +33,7 @@ function NavBar() {
               <NavLink to="/signin">Login</NavLink>
             </button>
             <button type="button">
-              <NavLink to="/terms">Try for Free</NavLink>
+              <NavLink to="/try">Try for Free</NavLink>
             </button>
           </div>
 
