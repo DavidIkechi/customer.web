@@ -1,5 +1,5 @@
 # models for database [SQLAlchemy]
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Enum, Float, JSON
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Enum, Float, JSON, TEXT
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from datetime import datetime
@@ -20,7 +20,7 @@ class Company(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255), index=True)
-    address = Column(String(64000))
+    address = Column(TEXT)
     size = Column(Integer)
 
     users = relationship("User", back_populates="company")
@@ -58,7 +58,7 @@ class Audio(Base):
     __tablename__ = "audios"
 
     id = Column(Integer, primary_key=True, index=True)
-    audio_path = Column(String(64000))
+    audio_path = Column(TEXT)
     timestamp = Column(DateTime, index=True, default=datetime.now())
     size = Column(Integer, index=True)
     duration = Column(Integer, index=True)
@@ -71,6 +71,8 @@ class Audio(Base):
     most_negative_sentences = Column(JSON, nullable = True)
 
     agent_id = Column(Integer, ForeignKey("agents.id"))
+    agent_firstname = Column(String, index=True)
+    agent_lastname = Column(String, index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     job = relationship("Job", back_populates="audio", uselist=False)
     user = relationship("User", back_populates="audios")
@@ -103,9 +105,9 @@ class Analysis(Base):
     __tablename__ = "analysis"
 
     id = Column(Integer, primary_key=True, index=True)
-    audio_path = Column(String(64000))
+    audio_path = Column(TEXT)
     timestamp = Column(DateTime, index=True)
-    transcript = Column(String(4294000000))
+    transcript = Column(TEXT)
     positivity_score = Column(Float, index=True)
     negativity_score = Column(Float, index=True)
     neutrality_score = Column(Float, index=True)
@@ -118,7 +120,7 @@ class UserProfile(Base):
 
     id = Column(Integer, ForeignKey("users.id"), nullable=True)
     phone_number = Column(String(255))
-    company_address = Column(String(64000))
+    company_address = Column(TEXT)
     email = Column(String(255), nullable=True)
     company_id = Column(Integer, ForeignKey("companies.id"))
     api_key = Column(String(255), name="uuid", primary_key=True, default=generate_uuid)
