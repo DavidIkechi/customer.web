@@ -22,6 +22,7 @@
       border: 0.5px solid #8ab1c6;
       border-radius: 1em;
       position: relative;
+      overflow: hidden;
 
       .inner__bar {
         position: absolute;
@@ -75,11 +76,6 @@
       display: flex;
       align-items: center;
       gap: pix-rem(17);
-
-      .dropdown__container {
-        border-left: 0.5px solid #3389ff;
-        padding-left: pix-rem(12);
-      }
     }
   }
 }

@@ -78,13 +78,23 @@ function Signin() {
 
     const response = await axios
       .post("login", formData, config)
+
       .then((response) => {
-        console.log(response);
+        // console.log(response);
+
+        const acessToken = response.data.access_token;
+
+        localStorage.setItem("accessToken", acessToken);
+
+        // console.log(response.data.access_token);
+
         axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${response.data["access_token"]}`;
+
         setNavigate(true);
       })
+
       .catch((error) => {});
   };
   // console.log(response.data);
