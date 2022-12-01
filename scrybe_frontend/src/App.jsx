@@ -49,6 +49,7 @@ import React, { useState, useEffect } from "react";
 import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
 import { UploadModal } from "./pages/UploadRecordingsModal";
 import Error from "./pages/Error/Error";
+import EmailVerify from "./pages/EmailVerification/EmailVerify";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -64,6 +65,7 @@ function App() {
     <>
       <Routes>
         {/* access without sign in */}
+        <Route path="/verification" element={<EmailVerify />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/try" element={<TryForFree />} />
         <Route path="/careers" element={<Careers />} />

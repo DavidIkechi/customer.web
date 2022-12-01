@@ -58,7 +58,7 @@ function Leaderboard() {
         //     console.log("data", bottomView);
         //   }
         // }
-        // setLeaderboard(arr);
+        setLeaderboard();
       })
       .catch((error) => {
         console.error(error);
