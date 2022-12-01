@@ -10,12 +10,12 @@ import OverAllSentimentCard from "./components/OverallSentimentCard";
 import VerdictCard from "./components/VerdictCard";
 import PhraseTagCard from "./components/PhraseTagCard";
 import SideBar from "../../components/SideBar";
-import { useMockAuthAndReadSentiment } from "./hooks";
+import { useMockEnd } from "./hooks";
 
 function SentimentAnalysis() {
   const [isMobileAsideOpen, setIsMobileAsideOpen] = useState(false);
   const params = useParams();
-  const sentimentData = useMockAuthAndReadSentiment(parseInt(params.AudioId));
+  const sentimentData = useMockEnd(parseInt(params.AudioId));
 
   const positiveTags = [
     "brave",
