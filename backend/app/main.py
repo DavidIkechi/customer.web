@@ -26,7 +26,12 @@ from emails import send_email, verify_token, send_password_reset_email
 from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
+import cloudinary
+import cloudinary.uploader
+from BitlyAPI import shorten_urls
+
 from datetime import datetime
+
 
 import shutil
 import os
@@ -111,8 +116,28 @@ async def ping():
     return {"message": "Scrybe Up"}
 
 
-@app.post("/analyse", tags=['analyse'])
-async def analyse(file: UploadFile=File(...)):
+@app.post("/upload_audios", tags=['analyse'])
+async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session = Depends(get_db), file: UploadFile=File(...), user: models.User = Depends(get_active_user)):
+    
+    user_id = user.id
+    company_id = user.company_id
+    
+    # convert to lower case for both first and last name.    
+    first_name = first_name.lower()
+    last_name = last_name.lower()
+    agent_name = "%s %s" %(first_name, last_name)
+    
+    # if the agent name is already in the database before creating for the agent.
+    if not db.query(models.Agent).filter(models.Agent.first_name == first_name, 
+                                     models.Agent.last_name == last_name).first():
+        db_agent = models.Agent(first_name=first_name, last_name=last_name, company_id=company_id)
+        # Add Agent
+        db.add(db_agent)
+        db.commit()
+        db.refresh(db_agent)
+    else:
+        db_agent = db.query(models.Agent).filter(models.Agent.first_name == first_name, 
+                                     models.Agent.last_name == last_name).first()
     try:
         contents = file.file.read()
         with open(file.filename, 'wb') as f:
@@ -121,22 +146,60 @@ async def analyse(file: UploadFile=File(...)):
         return {"error": "There was an error uploading the file"}
     finally:
         file.file.close()
+    
+    try:
+        result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
+        url = result.get("url")
+        urls = [url]
+        response = shorten_urls(urls)
+        retrieve_url = response[0]
+        new_url = retrieve_url.short_url
+        
+    except Exception:
+        return {"error": "There was an error uploading the file"}
+    # transcript = transcript
+    
+    size = audio_details(file.filename)["size"]
+    duration = audio_details(file.filename)["mins"]
+    transcript = transcribe_file(new_url)
+    # get some essential parameters
+    print(transcript)
+    audio_url = transcript['audio_url']
+    job_status = transcript['status']
+    transcript_id = transcript['id']
+    
+    db_audio = models.Audio(audio_path=audio_url, job_id = transcript_id, user_id=user_id, size=size, duration=duration, 
+                            agent_id=db_agent.id)
 
-    transcript = transcribe_file(file.filename)
-    transcript = transcript
+    db.add(db_audio)
+    db.commit()
+    db.refresh(db_audio)
+    
+    # get the audio id and some details from the audio table.
+    aud_details = db.query(models.Audio).filter(models.Audio.job_id == transcript_id).first()
+    audio_id = aud_details.id
+    
+    # create the Job Table as well.
+    db_job = models.Job(job_status=job_status, audio_id = audio_id)
 
-    sentiment_result = sentiment(transcript)
+    db.add(db_job)
+    db.commit()
+    db.refresh(db_job)
+    # sentiment_result = sentiment(transcript)
 
-    negativity_score = sentiment_result['negativity_score']
-    positivity_score = sentiment_result['positivity_score']
-    neutrality_score = sentiment_result['neutrality_score']
-    overall_sentiment = sentiment_result['overall_sentiment']
+    # negativity_score = sentiment_result['negativity_score']
+    # positivity_score = sentiment_result['positivity_score']
+    # neutrality_score = sentiment_result['neutrality_score']
+    # overall_sentiment = sentiment_result['overall_sentiment']
+    
+
+    return {
+        "id":audio_id,
+        "transcript_id": transcript_id
+    }
 
 
-    return {"transcript": transcript, "sentiment_result": sentiment_result}
-
-
-@app.post("/new_analyse", tags=['analyse'])
+@app.post("/upload_recording", tags=['analyse'])
 async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Session = Depends(get_db), file: UploadFile=File(...), user: models.User = Depends(get_active_user)):
 
     # Create Agent
