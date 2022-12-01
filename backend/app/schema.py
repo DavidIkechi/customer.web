@@ -131,6 +131,13 @@ class Recordings(BaseModel):
     class Config:
         orm_mode = True
 
+class TotalAnalysis(BaseModel):
+    week: list = []
+    month: list = []
+
+    class Config:
+        orm_mode = True
+
 class UserProfile(BaseModel):
     id: str
     phone_number: str
