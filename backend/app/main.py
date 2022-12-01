@@ -27,6 +27,7 @@ import shutil
 import os
 
 
+
 # Dependency
 def get_db():
     db = SessionLocal()
@@ -322,4 +323,6 @@ def get_agents_leaderboard(db: Session = Depends(get_db)):
 async def my_profile (db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     user_id = user.id
     return crud.get_user_profile(db, user_id)
+
+
 
