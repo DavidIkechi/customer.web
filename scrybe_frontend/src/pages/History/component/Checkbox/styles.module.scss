@@ -1,0 +1,37 @@
+$border-color: #828282;
+.checkbox {
+  input {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 30px;
+    width: 30px;
+    border-radius: 4px;
+    border: 1px solid $border-color;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 0 5px 3px #3e97fd;
+    }
+    @media (max-width: 670px) {
+      scale: 0.8;
+    }
+  }
+}
+
+.checkbox__checked {
+  position: relative;
+  border: none !important;
+  transition: all 400ms ease;
+
+  background: var(--primary-blue);
+  &::before {
+    content: "\2714";
+    font-size: 1.4em;
+    color: #ffffff;
+    position: absolute;
+    right: 6px;
+    top: -3px;
+    rotate: 12deg;
+  }
+}
