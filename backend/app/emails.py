@@ -22,11 +22,11 @@ conf = ConnectionConfig(
     MAIL_USERNAME = os.getenv('EMAIL'),
     MAIL_PASSWORD = os.getenv('PASS'),
     MAIL_FROM = os.getenv('EMAIL'),
-    MAIL_PORT = 465,
+    MAIL_PORT = 587,
     MAIL_SERVER = 'smtp.gmail.com',
-    MAIL_STARTTLS = False,
+    MAIL_STARTTLS = True,
     USE_CREDENTIALS = True,
-    MAIL_SSL_TLS= True,
+    MAIL_SSL_TLS= False,
     VALIDATE_CERTS = True
 )
 
@@ -100,7 +100,7 @@ async def send_password_reset_email(email: List, instance: User):
                     <p>
                         To reset your password
                         <a href="http://heed.hng.tech/set-new-password?token={token}">
-                            click here
+                            Click here
                         </a>.
                     </p>
 
@@ -110,6 +110,7 @@ async def send_password_reset_email(email: List, instance: User):
 
                     <p>Sincerely</p>
                     <p>Heed Team</p>
+
         </div>
     """
 
@@ -122,6 +123,8 @@ async def send_password_reset_email(email: List, instance: User):
 
     fm =FastMail(conf)
     await fm.send_message(message=message)
+
+    return token
 
 
 

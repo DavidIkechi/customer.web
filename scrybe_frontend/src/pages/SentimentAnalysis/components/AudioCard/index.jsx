@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./AudioCard.module.scss";
-import audioIcon from "../../icons/audio_icon.svg";
+import audioIcon from "../../assets/icons/audio_icon.svg";
 import AsideCard from "../AsideCard";
 
 function AudioCard(props) {

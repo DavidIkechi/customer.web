@@ -19,8 +19,8 @@ class Company(Base):
     __tablename__ = 'companies'
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True)
-    address = Column(String, index=True)
+    name = Column(String(255), index=True)
+    address = Column(String(64000))
     size = Column(Integer)
 
     users = relationship("User", back_populates="company")
@@ -30,10 +30,10 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    first_name = Column(String, index=True)
-    last_name = Column(String, index=True)
-    email = Column(String, unique=True, index=True)
-    password = Column(String)
+    first_name = Column(String(255), index=True)
+    last_name = Column(String(255), index=True)
+    email = Column(String(255), unique=True, index=True)
+    password = Column(String(255))
     is_active = Column(Boolean, default=False)
     is_admin = Column(Boolean, default=False)
     is_verified = Column(Boolean, default=False)
@@ -47,8 +47,8 @@ class Agent(Base):
     __tablename__ = "agents"
 
     id = Column(Integer, primary_key=True, index=True)
-    first_name = Column(String, index=True)
-    last_name = Column(String, index=True)
+    first_name = Column(String(255), index=True)
+    last_name = Column(String(255), index=True)
     company_id = Column(Integer, ForeignKey("companies.id"))
 
     audios = relationship("Audio")
@@ -58,19 +58,21 @@ class Audio(Base):
     __tablename__ = "audios"
 
     id = Column(Integer, primary_key=True, index=True)
-    audio_path = Column(String, index=True)
+    audio_path = Column(String(64000))
     timestamp = Column(DateTime, index=True, default=datetime.now())
     size = Column(Integer, index=True)
     duration = Column(Integer, index=True)
-    transcript = Column(String, index=True)
+    transcript = Column(String(255), index=True)
     positivity_score = Column(Float, index=True)
     negativity_score = Column(Float, index=True)
     neutrality_score = Column(Float, index=True)
     overall_sentiment = Column(Enum("Positive", "Negative", "Neutral"), index=True)
-    most_positive_sentences = Column(JSON, index =True, nullable = True)
-    most_negative_sentences = Column(JSON, index =True, nullable = True)
+    most_positive_sentences = Column(JSON, nullable = True)
+    most_negative_sentences = Column(JSON, nullable = True)
 
     agent_id = Column(Integer, ForeignKey("agents.id"))
+    agent_firstname = Column(String, index=True)
+    agent_lastname = Column(String, index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     job = relationship("Job", back_populates="audio", uselist=False)
     user = relationship("User", back_populates="audios")
@@ -92,9 +94,8 @@ class History(Base):
 
     id = Column(Integer, primary_key=True, index=True)
 
-    audio_name = Column(String, index=True)
-    agent_name = Column(String, index=True)
-    sentiment_result = Column(String, index=True)
+    audio_name = Column(String(255), index=True)
+    agent_name = Column(String(255), index=True)
     date_uploaded = Column(DateTime, default=datetime.utcnow(), index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
 
@@ -104,9 +105,9 @@ class Analysis(Base):
     __tablename__ = "analysis"
 
     id = Column(Integer, primary_key=True, index=True)
-    audio_path = Column(String, index=True)
+    audio_path = Column(String(64000))
     timestamp = Column(DateTime, index=True)
-    transcript = Column(String, index=True)
+    transcript = Column(String(4294000000))
     positivity_score = Column(Float, index=True)
     negativity_score = Column(Float, index=True)
     neutrality_score = Column(Float, index=True)
@@ -118,8 +119,8 @@ class UserProfile(Base):
     __tablename__ = "Accounts"
 
     id = Column(Integer, ForeignKey("users.id"), nullable=True)
-    phone_number = Column(String)
-    company_address = Column(String)
-    email = Column(String, nullable=True)
-    company_id= Column(String, ForeignKey("companies.id"))
-    api_key = Column(String, name="uuid", primary_key=True, default=generate_uuid)
+    phone_number = Column(String(255))
+    company_address = Column(String(64000))
+    email = Column(String(255), nullable=True)
+    company_id = Column(Integer, ForeignKey("companies.id"))
+    api_key = Column(String(255), name="uuid", primary_key=True, default=generate_uuid)

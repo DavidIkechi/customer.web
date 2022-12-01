@@ -96,7 +96,7 @@ def get_agent(db: Session, agent_id: int):
 def get_agents_by_company_id(db: Session, company_id: int):
     return db.query(models.Agent).filter(models.Agent.company_id == company_id).all()
 
-def create_agent(db: Session, agent: schema.Agent, company_id: int):
+def create_agent(db: Session, agent: schema.AgentCreate, company_id: int):
     db_agent = models.Agent(first_name=agent.first_name, last_name=agent.last_name, company_id=company_id)
     db.add(db_agent)
     db.commit()

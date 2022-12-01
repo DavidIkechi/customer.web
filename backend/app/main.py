@@ -1,19 +1,22 @@
-
-from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form
+from typing import List
+from models import Audio
+from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form, Query
 from fastapi_pagination import Page, paginate, Params
 from fastapi.middleware.cors import CORSMiddleware
 from routers.sentiment import sentiment
 from routers.transcribe import transcribe_file
 import auth
 from routers.score import score_count
-
+import uvicorn
 from routers.transcribe import transcript_router
 from routers.score import score_count
 import models, json
 from auth import get_active_user, get_current_user
 from jwt import (
     main_login
-    )
+
+)
+
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from db import Base, engine, SessionLocal
 from sqlalchemy.orm import Session
@@ -26,6 +29,9 @@ import fastapi as _fastapi
 import shutil
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Dependency
 def get_db():
@@ -73,10 +79,11 @@ origins = [
     "http://localhost:3000",
     "http://localhost:5173",
     "http://localhost:8000",
-    "https://scrybe.hng.tech",
-    "https://scrybe.hng.tech:80",
-    "https://scrybe.hng.tech:3000",
-    "https://scrybe.hng.tech:5173",
+    "https://heed.hng.tech",
+    "http://heed.hng.tech",
+    "https://heed.hng.tech:80",
+    "https://heed.hng.tech:3000",
+    "https://heed.hng.tech:5173",
 ]
 
 app.add_middleware(
@@ -86,6 +93,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+def main() -> None:
+    uvicorn.run(
+        "main:app", 
+        host=os.getenv("HOST"), 
+        port=int(os.getenv("PORT")), 
+        reload=os.getenv("RELOAD")
+    )
 
 
 @app.get("/")
@@ -131,6 +146,7 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     db.add(db_agent)
     db.commit()
     db.refresh(db_agent)
+    
 
     try:
         contents = file.file.read()
@@ -155,7 +171,7 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     most_negative_sentences = sentiment_result['most_negative_sentences']
     most_positive_sentences = sentiment_result ['most_postive_sentences']
 
-    db_audio = models.Audio(audio_path=file.filename, user_id=user_id, size=size, duration=duration, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, most_negative_sentences = most_negative_sentences, most_positive_sentences = most_positive_sentences, agent_id=db_agent.id)
+    db_audio = models.Audio(audio_path=file.filename, user_id=user_id, size=size, duration=duration, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, most_negative_sentences = most_negative_sentences, most_positive_sentences = most_positive_sentences, agent_id=db_agent.id, agent_firstname= db_agent.first_name, agent_lastname= db_agent.last_name)
 
     db.add(db_audio)
     db.commit()
@@ -212,6 +228,7 @@ async def email_verification(request: Request, token: str, db: Session = Depends
 
     if user and not user.is_active:
         user.is_active = True
+        user.is_verified = True
         db.commit()
         return{
             "status" : "ok",
@@ -221,6 +238,7 @@ async def email_verification(request: Request, token: str, db: Session = Depends
 @app.patch("/user/update/{user_id}", summary = "update user details", response_model=schema.user_update, tags=['users'])
 def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depends(get_db)):
      return crud.update_user(db=db, user=user, user_id=user_id)
+
 
 @app.post("/tryForFree")
 async def free_trial(file: UploadFile = File(...)):
@@ -266,13 +284,10 @@ def get_sentiment_result(id: int, db: Session = Depends(get_db)):
             detail="The analysis doesn't exist",
         )
     return analysis
-
-
 @app.get("/audios", summary = "get all audio uploads", response_model=list[schema.Audio], tags=['audios'])
 def read_audios(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     audios = crud.get_audios(db, skip=skip, limit=limit)
     return audios
-
 
 @app.get('/audios/{audio_id}/sentiment')
 def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
@@ -306,16 +321,20 @@ def get_recent_recordings(skip: int = 0, limit: int = 5, db: Session = Depends(g
 
 
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
-def get_agents_leaderboard(db: Session = Depends(get_db)):
+def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     results = db.execute("""SELECT agent_id,
+        agent_firstname,
+        agent_lastname,
         SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score,
         SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score,
         SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
-        (positivity_score/(positivity_score+negativity_score+neutrality_score) * 10) AS Avergae_score
+        round(positivity_score/(positivity_score+negativity_score+neutrality_score) * 10, 2) AS Avergae_score
     FROM audios GROUP BY agent_id
     ORDER BY Positive_score DESC""")
     leaderboard = [dict(r) for r in results]
-    return {"Agents Leaderboard": leaderboard}
+    top3_agents = leaderboard[:3]
+    others = leaderboard[3:]
+    return {"Top3 Agents": top3_agents, "Other Agents": others}
 
 
 @app.get("/account", summary = "get user profile details", tags=['users'])
@@ -325,18 +344,16 @@ async def my_profile (db: Session = Depends(get_db), user: models.User = Depends
 
 
 
-@app.post('/forget-password', summary = "get token for password reset", tags=['users'])
-async def forget_password(email: schema.ForgetPassword, db: Session = Depends(get_db)):
+@app.post('/forgot-password', summary = "get token for password reset", tags=['users'])
+async def forgot_password(email: schema.ForgetPassword, db: Session = Depends(get_db)):
     user: models.User = crud.get_user_by_email(db, email)
 
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
 
     
-    await send_password_reset_email([email], user)
-
-    return {'success': 'Email sent'}
-
+    token = await send_password_reset_email([email], user)
+    return token
 
 
 @app.patch('/reset-password', summary = "reset password", tags=['users'])
@@ -354,10 +371,25 @@ async def reset_password(token: str, new_password: schema.UpdatePassword, db: Se
     
     return reset_done
 
-    
+
+if __name__ == "__main__":
+    main()
 
 
+@app.post("/agent", tags=['create agent'])
+async def create_agent(agent: schema.AgentCreate, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    company_id = user.company_id
+    return crud.create_agent(db, agent, company_id)
 
-
-
-
+#delete single and multiple audios
+@app.delete("/audios/delete")
+def delete_audios(audios: List[int] = Query(None), db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    deleted_audios = []
+    for audio_id in audios:
+        db_audio = crud.get_audio(db, audio_id=audio_id)
+        if db_audio:
+            db.delete(db_audio)
+            db.commit()
+            deleted_audios.append(db_audio.audio_path)
+    return {"message": "operation successful", "deleted audion(s)": deleted_audios}
+            
