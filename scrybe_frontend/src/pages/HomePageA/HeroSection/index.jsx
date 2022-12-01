@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./hero.module.scss";
 import heroImage from "./assets/Group 1000000899.webp";
 import curves from "./assets/Vector 13.webp";
+import { NavLink } from "react-router-dom";
 
 function Hero(isHomePageA) {
   isHomePageA = true;
@@ -21,20 +22,12 @@ function Hero(isHomePageA) {
             your customer support conversations{" "}
           </p>
           <div className={styles.CTAs}>
-            {isHomePageA === true ? (
-              <>
-                <a href="/dashboard" className={styles.ctaDemo}>
-                  Request a Demo
-                </a>
-                <a href="/transcriptions" className={styles.ctaStarter}>
-                  Get Started
-                </a>
-              </>
-            ) : (
-              <a href="/dashboard" className={styles.ctaDemo}>
-                Request a Demo
-              </a>
-            )}
+            <NavLink to="/demos" className={styles.ctaDemo}>
+              Request a Demo
+            </NavLink>
+            <NavLink to="/signin" className={styles.ctaStarter}>
+              Get Started
+            </NavLink>
           </div>
         </div>
         <div className={styles.heroImage}>
