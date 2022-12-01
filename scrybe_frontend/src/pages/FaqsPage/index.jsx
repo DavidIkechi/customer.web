@@ -80,12 +80,14 @@ function FAQs() {
       <NavBar />
       <div className={styles.faq__hero}>
         <div className={styles.faqHero__content}>
-          <div>
-            Get the answers you're looking for on <span>Scrybe</span>
-          </div>
-          <div>
+          <div className={styles.faqHero__text}>
+            <h1>
+              Get the answers you're looking for on <span>HEED</span>
+            </h1>
             <img src={Hero} alt="" />
           </div>
+          {/* <div>
+          </div> */}
         </div>
       </div>
 

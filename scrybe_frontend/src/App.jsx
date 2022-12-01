@@ -7,13 +7,14 @@ import TranscribePage from "./pages/TranscribePage";
 import HomePage from "./pages/HomePageA";
 import HomePageB from "./pages/HomePageB";
 import TermsAndCondition from "./pages/TermsAndCondition";
-import History from "./pages/History/History";
+import History from "./pages/History";
 import Services from "./pages/Services/Services";
 import Solutions from "./pages/Solutions/Solutions";
 import DashboardOverview from "./pages/DashboardOverview";
 import Events from "./pages/Events/Events";
 import HelpSupport from "./pages/HelpAndSupport/HelpSupport";
 import About from "./pages/AboutUs";
+import Pricing from "./pages/Pricing";
 import TryForFree from "./pages/TryForFree";
 import Press from "./pages/PressPage";
 import PressArticle from "./pages/PressArticle";
@@ -45,32 +46,21 @@ import NotificationSettings from "./pages/Settings/SettingsPageSubPages/Notifica
 import PersonalInformation from "./pages/Settings/SettingsPageSubPages/PersonalInformation/PersonalInformationSettings";
 import PartnersPage from "./pages/PartnersPage";
 import React, { useState } from "react";
-import Cookies from "js-cookie";
 import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
+import Error from "./pages/Error/Error";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
 
 function App() {
-  // const [auth, setAuth] = useState(false);
-  // const [token, setToken] = useState("");
-  // const readCookie = () => {
-  //   let token = Cookies.get("token");
-  //   if (token) {
-  //     setAuth(true);
-  //     setToken(token);
-  //   }
-  // };
-  // React.useEffect(() => {
-  //   readCookie();
-  // }, []);
-
   return (
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/agent-report" element={<AgentReport />} />
-        <Route path="/sentiment-analysis" element={<SentimentAnalysis />} />
+        <Route
+          path="/sentiment-analysis/:AudioId"
+          element={<SentimentAnalysis />}
+        />
         <Route path="/transcriptions/:userId" element={<TranscribePage />} />
         <Route path="/try" element={<TryForFree />} />
         <Route path="/history" element={<History />} />
@@ -165,6 +155,10 @@ function App() {
         <Route path="press" element={<Press />} />
         <Route path="/partners" element={<PartnersPage />} />
         <Route path="press-article" element={<PressArticle />} />
+        <Route path="pricing" element={<Pricing />} />
+
+        {/* Error page */}
+        <Route path="*" element={<Error />} />
       </Routes>
     </>
   );

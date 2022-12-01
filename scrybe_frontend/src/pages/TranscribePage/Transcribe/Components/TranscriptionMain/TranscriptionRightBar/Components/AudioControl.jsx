@@ -1,7 +1,36 @@
 import React from "react";
 import styles from "./AudioControl.module.scss";
 
-function AudioControl() {
+function AudioControl({
+  audioElem,
+  setIsPlaying,
+  isPlaying,
+  audioDuration,
+  currentTime,
+}) {
+  const PlayPause = () => {
+    setIsPlaying(!isPlaying);
+  };
+  const SkipForward = () => {
+    audioElem.current.currentTime = audioElem.current.currentTime + 4;
+  };
+  const SkipBackward = () => {
+    audioElem.current.currentTime = audioElem.current.currentTime - 4;
+  };
+
+  const timeFormatter = (num) => {
+    if (num === 0 || isNaN(num)) return `00:00`;
+    const divisor_for_minutes = num % (60 * 60);
+    const minutes = Math.floor(divisor_for_minutes / 60);
+    const divisor_for_seconds = divisor_for_minutes % 60;
+    const seconds = Math.ceil(divisor_for_seconds);
+    const formatedTime = `${minutes}:${seconds}`;
+    if (formatedTime.length === 3 && minutes < 1)
+      return `0${minutes}:0${seconds}`;
+    if (formatedTime.length === 4) return `0${minutes}:${seconds}`;
+    if (formatedTime.length === 3 && minutes > 0)
+      return `0${minutes}:${seconds}0`;
+  };
   return (
     <div className={styles.AudioControl}>
       {/* Audio Info Details */}
@@ -32,7 +61,7 @@ function AudioControl() {
 
       {/* AudioControlButtons */}
       <div className={styles.ControlButtons}>
-        <div className={styles.RewindButton}>
+        <div className={styles.RewindButton} onClick={SkipBackward}>
           <svg
             width="17"
             height="10"
@@ -46,21 +75,39 @@ function AudioControl() {
             />
           </svg>
         </div>
-        <div className={styles.PlayButton}>
-          <svg
-            width="9"
-            height="12"
-            viewBox="0 0 9 12"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0.5 11.1998V0.799805L8.65 5.9998L0.5 11.1998ZM1.5 9.3498L6.8 5.9998L1.5 2.6498V9.3498Z"
-              fill="#6A6A6A"
-            />
-          </svg>
+        <div className={styles.PlayButton} onClick={PlayPause}>
+          {/* pause */}
+          {isPlaying && (
+            <svg
+              width="9"
+              height="11"
+              viewBox="0 0 9 11"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6.18569 10.4V0H8.43333V10.4H6.18569ZM0.283333 10.4V0H2.53098V10.4H0.283333Z"
+                fill="#6A6A6A"
+              />
+            </svg>
+          )}
+          {/* play */}
+          {!isPlaying && (
+            <svg
+              width="9"
+              height="12"
+              viewBox="0 0 9 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0.5 11.1998V0.799805L8.65 5.9998L0.5 11.1998ZM1.5 9.3498L6.8 5.9998L1.5 2.6498V9.3498Z"
+                fill="#6A6A6A"
+              />
+            </svg>
+          )}
         </div>
-        <div className={styles.ForwardButton}>
+        <div className={styles.ForwardButton} onClick={SkipForward}>
           <svg
             width="17"
             height="10"
@@ -78,12 +125,12 @@ function AudioControl() {
 
       {/* Audio Timer */}
       <div className={styles.AudioTimer}>
-        <p>0:42</p>
+        <p>{timeFormatter(currentTime)}</p>
         <div className={styles.AudioSlider}>
           <div className={styles.AudioFull} />
           <div className={styles.AudioIndicator} />
         </div>
-        <p>1:36</p>
+        <p>{timeFormatter(audioDuration)}</p>
       </div>
     </div>
   );
