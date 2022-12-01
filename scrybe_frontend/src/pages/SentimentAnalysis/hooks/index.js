@@ -37,6 +37,8 @@ const useMockEnd = (id) => {
         mainData.neutrality_score = scores[1];
         mainData.negativity_score = scores[2];
         mainData.transcript = mainData.transcription;
+        mainData.positiveTags = JSON.parse(mainData.positiveTags);
+        mainData.negativeTags = JSON.parse(mainData.negativeTags);
         setSentimentData(mainData);
       })
       .catch((err) => {

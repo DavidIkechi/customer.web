@@ -104,12 +104,20 @@ function SentimentAnalysis() {
           <OverAllSentimentCard sentimentData={sentimentData} />
           <VerdictCard sentimentData={sentimentData} />
           <PhraseTagCard
-            tags={positiveTags}
+            tags={
+              sentimentData.positiveTags
+                ? sentimentData.positiveTags
+                : positiveTags
+            }
             title={"Positive phrase tags"}
             sentimentData={sentimentData}
           />
           <PhraseTagCard
-            tags={negativeTags}
+            tags={
+              sentimentData.negativeTags
+                ? sentimentData.negativeTags
+                : negativeTags
+            }
             title={"Negative phrase tags"}
             sentimentData={sentimentData}
           />
