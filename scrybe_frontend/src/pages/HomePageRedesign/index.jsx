@@ -9,6 +9,7 @@ import transScreen from "./assets/trans__screen.png";
 import analyzeScreen from "./assets/analyze__screen.png";
 import clientOne from "./assets/client__one.png";
 import clientTwo from "./assets/client__two.png";
+import backgroundMobile1 from "./assets/background__mobile.png";
 
 const index = () => {
   return (
@@ -16,12 +17,15 @@ const index = () => {
       {/* <div className={styles.header__container}></div> */}
       <section className={styles.first__section}>
         <div className={styles.sect__container}>
-          <div>
-            <div>
-              <h1>AI-Powered tool for an Enlightened Customer Engagement</h1>
+          <div className={styles.hero__text}>
+            <div className={styles.hero__heading}>
+              <h1 className={styles.hero__head}>
+                AI - Powered Solutions To Boost Sales And Support Teams
+                Efficiency
+              </h1>
             </div>
-            <div>
-              <p>
+            <div className={styles.hero__subtext}>
+              <p className={styles.hero__subhead}>
                 Heed uses Artificial Intelligence to automatically transcribe
                 and analyze recorded audio calls by Customer support agents and
                 sales reps to give cutting-edge insight into customer sentiment,
@@ -30,93 +34,97 @@ const index = () => {
               </p>
             </div>
           </div>
-          <div>
-            <div>
-              <button>For Support</button>
-              <button>For Sales</button>
+          <div className={styles.hero__bottom}>
+            <div className={styles.hero__action}>
+              <div className={styles.button__content}>
+                <button className={styles.hero__buttonOne}>For Support</button>
+                <button className={styles.hero__buttonTwo}>For Sales</button>
+              </div>
             </div>
-          </div>
-          <div>
-            <img
-              src={heroCenter}
-              alt="hero center icon"
-              className={styles.hero__icon}
-            />
+            <div className={styles.hero__image}>
+              <img
+                src={heroCenter}
+                alt="hero center icon"
+                className={styles.hero__icon}
+              />
+            </div>
           </div>
         </div>
       </section>
       <section className={styles.second__section}>
         <div className={styles.sect__container}>
-          <div>
-            <h2>Grow your Business with us</h2>
+          <div className={styles.second__top}>
+            <h2 className={styles.second__head}>Why Heed?</h2>
           </div>
-          <div>
-            <div>
-              <div>
-                <div>
+          <div className={styles.second__bottom}>
+            <div className={styles.second__flex}>
+              <div className={styles.top__layout}>
+                <div className={styles.second__icons}>
                   <img
                     src={saveTime}
                     alt="what we do icon"
                     className={styles.save__time}
                   />
                 </div>
-                <div>
-                  <h4>Saves Time</h4>
+                <div className={styles.each__heading}>
+                  <h4 className={styles.each__head}>
+                    Increase Sales/Support Attendance
+                  </h4>
                 </div>
               </div>
-              <div>
-                <p>
-                  Many sentiment analysis tools can be time-consuming, some take
-                  as much as 30 minutes to transcribe audio, analyze and give
-                  insight. Heed stands out by performing all these functions in
-                  less than 20 minutes, thereby saving you time while also
-                  giving you a much better customer sentiment insight
+              <div className={styles.bottom__layout}>
+                <p className={styles.second__subhead}>
+                  With our AI-based customer support attendance, we give you
+                  in-depth insight into the activities of your sales agents,
+                  support teams and their approach towards buyers sentiment and
+                  customers pain point
                 </p>
               </div>
             </div>
-            <div>
-              <div>
-                <div>
+            <div className={styles.second__flex}>
+              <div className={styles.top__layout}>
+                <div className={styles.second__icons}>
                   <img
                     src={easeUse}
                     alt="what we do icon"
                     className={styles.ease__icon}
                   />
                 </div>
-                <div>
-                  <h4>Ease of use</h4>
+                <div className={styles.each__heading}>
+                  <h4 className={styles.each__head}>Make Better Decisions</h4>
                 </div>
               </div>
-              <div>
-                <p>
-                  Our Web dashboard is very user-friendly. We've been Performing
-                  sentimental analysis for a very long time and upgrading our
-                  tools frequently to make sure all of our customers can
-                  continue to have a wonderful experience while performing
-                  analysis
+              <div className={styles.bottom__layout}>
+                <p className={styles.second__subhead}>
+                  Turn data into insights with unique analytics. Heed not only
+                  transcribe and analyze the recorded audio files. We give you
+                  an audio intelligence insight your sales process and support
+                  activities, to help you make better decisions that can result
+                  to business growth
                 </p>
               </div>
             </div>
-            <div>
-              <div>
-                <div>
+            <div className={styles.second__flex}>
+              <div className={styles.top__layout}>
+                <div className={styles.second__icons}>
                   <img
                     src={powerIcon}
                     alt="what we do icon"
                     className={styles.power__icon}
                   />
                 </div>
-                <div>
-                  <h4>Powerful analytics</h4>
+                <div className={styles.each__heading}>
+                  <h4 className={styles.each__head}>
+                    Saves Money, Reduce Cost
+                  </h4>
                 </div>
               </div>
-              <div>
-                <p>
-                  Many sentiment analysis tools can be time-Turn data into
-                  insights with unique analytics. Heed not only transcribe and
-                  analyze the recorded audio files. We give you an audio
-                  intelligence insight to help you make better decisions that
-                  can result in customer retention
+              <div className={styles.bottom__layout}>
+                <p className={styles.second__subhead}>
+                  Heed helps you monitor and evaluate how your customer service
+                  team deals with customer complaints. This will help you with
+                  an empathetic approach to your customer's/buyers needs, and
+                  give you insight on how to channel your resources rightly
                 </p>
               </div>
             </div>
@@ -126,23 +134,29 @@ const index = () => {
       <section className={styles.third__section}>
         <div className={styles.sect__container}>
           <div>
-            <div>
-              <h3>How it works?</h3>
+            <div className={styles.third__top}>
+              <h3 className={styles.third__head}>How it works?</h3>
             </div>
-            <div>
-              <div>
-                <div>
-                  <p>
-                    Upload the audio file you want to analyze (in mp3 format){" "}
-                    <br />
-                    Heed will analyze the conversation to produce:
-                    <ul>
-                      <li>a readable and searchable text file </li>
-                      <li>A Sentiment Analysis report</li>
+            <div className={styles.third__bottom}>
+              <div className={styles.third__row}>
+                <div className={styles.third__text}>
+                  <p className={styles.third__subtext}>
+                    Upload recorded calls from Sale/Support Team
+                    <ul className={styles.third__lists}>
+                      <li className={styles.each__list}>
+                        a readable and searchable text file{" "}
+                      </li>
+                      <li className={styles.each__list}>
+                        A Sentiment Analysis report
+                      </li>
+                      <li className={styles.each__list}>
+                        A Sentiment score is given on Agent record to prove
+                        performance.
+                      </li>
                     </ul>
                   </p>
                 </div>
-                <div>
+                <div className={styles.third__image}>
                   <img
                     src={uploadScreen}
                     alt="How it works icon"
@@ -150,29 +164,31 @@ const index = () => {
                   />
                 </div>
               </div>
-              <div>
-                <div>
+              <div className={styles.third__col}>
+                <div className={styles.third__image}>
                   <img
                     src={transScreen}
                     alt="what we do icon"
                     className={styles.trans__screen}
                   />
                 </div>
-                <div>
-                  <p>
+                <div className={styles.third__text}>
+                  <p className={styles.third__subtext}>
                     Heed automatically transcribes and analyzes your file within
                     minutes. We will also notify you via mail when your report
                     is ready.
                   </p>
                 </div>
               </div>
-              <div>
-                <div>
-                  <p>
+              <div className={styles.third__row}>
+                <div className={styles.third__text}>
+                  <p className={styles.third__subtext}>
                     Analyze the insights and take action.
-                    <ul>
-                      <li>Get an overview of your agents' performance</li>
-                      <li>
+                    <ul className={styles.third__lists}>
+                      <li className={styles.each__list}>
+                        Get an overview of your agents' performance
+                      </li>
+                      <li className={styles.each__list}>
                         Measure the quality of their interactions and see which
                         agents consistently get positive sentiment results and
                         those which need improvement.
@@ -180,7 +196,7 @@ const index = () => {
                     </ul>
                   </p>
                 </div>
-                <div>
+                <div className={styles.third__image}>
                   <img
                     src={analyzeScreen}
                     alt="How it works icon"
@@ -194,23 +210,27 @@ const index = () => {
       </section>
       <section className={styles.fourth__section}>
         <div className={styles.sect__container}>
-          <div>
-            <h3>Here's what our clients are saying!</h3>
+          <div className={styles.fourth__heading}>
+            <h3 className={styles.fourth__head}>
+              Here's what our clients are saying!
+            </h3>
           </div>
-          <div>
-            <div>
-              <div>
+          <div className={styles.layout__one}>
+            <div className={styles.client__test}>
+              <div className={styles.profile__pic}>
                 <img
                   src={clientOne}
                   alt="Client testimonial profile"
                   className={styles.client__one}
                 />
               </div>
-              <div>
-                <h5>Mark Essien, CEO Hotels.ng</h5>
+              <div className={styles.profile__head}>
+                <h5 className={styles.profile__name}>
+                  Mark Essien, CEO Hotels.ng
+                </h5>
               </div>
-              <div>
-                <p>
+              <div className={styles.profile__text}>
+                <p className={styles.profile__msg}>
                   Heed is half the price and twice the speed, We looked for a
                   more reliable and flexible platform for our call analysis.
                   Then we found Heed. ever since then, its been a wonderful
@@ -218,19 +238,21 @@ const index = () => {
                 </p>
               </div>
             </div>
-            <div>
-              <div>
+            <div className={styles.client__test}>
+              <div className={styles.profile__pic}>
                 <img
                   src={clientTwo}
                   alt="Client testimonial profile"
                   className={styles.client__two}
                 />
               </div>
-              <div>
-                <h5>Chukwuebuka pad, Product manager, Carrot.</h5>
+              <div className={styles.profile__head}>
+                <h5 className={styles.profile__name}>
+                  Chukwuebuka pad, Product manager, Carrot.
+                </h5>
               </div>
-              <div>
-                <p>
+              <div className={styles.profile__text}>
+                <p className={styles.profile__msg}>
                   We are so happy to have discovered Heed. It is a good way to
                   get feedback from clients about their experience with my
                   company. It's even better for making sure our audio
@@ -239,17 +261,21 @@ const index = () => {
               </div>
             </div>
           </div>
-          <div>
-            <h3>Drive Sales And Support Team Efficiency</h3>
-            <div>
-              <p>
+          <div className={styles.layout__two}>
+            <div className={styles.fourth__heading}>
+              <h3 className={styles.fourth__head}>
+                Drive Sales And Support Team Efficiency
+              </h3>
+            </div>
+            <div className={styles.fourth__subtext}>
+              <p className={styles.fourth__subhead}>
                 We help businesses unlock insights and extract meaningful data
                 from your customer support conversations
               </p>
             </div>
           </div>
-          <div>
-            <button>Get Started</button>
+          <div className={styles.layout__three}>
+            <button className={styles.fourth__action}>Get Started</button>
           </div>
         </div>
       </section>

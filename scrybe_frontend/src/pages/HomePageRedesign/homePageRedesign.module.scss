@@ -1,0 +1,40 @@
+img {
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+input,
+textarea,
+label,
+span,
+button {
+  font-family: "Kanit", sans-serif;
+}
+
+.sect__container {
+  width: 95%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.first__section {
+  background-image: url(./assets/background__mobile.png);
+  height: 100vh;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+  .hero__text {
+    padding-top: 1em;
+    margin-top: 2em;
+    
+  }
+
+}
