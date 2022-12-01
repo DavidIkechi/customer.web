@@ -26,13 +26,15 @@ class Company(Base):
     users = relationship("User", back_populates="company")
     agents = relationship("Agent", back_populates="company")
 
-class User(Base):
-    __tablename__ = "users"
+class UserProfile(Base):
+    __tablename__ = "Accounts"
 
-    id = Column(Integer, primary_key=True, index=True)
-    first_name = Column(String(255), index=True)
-    last_name = Column(String(255), index=True)
-    email = Column(String(255), unique=True, index=True)
+    id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    phone_number = Column(String(255))
+    company_address = Column(String(64000))
+    email = Column(String(255), nullable=True)
+    company_id = Column(Integer, ForeignKey("companies.id"))
+    api_key = Column(String(255), name="uuid", primary_key=True, default=generate_uuid)
     password = Column(String(255))
     is_active = Column(Boolean, default=False)
     is_admin = Column(Boolean, default=False)
