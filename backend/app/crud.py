@@ -157,3 +157,4 @@ def get_user_profile(db: Session, user_id: int):
 
 def get_user_profile_by_email(db: Session, email: str):
     return db.query(models.User).filter(models.User.email == email).first()
+

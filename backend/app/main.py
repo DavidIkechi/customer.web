@@ -14,15 +14,19 @@ import models, json
 from auth import get_active_user, get_current_user
 from jwt import (
     main_login
-    )
+
+)
+
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from db import Base, engine, SessionLocal
 from sqlalchemy.orm import Session
 import crud, schema
-from emails import send_email, verify_token
+
+from emails import send_email, verify_token, send_password_reset_email
 from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
+from datetime import datetime
 
 import shutil
 import os
@@ -30,6 +34,7 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
+
 
 # Dependency
 def get_db():
@@ -169,7 +174,7 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     most_negative_sentences = sentiment_result['most_negative_sentences']
     most_positive_sentences = sentiment_result ['most_postive_sentences']
 
-    db_audio = models.Audio(audio_path=file.filename, user_id=user_id, size=size, duration=duration, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, most_negative_sentences = most_negative_sentences, most_positive_sentences = most_positive_sentences, agent_id=db_agent.id)
+    db_audio = models.Audio(audio_path=file.filename, user_id=user_id, size=size, duration=duration, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, most_negative_sentences = most_negative_sentences, most_positive_sentences = most_positive_sentences, agent_id=db_agent.id, agent_firstname= db_agent.first_name, agent_lastname= db_agent.last_name)
 
     db.add(db_audio)
     db.commit()
@@ -236,6 +241,7 @@ async def email_verification(request: Request, token: str, db: Session = Depends
 @app.patch("/user/update/{user_id}", summary = "update user details", response_model=schema.user_update, tags=['users'])
 def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depends(get_db)):
      return crud.update_user(db=db, user=user, user_id=user_id)
+
 
 @app.post("/tryForFree")
 async def free_trial(file: UploadFile = File(...)):
@@ -316,18 +322,54 @@ def get_recent_recordings(skip: int = 0, limit: int = 5, db: Session = Depends(g
     recordings = db.query(models.Audio).filter(models.Audio.user_id == user.id).order_by(models.Audio.timestamp.desc()).offset(skip).limit(limit).all()
     return recordings
 
+#get total analysis
+@app.get("/total-analysis", summary="get user total analysis", response_model = schema.TotalAnalysis)
+def get_total_analysis(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    overall_sentiment = db.query(models.Audio).filter(models.Audio.user_id == user.id)
+    week = datetime.now().isocalendar().week
+    month = datetime.now().month
+    list_month=[]
+    list_week=[]
+    week_item={}
+    month_item={}
+    result = dict()
+    for i in overall_sentiment:
+        if i.timestamp.month == month:
+            list_month.append(i.overall_sentiment)
+        if i.timestamp.isocalendar().week == week:
+            list_week.append(i.overall_sentiment)
+
+
+    week_item['id'] = 1
+    week_item['positive'] = list_week.count("Positive")
+    week_item['neutral'] = list_week.count("Neutral")
+    week_item['negative'] = list_week.count("Negative")
+
+    month_item['id'] = 1
+    month_item['positive'] = list_month.count("Positive")
+    month_item['neutral'] = list_month.count("Neutral")
+    month_item['negative'] = list_month.count("Negative")
+
+    result['week'] = [week_item]
+    result['month'] = [month_item]
+
+    return result
 
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
-def get_agents_leaderboard(db: Session = Depends(get_db)):
+def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     results = db.execute("""SELECT agent_id,
+        agent_firstname,
+        agent_lastname,
         SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score,
         SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score,
         SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
-        (positivity_score/(positivity_score+negativity_score+neutrality_score) * 10) AS Avergae_score
+        round(positivity_score/(positivity_score+negativity_score+neutrality_score) * 10, 2) AS Avergae_score
     FROM audios GROUP BY agent_id
     ORDER BY Positive_score DESC""")
     leaderboard = [dict(r) for r in results]
-    return {"Agents Leaderboard": leaderboard}
+    top3_agents = leaderboard[:3]
+    others = leaderboard[3:]
+    return {"Top3 Agents": top3_agents, "Other Agents": others}
 
 
 @app.get("/account", summary = "get user profile details", tags=['users'])
@@ -335,8 +377,21 @@ async def my_profile (db: Session = Depends(get_db), user: models.User = Depends
     user_id = user.id
     return crud.get_user_profile(db, user_id)
 
+
+@app.post("/forgot_password", tags=['users'])
+async def forgot_password(email: str, db: Session = Depends(get_db)):
+    user_exist = crud.get_user_by_email(db, email)
+    if not user_exist:
+        raise HTTPException(status_code=404, detail="User not Found")
+    #if not user_exist.is_verified:
+        #raise HTTPException(status_code=404, detail="You need to be verified to reset your password!!!")
+    token = await send_password_reset_email([user_exist.email], user_exist)
+    return token
+    
+
 if __name__ == "__main__":
     main()
+
 
 
 @app.post("/agent", tags=['create agent'])
