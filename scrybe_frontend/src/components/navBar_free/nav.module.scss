@@ -16,6 +16,9 @@
       padding-block: pix-rem(20);
     }
   }
+  .signinDesign{
+    cursor: pointer;
+  }
   &__closed {
     display: none;
     @include media($mobile) {
