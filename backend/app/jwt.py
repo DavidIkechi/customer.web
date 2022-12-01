@@ -6,7 +6,6 @@ from passlib.context import CryptContext
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 import models
-
 from crud import get_user_by_email
 # from db import engine, SessionLocal
 

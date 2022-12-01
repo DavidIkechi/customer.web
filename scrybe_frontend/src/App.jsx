@@ -123,57 +123,54 @@ function App() {
 
         {/* cant access without signin */}
 
-        <Route element={<RequireToken />}>
-          <Route path="/sentiment-analysis" element={<SentimentAnalysis />} />
-          <Route path="/transcriptions/:userId" element={<TranscribePage />} />
-          <Route path="/history" element={<History />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/dashboard" element={<DashboardOverview />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/leaderboard" element={<LeaderboardPage />} />
-          <Route path="/homeB" element={<HomePageB />} />
-          <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
-          <Route path="/agent-report" element={<AgentReport />} />
-          <Route path="/reviews" element={<Reviews />} />
+        {/* <Route element={<RequireToken />}> */}
+        <Route
+          path="/sentiment-analysis/:AudioId"
+          element={<SentimentAnalysis />}
+        />
+        <Route path="/transcriptions/:userId" element={<TranscribePage />} />
+        <Route path="/history" element={<History />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/dashboard" element={<DashboardOverview />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/leaderboard" element={<LeaderboardPage />} />
+        <Route path="/homeB" element={<HomePageB />} />
+        <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
+        <Route path="/agent-report" element={<AgentReport />} />
+        <Route path="/reviews" element={<Reviews />} />
 
-          {/* Try Routes */}
-          <Route path="/try-processing" element={<TryProcessing />} />
-          <Route path="/try-results" element={<TryResults />} />
-          {/*  */}
+        {/* Try Routes */}
+        <Route path="/try-processing" element={<TryProcessing />} />
+        <Route path="/try-results" element={<TryResults />} />
+        {/*  */}
 
-          {/* Settings Pages */}
-          <Route path="/settings" element={<SettingsIndex />} />
-          <Route
-            path="settings/account-security"
-            element={<AccountSettings />}
-          />
-          <Route
-            path="settings/notifications"
-            element={<NotificationSettings />}
-          />
-          {/*  */}
+        {/* Settings Pages */}
+        <Route path="/settings" element={<SettingsIndex />} />
+        <Route path="settings/account-security" element={<AccountSettings />} />
+        <Route
+          path="settings/notifications"
+          element={<NotificationSettings />}
+        />
+        {/*  */}
 
-          <Route
-            path="settings/personal-information"
-            element={<PersonalInformation />}
-          />
+        <Route
+          path="settings/personal-information"
+          element={<PersonalInformation />}
+        />
 
-          {/* ROutes without working paths */}
+        {/* ROutes without working paths */}
 
-          <Route
-            path="/uploaded"
-            element={<DummyPage someText="uploaded recordings" />}
-          />
-          <Route
-            path="/report"
-            element={<DummyPage someText="report and performance" />}
-          />
-          <Route
-            path="/upload"
-            element={<DummyPage someText="upload pages" />}
-          />
-          {/* ROutes without working paths */}
-        </Route>
+        <Route
+          path="/uploaded"
+          element={<DummyPage someText="uploaded recordings" />}
+        />
+        <Route
+          path="/report"
+          element={<DummyPage someText="report and performance" />}
+        />
+        <Route path="/upload" element={<DummyPage someText="upload pages" />} />
+        {/* ROutes without working paths */}
+        {/* </Route> */}
         {/* cant access without signin */}
 
         {/* <Route path="/help-support-general" element={<General />}>
