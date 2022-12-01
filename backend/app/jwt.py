@@ -15,6 +15,7 @@ import os
 
 load_dotenv()
 
+
 #Can be found in .env file at base directory
 JWT_ACCESS_SECRET_KEY = os.getenv("JWT_ACCESS_SECRET_KEY")
 JWT_REFRESH_SECRET_KEY = os.getenv("JWT_REFRESH_SECRET_KEY")

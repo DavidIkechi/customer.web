@@ -47,6 +47,8 @@ import PersonalInformation from "./pages/Settings/SettingsPageSubPages/PersonalI
 import PartnersPage from "./pages/PartnersPage";
 import React, { useState } from "react";
 import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
+import { UploadModal } from "./pages/UploadRecordingsModal";
+import Error from "./pages/Error/Error";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -112,6 +114,7 @@ function App() {
         />
         <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
         <Route path="/agent-report" element={<AgentReport />} />
+        <Route path="/upload-new-file" element={<UploadModal />} />
 
         {/* ROutes without working paths */}
 
@@ -155,6 +158,9 @@ function App() {
         <Route path="/partners" element={<PartnersPage />} />
         <Route path="press-article" element={<PressArticle />} />
         <Route path="pricing" element={<Pricing />} />
+
+        {/* Error page */}
+        <Route path="*" element={<Error />} />
       </Routes>
     </>
   );
