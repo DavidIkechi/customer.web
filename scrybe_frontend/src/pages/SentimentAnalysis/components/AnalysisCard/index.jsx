@@ -44,8 +44,9 @@ function AnalysisCard({ sentimentData }) {
             <div className={styles.title__line} />
           </div>
           <div className={styles.content__analysis__metrics}>
-            {sentimentData.positivity_score &&
-            sentimentData.negativity_score ? (
+            {sentimentData.positivity_score ||
+            sentimentData.negativity_score ||
+            sentimentData.neutrality_score ? (
               <>
                 <div className={`${styles.metric} ${styles.positive}`}>
                   Positive - {(sentimentData.positivity_score * 100).toFixed(2)}
