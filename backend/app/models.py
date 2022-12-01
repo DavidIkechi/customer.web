@@ -100,8 +100,6 @@ class History(Base):
     agent_name = Column(String(255), index=True)
     date_uploaded = Column(DateTime, default=datetime.utcnow(), index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
-
-
     
 class Analysis(Base):
     __tablename__ = "analysis"
@@ -124,4 +122,5 @@ class UserProfile(Base):
     phone_number = Column(String(255))
     company_address = Column(TEXT)
     email = Column(String(255), nullable=True)
-    company_id= Column(String(255), name="uuid", primary_key=True, default=generate_uuid)
+    company_id = Column(Integer, ForeignKey("companies.id"))
+    api_key = Column(String(255), name="uuid", primary_key=True, default=generate_uuid)
