@@ -1,12 +1,13 @@
-
-from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form
+from typing import List
+from models import Audio
+from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form, Query
 from fastapi_pagination import Page, paginate, Params
 from fastapi.middleware.cors import CORSMiddleware
 from routers.sentiment import sentiment
 from routers.transcribe import transcribe_file
 import auth
 from routers.score import score_count
-
+import uvicorn
 from routers.transcribe import transcript_router
 from routers.score import score_count
 import models, json
@@ -26,6 +27,9 @@ import fastapi as _fastapi
 import shutil
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Dependency
 def get_db():
@@ -73,10 +77,11 @@ origins = [
     "http://localhost:3000",
     "http://localhost:5173",
     "http://localhost:8000",
-    "https://scrybe.hng.tech",
-    "https://scrybe.hng.tech:80",
-    "https://scrybe.hng.tech:3000",
-    "https://scrybe.hng.tech:5173",
+    "https://heed.hng.tech",
+    "http://heed.hng.tech",
+    "https://heed.hng.tech:80",
+    "https://heed.hng.tech:3000",
+    "https://heed.hng.tech:5173",
 ]
 
 app.add_middleware(
@@ -86,6 +91,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+def main() -> None:
+    uvicorn.run(
+        "main:app", 
+        host=os.getenv("HOST"), 
+        port=int(os.getenv("PORT")), 
+        reload=os.getenv("RELOAD")
+    )
 
 
 @app.get("/")
@@ -131,6 +144,7 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     db.add(db_agent)
     db.commit()
     db.refresh(db_agent)
+    
 
     try:
         contents = file.file.read()
@@ -212,6 +226,7 @@ async def email_verification(request: Request, token: str, db: Session = Depends
 
     if user and not user.is_active:
         user.is_active = True
+        user.is_verified = True
         db.commit()
         return{
             "status" : "ok",
@@ -266,13 +281,10 @@ def get_sentiment_result(id: int, db: Session = Depends(get_db)):
             detail="The analysis doesn't exist",
         )
     return analysis
-
-
 @app.get("/audios", summary = "get all audio uploads", response_model=list[schema.Audio], tags=['audios'])
 def read_audios(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     audios = crud.get_audios(db, skip=skip, limit=limit)
     return audios
-
 
 @app.get('/audios/{audio_id}/sentiment')
 def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
@@ -323,3 +335,24 @@ async def my_profile (db: Session = Depends(get_db), user: models.User = Depends
     user_id = user.id
     return crud.get_user_profile(db, user_id)
 
+if __name__ == "__main__":
+    main()
+
+
+@app.post("/agent", tags=['create agent'])
+async def create_agent(agent: schema.AgentCreate, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    company_id = user.company_id
+    return crud.create_agent(db, agent, company_id)
+
+#delete single and multiple audios
+@app.delete("/audios/delete")
+def delete_audios(audios: List[int] = Query(None), db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    deleted_audios = []
+    for audio_id in audios:
+        db_audio = crud.get_audio(db, audio_id=audio_id)
+        if db_audio:
+            db.delete(db_audio)
+            db.commit()
+            deleted_audios.append(db_audio.audio_path)
+    return {"message": "operation successful", "deleted audion(s)": deleted_audios}
+            
