@@ -122,4 +122,5 @@ class UserProfile(Base):
     phone_number = Column(String(255))
     company_address = Column(String(64000))
     email = Column(String(255), nullable=True)
-    company_id= Column(String(255), name="uuid", primary_key=True, default=generate_uuid)
+    company_id = Column(Integer, ForeignKey("companies.id"))
+    api_key = Column(String(255), name="uuid", primary_key=True, default=generate_uuid)

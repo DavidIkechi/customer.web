@@ -1,5 +1,6 @@
-
-from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form
+from typing import List
+from models import Audio
+from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form, Query
 from fastapi_pagination import Page, paginate, Params
 from fastapi.middleware.cors import CORSMiddleware
 from routers.sentiment import sentiment
@@ -13,12 +14,15 @@ import models, json
 from auth import get_active_user, get_current_user
 from jwt import (
     main_login
-    )
+
+)
+
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from db import Base, engine, SessionLocal
 from sqlalchemy.orm import Session
 import crud, schema
-from emails import send_email, verify_token
+
+from emails import send_email, verify_token, send_password_reset_email
 from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
@@ -143,6 +147,7 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     db.add(db_agent)
     db.commit()
     db.refresh(db_agent)
+    
 
     try:
         contents = file.file.read()
@@ -224,6 +229,7 @@ async def email_verification(request: Request, token: str, db: Session = Depends
 
     if user and not user.is_active:
         user.is_active = True
+        user.is_verified = True
         db.commit()
         return{
             "status" : "ok",
@@ -279,13 +285,10 @@ def get_sentiment_result(id: int, db: Session = Depends(get_db)):
             detail="The analysis doesn't exist",
         )
     return analysis
-
-
 @app.get("/audios", summary = "get all audio uploads", response_model=list[schema.Audio], tags=['audios'])
 def read_audios(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     audios = crud.get_audios(db, skip=skip, limit=limit)
     return audios
-
 
 @app.get('/audios/{audio_id}/sentiment')
 def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
@@ -340,6 +343,35 @@ async def my_profile (db: Session = Depends(get_db), user: models.User = Depends
     user_id = user.id
     return crud.get_user_profile(db, user_id)
 
+@app.post("/forgot_password", tags=['users'])
+async def forgot_password(email: str, db: Session = Depends(get_db)):
+    user_exist = crud.get_user_by_email(db, email)
+    if not user_exist:
+        raise HTTPException(status_code=404, detail="User not Found")
+    #if not user_exist.is_verified:
+        #raise HTTPException(status_code=404, detail="You need to be verified to reset your password!!!")
+    token = await send_password_reset_email([user_exist.email], user_exist)
+    return token
+
+
 if __name__ == "__main__":
     main()
 
+
+@app.post("/agent", tags=['create agent'])
+async def create_agent(agent: schema.AgentCreate, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    company_id = user.company_id
+    return crud.create_agent(db, agent, company_id)
+
+#delete single and multiple audios
+@app.delete("/audios/delete")
+def delete_audios(audios: List[int] = Query(None), db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    deleted_audios = []
+    for audio_id in audios:
+        db_audio = crud.get_audio(db, audio_id=audio_id)
+        if db_audio:
+            db.delete(db_audio)
+            db.commit()
+            deleted_audios.append(db_audio.audio_path)
+    return {"message": "operation successful", "deleted audion(s)": deleted_audios}
+            
