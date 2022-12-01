@@ -46,7 +46,6 @@ function DashboardOverview() {
 
   useEffect(() => {
     setSelectedTotalAnalysis(totalAnalysisData.week);
-
   }, []);
 
   useEffect(() => {
@@ -73,7 +72,6 @@ function DashboardOverview() {
     });
   }, [selectedTotalRecordings]);
 
-
   function recordingsTimeStampFunc(e) {
     setSelectedTotalRecordings(totalRecordingData[e.target.value]);
   }
@@ -97,7 +95,6 @@ function DashboardOverview() {
               >
                 <option value="week">This week</option>
                 <option value="month">This month</option>
-
               </select>
               {/* <h2 className={styles.thismonth}>
               This month <img src={chevron} alt="" />

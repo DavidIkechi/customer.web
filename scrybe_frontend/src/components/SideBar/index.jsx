@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import PropTypes from "prop-types";
 import styles from "./SideBar.module.scss";
 import logoSVG from "./assets/logo.svg";
 import arrowDown from "./assets/icons/arrow-down.svg";
@@ -9,9 +8,9 @@ import arrowDown from "./assets/icons/arrow-down.svg";
 import leaderboard from "./assets/icons/leaderboard.svg";
 // import monthlyAnalysis from "./assets/icons/monthly-analysis.svg";
 import settings from "./assets/icons/settings.svg";
-import logoSVG from "./assets/logo.svg";
 import SearchInput from "./SearchInput";
-import styles from "./SideBar.module.scss";
+import myScrybe from "./assets/icons/my-scrybe.svg";
+import analysis from "./assets/icons/analysis.svg";
 
 /**
  * Wrap your component with this component to get a sidebar with a logo, a search input field and a list of links.
