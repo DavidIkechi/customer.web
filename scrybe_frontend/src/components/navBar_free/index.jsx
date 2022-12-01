@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import logo from "../../assets/heed_logo_with_text.svg";
 import styles from "./nav.module.scss";
-import logo from "../../assets/scrybe_logo_with_text.svg";
 
 function NavBar() {
   const [clicked, setClicked] = useState(false);
@@ -24,14 +24,14 @@ function NavBar() {
             <NavLink to="/"> Home </NavLink>
             <NavLink to="/services">Service</NavLink>
             <NavLink to="/solutions">Solutions</NavLink>
-            <NavLink to="/"> Pricing </NavLink>
-            <NavLink to="/"> Industry</NavLink>
-            <NavLink to="/">About Us</NavLink>
+            <NavLink to="/pricing"> Pricing </NavLink>
+            {/* <NavLink to="/industry"> Industry</NavLink> */}
+            <NavLink to="/about-us">About Us</NavLink>
           </div>
           <div className={styles.nav__ctas}>
-            <NavLink to="/signin" className={styles.signinDesign}>
-              Login
-            </NavLink>
+            <button type="button">
+              <NavLink to="/signin">Login</NavLink>
+            </button>
             <button type="button">
               <NavLink to="/try">Try for Free</NavLink>
             </button>

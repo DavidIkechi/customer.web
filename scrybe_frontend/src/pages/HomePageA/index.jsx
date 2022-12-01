@@ -32,9 +32,9 @@ function HomePage() {
               <img src={aboutUsimage} alt="" srcSet="" />
             </div>
             <p className={styles.aboutUs__details}>
-              Scrybe is a conversation intelligence tool that automatically
+              Heed is a conversation intelligence tool that automatically
               transcribes and analyzes recorded customer support conversations
-              to extract sentimental analysis data. We help you determinethe
+              to extract sentimental analysis data. We help you determine the
               efficiency of your customer support agents with the aim of
               improving overall customer satisfaction
             </p>
@@ -116,7 +116,7 @@ function HomePage() {
             FREQUENTLY ASKED <span>QUESTIONS</span>{" "}
           </h2>
           <div className={`${styles.faq_faqs} ${styles.faq_container}`}>
-            <FaqElement question="How do I register on Scrybe?" />
+            <FaqElement question="How do I register on Heed?" />
             <FaqElement question="What are the limitations of free package?" />
             <FaqElement question="What format can i use for uploads?" />
             <FaqElement question="Who has access to my data?" />

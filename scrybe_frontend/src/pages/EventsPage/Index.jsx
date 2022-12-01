@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useRef } from "react";
 import Event from "./Events.module.scss";
 
 import filterIcon from "./assets/filter-icon.svg";
@@ -14,20 +14,167 @@ import expect from "./assets/expect-icon.svg";
 import communication from "./assets/communication.png";
 import winingWay from "./assets/winning-way.png";
 import business from "./assets/business.png";
+import close from "./assets/Icon.svg";
 
 import NavBar from "../../components/navBar/index";
 import Footer from "../../components/footer/index";
 
 const Events = () => {
+  let modal = useRef();
+
   return (
-    <div className="event-section">
+    <div className={Event.eventSection}>
       <NavBar />
+
+      <dialog className={Event.eventModal} ref={(mode) => (modal = mode)}>
+        <div className={Event.modalHead}>
+          <h3>Filter events just how you want it</h3>
+          <img src={close} alt="close" onClick={() => modal.close()} />
+        </div>
+
+        <div className={Event.eventCalender}>
+          <h3>Event Calender By Month</h3>
+
+          <div className={Event.calenderContainer}>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>January</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>February</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>March</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>April</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>May</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>June</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>July</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>August</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>September</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>October</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>November</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>December</p>
+            </div>
+          </div>
+          <div className={Event.eventSelect}>
+            <input type="checkbox" />
+            <p>Select All</p>
+          </div>
+        </div>
+
+        <div className={Event.eventType}>
+          <h3>Event Type</h3>
+          <div className={Event.typeContainer}>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>Virtual</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>In-Person</p>
+            </div>
+          </div>
+        </div>
+
+        <div className={Event.eventSubject}>
+          <h3>Event Subject</h3>
+          <div className={Event.subjectContainer}>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>Sales</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>Mental Care</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>HR</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>Marketing</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>IT</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>Health Care</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>Workplace Issues</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>Services</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>Tech</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>Race and Gender Issues</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>Professional Services</p>
+            </div>
+            <div className={Event.eventCheck}>
+              <input type="checkbox" />
+              <p>Arts</p>
+            </div>
+          </div>
+          <div className={Event.eventSelect}>
+            <input type="checkbox" />
+            <p>Select All</p>
+          </div>
+        </div>
+
+        <div className={Event.filterBtn}>
+          <p>Clear All</p>
+          <button onClick={() => modal.close()}>Apply Filters</button>
+        </div>
+      </dialog>
+
       <div className={Event.headerSection}>
         <div className={Event.containers}>
           <div className={Event.eventFlex}>
             <h1>Events</h1>
 
-            <button>
+            <button onClick={() => modal.showModal()}>
               Filter Events
               <img src={filterIcon} alt="filter" />
             </button>
