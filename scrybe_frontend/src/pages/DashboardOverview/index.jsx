@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
-import { ThisWeekRecordings } from "./Data";
+import { totalRecordingData, totalAnalysisData } from "./Data";
 import { useMockAuthAndGetRecording } from "./hooks";
 import SideBar from "../../components/SideBar";
 import styles from "./DashboardOverview.module.scss";
@@ -29,23 +29,34 @@ ChartJS.register(CategoryScale, LinearScale, BarElement);
 
 function DashboardOverview() {
   const recentRecording = useMockAuthAndGetRecording();
-
   useEffect(() => {
-    console.log(recentRecording);
+    // console.log(recentRecording);
   }, [recentRecording]);
 
   const [chartData, setChartData] = useState({
     datasets: [],
   });
   const [chartOptions, setChartOptions] = useState({});
+  const [selectedTotalRecordings, setSelectedTotalRecordings] = useState([]);
+  const [selectedTotalAnalysis, setSelectedTotalAnalysis] = useState([]);
+
+  useEffect(() => {
+    setSelectedTotalRecordings(totalRecordingData.week);
+  }, []);
+
+  useEffect(() => {
+    setSelectedTotalAnalysis(totalAnalysisData.week);
+
+  }, []);
 
   useEffect(() => {
     setChartData({
-      labels: ThisWeekRecordings.map((data) => data.day),
+      labels: selectedTotalRecordings.map((data) => data.time),
       datasets: [
         {
           label: "",
-          data: ThisWeekRecordings.map((data) => data.totalRecordings),
+          data: selectedTotalRecordings.map((data) => data.totalRecordings),
+
           backgroundColor: ["#B0CAD9", "#005584", "#548DAD", "#004D78"],
           maxBarThickness: 10,
           borderSkipped: "start",
@@ -60,8 +71,15 @@ function DashboardOverview() {
         },
       },
     });
-  }, []);
+  }, [selectedTotalRecordings]);
 
+
+  function recordingsTimeStampFunc(e) {
+    setSelectedTotalRecordings(totalRecordingData[e.target.value]);
+  }
+  function analysisTimeStampFunc(e) {
+    setSelectedTotalAnalysis(totalAnalysisData[e.target.value]);
+  }
   return (
     <SideBar>
       <section className={styles.dashboard_overview}>
@@ -72,10 +90,14 @@ function DashboardOverview() {
               <h1>
                 <img src={toneWave} alt="" /> Total Recordings
               </h1>
-              <select className={styles.dropdown}>
+              <select
+                className={styles.dropdown}
+                id="timeStamp"
+                onChange={recordingsTimeStampFunc}
+              >
                 <option value="week">This week</option>
                 <option value="month">This month</option>
-                <option value="year">This year</option>
+
               </select>
               {/* <h2 className={styles.thismonth}>
               This month <img src={chevron} alt="" />
@@ -92,10 +114,12 @@ function DashboardOverview() {
               <h1>
                 <img src={analysis} alt="Total recording" /> Total Analysis
               </h1>
-              <select className={styles.dropdown}>
+              <select
+                className={styles.dropdown}
+                onChange={analysisTimeStampFunc}
+              >
                 <option value="week">This week</option>
                 <option value="month">This month</option>
-                <option value="year">This year</option>
               </select>
               {/* <h2 className={styles.thismonth}>
               This month <img src={chevron} alt="analysis" />
@@ -103,9 +127,15 @@ function DashboardOverview() {
             </div>
             <div className={styles.subcontent_con}>
               <div className={styles.circles}>
-                <div className={styles.meduim}>23%</div>
-                <div className={styles.small}>8%</div>
-                <div className={styles.big}>65%</div>
+                <div className={styles.meduim}>
+                  {selectedTotalAnalysis.map((data) => data.neutral)}%
+                </div>
+                <div className={styles.small}>
+                  {selectedTotalAnalysis.map((data) => data.negative)}%
+                </div>
+                <div className={styles.big}>
+                  {selectedTotalAnalysis.map((data) => data.positive)}%
+                </div>
               </div>
               <div className={styles.scale}>
                 <h3>
@@ -133,7 +163,6 @@ function DashboardOverview() {
               <select className={styles.dropdown}>
                 <option value="week">This week</option>
                 <option value="month">This month</option>
-                <option value="year">This year</option>
               </select>
               {/* <h2 className={styles.thismonth}>
               This month <img src={chevron} alt="analysis" />
