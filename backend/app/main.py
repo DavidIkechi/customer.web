@@ -12,7 +12,7 @@ from routers.score import score_count
 import models, json
 from auth import get_active_user, get_current_user
 from jwt import (
-    main_login, main_reset_password
+    main_login
 
 )
 
@@ -21,7 +21,7 @@ from db import Base, engine, SessionLocal
 from sqlalchemy.orm import Session
 import crud, schema
 
-from emails import send_email, verify_token, send_password_reset_email, verify_reset_token
+from emails import send_email, verify_token, send_password_reset_email
 from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
@@ -335,15 +335,3 @@ async def forgot_password(email: str, db: Session = Depends(get_db)):
         #raise HTTPException(status_code=404, detail="You need to be verified to reset your password!!!")
     token = await send_password_reset_email([user_exist.email], user_exist)
     return token
-
-    
-@app.post("/reset_password", tags=['users'])
-async def reset_password(token: str, password1: str, password2: str, db: Session = Depends(get_db)):
-    if (password1 != password2):
-        raise HTTPException(status_code=404, detail="Passwords does not match")
-    #decode the token
-    user = await verify_reset_token(token, db)
-    check = await main_reset_password(password1, user, db)
-    if not check:
-        raise HTTPException(status_code=404, detail="New password must be different from old")
-    return check

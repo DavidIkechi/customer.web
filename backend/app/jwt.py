@@ -6,7 +6,7 @@ from passlib.context import CryptContext
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 import models
-from crud import get_user_by_email, update_password
+from crud import get_user_by_email
 # from db import engine, SessionLocal
 
 from dotenv import load_dotenv
@@ -165,11 +165,3 @@ async def refresh(refresh_token, db):
     if user is None:
         raise user_not_found_exception
 
-
-async def main_reset_password(password1, user, db):
-    #check if its not in DB
-    if verify_password(password1, user.password):
-        return False
-    #save the new password
-    new_p = update_password(db, password1, user)
-    return new_p
