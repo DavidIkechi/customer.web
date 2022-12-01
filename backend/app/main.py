@@ -319,7 +319,7 @@ def get_recent_recordings(skip: int = 0, limit: int = 5, db: Session = Depends(g
 
 
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
-def get_agents_leaderboard(db: Session = Depends(get_db),user: models.User = Depends(get_active_user)):
+def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     results = db.execute("""SELECT agent_id,
         agent_firstname,
         agent_lastname,
