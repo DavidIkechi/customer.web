@@ -139,21 +139,11 @@ const index = () => {
             </div>
             <div className={styles.third__bottom}>
               <div className={styles.third__row}>
-                <div className={styles.third__text}>
+                <div
+                  className={`${styles.third__text} ${styles.mobile__text} `}
+                >
                   <p className={styles.third__subtext}>
                     Upload recorded calls from Sale/Support Team
-                    <ul className={styles.third__lists}>
-                      <li className={styles.each__list}>
-                        a readable and searchable text file{" "}
-                      </li>
-                      <li className={styles.each__list}>
-                        A Sentiment Analysis report
-                      </li>
-                      <li className={styles.each__list}>
-                        A Sentiment score is given on Agent record to prove
-                        performance.
-                      </li>
-                    </ul>
                   </p>
                 </div>
                 <div className={styles.third__image}>
@@ -174,27 +164,38 @@ const index = () => {
                 </div>
                 <div className={styles.third__text}>
                   <p className={styles.third__subtext}>
-                    Heed automatically transcribes and analyzes your file within
-                    minutes. We will also notify you via mail when your report
-                    is ready.
+                    Heed will analyze the <br />
+                    conversation to produce:
                   </p>
+                  <ul className={styles.third__lists}>
+                    <li className={styles.each__list}>
+                      a readable and searchable text file
+                    </li>
+                    <li className={styles.each__list}>
+                      A Sentiment Analysis report
+                    </li>
+                    <li className={styles.each__list}>
+                      A Sentiment score is given on Agent record to prove
+                      performance.
+                    </li>
+                  </ul>
                 </div>
               </div>
               <div className={styles.third__row}>
                 <div className={styles.third__text}>
                   <p className={styles.third__subtext}>
                     Analyze the insights and take action.
-                    <ul className={styles.third__lists}>
-                      <li className={styles.each__list}>
-                        Get an overview of your agents' performance
-                      </li>
-                      <li className={styles.each__list}>
-                        Measure the quality of their interactions and see which
-                        agents consistently get positive sentiment results and
-                        those which need improvement.
-                      </li>
-                    </ul>
                   </p>
+                  <ul className={styles.third__lists}>
+                    <li className={styles.each__list}>
+                      Get an overview of your agents' performance
+                    </li>
+                    <li className={styles.each__list}>
+                      Measure the quality of their interactions and see which
+                      agents consistently get positive sentiment results and
+                      those which need improvement.
+                    </li>
+                  </ul>
                 </div>
                 <div className={styles.third__image}>
                   <img
@@ -261,9 +262,13 @@ const index = () => {
               </div>
             </div>
           </div>
-          <div className={styles.layout__two}>
-            <div className={styles.fourth__heading}>
-              <h3 className={styles.fourth__head}>
+        </div>
+      </section>
+      <section className={styles.fifth__section}>
+        <div className={styles.sect__container}>
+          <div className={styles.top__fifth}>
+            <div className={styles.fifth__heading}>
+              <h3 className={styles.fifth__head}>
                 Drive Sales And Support Team Efficiency
               </h3>
             </div>
@@ -274,8 +279,8 @@ const index = () => {
               </p>
             </div>
           </div>
-          <div className={styles.layout__three}>
-            <button className={styles.fourth__action}>Get Started</button>
+          <div className={styles.bottom__fifth}>
+            <button className={styles.fifth__action}>Get Started</button>
           </div>
         </div>
       </section>

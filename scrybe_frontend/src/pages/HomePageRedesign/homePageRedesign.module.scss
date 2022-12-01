@@ -18,14 +18,14 @@ button {
 }
 
 .sect__container {
-  width: 95%;
+  width: 90%;
   max-width: 1440px;
   margin: 0 auto;
 }
 
 .first__section {
   background-image: url(./assets/background__mobile.png);
-  height: 100vh;
+  height: 130vh;
   width: 100%;
   background-repeat: no-repeat;
   background-size: cover;
@@ -34,7 +34,182 @@ button {
   .hero__text {
     padding-top: 1em;
     margin-top: 2em;
-    
+    text-align: center;
   }
 
+  .hero__text .hero__head {
+    font-size: 2.2rem;
+    color: #313131;
+    font-weight: 700;
+    font-style: bold;
+    fill: solid;
+    line-height: 1.5rem;
+  }
+
+  .hero__subtext {
+    width: 95%;
+    margin: 2em auto;
+  }
+
+  .hero__text .hero__subhead {
+    font-size: .9rem;
+    color: #454545;
+    font-weight: 400;
+    font-style: normal;
+    fill: solid;
+    line-height: .8rem;
+  }
+
+  .hero__bottom .hero__action {
+    border: 1px solid #D9D9D9;
+    border-radius: .3rem;
+    background-color: #FFFFFF;
+    padding: .2em .5em;
+  }
+
+  .hero__bottom .button__content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .hero__bottom .hero__buttonOne, .hero__bottom .hero__buttonTwo {
+    padding: .6em 1.8em;
+    font-size: .8rem;
+    font-weight: 400;
+    font-style: normal;
+    fill: solid;
+    line-height: .8rem;
+    flex-basis: 48%;
+  }
+
+  .hero__bottom .hero__image {
+    margin-top: 2.5em;
+  }
+
+//   border-bottom: 1px solid #B0CAD9;
+
+}
+
+
+// Styling of the second section
+.second__section {
+    margin-top: 3em;
+
+    .second__top {
+        text-align: center;
+        margin-bottom: 2em;
+    }
+
+    .second__top .second__head {
+        font-size: 2rem;
+        color: #313131;
+        font-weight: 700;
+        font-style: bold;
+        fill: solid;
+        line-height: 2rem;
+    }
+
+    .second__bottom .second__flex {
+        border: 1px solid #D9D9D9;
+        margin-bottom: 1em;
+        padding: 1.5em 1em;
+        border-radius: .8rem;
+    }
+
+    .second__bottom .top__layout {
+        text-align: center;
+    }
+
+    .second__bottom .second__icons {
+        width: 2rem;
+        margin: 0 auto;
+    }
+
+    .second__bottom .each__heading {
+        padding: 0em 1.5em;
+        margin-top: .5em;
+    }
+
+    .second__bottom .each__head {
+        font-size: 1.5rem;
+        color: #313131;
+        font-weight: 700;
+        font-style: bold;
+        fill: solid;
+        line-height: 1.5rem;
+    }
+
+    .second__bottom .bottom__layout {
+        margin-top: 1em;
+        text-align: center;
+    }
+
+    .second__bottom .second__subhead {
+        font-size: .8rem;
+        color: #454545;
+        font-weight: 400;
+        font-style: normal;
+        fill: solid;
+        line-height: 1.25rem;
+    }
+}
+
+.third__section {
+    margin-top: 5em;
+
+    .third__top {
+        text-align: center;
+    }
+
+    .third__top .third__head {
+        font-size: 2.5rem;
+        color: #313131;
+        font-weight: 700;
+        font-style: bold;
+        fill: solid;
+        line-height: 1.5rem;
+    }
+
+    .third__bottom .third__row {
+        display: flex;
+        flex-direction: column-reverse;
+        margin-top: 2.3em;
+    }
+
+    .third__bottom .third__col {
+        margin-top: 2.3em;
+    }
+
+    .third__bottom .third__text {
+        margin-top: 1em;
+    }
+
+    .third__bottom .mobile__text {
+        text-align: center;
+    }
+
+    .third__bottom .third__subtext {
+        font-size: 1.2rem;
+        color: #454545;
+        font-weight: 600;
+        font-style: bold;
+        fill: solid;
+        line-height: 1rem;
+    }
+
+    .third__bottom .third__lists {
+        margin-left: 1.5em;
+    }
+
+    .third__bottom .third__lists .each__list {
+        list-style: disc;
+        font-size: 1.2rem;
+        color: #454545;
+        font-weight: 600;
+        font-style: bold;
+        fill: solid;
+        line-height: 1rem;
+    }
 }
