@@ -2,7 +2,7 @@
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import status, HTTPException, Depends
 from crud import get_user_by_email
-#from jose import jwt, JWTError
+from jose import jwt, JWTError
 import os
 import services as _services
 from dotenv import load_dotenv
