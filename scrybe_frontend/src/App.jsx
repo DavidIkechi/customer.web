@@ -132,6 +132,19 @@ function App() {
           element={<PersonalInformation />}
         />
 
+        {/* ROutes without working paths */}
+
+        <Route
+          path="/uploaded"
+          element={<DummyPage someText="uploaded recordings" />}
+        />
+        <Route
+          path="/report"
+          element={<DummyPage someText="report and performance" />}
+        />
+        <Route path="/upload" element={<DummyPage someText="upload pages" />} />
+        {/* ROutes without working paths */}
+
         {/* access without sign in */}
 
         {/* <Route path="/industry" exact element={<Industry />} /> */}
@@ -145,15 +158,15 @@ function App() {
           {/* ROutes without working paths */}
 
           <Route
-            path="/uploaded"
+            path="/dummyuploaded"
             element={<DummyPage someText="uploaded recordings" />}
           />
           <Route
-            path="/report"
+            path="/dummyreport"
             element={<DummyPage someText="report and performance" />}
           />
           <Route
-            path="/upload"
+            path="/dummyupload"
             element={<DummyPage someText="upload pages" />}
           />
           {/* ROutes without working paths */}
