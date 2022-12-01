@@ -35,6 +35,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 # Dependency
 def get_db():
     db = SessionLocal()
@@ -376,6 +377,7 @@ async def my_profile (db: Session = Depends(get_db), user: models.User = Depends
     user_id = user.id
     return crud.get_user_profile(db, user_id)
 
+
 @app.post("/forgot_password", tags=['users'])
 async def forgot_password(email: str, db: Session = Depends(get_db)):
     user_exist = crud.get_user_by_email(db, email)
@@ -385,10 +387,11 @@ async def forgot_password(email: str, db: Session = Depends(get_db)):
         #raise HTTPException(status_code=404, detail="You need to be verified to reset your password!!!")
     token = await send_password_reset_email([user_exist.email], user_exist)
     return token
-
+    
 
 if __name__ == "__main__":
     main()
+
 
 
 @app.post("/agent", tags=['create agent'])
