@@ -12,6 +12,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+
+  .sidebarContainer{
+    height: 100%;
+  }
 
   @include mixins.sm {
     height: 100%;

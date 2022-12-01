@@ -1,0 +1,130 @@
+.grid__view {
+  max-width: 1440px;
+}
+
+.grid__container {
+  background: #ffffff;
+  width: 300px;
+  padding: 1.5rem;
+  border-radius: 15px;
+  transition: all 0.7s ease;
+  cursor: default;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  translate: 0 100px;
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+  @keyframes fadeIn {
+    100% {
+      translate: 0 0;
+      opacity: 1;
+    }
+  }
+  &:hover {
+    scale: 1.1;
+  }
+  @media (max-width: 1100px) {
+    min-width: 100%;
+  }
+  @media (max-width: 670px) {
+    max-width: 100%;
+    width: 260px;
+  }
+  @media (max-width: 600px) {
+    width: 400px;
+  }
+  @media (max-width: 460px) {
+    width: 370px;
+    display: flex;
+    border-radius: 6px;
+    box-shadow: 0 0px 15px rgba(0, 0, 0, 0.068);
+  }
+  @media (max-width: 400px) {
+    width: 350px;
+  }
+}
+.grid__image {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  div {
+    &:first-child {
+      width: 30%;
+    }
+    &:last-child {
+      width: 70%;
+    }
+  }
+  img {
+    width: 45px;
+    height: 45px;
+    background: #e6f6ff;
+    border-radius: 50%;
+    padding: 10px;
+  }
+  h3 {
+    font-weight: 600;
+    color: #454545;
+  }
+  p {
+    color: #828282;
+    font-size: 14px;
+  }
+  @media (max-width: 670px) {
+    h3 {
+      font-size: 14px;
+    }
+  }
+  @media (max-width: 600px) {
+    div {
+      &:first-child {
+        width: 50%;
+      }
+      &:last-child {
+        width: 50%;
+      }
+    }
+    h3 {
+      font-size: 19px;
+    }
+  }
+  @media (max-width: 460px) {
+    width: 70%;
+    margin-bottom: 0;
+    div {
+      &:first-child {
+        width: 30%;
+      }
+      &:last-child {
+        width: 70%;
+      }
+    }
+    h3 {
+      font-size: 14px;
+    }
+  }
+}
+
+.grid__btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  button {
+    text-transform: capitalize !important;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    padding: 3px 8px;
+  }
+  span {
+    font-weight: 600;
+    font-size: 11px;
+    color: #828282;
+  }
+  @media (max-width: 460px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+  }
+}

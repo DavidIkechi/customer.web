@@ -46,6 +46,7 @@ function DashboardOverview() {
 
   useEffect(() => {
     setSelectedTotalAnalysis(totalAnalysisData.week);
+
   }, []);
 
   useEffect(() => {
@@ -55,6 +56,7 @@ function DashboardOverview() {
         {
           label: "",
           data: selectedTotalRecordings.map((data) => data.totalRecordings),
+
           backgroundColor: ["#B0CAD9", "#005584", "#548DAD", "#004D78"],
           maxBarThickness: 10,
           borderSkipped: "start",
@@ -70,6 +72,7 @@ function DashboardOverview() {
       },
     });
   }, [selectedTotalRecordings]);
+
 
   function recordingsTimeStampFunc(e) {
     setSelectedTotalRecordings(totalRecordingData[e.target.value]);
@@ -94,6 +97,7 @@ function DashboardOverview() {
               >
                 <option value="week">This week</option>
                 <option value="month">This month</option>
+
               </select>
               {/* <h2 className={styles.thismonth}>
               This month <img src={chevron} alt="" />

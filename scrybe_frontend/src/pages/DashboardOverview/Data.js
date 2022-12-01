@@ -69,7 +69,6 @@ export const totalAnalysisData = {
       negative: 10,
     },
   ],
-
   month: [
     {
       id: 1,

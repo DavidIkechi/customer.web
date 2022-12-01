@@ -85,7 +85,7 @@
 
     button {
       a {
-        color: white;
+        // color: white;
         text-decoration: none;
       }
     }
@@ -104,6 +104,9 @@
       all: unset;
       color: #5e5e5e;
       font-weight: 300;
+      &:hover {
+        color: #006cff;
+    }
     }
   }
   &__img {
@@ -136,11 +139,31 @@
         }
         border: 1px solid #006cff;
         font-size: clamp(0.625rem, 0.489rem + 0.68vw, 1rem);
+        cursor: pointer;
+        &:hover {
+          background-color: #006cff;
+          & > a{
+            color: #fff;
+          }
+      }
+      & > a{
+        color: #006cff;
+      }
       }
       &:nth-child(2) {
         background-color: #006cff;
         color: white;
         font-size: clamp(0.625rem, 0.489rem + 0.68vw, 1rem);
+        &:hover {
+          background-color: #fff;
+          border: 1px solid #006cff;
+          a{
+            color: #006cff;
+          } 
+      }
+      & > a{
+        color: #fff;
+      }
       }
     }
   }
