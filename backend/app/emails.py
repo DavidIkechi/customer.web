@@ -1,7 +1,7 @@
 from fastapi import (BackgroundTasks, UploadFile,File, Form, Depends, HTTPException, status)
 from fastapi_mail import FastMail, ConnectionConfig, MessageSchema
 from typing import List
-from jose import jwt
+#from jose import jwt
 from fastapi.exceptions import HTTPException
 from dotenv import dotenv_values
 from models import User
@@ -15,7 +15,7 @@ import os
 
 # Load all environment variables
 load_dotenv()
-
+"""
 conf = ConnectionConfig(
     MAIL_USERNAME = os.getenv('EMAIL'),
     MAIL_PASSWORD = os.getenv('PASS'),
@@ -27,7 +27,7 @@ conf = ConnectionConfig(
     MAIL_SSL_TLS= True,
     VALIDATE_CERTS = True
 )
-
+"""
 async def send_email(email: List, instance: User):
     token_data = {
         'email': instance.email,
