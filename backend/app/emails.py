@@ -20,11 +20,11 @@ conf = ConnectionConfig(
     MAIL_USERNAME = os.getenv('EMAIL'),
     MAIL_PASSWORD = os.getenv('PASS'),
     MAIL_FROM = os.getenv('EMAIL'),
-    MAIL_PORT = 465,
+    MAIL_PORT = 587,
     MAIL_SERVER = 'smtp.gmail.com',
-    MAIL_STARTTLS = False,
+    MAIL_STARTTLS = True,
     USE_CREDENTIALS = True,
-    MAIL_SSL_TLS= True,
+    MAIL_SSL_TLS= False,
     VALIDATE_CERTS = True
 )
 
