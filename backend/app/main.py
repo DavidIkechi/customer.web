@@ -346,6 +346,6 @@ def delete_audios(audios: List[int] = Query(None), db: Session = Depends(get_db)
         if db_audio:
             db.delete(db_audio)
             db.commit()
-            delete_audios.append(db_audio.audio_path)
-    return {"message": "operation successful", "deleted audion(s)": delete_audios}
+            deleted_audios.append(db_audio.audio_path)
+    return {"message": "operation successful", "deleted audion(s)": deleted_audios}
             
