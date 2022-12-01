@@ -6,9 +6,9 @@ import logoSVG from "./assets/logo.svg";
 import arrowDown from "./assets/icons/arrow-down.svg";
 import myScrybe from "./assets/icons/my-scrybe.svg";
 import analysis from "./assets/icons/analysis.svg";
-import insight from "./assets/icons/insight.svg";
+// import insight from "./assets/icons/insight.svg";
 import leaderboard from "./assets/icons/leaderboard.svg";
-import monthlyAnalysis from "./assets/icons/monthly-analysis.svg";
+// import monthlyAnalysis from "./assets/icons/monthly-analysis.svg";
 import settings from "./assets/icons/settings.svg";
 
 function SideBar({ children }) {
@@ -34,7 +34,7 @@ function SideBar({ children }) {
           }
         >
           <img src={logoSVG} alt="Scrybe logo" />
-          <p>Scrybe</p>
+          <p>Heed</p>
         </NavLink>
         <div className={styles.navLinks}>
           <NavLink
@@ -50,7 +50,7 @@ function SideBar({ children }) {
             }
           >
             <img src={myScrybe} alt="myScrybe icon" />
-            <p>My Scrybe</p>
+            <p>Overview</p>
           </NavLink>
           <NavLink
             to="/sentiment-analysis"
@@ -67,8 +67,8 @@ function SideBar({ children }) {
             <img src={analysis} alt="analysis icon" />
             <p>Analysis</p>
           </NavLink>
-          <NavLink
-            to="./"
+          {/* <NavLink
+            to="/sentiment-analysis"
             className={({ isActive }) =>
               isActive
                 ? `${styles.active} ${styles.navLink} ${
@@ -81,7 +81,7 @@ function SideBar({ children }) {
           >
             <img src={insight} alt="insight icon" />
             <p>Insight</p>
-          </NavLink>
+          </NavLink> */}
           <NavLink
             to="/leaderboard"
             className={({ isActive }) =>
@@ -97,7 +97,7 @@ function SideBar({ children }) {
             <img src={leaderboard} alt="leaderboard icon" />
             <p>Leaderboard</p>
           </NavLink>
-          <NavLink
+          {/* <NavLink
             to="/sentiment-analysis/monthly-analysis"
             className={({ isActive }) =>
               isActive
@@ -111,7 +111,7 @@ function SideBar({ children }) {
           >
             <img src={monthlyAnalysis} alt="monthly analysis icon" />
             <p>Monthly Analysis</p>
-          </NavLink>
+          </NavLink> */}
           <NavLink
             to="/settings"
             className={({ isActive }) =>
