@@ -48,6 +48,7 @@ import PartnersPage from "./pages/PartnersPage";
 import React, { useState } from "react";
 import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
 import Error from "./pages/Error/Error";
+import WithAuth from "./HOC";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -71,7 +72,14 @@ function App() {
         <Route path="/about-us" element={<About />} />
         <Route path="/events" element={<Events />} />
         <Route path="/dashboard" element={<DashboardOverview />} />
-        <Route path="/account" element={<Account />} />
+        <Route
+          path="/account"
+          element={
+            <WithAuth>
+              <Account />{" "}
+            </WithAuth>
+          }
+        />
         {/* <Route path="/industry" exact element={<Industry />} /> */}
         {/* <Route path="/industry-article" element={<IndustryArticles />} />
         <Route path="/how-it-works" element={<HowitWorks />} /> */}
