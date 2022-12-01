@@ -14,12 +14,15 @@ import models, json
 from auth import get_active_user, get_current_user
 from jwt import (
     main_login
-    )
+
+)
+
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from db import Base, engine, SessionLocal
 from sqlalchemy.orm import Session
 import crud, schema
-from emails import send_email, verify_token
+
+from emails import send_email, verify_token, send_password_reset_email
 from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
@@ -334,6 +337,17 @@ def get_agents_leaderboard(db: Session = Depends(get_db)):
 async def my_profile (db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     user_id = user.id
     return crud.get_user_profile(db, user_id)
+
+@app.post("/forgot_password", tags=['users'])
+async def forgot_password(email: str, db: Session = Depends(get_db)):
+    user_exist = crud.get_user_by_email(db, email)
+    if not user_exist:
+        raise HTTPException(status_code=404, detail="User not Found")
+    #if not user_exist.is_verified:
+        #raise HTTPException(status_code=404, detail="You need to be verified to reset your password!!!")
+    token = await send_password_reset_email([user_exist.email], user_exist)
+    return token
+
 
 if __name__ == "__main__":
     main()
