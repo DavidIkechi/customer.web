@@ -86,6 +86,109 @@
     margin-bottom: 20px;
 }
 
+.eventSection {
+    position: relative;
+
+    .eventModal::-webkit-scrollbar {
+        display: none;
+    }
+
+    .eventModal {
+        max-width: 550px;
+        margin: auto;
+        position: absolute;
+        z-index: 9999;
+        background: #fff;
+        left: 0;
+        right: 0;
+        border-radius: 10px;
+        border: 0;
+
+        .modalHead {
+            background: #006CFF;
+            text-align: center;
+            padding: 12px 0;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+
+            h3 {
+                color: #fff;
+                font-weight: 500;
+                font-size: 25px;
+            }
+
+            img {
+                position: absolute;
+                top: 0;
+                width: 16px;
+                cursor: pointer;
+                right: 0;
+            }
+        }
+
+        .eventCalender, .eventType, .eventSubject {
+            padding: 10px 30px;
+
+            h3 {
+                color: #3F3F3F;
+                font-weight: 600;
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+
+            .calenderContainer, .typeContainer, .subjectContainer {
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 1.5rem;
+
+                .eventCheck {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+
+                    input {
+                        width: 20px !important;
+                    }
+                }
+            }
+
+            .eventSelect {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 8px;
+                margin-top: 20px;
+
+                input {
+                    width: 20px !important;
+                }
+            }
+        }
+
+        .filterBtn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 30px;
+
+            p {
+            color: #006CFF;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        button {
+            @include btn;
+            &:hover {
+                @include btnStates;
+            }
+        }
+    }
+}
+}
+
 .headerSection {
     background: #F9FDFF;
     padding: 4rem 0;
