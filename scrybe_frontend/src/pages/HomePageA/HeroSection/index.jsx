@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./hero.module.scss";
 import heroImage from "./assets/Group 1000000899.webp";
 import curves from "./assets/Vector 13.webp";
+import { NavLink } from "react-router-dom";
 
 function Hero() {
   return (
@@ -20,12 +21,12 @@ function Hero() {
             your customer support conversations{" "}
           </p>
           <div className={styles.CTAs}>
-            <a href="/dashboard" className={styles.ctaDemo}>
+            <NavLink to="/demos" className={styles.ctaDemo}>
               Request a Demo
-            </a>
-            <a href="/transcriptions" className={styles.ctaStarter}>
+            </NavLink>
+            <NavLink to="/signin" className={styles.ctaStarter}>
               Get Started
-            </a>
+            </NavLink>
           </div>
         </div>
         <div className={styles.heroImage}>

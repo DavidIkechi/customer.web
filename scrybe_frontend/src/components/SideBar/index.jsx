@@ -1,12 +1,13 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import analysis from "./assets/icons/analysis.svg";
+import PropTypes from "prop-types";
+import styles from "./SideBar.module.scss";
+import logoSVG from "./assets/logo.svg";
 import arrowDown from "./assets/icons/arrow-down.svg";
-import insight from "./assets/icons/insight.svg";
+// import insight from "./assets/icons/insight.svg";
 import leaderboard from "./assets/icons/leaderboard.svg";
-import monthlyAnalysis from "./assets/icons/monthly-analysis.svg";
-import myScrybe from "./assets/icons/my-scrybe.svg";
+// import monthlyAnalysis from "./assets/icons/monthly-analysis.svg";
 import settings from "./assets/icons/settings.svg";
 import logoSVG from "./assets/logo.svg";
 import SearchInput from "./SearchInput";
@@ -76,7 +77,7 @@ function SideBar({
             }
           >
             <img src={myScrybe} alt="myScrybe icon" />
-            <p>My Head</p>
+            <p>Overview</p>
           </NavLink>
           <NavLink
             to="/sentiment-analysis"
@@ -93,8 +94,8 @@ function SideBar({
             <img src={analysis} alt="analysis icon" />
             <p>Analysis</p>
           </NavLink>
-          <NavLink
-            to="./"
+          {/* <NavLink
+            to="/sentiment-analysis"
             className={({ isActive }) =>
               isActive
                 ? `${styles.active} ${styles.navLink} ${
@@ -107,7 +108,7 @@ function SideBar({
           >
             <img src={insight} alt="insight icon" />
             <p>Insight</p>
-          </NavLink>
+          </NavLink> */}
           <NavLink
             to="/leaderboard"
             className={({ isActive }) =>
@@ -123,7 +124,7 @@ function SideBar({
             <img src={leaderboard} alt="leaderboard icon" />
             <p>Leaderboard</p>
           </NavLink>
-          <NavLink
+          {/* <NavLink
             to="/sentiment-analysis/monthly-analysis"
             className={({ isActive }) =>
               isActive
@@ -137,7 +138,7 @@ function SideBar({
           >
             <img src={monthlyAnalysis} alt="monthly analysis icon" />
             <p>Monthly Analysis</p>
-          </NavLink>
+          </NavLink> */}
           <NavLink
             to="/settings"
             className={({ isActive }) =>
