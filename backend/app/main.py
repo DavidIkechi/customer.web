@@ -226,6 +226,7 @@ async def email_verification(request: Request, token: str, db: Session = Depends
 
     if user and not user.is_active:
         user.is_active = True
+        user.is_verified = True
         db.commit()
         return{
             "status" : "ok",
@@ -336,6 +337,12 @@ async def my_profile (db: Session = Depends(get_db), user: models.User = Depends
 
 if __name__ == "__main__":
     main()
+
+
+@app.post("/agent", tags=['create agent'])
+async def create_agent(agent: schema.AgentCreate, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    company_id = user.company_id
+    return crud.create_agent(db, agent, company_id)
 
 #delete single and multiple audios
 @app.delete("/audios/delete")
