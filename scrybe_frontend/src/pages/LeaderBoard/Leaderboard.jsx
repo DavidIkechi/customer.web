@@ -38,7 +38,7 @@ function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState([]);
   function loadAgentActivity() {
     axios
-      .get("http://scrybe.hng.tech:5000/api/leaderboard")
+      .get("http://heedapi.herokuapp.com/leaderboard")
       .then((response) => {
         console.log(response.data["Agents Leaderboard"]);
         const arr = response.data["Agents Leaderboard"];
