@@ -47,6 +47,7 @@ import PersonalInformation from "./pages/Settings/SettingsPageSubPages/PersonalI
 import PartnersPage from "./pages/PartnersPage";
 import React, { useState, useEffect } from "react";
 import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
+import { UploadModal } from "./pages/UploadRecordingsModal";
 import Error from "./pages/Error/Error";
 
 const AuthApi = React.createContext();
@@ -84,6 +85,21 @@ function App() {
           path="/pw-reset-successful"
           element={<PasswordResetSuccessful />}
         />
+        <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
+        <Route path="/agent-report" element={<AgentReport />} />
+        <Route path="/upload-new-file" element={<UploadModal />} />
+
+        {/* ROutes without working paths */}
+
+        <Route
+          path="/uploaded"
+          element={<DummyPage someText="uploaded recordings" />}
+        />
+        <Route
+          path="/report"
+          element={<DummyPage someText="report and performance" />}
+        />
+        <Route path="/upload" element={<DummyPage someText="upload pages" />} />
         <Route
           path="/help"
           element={<DummyPage someText="help and supprt" />}
