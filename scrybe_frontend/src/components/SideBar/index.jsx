@@ -1,22 +1,41 @@
+import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import PropTypes from "prop-types";
-import styles from "./SideBar.module.scss";
-import logoSVG from "./assets/logo.svg";
-import arrowDown from "./assets/icons/arrow-down.svg";
-import myScrybe from "./assets/icons/my-scrybe.svg";
 import analysis from "./assets/icons/analysis.svg";
+import arrowDown from "./assets/icons/arrow-down.svg";
 import insight from "./assets/icons/insight.svg";
 import leaderboard from "./assets/icons/leaderboard.svg";
 import monthlyAnalysis from "./assets/icons/monthly-analysis.svg";
+import myScrybe from "./assets/icons/my-scrybe.svg";
 import settings from "./assets/icons/settings.svg";
+import logoSVG from "./assets/logo.svg";
+import SearchInput from "./SearchInput";
+import styles from "./SideBar.module.scss";
 
-function SideBar({ children }) {
+/**
+ * Wrap your component with this component to get a sidebar with a logo, a search input field and a list of links.
+ * getValue is a function that returns the value of the search input field
+ * @name getValue
+ * @useage getValue={(e) => console.log(e)} you will get the value of the search input field
+ * @param {needSearchMobile} boolean
+ * use this prop to determine if the search input field should be rendered on mobile screens or not!
+ * @param {needSearchDesktop} boolean
+ * use this prop to determine if the search input field should be rendered on desktop screens or not!
+ * @param {getValue} function
+ * @returns text from search input field
+ */
+function SideBar({
+  children,
+  getValue,
+  needSearchGeneral,
+  needSearchMobile,
+  needSearchDesktop,
+}) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className={styles.sidebar__container}>
-      <div className={`${styles.sidebar} ${sidebarOpen && styles.open}`}>
+      <div className={`${styles.sidebar} ${sidebarOpen && styles.open}  `}>
         <img
           src={arrowDown}
           alt="arrow icon"
@@ -34,8 +53,15 @@ function SideBar({ children }) {
           }
         >
           <img src={logoSVG} alt="Scrybe logo" />
-          <p>Scrybe</p>
+          <p>Heed</p>
         </NavLink>
+        <div
+          className={` ${styles[`${needSearchDesktop}`]} ${
+            styles[`${needSearchMobile}`]
+          }`}
+        >
+          <SearchInput sidebarIsActive={sidebarOpen} inputValue={getValue} />
+        </div>
         <div className={styles.navLinks}>
           <NavLink
             to="/dashboard"
@@ -50,7 +76,7 @@ function SideBar({ children }) {
             }
           >
             <img src={myScrybe} alt="myScrybe icon" />
-            <p>My Scrybe</p>
+            <p>My Head</p>
           </NavLink>
           <NavLink
             to="/sentiment-analysis"

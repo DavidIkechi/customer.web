@@ -18,22 +18,20 @@ function UploadedRecordings() {
         toggleSidebar={toggleSidebar}
         closeSidebar={() => setToggleSidebar(!toggleSidebar)}
       /> */}
-      <SideBar />
-      <div className={styles.uploadedRecordingsCol}>
-        <div className={styles.uploadedRecordingsSideBar}>
-          <UploadedNavbar
-            openSidebar={() => setToggleSidebar(!toggleSidebar)}
-            search={(e) => setterFn(e)}
-          />
+      <SideBar
+        needSearchMobile="needSearchMobile"
+        getValue={(e) => setterFn(e)}
+      >
+        <div className={styles.uploadedRecordingsCol}>
+          <div className={styles.uploadedRecordingsSideBar}>
+            <UploadedNavbar
+              openSidebar={() => setToggleSidebar(!toggleSidebar)}
+              search={(e) => setterFn(e)}
+            />
+          </div>
+          <TableData searchKeyword={isSearching} />
         </div>
-        <TableData searchKeyword={isSearching} />
-      </div>
-      {toggleSidebar && (
-        <div
-          className={toggleSidebar ? styles.sidebaroverlay : ""}
-          onClick={() => setToggleSidebar(!toggleSidebar)}
-        ></div>
-      )}
+      </SideBar>
     </div>
   );
 }
