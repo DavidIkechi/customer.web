@@ -336,10 +336,10 @@ async def my_profile (db: Session = Depends(get_db), user: models.User = Depends
     user_id = user.id
     return crud.get_user_profile(db, user_id)
 
-<<<<<<< HEAD
 
-=======
+
+
 if __name__ == "__main__":
     main()
->>>>>>> 95bfd4df5117094b5fdfab3e032dbcd3d9855816
+
 
