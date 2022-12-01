@@ -7,7 +7,7 @@ import TranscribePage from "./pages/TranscribePage";
 import HomePage from "./pages/HomePageA";
 import HomePageB from "./pages/HomePageB";
 import TermsAndCondition from "./pages/TermsAndCondition";
-import History from "./pages/History/History";
+import History from "./pages/History";
 import Services from "./pages/Services/Services";
 import Solutions from "./pages/Solutions/Solutions";
 import DashboardOverview from "./pages/DashboardOverview";
@@ -47,6 +47,7 @@ import PersonalInformation from "./pages/Settings/SettingsPageSubPages/PersonalI
 import PartnersPage from "./pages/PartnersPage";
 import React, { useState } from "react";
 import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
+import Error from "./pages/Error/Error";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -56,7 +57,10 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/sentiment-analysis" element={<SentimentAnalysis />} />
+        <Route
+          path="/sentiment-analysis/:AudioId"
+          element={<SentimentAnalysis />}
+        />
         <Route path="/transcriptions/:userId" element={<TranscribePage />} />
         <Route path="/try" element={<TryForFree />} />
         <Route path="/history" element={<History />} />
@@ -152,6 +156,9 @@ function App() {
         <Route path="/partners" element={<PartnersPage />} />
         <Route path="press-article" element={<PressArticle />} />
         <Route path="pricing" element={<Pricing />} />
+
+        {/* Error page */}
+        <Route path="*" element={<Error />} />
       </Routes>
     </>
   );
