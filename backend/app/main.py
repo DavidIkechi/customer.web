@@ -6,7 +6,7 @@ from routers.sentiment import sentiment
 from routers.transcribe import transcribe_file
 import auth
 from routers.score import score_count
-
+import uvicorn
 from routers.transcribe import transcript_router
 from routers.score import score_count
 import models, json
@@ -29,6 +29,9 @@ import fastapi as _fastapi
 import shutil
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Dependency
 def get_db():
@@ -76,10 +79,11 @@ origins = [
     "http://localhost:3000",
     "http://localhost:5173",
     "http://localhost:8000",
-    "https://scrybe.hng.tech",
-    "https://scrybe.hng.tech:80",
-    "https://scrybe.hng.tech:3000",
-    "https://scrybe.hng.tech:5173",
+    "https://heed.hng.tech",
+    "http://heed.hng.tech",
+    "https://heed.hng.tech:80",
+    "https://heed.hng.tech:3000",
+    "https://heed.hng.tech:5173",
 ]
 
 app.add_middleware(
@@ -89,6 +93,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+def main() -> None:
+    uvicorn.run(
+        "main:app", 
+        host=os.getenv("HOST"), 
+        port=int(os.getenv("PORT")), 
+        reload=os.getenv("RELOAD")
+    )
 
 
 @app.get("/")
@@ -335,3 +347,8 @@ async def forgot_password(email: str, db: Session = Depends(get_db)):
         #raise HTTPException(status_code=404, detail="You need to be verified to reset your password!!!")
     token = await send_password_reset_email([user_exist.email], user_exist)
     return token
+
+
+if __name__ == "__main__":
+    main()
+
