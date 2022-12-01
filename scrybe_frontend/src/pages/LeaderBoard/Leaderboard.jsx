@@ -43,9 +43,13 @@ function Leaderboard() {
         console.log(response.data["Agents Leaderboard"]);
         const arr = response.data["Agents Leaderboard"];
         //remove me --->
-        arr.pop();
+        arr.sort((a, b) => {
+          return b.Avergae_score - a.Avergae_score;
+        });
         //<--- remove me
-        setLeaderboard(arr);
+        const top3 = arr.slice(0, 3);
+        console.log(arr);
+        setLeaderboard(top3);
       })
       .catch((error) => {
         console.error(error);
