@@ -96,8 +96,6 @@ def view_transcript(job_id: Union[int, str], db: Session = Depends(_services.get
     db_audio.negativity_score, db_audio.neutrality_score=negativity_score, neutrality_score
     db_audio.overall_sentiment, db_audio.most_negative_sentences=overall_sentiment, most_negative_sentences 
     db_audio.most_positive_sentences = most_positive_sentences
-    db_audio.agent_firstname = db_agent.first_name
-    db_audio.agent_lastname = db_agent.last_name
     db.commit()
 
     db_agent = db.query(models.Agent).filter(models.Agent.aud_id == db_audio_id).first()

@@ -37,10 +37,6 @@ import shutil
 import os
 
 from dotenv import load_dotenv
-from starlette.responses import FileResponse
-from starlette.requests import Request
-from starlette.responses import Response
-import boto3
 
 load_dotenv()
 
@@ -114,9 +110,6 @@ def main() -> None:
         reload=os.getenv("RELOAD")
     )
 
-s3_client = boto3.client('s3')
-bucket = 'Heed'
-
 
 
 @app.get("/")
@@ -125,7 +118,7 @@ async def ping():
 
 
 @app.post("/upload_audios", tags=['analyse'])
-async def analyse(request: Request, response: Response, first_name: str = Form(), last_name: str = Form(), db: Session = Depends(get_db), file: UploadFile=File(...), user: models.User = Depends(get_active_user)):
+async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session = Depends(get_db), file: UploadFile=File(...), user: models.User = Depends(get_active_user)):
     
     user_id = user.id
     company_id = user.company_id
@@ -154,30 +147,18 @@ async def analyse(request: Request, response: Response, first_name: str = Form()
         return {"error": "There was an error uploading the file"}
     finally:
         file.file.close()
-    
-    #ry:
-    result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
-    url = result.get("url")
-    urls = [url]
-    response = shorten_urls(urls)
-    retrieve_url = response[0]
-    new_url = retrieve_url.short_url
-        
-   #except Exception:
-        #eturn {"error": "There was an error uploading the file"}
 
     try:
-        audio_file = file.filename
-        unique_file_name = f'{uuid.uuid4()}.{audio_file.content_type.split("/")[1]}'
-        s3_client.upload_fileobj(
-            audio_file.file,
-            bucket,
-            unique_file_name
-        )
-        audio_s3_url = f"https://{bucket}.s3.amazonaws.com/{unique_file_name}"
-        response.status_code = 200
-    except Exception as e:
-        return {"error": "error while uploading file"}
+        result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
+        url = result.get("url")
+        urls = [url]
+        response = shorten_urls(urls)
+        retrieve_url = response[0]
+        new_url = retrieve_url.short_url
+        
+    except Exception:
+        return {"error": "There was an error uploading the file"}
+   
     # transcript = transcript
     
     size = audio_details(file.filename)["size"]
@@ -189,7 +170,7 @@ async def analyse(request: Request, response: Response, first_name: str = Form()
     transcript_id = transcript['id']
     
     db_audio = models.Audio(audio_path=audio_url, job_id = transcript_id, user_id=user_id, size=size, duration=duration, 
-                            agent_id=db_agent.id)
+                            agent_id=db_agent.id, agent_firstname= db_agent.first_name, agent_lastname=db_agent.last_name)
 
     db.add(db_audio)
     db.commit()
@@ -218,8 +199,7 @@ async def analyse(request: Request, response: Response, first_name: str = Form()
     
     return {
         "id":audio_id,
-        "transcript_id": transcript_id,
-        "S3 AWs url": audio_s3_url
+        "transcript_id": transcript_id
     }
 
 # create the endpoint
