@@ -5,7 +5,7 @@ import logoutStyles from "./logout.module.scss";
 import Cookie from "js-cookie";
 
 function Logout() {
-  Cookie.remove("heedAcessToken");
+  Cookie.remove("heedAccessToken");
   return (
     <div className={logoutStyles.logout}>
       <div className={logoutStyles.logo__div}>
