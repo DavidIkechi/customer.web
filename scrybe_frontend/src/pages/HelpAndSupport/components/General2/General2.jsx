@@ -1,7 +1,7 @@
 import HelpSupportArticle from "../HelpSupportArticles/HelpSupportArticle";
 import styles from "./General2.module.scss";
 import illustration from "../assets/illustration.svg";
-import Articles from "../Articles/Articles";
+import Articles from "../Articles";
 
 function General2() {
   return (
