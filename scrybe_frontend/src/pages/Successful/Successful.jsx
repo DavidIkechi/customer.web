@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Demo from "../../components/Demo/Demo";
 import footerImg from "./assets/forget-pw-successful.png";
 import styles from "./Successful.module.scss";
 

@@ -1,22 +1,39 @@
 .demo_container {
-    width: 500px;
-    min-height: 100vh;
-    margin: 1.5rem auto;
+    width: 100%;
+    height: 100%;
+    margin: 2rem auto;
     border-radius: 5px;
 
-    .demo_outer {
-        width: 100%;
-        // overflow: hidden;
+    .demo_outer, .slidepage {
+        width: 50%;
+        margin: 0 auto;
+        box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+        overflow: hidden;
+        transition: margin-left 0.3s ease-in-out;
 
         .demo_holder {
             display: flex;
-            width: 1500%;
+            width: 1300%;
+            margin: 0 auto;
 
-            .demo {
-                box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
-                width: 25%;
+            .demo, 
+            .demo_1, 
+            .demo_2, 
+            .demo_3, 
+            .demo_4, 
+            .demo_5, 
+            .demo_6,
+            .demo_7,
+            .demo_8,
+            .demo_9,
+            .demo_10,
+            .demo_11,
+            .demo_12,
+            .demo_13  {
+                width: 100%;
                 text-align: center;
-                padding: 2rem 1rem;
+                padding: 0 1rem 2rem;
+                margin: 1rem 0;
         
                 .img_container {
                     width: 100%;
@@ -45,8 +62,33 @@
                     gap: 1rem;
                     width: 80%;
                     margin: 0 auto;
+
+                    .btn_nav {
+                        width: 50%;
+
+                        button {
+                            width: 100%;
+                            display: inline-block;
+                            margin-top: 10px;
+                            padding: 0.5rem 1rem;
+                            border-radius: 4px;
+                            color: #ffffff;
+                            background-color: #005584;
+                            border: thin solid #005584;
+                            outline: none;
+                            cursor: pointer;
+                            user-select: none;
+
+                            &:hover {
+                                color: #005584;
+                                background-color: white;
+                                border: thin solid #005584;
+                                transition: 0.1s;
+                            }
+                        }
+                    }
         
-                    button {
+                    .prev, .next {
                         display: inline-block;
                         margin-top: 10px;
                         width: 50%;
@@ -55,21 +97,19 @@
                         color: #ffffff;
                         background-color: #005584;
                         border: thin solid #005584;
-                        border: none;
                         outline: none;
                         cursor: pointer;
+                        user-select: none;
 
                         &:hover {
                             color: #005584;
                             background-color: white;
                             border: thin solid #005584;
-                            transition: 0.1s;
+                            transition: 0.1s ease;
                         }
-                    }
-
+                    }     
                 }
             }
-
         }
     }
 }
