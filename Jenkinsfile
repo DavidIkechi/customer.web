@@ -28,7 +28,7 @@ pipeline {
 				sh "sudo su - riches && whoami"
                                 //sh "sudo pm2 stop heed"
 				//sh "sudo pm2 stop heed_api"
-				sh "sudo cd /home/riches/heed/frontend && sudo pm2 start --name heed npm -- start"
+				sh "(cd /home/riches/heed/frontend && sudo pm2 start --name heed npm -- start)"
 				sh "sudo pm2 start /home/riches/heed/backend/main.py --interpreter python3 --name heed_api"
 			}
 			
