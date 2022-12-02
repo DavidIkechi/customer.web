@@ -28,7 +28,7 @@ from starlette.requests import Request
 import fastapi as _fastapi
 import cloudinary
 import cloudinary.uploader
-from BitlyAPI import shorten_urls
+#from BitlyAPI import shorten_urls
 
 from datetime import datetime
 
@@ -426,9 +426,13 @@ def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = De
         SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score,
         SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score,
         SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
-        round(positivity_score/(positivity_score+negativity_score+neutrality_score) * 10, 2) AS Avergae_score
+        round(positivity_score/(positivity_score+negativity_score+neutrality_score) * 10, 1) AS Average_score
     FROM audios GROUP BY agent_id
     ORDER BY Positive_score DESC""")
+
+    if not results:
+        raise HTTPException(status_code=404, detail= "Results not found")
+
     leaderboard = [dict(r) for r in results]
     top3_agents = leaderboard[:3]
     others = leaderboard[3:]
