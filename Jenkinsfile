@@ -26,7 +26,7 @@ pipeline {
 				sh "sudo cp -rf ${WORKSPACE}/backend/app/* /home/riches/heed/backend"
 				sh "sudo cp -fr ${WORKSPACE}/scrybe_frontend/* /home/riches/heed/frontend"
 				sh "sudo su - riches && whoami"
-                                sh "sudo pm2 stop heed"
+                                //sh "sudo pm2 stop heed"
 				//sh "sudo pm2 stop heed_api"
 				sh "sudo pm2 serve /home/riches/heed/frontend/dist --port 4173 --name heed"
 				sh "sudo pm2 start /home/riches/heed/backend/main.py --interpreter python3 --name heed_api"
