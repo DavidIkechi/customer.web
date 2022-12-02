@@ -4,10 +4,10 @@ import locate from "./assets/location-marker.png";
 import email from ".//assets/mail.png";
 import call from ".//assets/phone.png";
 import { NavLink } from "react-router-dom";
-import logo from "./assets/heed-logo.png";
-import ig from "./assets/ig.png";
-import fb from "./assets/fb.png";
-import twitter from "./assets/twit.png";
+import logo from "./assets/logo.png";
+import ig from "./assets/instagram.png";
+import fb from "./assets/facebook.png";
+import twitter from "./assets/twitter.png";
 
 function Footer() {
   return (

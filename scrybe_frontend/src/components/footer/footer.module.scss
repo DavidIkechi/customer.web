@@ -1,6 +1,15 @@
 .footer {
-  background-color: #031025;
-  color: #ffffff;
+        padding-inline: pix-rem(16);
+        background-color: #031025;
+        color: white !important;
+        padding-block: pix-rem(70);
+        h4 {
+                color: white;
+                font-size: pix-rem(20) !important ;
+        }
+        p {
+                color: white;
+        }
 
   .footerContent {
     display: flex;
