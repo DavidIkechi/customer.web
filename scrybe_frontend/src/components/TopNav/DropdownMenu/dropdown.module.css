@@ -1,0 +1,22 @@
+.dropdown{
+    box-sizing: border-box;
+    position: absolute;
+    width: 160px;
+    box-shadow: 2px 2px 8px rgba(64, 64, 64, 0.2);
+    background-color: white;
+    top: -50;
+    right: 0;
+    padding:12px 40px 12px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-top: 70px;
+}
+.list{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+p{
+    color:#6A6A6A;
+}

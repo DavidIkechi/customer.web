@@ -1,5 +1,7 @@
 import React from "react";
-import SideBar from "../../components/SideBar";
+import NewDesignSideBar from "../../components/NewDesignSidebar";
+import TopNav from "../../components/TopNav";
+// import SideBar from "../../components/SideBar";
 import TableData from "./TableData";
 import UploadedNavbar from "./UploadedNavbar";
 import styles from "./uploadedRecordings.module.scss";
@@ -18,20 +20,24 @@ function UploadedRecordings() {
         toggleSidebar={toggleSidebar}
         closeSidebar={() => setToggleSidebar(!toggleSidebar)}
       /> */}
-      <SideBar
+      <NewDesignSideBar
+        toggleSidebar={toggleSidebar}
         needSearchMobile="needSearchMobile"
         getValue={(e) => setterFn(e)}
+        closeSidebar={() => setToggleSidebar(!toggleSidebar)}
       >
         <div className={styles.uploadedRecordingsCol}>
           <div className={styles.uploadedRecordingsSideBar}>
-            <UploadedNavbar
-              openSidebar={() => setToggleSidebar(!toggleSidebar)}
+            <TopNav
+              openSidebar={() => {
+                setToggleSidebar(!toggleSidebar);
+              }}
               search={(e) => setterFn(e)}
             />
           </div>
           <TableData searchKeyword={isSearching} />
         </div>
-      </SideBar>
+      </NewDesignSideBar>
     </div>
   );
 }

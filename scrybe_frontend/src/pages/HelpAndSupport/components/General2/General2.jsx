@@ -1,10 +1,11 @@
 import HelpSupportArticle from "../HelpSupportArticles/HelpSupportArticle";
 import styles from "./General2.module.scss";
 import illustration from "../assets/illustration.svg";
+import Articles from "../Articles";
 
 function General2() {
   return (
-    <div>
+    <div className={styles.general2}>
       <div className={styles.main}>
         <div className={styles.flex}>
           <HelpSupportArticle />
@@ -26,6 +27,7 @@ function General2() {
             </p>
           </div>
         </div>
+        <Articles />
       </div>
     </div>
   );
