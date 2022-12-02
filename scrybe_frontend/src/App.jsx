@@ -101,7 +101,10 @@ function App() {
         <Route path="press-article" element={<PressArticle />} />
         <Route path="pricing" element={<Pricing />} />
 
-        <Route path="/sentiment-analysis" element={<SentimentAnalysis />} />
+        <Route
+          path="/sentiment-analysis/:AudioId"
+          element={<SentimentAnalysis />}
+        />
         <Route path="/transcriptions/:userId" element={<TranscribePage />} />
         <Route path="/history" element={<History />} />
         <Route path="/events" element={<Events />} />
