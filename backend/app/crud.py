@@ -63,6 +63,9 @@ def get_audio(db: Session, audio_id: int):
 def get_audios(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Audio).offset(skip).limit(limit).all()
 
+def get_audios_by_user(db: Session, user_id: int):
+    return db.query(models.Audio).filter(models.Audio.user_id == user_id).all()
+
 def get_company(db: Session, company_id: int):
     return db.query(models.Company).filter(models.Company.id == company_id).first()
 

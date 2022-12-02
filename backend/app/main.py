@@ -289,10 +289,14 @@ def get_sentiment_result(id: int, db: Session = Depends(get_db)):
             detail="The analysis doesn't exist",
         )
     return analysis
-@app.get("/audios", summary = "get all audio uploads", response_model=list[schema.Audio], tags=['audios'])
-def read_audios(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    audios = crud.get_audios(db, skip=skip, limit=limit)
+
+
+@app.get("/list-audios-by-user", summary = "list all user audios with their status", response_model=list[schema.Audio])
+def list_audios_by_user(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    audios = crud.get_audios_by_user(db, user_id=user.id)
     return audios
+    
+
 
 @app.get('/audios/{audio_id}/sentiment')
 def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
