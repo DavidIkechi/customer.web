@@ -1,20 +1,12 @@
 // eslint-disable-next-line no-warning-comments
 // TODO disable eslint warning for this todo ;)
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import styles from "./try_state_1.module.scss";
 import RecordingLogo from "../../assets/Recording-logo.png";
 
 export default function TryState1() {
-  const [transcribe, setTranscribe] = useState([]);
-
-  useEffect(() => {
-    axios.post(
-      "http://scrybe.hng.tech:5000/docs#/default/free_trial_tryForFree_post"
-    );
-  });
-
   const [files, setFiles] = useState(null);
   const inputRef = useRef();
 
@@ -23,12 +15,21 @@ export default function TryState1() {
   };
   const handleDrop = (event) => {
     event.preventDefault();
+    console.log(event.dataTransfer.files);
     setFiles(event.dataTransfer.files);
   };
-  // const [isShown, setIsShown] = useState(false);
-  // const handleClick = (event) => {
-  //   setIsShown((current) => !current);
-  // };
+
+  const uploadFiles = () => {
+    axios
+      .post("https://api.heed.hng.tech/tryForFree", files)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // console.log("the name");
+  };
 
   if (files)
     return (
@@ -54,9 +55,14 @@ export default function TryState1() {
               </div>
               <div className={styles.orRight} />
             </div>
+
             <input
               type="file"
-              onChange={(event) => setFiles(event.target.files)}
+              onChange={(event) => {
+                setFiles(event.target.files);
+                console.log(event.target.files);
+              }}
+              name="file"
               hidden
               ref={inputRef}
             />
@@ -67,12 +73,17 @@ export default function TryState1() {
             >
               Select another file from your computer
             </p>
-
-            <Link to="/try-processing">
-              <button className={styles.selectButton2} type="button">
-                Transcribe
-              </button>
-            </Link>
+            {/* 
+              <Link to="/try-processing">
+              </Link> */}
+            <button onClick={uploadFiles}>upload</button>
+            <button
+              onClick={uploadFiles}
+              className={styles.selectButton2}
+              type="submit"
+            >
+              Transcribe
+            </button>
           </div>
         </div>
         <div className={styles.tryNote}>
@@ -97,7 +108,6 @@ export default function TryState1() {
             </li>
           </ul>
         </div>
-        {/* {isShown && <TryState3 />} */}
       </div>
     );
 
@@ -125,7 +135,10 @@ export default function TryState1() {
             </div>
             <input
               type="file"
-              onChange={(event) => setFiles(event.target.files)}
+              onChange={(event) => {
+                setFiles(event.target.files);
+                console.log(event.target.files);
+              }}
               hidden
               ref={inputRef}
             />
