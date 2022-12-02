@@ -10,7 +10,7 @@ const EmailVerify = () => {
         <img src={mail} alt="mail" />
         <p className={styles.status}>Verified!</p>
         <p className={styles.msg}>
-          Hello Rambey, your account has been successfully verified
+          Hello there, your account has been successfully verified
         </p>
         <Link to="/signin">Login</Link>
       </div>
