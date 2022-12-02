@@ -382,7 +382,7 @@ async def my_profile (db: Session = Depends(get_db), user: models.User = Depends
 
 @app.post('/forgot-password', summary = "get token for password reset", tags=['users'])
 async def forgot_password(email: schema.ForgetPassword, db: Session = Depends(get_db)):
-    user: models.User = crud.get_user_by_email(db, email)
+    user: models.User = crud.get_user_by_email(db, email.email)
 
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
