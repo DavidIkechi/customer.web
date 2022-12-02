@@ -15,6 +15,7 @@ import Events from "./pages/Events/Events";
 import HelpSupport from "./pages/HelpAndSupport/HelpSupport";
 import About from "./pages/AboutUs";
 import Pricing from "./pages/Pricing";
+// import CheckoutStartup from "./pages/Checkout/CheckoutStartUp";
 import TryForFree from "./pages/TryForFree";
 import Press from "./pages/PressPage";
 import PressArticle from "./pages/PressArticle";
@@ -38,6 +39,8 @@ import Reviews from "./pages/Reviews/Reviews";
 import TryProcessing from "./pages/TryForFree/tryProcessing";
 import TryResults from "./pages/TryForFree/tryResults";
 import TermsOfService from "./pages/TermsOfService";
+import General from "./pages/HelpAndSupport/components/General";
+import PromotedArticles from "./pages/HelpAndSupport/components/PromotedArticles"
 import Blogs from "./pages/BlogsPage";
 import BlogPostPage from "./pages/BlogPostPage";
 import SettingsIndex from "./pages/Settings/SettingsIndex";
@@ -81,14 +84,12 @@ function App() {
         <Route path="/homeB" element={<HomePageB />} />
         <Route path="/faq" element={<FAQs />} />
         <Route path="/help-support" element={<HelpSupport />} />
-        {/* <Route path="/help-support-general" element={<General />}>
-          <Route index element={<General1 />} />
+        <Route path="/help-support-general" element={<General />} />
+        <Route path="/promoted-articles" element={<PromotedArticles />}></Route>
+        {/* 
           <Route path="articles" element={<General2 />} />
         </Route> */}
-        {/* <Route
-          path="/help-support-general/promoted-articles"
-          element={<PromotedArticles />}
-        >
+        {/* 
           <Route index element={<PromotedArticle1 />} />
           <Route path="*" element={<PromotedArticle1 />} />
         </Route> */}
@@ -155,6 +156,7 @@ function App() {
         <Route path="/partners" element={<PartnersPage />} />
         <Route path="press-article" element={<PressArticle />} />
         <Route path="pricing" element={<Pricing />} />
+        {/* <Route path="checkout-startup" element={<CheckoutStartup />} /> */}
       </Routes>
     </>
   );

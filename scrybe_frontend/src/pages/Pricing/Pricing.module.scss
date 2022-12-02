@@ -220,7 +220,7 @@
 .tableWrapper {
   overflow-x: scroll;
 }
-table {
+.pricing table {
   border-collapse: collapse;
   width: 100%;
   padding-block: 2rem;
@@ -234,18 +234,18 @@ table {
     width: pix-rem(700);
   }
 }
-thead {
+ .pricingthead {
   background-color: #005584;
   color: #fff;
   font-weight: 500;
   font-size: 1rem;
 }
-th,
-td {
+.pricing th,
+.pricing td {
   padding: 0.75rem;
 }
-tr th:first-child,
-tr td:first-child {
+.pricing tr th:first-child,
+.pricing tr td:first-child {
   text-align: left;
   position: sticky;
   left: 0;
@@ -253,17 +253,17 @@ tr td:first-child {
     width: 30%;
   }
 }
-tr td:first-child {
+.pricing tr td:first-child {
   @include media(768px) {
     background-color: #fff;
   }
 }
-tr th:first-child {
+.pricing tr th:first-child {
   @include media(768px) {
     background-color: #005584;
   }
 }
-tr img {
+.pricing tr img {
   margin-inline: auto;
 }
 
