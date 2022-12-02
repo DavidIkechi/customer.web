@@ -106,6 +106,7 @@ function App() {
           element={<DummyPage someText="help and supprt" />}
         />
         <Route path="/demos" element={<DummyPage someText="demo pages" />} />
+        <Route path="/reviews" element={<Reviews />} />
         <Route path="/blog" element={<Blogs />} />
         <Route path="/blog/:id" element={<BlogPostPage />} />
 
@@ -135,7 +136,6 @@ function App() {
           <Route path="/homeB" element={<HomePageB />} />
           <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
           <Route path="/agent-report" element={<AgentReport />} />
-          <Route path="/reviews" element={<Reviews />} />
 
           {/* Try Routes */}
           <Route path="/try-processing" element={<TryProcessing />} />
