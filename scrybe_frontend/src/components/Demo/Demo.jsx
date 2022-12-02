@@ -161,8 +161,7 @@ const handleRestartClick = () => {
 function Demo() {
   return (
     <>
-      <div className={styles.demo_container} onClick={() => {
-        closeUpModal(false)}}>
+      <div className={styles.demo_container}>
         <div className={styles.demo_outer}>
           <div className={`${styles.demo_holder} ${styles.slidepage}`}>
             <div className={`${styles.demo_1} ${styles.demo}`}>

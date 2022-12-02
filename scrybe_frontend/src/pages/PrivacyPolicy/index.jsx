@@ -19,6 +19,7 @@ import TransferOfData from "./Components/TransferOfData.jsx";
 import UseOfData from "./Components/UseOfData.jsx";
 import YourRights from "./Components/YourRights.jsx";
 import Payments from "./Components/Payments.jsx";
+import React from "react";
 
 import "./Style/privacyPolicy.scss";
 
