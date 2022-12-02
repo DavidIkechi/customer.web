@@ -40,7 +40,7 @@ import TryProcessing from "./pages/TryForFree/tryProcessing";
 import TryResults from "./pages/TryForFree/tryResults";
 import TermsOfService from "./pages/TermsOfService";
 import General from "./pages/HelpAndSupport/components/General";
-import PromotedArticles from "./pages/HelpAndSupport/components/PromotedArticles"
+import PromotedArticles from "./pages/HelpAndSupport/components/PromotedArticles";
 import Blogs from "./pages/BlogsPage";
 import BlogPostPage from "./pages/BlogPostPage";
 import SettingsIndex from "./pages/Settings/SettingsIndex";
