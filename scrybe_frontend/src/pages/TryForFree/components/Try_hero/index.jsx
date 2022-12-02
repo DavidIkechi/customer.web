@@ -24,7 +24,7 @@ export default function tryHero() {
           <img src={TryPic} alt="some" />
         </div>
 
-        <Link to="/" className={styles.HeroButtonMobile}>
+        <Link to="/signin" className={styles.HeroButtonMobile}>
           Sign Up Now
         </Link>
         <img className={styles.backgroundImage} src={Background} alt="some" />

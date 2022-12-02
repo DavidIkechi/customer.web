@@ -33,17 +33,15 @@ function NavBar() {
           >
             <div className={styles.nav__links}>
               <NavLink to="/"> Home </NavLink>
-              <NavLink to="/services">Service</NavLink>
-              <NavLink to="/solutions">Solutions</NavLink>
-              <NavLink to="/"> Pricing </NavLink>
-              <NavLink to="/"> Industry</NavLink>
-              <NavLink to="/">About Us</NavLink>
+              <NavLink to="/pricing"> Pricing </NavLink>
+              <NavLink to="/about-us">About Us</NavLink>
             </div>
             <div className={styles.nav__ctas}>
-              <button type="button">Login</button>
-              <button type="button">
-                <NavLink to="/try">Upload Files</NavLink>
-              </button>
+              <div>JD</div>
+              <div>
+                <p>Jane Doe</p>
+                <NavLink to="/dashboard"> Office workspace</NavLink>
+              </div>
             </div>
 
             <div className={styles.nav__ctl}>
@@ -98,10 +96,7 @@ function NavBar() {
         >
           <div className={styles.nav__links}>
             <NavLink to="/"> Home </NavLink>
-            <NavLink to="/services">Service</NavLink>
-            <NavLink to="/solutions">Solutions</NavLink>
             <NavLink to="/pricing"> Pricing </NavLink>
-            {/* <NavLink to="/industry"> Industry</NavLink> */}
             <NavLink to="/about-us">About Us</NavLink>
           </div>
           <div className={styles.nav__ctas}>

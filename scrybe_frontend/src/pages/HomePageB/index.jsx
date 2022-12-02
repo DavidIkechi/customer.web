@@ -12,7 +12,7 @@ function HomePageB() {
   return (
     <>
       <NavBar />
-      <Hero />
+      <Hero isHomePageA={false} />
       <BrandsLogo />
       <section className={styles.container}>
         <div className={styles.getStarted}>
