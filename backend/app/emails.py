@@ -88,7 +88,7 @@ async def send_password_reset_email(email: List, instance: User):
 
     token = jwt.encode(token_data, os.getenv('SECRET'), algorithm='HS256')
 
-    first_name: instance.first_name
+    first_name = instance.first_name
 
 
 
