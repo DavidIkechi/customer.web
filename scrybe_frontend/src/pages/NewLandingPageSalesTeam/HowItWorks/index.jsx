@@ -27,7 +27,7 @@ const HowItWorks = () => {
         </div>
 
         <div className={styles.bulletsBody}>
-          <div className={styles.bulletsContentLine}></div>
+          <div className={styles.bulletsContentLine1}></div>
           <p className={styles.bulletscontent}>
             Heed will analyze the conversation to produce: a readable and
             searchable text file a Sentiment Analysis report Heed automatically
@@ -44,7 +44,7 @@ const HowItWorks = () => {
         </div>
 
         <div className={styles.bulletsBody}>
-          <div className={styles.bulletsContentLine}></div>
+          <div className={styles.bulletsContentLine2}></div>
           <p className={styles.bulletscontent}>
             Get an overview of your agents’ performance - Measure the quality of
             their interactions and see which agents consistently get positive
