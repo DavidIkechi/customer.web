@@ -49,6 +49,7 @@ import React, { useState, useEffect } from "react";
 import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
 import { UploadModal } from "./pages/UploadRecordingsModal";
 import Error from "./pages/Error/Error";
+import Von from "./pages/Von/Von";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -197,6 +198,7 @@ function App() {
 
         {/* Error page */}
         <Route path="*" element={<Error />} />
+        <Route path="/von" element={<Von />} />
       </Routes>
     </>
   );
