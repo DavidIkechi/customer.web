@@ -9,7 +9,9 @@
         gap: 1.5rem;
 
         img {
-            max-width: 200px;
+            width: 50%;
+            height: 280px;
+            object-fit: cover;
         }
 
         .msgCont {
@@ -74,6 +76,9 @@
 
     @media screen and (max-width: 481px) {
         .contentCont {
+            img {
+                width: 100%;
+            }
             .msgCont {
                 p {
                     font-size: 30px;

@@ -1,8 +1,13 @@
 import React from "react";
 import styles from "./SentimentAnalysis.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function SentimentAnalysis() {
+  const getTranscriptionID = () => {
+    let location = window.location.pathname;
+    return location.substring(16, location.length);
+  };
+  const audioId = getTranscriptionID();
   return (
     <div className={styles.SentimentAnalysis}>
       <h2>Sentiment analysis</h2>
@@ -21,11 +26,13 @@ function SentimentAnalysis() {
               fill="white"
             />
           </svg>
-          <Link to="/sentiment-analysis">
-            <a href="/sentiment-analysis" target="_blank" rel="noreferrer">
-              View analysis
-            </a>
-          </Link>
+          <a
+            href={`/sentiment-analysis/${audioId}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            View analysis
+          </a>
         </button>
         <div className={styles.downloadButton}>
           <svg

@@ -13,13 +13,20 @@ function SignUpVerify() {
           >
             <h1>Verify your Account</h1>
             <h3>We sent a link to your mail to verify your account</h3>
-            <form action="">
-              <input type="submit" value="Open email" className="success-btn" />
-              <p className="successful-p">
-                Didn’t receive an email?{" "}
-                <NavLink to={""}>Click to resend.</NavLink>
-              </p>
-            </form>
+            {/* <form action=""> */}
+            <a
+              href="https://mail.google.com/"
+              target="_blank"
+              className={styles.successbtn}
+              rel="noreferrer"
+            >
+              Open email{" "}
+            </a>
+            <p className="successful-p">
+              Didn’t receive an email?{" "}
+              <NavLink to={""}>Click to resend.</NavLink>
+            </p>
+            {/* </form> */}
           </div>
           <div className={styles.second}>
             <img src={footerImg} alt="" />

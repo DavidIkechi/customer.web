@@ -38,12 +38,15 @@ function HomePage() {
               efficiency of your customer support agents with the aim of
               improving overall customer satisfaction
             </p>
-            <a
+            <NavLink to="/about-us" className={styles.aboutUs__cta}>
+              Read more
+            </NavLink>
+            {/* <a
               href="https://www.w3schools.com/react/react_css.asp"
               className={styles.aboutUs__cta}
             >
-              Read more
-            </a>
+              Read more */}
+            {/* </a> */}
           </div>
         </div>
       </section>
@@ -61,12 +64,12 @@ function HomePage() {
               <p className={styles.gettingStarted__card_detail}>
                 Upload Audio between customers and staff on our database
               </p>
-              <a
+              {/* <a
                 href="/transcriptions"
                 className={styles.gettingStarted__card_cta}
               >
                 Get Started
-              </a>
+              </a> */}
             </div>
 
             <div className={styles.gettingStarted__card}>
@@ -91,12 +94,12 @@ function HomePage() {
               <p className={styles.gettingStarted__card_detail}>
                 The text is analyzed using open Ai for for sentiments
               </p>
-              <a
+              {/* <a
                 href="transcriptions"
                 className={styles.gettingStarted__card_cta}
               >
                 Get Started
-              </a>
+              </a> */}
             </div>
           </div>
         </div>
