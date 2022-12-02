@@ -29,13 +29,9 @@
     justify-content: space-between;
     .TopNav_user {
       display: flex;
-      // align-items: center;
-      // justify-content: space-between;
       margin-right: 1rem;
       .TopNav_user_desktop {
         display: flex;
-        // align-items: center;
-        // justify-content: space-between;
         img {
           margin-right: 1rem;
         }
@@ -59,6 +55,14 @@
 
               color: #454545;
             }
+            .arrow {
+              transition: all 0.3s ease-in-out !important;
+              -webkit-transition: all 0.3s ease-in-out !important;
+              -moz-transition: all 0.3s ease-in-out !important;
+              -ms-transition: all 0.3s ease-in-out !important;
+              -o-transition: all 0.3s ease-in-out !important;
+              -webkit-transition: all;
+}
           }
           .workspace_name {
             font-family: "Kanit";
@@ -106,7 +110,12 @@
   }
 }
 .showDropup .arrow {
-  transform: rotate(90deg);
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  
 }
 
 // responsive

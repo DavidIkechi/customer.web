@@ -1,13 +1,13 @@
 import React from "react";
-import styles from "./footer.module.scss";
-import locate from "./assets/location-marker.png";
+import { NavLink } from "react-router-dom";
 import email from ".//assets/mail.png";
 import call from ".//assets/phone.png";
-import { NavLink } from "react-router-dom";
-import logo from "./assets/heed-logo.png";
-import ig from "./assets/ig.png";
 import fb from "./assets/fb.png";
+import ig from "./assets/ig.png";
+import locate from "./assets/location-marker.png";
+import logo from "./assets/logo.png";
 import twitter from "./assets/twit.png";
+import styles from "./footer.module.scss";
 
 function Footer() {
   return (

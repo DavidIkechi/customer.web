@@ -21,8 +21,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from db import Base, engine, SessionLocal
 from sqlalchemy.orm import Session
 import crud, schema
-
-from emails import send_email, verify_token, send_password_reset_email
+from emails import send_email, verify_token, send_password_reset_email, password_verif_token
 from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
@@ -169,6 +168,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     job_status = transcript['status']
     transcript_id = transcript['id']
     
+
     db_audio = models.Audio(audio_path=audio_url, job_id = transcript_id, user_id=user_id, size=size, duration=duration, 
                             agent_id=db_agent.id, agent_firstname= db_agent.first_name, agent_lastname=db_agent.last_name)
 
@@ -291,10 +291,27 @@ def get_sentiment_result(id: int, db: Session = Depends(get_db)):
             detail="The analysis doesn't exist",
         )
     return analysis
-@app.get("/audios", summary = "get all audio uploads", response_model=list[schema.Audio], tags=['audios'])
-def read_audios(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    audios = crud.get_audios(db, skip=skip, limit=limit)
+
+
+@app.get("/list-audios-by-user", summary = "list all user audios with their status")
+def list_audios_by_user(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    result = crud.get_audios_by_user(db, user_id=user.id)
+    audios = []
+    for i in result:
+        audio = {
+            "id": i.id,
+            "filename": i.filename,
+            "job_id": i.job_id,
+            "duration": i.duration,
+            "size": i.size,
+            "timestamp": i.timestamp,
+            "job_details": i.job
+
+        }
+        audios.append(audio)
     return audios
+    
+
 
 @app.get('/audios/{audio_id}/sentiment')
 def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
@@ -470,16 +487,34 @@ async def my_profile (db: Session = Depends(get_db), user: models.User = Depends
     return crud.get_user_profile(db, user_id)
 
 
-@app.post("/forgot_password", tags=['users'])
-async def forgot_password(email: str, db: Session = Depends(get_db)):
-    user_exist = crud.get_user_by_email(db, email)
-    if not user_exist:
-        raise HTTPException(status_code=404, detail="User not Found")
-    #if not user_exist.is_verified:
-        #raise HTTPException(status_code=404, detail="You need to be verified to reset your password!!!")
-    token = await send_password_reset_email([user_exist.email], user_exist)
+
+@app.post('/forgot-password', summary = "get token for password reset", tags=['users'])
+async def forgot_password(email: schema.ForgetPassword, db: Session = Depends(get_db)):
+    user: models.User = crud.get_user_by_email(db, email.email)
+
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    
+    token = await send_password_reset_email([email.email], user)
     return token
     
+
+@app.patch('/reset-password', summary = "reset password", tags=['users'])
+async def reset_password(token: str, new_password: schema.UpdatePassword, db: Session = Depends(get_db)):
+    email = password_verif_token(token)
+    user: models.User = crud.get_user_by_email(db, email)
+        
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    reset_done = crud.reset_password(db, new_password.password, user)
+
+    if not reset_done:
+        raise HTTPException(status_code=500)
+    
+    return reset_done
+
 
 if __name__ == "__main__":
     main()
