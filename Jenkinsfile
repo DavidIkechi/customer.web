@@ -29,7 +29,7 @@ pipeline {
                                 //sh "sudo pm2 stop heed"
 				//sh "sudo pm2 stop heed_api"
 				sh "sudo pm2 --name heed start npm -- start /home/riches/heed/frontend/dist --port 4173"
-				sh "sudo pm2 start main.py --name heed_api --interpreter python3 /home/riches/heed/backend/main.py"
+				sh "sudo pm2 start --name heed_api --interpreter python3 /home/riches/heed/backend/main.py"
 			}
 			
 		}
