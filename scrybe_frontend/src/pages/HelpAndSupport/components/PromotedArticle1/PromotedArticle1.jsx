@@ -1,6 +1,6 @@
-import styles from "./PromotedArticle1.module.scss";
+import Articles from "../Articles";
 import illustration from "../assets/illustration2.png";
-import Articles from "../articles/Articles";
+import styles from "./PromotedArticle1.module.scss";
 
 function PromotedArticle1() {
   return (
