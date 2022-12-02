@@ -25,7 +25,7 @@ DB_USER = os.getenv("DB_USER")
 DB_CONNECTION = DB_USER+":"+DB_PASS+"@"+DB_HOST+"/"+DB_NAME
 SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://"+DB_CONNECTION
 """
-SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_app.db"
+SQLALCHEMY_DATABASE_URL = "sqlite:///./heedtest.db"
 
 
 engine = create_engine(
