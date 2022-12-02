@@ -31,7 +31,7 @@ function About() {
               <h1 className={styles.first__head}>
                 Heed helps sales mangers work{" "}
                 <span className={styles.first__inline}>faster </span>, with
-                <span className={styles.first__inline}>simplified roles</span>
+                <span className={styles.first__inline}> simplified roles</span>
               </h1>
             </div>
           </div>
@@ -67,14 +67,16 @@ function About() {
       <section className={styles.second__section}>
         <div className={styles.sect__container}>
           <div className={styles.head__container}>
-            <h2 className={styles.heading}>Our core values</h2>
+            <h2 className={styles.second__head}>Our core values</h2>
           </div>
           <div className={styles.second__bottom}>
             <div className={styles.second__row}>
               <div className={styles.each__box}>
                 <div className={styles.heading__icon}>
                   <h4 className={styles.box__head}>Company's Success</h4>
-                  <img src={icon3} alt="" />
+                  <div className={styles.core__icons}>
+                    <img src={icon3} alt="core icons" />
+                  </div>
                 </div>
                 <p className={styles.box__text}>
                   Our number one goal is to see our customers suceed at
@@ -85,7 +87,9 @@ function About() {
               <div className={styles.each__box}>
                 <div className={styles.heading__icon}>
                   <h4 className={styles.box__head}>Data Safety</h4>
-                  <img src={icon1} alt="" />
+                  <div className={styles.core__icons}>
+                    <img src={icon1} alt="core icons" />
+                  </div>
                 </div>
                 <p className={styles.box__text}>
                   All our customers data are safe. We garuantee security of
@@ -99,7 +103,9 @@ function About() {
               <div className={styles.each__box}>
                 <div className={styles.heading__icon}>
                   <h4 className={styles.box__head}>Company's Value</h4>
-                  <img src={icon2} alt="" />
+                  <div className={styles.core__icons}>
+                    <img src={icon2} alt="core icons" />
+                  </div>
                 </div>
                 <p className={styles.box__text}>
                   Know your support teams individual and collective performance.
@@ -110,7 +116,9 @@ function About() {
               <div className={styles.each__box}>
                 <div className={styles.heading__icon}>
                   <h4 className={styles.box__head}>Company's History</h4>
-                  <img src={icon4} alt="" />
+                  <div className={styles.core__icons}>
+                    <img src={icon4} alt="core icons" />
+                  </div>
                 </div>
                 <p className={styles.box__text}>
                   We are comminted to helping you track your data history. With
@@ -141,21 +149,33 @@ function About() {
               </div>
             </div>
             <div className={styles.third__bottom}>
-              <div className={styles.third__flex}>
-                <img src={partner1} alt="companies icon" />
-                <h4 className={styles.icon__head}>HotelsNg</h4>
+              <div className={styles.each__flex}>
+                <div className={styles.third__flex}>
+                  <div className={styles.comp__icons}>
+                    <img src={partner1} alt="companies icon" />
+                  </div>
+                  <h4 className={styles.icon__head}>HotelsNg</h4>
+                </div>
+                <div className={styles.third__flex}>
+                  <div className={styles.comp__icons}>
+                    <img src={partner4} alt="companies icon" />
+                  </div>
+                  <h4 className={styles.icon__head}>The HNG Internship</h4>
+                </div>
               </div>
-              <div className={styles.third__flex}>
-                <img src={partner2} alt="companies icon" />
-                <h4 className={styles.icon__head}>HNG i9</h4>
-              </div>
-              <div className={styles.third__flex}>
-                <img src={partner3} alt="companies icon" />
-                <h4 className={styles.icon__head}>BrainBox inc.</h4>
-              </div>
-              <div className={styles.third__flex}>
-                <img src={partner4} alt="companies icon" />
-                <h4 className={styles.icon__head}>The HNG Internship</h4>
+              <div className={styles.each__flex}>
+                <div className={styles.third__flex}>
+                  <div className={styles.comp__icons}>
+                    <img src={partner3} alt="companies icon" />
+                  </div>
+                  <h4 className={styles.icon__head}>BrainBox inc.</h4>
+                </div>
+                <div className={styles.third__flex}>
+                  <div className={styles.comp__icons}>
+                    <img src={partner2} alt="companies icon" />
+                  </div>
+                  <h4 className={styles.icon__head}>HNG i9</h4>
+                </div>
               </div>
             </div>
           </div>
