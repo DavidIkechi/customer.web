@@ -17,6 +17,10 @@ import avi6 from "./assets/avi-6.svg";
 import footerImg from "./assets/reviews-bottom-img.png";
 
 function Reviews() {
+  React.useEffect(() => {
+    // 👇️ scroll to top on page load
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
   return (
     <main className={styles.main}>
       <header className={styles.hero}>

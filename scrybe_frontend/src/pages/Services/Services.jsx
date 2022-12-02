@@ -11,6 +11,10 @@ import NavBar from "../../components/navBar";
 import Footer from "../../components/footer";
 
 function Services() {
+  React.useEffect(() => {
+    // 👇️ scroll to top on page load
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
   return (
     <div className="services-section">
       <NavBar />

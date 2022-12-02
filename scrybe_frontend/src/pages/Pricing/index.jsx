@@ -12,6 +12,10 @@ import NavBarFree from "../../components/navBar_free";
 import Footer from "../../components/footer";
 
 function Pricing() {
+  React.useEffect(() => {
+    // 👇️ scroll to top on page load
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
   const plansRef = useRef();
   const [showMonth, setshowMonth] = useState(true);
   const [showYear, setshowYear] = useState(false);

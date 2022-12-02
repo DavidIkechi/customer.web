@@ -23,6 +23,10 @@ import Payments from "./Components/Payments.jsx";
 import "./Style/privacyPolicy.scss";
 
 function PrivacyPolicy() {
+  React.useEffect(() => {
+    // 👇️ scroll to top on page load
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
   return (
     <section className="privacy">
       <Header />
