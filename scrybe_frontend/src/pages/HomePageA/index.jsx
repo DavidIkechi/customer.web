@@ -32,18 +32,21 @@ function HomePage() {
               <img src={aboutUsimage} alt="" srcSet="" />
             </div>
             <p className={styles.aboutUs__details}>
-              Scrybe is a conversation intelligence tool that automatically
+              Heed is a conversation intelligence tool that automatically
               transcribes and analyzes recorded customer support conversations
-              to extract sentimental analysis data. We help you determinethe
+              to extract sentimental analysis data. We help you determine the
               efficiency of your customer support agents with the aim of
               improving overall customer satisfaction
             </p>
-            <a
+            <NavLink to="/about-us" className={styles.aboutUs__cta}>
+              Read more
+            </NavLink>
+            {/* <a
               href="https://www.w3schools.com/react/react_css.asp"
               className={styles.aboutUs__cta}
             >
-              Read more
-            </a>
+              Read more */}
+            {/* </a> */}
           </div>
         </div>
       </section>
@@ -61,12 +64,12 @@ function HomePage() {
               <p className={styles.gettingStarted__card_detail}>
                 Upload Audio between customers and staff on our database
               </p>
-              <a
+              {/* <a
                 href="/transcriptions"
                 className={styles.gettingStarted__card_cta}
               >
                 Get Started
-              </a>
+              </a> */}
             </div>
 
             <div className={styles.gettingStarted__card}>
@@ -91,12 +94,12 @@ function HomePage() {
               <p className={styles.gettingStarted__card_detail}>
                 The text is analyzed using open Ai for for sentiments
               </p>
-              <a
+              {/* <a
                 href="transcriptions"
                 className={styles.gettingStarted__card_cta}
               >
                 Get Started
-              </a>
+              </a> */}
             </div>
           </div>
         </div>
@@ -113,7 +116,7 @@ function HomePage() {
             FREQUENTLY ASKED <span>QUESTIONS</span>{" "}
           </h2>
           <div className={`${styles.faq_faqs} ${styles.faq_container}`}>
-            <FaqElement question="How do I register on Scrybe?" />
+            <FaqElement question="How do I register on Heed?" />
             <FaqElement question="What are the limitations of free package?" />
             <FaqElement question="What format can i use for uploads?" />
             <FaqElement question="Who has access to my data?" />

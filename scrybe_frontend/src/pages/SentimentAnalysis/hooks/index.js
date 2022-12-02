@@ -1,17 +1,17 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+const baseURL = "https://heedapi.herokuapp.com";
 const useMockAuthAndReadSentiment = (id) => {
   const [sentimentData, setSentimentData] = useState({});
   useEffect(() => {
     const data =
-      "grant_type=password&username=tochibedford.work%40gmail.com&password=12345678&scope=&client_id=&client_secret=";
-    axios.post("http://scrybe.hng.tech:5000/login", data).then((res) => {
+      "grant_type=&username=tochibedford.work%40gmail.com&password=12345678&scope=&client_id=&client_secret=";
+    axios.post(baseURL + "/login", data).then((res) => {
       const headers = {
         Authorization: `Bearer ${res.data.access_token}`,
       };
       axios
-        .get(`http://scrybe.hng.tech:5000/audios/${id}/sentiment`, { headers })
+        .get(baseURL + `/audios/${id}/sentiment`, { headers })
         .then((newRes) => {
           setSentimentData(newRes.data);
         })
@@ -24,13 +24,22 @@ const useMockAuthAndReadSentiment = (id) => {
   return sentimentData;
 };
 
-const useMockEnd = (amount) => {
-  const [sentimentData, setSentimentData] = useState([]);
+const useMockEnd = (id) => {
+  const [sentimentData, setSentimentData] = useState({});
   useEffect(() => {
     axios
       .get("https://mockend.com/tochibedford/MockendData/Audios")
       .then((res) => {
-        setSentimentData(res.data.slice(0, amount));
+        //transforming data to look like heed api return data
+        const mainData = res.data[id];
+        const scores = JSON.parse(mainData.sentiment_score);
+        mainData.positivity_score = scores[0];
+        mainData.neutrality_score = scores[1];
+        mainData.negativity_score = scores[2];
+        mainData.transcript = mainData.transcription;
+        mainData.positiveTags = JSON.parse(mainData.positiveTags);
+        mainData.negativeTags = JSON.parse(mainData.negativeTags);
+        setSentimentData(mainData);
       })
       .catch((err) => {
         console.log(err);

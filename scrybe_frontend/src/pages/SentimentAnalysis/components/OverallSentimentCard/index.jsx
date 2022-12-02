@@ -33,7 +33,7 @@ function OverAllSentimentCard(props) {
       sentimentDataFormatted["datasets"] !== undefined ? (
         <DoughnutChart data={sentimentDataFormatted} />
       ) : (
-        ""
+        <div className={styles.skeleton__chart}></div>
       )}
     </AsideCard>
   );

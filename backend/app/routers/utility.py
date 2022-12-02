@@ -1,6 +1,17 @@
 import requests
 import time
 from fastapi import HTTPException
+import boto3
+from botocore.exceptions import ClientError
+import logging
+import requests
+import time
+
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 upload_endpoint = "https://api.assemblyai.com/v2/upload"
@@ -20,20 +31,37 @@ def _read_file(filename, chunk_size=5242880):
 # Uploads a file to AAI servers
 def upload_file(audio_file, header):
     try:
-        upload_response = requests.post(
-            upload_endpoint,
-            headers=header, data=_read_file(audio_file)
-        )
-    except Exception:
-        return {"error": "There was an error with the file you uploaded. upload an mp3 preferably."}
+        # upload_response = requests.post(
+        #     upload_endpoint,
+        #     headers=header, data=_read_file(audio_file)
+        # )
+        bucket_name = "code-bearer"
+        object_name = audio_file
+
+        iam_access_id = os.getenv("Access_key_id")
+        iam_secret_key = os.getenv("secret_access_key")
+        s3_client = boto3.client(
+            's3', 
+            aws_access_key_id=iam_access_id,
+            aws_secret_access_key=iam_secret_key
+            )
+        p_url = s3_client.generate_presigned_url(
+            ClientMethod='get_object',
+            Params={'Bucket': bucket_name, 'Key': object_name},
+            ExpiresIn = 1800)
+        for bucket in s3.buckets.all():
+            print(bucket.name)
+
+    except ClientError as e:
+        logging.error(e)
     
-    return upload_response.json()
+    return p_url
 
 
 # Request transcript for file uploaded to AAI servers
 def request_transcript(upload_url, header):
     transcript_request = {
-        'audio_url': upload_url['upload_url']
+        'audio_url': upload_url
     }
     transcript_response = requests.post(
         transcript_endpoint,

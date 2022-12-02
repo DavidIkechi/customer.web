@@ -1,0 +1,98 @@
+    .contentCont {
+        width: 90%;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        img {
+            width: 50%;
+            height: 280px;
+            object-fit: cover;
+        }
+
+        .msgCont {
+            p {
+                text-align: center;
+                font-size: 40px;
+                font-weight: 600;
+                color: #575756;
+            }
+
+            div {
+                display: flex;
+                gap: 2rem;
+                text-align: center;
+                justify-content: center;
+                margin-top: 1.5rem;
+
+                .fill {
+                    display: block;
+                    background: #006CFF;
+                    text-align: center;
+                    padding: 15px 20px;
+                    color: #fff;
+                    border: 0;
+                    border-radius: 3px;
+                    font-weight: 400;
+                    width: 180px;
+                    font-size: 18px;
+                    border: 1px solid transparent;
+                    transition: all 0.3s ease;
+
+                    &:hover {
+                        background: transparent;
+                        border-color: #006CFF;
+                        color: #006CFF;
+                    }
+                }
+
+                .trans {
+                    display: block;
+                    background: transparent;
+                    text-align: center;
+                    padding: 15px 20px;
+                    color: #006CFF;
+                    border: 0;
+                    border-radius: 3px;
+                    font-weight: 400;
+                    width: 180px;
+                    font-size: 18px;
+                    border: 1px solid #006CFF;
+                    transition: all 0.3s ease;
+
+                    &:hover {
+                        background: #006CFF;
+                        border-color: #006CFF;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 481px) {
+        .contentCont {
+            img {
+                width: 100%;
+            }
+            .msgCont {
+                p {
+                    font-size: 30px;
+                }
+
+                div {
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+
+                    .fill, .trans {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }

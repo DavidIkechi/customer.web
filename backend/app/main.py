@@ -1,30 +1,44 @@
-
-from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form
+from typing import List
+from models import Audio
+from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form, Query
 from fastapi_pagination import Page, paginate, Params
 from fastapi.middleware.cors import CORSMiddleware
 from routers.sentiment import sentiment
 from routers.transcribe import transcribe_file
 import auth
 from routers.score import score_count
-
+import uvicorn
 from routers.transcribe import transcript_router
 from routers.score import score_count
 import models, json
 from auth import get_active_user, get_current_user
 from jwt import (
     main_login
-    )
+
+)
+
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from db import Base, engine, SessionLocal
 from sqlalchemy.orm import Session
 import crud, schema
-from emails import send_email, verify_token
+
+from emails import send_email, verify_token, send_password_reset_email
 from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
+import cloudinary
+import cloudinary.uploader
+from BitlyAPI import shorten_urls
+
+from datetime import datetime
+
 
 import shutil
 import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 # Dependency
@@ -73,10 +87,11 @@ origins = [
     "http://localhost:3000",
     "http://localhost:5173",
     "http://localhost:8000",
-    "https://scrybe.hng.tech",
-    "https://scrybe.hng.tech:80",
-    "https://scrybe.hng.tech:3000",
-    "https://scrybe.hng.tech:5173",
+    "https://heed.hng.tech",
+    "http://heed.hng.tech",
+    "https://heed.hng.tech:80",
+    "https://heed.hng.tech:3000",
+    "https://heed.hng.tech:5173",
 ]
 
 app.add_middleware(
@@ -87,14 +102,42 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+def main() -> None:
+    uvicorn.run(
+        "main:app", 
+        host=os.getenv("HOST"), 
+        port=int(os.getenv("PORT")), 
+        reload=os.getenv("RELOAD")
+    )
+
 
 @app.get("/")
 async def ping():
     return {"message": "Scrybe Up"}
 
 
-@app.post("/analyse", tags=['analyse'])
-async def analyse(file: UploadFile=File(...)):
+@app.post("/upload_audios", tags=['analyse'])
+async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session = Depends(get_db), file: UploadFile=File(...), user: models.User = Depends(get_active_user)):
+    
+    user_id = user.id
+    company_id = user.company_id
+    
+    # convert to lower case for both first and last name.    
+    first_name = first_name.lower()
+    last_name = last_name.lower()
+    agent_name = "%s %s" %(first_name, last_name)
+    
+    # if the agent name is already in the database before creating for the agent.
+    if not db.query(models.Agent).filter(models.Agent.first_name == first_name, 
+                                     models.Agent.last_name == last_name).first():
+        db_agent = models.Agent(first_name=first_name, last_name=last_name, company_id=company_id)
+        # Add Agent
+        db.add(db_agent)
+        db.commit()
+        db.refresh(db_agent)
+    else:
+        db_agent = db.query(models.Agent).filter(models.Agent.first_name == first_name, 
+                                     models.Agent.last_name == last_name).first()
     try:
         contents = file.file.read()
         with open(file.filename, 'wb') as f:
@@ -103,22 +146,60 @@ async def analyse(file: UploadFile=File(...)):
         return {"error": "There was an error uploading the file"}
     finally:
         file.file.close()
+    
+    try:
+        result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
+        url = result.get("url")
+        urls = [url]
+        response = shorten_urls(urls)
+        retrieve_url = response[0]
+        new_url = retrieve_url.short_url
+        
+    except Exception:
+        return {"error": "There was an error uploading the file"}
+    # transcript = transcript
+    
+    size = audio_details(file.filename)["size"]
+    duration = audio_details(file.filename)["mins"]
+    transcript = transcribe_file(new_url)
+    # get some essential parameters
+    print(transcript)
+    audio_url = transcript['audio_url']
+    job_status = transcript['status']
+    transcript_id = transcript['id']
+    
+    db_audio = models.Audio(audio_path=audio_url, job_id = transcript_id, user_id=user_id, size=size, duration=duration, 
+                            agent_id=db_agent.id)
 
-    transcript = transcribe_file(file.filename)
-    transcript = transcript
+    db.add(db_audio)
+    db.commit()
+    db.refresh(db_audio)
+    
+    # get the audio id and some details from the audio table.
+    aud_details = db.query(models.Audio).filter(models.Audio.job_id == transcript_id).first()
+    audio_id = aud_details.id
+    
+    # create the Job Table as well.
+    db_job = models.Job(job_status=job_status, audio_id = audio_id)
 
-    sentiment_result = sentiment(transcript)
+    db.add(db_job)
+    db.commit()
+    db.refresh(db_job)
+    # sentiment_result = sentiment(transcript)
 
-    negativity_score = sentiment_result['negativity_score']
-    positivity_score = sentiment_result['positivity_score']
-    neutrality_score = sentiment_result['neutrality_score']
-    overall_sentiment = sentiment_result['overall_sentiment']
+    # negativity_score = sentiment_result['negativity_score']
+    # positivity_score = sentiment_result['positivity_score']
+    # neutrality_score = sentiment_result['neutrality_score']
+    # overall_sentiment = sentiment_result['overall_sentiment']
+    
+
+    return {
+        "id":audio_id,
+        "transcript_id": transcript_id
+    }
 
 
-    return {"transcript": transcript, "sentiment_result": sentiment_result}
-
-
-@app.post("/new_analyse", tags=['analyse'])
+@app.post("/upload_recording", tags=['analyse'])
 async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Session = Depends(get_db), file: UploadFile=File(...), user: models.User = Depends(get_active_user)):
 
     # Create Agent
@@ -131,6 +212,7 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     db.add(db_agent)
     db.commit()
     db.refresh(db_agent)
+    
 
     try:
         contents = file.file.read()
@@ -155,7 +237,7 @@ async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Ses
     most_negative_sentences = sentiment_result['most_negative_sentences']
     most_positive_sentences = sentiment_result ['most_postive_sentences']
 
-    db_audio = models.Audio(audio_path=file.filename, user_id=user_id, size=size, duration=duration, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, most_negative_sentences = most_negative_sentences, most_positive_sentences = most_positive_sentences, agent_id=db_agent.id)
+    db_audio = models.Audio(audio_path=file.filename, user_id=user_id, size=size, duration=duration, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, most_negative_sentences = most_negative_sentences, most_positive_sentences = most_positive_sentences, agent_id=db_agent.id, agent_firstname= db_agent.first_name, agent_lastname= db_agent.last_name)
 
     db.add(db_audio)
     db.commit()
@@ -212,6 +294,7 @@ async def email_verification(request: Request, token: str, db: Session = Depends
 
     if user and not user.is_active:
         user.is_active = True
+        user.is_verified = True
         db.commit()
         return{
             "status" : "ok",
@@ -221,6 +304,7 @@ async def email_verification(request: Request, token: str, db: Session = Depends
 @app.patch("/user/update/{user_id}", summary = "update user details", response_model=schema.user_update, tags=['users'])
 def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depends(get_db)):
      return crud.update_user(db=db, user=user, user_id=user_id)
+
 
 @app.post("/tryForFree")
 async def free_trial(file: UploadFile = File(...)):
@@ -266,13 +350,10 @@ def get_sentiment_result(id: int, db: Session = Depends(get_db)):
             detail="The analysis doesn't exist",
         )
     return analysis
-
-
 @app.get("/audios", summary = "get all audio uploads", response_model=list[schema.Audio], tags=['audios'])
 def read_audios(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     audios = crud.get_audios(db, skip=skip, limit=limit)
     return audios
-
 
 @app.get('/audios/{audio_id}/sentiment')
 def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
@@ -304,18 +385,54 @@ def get_recent_recordings(skip: int = 0, limit: int = 5, db: Session = Depends(g
     recordings = db.query(models.Audio).filter(models.Audio.user_id == user.id).order_by(models.Audio.timestamp.desc()).offset(skip).limit(limit).all()
     return recordings
 
+#get total analysis
+@app.get("/total-analysis", summary="get user total analysis", response_model = schema.TotalAnalysis)
+def get_total_analysis(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    overall_sentiment = db.query(models.Audio).filter(models.Audio.user_id == user.id)
+    week = datetime.now().isocalendar().week
+    month = datetime.now().month
+    list_month=[]
+    list_week=[]
+    week_item={}
+    month_item={}
+    result = dict()
+    for i in overall_sentiment:
+        if i.timestamp.month == month:
+            list_month.append(i.overall_sentiment)
+        if i.timestamp.isocalendar().week == week:
+            list_week.append(i.overall_sentiment)
+
+
+    week_item['id'] = 1
+    week_item['positive'] = list_week.count("Positive")
+    week_item['neutral'] = list_week.count("Neutral")
+    week_item['negative'] = list_week.count("Negative")
+
+    month_item['id'] = 1
+    month_item['positive'] = list_month.count("Positive")
+    month_item['neutral'] = list_month.count("Neutral")
+    month_item['negative'] = list_month.count("Negative")
+
+    result['week'] = [week_item]
+    result['month'] = [month_item]
+
+    return result
 
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
-def get_agents_leaderboard(db: Session = Depends(get_db)):
+def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     results = db.execute("""SELECT agent_id,
+        agent_firstname,
+        agent_lastname,
         SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score,
         SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score,
         SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
-        (positivity_score/(positivity_score+negativity_score+neutrality_score) * 10) AS Avergae_score
+        round(positivity_score/(positivity_score+negativity_score+neutrality_score) * 10, 2) AS Avergae_score
     FROM audios GROUP BY agent_id
     ORDER BY Positive_score DESC""")
     leaderboard = [dict(r) for r in results]
-    return {"Agents Leaderboard": leaderboard}
+    top3_agents = leaderboard[:3]
+    others = leaderboard[3:]
+    return {"Top3 Agents": top3_agents, "Other Agents": others}
 
 
 @app.get("/account", summary = "get user profile details", tags=['users'])
@@ -323,3 +440,37 @@ async def my_profile (db: Session = Depends(get_db), user: models.User = Depends
     user_id = user.id
     return crud.get_user_profile(db, user_id)
 
+
+@app.post("/forgot_password", tags=['users'])
+async def forgot_password(email: str, db: Session = Depends(get_db)):
+    user_exist = crud.get_user_by_email(db, email)
+    if not user_exist:
+        raise HTTPException(status_code=404, detail="User not Found")
+    #if not user_exist.is_verified:
+        #raise HTTPException(status_code=404, detail="You need to be verified to reset your password!!!")
+    token = await send_password_reset_email([user_exist.email], user_exist)
+    return token
+    
+
+if __name__ == "__main__":
+    main()
+
+
+
+@app.post("/agent", tags=['create agent'])
+async def create_agent(agent: schema.AgentCreate, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    company_id = user.company_id
+    return crud.create_agent(db, agent, company_id)
+
+#delete single and multiple audios
+@app.delete("/audios/delete")
+def delete_audios(audios: List[int] = Query(None), db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    deleted_audios = []
+    for audio_id in audios:
+        db_audio = crud.get_audio(db, audio_id=audio_id)
+        if db_audio:
+            db.delete(db_audio)
+            db.commit()
+            deleted_audios.append(db_audio.audio_path)
+    return {"message": "operation successful", "deleted audion(s)": deleted_audios}
+            
