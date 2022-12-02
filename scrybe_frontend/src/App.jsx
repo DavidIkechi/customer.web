@@ -52,6 +52,7 @@ import Error from "./pages/Error/Error";
 import EmailVerify from "./pages/EmailVerification/EmailVerify";
 
 import WithAuth from "./HOCs";
+import Logout from "./pages/Logout";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -68,6 +69,7 @@ function App() {
       <Routes>
         {/* access without sign in */}
         <Route path="/verification" element={<EmailVerify />} />
+        <Route path ="/logout" element = {<Logout/>}/>
         <Route path="/" element={<HomePage />} />
         <Route path="/try" element={<TryForFree />} />
         <Route path="/careers" element={<Careers />} />
