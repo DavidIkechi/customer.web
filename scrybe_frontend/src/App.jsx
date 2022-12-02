@@ -40,6 +40,8 @@ import TryResults from "./pages/TryForFree/tryResults";
 import TermsOfService from "./pages/TermsOfService";
 import Blogs from "./pages/BlogsPage";
 import BlogPostPage from "./pages/BlogPostPage";
+import General from "./pages/HelpAndSupport/components/General";
+import PromotedArticles from "./pages/HelpAndSupport/components/PromotedArticles";
 import SettingsIndex from "./pages/Settings/SettingsIndex";
 import AccountSettings from "./pages/Settings/SettingsPageSubPages/AccountSettings/AccountSettings";
 import NotificationSettings from "./pages/Settings/SettingsPageSubPages/Notifications/NotificationSettings";
@@ -183,7 +185,8 @@ function App() {
           />
           {/* ROutes without working paths */}
         </Route>
-
+        <Route path="/help-support-general" element={<General />} />
+        <Route path="/promoted-articles" element={<PromotedArticles />}></Route>
         {/* cant access without signin */}
 
         {/* <Route path="/help-support-general" element={<General />}>
