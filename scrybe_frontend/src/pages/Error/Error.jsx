@@ -10,13 +10,17 @@ const Error = () => {
       <img src={error} alt="error" />
       <div className={styles.msgCont}>
         <p>Ooops! We can't find that page</p>
+        <p className={styles.msg}>
+          Sorry, the page you’re looking for might have been removed, had its
+          name changed or is temporarily unavailable.
+        </p>
         <div>
           <Link onClick={() => navigate(-1)} className={styles.fill}>
             Go back
           </Link>
 
           <Link to="/" className={styles.trans}>
-            Take me home
+            Back to Homepage
           </Link>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import Footer from "../../components/footer";
 import NavBar from "../../components/navBar";
-import Articles from "./components/Articles/Articles";
+import Articles from "./components/Articles";
 import Cards from "./components/Cards/Cards";
 import Contact from "./components/Contact/Contact";
 import Header from "./components/Header/Header";

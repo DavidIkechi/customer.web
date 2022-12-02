@@ -404,7 +404,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
             elif 15 <= i.timestamp.day <= 21:
                 results["month"][2]["totalRecordings"] += 1
             elif 22 <= i.timestamp.day <= 31:
-                results["month"][2]["totalRecordings"] += 1
+                results["month"][3]["totalRecordings"] += 1
 
     return results
 
@@ -424,6 +424,37 @@ def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = De
     top3_agents = leaderboard[:3]
     others = leaderboard[3:]
     return {"Top3 Agents": top3_agents, "Other Agents": others}
+
+#agent total_analysis
+@app.get("/total-agent-analysis", summary="get total agent analysis")
+def get_total_agent_analysis(agent_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    total_analysis = db.query(models.Audio).filter(models.Audio.user_id == user.id, models.Audio.agent_id == agent_id)
+    week = datetime.now().isocalendar().week
+    list_week=[]
+    week_item={}
+    result = {
+        "week": [
+            {"id": 1, "time": "Day 1", "positive": 0, "negative": 0, "neutral": 0},
+            {"id": 2, "time": "Day 2", "positive": 0, "negative": 0, "neutral": 0},
+            {"id": 3, "time": "Day 3", "positive": 0, "negative": 0, "neutral": 0},
+            {"id": 4, "time": "Day 4", "positive": 0, "negative": 0, "neutral": 0},
+            {"id": 5, "time": "Day 5", "positive": 0, "negative": 0, "neutral": 0},
+            {"id": 6, "time": "Day 6", "positive": 0, "negative": 0, "neutral": 0},
+            {"id": 7, "time": "Day 7", "positive": 0, "negative": 0, "neutral": 0}
+        ],
+    }
+    for i in total_analysis:
+        if i.timestamp.isocalendar().week == week:
+            for y in range(7):
+                if i.timestamp.weekday() == y:
+                    if i.overall_sentiment == "Positive":
+                        result["week"][y]["positive"] += 1
+                    elif i.overall_sentiment == "Negative":
+                        result["week"][y]["negative"] += 1
+                    elif i.overall_sentiment == "Neutral":
+                        result["week"][y]["neutral"] += 1
+
+    return result
 
 
 @app.get("/account", summary = "get user profile details", tags=['users'])

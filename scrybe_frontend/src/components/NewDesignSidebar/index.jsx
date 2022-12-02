@@ -3,14 +3,18 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import SearchInput from "./SearchInput";
 // import styles from "./SideBar.module.scss";
-import closeIcon from "./assets/icons/closeIcon.svg";
-import logoSVG from "./assets/logo.svg";
+import closeIcon from "./icons/closeIcon.svg";
+import logoSVG from "./icons/logo.svg";
 // import insight from "./assets/icons/insight.svg";
-import leaderboard from "./assets/icons/leaderboard.svg";
+import leaderboard from "./icons/leaderboard.svg";
 // import monthlyAnalysis from "./assets/icons/monthly-analysis.svg";
-import analysis from "./assets/icons/analysis.svg";
-import myScrybe from "./assets/icons/my-scrybe.svg";
-import settings from "./assets/icons/settings.svg";
+import analysis from "./icons/analysis.svg";
+import dropdown_arr from "./icons/dropdownArr.svg";
+import myScrybe from "./icons/my-scrybe.svg";
+import settings from "./icons/settings.svg";
+import usrAvatar from "./icons/user_avatar.svg";
+
+import { fetchCurrentUser } from "../../helpers/fetchCurrentUser/index";
 import styles from "./generalSidebar.module.scss";
 
 /**
@@ -36,79 +40,101 @@ function NewDesignSideBar({
   closeSidebar,
   toggleSidebar,
 }) {
-  // const [isToggled, setIsToggled] = React.useState(false);
-  console.log("toggleSidebar", toggleSidebar);
+  const activeUser = fetchCurrentUser();
   return (
     <div
       className={`${styles.generalSidebar}
       } ${toggleSidebar ? styles.showSidebar : ""} `}
     >
       <div className={styles.generalSidebar_header}>
-        <div className={styles.generalSidebar_header_logo_vs_closeIcon}>
-          <NavLink to="/" className={`${styles.logoLink}`}>
-            <img src={logoSVG} alt="heed logo" />
-            <p>Heed</p>
-          </NavLink>
-          <img
-            src={closeIcon}
-            alt="closeIcon"
-            className={styles.SidebarcloseIcon}
-            onClick={closeSidebar}
-          />
-        </div>
-        <div
-          className={` ${styles[`${needSearchDesktop}`]} ${
-            styles[`${needSearchMobile}`]
-          }`}
-        >
-          <SearchInput inputValue={getValue} />
-        </div>
-        <div className={styles.navLinks}>
-          <NavLink
-            to="/dashboard"
-            className={({ isActive }) =>
-              isActive
-                ? `${styles.active} ${styles.navLink}`
-                : `${styles.inactive} ${styles.navLink}`
-            }
+        <div className={styles.generalSidebar_itemsFlex}>
+          <div className={styles.generalSidebar_header_logo_vs_closeIcon}>
+            <NavLink to="/" className={`${styles.logoLink}`}>
+              <img src={logoSVG} alt="heed logo" />
+              <p>Heed</p>
+            </NavLink>
+            <img
+              src={closeIcon}
+              alt="closeIcon"
+              className={styles.SidebarcloseIcon}
+              onClick={closeSidebar}
+            />
+          </div>
+          <div
+            className={` ${styles[`${needSearchDesktop}`]} ${
+              styles[`${needSearchMobile}`]
+            }`}
           >
-            <img src={myScrybe} alt="myScrybe icon" />
-            <p>Overview</p>
-          </NavLink>
-          <NavLink
-            to="/sentiment-analysis"
-            className={({ isActive }) =>
-              isActive
-                ? `${styles.active} ${styles.navLink}`
-                : `${styles.inactive} ${styles.navLink}`
-            }
-          >
-            <img src={analysis} alt="analysis icon" />
-            <p>Analysis</p>
-          </NavLink>
+            <SearchInput inputValue={getValue} />
+          </div>
+          <div className={styles.navLinks}>
+            <NavLink
+              to="/dashboard"
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.active} ${styles.navLink}`
+                  : `${styles.inactive} ${styles.navLink}`
+              }
+            >
+              <img src={myScrybe} alt="myScrybe icon" />
+              <p>Overview</p>
+            </NavLink>
+            <NavLink
+              to="/sentiment-analysis"
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.active} ${styles.navLink}`
+                  : `${styles.inactive} ${styles.navLink}`
+              }
+            >
+              <img src={analysis} alt="analysis icon" />
+              <p>Analysis</p>
+            </NavLink>
 
-          <NavLink
-            to="/leaderboard"
-            className={({ isActive }) =>
-              isActive
-                ? `${styles.active} ${styles.navLink} `
-                : `${styles.inactive} ${styles.navLink}`
-            }
-          >
-            <img src={leaderboard} alt="leaderboard icon" />
-            <p>Leaderboard</p>
-          </NavLink>
-          <NavLink
-            to="/settings"
-            className={({ isActive }) =>
-              isActive
-                ? `${styles.active} ${styles.navLink}`
-                : `${styles.inactive} ${styles.navLink}`
-            }
-          >
-            <img src={settings} alt="settings icon" />
-            <p>Settings</p>
-          </NavLink>
+            <NavLink
+              to="/leaderboard"
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.active} ${styles.navLink} `
+                  : `${styles.inactive} ${styles.navLink}`
+              }
+            >
+              <img src={leaderboard} alt="leaderboard icon" />
+              <p>Leaderboard</p>
+            </NavLink>
+            <NavLink
+              to="/settings"
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.active} ${styles.navLink}`
+                  : `${styles.inactive} ${styles.navLink}`
+              }
+            >
+              <img src={settings} alt="settings icon" />
+              <p>Settings</p>
+            </NavLink>
+          </div>
+        </div>
+        <div className={styles.generalSidebar__bottom}>
+          <div className={styles.generalSidebar_user_desktop}>
+            <img
+              src={activeUser?.profilePic ? activeUser?.profilePic : usrAvatar}
+              alt={activeUser?.name}
+            />
+            <div className={styles.generalSidebar_user_desktop_nameDetails}>
+              <div className={styles.generalSidebar_user_desktop_name_arr}>
+                <p className={styles.name}>
+                  {activeUser?.name ? activeUser?.name : "John Doe"}
+                </p>
+                <img src={dropdown_arr} alt="dropdown arrow" />
+              </div>
+              <p className={styles.workspace_name}>
+                {activeUser?.workspace_name
+                  ? activeUser?.workspace_name
+                  : "Office workspace"}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
       {children}
