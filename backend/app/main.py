@@ -167,7 +167,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     job_status = transcript['status']
     transcript_id = transcript['id']
     
-    db_audio = models.Audio(audio_path=audio_url, job_id = transcript_id, user_id=user_id, size=size, duration=duration, 
+    db_audio = models.Audio(audio_path=audio_url, filename= str(file.filename), job_id = transcript_id, user_id=user_id, size=size, duration=duration, 
                             agent_id=db_agent.id)
 
     db.add(db_audio)
@@ -291,9 +291,22 @@ def get_sentiment_result(id: int, db: Session = Depends(get_db)):
     return analysis
 
 
-@app.get("/list-audios-by-user", summary = "list all user audios with their status", response_model=list[schema.Audio])
+@app.get("/list-audios-by-user", summary = "list all user audios with their status")
 def list_audios_by_user(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    audios = crud.get_audios_by_user(db, user_id=user.id)
+    result = crud.get_audios_by_user(db, user_id=user.id)
+    audios = []
+    for i in result:
+        audio = {
+            "id": i.id,
+            "filename": i.filename,
+            "job_id": i.job_id,
+            "duration": i.duration,
+            "size": i.size,
+            "timestamp": i.timestamp,
+            "job_details": i.job
+
+        }
+        audios.append(audio)
     return audios
     
 
