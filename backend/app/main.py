@@ -26,6 +26,7 @@ from emails import send_email, verify_token, send_password_reset_email
 from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
+from datetime import datetime
 
 import shutil
 import os
@@ -320,6 +321,38 @@ def get_recent_recordings(skip: int = 0, limit: int = 5, db: Session = Depends(g
     recordings = db.query(models.Audio).filter(models.Audio.user_id == user.id).order_by(models.Audio.timestamp.desc()).offset(skip).limit(limit).all()
     return recordings
 
+#get total analysis
+@app.get("/total-analysis", summary="get user total analysis", response_model = schema.TotalAnalysis)
+def get_total_analysis(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    overall_sentiment = db.query(models.Audio).filter(models.Audio.user_id == user.id)
+    week = datetime.now().isocalendar().week
+    month = datetime.now().month
+    list_month=[]
+    list_week=[]
+    week_item={}
+    month_item={}
+    result = dict()
+    for i in overall_sentiment:
+        if i.timestamp.month == month:
+            list_month.append(i.overall_sentiment)
+        if i.timestamp.isocalendar().week == week:
+            list_week.append(i.overall_sentiment)
+
+
+    week_item['id'] = 1
+    week_item['positive'] = list_week.count("Positive")
+    week_item['neutral'] = list_week.count("Neutral")
+    week_item['negative'] = list_week.count("Negative")
+
+    month_item['id'] = 1
+    month_item['positive'] = list_month.count("Positive")
+    month_item['neutral'] = list_month.count("Neutral")
+    month_item['negative'] = list_month.count("Negative")
+
+    result['week'] = [week_item]
+    result['month'] = [month_item]
+
+    return result
 
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
