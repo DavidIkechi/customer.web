@@ -1,7 +1,7 @@
 import Header from "../Header/Header";
 import HelpSupportNav from "../HelpSupportNav/HelpSupportNav";
 import Contact from "../Contact/Contact";
-import General1 from "../General1/index";
+import General1 from "../General1/General1";
 import General2 from "../General2/General2";
 import { useState } from "react";
 import styles from "./General.module.scss";

@@ -15,7 +15,6 @@ import Events from "./pages/Events/Events";
 import HelpSupport from "./pages/HelpAndSupport/HelpSupport";
 import About from "./pages/AboutUs";
 import Pricing from "./pages/Pricing";
-// import CheckoutStartup from "./pages/Checkout/CheckoutStartUp";
 import TryForFree from "./pages/TryForFree";
 import Press from "./pages/PressPage";
 import PressArticle from "./pages/PressArticle";
@@ -39,8 +38,6 @@ import Reviews from "./pages/Reviews/Reviews";
 import TryProcessing from "./pages/TryForFree/tryProcessing";
 import TryResults from "./pages/TryForFree/tryResults";
 import TermsOfService from "./pages/TermsOfService";
-import General from "./pages/HelpAndSupport/components/General";
-import PromotedArticles from "./pages/HelpAndSupport/components/PromotedArticles";
 import Blogs from "./pages/BlogsPage";
 import BlogPostPage from "./pages/BlogPostPage";
 import SettingsIndex from "./pages/Settings/SettingsIndex";
@@ -82,27 +79,6 @@ function App() {
         <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="/faq" element={<FAQs />} />
         <Route path="/help-support" element={<HelpSupport />} />
-        <Route path="/help-support-general" element={<General />} />
-        <Route path="/promoted-articles" element={<PromotedArticles />}></Route>
-        {/* <Route path="/help-support-general" element={<General />}>
-          <Route index element={<General1 />} />
-          <Route path="articles" element={<General2 />} />
-        </Route> */}
-        {/* <Route
-          path="/help-support-general/promoted-articles"
-          element={<PromotedArticles />}
-        >
-          <Route index element={<PromotedArticle1 />} />
-          <Route path="*" element={<PromotedArticle1 />} />
-        </Route> */}
-        {/* <Route
-          path="/help-support/promoted-articles"
-          element={<PromotedArticles />}
-        >
-          <Route index element={<PromotedArticle1 />} />
-          <Route path="*" element={<PromotedArticle1 />} />
-        </Route> */}
-
         <Route path="/create-account" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/reset-successful" element={<Successful />} />
@@ -168,11 +144,69 @@ function App() {
           element={<PersonalInformation />}
         />
 
-        {/* Press  */}
-        <Route path="press" element={<Press />} />
-        <Route path="/partners" element={<PartnersPage />} />
-        <Route path="press-article" element={<PressArticle />} />
-        <Route path="pricing" element={<Pricing />} />
+        {/* ROutes without working paths */}
+
+        <Route
+          path="/uploaded"
+          element={<DummyPage someText="uploaded recordings" />}
+        />
+        <Route
+          path="/report"
+          element={<DummyPage someText="report and performance" />}
+        />
+        <Route path="/upload" element={<DummyPage someText="upload pages" />} />
+        {/* ROutes without working paths */}
+
+        {/* access without sign in */}
+
+        {/* <Route path="/industry" exact element={<Industry />} /> */}
+        {/* <Route path="/industry-article" element={<IndustryArticles />} />
+        <Route path="/how-it-works" element={<HowitWorks />} /> */}
+        {/* leaderboard */}
+
+        {/* cant access without signin */}
+
+        <Route element={<RequireToken />}>
+          {/* ROutes without working paths */}
+
+          <Route
+            path="/dummyuploaded"
+            element={<DummyPage someText="uploaded recordings" />}
+          />
+          <Route
+            path="/dummyreport"
+            element={<DummyPage someText="report and performance" />}
+          />
+          <Route
+            path="/dummyupload"
+            element={<DummyPage someText="upload pages" />}
+          />
+          {/* ROutes without working paths */}
+        </Route>
+
+        {/* cant access without signin */}
+
+        {/* <Route path="/help-support-general" element={<General />}>
+          <Route index element={<General1 />} />
+          <Route path="articles" element={<General2 />} />
+        </Route> */}
+        {/* <Route
+          path="/help-support-general/promoted-articles"
+          element={<PromotedArticles />}
+        >
+          <Route index element={<PromotedArticle1 />} />
+          <Route path="*" element={<PromotedArticle1 />} />
+        </Route> */}
+        {/* <Route
+          path="/help-support/promoted-articles"
+          element={<PromotedArticles />}
+        >
+          <Route index element={<PromotedArticle1 />} />
+          <Route path="*" element={<PromotedArticle1 />} />
+        </Route> */}
+
+        {/* Error page */}
+        <Route path="*" element={<Error />} />
       </Routes>
     </>
   );

@@ -18,7 +18,7 @@ function Cards() {
       </div>
 
       <div className={styles.cards_holder}>
-        <Link to="/help-support-general">
+        <Link to="/help-general">
           <Card
             src={general}
             header="General"

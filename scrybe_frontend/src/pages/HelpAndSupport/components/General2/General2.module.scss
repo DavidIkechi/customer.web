@@ -4,14 +4,6 @@
     justify-content: space-between;
 }
 
-.general2 .flex p{
-padding-block-end: 5rem;
-}
-
-.general2 .flex {
-    margin-block-end: 5rem;
-}
-
 .guide {
     width: 510px;
     background-color: white;
@@ -40,11 +32,6 @@ padding-block-end: 5rem;
     justify-content: center;
 }
 
-@media screen and (max-width: 1240px) {
-    .main {
-        padding: 0 1rem;
-    }
-}
 @media screen and (max-width: 900px) {
     .main {
         padding: 0 1rem;
