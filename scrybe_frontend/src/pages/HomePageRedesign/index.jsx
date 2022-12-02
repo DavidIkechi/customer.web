@@ -213,7 +213,8 @@ const index = () => {
         <div className={styles.sect__container}>
           <div className={styles.fourth__heading}>
             <h3 className={styles.fourth__head}>
-              Here's what our clients are saying!
+              Here's what our{" "}
+              <span className={styles.fourth__inline}>clients</span> are saying!
             </h3>
           </div>
           <div className={styles.layout__one}>
@@ -271,12 +272,6 @@ const index = () => {
               <h3 className={styles.fifth__head}>
                 Drive Sales And Support Team Efficiency
               </h3>
-            </div>
-            <div className={styles.fourth__subtext}>
-              <p className={styles.fourth__subhead}>
-                We help businesses unlock insights and extract meaningful data
-                from your customer support conversations
-              </p>
             </div>
           </div>
           <div className={styles.bottom__fifth}>

@@ -107,7 +107,10 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/reset-successful" element={<Successful />} />
         <Route path="/verify-signup" element={<SignUpVerify />} />
-        <Route path="/set-new-password" element={<SetNewPassword />} />
+        <Route
+          path="/set-new-password:id/:token"
+          element={<SetNewPassword />}
+        />
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route
           path="/pw-reset-successful"
