@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import account from "./assets/account.jpg";
 import logout from "./assets/logout.jpg";
 import support from "./assets/support.jpg";
-import styles from "./dropdown.module.css";
+import styles from "./dropdown.module.scss";
 function DropDownModal({ closeModal }) {
   return (
     <div className={styles.dropdown}>
