@@ -49,6 +49,7 @@ import React, { useState, useEffect } from "react";
 import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
 import { UploadModal } from "./pages/UploadRecordingsModal";
 import Error from "./pages/Error/Error";
+import EmailVerify from "./pages/EmailVerification/EmailVerify";
 import WithAuth from "./HOCs";
 
 const AuthApi = React.createContext();
@@ -65,6 +66,7 @@ function App() {
     <>
       <Routes>
         {/* access without sign in */}
+        <Route path="/verification" element={<EmailVerify />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/try" element={<TryForFree />} />
         <Route path="/careers" element={<Careers />} />
@@ -90,39 +92,16 @@ function App() {
         <Route path="/agent-report" element={<AgentReport />} />
         <Route path="/upload-new-file" element={<UploadModal />} />
 
-        {/* ROutes without working paths */}
-        <Route
-          path="/uploaded"
-          element={<DummyPage someText="uploaded recordings" />}
-        />
-        <Route
-          path="/report"
-          element={<DummyPage someText="report and performance" />}
-        />
-        <Route path="/upload" element={<DummyPage someText="upload pages" />} />
-        <Route
-          path="/help"
-          element={<DummyPage someText="help and supprt" />}
-        />
         <Route path="/demos" element={<DummyPage someText="demo pages" />} />
         <Route path="/blog" element={<Blogs />} />
         <Route path="/blog/:id" element={<BlogPostPage />} />
+
         {/* Press  */}
         <Route path="press" element={<Press />} />
         <Route path="/partners" element={<PartnersPage />} />
         <Route path="press-article" element={<PressArticle />} />
         <Route path="pricing" element={<Pricing />} />
 
-        {/* access without sign in */}
-
-        {/* <Route path="/industry" exact element={<Industry />} /> */}
-        {/* <Route path="/industry-article" element={<IndustryArticles />} />
-        <Route path="/how-it-works" element={<HowitWorks />} /> */}
-        {/* leaderboard */}
-
-        {/* cant access without signin */}
-
-        {/* <Route element={<RequireToken />}> */}
         <Route
           path="/sentiment-analysis/:AudioId"
           element={<SentimentAnalysis />}
@@ -176,7 +155,34 @@ function App() {
         />
         <Route path="/upload" element={<DummyPage someText="upload pages" />} />
         {/* ROutes without working paths */}
-        {/* </Route> */}
+
+        {/* access without sign in */}
+
+        {/* <Route path="/industry" exact element={<Industry />} /> */}
+        {/* <Route path="/industry-article" element={<IndustryArticles />} />
+        <Route path="/how-it-works" element={<HowitWorks />} /> */}
+        {/* leaderboard */}
+
+        {/* cant access without signin */}
+
+        <Route element={<RequireToken />}>
+          {/* ROutes without working paths */}
+
+          <Route
+            path="/dummyuploaded"
+            element={<DummyPage someText="uploaded recordings" />}
+          />
+          <Route
+            path="/dummyreport"
+            element={<DummyPage someText="report and performance" />}
+          />
+          <Route
+            path="/dummyupload"
+            element={<DummyPage someText="upload pages" />}
+          />
+          {/* ROutes without working paths */}
+        </Route>
+
         {/* cant access without signin */}
 
         {/* <Route path="/help-support-general" element={<General />}>
