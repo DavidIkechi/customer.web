@@ -50,6 +50,7 @@ import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
 import { UploadModal } from "./pages/UploadRecordingsModal";
 import Error from "./pages/Error/Error";
 import EmailVerify from "./pages/EmailVerification/EmailVerify";
+
 import WithAuth from "./HOCs";
 
 const AuthApi = React.createContext();
