@@ -233,10 +233,9 @@ const index = () => {
               </div>
               <div className={styles.profile__text}>
                 <p className={styles.profile__msg}>
-                  Heed is half the price and twice the speed, We looked for a
-                  more reliable and flexible platform for our call analysis.
-                  Then we found Heed. ever since then, its been a wonderful
-                  experience being their client.
+                  We are so happy to have discovered Heed. It is a good way to
+                  monitor our engagements with clients and ensure my agents are
+                  effective in our customer support activities.
                 </p>
               </div>
             </div>
@@ -255,10 +254,8 @@ const index = () => {
               </div>
               <div className={styles.profile__text}>
                 <p className={styles.profile__msg}>
-                  We are so happy to have discovered Heed. It is a good way to
-                  get feedback from clients about their experience with my
-                  company. It's even better for making sure our audio
-                  transcription service is on the right track
+                  Heed gave us insight into customers preferences and we were
+                  able to use this insight to grow our Sales revenue by 17%
                 </p>
               </div>
             </div>
@@ -273,9 +270,15 @@ const index = () => {
                 Drive Sales And Support Team Efficiency
               </h3>
             </div>
+            <div className={styles.fifth__subtext}>
+              <p className={styles.fifth__subhead}>
+                We help businesses unlock insights and extract meaningful data
+                from your customer support conversations
+              </p>
+            </div>
           </div>
           <div className={styles.bottom__fifth}>
-            <button className={styles.fifth__action}>Get Started</button>
+            <button className={styles.fifth__action}>Try Now</button>
           </div>
         </div>
       </section>

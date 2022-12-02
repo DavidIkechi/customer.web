@@ -284,13 +284,28 @@ button {
 
     .top__fifth .fifth__heading {
         text-align: center;
-        margin-bottom: 4em;
+        margin-bottom: 1em;
     }
 
     .top__fifth .fifth__head {
         font-size: 2.5rem;
         color: #313131;
         font-weight: 700;
+        font-style: bold;
+        fill: solid;
+        line-height: 1.5rem;
+    }
+
+    .top__fifth .fifth__subtext {
+        text-align: center;
+        width: 60%;
+        margin: 0 auto 4em;
+    }
+
+    .top__fifth .fifth__subhead {
+        font-size: 1.25rem;
+        color: #454545;
+        font-weight: 600;
         font-style: bold;
         fill: solid;
         line-height: 1.5rem;
@@ -313,4 +328,193 @@ button {
         border: none;
         border-radius: .25rem;
     }
+}
+
+
+
+@media (min-width: 768px) {
+
+    //Styling of the first section
+
+    // .desktop__first {
+    //     background-image: url(./assets/background__grad.png);
+    //     height: 50vh;
+    //     width: 100%;
+    //     background-repeat: no-repeat;
+    //     background-size: cover;
+    //     // position: relative;
+    // }
+
+    .first__section {
+        // background-image: none;
+        height: 160vh;
+
+        .hero__bottom .hero__action {
+            display: flex;
+            justify-content: space-between;
+            width: 50%;
+            margin: 0 auto;
+        }
+
+        .hero__text .hero__head {
+            font-size: 3rem;
+        }
+
+        .hero__subtext {
+            width: 95%;
+            margin-bottom: 3.5em;
+        }
+
+        .hero__text .hero__subhead {
+            font-size: 1.25rem;
+        }
+
+        .hero__bottom {
+            margin-bottom: 5em;
+        }
+
+        .hero__image {
+            padding-top: 3em;
+        }
+    }
+
+
+    //Styling of the second section
+
+    .second__section {
+
+        margin-top: 3em;
+        // height: 100vh;
+
+        .second__top .second__head {
+            font-size: 2.5rem;
+        }
+        
+        .second__bottom {
+            display: flex;
+            justify-content: space-between;
+        
+        }
+
+        .second__bottom .second__flex {
+            flex-basis: 30%;
+
+        }
+
+        .second__bottom .second__icons {
+            width: 3rem;
+        }
+
+        .second__bottom .each__head {
+            font-size: 1.8rem;
+        }
+
+        .second__bottom .second__subhead {
+            font-size: 1rem;
+        }
+    }
+
+    //Styling of the third section
+
+    .third__section {
+        margin-top: 8em;
+
+        .third__top {
+            margin-bottom: 4em;
+        }
+
+        .third__top .third__head {
+            font-size: 3rem;
+        }
+
+        .third__bottom .third__row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4em;
+        }
+
+        .third__bottom .third__col {
+            display: flex;
+            margin-top: 4em;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .third__bottom .third__text {
+            margin-top: 0em;
+            width: 45%;
+        }
+
+        .third__bottom .third__image {
+            width: 45%;
+        }
+
+        .third__bottom .mobile__text {
+            text-align: unset;
+        }
+
+        .third__bottom .third__subtext {
+            font-size: 1.8rem;
+        }
+
+        .third__bottom .third__lists .each__list {
+            font-size: 1.8rem;
+        }
+    }
+
+
+    //Styling of the fourth section 
+
+    .fourth__section {
+
+        margin-top: 8em;
+
+        .layout__one {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .layout__one .client__test {
+            flex-basis: 48%;
+        }
+
+        .fourth__heading {
+            margin-bottom: 2em;
+        }
+
+        .fourth__heading .fourth__head {
+            font-size: 2.8rem;
+        }
+
+        .layout__one .client__test {
+            padding: 1.5em 2em 3em;
+        }
+
+        .layout__one .profile__name {
+            font-size: 1.5rem;
+        }
+
+        .layout__one .profile__msg {
+            font-size: 1.1rem;
+            color: #666666;
+            font-weight: 300;
+            font-style: normal;
+            fill: solid;
+            line-height: 1rem;
+        }
+    }
+
+    .fifth__section {
+        .top__fifth .fifth__head {
+            font-size: 2.8rem;
+        }
+
+        .bottom__fifth .fifth__action {
+            padding: 1.2em 4em;
+        }
+    }
+    
+
 }
