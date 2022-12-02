@@ -44,7 +44,7 @@ async def send_email(email: List, instance: User):
                     <p>Thank you for registering with us. Kindly click on the link below to
                     verify your email and have full acccess to the platform.</p>
 
-                    <a href="https:api.heed.hng.tech/verification?token={token}">Verify your email address </a>
+                    <a href="https://api.heed.hng.tech/verification?token={token}">Verify your email address </a>
         </div>
     """
 
@@ -72,3 +72,33 @@ async def verify_token(token: str, db: Session):
             headers={"WWW.Authenticate": "Bearer"}
         )
     return user
+
+async def send_password_reset_email(email: List, instance: User):
+    token_data = {
+        'email': instance.email,
+        # 'username': instance.username
+    }
+
+    token = jwt.encode(token_data, os.getenv('SECRET_P'), algorithm='HS256')
+
+    template = f"""
+        <div>
+                    <h3>Password Reset </h3>
+                    <br>
+                    <p>Hi {instance.first_name}, You requested to reset your password. Click the link below to change your password.</p>
+                    <br>
+                    <p>Kindly ignore this message if you did not make the request. </p>
+                    <a href="https://api.heed.hng.tech/reset_password?token={token}">Reset Password </a>
+        </div>
+    """
+
+    message = MessageSchema(
+        subject = "Password Reset",
+        recipients =email,
+        body = template,
+        subtype = "html"
+    )
+
+    fm =FastMail(conf)
+    await fm.send_message(message=message)
+    return token

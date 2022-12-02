@@ -10,7 +10,7 @@ import uvicorn
 from routers.transcribe import transcript_router
 from routers.score import score_count
 import models, json
-from auth import get_active_user, get_current_user
+from auth import get_active_user, get_current_user, get_admin
 from jwt import (
     main_login
     )
@@ -155,7 +155,6 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     duration = audio_details(file.filename)["mins"]
     transcript = transcribe_file(new_url)
     # get some essential parameters
-    print(transcript)
     audio_url = transcript['audio_url']
     job_status = transcript['status']
     transcript_id = transcript['id']
@@ -171,77 +170,27 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     aud_details = db.query(models.Audio).filter(models.Audio.job_id == transcript_id).first()
     audio_id = aud_details.id
     
+    # update the Agent table.
+    db_agent = db.query(models.Agent).filter(models.Agent.first_name == first_name, 
+                                     models.Agent.last_name == last_name).first()
+    db_agent.aud_id = audio_id
+    db.commit()
+    
     # create the Job Table as well.
     db_job = models.Job(job_status=job_status, audio_id = audio_id)
 
     db.add(db_job)
     db.commit()
     db.refresh(db_job)
-    # sentiment_result = sentiment(transcript)
-
-    # negativity_score = sentiment_result['negativity_score']
-    # positivity_score = sentiment_result['positivity_score']
-    # neutrality_score = sentiment_result['neutrality_score']
-    # overall_sentiment = sentiment_result['overall_sentiment']
     
+    # delete the file
+    os.remove(file.filename)
 
+    
     return {
         "id":audio_id,
         "transcript_id": transcript_id
     }
-
-
-@app.post("/upload_recording", tags=['analyse'])
-async def new_analyse(first_name: str = Form(), last_name: str = Form(), db: Session = Depends(get_db), file: UploadFile=File(...), user: models.User = Depends(get_active_user)):
-
-    # Create Agent
-    user_id = user.id
-    company_id = user.company_id
-    agent_name = "%s %s" %(first_name, last_name)
-    db_agent = models.Agent(first_name=first_name, last_name=last_name, company_id=company_id)
-
-    # Add Agent
-    db.add(db_agent)
-    db.commit()
-    db.refresh(db_agent)
-
-    try:
-        contents = file.file.read()
-        with open(file.filename, 'wb') as f:
-            f.write(contents)
-    except Exception:
-        return {"error": "There was an error uploading the file"}
-    finally:
-        file.file.close()
-
-    size = audio_details(file.filename)["size"]
-    duration = audio_details(file.filename)["mins"]
-    transcript = transcribe_file(file.filename)
-    transcript = transcript
-
-    sentiment_result = sentiment(transcript)
-
-    negativity_score = sentiment_result['negativity_score']
-    positivity_score = sentiment_result['positivity_score']
-    neutrality_score = sentiment_result['neutrality_score']
-    overall_sentiment = sentiment_result['overall_sentiment']
-    most_negative_sentences = sentiment_result['most_negative_sentences']
-    most_positive_sentences = sentiment_result ['most_postive_sentences']
-
-    db_audio = models.Audio(audio_path=file.filename, user_id=user_id, size=size, duration=duration, transcript=transcript, positivity_score=positivity_score, negativity_score=negativity_score, neutrality_score=neutrality_score, overall_sentiment=overall_sentiment, most_negative_sentences = most_negative_sentences, most_positive_sentences = most_positive_sentences, agent_id=db_agent.id)
-
-    db.add(db_audio)
-    db.commit()
-    db.refresh(db_audio)
-
-    history_create: schema.HistoryCreate = {"user_id":user_id,
-                                            "sentiment_result":overall_sentiment,
-                                            "agent_name": agent_name,
-                                            "audio_name": file.filename}
-
-    crud.create_history(db, history_create)
-
-    return {"transcript": transcript, "sentiment_result": sentiment_result}
 
 
 # create the endpoint
@@ -251,7 +200,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
     return await main_login(form_data, db)
 
 
-@app.post("/users", summary = "create/register a user", response_model=schema.User, tags=['users'])
+@app.post("/create_users", summary = "create/register a user", response_model=schema.User, tags=['users'])
 async def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
 
@@ -262,14 +211,14 @@ async def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):
     return crud.create_user(db=db, user=user)
 
 
-@app.get("/users", summary = "get all users", response_model=list[schema.User], tags=['users'])
+@app.get("/get_all_users", summary = "get all users", response_model=list[schema.User], tags=['users'])
 def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     users = crud.get_users(db, skip=skip, limit=limit)
     return users
 
 
-@app.get("/users/{user_id}", summary = "get user by id", response_model=schema.User, tags=['users'])
-def read_user(user_id: int, db: Session = Depends(get_db)):
+@app.get("/get_user/{user_id}", summary = "get user by id", response_model=schema.User, tags=['users'])
+def read_user(user_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_admin)):
     db_user = crud.get_user(db, user_id=user_id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
@@ -290,11 +239,6 @@ async def email_verification(request: Request, token: str, db: Session = Depends
             "status" : "ok",
             "data" : f"Hello {user.first_name}, your account has been successfully verified"}
 
-
-@app.patch("/user/update/{user_id}", summary = "update user details", response_model=schema.user_update, tags=['users'])
-def update_user(user: schema.user_update, user_id: int, db:Session=_fastapi.Depends(get_db)):
-     return crud.update_user(db=db, user=user, user_id=user_id)
-
 @app.post("/tryForFree")
 async def free_trial(file: UploadFile = File(...)):
     ####### saving the audio file
@@ -312,8 +256,6 @@ async def free_trial(file: UploadFile = File(...)):
         transcript = transcribe_file(file.filename)
         transcript = transcript
         return{"transcript": transcript}
-
-
 
 
 @app.get('/history', summary = "get user history", response_model=Page[schema.History])
