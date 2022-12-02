@@ -357,6 +357,59 @@ def get_total_analysis(db: Session = Depends(get_db), user: models.User = Depend
 
     return result
 
+#total-recordings
+@app.get("/total-recordings-user", summary="get total user recordings")
+def total_recordings_user(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    total_recordings = db.query(models.Audio).filter(models.Audio.user_id == user.id)
+    week = datetime.now().isocalendar().week
+    month = datetime.now().month
+    results = {
+        "week": [
+            {"id": 1, "time": "M", "totalRecordings": 0},
+            {"id": 2, "time": "T", "totalRecordings": 0},
+            {"id": 3, "time": "W", "totalRecordings": 0},
+            {"id": 4, "time": "T", "totalRecordings": 0},
+            {"id": 5, "time": "F", "totalRecordings": 0},
+            {"id": 6, "time": "S", "totalRecordings": 0},
+            {"id": 7, "time": "S", "totalRecordings": 0}
+        ],
+        "month": [
+            {"id": 1, "time": "wk1", "totalRecordings": 0},
+            {"id": 2, "time": "wk2", "totalRecordings": 0},
+            {"id": 3, "time": "wk3", "totalRecordings": 0},
+            {"id": 4, "time": "wk4", "totalRecordings": 0}
+        ]
+    }
+    for i in total_recordings:
+        if i.timestamp.isocalendar().week == week:
+            if i.timestamp.weekday() == 0:
+                results["week"][0]["totalRecordings"] += 1
+            elif i.timestamp.weekday() == 1:
+                results["week"][1]["totalRecordings"] += 1
+            elif i.timestamp.weekday() == 2:
+                results["week"][2]["totalRecordings"] += 1
+            elif i.timestamp.weekday() == 3:
+                results["week"][3]["totalRecordings"] += 1
+            elif i.timestamp.weekday() == 4:
+                results["week"][4]["totalRecordings"] += 1
+            elif i.timestamp.weekday() == 5:
+                results["week"][5]["totalRecordings"] += 1
+            elif i.timestamp.weekday() == 6:
+                results["week"][6]["totalRecordings"] += 1
+
+        if i.timestamp.month == month:
+            if i.timestamp.day <= 7:
+                results["month"][0]["totalRecordings"] += 1
+            elif 8 <= i.timestamp.day <= 14:
+                results["month"][1]["totalRecordings"] += 1
+            elif 15 <= i.timestamp.day <= 21:
+                results["month"][2]["totalRecordings"] += 1
+            elif 22 <= i.timestamp.day <= 31:
+                results["month"][2]["totalRecordings"] += 1
+
+    return results
+
+
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     results = db.execute("""SELECT agent_id,
