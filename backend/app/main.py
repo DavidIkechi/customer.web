@@ -441,7 +441,7 @@ async def forgot_password(email: schema.ForgetPassword, db: Session = Depends(ge
         raise HTTPException(status_code=404, detail="User not found")
 
     
-    token = await send_password_reset_email([email], user)
+    token = await send_password_reset_email([email.email], user)
     return token
     
 
