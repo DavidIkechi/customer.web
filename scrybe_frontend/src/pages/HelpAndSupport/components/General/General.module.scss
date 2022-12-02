@@ -1,5 +1,5 @@
 .body {
-    background-color: #FBF9F6;
+    background-color: #f9fdff;
     P, h1, h2 , h3, h4, h5 {
         line-height: normal;
     }
@@ -8,7 +8,8 @@
     }
 }
 .general {
-    padding: 0 5rem;
+     width: min(100%, 75.25rem);
+  margin-inline: auto;
 }
 
 .contact {
@@ -23,6 +24,11 @@
     a {
         text-decoration: none;
         color: #002D6B;
+    }
+}
+@media screen and (max-width: 1240px) {
+    .main {
+        padding: 0 1rem;
     }
 }
 
