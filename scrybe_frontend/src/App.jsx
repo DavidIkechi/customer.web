@@ -51,6 +51,8 @@ import { UploadModal } from "./pages/UploadRecordingsModal";
 import Error from "./pages/Error/Error";
 import EmailVerify from "./pages/EmailVerification/EmailVerify";
 
+import WithAuth from "./HOCs";
+
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
 
@@ -109,7 +111,14 @@ function App() {
         <Route path="/history" element={<History />} />
         <Route path="/events" element={<Events />} />
         <Route path="/dashboard" element={<DashboardOverview />} />
-        <Route path="/account" element={<Account />} />
+        <Route
+          path="/account"
+          element={
+            <WithAuth>
+              <Account />
+            </WithAuth>
+          }
+        />
         <Route path="/leaderboard" element={<LeaderboardPage />} />
         <Route path="/homeB" element={<HomePageB />} />
         <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
