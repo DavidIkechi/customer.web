@@ -30,58 +30,60 @@ const Index = () => {
       {/* <div className={styles.header__container}></div> */}
       <section className={styles.first__section}>
         <div className={styles.sect__container}>
-          <div className={styles.hero__text}>
-            <div className={styles.hero__heading}>
-              <h1 className={styles.hero__head}>
-                AI - Powered Solutions To Boost Sales And Support Teams
-                Efficiency
-              </h1>
-            </div>
-            <div className={styles.hero__subtext}>
-              <p className={styles.hero__subhead}>
-                Heed uses Artificial Intelligence to automatically transcribe
-                and analyze recorded audio calls by Customer support agents and
-                sales reps to give cutting-edge insight into customer sentiment,
-                thereby boosting operational efficiency, brand loyalty and
-                customer retention
-              </p>
-            </div>
-          </div>
-          <div className={styles.hero__bottom}>
-            <div className={styles.hero__action}>
-              <div className={styles.button__content}>
-                <Link>
-                  <button
-                    className={styles.hero__buttonOne}
-                    style={{
-                      backgroundColor: supportColor ? "#006CFF" : "#FFFFFF",
-                      color: supportText ? "#FFFFFF" : "#006CFF",
-                    }}
-                    onClick={toggleColor}
-                  >
-                    For Support
-                  </button>
-                </Link>
-                <Link>
-                  <button
-                    className={styles.hero__buttonTwo}
-                    style={{
-                      backgroundColor: saleColor ? "#006CFF" : "#FFFFFF",
-                      color: saleText ? "#FFFFFF" : "#006CFF",
-                    }}
-                    onClick={toggleColor}
-                  >
-                    For Sales
-                  </button>
-                </Link>
+          <div className={styles.hero__flex}>
+            <div className={styles.hero__text}>
+              <div className={styles.hero__heading}>
+                <h1 className={styles.hero__head}>
+                  AI - Powered Solutions To Boost Sales And Support Teams
+                  Efficiency
+                </h1>
+              </div>
+              <div className={styles.hero__subtext}>
+                <p className={styles.hero__subhead}>
+                  Heed uses Artificial Intelligence to automatically transcribe
+                  and analyze recorded audio calls by Customer support agents
+                  and sales reps to give cutting-edge insight into customer
+                  sentiment, thereby boosting operational efficiency, brand
+                  loyalty and customer retention
+                </p>
               </div>
             </div>
-            <div className={styles.hero__image}>
-              <img
-                src={heroCenter}
-                alt="hero center icon"
-                className={styles.hero__icon}
-              />
+            <div className={styles.hero__bottom}>
+              <div className={styles.hero__action}>
+                <div className={styles.button__content}>
+                  <Link style={{ width: "48%" }}>
+                    <button
+                      className={styles.hero__buttonOne}
+                      style={{
+                        backgroundColor: supportColor ? "#006CFF" : "#FFFFFF",
+                        color: supportText ? "#FFFFFF" : "#006CFF",
+                      }}
+                      onClick={toggleColor}
+                    >
+                      For Support
+                    </button>
+                  </Link>
+                  <Link style={{ width: "48%" }}>
+                    <button
+                      className={styles.hero__buttonTwo}
+                      style={{
+                        backgroundColor: saleColor ? "#006CFF" : "#FFFFFF",
+                        color: saleText ? "#FFFFFF" : "#006CFF",
+                      }}
+                      onClick={toggleColor}
+                    >
+                      For Sales
+                    </button>
+                  </Link>
+                </div>
+              </div>
+              <div className={styles.hero__image}>
+                <img
+                  src={heroCenter}
+                  alt="hero center icon"
+                  className={styles.hero__icon}
+                />
+              </div>
             </div>
           </div>
         </div>
