@@ -44,6 +44,7 @@ class Job(JobBase):
 
 class AudioBase(BaseModel):
     audio_path: str
+    filename: str
     transcript: str
     size: int
     duration: int
@@ -54,6 +55,9 @@ class AudioBase(BaseModel):
     overall_sentiment: str
     most_positive_sentences: list
     most_negative_sentences: list
+
+    class Config:
+        orm_mode = True
 
 class AudioCreate(AudioBase):
     pass
@@ -131,6 +135,13 @@ class Recordings(BaseModel):
     class Config:
         orm_mode = True
 
+class TotalAnalysis(BaseModel):
+    week: list = []
+    month: list = []
+
+    class Config:
+        orm_mode = True
+
 class UserProfile(BaseModel):
     id: str
     phone_number: str
@@ -138,3 +149,12 @@ class UserProfile(BaseModel):
     email: str
     company_id: int
     api_key: UUID = uuid1()
+
+
+class ForgetPassword(BaseModel):
+    email: str
+
+
+class UpdatePassword(BaseModel):
+    password: str
+

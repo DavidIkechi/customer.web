@@ -8,7 +8,7 @@ import styles from "./SignIn.module.scss";
 import AuthApi from "../../App";
 import { Navigate } from "react-router-dom";
 import { useCallback } from "react";
-
+import Cookie from "js-cookie";
 function Signin() {
   const emailTest = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
   const passwordTest = new RegExp(/^[a-zA-Z]{8,}$/);
@@ -78,13 +78,23 @@ function Signin() {
 
     const response = await axios
       .post("login", formData, config)
+
       .then((response) => {
-        console.log(response);
+        // console.log(response);
+
+        const acessToken = response.data.access_token;
+        Cookie.set("heedAccessToken", response?.data?.access_token);
+        // localStorage.setItem("accessToken", acessToken);
+
+        // console.log(response.data.access_token);
+
         axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${response.data["access_token"]}`;
+
         setNavigate(true);
       })
+
       .catch((error) => {});
   };
   // console.log(response.data);

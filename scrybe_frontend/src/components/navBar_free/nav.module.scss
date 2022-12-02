@@ -1,6 +1,7 @@
 @use "../../functions.scss" as *;
 
 .nav {
+  padding: 0 5%;
   $mobile: 950px;
   background-color: white;
   &__ctl {
@@ -15,6 +16,9 @@
       top: 0;
       padding-block: pix-rem(20);
     }
+  }
+  .signinDesign{
+    cursor: pointer;
   }
   &__closed {
     display: none;
@@ -92,6 +96,7 @@
   }
   &__links {
     display: flex;
+    padding-left: 15%;
     gap: pix-rem(24);
     align-items: center;
     cursor: pointer;
@@ -106,7 +111,7 @@
       font-weight: 300;
       &:hover {
         color: #006cff;
-    }
+      }
     }
   }
   &__img {
@@ -142,13 +147,13 @@
         cursor: pointer;
         &:hover {
           background-color: #006cff;
-          & > a{
+          & > a {
             color: #fff;
           }
-      }
-      & > a{
-        color: #006cff;
-      }
+        }
+        & > a {
+          color: #006cff;
+        }
       }
       &:nth-child(2) {
         background-color: #006cff;
@@ -157,13 +162,13 @@
         &:hover {
           background-color: #fff;
           border: 1px solid #006cff;
-          a{
+          a {
             color: #006cff;
-          } 
-      }
-      & > a{
-        color: #fff;
-      }
+          }
+        }
+        & > a {
+          color: #fff;
+        }
       }
     }
   }

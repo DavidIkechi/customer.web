@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { gridIcon } from "../../assets/images";
+import data from "../../assets/data";
 import "./style.scss";
 import { HistoryContext } from "../../Contexts/HistoryContext";
 
@@ -53,7 +54,7 @@ export default function TitleSection() {
             <div className="filter__2">
               <div className="filter__2__number">
                 <p>
-                  <b>1-20 </b> of 100
+                  <b>1-10 </b> of {data.length}
                 </p>
               </div>
               <div className="filter">
@@ -77,7 +78,7 @@ export default function TitleSection() {
           <>
             <div className="filter__2__md">
               <p>
-                <b>1-10 </b> of 100
+                <b>1-10 </b> of {data.length}
               </p>
             </div>
             <div className="filter__md">
