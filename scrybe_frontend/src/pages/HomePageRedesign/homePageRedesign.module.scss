@@ -82,6 +82,9 @@ button {
     fill: solid;
     line-height: .8rem;
     flex-basis: 48%;
+    outline: none;
+    border: none;
+    border-radius: .3rem;
   }
 
   .hero__bottom .hero__image {
