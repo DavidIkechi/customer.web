@@ -50,6 +50,7 @@ class Agent(Base):
     first_name = Column(String(255), index=True)
     last_name = Column(String(255), index=True)
     company_id = Column(Integer, ForeignKey("companies.id"))
+    aud_id = Column(Integer, index=True)
 
     audios = relationship("Audio")
     company = relationship("Company", back_populates="agents")
@@ -59,20 +60,18 @@ class Audio(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     audio_path = Column(TEXT)
+    job_id = Column(String(255), index=True)
     timestamp = Column(DateTime, index=True, default=datetime.now())
     size = Column(Integer, index=True)
     duration = Column(Integer, index=True)
-    transcript = Column(String(255), index=True)
+    transcript = Column(TEXT)
     positivity_score = Column(Float, index=True)
     negativity_score = Column(Float, index=True)
     neutrality_score = Column(Float, index=True)
     overall_sentiment = Column(Enum("Positive", "Negative", "Neutral"), index=True)
     most_positive_sentences = Column(JSON, nullable = True)
     most_negative_sentences = Column(JSON, nullable = True)
-
     agent_id = Column(Integer, ForeignKey("agents.id"))
-    agent_firstname = Column(String, index=True)
-    agent_lastname = Column(String, index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     job = relationship("Job", back_populates="audio", uselist=False)
     user = relationship("User", back_populates="audios")
@@ -82,24 +81,27 @@ class Job(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     timestamp = Column(DateTime, index=True, default=datetime.now())
-    job_status = Column(Enum("PENDING", "SUCCESS", "FAILED"), index=True)
+    job_status = Column(TEXT)
     audio_id = Column(Integer, ForeignKey("audios.id"))
-
     audio = relationship("Audio", back_populates="job")
 
+class uploaded_Job(Base):
+    __tablename__ = "uploaded_jobs"
 
+    id = Column(Integer, primary_key=True, index=True)
+    job_id = Column(String(255), index=True)
+    audio_url = Column(String(255), index=True)
 
 class History(Base):
     __tablename__ = "history"
 
     id = Column(Integer, primary_key=True, index=True)
+    sentiment_result = Column(Enum("Positive", "Negative", "Neutral"), index=True)
 
     audio_name = Column(String(255), index=True)
     agent_name = Column(String(255), index=True)
     date_uploaded = Column(DateTime, default=datetime.utcnow(), index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
-
-
     
 class Analysis(Base):
     __tablename__ = "analysis"
