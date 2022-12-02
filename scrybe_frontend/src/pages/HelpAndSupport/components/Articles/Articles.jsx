@@ -15,9 +15,18 @@ function Articles() {
           <Link to={"/promoted-articles"}>
             <h3> Article: Transcription v Automated Transcription </h3>
           </Link>
-          <h3>Guide: How to login and sign up </h3>
-          <h3>Article: Placing a rush transcription Order</h3>
-          <h3>Guide: Monitoring your employees data</h3>
+          <Link>
+            <h3>Guide: How to login and sign up </h3>
+          </Link>
+          <Link>
+            <h3>Article: Placing a rush transcription Order</h3>
+          </Link>
+          <Link>
+            <h3>Guide: Monitoring your employees data</h3>
+          </Link>
+          <Link>
+            <h3>Article: How to get your downloads in real time</h3>
+          </Link>
           <h3>Article: How to get your downloads in real time</h3>
         </div>
       </div>
