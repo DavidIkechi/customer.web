@@ -142,18 +142,6 @@
     width: 95%;
     margin-inline: auto;
   }
-  width: min(100%, 75.25rem);
-  margin-inline: auto;
-  @include media(1220px) {
-    width: pix-rem(390);
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  @include media(420px) {
-    width: 95%;
-    margin-inline: auto;
-  }
 }
 
 .plansCard {
@@ -232,7 +220,7 @@
 .tableWrapper {
   overflow-x: scroll;
 }
-.pricing table {
+table {
   border-collapse: collapse;
   width: 100%;
   padding-block: 2rem;
@@ -246,18 +234,18 @@
     width: pix-rem(700);
   }
 }
- .pricingthead {
+thead {
   background-color: #005584;
   color: #fff;
   font-weight: 500;
   font-size: 1rem;
 }
-.pricing th,
-.pricing td {
+th,
+td {
   padding: 0.75rem;
 }
-.pricing tr th:first-child,
-.pricing tr td:first-child {
+tr th:first-child,
+tr td:first-child {
   text-align: left;
   position: sticky;
   left: 0;
@@ -265,17 +253,17 @@
     width: 30%;
   }
 }
-.pricing tr td:first-child {
+tr td:first-child {
   @include media(768px) {
     background-color: #fff;
   }
 }
-.pricing tr th:first-child {
+tr th:first-child {
   @include media(768px) {
     background-color: #005584;
   }
 }
-.pricing tr img {
+tr img {
   margin-inline: auto;
 }
 

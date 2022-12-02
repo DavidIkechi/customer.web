@@ -15,17 +15,7 @@
 }
 
 .articles_style {
-    width: min(100%, 75.25rem);
-       margin-inline: auto;
-          
-}
-
- @media screen and (max-width: 1240px) {
-    .articles_style {
-   padding: 0 1rem;
-    }
-     
-    
+    padding: 0 0rem;
 }
 
 .articles_cont {
@@ -58,9 +48,6 @@
 
         h3 {
             padding: 0;
-        }
-        &:hover{
-                border-bottom: 1px solid rgb(0, 106, 255);
         }
     }
     
