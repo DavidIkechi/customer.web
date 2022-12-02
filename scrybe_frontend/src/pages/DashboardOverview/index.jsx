@@ -5,6 +5,7 @@ import RecentRecording from "./components/RecentRecording";
 import TotalAnalysis from "./components/TotalAnalysis";
 import TotalRecording from "./components/TotalRecording";
 import styles from "./DashboardOverview.module.scss";
+import { LeaderboardData } from "./Data";
 
 function DashboardOverview() {
   return (
@@ -13,7 +14,7 @@ function DashboardOverview() {
         <div className={styles.container}>
           <TotalRecording />
           <TotalAnalysis />
-          <LeaderBoard />
+          <LeaderBoard LeaderboardData={LeaderboardData} />
         </div>
         <RecentRecording />
       </section>
