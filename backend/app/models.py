@@ -50,6 +50,7 @@ class Agent(Base):
     first_name = Column(String(255), index=True)
     last_name = Column(String(255), index=True)
     company_id = Column(Integer, ForeignKey("companies.id"))
+    aud_id = Column(Integer, index=True)
 
     audios = relationship("Audio")
     company = relationship("Company", back_populates="agents")
@@ -95,6 +96,7 @@ class History(Base):
     __tablename__ = "history"
 
     id = Column(Integer, primary_key=True, index=True)
+    sentiment_result = Column(Enum("Positive", "Negative", "Neutral"), index=True)
 
     audio_name = Column(String(255), index=True)
     agent_name = Column(String(255), index=True)

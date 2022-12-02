@@ -8,6 +8,7 @@ import styles from "./SignUp.module.scss";
 import { Navigate } from "react-router-dom";
 import { useCallback } from "react";
 import { useEffect } from "react";
+import Cookie from "js-cookie"
 
 function Signup() {
   const [first_name, setFirstName] = useState("");
@@ -108,6 +109,7 @@ function Signup() {
       .then((response) => {
         console.log(response);
         setNavigate(true);
+        Cookie.set("heedAccessToken",response?.data?.access_token);
       })
       .catch((error) => {});
   };
