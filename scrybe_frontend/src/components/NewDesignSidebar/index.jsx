@@ -22,7 +22,11 @@ import styles from "./generalSidebar.module.scss";
  * use this prop to determine if the search input field should be rendered on mobile screens or not!
  * @param {needSearchDesktop} boolean
  * use this prop to determine if the search input field should be rendered on desktop screens or not!
- * @returns text from search input field
+ * @param {closeSidebar} function
+ * use this prop to close the sidebar on mobile screens
+ * @param {toggleSidebar} boolean
+ * use this prop to determine if the sidebar should be open or closed on mobile screens when the hamburger icon is clicked from navbar
+ * @returns a wrapper component with a sidebar and all the props passed to it
  */
 function NewDesignSideBar({
   children,
