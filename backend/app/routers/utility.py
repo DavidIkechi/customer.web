@@ -74,7 +74,7 @@ def request_transcript(upload_url, header):
 # Make a polling endpoint
 def make_polling_endpoint(transcript_response):
     polling_endpoint = "https://api.assemblyai.com/v2/transcript/"
-    polling_endpoint += transcript_response['id']
+    polling_endpoint += transcript_response
     return polling_endpoint
 
 
@@ -88,6 +88,12 @@ def wait_for_completion(polling_endpoint, header):
             break
 
         time.sleep(5)
+        
+def get_result(polling_endpoint, header):
+    polling_response = requests.get(polling_endpoint, headers=header)
+    
+    return polling_response
+    
 
 
 # Get the paragraphs of the transcript

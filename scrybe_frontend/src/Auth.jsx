@@ -13,7 +13,7 @@ export function RequireToken() {
   let location = useLocation();
 
   if (!auth) {
-    return <Navigate to="/create-account" state={{ from: location }} />;
+    return <Navigate to="/signin" state={{ from: location }} />;
   }
 
   return <Outlet />;
