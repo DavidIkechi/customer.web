@@ -18,6 +18,10 @@
     display: none;
   }
 
+  .TopNav_search {
+    margin-top: 1rem;
+  }
+
   // uset car and btn
   .TopNav_user_btn {
     display: flex;
@@ -101,8 +105,8 @@
     }
   }
 }
-.showDropup .arrow{
-  transform:rotate(90deg);
+.showDropup .arrow {
+  transform: rotate(90deg);
 }
 
 // responsive
@@ -130,6 +134,9 @@
         top: 1rem;
         right: 1rem;
       }
+    }
+    .TopNav_search {
+      display: none;
     }
   }
 }

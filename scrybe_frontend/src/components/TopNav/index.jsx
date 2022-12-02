@@ -19,7 +19,9 @@ const TopNav = ({ openSidebar, search }) => {
         <img src={toggleNavIcon} alt="" onClick={openSidebar} />
         <img src={logo} alt="" />
       </div>
-      <SearchInput className="TopNav_inputwrap" inputValue={search} />
+      <div className={styles.TopNav_search}>
+        <SearchInput inputValue={search} />
+      </div>
       <div className={styles.TopNav_user_btn}>
         <div className={styles.TopNav_user}>
           <div className={styles.TopNav_user_desktop}>
