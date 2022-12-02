@@ -18,7 +18,7 @@ function Cards() {
       </div>
 
       <div className={styles.cards_holder}>
-        <Link to="/help-general">
+        <Link to="/help-support-general">
           <Card
             src={general}
             header="General"
@@ -58,6 +58,12 @@ function Cards() {
           paragrapgh="Information regarding account information
                         and how we handle your data."
         />
+      </div>
+
+      <div className={styles.btn_container}>
+        <button className={styles.transcribe_btn}>
+          Start Transcribing Now
+        </button>
       </div>
     </div>
   );
