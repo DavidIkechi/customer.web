@@ -10,12 +10,12 @@ import OverAllSentimentCard from "./components/OverallSentimentCard";
 import VerdictCard from "./components/VerdictCard";
 import PhraseTagCard from "./components/PhraseTagCard";
 import SideBar from "../../components/SideBar";
-import { useMockAuthAndReadSentiment } from "./hooks";
+import { useMockEnd } from "./hooks";
 
 function SentimentAnalysis() {
   const [isMobileAsideOpen, setIsMobileAsideOpen] = useState(false);
   const params = useParams();
-  const sentimentData = useMockAuthAndReadSentiment(parseInt(params.AudioId));
+  const sentimentData = useMockEnd(parseInt(params.AudioId));
 
   const positiveTags = [
     "brave",
@@ -104,12 +104,20 @@ function SentimentAnalysis() {
           <OverAllSentimentCard sentimentData={sentimentData} />
           <VerdictCard sentimentData={sentimentData} />
           <PhraseTagCard
-            tags={positiveTags}
+            tags={
+              sentimentData.positiveTags
+                ? sentimentData.positiveTags
+                : positiveTags
+            }
             title={"Positive phrase tags"}
             sentimentData={sentimentData}
           />
           <PhraseTagCard
-            tags={negativeTags}
+            tags={
+              sentimentData.negativeTags
+                ? sentimentData.negativeTags
+                : negativeTags
+            }
             title={"Negative phrase tags"}
             sentimentData={sentimentData}
           />

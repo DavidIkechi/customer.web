@@ -2,8 +2,10 @@ import React from "react";
 import logoutIllusration from "./assets/logout-illustration.png";
 import logoWithText from "../../assets/scrybe_logo_with_text.svg";
 import logoutStyles from "./logout.module.scss";
+import Cookie from "js-cookie";
 
 function Logout() {
+  Cookie.remove("heedAccessToken");
   return (
     <div className={logoutStyles.logout}>
       <div className={logoutStyles.logo__div}>

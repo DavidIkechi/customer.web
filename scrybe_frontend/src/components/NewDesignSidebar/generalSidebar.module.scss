@@ -1,0 +1,192 @@
+// @import "../../assets/styles/utilities/functionsANDmedia";
+@import "../../assets/styles/utilities/variables";
+
+.generalSidebar {
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  > *:last-child {
+    overflow-y: scroll;
+  }
+
+  .generalSidebar_header {
+    width: 280px;
+    height: 100vh;
+    border-right: 0.5px solid #dfdede;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem 0 3rem 0;
+    .generalSidebar_header_userInput {
+      padding: 0 1rem;
+      display: none;
+    }
+
+    // the header log and close button
+    .generalSidebar_header_logo_vs_closeIcon {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding: 0 1rem;
+      .logo {
+        width: 150px;
+      }
+      .SidebarcloseIcon {
+        cursor: pointer;
+        display: none;
+        width: 20px;
+      }
+    }
+
+    .logoLink {
+      display: flex;
+      // column-gap: pix-rem(10);
+      // padding: pix-rem(32) 0;
+      text-decoration: none;
+      cursor: pointer;
+      p {
+        font-size: 38px;
+        font-weight: 600;
+        line-height: 26px;
+        color: #6a6a6a;
+        margin-left: 1rem;
+      }
+    }
+
+    .navLinks {
+      margin-top: 3rem;
+      width: 100%;
+      .navLink {
+        display: flex;
+        margin-bottom: 2rem;
+        text-decoration: none;
+        padding: 0 1rem 0 2rem;
+        img {
+          width: 20px;
+          margin-right: 1rem;
+        }
+        cursor: pointer;
+        p {
+          font-weight: 300;
+          font-size: 16px;
+          line-height: 26px;
+          color: #6a6a6a;
+        }
+      }
+      .active {
+        background: $blue-50;
+        border-right: 4px solid $blue-400;
+      }
+    }
+    //user details
+    .generalSidebar__bottom {
+      padding: 0 1rem;
+      display: none;
+      .generalSidebar_user_desktop {
+        display: flex;
+        img {
+          margin-right: 1rem;
+        }
+        .generalSidebar_user_desktop_nameDetails {
+          width: 125px !important;
+          height: 48px;
+          position: relative;
+          .generalSidebar_user_desktop_name_arr {
+            display: flex;
+            .name {
+              font-family: "Kanit";
+              font-style: normal;
+              font-weight: 600;
+              font-size: 20px;
+              line-height: 20px;
+              margin-right: 0.5rem;
+              color: #454545;
+            }
+          }
+          .workspace_name {
+            font-family: "Kanit";
+            font-style: normal;
+            font-weight: 300;
+            font-size: 14px;
+            line-height: 20px;
+            color: #a9a9a9;
+          }
+        }
+      }
+    }
+  }
+  .needSearchMobile {
+    display: none;
+  }
+  .needSearchDesktop {
+    display: block !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .generalSidebar_header {
+    position: absolute;
+    top: 0;
+    left: -18em;
+    z-index: 5;
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    //header side
+    .generalSidebar_header_logo_vs_closeIcon {
+      .logo {
+        width: 100px;
+      }
+      .SidebarcloseIcon {
+        display: block !important;
+      }
+    }
+  }
+  .showSidebar .generalSidebar_header {
+    left: 0 !important;
+  }
+  .needSearchMobile {
+    display: block !important;
+  }
+  .generalSidebar__bottom {
+    display: block !important;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .generalSidebar_header {
+    position: absolute;
+    top: 0;
+    left: -18em;
+    z-index: 5;
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    .generalSidebar_header_userInput {
+      display: block !important;
+    }
+    //header side
+    .generalSidebar_header_logo_vs_closeIcon {
+      .logo {
+        width: 100px;
+      }
+      .SidebarcloseIcon {
+        display: block !important;
+      }
+    }
+  }
+  .showSidebar .generalSidebar_header {
+    left: 0;
+  }
+
+  .generalSidebar__bottom {
+    display: block !important;
+  }
+}

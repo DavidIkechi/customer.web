@@ -40,6 +40,8 @@ import TryResults from "./pages/TryForFree/tryResults";
 import TermsOfService from "./pages/TermsOfService";
 import Blogs from "./pages/BlogsPage";
 import BlogPostPage from "./pages/BlogPostPage";
+import General from "./pages/HelpAndSupport/components/General";
+import PromotedArticles from "./pages/HelpAndSupport/components/PromotedArticles";
 import SettingsIndex from "./pages/Settings/SettingsIndex";
 import AccountSettings from "./pages/Settings/SettingsPageSubPages/AccountSettings/AccountSettings";
 import NotificationSettings from "./pages/Settings/SettingsPageSubPages/Notifications/NotificationSettings";
@@ -65,6 +67,8 @@ function App() {
     <>
       <Routes>
         {/* access without sign in */}
+        <Route path="/verification" element={<EmailVerify />} />
+        <Route path="/logout" element={<Logout />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/try" element={<TryForFree />} />
         <Route path="/careers" element={<Careers />} />
@@ -83,12 +87,67 @@ function App() {
         <Route path="/set-new-password" element={<SetNewPassword />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route
+          path="/landing-page-sales-team"
+          element={<NewLandingPageSalesTeam />}
+        />
+        <Route
           path="/pw-reset-successful"
           element={<PasswordResetSuccessful />}
         />
         <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
         <Route path="/agent-report" element={<AgentReport />} />
         <Route path="/upload-new-file" element={<UploadModal />} />
+
+        <Route path="/demos" element={<DummyPage someText="demo pages" />} />
+        <Route path="/blog" element={<Blogs />} />
+        <Route path="/blog/:id" element={<BlogPostPage />} />
+
+        {/* Press  */}
+        <Route path="press" element={<Press />} />
+        <Route path="/partners" element={<PartnersPage />} />
+        <Route path="press-article" element={<PressArticle />} />
+        <Route path="pricing" element={<Pricing />} />
+
+        <Route
+          path="/sentiment-analysis/:AudioId"
+          element={<SentimentAnalysis />}
+        />
+        <Route path="/transcriptions/:userId" element={<TranscribePage />} />
+        <Route path="/history" element={<History />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/dashboard" element={<DashboardOverview />} />
+        <Route
+          path="/account"
+          element={
+            <WithAuth>
+              <Account />
+            </WithAuth>
+          }
+        />
+        <Route path="/leaderboard" element={<LeaderboardPage />} />
+        <Route path="/homeB" element={<HomePageB />} />
+        <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
+        <Route path="/agent-report" element={<AgentReport />} />
+        <Route path="/reviews" element={<Reviews />} />
+
+        {/* Try Routes */}
+        <Route path="/try-processing" element={<TryProcessing />} />
+        <Route path="/try-results" element={<TryResults />} />
+        {/*  */}
+
+        {/* Settings Pages */}
+        <Route path="/settings" element={<SettingsIndex />} />
+        <Route path="settings/account-security" element={<AccountSettings />} />
+        <Route
+          path="settings/notifications"
+          element={<NotificationSettings />}
+        />
+        {/*  */}
+
+        <Route
+          path="settings/personal-information"
+          element={<PersonalInformation />}
+        />
 
         {/* ROutes without working paths */}
 
@@ -126,55 +185,24 @@ function App() {
         {/* cant access without signin */}
 
         <Route element={<RequireToken />}>
-          <Route path="/sentiment-analysis" element={<SentimentAnalysis />} />
-          <Route path="/transcriptions/:userId" element={<TranscribePage />} />
-          <Route path="/history" element={<History />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/dashboard" element={<DashboardOverview />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/leaderboard" element={<LeaderboardPage />} />
-          <Route path="/homeB" element={<HomePageB />} />
-          <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
-          <Route path="/agent-report" element={<AgentReport />} />
-
-          {/* Try Routes */}
-          <Route path="/try-processing" element={<TryProcessing />} />
-          <Route path="/try-results" element={<TryResults />} />
-          {/*  */}
-
-          {/* Settings Pages */}
-          <Route path="/settings" element={<SettingsIndex />} />
-          <Route
-            path="settings/account-security"
-            element={<AccountSettings />}
-          />
-          <Route
-            path="settings/notifications"
-            element={<NotificationSettings />}
-          />
-          {/*  */}
-
-          <Route
-            path="settings/personal-information"
-            element={<PersonalInformation />}
-          />
-
           {/* ROutes without working paths */}
 
           <Route
-            path="/uploaded"
+            path="/dummyuploaded"
             element={<DummyPage someText="uploaded recordings" />}
           />
           <Route
-            path="/report"
+            path="/dummyreport"
             element={<DummyPage someText="report and performance" />}
           />
           <Route
-            path="/upload"
+            path="/dummyupload"
             element={<DummyPage someText="upload pages" />}
           />
           {/* ROutes without working paths */}
         </Route>
+        <Route path="/help-support-general" element={<General />} />
+        <Route path="/promoted-articles" element={<PromotedArticles />}></Route>
         {/* cant access without signin */}
 
         {/* <Route path="/help-support-general" element={<General />}>
