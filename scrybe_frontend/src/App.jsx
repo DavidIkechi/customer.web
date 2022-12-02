@@ -67,8 +67,8 @@ function App() {
     <>
       <Routes>
         {/* access without sign in */}
-        <Route path="/verification" element={<EmailVerify />} />
-        <Route path="/logout" element={<Logout />} />
+        {/* <Route path="/verification" element={<EmailVerify />} /> */}
+        {/* <Route path="/logout" element={<Logout />} /> */}
         <Route path="/" element={<HomePage />} />
         <Route path="/try" element={<TryForFree />} />
         <Route path="/careers" element={<Careers />} />
@@ -86,10 +86,10 @@ function App() {
         <Route path="/verify-signup" element={<SignUpVerify />} />
         <Route path="/set-new-password" element={<SetNewPassword />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
-        <Route
+        {/* <Route
           path="/landing-page-sales-team"
           element={<NewLandingPageSalesTeam />}
-        />
+        /> */}
         <Route
           path="/pw-reset-successful"
           element={<PasswordResetSuccessful />}
@@ -119,9 +119,9 @@ function App() {
         <Route
           path="/account"
           element={
-            <WithAuth>
-              <Account />
-            </WithAuth>
+            // <WithAuth>
+            <Account />
+            // </WithAuth>
           }
         />
         <Route path="/leaderboard" element={<LeaderboardPage />} />
