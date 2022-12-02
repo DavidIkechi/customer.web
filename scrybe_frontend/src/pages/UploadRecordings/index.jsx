@@ -1,5 +1,6 @@
 import React from "react";
 import NewDesignSideBar from "../../components/NewDesignSidebar";
+import TopNav from "../../components/TopNav";
 // import SideBar from "../../components/SideBar";
 import TableData from "./TableData";
 import UploadedNavbar from "./UploadedNavbar";
@@ -27,9 +28,8 @@ function UploadedRecordings() {
       >
         <div className={styles.uploadedRecordingsCol}>
           <div className={styles.uploadedRecordingsSideBar}>
-            <UploadedNavbar
+            <TopNav
               openSidebar={() => {
-                console.log("open sidebar");
                 setToggleSidebar(!toggleSidebar);
               }}
               search={(e) => setterFn(e)}

@@ -71,7 +71,7 @@ function App() {
       <Routes>
         {/* access without sign in */}
         <Route path="/verification" element={<EmailVerify />} />
-        <Route path ="/logout" element = {<Logout/>}/>
+        <Route path="/logout" element={<Logout />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/try" element={<TryForFree />} />
         <Route path="/careers" element={<Careers />} />
