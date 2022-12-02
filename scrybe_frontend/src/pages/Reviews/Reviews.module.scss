@@ -73,6 +73,7 @@
     justify-content: space-between;
     gap: 1.5rem;
     margin-bottom: 10rem;
+    padding: 2rem;
 
     > div {
         display: flex;
@@ -182,5 +183,96 @@
                 border: thin solid #006CFF;
             }
         }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .hero {
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 0;
+        padding: 1rem 1rem 10rem;
+        flex-wrap: nowrap;
+
+        h1 {
+            font-size: 32px;
+            line-height: 40px;
+        }
+
+        p {
+            display: none;
+        }
+
+        .text, .image {
+            flex-basis: 80%;
+        }
+    }
+
+    .first_title h2 {
+        font-size: 32px;
+        line-height: 40px;
+    }
+
+    .companies {
+        margin-bottom: 3rem;
+    }
+
+    .companies div {
+        flex-basis: 45%;
+    }
+
+    .testimonial {
+        flex-direction: column;
+        margin-bottom: 3rem;
+        padding: 1rem;
+    }
+
+    .testimonial div {
+        flex-basis: 80%;
+        height: unset;
+    }
+
+    .testimonial > div div img {
+        width: 100%;
+    }
+
+    .join {
+        flex-direction: column;
+        background: unset;
+        padding: 3rem;
+
+        h3, p {
+            display: none;
+        }
+    }
+
+    .join .btns_btm {
+        flex-direction: column;
+    }
+
+    .join .join_flex {
+        flex-direction: column;
+    }
+
+    .join .join_flex > div {
+        flex-basis: 90%;
+    }
+
+    .join .join_flex > div h2 {
+        font-size: 32px;
+        line-height: 40px;
+        text-align: center;
+    }
+
+    .join .join_flex .btns_btm .right_btn {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 368px) {
+    .hero {
+        background: url(../Reviews/assets/header-bg-mobile.png) no-repeat;
     }
 }
