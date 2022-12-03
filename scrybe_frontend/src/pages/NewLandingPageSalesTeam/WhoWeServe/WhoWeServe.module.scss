@@ -1,9 +1,12 @@
-// @use "../../../functions.scss"as *;
+@use "../../../functions.scss"as *;
 
 .WhoWEServe{
     padding: 4rem;
     display: flex;
     flex-direction: column;
+    @include media(320px) {
+        padding: 2rem;
+    }
     .heading{
         font-family: 'Kanit';
         font-style: normal;
@@ -13,10 +16,4 @@
         color: #313131;
         text-align: center;
     }
-    .images{
-        display: flex;
-        justify-content: space-between;
-        margin: 2rem auto;
-    }
-   
 }

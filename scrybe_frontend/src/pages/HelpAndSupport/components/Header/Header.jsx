@@ -9,7 +9,7 @@ function Header() {
         </div>
         <div className={styles.help_header}>
           <h1>Hi! How can we help you?</h1>
-          <p>Everything you need to get started on Scrybe</p>
+          <p>Everything you need to get started on Heed</p>
         </div>
       </div>
     </div>

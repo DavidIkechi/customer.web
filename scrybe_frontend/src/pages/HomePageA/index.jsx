@@ -1,16 +1,16 @@
 import React from "react";
-import styles from "./landingpage.module.scss";
+import { NavLink } from "react-router-dom";
+import Footer from "../../components/Footer";
+import NavBarFree from "../../components/NavbarFree";
 import aboutUsimage from "./assets/Group 1000000931.webp";
-import Footer from "../../components/footer";
-import NavBarFree from "../../components/navBar_free";
-import Hero from "./HeroSection";
-import CustomerReview from "./CustomerReview";
-import BrandsLogo from "./BrandLogos";
-import FaqElement from "./FaqElement";
-import upLoadAudio from "./assets/upload-photo.svg";
 import sentiment from "./assets/rafiki.svg";
 import transcribe from "./assets/transcrib-text.svg";
-import { NavLink } from "react-router-dom";
+import upLoadAudio from "./assets/upload-photo.svg";
+import BrandsLogo from "./BrandLogos";
+import CustomerReview from "./CustomerReview";
+import FaqElement from "./FaqElement";
+import Hero from "./HeroSection";
+import styles from "./landingpage.module.scss";
 
 function HomePage() {
   return (

@@ -1,24 +1,23 @@
 import React from "react";
 import styled from "./Solutions.module.scss";
 
+import Footer from "../../components/Footer";
 import NavBar from "../../components/navBar";
-import Footer from "../../components/footer";
 
-import heroImg from "./assets/hero-img.png";
-import durationIcon from "./assets/ranking.svg";
-import transcribeIcon from "./assets/transcribe-icon.svg";
-import sentimentsIcon from "./assets/sentiment-icon.svg";
-import uploadImg from "./assets/upload-img.png";
-import monitor from "./assets/monitor.png";
 import dashboard from "./assets/dashboard.png";
+import heroImg from "./assets/hero-img.png";
+import monitor from "./assets/monitor.png";
+import durationIcon from "./assets/ranking.svg";
+import sentimentsIcon from "./assets/sentiment-icon.svg";
 import sentiment from "./assets/sentiments.png";
+import transcribeIcon from "./assets/transcribe-icon.svg";
 
-import warpWire from "./assets/warpwire-logo.svg";
-import nCast from "./assets/ncast-logo.svg";
-import microsoft from "./assets/microsoft-logo.svg";
-import hulu from "./assets/hulu-logo.svg";
-import happy from "./assets/happy-logo.svg";
 import google from "./assets/googole-logo.svg";
+import happy from "./assets/happy-logo.svg";
+import hulu from "./assets/hulu-logo.svg";
+import microsoft from "./assets/microsoft-logo.svg";
+import nCast from "./assets/ncast-logo.svg";
+import warpWire from "./assets/warpwire-logo.svg";
 
 function Solutions() {
   React.useEffect(() => {

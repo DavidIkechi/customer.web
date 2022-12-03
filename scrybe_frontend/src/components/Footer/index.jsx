@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import email from ".//assets/mail.png";
-import call from ".//assets/phone.png";
+import email from "./assets/mail.png";
+import call from "./assets/phone.png";
 import fb from "./assets/fb.png";
 import ig from "./assets/ig.png";
 import locate from "./assets/location-marker.png";
@@ -59,28 +59,8 @@ function Footer() {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/blog" className={styles.links}>
-                Blog
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/services" className={styles.links}>
-                Our Services
-              </NavLink>
-            </li>
-            <li>
               <NavLink to="/privacy" className={styles.links}>
                 Privacy Policy
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/demo" className={styles.links}>
-                How it works
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/solutions" className={styles.links}>
-                Solutions
               </NavLink>
             </li>
             <li>
@@ -108,34 +88,13 @@ function Footer() {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/events" className={styles.links}>
-                Events
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/careers" className={styles.links}>
-                Career
-              </NavLink>
-            </li>
-            <li>
               <NavLink to="/faq" className={styles.links}>
-                Faq
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink to="/partners" className={styles.links}>
-                Partnership
+                FAQ
               </NavLink>
             </li>
             <li>
               <NavLink to="/help-support" className={styles.links}>
                 Help and Support
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/press" className={styles.links}>
-                Press Page
               </NavLink>
             </li>
           </ul>

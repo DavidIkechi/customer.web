@@ -1,8 +1,8 @@
 // eslint-disable-next-line no-warning-comments
 // TODO disable eslint warning for this todo ;)
 import React from "react";
-import Footer from "../../components/footer";
-import NavBarFree from "../../components/navBar_free";
+import Footer from "../../components/Footer";
+import NavBarFree from "../../components/NavbarFree";
 import TryHero from "./components/Try_hero/index";
 import TryState4 from "./components/Try_state_4/index";
 

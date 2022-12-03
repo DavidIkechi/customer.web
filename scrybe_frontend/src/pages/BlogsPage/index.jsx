@@ -8,7 +8,7 @@ import { blogs } from "./assets/data";
 import FadeInSection from "./FadeInSection";
 import ImageSlider from "./ImageSlider";
 import NavBar from "../../components/navBar";
-import Footer from "../../components/footer";
+import Footer from "../../components/Footer";
 
 function Blogs() {
   React.useEffect(() => {

@@ -35,9 +35,14 @@ const TotalRecording = () => {
     });
     setChartOptions({
       responsive: false,
+      spacing: 10,
+      borderSkipped: "bottom",
       plugins: {
         legend: {
           display: false,
+        },
+        tooltip: {
+          enabled: false,
         },
       },
     });
@@ -51,7 +56,7 @@ const TotalRecording = () => {
     setSelectedTotalRecordings(totalRecordingData[e.target.value]);
   }
   return (
-    <div className={styles.recordings_container}>
+    <div className={styles.recordings}>
       <div className={styles.recordings__heading}>
         <h1>
           <img src={toneWave} alt="" /> Total Recordings
@@ -64,12 +69,16 @@ const TotalRecording = () => {
           <option value="week">This week</option>
           <option value="month">This month</option>
         </select>
-        {/* <h2 className={styles.thismonth}>
+      </div>
+
+      {/* <h2 className={styles.thismonth}>
       This month <img src={chevron} alt="" />
     </h2> */}
-      </div>
-      <div className={styles.recordings}>
-        <Bar options={chartOptions} data={chartData} />
+      <div className={styles.recordings__chart}>
+        <div>
+          <h1 className={styles.totalNumber}>9436</h1>
+          <Bar options={chartOptions} data={chartData} />
+        </div>
       </div>
     </div>
   );

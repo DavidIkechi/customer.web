@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
-import utils from "../assets/utils.module.scss";
-import styles from "./styles.module.scss";
+import Footer from "../../../components/Footer";
 import { insta01, insta02, insta03 } from "../../BlogsPage/assets";
 import ImageSlider from "../../BlogsPage/ImageSlider";
-import Footer from "../../../components/footer";
+import utils from "../assets/utils.module.scss";
+import styles from "./styles.module.scss";
 function DefaultLayout(props) {
   const { children } = props;
   const slides = [
