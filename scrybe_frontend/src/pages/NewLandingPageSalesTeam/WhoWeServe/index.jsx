@@ -13,11 +13,11 @@ const WhoWeServe = () => {
         classname={styles.images}
         style={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "center",
           margin: "2rem",
           flexWrap: "wrap",
           alignItems: "center",
-          gap: "1rem",
+          gap: "3rem",
         }}
       >
         <img src={flutterwave} alt="fluterwave" />
