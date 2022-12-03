@@ -1,6 +1,6 @@
-import styles from "./General1.module.scss";
-import Articles from "../articles/Articles";
 import PropTypes from "prop-types";
+import Articles from "../Articles";
+import styles from "./General1.module.scss";
 function General1({ setDisplay }) {
   return (
     <div className={styles.general1}>

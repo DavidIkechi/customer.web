@@ -17,8 +17,8 @@
     background-color: #fff;
     display: flex;
     flex-direction: column;
-    // justify-content: space-between;
-    padding: 1rem 0;
+    justify-content: space-between;
+    padding: 1rem 0 3rem 0;
     .generalSidebar_header_userInput {
       padding: 0 1rem;
       display: none;
@@ -81,6 +81,41 @@
         border-right: 4px solid $blue-400;
       }
     }
+      //user details
+  .generalSidebar__bottom {
+    padding: 0 1rem;
+    .generalSidebar_user_desktop {
+      display: flex;
+      img {
+        margin-right: 1rem;
+      }
+      .generalSidebar_user_desktop_nameDetails {
+        width: 125px !important;
+        height: 48px;
+        position: relative;
+        .generalSidebar_user_desktop_name_arr {
+          display: flex;
+          .name {
+            font-family: "Kanit";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 20px;
+            margin-right: 0.5rem;
+            color: #454545;
+          }
+        }
+        .workspace_name {
+          font-family: "Kanit";
+          font-style: normal;
+          font-weight: 300;
+          font-size: 14px;
+          line-height: 20px;
+          color: #a9a9a9;
+        }
+      }
+    }
+  }
   }
   .needSearchMobile {
     display: none;
@@ -88,6 +123,8 @@
   .needSearchDesktop {
     display: block !important;
   }
+
+  
 }
 
 @media screen and (max-width: 768px) {
@@ -143,7 +180,7 @@
       }
     }
   }
-  .showSidebar .generalSidebar_header{
+  .showSidebar .generalSidebar_header {
     left: 0;
   }
 }
