@@ -13,7 +13,7 @@ const RecentRecording = () => {
   }, [recentRecording]);
   return (
     <>
-      {recentRecording?.length > 0 ? (
+      {recentRecording?.length < 0 ? (
         <table className={styles.recent_recordings}>
           <caption>Recent recordings </caption>
           <thead>
@@ -33,8 +33,9 @@ const RecentRecording = () => {
                 <img src={toneWave} alt="tone wave" />
               </td>
               <td>
-                <span>{recentRecording.audio_path}</span>
-                <span className={styles.bold_td}> Inactive recharge card</span>
+                {recentRecording.audio_path}
+                {/* <span>{recentRecording.audio_path}</span> */}
+                {/* <span className={styles.bold_td}> Inactive recharge card</span> */}
               </td>
               <td>{recentRecording.duration}</td>
               <td>{recentRecording.size}</td>

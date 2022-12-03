@@ -84,7 +84,7 @@ function Signin() {
 
         const acessToken = response.data.access_token;
         Cookies.set("heedAccessToken", response?.data?.access_token);
-        localStorage.setItem("auth" , email)
+        // localStorage.setItem("auth", email);
         // localStorage.setItem("accessToken", acessToken);
 
         // console.log(response.data.access_token);

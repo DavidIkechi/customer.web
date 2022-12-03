@@ -4,6 +4,11 @@
   padding: 0;
   width: 100%;
 }
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
 .subcontent_con {
   display: flex;
   justify-content: center;
@@ -37,29 +42,16 @@
 .recordings,
 .analysis,
 .leaderboard {
-  display: flex;
-  flex-direction: column;
-  position: relative;
+  flex-basis: 100%;
+  // height: 330px;
   background: #ffffff;
   box-shadow: 0px 20px 24px -4px rgba(197, 197, 197, 0.08),
     0px 8px 8px -4px rgba(197, 197, 197, 0.03);
   border-radius: 4px;
-  z-index: 0;
 }
-.recordings_container {
-  background: #ffffff;
-  box-shadow: 0px 20px 24px -4px rgba(197, 197, 197, 0.08),
-    0px 8px 8px -4px rgba(197, 197, 197, 0.03);
-  border-radius: 4px;
-  padding: 1rem 1.6rem 2rem 1rem;
-  margin: 20px auto;
-  width: 100%;
-  height: 306px;
-}
+
 .recordings {
-  align-items: center;
-  height: 215px;
-  margin-top: 3rem;
+  padding: 1.5rem 1rem 1.5rem;
 
   &__heading {
     display: flex;
@@ -72,13 +64,22 @@
       font-size: 1rem;
     }
   }
+  .totalNumber {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 2rem;
+    color: #262626;
+    margin-bottom: 1rem;
+  }
+  &__chart {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+  }
 }
 // analysis
 .analysis {
-  width: 100%;
-  height: 310px;
-  margin: 20px auto;
-  padding: 1rem 1rem 1.5rem;
+  padding: 1.5rem 1rem 1.5rem;
 
   &__heading {
     display: flex;
@@ -102,60 +103,36 @@
       gap: 0.3rem;
     }
   }
-  // .circles {
-  //   position: relative;
-  //   left: -11rem;
-  //   top: -1.5rem;
-  //   font-size: 1.5rem;
-  //   line-height: 40px;
-  //   div {
-  //     position: absolute;
-  //     display: flex;
-  //     justify-content: center;
-  //     align-items: center;
-
-  //     border: 3.32922px solid #ffffff;
-  //     border-radius: 83.2306px;
-  //   }
-  //   .meduim {
-  //     left: 49px;
-  //     top: 56px;
-
-  //     width: 99.88px;
-  //     height: 99.86px;
-  //     background: #ffce54;
-  //     color: #313131;
-  //   }
-  //   .small {
-  //     left: 85.62px;
-  //     top: 143.38px;
-
-  //     width: 66.58px;
-  //     height: 66.58px;
-  //     color: #313131;
-  //     background: #ff7589;
-  //     z-index: 1;
-  //   }
-  //   .big {
-  //     left: 127.24px;
-  //     top: 58.56px;
-
-  //     width: 166.46px;
-  //     height: 166.44px;
-  //     background: #76c86f;
-  //     color: #313131;
-  //   }
-  // }
   .total_analysis_chart {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 0.8rem;
+    padding-top: 0.8rem;
+    .chart_inner {
+      margin-top: -8rem;
+      margin-bottom: 100px;
+      margin-left: 0;
+      text-align: center;
+      h1 {
+        margin: 0;
+        font-weight: 500;
+        font-size: 2rem;
+        color: #1d1d1d;
+        // width: 40px;
+        // margin: -4px 0px;
+      }
+      span {
+        margin: 0;
+        font-weight: 400;
+        font-size: 1.4rem;
+        color: #6a6a6a;
+      }
+    }
     .scale {
       display: flex;
       gap: 0.906rem;
-      margin-top: 1rem;
+      // padding-top: 1rem;
       h3 {
         font-weight: 400;
         font-size: 0.7rem;
@@ -184,10 +161,7 @@
 }
 // leaderboard
 .leaderboard {
-  height: 310px;
-  width: 100%;
-  margin: 20px auto;
-  padding: 1rem 1rem 1.5rem;
+  padding: 1.5rem 1rem 1.5rem;
 
   &__heading {
     display: flex;
@@ -223,26 +197,7 @@
         }
       }
     }
-    // div {
-    //   display: flex;
-    //   gap: 7rem;
-    //   h2 {
-    //     display: flex;
-    //     align-items: center;
-    //     gap: 1rem;
-    //     font-weight: 400;
-    //     font-size: 0.9rem;
-    //     line-height: 16px;
-    //     color: #6a6a6a;
-    //     img {
-    //       width: 24px;
-    //     }
-    //   }
-    // }
   }
-  // .agents_desktop {
-  //   display: none;
-  // }
 }
 // recent_recordings
 .recent_recordings {
@@ -273,15 +228,6 @@
     line-height: 120%;
     text-align: center;
   }
-  tbody tr .bold_td {
-    font-weight: 700;
-  }
-  tbody tr td span {
-    font-size: 0.9rem;
-    line-height: 20px;
-    display: block;
-    text-align: left;
-  }
 
   tbody tr td:first-child {
     text-align: center;
@@ -289,13 +235,14 @@
 }
 
 .empty_state_mobile {
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
-  padding: 0 1rem;
-  margin-top: 6.25rem;
-  margin-bottom: 15.75rem;
+  padding: 10rem 1rem;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
 }
 .empty_state_desktop {
   display: none;
@@ -334,6 +281,11 @@
   .dashboard_overview {
     padding-left: 0.5rem;
   }
+  table {
+    tr th:first-child {
+      background: #fff;
+    }
+  }
 }
 
 @media screen and (min-width: 48rem) {
@@ -343,13 +295,23 @@
     padding: 2.5rem;
     width: 100%;
   }
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .recordings {
+    &__chart {
+      margin-left: -3rem;
+    }
+  }
+
   .recent_recordings {
     caption {
       padding: 1rem 2rem;
     }
   }
   .analysis {
-    padding: 1rem 1.5rem 1.5rem;
     .scale {
       h3 {
         font-size: 0.925rem;
@@ -360,13 +322,14 @@
     display: none;
   }
   .empty_state_desktop {
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 0 auto;
-    padding: 0 1rem;
-    margin-top: 6.25rem;
-    margin-bottom: 15.75rem;
+    padding: 4rem 1rem;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
   }
   .empty_state_header {
     font-size: 1.5rem;
@@ -384,6 +347,7 @@
 @media screen and (min-width: 75.625rem) {
   .container {
     display: flex;
+    flex-direction: row;
     gap: 2rem;
   }
   .recent_recordings {
@@ -398,68 +362,4 @@
       font-size: 0.925rem;
     }
   }
-  // .agents_mobile {
-  //   display: none !important;
-  // }
-  // .agents_desktop {
-  //   display: block !important;
-  //   margin-top: 1.8rem;
-  //   .agentLCon {
-  //     display: flex;
-  //     justify-content: center;
-  //   }
-  //   .agentL {
-  //     position: relative;
-
-  //     width: 100px;
-
-  //     img {
-  //       width: 80px;
-  //     }
-  //     span {
-  //       img {
-  //         width: 21.48px;
-  //         position: absolute;
-  //         left: 28px;
-  //         top: -16px;
-  //       }
-  //     }
-  //     .one {
-  //       display: flex;
-  //       justify-content: center;
-  //       align-items: center;
-  //       position: absolute;
-  //       width: 16px;
-  //       height: 16px;
-  //       left: 33px;
-  //       bottom: -6px;
-  //       background: #004db5;
-  //       border-radius: 94.5578px;
-  //       font-weight: 700;
-  //       font-size: 8px;
-  //       line-height: 12px;
-  //       color: #fff;
-  //     }
-  //   }
-  //   .other_agents {
-  //     display: flex;
-  //     flex-direction: column;
-  //     align-items: center;
-  //     gap: 1rem;
-  //     margin-top: 2.5rem;
-  //     div {
-  //       display: flex;
-  //       gap: 9rem;
-  //       h2 {
-  //         display: flex;
-  //         align-items: center;
-  //         gap: 0.3rem;
-  //         font-weight: 400;
-  //         font-size: 0.9rem;
-  //         line-height: 16px;
-  //         color: #6a6a6a;
-  //       }
-  //     }
-  //   }
-  // }
 }

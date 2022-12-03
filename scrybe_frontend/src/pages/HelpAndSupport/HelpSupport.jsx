@@ -1,5 +1,5 @@
-import Footer from "../../components/footer";
-import NavBarFree from "../../components/navBar_free";
+import Footer from "../../components/Footer";
+import NavBarFree from "../../components/NavbarFree";
 import Articles from "./components/Articles";
 import Cards from "./components/Cards/Cards";
 import Contact from "./components/Contact/Contact";
