@@ -42,7 +42,12 @@ const TotalAnalysis = () => {
       cutout: "60%",
       offset: 0,
       spacing: 0,
-      plugins: { legend: { display: false, position: "bottom" } },
+      plugins: {
+        legend: { display: false, position: "bottom" },
+        tooltip: {
+          enabled: false,
+        },
+      },
     });
   }, [selectedTotalAnalysis]);
 
@@ -67,29 +72,11 @@ const TotalAnalysis = () => {
       <div className={styles.total_analysis_chart}>
         <div style={{ width: 200 }}>
           <Doughnut options={chartOptions} data={chartData} />
+          <div className={styles.chart_inner}>
+            <h1>{selectedTotalAnalysis.map((data) => data.positive)}%</h1>
+            <span>+ve</span>
+          </div>
         </div>
-        {/* <div style={{ width: 170 }}>
-          <Doughnut
-            data="test"
-            options={{
-              cutout: "60%",
-              offset: 0,
-              spacing: 0,
-              // plugins: { legend: { display: false, position: "bottom" } },
-            }}
-          />
-        </div> */}
-        {/* <div className={styles.circles}>
-          <div className={styles.meduim}>
-            {selectedTotalAnalysis.map((data) => data.neutral)}%
-          </div>
-          <div className={styles.small}>
-            {selectedTotalAnalysis.map((data) => data.negative)}%
-          </div>
-          <div className={styles.big}>
-            {selectedTotalAnalysis.map((data) => data.positive)}%
-          </div>
-        </div> */}
         <div className={styles.scale}>
           <h3>
             <span className={styles.positive}>1</span> Positive{" "}
