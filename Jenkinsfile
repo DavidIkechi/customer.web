@@ -10,6 +10,7 @@ pipeline {
 			steps {
 				sh "git pull origin main"
 			}
+		}
 			
 		stage("build frontend"){
 
