@@ -107,7 +107,7 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/reset-successful" element={<Successful />} />
         <Route path="/verify-signup" element={<SignUpVerify />} />
-        <Route path="/set-new-password/:token" element={<SetNewPassword />} />
+        <Route path="/set-new-password" element={<SetNewPassword />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route
           path="/pw-reset-successful"
@@ -159,7 +159,6 @@ function App() {
         <Route path="/partners" element={<PartnersPage />} />
         <Route path="press-article" element={<PressArticle />} />
         <Route path="pricing" element={<Pricing />} />
-        <Route path="/home-page" element={<HomePageRedesign />} />
         {/* Error page */}
         <Route path="*" element={<Error />} />
       </Routes>
