@@ -1,33 +1,41 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 import footerImg from "./assets/reset-pw.png";
 import styles from "./SetNewPassword.module.scss";
 
 function SetNewPassword() {
+  const [userInfo, setUserInfo] = useState({});
+  const navigate = useNavigate();
+  const query = new URLSearchParams(useLocation());
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
-  /* eslint-disable no-unused-vars */
-  const [userInfo, setUserInfo] = useState();
-  /* eslint-enable no-unused-vars */
-  const onSubmit = (data) => {
-    console.log(data);
+
+  const baseUrl = "https://api.heed.hng.tech/";
+  const submitCallback = (data) => {
     setUserInfo(data);
-    console.log(errors);
+    axios
+      .patch(baseUrl + "/reset-password?token=" + query.get("token"), {
+        password: userInfo.password,
+      })
+      .then((res) => {
+        if (res.status === 200) navigate("/pw-reset-successful");
+      });
   };
 
   // Watch event for disable button
   const password = watch("password");
   const password2 = watch("password2");
 
-  console.log("password", password);
-  console.log("password2", password2);
-
   const isValid = password && password2;
+
   return (
     <>
       <main className={styles.signUpWrapper}>
@@ -37,7 +45,7 @@ function SetNewPassword() {
           >
             <h1>Set new password</h1>
             <h3>Your new password must be different from the previous one</h3>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(submitCallback)}>
               <label htmlFor="password">Password</label>
               <input
                 type="password"
