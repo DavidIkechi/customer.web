@@ -52,6 +52,7 @@ import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
 import { UploadModal } from "./pages/UploadRecordingsModal";
 import Error from "./pages/Error/Error";
 import Von from "./pages/Von/Von";
+import LandingPageSalesTeam from "./pages/NewLandingPageSalesTeam/index";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -86,10 +87,7 @@ function App() {
         <Route path="/verify-signup" element={<SignUpVerify />} />
         <Route path="/set-new-password" element={<SetNewPassword />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
-        {/* <Route
-          path="/landing-page-sales-team"
-          element={<NewLandingPageSalesTeam />}
-        /> */}
+        <Route path="/sales-team" element={<LandingPageSalesTeam />} />
         <Route
           path="/pw-reset-successful"
           element={<PasswordResetSuccessful />}

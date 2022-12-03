@@ -9,7 +9,17 @@ const WhoWeServe = () => {
   return (
     <div className={styles.WhoWEServe}>
       <p className={styles.heading}>Who We Serve?</p>
-      <div classname={styles.images}>
+      <div
+        classname={styles.images}
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          margin: "2rem",
+          flexWrap: "wrap",
+          alignItems: "center",
+          gap: "1rem",
+        }}
+      >
         <img src={flutterwave} alt="fluterwave" />
         <img src={paystack} alt="paystack" />
         <img src={cowrywise} alt="cowrywise" />
