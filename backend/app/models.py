@@ -73,6 +73,8 @@ class Audio(Base):
     most_positive_sentences = Column(JSON, nullable = True)
     most_negative_sentences = Column(JSON, nullable = True)
     agent_id = Column(Integer, ForeignKey("agents.id"))
+    agent_firstname = Column(String, index=True)
+    agent_lastname = Column(String, index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     job = relationship("Job", back_populates="audio", uselist=False)
     user = relationship("User", back_populates="audios")
