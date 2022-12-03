@@ -23,8 +23,8 @@ pipeline {
 		stage("deploy") {
 		
 			steps {
-				//sh "sudo pm2 delete heed"
-				//sh "sudo pm2 delete heed_api"
+				sh "sudo pm2 delete heed"
+				sh "sudo pm2 delete heed_api"
 				sh "sudo pm2 start /backend/app/main.py --name heed_api --interpreter python3"
 				sh "cd scrybe_frontend && sudo pm2 start --name heed npm -- start"
 			}
