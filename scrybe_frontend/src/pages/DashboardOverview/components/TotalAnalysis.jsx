@@ -73,7 +73,7 @@ const TotalAnalysis = () => {
         </select>
       </div>
       <div className={styles.total_analysis_chart}>
-        <div style={{ width: 200 }}>
+        <div className={styles.doughnut_chart}>
           <Doughnut options={chartOptions} data={chartData} />
           <div className={styles.chart_inner}>
             <h1>{selectedTotalAnalysis?.map((data) => data.positive)}%</h1>

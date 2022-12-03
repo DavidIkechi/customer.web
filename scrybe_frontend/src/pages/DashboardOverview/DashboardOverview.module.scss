@@ -108,7 +108,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: 0.8rem;
+    padding-top: 1.3rem;
+    .doughnut_chart {
+      width: 200px;
+      height: 230px;
+    }
     .chart_inner {
       margin-top: -8rem;
       margin-bottom: 100px;
@@ -188,15 +192,20 @@
         th {
           font-weight: normal;
           color: #6a6a6a;
+          padding: 10px;
         }
       }
       tbody {
         color: #6a6a6a;
 
         tr {
+          padding: 1rem 0;
           text-align: center;
           border-spacing: 2rem;
           border-bottom: solid 1.2rem white;
+          td {
+            padding: 1rem 0;
+          }
         }
       }
     }

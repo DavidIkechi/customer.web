@@ -1,5 +1,5 @@
 import React from "react";
-import SideBar from "../../components/SideBar";
+import NewDesignSideBar from "../../components/NewDesignSidebar";
 import LeaderBoard from "./components/LeaderBoard";
 import RecentRecording from "./components/RecentRecording";
 import TotalAnalysis from "./components/TotalAnalysis";
@@ -9,7 +9,7 @@ import { LeaderboardData } from "./Data";
 
 function DashboardOverview() {
   return (
-    <SideBar>
+    <NewDesignSideBar>
       <section className={styles.dashboard_overview}>
         <div className={styles.container}>
           <TotalRecording />
@@ -18,7 +18,7 @@ function DashboardOverview() {
         </div>
         <RecentRecording />
       </section>
-    </SideBar>
+    </NewDesignSideBar>
   );
 }
 
