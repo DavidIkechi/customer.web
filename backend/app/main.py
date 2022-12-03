@@ -605,7 +605,4 @@ def download (id: int, db: Session = Depends(get_db)):
                 "most_positive_sentences": most_positive_sentences,
                 "most_negative_sentences": most_negative_sentences,
                 }
-    # jsonFile = open('Json_download/' + str(db_audio.filename) + ".json", "w")
-    with open('Json_download/' + str(db_audio.filename) + ".json", "w") as file:
-        file = json.dump(sentiment, file, indent = 4)
-        return file
+    return sentiment
