@@ -1,5 +1,5 @@
 import Footer from "../../components/footer";
-import NavBar from "../../components/navBar";
+import NavBarFree from "../../components/navBar_free";
 import Articles from "./components/Articles";
 import Cards from "./components/Cards/Cards";
 import Contact from "./components/Contact/Contact";
@@ -10,7 +10,7 @@ import styles from "./HelpSupport.module.scss";
 function HelpSupport() {
   return (
     <>
-      <NavBar />
+      <NavBarFree />
       <div className={styles.body}>
         <Header />
         <Input />
