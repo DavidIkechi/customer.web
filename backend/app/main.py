@@ -588,7 +588,7 @@ def delete_audios(audios: List[int] = Query(None), db: Session = Depends(get_db)
 
 
 @app.get("/download/{id}")
-def download (id: int, db: Session = Depends(get_db)):
+def download (id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     db_audio = crud.get_audio(db, audio_id = id)
     positivity_score = float(db_audio.positivity_score)
     negativity_score = float(db_audio.negativity_score)
