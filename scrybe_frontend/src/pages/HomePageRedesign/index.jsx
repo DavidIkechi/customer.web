@@ -54,7 +54,7 @@ const Index = () => {
             <div className={styles.hero__bottom}>
               <div className={styles.hero__action}>
                 <div className={styles.button__content}>
-                  <Link style={{ width: "48%" }}>
+                  <Link to="/support-team" style={{ width: "48%" }}>
                     <button
                       className={styles.hero__buttonOne}
                       style={{
@@ -66,7 +66,7 @@ const Index = () => {
                       For Support
                     </button>
                   </Link>
-                  <Link style={{ width: "48%" }}>
+                  <Link to="/sales-team" style={{ width: "48%" }}>
                     <button
                       className={styles.hero__buttonTwo}
                       style={{
@@ -318,7 +318,7 @@ const Index = () => {
             </div>
           </div>
           <div className={styles.bottom__fifth}>
-            <Link>
+            <Link to="/try">
               <button className={styles.fifth__action}>Try Now</button>
             </Link>
           </div>

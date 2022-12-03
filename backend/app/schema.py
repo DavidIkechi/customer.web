@@ -142,13 +142,21 @@ class TotalAnalysis(BaseModel):
     class Config:
         orm_mode = True
 
+
 class UserProfile(BaseModel):
     id: str
-    phone_number: str
-    company_address: str
+    phone_number: Optional[str]
+    company_address: Optional[str]
+    company_logo_url: Optional[str]
     email: str
     company_id: int
     api_key: UUID = uuid1()
+
+    
+class UserProfileUpdate(BaseModel):
+    phone_number: Optional[str]
+    company_address: Optional[str]
+    company_logo_url: Optional[str]
 
 
 class ForgetPassword(BaseModel):
