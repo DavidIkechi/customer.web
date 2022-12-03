@@ -133,3 +133,4 @@ class FreeTrial(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     transcript_id = Column(String(255), index=True)
+    transcript_status = Column(TEXT)
