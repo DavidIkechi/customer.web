@@ -1,10 +1,11 @@
-from typing import List
+from typing import List, Union
 from models import Audio
 from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form, Query
 from fastapi_pagination import Page, paginate, Params
 from fastapi.middleware.cors import CORSMiddleware
 from routers.sentiment import sentiment
-from routers.transcribe import transcribe_file
+from routers.transcribe import transcribe_file, get_transcript_result
+from routers import sentiment
 import auth
 from routers.score import score_count
 import uvicorn
@@ -28,6 +29,7 @@ import fastapi as _fastapi
 import cloudinary
 import cloudinary.uploader
 from BitlyAPI import shorten_urls
+import services as _services
 
 from datetime import datetime
 
@@ -247,7 +249,7 @@ async def email_verification(request: Request, token: str, db: Session = Depends
             "data" : f"Hello {user.first_name}, your account has been successfully verified"}
 
 @app.post("/tryForFree")
-async def free_trial(file: UploadFile = File(...)):
+async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...)):
     ####### saving the audio file
     with open(f'{file.filename}', "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
@@ -259,10 +261,56 @@ async def free_trial(file: UploadFile = File(...)):
     elif getSize > fileSize :
         raise HTTPException(status_code = 406, detail="File Must Not Be More Than 5MB")
     else:
-        ######### Load audio file
-        transcript = transcribe_file(file.filename)
-        transcript = transcript
-        return{"transcript": transcript}
+        try:
+            result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
+            url = result.get("url")
+            urls = [url]
+            response = shorten_urls(urls)
+            retrieve_url = response[0]
+            new_url = retrieve_url.short_url
+        except Exception:   
+            return {"error": "There was an error uploading the file"}
+        # transcript = transcript
+        transcript = transcribe_file(new_url)
+        # get some essential parameters
+        transcript_id = transcript['id']
+        transcript_status = transcript['status']
+
+        callback = models.FreeTrial(transcript_id = transcript_id, transcript_status=transcript_status)
+
+        db.add(callback)
+        db.commit()
+        db.refresh(callback)
+        # delete the file
+        os.remove(file.filename)
+
+    return {"transcript_id": transcript_id, "status": transcript_status}
+
+
+@app.get("/get_transcript/{transcript_id}", description="Retrieving transcript by audio ID")
+def view_transcript(transcript_id: Union[int, str], db: Session = Depends(_services.get_session)):
+    transcript = db.query(models.FreeTrial).filter(models.FreeTrial.transcript_id == transcript_id).first()
+    if not transcript:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, 
+            detail=f"Transcription with id: {transcript_id} was not found")
+    transcript_audio_id = transcript_id
+    
+    
+    transcript_audio = get_transcript_result(transcript_audio_id)
+    transcript.job_status = transcript_audio['status']
+    # db.commit()
+    
+    if transcript_audio['status'] != "completed":
+        return {"status":transcript_audio['status']}
+    else:
+        # get the text.
+        transcripted_word = transcript_audio['text']
+        sentiment_result = sentiment.sentiment(transcripted_word)
+
+        overall_sentiment = sentiment_result['overall_sentiment']
+
+        return {"transcription": transcripted_word, "overall_sentiment_result": overall_sentiment}
 
 
 @app.get('/history', summary = "get user history", response_model=Page[schema.History])
@@ -530,4 +578,17 @@ def delete_audios(audios: List[int] = Query(None), db: Session = Depends(get_db)
             db.commit()
             deleted_audios.append(db_audio.audio_path)
     return {"message": "operation successful", "deleted audion(s)": deleted_audios}
-            
+
+
+# @app.get("/download/{id}")
+# async def download(id, db: Session = Depends(get_db)):
+#     db_analysis = crud.get_audio(db, audio_id = id)
+#     # return db_analysis
+#     # if not db_analysis:
+#     #     return{"error": "No Audio With This ID"}
+#     # else:
+    
+#     # with open("example.json", "wb") as f:
+#     print(db_analysis)
+#     return 
+        
