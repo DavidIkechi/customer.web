@@ -88,19 +88,19 @@ def upload_user_image(db:Session , user_id:int, image_file:UploadFile):
 
     
 def delete_user(db: Session, user_id: int, current_user):
-    user = db.query(models.User).filter(models.User.id == user_id).first()
-    if user is None:
+    deleted_user = db.query(models.User).filter(models.User.id == user_id).first()
+    if deleted_user is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"The user with id {user_id} does not exist")
     if user_id != current_user.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , 
                                 detail="Not authorized to perform requested action")
         
-    user_profile= db.query(models.UserProfile).filter(models.UserProfile.id == user.id).first()
-    db.delete(user)
+    user_profile= db.query(models.UserProfile).filter(models.UserProfile.id == deleted_user.id).first()
+    db.delete(deleted_user)
     db.delete(user_profile)
     db.commit()
-    return Response(status_code=status.HTTP_204_NO_CONTENT)
+    return {"message":f"User with id{deleted_user.id} has been deleted"}
 
 
 def get_audio(db: Session, audio_id: int):
