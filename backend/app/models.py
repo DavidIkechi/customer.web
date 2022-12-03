@@ -69,6 +69,7 @@ class Audio(Base):
     positivity_score = Column(Float, index=True, nullable = True)
     negativity_score = Column(Float, index=True, nullable = True)
     neutrality_score = Column(Float, index=True, nullable = True)
+    average_score = Column(Float, index=True, nullable = True)
     overall_sentiment = Column(Enum("Positive", "Negative", "Neutral"), index=True, nullable = True)
     most_positive_sentences = Column(JSON, nullable = True)
     most_negative_sentences = Column(JSON, nullable = True)
@@ -129,3 +130,11 @@ class UserProfile(Base):
     email = Column(String(255), nullable=True)
     company_id = Column(Integer, ForeignKey("companies.id"))
     api_key = Column(String(255), name="uuid", primary_key=True, default=generate_uuid)
+
+
+class FreeTrial(Base):
+    __tablename__ = "FreeTrial"
+
+    id = Column(Integer, primary_key=True, index=True)
+    transcript_id = Column(String(255), index=True)
+    transcript_status = Column(TEXT)

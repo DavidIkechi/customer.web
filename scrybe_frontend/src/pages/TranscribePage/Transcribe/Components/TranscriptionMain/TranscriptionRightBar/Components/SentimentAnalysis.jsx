@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./SentimentAnalysis.module.scss";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function SentimentAnalysis() {
   const getTranscriptionID = () => {
@@ -63,7 +63,7 @@ function SentimentAnalysis() {
         </div>
       </div>
       <div className={styles.mobileSentimentAnalysis}>
-        <Link to="/sentiment-analysis">
+        <Link to="/sentiment-analysis/:userId">
           <div className={styles.mobileContainer}>
             <h5>sentiment analysis</h5>
             <svg

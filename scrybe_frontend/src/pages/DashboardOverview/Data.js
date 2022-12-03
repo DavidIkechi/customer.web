@@ -84,7 +84,7 @@ export const LeaderboardData = {
     {
       name_id: "AG685500DE",
       recordings: 20,
-      position: "1stt",
+      position: "1st",
       score: 95,
     },
     {
@@ -102,7 +102,6 @@ export const LeaderboardData = {
     {
       name: "Agent 4",
       recordings: 4,
-
       position: "4th",
       score: 85,
     },
@@ -124,17 +123,20 @@ export const LeaderboardData = {
   ],
   month: [
     {
-      name: "Agent 5",
-      position: "1stt",
+      name_id: "AG685500DE",
+      recordings: 8,
+      position: "1st",
       score: 99,
     },
     {
-      name: "Agent 7",
+      name_id: "AG685500DE",
+      recordings: 8,
       position: "2nd",
       score: 90,
     },
     {
-      name: "Agent 3",
+      name_id: "AG685500DE",
+      recordings: 8,
       position: "3rd",
       score: 50,
     },

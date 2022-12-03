@@ -8,8 +8,8 @@ import checkIcon from "./assets/check.svg";
 import BenefitsImage from "./assets/benefitsimage.svg";
 import YearPlans from "./components/YearPlan/yearPlans";
 import MonthPlans from "./components/MonthPlan/monthPlans";
-import NavBarFree from "../../components/navBar_free";
-import Footer from "../../components/footer";
+import NavBarFree from "../../components/NavbarFree";
+import Footer from "../../components/Footer";
 
 function Pricing() {
   React.useEffect(() => {
@@ -246,7 +246,7 @@ function Pricing() {
         </div>
         <div className={styles.benefits}>
           <div className={styles.benefitdescription}>
-            <h3>Benefits of using Scrybe</h3>
+            <h3>Benefits of using Heed</h3>
             <ul>
               <li>
                 <span>&bull;</span>Converts recorded calls in MP3 format into
