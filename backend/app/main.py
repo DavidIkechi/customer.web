@@ -39,6 +39,7 @@ import os
 
 from dotenv import load_dotenv
 
+
 load_dotenv()
 
 
@@ -103,6 +104,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 def main() -> None:
     uvicorn.run(
         "main:app", 
@@ -140,6 +142,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     else:
         db_agent = db.query(models.Agent).filter(models.Agent.first_name == first_name, 
                                      models.Agent.last_name == last_name).first()
+
     try:
         contents = file.file.read()
         with open(file.filename, 'wb') as f:
@@ -159,7 +162,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
         
     except Exception:
         return {"error": "There was an error uploading the file"}
-   
+
     # transcript = transcript
     
     size = audio_details(file.filename)["size"]
@@ -483,18 +486,19 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
 
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    results = db.execute("""SELECT agent_id,
-        agent_firstname,
-        agent_lastname,
-        SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score,
-        SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score,
-        SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
-        round(positivity_score/(positivity_score+negativity_score+neutrality_score) * 10, 1) AS Average_score
-    FROM audios GROUP BY agent_id
-    ORDER BY Positive_score DESC""")
+    try:
+        results = db.execute("""SELECT agent_id,
+            agent_firstname,
+            agent_lastname,
+            SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score,
+            SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score,
+            SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
+            average_score AS Average_score
+        FROM audios GROUP BY agent_id
+        ORDER BY Positive_score DESC""")
 
-    if not results:
-        raise HTTPException(status_code=404, detail= "Results not found")
+    except Exception:
+        raise {"status_code": 404, "error": "Results not found"}
 
     leaderboard = [dict(r) for r in results]
     top3_agents = leaderboard[:3]
