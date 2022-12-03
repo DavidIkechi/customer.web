@@ -104,8 +104,9 @@ function Signup() {
       company_name: company_name,
       password: password,
     };
+    console.group(data);
     await axios
-      .post("users", data)
+      .post("create_users", data)
       .then((response) => {
         console.log(response);
         setNavigate(true);

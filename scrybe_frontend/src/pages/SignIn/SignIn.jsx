@@ -60,13 +60,15 @@ function Signin() {
   useEffect(() => {
     const isValid = validate();
     setIsValid(isValid);
-  }, [validate]);
+  }, [validate, username, password]);
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+    console.group("Submit");
 
     let formData = new FormData();
 
     formData.append("username", username);
+    console.log(username);
     formData.append("password", password);
 
     const config = {
@@ -112,7 +114,7 @@ function Signin() {
           <div
             className={`${styles.first} ${styles.signin} ${styles.otherThanSignup}`}
           >
-            <h1>Welcome back, Heed!</h1>
+            <h1>Welcome back, Scryber!</h1>
             <h3>Please enter your details</h3>
             <form onSubmit={handleSubmit}>
               <div
