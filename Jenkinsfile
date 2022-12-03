@@ -5,13 +5,7 @@ pipeline {
 		
 		
 		
-		stage("update repository"){
-			
-			steps {
-				sh "git pull origin main"
-			}
-		}
-			
+					
 		stage("build frontend"){
 
 			steps {
