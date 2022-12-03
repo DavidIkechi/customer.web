@@ -1,5 +1,6 @@
+@use "../../functions.scss" as *;
+
 .pricing {
-  width: min(100%, 75.25rem);
   margin-inline: auto;
 }
 
@@ -8,6 +9,12 @@
   padding: 1rem;
   min-height: 95vh;
   overflow-x: visible;
+  margin-bottom: pix-rem(280);
+  @include media(1220px) {
+    min-height: pix-rem(840);
+    margin-bottom: pix-rem(60);
+    margin-inline: auto;
+  }
 }
 
 .pricing .hero .container {
@@ -15,27 +22,61 @@
   margin-inline: auto;
   display: flex;
   justify-content: space-between;
+  @include media(1220px) {
+    margin-inline: auto;
+    flex-direction: column;
+    justify-content: center;
+    & > * {
+      text-align: center;
+    }
+  }
 }
 
 .pricing .hero .container .content {
   margin-top: 5.625rem;
   width: min(100%, 36rem);
+  margin-inline: auto;
+  @include media(1220px) {
+    margin-bottom: pix-rem(40);
+  }
 }
 .pricing .hero .container .content .heroH1 {
   font-size: 3rem;
   font-weight: bold;
   color: #313131;
   line-height: 1.3;
+  @include media(1220px) {
+    font-size: pix-rem(40);
+  }
 }
 .pricing .hero .container .content .heroText {
   margin-top: 0.5rem;
   font-size: 1.25rem;
+  font-weight: 600;
+  @include media(1220px) {
+    font-size: pix-rem(20);
+  }
 }
 .pricing .hero .container .content .heroAccent {
   color: #006cff;
 }
 .pricing .hero .container .heroImage {
   width: min(100%, 38.3125rem);
+  margin-inline: auto;
+}
+
+.pricing .hero .curves {
+  position: absolute;
+  top: pix-rem(140);
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: -1;
+  height: pix-rem(830);
+  max-height: pix-rem(1700);
+  @include media(1220px) {
+    top: pix-rem(260);
+  }
 }
 
 .pricing .CTA {
@@ -52,6 +93,9 @@
   margin: 3rem auto;
   background-color: #e6f0ff;
   padding: 1rem;
+  @include media(520px) {
+    flex-direction: column;
+  }
 }
 .pricing .CTA .CTAs .ctaMonth,
 .pricing .CTA .CTAs .ctaYear {
@@ -61,21 +105,18 @@
   border-radius: 0.25rem;
   width: 7.75rem;
   text-align: center;
+  border: 0.0625rem solid #004db5;
+  color: #004db5;
+  background-color: transparent;
+  cursor: pointer;
 }
-.pricing .CTA .CTAs .ctaMonth {
-  border: 0.0625rem solid #006cff;
-  color: #006cff;
-}
-.pricing .CTA .CTAs .ctaMonth:active {
-  color: #004cb3;
-  border: 0.0625rem solid #004cb3;
-}
-.pricing .CTA .CTAs .ctaYear {
+
+.pricing button .ctaMonth.active {
   background-color: #004db5;
   color: white;
 }
-.pricing .CTA .CTAs .ctaStarter:active {
-  background-color: #004cb3;
+.hidden {
+  display: none;
 }
 .pricing .CTAtitle {
   font-size: 2rem;
@@ -85,10 +126,34 @@
   text-align: center;
   padding-block: 2rem;
 }
-
+//
 .pricing .plans {
   display: flex;
   gap: 23px;
+  width: min(100%, 75.25rem);
+  margin-inline: auto;
+  @include media(1220px) {
+    width: pix-rem(390);
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  @include media(420px) {
+    width: 95%;
+    margin-inline: auto;
+  }
+  width: min(100%, 75.25rem);
+  margin-inline: auto;
+  @include media(1220px) {
+    width: pix-rem(390);
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  @include media(420px) {
+    width: 95%;
+    margin-inline: auto;
+  }
 }
 
 .plansCard {
@@ -121,6 +186,9 @@
 .plansCard p {
   color: #454545;
   font-size: 1rem;
+  @include media(420px) {
+    font-size: pix-rem(14);
+  }
 }
 
 .plansCardTitle,
@@ -140,8 +208,11 @@
   font-size: 4.5rem;
   font-weight: 600;
 }
-.pricing .features{
+//
+.pricing .features {
   margin-block: 4rem;
+  width: min(100%, 75.25rem);
+  margin-inline: auto;
 }
 
 .pricingFeatures {
@@ -157,33 +228,71 @@
   background-color: #006cff;
   border-radius: 4px;
 }
-table {
+
+.tableWrapper {
+  overflow-x: scroll;
+}
+//pricing class tag added
+.pricing table {
   border-collapse: collapse;
   width: 100%;
   padding-block: 2rem;
-}
-th,
-td {
-  padding: 0.75rem;
+  width: 95%;
+  margin-inline: auto;
 
+  @include media(1220px) {
+    width: pix-rem(1024);
+  }
+  @include media(768px) {
+    width: pix-rem(700);
+  }
 }
-tr th:first-child {
-   text-align: left;
+ .pricingthead {
+  background-color: #005584;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1rem;
 }
-tr td:first-child {
+.pricing th,
+.pricing td {
+  padding: 0.75rem;
+}
+.pricing tr th:first-child,
+.pricing tr td:first-child {
   text-align: left;
+  position: sticky;
+  left: 0;
+  @include media(768px) {
+    width: 30%;
+  }
 }
-tr img {
+.pricing tr td:first-child {
+  @include media(768px) {
+    background-color: #fff;
+  }
+}
+.pricing tr th:first-child {
+  @include media(768px) {
+    background-color: #005584;
+  }
+}
+.pricing tr img {
   margin-inline: auto;
 }
 
 .pricing .benefits {
   padding: 32px;
-  background-color: #E6F6FF;
+  background-color: #e6f6ff;
   border-radius: 1rem;
   display: flex;
   gap: 30px;
-  margin-block: 6rem;
+  margin: 6rem auto;
+  width: min(100%, 75.25rem);
+  @include media(1220px) {
+    margin-inline: auto;
+    flex-direction: column-reverse;
+    justify-content: center;
+  }
 }
 
 .pricing .benefits .benefitdescription {
@@ -193,7 +302,7 @@ tr img {
   flex: 1;
 }
 .pricing .benefits .BenefitsImage img {
- width: 100%;
+  width: 100%;
 }
 
 .pricing .benefits ul li {
@@ -210,6 +319,15 @@ tr img {
 .pricing .benefits .benefitCTA {
   display: flex;
   margin-top: 2rem;
+  @include media(1220px) {
+    width: 50%;
+    margin-inline: auto;
+    flex-direction: column;
+    justify-content: center;
+  }
+  @include media(520px) {
+    width: 100%;
+  }
 }
 .pricing .benefits .benefitCTA a {
   text-decoration: none;
@@ -219,6 +337,14 @@ tr img {
   border-radius: 0.25rem;
   text-align: center;
   margin-right: 2rem;
+  color: #006CFF;
+  @include media(1220px) {
+    margin-block: pix-rem(20);
+  }
+  @include media(460px) {
+    width: 50%;
+    margin-inline: auto;
+  }
 }
 
 .pricing .benefits .benefitCTA a:first-child {

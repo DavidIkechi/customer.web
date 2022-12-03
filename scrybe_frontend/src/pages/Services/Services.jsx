@@ -8,9 +8,13 @@ import arrow from "./assets/arrow-right.svg";
 import sentiment from "./assets/sentiment-page.png";
 
 import NavBar from "../../components/navBar";
-import Footer from "../../components/footer";
+import Footer from "../../components/Footer";
 
 function Services() {
+  React.useEffect(() => {
+    // 👇️ scroll to top on page load
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
   return (
     <div className="services-section">
       <NavBar />

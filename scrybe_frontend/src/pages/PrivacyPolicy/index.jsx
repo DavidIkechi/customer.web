@@ -1,5 +1,6 @@
-import Header from "../../components/navBar_free/index";
-import Footer from "../../components/footer/index";
+import React from "react";
+import Footer from "../../components/Footer";
+import Header from "../../components/NavbarFree";
 import Analytics from "./Components/Analytics.jsx";
 import Changes from "./Components/Changes.jsx";
 import CiCdTools from "./Components/CiCdTools.jsx";
@@ -12,17 +13,21 @@ import InformationCollectionUse from "./Components/InformationCollectionUse.jsx"
 import Introduction from "./Components/Introduction.jsx";
 import LawfulBasis from "./Components/LawfulBasis.jsx";
 import LinksToOtherSites from "./Components/LinksToOtherSites.jsx";
+import Payments from "./Components/Payments.jsx";
 import RetentionOfData from "./Components/RetentionOfData.jsx";
 import SecurityOfData from "./Components/SecurityOfData.jsx";
 import ServiceProviders from "./Components/ServiceProviders.jsx";
 import TransferOfData from "./Components/TransferOfData.jsx";
 import UseOfData from "./Components/UseOfData.jsx";
 import YourRights from "./Components/YourRights.jsx";
-import Payments from "./Components/Payments.jsx";
 
 import "./Style/privacyPolicy.scss";
 
 function PrivacyPolicy() {
+  React.useEffect(() => {
+    // 👇️ scroll to top on page load
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
   return (
     <section className="privacy">
       <Header />

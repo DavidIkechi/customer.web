@@ -1,8 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import Footer from "../../../../components/Footer";
 import RedirectNav from "../../Components/SettingsPageRedirectNav/SettingsPageRedirectNav";
 import AccountPageCss from "./AccountSettings.module.scss";
-import Footer from "../../../../components/footer/index";
-import { Link } from "react-router-dom";
 
 const AccountSettings = () => {
   const currentDate = new Date().toLocaleDateString("en-GB");

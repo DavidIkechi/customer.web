@@ -1,0 +1,194 @@
+@import "./assets/utilities/functionsANDmedia";
+@import "./assets/utilities/variables";
+$sidebarWidth: 250px;
+$trans: all 400ms ease;
+.sidebarMobile__container {
+  position: fixed;
+  z-index: 99;
+  background: #ffffff;
+  transition: all 1s ease;
+  box-shadow: 0 151px 60px rgba(0, 0, 0, 0.226);
+
+  > {
+    div:last-of-type,
+    section:last-of-type,
+    p:last-of-type {
+      overflow-y: auto;
+      will-change: width;
+      transition: width 1s ease;
+      width: $sidebarWidth;
+    }
+  }
+  .inputWithIcon {
+    position: absolute;
+    top: 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    input {
+      width: calc($sidebarWidth - 20px);
+      border: 1px solid rgba(170, 170, 170, 0.178);
+      padding: 10px 15px;
+      padding-left: 3rem;
+      font-weight: 300;
+      font-size: 16px;
+      border-radius: 3px;
+      outline: none;
+      background: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: transparent url("../../assets/images/search-icon.svg")
+        no-repeat 10px center;
+    }
+  }
+
+  .profile {
+    position: absolute;
+    width: 100%;
+    bottom: 3rem;
+    .profileSidebar {
+      padding: 0 10px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+      span {
+        rotate: 90deg;
+        font-weight: bold;
+        font-size: 1.4rem;
+        position: absolute;
+        right: 1rem;
+        top: 0;
+        cursor: pointer;
+      }
+      p {
+        color: #6a6a6a;
+        font-weight: 300;
+      }
+      h3 {
+        font-size: 16px;
+      }
+    }
+  }
+  .sidebar {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition-duration: 400ms;
+    z-index: 6;
+  }
+
+  .sidebar.close {
+    width: 0px;
+  }
+
+  .navOpener {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    border: 2px solid $blue-500;
+    padding: 5px;
+    border-radius: 50%;
+    background-color: white;
+    cursor: pointer;
+    z-index: 99;
+    transition: scale 400ms ease;
+    &:where(:hover) {
+      scale: 1.1;
+    }
+  }
+
+  .logoLink {
+    display: flex;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 9;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .logoLink {
+    justify-content: center;
+    align-items: center;
+    p {
+      display: inline;
+      font-weight: 600;
+      font-size: 2rem;
+      line-height: 26px;
+      color: $grey-500;
+      cursor: pointer;
+      margin-left: 20px;
+      scale: none;
+    }
+  }
+
+  .navLinks {
+    margin: pix-rem(10) 0 0 0;
+
+    width: 100%;
+    .navLink {
+      transition: $trans;
+
+      &:hover {
+        background: #e6f6ff;
+      }
+    }
+  }
+
+  .navLink {
+    display: flex;
+    justify-content: center;
+    padding: pix-rem(10) 0;
+    text-decoration: none;
+    cursor: pointer;
+
+    p {
+      display: none;
+    }
+    img:not(:first-child) {
+      width: 50px;
+      padding-right: 20px;
+    }
+  }
+
+  .navLink {
+    justify-content: flex-start;
+    padding-left: 10px;
+
+    p {
+      display: inline;
+      font-weight: 300;
+      font-size: 20px;
+      line-height: 26px;
+      color: #6a6a6a;
+      cursor: pointer;
+      transition: $trans;
+    }
+    @media (max-width: 400px) {
+      p {
+        font-size: 14px;
+        font-weight: 400;
+      }
+    }
+    img {
+      width: 40px;
+      padding-right: 20px;
+    }
+  }
+
+  .navLink.active {
+    background: $blue-50;
+    border-right: 4px solid $blue-400;
+  }
+}

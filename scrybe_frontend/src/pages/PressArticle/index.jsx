@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styles from "./pressArticle.module.scss";
-import pressArtIcon from "./assets/pressArtIcon.png";
-import arrowLeft from "./assets/arrow__left.png";
+import Footer from "../../components/Footer";
 import NavBar from "../../components/navBar";
-import Footer from "../../components/footer";
+import arrowLeft from "./assets/arrow__left.png";
+import pressArtIcon from "./assets/pressArtIcon.png";
+import styles from "./pressArticle.module.scss";
 
 const index = () => {
   return (

@@ -1,18 +1,18 @@
 import React from "react";
-import styles from "./pageB.module.scss";
-import imag3d from "./assets/Other 14.webp";
-import upload from "./assets/Group 1000000932.png";
+import Footer from "../../components/Footer";
 import NavBar from "../../components/navBar/index.jsx";
-import Footer from "../../components/footer/index.jsx";
-import CustomerReview from "../HomePageA/CustomerReview/index.jsx";
 import BrandsLogo from "../HomePageA/BrandLogos/index.jsx";
+import CustomerReview from "../HomePageA/CustomerReview/index.jsx";
 import Hero from "../HomePageA/HeroSection/index.jsx";
+import upload from "./assets/Group 1000000932.png";
+import imag3d from "./assets/Other 14.webp";
+import styles from "./pageB.module.scss";
 
 function HomePageB() {
   return (
     <>
       <NavBar />
-      <Hero />
+      <Hero isHomePageA={false} />
       <BrandsLogo />
       <section className={styles.container}>
         <div className={styles.getStarted}>

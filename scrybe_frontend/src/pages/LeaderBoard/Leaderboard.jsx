@@ -1,36 +1,37 @@
 import styles from "./Leaderboard.module.scss";
+import SideBar from "../../components/SideBar";
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import Logo from "./images/Scrybe-logo.svg";
-import MyScrybe from "./images/dashboard.svg";
-import Analysis from "./images/graphic.svg";
-import Insight from "./images/history.svg";
-import LeaderBoard from "./images/leaderboard.svg";
-import MonthlyAnalysis from "./images/analytics.svg";
-import Settings from "./images/Setting.svg";
+// import Logo from "./images/Scrybe-logo.svg";
+// import MyScrybe from "./images/dashboard.svg";
+// import Analysis from "./images/graphic.svg";
+// import Insight from "./images/history.svg";
+// import LeaderBoard from "./images/leaderboard.svg";
+// import MonthlyAnalysis from "./images/analytics.svg";
+// import Settings from "./images/Setting.svg";
 import Agent from "./images/Agent-leaderboard.svg";
 import SearchIcon from "./images/search-icon.svg";
 import Calender from "./images/Calendar.svg";
-import Profile1 from "./images/profile1.svg";
+// import Profile1 from "./images/profile1.svg";
 // import Profile2 from "./images/profile2.svg";
 // import Profile3 from "./images/profile3.svg";
-import GreenLike from "./images/Like-green.svg";
-import BlackLike from "./images/Like-black.svg";
+// import GreenLike from "./images/Like-green.svg";
+// import BlackLike from "./images/Like-black.svg";
 import ProfileName from "./images/Profile-name.svg";
-import ProfileName5 from "./images/Profile-name5.svg";
-import ProfileName6 from "./images/Profile-name6.svg";
-import ProfileName7 from "./images/Profile-name7.svg";
-import ProfileName8 from "./images/Profile-name8.svg";
-import ProfileName9 from "./images/Profile-name9.svg";
-import ProfileName10 from "./images/Profile-name10.svg";
-import ProfileName11 from "./images/Profile-name11.svg";
-import ProfileName12 from "./images/Profile-name12.svg";
-import ProfileName13 from "./images/Profile-name13.svg";
-import ProfileName14 from "./images/Profile-name14.svg";
-import ProfileName15 from "./images/Profile-name15.svg";
-import ProfileName16 from "./images/Profile-name16.svg";
+// import ProfileName5 from "./images/Profile-name5.svg";
+// import ProfileName6 from "./images/Profile-name6.svg";
+// import ProfileName7 from "./images/Profile-name7.svg";
+// import ProfileName8 from "./images/Profile-name8.svg";
+// import ProfileName9 from "./images/Profile-name9.svg";
+// import ProfileName10 from "./images/Profile-name10.svg";
+// import ProfileName11 from "./images/Profile-name11.svg";
+// import ProfileName12 from "./images/Profile-name12.svg";
+// import ProfileName13 from "./images/Profile-name13.svg";
+// import ProfileName14 from "./images/Profile-name14.svg";
+// import ProfileName15 from "./images/Profile-name15.svg";
+// import ProfileName16 from "./images/Profile-name16.svg";
 import ProfileUpload from "./images/Profile-upload.svg";
 import UploadIcon from "./images/Upload-icon.svg";
 
@@ -38,18 +39,26 @@ function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState([]);
   function loadAgentActivity() {
     axios
-      .get("http://heedapi.herokuapp.com/leaderboard")
+      .get("https://heedapi.herokuapp.com/leaderboard")
       .then((response) => {
         console.log(response.data["Agents Leaderboard"]);
         const arr = response.data["Agents Leaderboard"];
+        // var topView = [];
+        // var bottomView = [];
         //remove me --->
-        arr.sort((a, b) => {
-          return b.Avergae_score - a.Avergae_score;
-        });
+        // arr.pop();
         //<--- remove me
-        const top3 = arr.slice(0, 3);
-        console.log(arr);
-        setLeaderboard(top3);
+        //  Emmy's loop //
+        // for (let i = 0; i < arr.length; i++) {
+        //   if (i <= 3) {
+        //     topView = arr[i];
+        //     console.log("data", topView);
+        //   } else {
+        //     bottomView = arr[i];
+        //     console.log("data", bottomView);
+        //   }
+        // }
+        // setLeaderboard(arr);
       })
       .catch((error) => {
         console.error(error);
@@ -61,8 +70,9 @@ function Leaderboard() {
   }, []);
 
   return (
-    <div className={styles.content_container}>
-      <section className={styles.left_section}>
+    <SideBar>
+      <div className={styles.content_container}>
+        {/* <section className={styles.left_section}>
         <nav>
           <div className={styles.Sidebar_container_content}>
             <img src={Logo} className={styles.Scrybe_media} alt="hero img" />
@@ -119,64 +129,66 @@ function Leaderboard() {
             <img src={Settings} className="" alt="hero img" />
             <p>Settings</p>
           </NavLink>
-        </nav>
-      </section>
+        </nav> */}
+        {/* </section> */}
 
-      <section>
-        <div className={styles.right_section_top}>
-          <div className={styles.InputWithIcon} id={styles.hide_for_mobile}>
-            <img src={SearchIcon} className="" alt="hero img" />
-            <input
-              type="text"
-              name=""
-              id="search-bar"
-              placeholder="  &nbsp; &nbsp; &nbsp; search again"
-              required
-            />
-          </div>
-
-          <div className={styles.Upload_profile_container}>
-            <img src={ProfileUpload} className="" alt="hero img" />
-            <button className={styles.Upload_button}>
-              <img src={UploadIcon} className="" alt="hero img" /> &nbsp; &nbsp;
-              upload
-            </button>
-          </div>
-        </div>
-
-        <div className={styles.right_section}>
-          <img src={Agent} className={styles.Agent_img} alt="hero img" />
-
-          <div className={styles.right_content2_container}>
-            <div className={styles.InputWithIcon}>
+        <section>
+          <div className={styles.right_section_top}>
+            <div className={styles.InputWithIcon} id={styles.hide_for_mobile}>
               <img src={SearchIcon} className="" alt="hero img" />
               <input
                 type="text"
                 name=""
                 id="search-bar"
-                placeholder="  &nbsp; &nbsp; &nbsp; search again"
+                placeholder="  &nbsp; &nbsp; &nbsp; Search "
                 required
               />
             </div>
 
-            <p id={styles.hide_for_mobile}>
-              1-20 <span> of 100</span>
-            </p>
-
-            <div className={styles.calender_content}>
-              <img src={Calender} className="" alt="hero img" />
-              <select id="calender-value" name="calender">
-                <option value="monthly">monthly</option>
-              </select>
+            <div className={styles.Upload_profile_container}>
+              <img src={ProfileUpload} className="" alt="hero img" />
+              <NavLink to="/upload">
+                <button className={styles.Upload_button}>
+                  <img src={UploadIcon} className="" alt="hero img" /> &nbsp;
+                  &nbsp; upload
+                </button>
+              </NavLink>
             </div>
           </div>
 
-          <div className={styles.Profile_container}>
-            {leaderboard.map((profile) => (
-              <LeaderBoardDisplay key={profile.agent_id} person={profile} />
-            ))}
+          <div className={styles.right_section}>
+            <img src={Agent} className={styles.Agent_img} alt="hero img" />
 
-            {/* <div className={styles.Profile1}>
+            <div className={styles.right_content2_container}>
+              <div className={styles.InputWithIcon}>
+                <img src={SearchIcon} className="" alt="hero img" />
+                <input
+                  type="text"
+                  name=""
+                  id="search-bar"
+                  placeholder="  &nbsp; &nbsp; &nbsp; Search Agent"
+                  required
+                />
+              </div>
+
+              <p id={styles.hide_for_mobile}>
+                1-20 <span> of 100</span>
+              </p>
+
+              <div className={styles.calender_content}>
+                <img src={Calender} className="" alt="hero img" />
+                <select id="calender-value" name="calender">
+                  <option value="monthly">monthly</option>
+                </select>
+              </div>
+            </div>
+
+            <div className={styles.Profile_container}>
+              {/* {leaderboard.map((profile) => (
+                <LeaderBoardDisplay key={profile.agent_id} person={profile} />
+              ))} */}
+
+              {/* <div className={styles.Profile1}>
               <div className={styles.Profile_img}>
                 <img src={Profile1} className="" alt="profile1" />
               </div>
@@ -283,239 +295,266 @@ function Leaderboard() {
                 </div>
               </div>
             </div>*/}
-          </div>
+            </div>
 
-          <div className={styles.Profile_Tabular}>
-            <div className={styles.Profile_Tabular_Content}>
-              <div className={styles.Profile_Tabular_Content1}>
-                <img src={ProfileName} className="" alt="profile1" />
-                <p> Ruth Sandra</p>
+            <div className={styles.Profile_Tabular_Container}>
+              {leaderboard.map((profile) => (
+                <LeaderBoardDisplay key={profile.agent_id} person={profile} />
+              ))}
+
+              {/* <div className={styles.Profile_Tabular}>
+                 <div className={styles.Profile_Tabular_Content}>
+                  <div className={styles.Profile_Tabular_Content1}>
+                    <img src={ProfileName} className="" alt="profile1" />
+                    <p> Ruth Sandra</p>
+                  </div>
+
+                  <div className={styles.Profile_Tabular_Content2}>
+                    <p className={styles.Profile_tabular_number}> 7 </p>
+                    <p className={styles.Profile_tabular_score}> AVG Score</p>
+                  </div>
+                </div>
+              </div> */}
+
+              {/* <div className={styles.Profile_Tabular}>
+               <div className={styles.Profile_Tabular_Content}>
+                <div className={styles.Profile_Tabular_Content1}>
+                  <img src={ProfileName5} className="" alt="profile1" />
+                  <p> Kelvin O.</p>
+                </div>
+
+                <div className={styles.Profile_Tabular_Content2}>
+                  <p className={styles.Profile_tabular_number}> 6.7 </p>
+                  <p className={styles.Profile_tabular_score}> AVG Score</p>
+                </div>
+               </div>
               </div>
 
-              <div className={styles.Profile_Tabular_Content2}>
-                <p className={styles.Profile_tabular_number}> 7 </p>
-                <p className={styles.Profile_tabular_score}> AVG Score</p>
+             <div className={styles.Profile_Tabular}>
+               <div className={styles.Profile_Tabular_Content}>
+                <div className={styles.Profile_Tabular_Content1}>
+                  <img src={ProfileName6} className="" alt="profile1" />
+                  <p> T. Black</p>
+                </div>
+
+                <div className={styles.Profile_Tabular_Content2}>
+                  <p className={styles.Profile_tabular_number}> 6.3 </p>
+                  <p className={styles.Profile_tabular_score}> AVG Score</p>
+                </div>
+               </div>
               </div>
+
+             <div className={styles.Profile_Tabular}>
+              <div className={styles.Profile_Tabular_Content}>
+                <div className={styles.Profile_Tabular_Content1}>
+                  <img src={ProfileName7} className="" alt="profile1" />
+                  <p> Victor </p>
+                </div>
+
+                <div className={styles.Profile_Tabular_Content2}>
+                  <p className={styles.Profile_tabular_number}> 6 </p>
+                  <p className={styles.Profile_tabular_score}> AVG Score</p>
+                </div>
+              </div>
+             </div>
+
+             <div className={styles.Profile_Tabular}>
+              <div className={styles.Profile_Tabular_Content}>
+                <div className={styles.Profile_Tabular_Content1}>
+                  <img src={ProfileName8} className="" alt="profile1" />
+                  <p> Mike</p>
+                </div>
+
+                <div className={styles.Profile_Tabular_Content2}>
+                  <p className={styles.Profile_tabular_number}> 5.8 </p>
+                  <p className={styles.Profile_tabular_score}> AVG Score</p>
+                </div>
+              </div>
+             </div>
+
+             <div className={styles.Profile_Tabular}>
+              <div className={styles.Profile_Tabular_Content}>
+                <div className={styles.Profile_Tabular_Content1}>
+                  <img src={ProfileName9} className="" alt="profile1" />
+                  <p> Bello. C</p>
+                </div>
+
+                <div className={styles.Profile_Tabular_Content2}>
+                  <p className={styles.Profile_tabular_number}> 5.5 </p>
+                  <p className={styles.Profile_tabular_score}> AVG Score</p>
+                </div>
+              </div>
+             </div>
+
+             <div className={styles.Profile_Tabular}>
+              <div className={styles.Profile_Tabular_Content}>
+                <div className={styles.Profile_Tabular_Content1}>
+                  <img src={ProfileName10} className="" alt="profile1" />
+                  <p> Elizabeth</p>
+                </div>
+
+                <div className={styles.Profile_Tabular_Content2}>
+                  <p className={styles.Profile_tabular_number}> 5.4 </p>
+                  <p className={styles.Profile_tabular_score}> AVG Score</p>
+                </div>
+              </div>
+             </div>
+
+             <div className={styles.Profile_Tabular}>
+              <div className={styles.Profile_Tabular_Content}>
+                <div className={styles.Profile_Tabular_Content1}>
+                  <img src={ProfileName11} className="" alt="profile1" />
+                  <p> Lucas</p>
+                </div>
+
+                <div className={styles.Profile_Tabular_Content2}>
+                  <p className={styles.Profile_tabular_number}> 5.3 </p>
+                  <p className={styles.Profile_tabular_score}> AVG Score</p>
+                </div>
+              </div>
+             </div>
+
+             <div className={styles.Profile_Tabular}>
+              <div className={styles.Profile_Tabular_Content}>
+                <div className={styles.Profile_Tabular_Content1}>
+                  <img src={ProfileName12} className="" alt="profile1" />
+                  <p> Violet. W</p>
+                </div>
+
+                <div className={styles.Profile_Tabular_Content2}>
+                  <p className={styles.Profile_tabular_number}> 5.2 </p>
+                  <p className={styles.Profile_tabular_score}> AVG Score</p>
+                </div>
+              </div>
+             </div>
+
+             <div className={styles.Profile_Tabular}>
+              <div className={styles.Profile_Tabular_Content}>
+                <div className={styles.Profile_Tabular_Content1}>
+                  <img src={ProfileName13} className="" alt="profile1" />
+                  <p> Khloe. F</p>
+                </div>
+
+                <div className={styles.Profile_Tabular_Content2}>
+                  <p className={styles.Profile_tabular_number}> 5.0 </p>
+                  <p className={styles.Profile_tabular_score}> AVG Score</p>
+                </div>
+              </div>
+             </div>
+
+             <div className={styles.Profile_Tabular}>
+              <div className={styles.Profile_Tabular_Content}>
+                <div className={styles.Profile_Tabular_Content1}>
+                  <img src={ProfileName14} className="" alt="profile1" />
+                  <p> Donald E.</p>
+                </div>
+
+                <div className={styles.Profile_Tabular_Content2}>
+                  <p className={styles.Profile_tabular_number}> 4.9 </p>
+                  <p className={styles.Profile_tabular_score}> AVG Score</p>
+                </div>
+              </div>
+             </div>
+
+             <div className={styles.Profile_Tabular}>
+              <div className={styles.Profile_Tabular_Content}>
+                <div className={styles.Profile_Tabular_Content1}>
+                  <img src={ProfileName15} className="" alt="profile1" />
+                  <p> Gozie</p>
+                </div>
+
+                <div className={styles.Profile_Tabular_Content2}>
+                  <p className={styles.Profile_tabular_number}> 4.9 </p>
+                  <p className={styles.Profile_tabular_score}> AVG Score</p>
+                </div>
+              </div>
+             </div>
+
+             <div className={styles.Profile_Tabular}>
+              <div className={styles.Profile_Tabular_Content}>
+                <div className={styles.Profile_Tabular_Content1}>
+                  <img src={ProfileName16} className="" alt="profile1" />
+                  <p> Adaobi A.</p>
+                </div>
+
+                <div className={styles.Profile_Tabular_Content2}>
+                  <p className={styles.Profile_tabular_number}> 4.6 </p>
+                  <p className={styles.Profile_tabular_score}> AVG Score</p>
+                </div>
+              </div>
+             </div> */}
+            </div>
+
+            <div className={styles.Page_num_container}>
+              <p className={styles.page_btn_start_page}>Previous</p>
+              <p className={styles.page_btn_active}>1</p>
+              <p className={styles.page_btn}>2</p>
+              <p className={styles.page_btn}>3</p>
+              <p className={styles.page_btn}>4</p>
+              <p className={styles.page_btn}>5</p>
+              <p className={styles.page_btn_color}>Next</p>
             </div>
           </div>
-
-          <div className={styles.Profile_Tabular}>
-            <div className={styles.Profile_Tabular_Content}>
-              <div className={styles.Profile_Tabular_Content1}>
-                <img src={ProfileName5} className="" alt="profile1" />
-                <p> Kelvin O.</p>
-              </div>
-
-              <div className={styles.Profile_Tabular_Content2}>
-                <p className={styles.Profile_tabular_number}> 6.7 </p>
-                <p className={styles.Profile_tabular_score}> AVG Score</p>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.Profile_Tabular}>
-            <div className={styles.Profile_Tabular_Content}>
-              <div className={styles.Profile_Tabular_Content1}>
-                <img src={ProfileName6} className="" alt="profile1" />
-                <p> T. Black</p>
-              </div>
-
-              <div className={styles.Profile_Tabular_Content2}>
-                <p className={styles.Profile_tabular_number}> 6.3 </p>
-                <p className={styles.Profile_tabular_score}> AVG Score</p>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.Profile_Tabular}>
-            <div className={styles.Profile_Tabular_Content}>
-              <div className={styles.Profile_Tabular_Content1}>
-                <img src={ProfileName7} className="" alt="profile1" />
-                <p> Victor </p>
-              </div>
-
-              <div className={styles.Profile_Tabular_Content2}>
-                <p className={styles.Profile_tabular_number}> 6 </p>
-                <p className={styles.Profile_tabular_score}> AVG Score</p>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.Profile_Tabular}>
-            <div className={styles.Profile_Tabular_Content}>
-              <div className={styles.Profile_Tabular_Content1}>
-                <img src={ProfileName8} className="" alt="profile1" />
-                <p> Mike</p>
-              </div>
-
-              <div className={styles.Profile_Tabular_Content2}>
-                <p className={styles.Profile_tabular_number}> 5.8 </p>
-                <p className={styles.Profile_tabular_score}> AVG Score</p>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.Profile_Tabular}>
-            <div className={styles.Profile_Tabular_Content}>
-              <div className={styles.Profile_Tabular_Content1}>
-                <img src={ProfileName9} className="" alt="profile1" />
-                <p> Bello. C</p>
-              </div>
-
-              <div className={styles.Profile_Tabular_Content2}>
-                <p className={styles.Profile_tabular_number}> 5.5 </p>
-                <p className={styles.Profile_tabular_score}> AVG Score</p>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.Profile_Tabular}>
-            <div className={styles.Profile_Tabular_Content}>
-              <div className={styles.Profile_Tabular_Content1}>
-                <img src={ProfileName10} className="" alt="profile1" />
-                <p> Elizabeth</p>
-              </div>
-
-              <div className={styles.Profile_Tabular_Content2}>
-                <p className={styles.Profile_tabular_number}> 5.4 </p>
-                <p className={styles.Profile_tabular_score}> AVG Score</p>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.Profile_Tabular}>
-            <div className={styles.Profile_Tabular_Content}>
-              <div className={styles.Profile_Tabular_Content1}>
-                <img src={ProfileName11} className="" alt="profile1" />
-                <p> Lucas</p>
-              </div>
-
-              <div className={styles.Profile_Tabular_Content2}>
-                <p className={styles.Profile_tabular_number}> 5.3 </p>
-                <p className={styles.Profile_tabular_score}> AVG Score</p>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.Profile_Tabular}>
-            <div className={styles.Profile_Tabular_Content}>
-              <div className={styles.Profile_Tabular_Content1}>
-                <img src={ProfileName12} className="" alt="profile1" />
-                <p> Violet. W</p>
-              </div>
-
-              <div className={styles.Profile_Tabular_Content2}>
-                <p className={styles.Profile_tabular_number}> 5.2 </p>
-                <p className={styles.Profile_tabular_score}> AVG Score</p>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.Profile_Tabular}>
-            <div className={styles.Profile_Tabular_Content}>
-              <div className={styles.Profile_Tabular_Content1}>
-                <img src={ProfileName13} className="" alt="profile1" />
-                <p> Khloe. F</p>
-              </div>
-
-              <div className={styles.Profile_Tabular_Content2}>
-                <p className={styles.Profile_tabular_number}> 5.0 </p>
-                <p className={styles.Profile_tabular_score}> AVG Score</p>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.Profile_Tabular}>
-            <div className={styles.Profile_Tabular_Content}>
-              <div className={styles.Profile_Tabular_Content1}>
-                <img src={ProfileName14} className="" alt="profile1" />
-                <p> Donald E.</p>
-              </div>
-
-              <div className={styles.Profile_Tabular_Content2}>
-                <p className={styles.Profile_tabular_number}> 4.9 </p>
-                <p className={styles.Profile_tabular_score}> AVG Score</p>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.Profile_Tabular}>
-            <div className={styles.Profile_Tabular_Content}>
-              <div className={styles.Profile_Tabular_Content1}>
-                <img src={ProfileName15} className="" alt="profile1" />
-                <p> Gozie</p>
-              </div>
-
-              <div className={styles.Profile_Tabular_Content2}>
-                <p className={styles.Profile_tabular_number}> 4.9 </p>
-                <p className={styles.Profile_tabular_score}> AVG Score</p>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.Profile_Tabular}>
-            <div className={styles.Profile_Tabular_Content}>
-              <div className={styles.Profile_Tabular_Content1}>
-                <img src={ProfileName16} className="" alt="profile1" />
-                <p> Adaobi A.</p>
-              </div>
-
-              <div className={styles.Profile_Tabular_Content2}>
-                <p className={styles.Profile_tabular_number}> 4.6 </p>
-                <p className={styles.Profile_tabular_score}> AVG Score</p>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.Page_num_container}>
-            <p className={styles.page_btn_start_page}>Previous</p>
-            <p className={styles.page_btn_active}>1</p>
-            <p className={styles.page_btn}>2</p>
-            <p className={styles.page_btn}>3</p>
-            <p className={styles.page_btn}>4</p>
-            <p className={styles.page_btn}>5</p>
-            <p className={styles.page_btn_color}>Next</p>
-          </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </SideBar>
   );
 }
 
+// // function LeaderBoardDisplay({ person }) {
+// //   return (
+// //     <div className={styles.Profile1}>
+// //       <div className={styles.Profile_img}>
+// //         <img src={Profile1} className="" alt="profile1" />
+// //       </div>
+// //       <div className={styles.Profile_content}>
+// //         <h2>Awesome Lily</h2>
+// //         <h1>{person.Avergae_score}</h1>
+// //         <p>Calls Received</p>
+// //         <div className={styles.Like_container}>
+// //           <div className={styles.Like_content1}>
+// //             <div className={styles.Like_icon_content}>
+// //               <img src={GreenLike} className="" alt="profile1" />
+// //               <p>{person.Positive_score}</p>
+// //             </div>
+// //             <p className={styles.Like_text}> POS.CALLS</p>
+// //           </div>
+
+// //           <div className={styles.Like_content1}>
+// //             <div className={styles.Like_icon_content}>
+// //               <img src={BlackLike} className="" alt="profile1" />
+// //               <p>{person.Neutral_score}</p>
+// //             </div>
+// //             <p className={styles.Like_text}> NEU.CALLS</p>
+// //           </div>
+
+// //           <div className={styles.Like_content1}>
+// //             <div className={styles.Like_icon_content}>
+// //               <img src={GreenLike} className="" alt="profile1" />
+// //               <p>{person.Negative_score}</p>
+// //             </div>
+// //             <p className={styles.Like_text}>NEG.CALLS</p>
+// //           </div>
+// //         </div>
+// //       </div>
+// //     </div>
+//   );
+// }
+
 function LeaderBoardDisplay({ person }) {
   return (
-    <div className={styles.Profile1}>
-      <div className={styles.Profile_img}>
-        <img src={Profile1} className="" alt="profile1" />
-      </div>
-      <div className={styles.Profile_content}>
-        <h2>Awesome Lily</h2>
-        <h1>{person.Avergae_score}</h1>
-        <p>Calls Received</p>
-        <div className={styles.Like_container}>
-          <div className={styles.Like_content1}>
-            <div className={styles.Like_icon_content}>
-              <img src={GreenLike} className="" alt="profile1" />
-              <p>{person.Positive_score}</p>
-            </div>
-            <p className={styles.Like_text}> POS.CALLS</p>
-          </div>
+    <div className={styles.Profile_Tabular}>
+      <div className={styles.Profile_Tabular_Content}>
+        <div className={styles.Profile_Tabular_Content1}>
+          <img src={ProfileName} className="" alt="profile1" />
+          <p> Ruth Sandra</p>
+        </div>
 
-          <div className={styles.Like_content1}>
-            <div className={styles.Like_icon_content}>
-              <img src={BlackLike} className="" alt="profile1" />
-              <p>{person.Neutral_score}</p>
-            </div>
-            <p className={styles.Like_text}> NEU.CALLS</p>
-          </div>
-
-          <div className={styles.Like_content1}>
-            <div className={styles.Like_icon_content}>
-              <img src={GreenLike} className="" alt="profile1" />
-              <p>{person.Negative_score}</p>
-            </div>
-            <p className={styles.Like_text}>NEG.CALLS</p>
-          </div>
+        <div className={styles.Profile_Tabular_Content2}>
+          <p className={styles.Profile_tabular_number}>
+            {person.Avergae_score}
+          </p>
+          <p className={styles.Profile_tabular_score}> AVG Score</p>
         </div>
       </div>
     </div>

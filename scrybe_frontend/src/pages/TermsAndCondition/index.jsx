@@ -8,7 +8,7 @@ import React, { useState } from "react";
 import { termsData } from "./data";
 import styles from "./style.module.scss";
 
-function Checkbox({ label, checked, ...props }) {
+export function Checkbox({ label, checked, ...props }) {
   const defaultChecked = checked || false;
   const [isChecked, setIsChecked] = useState(defaultChecked);
   return (

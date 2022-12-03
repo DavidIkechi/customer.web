@@ -8,6 +8,8 @@ import axios from "axios";
 function TranscriptionMain() {
   const [formattedData, setFormattedData] = useState([]);
 
+  const [timeUpdateTracker, setTimeUpdateTracker] = useState(false);
+
   const [audioSrc, setAudioSrc] = useState("");
   const audioElem = useRef();
   const [isPlaying, setIsPlaying] = useState(false);
@@ -17,10 +19,26 @@ function TranscriptionMain() {
     setAudioDuration(Math.round(audioElem.current?.duration));
   };
   const onTimeUpdate = () => {
+    updateTranscribedText();
     setCurrentTime(Math.floor(audioElem.current.currentTime));
+  };
+  const onPause = () => {
+    setTimeUpdateTracker(false);
   };
   const updateCurrentTime = () => {
     if (isPlaying) setCurrentTime(audioElem.current?.currentTime);
+  };
+  const updateTranscribedText = () => {
+    setTimeUpdateTracker(true);
+    if (timeUpdateTracker) console.log(`tracker is true`);
+    formattedData[Math.floor(currentTime / 5)].isActive = true;
+    for (
+      let i = Math.floor(currentTime / 5) + 1;
+      i < formattedData.length;
+      i++
+    ) {
+      formattedData[i].isActive = false;
+    }
   };
   useEffect(() => {
     if (isPlaying) {
@@ -36,9 +54,6 @@ function TranscriptionMain() {
     }
     fetchAudio();
   }, []);
-  const PlayPause = () => {
-    setIsPlaying(!isPlaying);
-  };
 
   //fetch data from custom API for now.
   const fetchData = () => {
@@ -51,33 +66,33 @@ function TranscriptionMain() {
         console.log(err);
       });
   };
-
   useEffect(() => {
     fetchData();
   }, []);
-
   const generateArray = (str) => {
     const cleanedData = [];
 
     const wordArray = str.split(" ");
-    let time = -30;
+    let time = -5;
     let objectID = -1;
     let emptyString = "";
     let counter = 0;
 
     wordArray.map((word) => {
-      if (counter < 50) {
+      if (counter < 20) {
         emptyString = emptyString + " " + word;
         counter++;
       }
-      if (counter == 50) {
+      if (counter == 20) {
         objectID++;
-        time = time + 30;
+        time = time + 5;
         const formatedTime = timeFormatter(time);
         const object = {
           id: objectID,
+          time: time,
           timeCount: formatedTime,
           stringText: emptyString,
+          isActive: false,
         };
         cleanedData.push(object);
         emptyString = "";
@@ -87,7 +102,6 @@ function TranscriptionMain() {
 
     return cleanedData;
   };
-
   // format time function
   const timeFormatter = (num) => {
     if (num === 0 || isNaN(num)) return `00:00`;
@@ -102,10 +116,16 @@ function TranscriptionMain() {
     if (formatedTime.length === 3 && minutes > 0)
       return `0${minutes}:${seconds}0`;
   };
+
   return (
     <div className={styles.TranscriptionMain}>
-      <Dummy formattedData={formattedData} />
-      <button onClick={PlayPause}>Click me</button>
+      <Dummy
+        formattedData={formattedData}
+        isPlaying={isPlaying}
+        audioElem={audioElem}
+        currentTime={currentTime}
+        timeUpdateTracker={timeUpdateTracker}
+      />
       <TranscriptionRightBar
         audioElem={audioElem}
         isPlaying={isPlaying}
@@ -118,6 +138,7 @@ function TranscriptionMain() {
         ref={audioElem}
         onLoadedMetadata={onLoadedMetadata}
         onTimeUpdate={onTimeUpdate}
+        onPause={onPause}
       />
     </div>
   );
