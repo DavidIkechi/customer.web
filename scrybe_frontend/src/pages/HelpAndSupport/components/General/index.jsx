@@ -5,14 +5,14 @@ import General1 from "../General1";
 import General2 from "../General2/General2";
 import { useState } from "react";
 import styles from "./General.module.scss";
-import NavBar from "../../../../components/navBar";
+import NavBarFree from "../../../../components/navBar_free";
 import Footer from "../../../../components/footer";
 
 function General() {
   const [display, setDisplay] = useState(true);
   return (
     <>
-      <NavBar />
+      <NavBarFree />
       <div className={styles.body}>
         <Header />
         <div className={styles.general}>
