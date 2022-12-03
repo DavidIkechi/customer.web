@@ -30,30 +30,36 @@ export function UploadModal() {
     myData.append("file", file);
     console.log("file", file);
     setFile({ file, progress: 0 });
-    const destinationUrl = "https://api.heed.hng.tech/upload_audio";
-    axios
-      .request({
-        method: "post",
-        url: destinationUrl,
-        data: myData,
-        onUploadProgress: (p) => {
-          setFile({ file, progress: (p.loaded / p.total) * 100 });
-          console.log(
-            "progress",
-            (p.loaded / p.total) * 100,
-            p.loaded,
-            p.total
-          );
-        },
-      })
-      .then((data) => {
-        console.log("http response", data);
-        setIsUploadComplete(true);
-        // show completed phase
-        //this.setState({
-        //fileprogress: 1.0,
-        //})
-      });
+
+    // const destinationUrl = "https://api.heed.hng.tech/upload_audio";
+    // axios
+    //   .request({
+    //     method: "post",
+    //     url: destinationUrl,
+    //     data: myData,
+    //     onUploadProgress: (p) => {
+    //       setFile({ file, progress: (p.loaded / p.total) * 100 });
+    //       console.log(
+    //         "progress",
+    //         (p.loaded / p.total) * 100,
+    //         p.loaded,
+    //         p.total
+    //       );
+    //     },
+    //   })
+    //   .then((data) => {
+    //     console.log("http response", data);
+    //     setIsUploadComplete(true);
+    //     // show completed phase
+    //     //this.setState({
+    //     //fileprogress: 1.0,
+    //     //})
+    //   });
+
+    setFile({ file, progress: 100 });
+    setTimeout(() => {
+      setIsUploadComplete(true);
+    }, 1000);
   };
 
   return (

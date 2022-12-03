@@ -296,24 +296,22 @@
 }
 
 .callback {
-    width: 95%;
     padding: .8em;
     border-radius: 8px;
     border: 1px solid #C5C5C5;
     outline: none;
-    margin-bottom: 2em;
 }
 
 .callback-wrapper {
   display: flex;
   position: relative;
-
+  margin-bottom: 2em;
+  align-items: center;
 }
 
 .callback-wrapper img {
   position: absolute;
   right: 1rem;
-  top: 0.6rem
 }
 
 
