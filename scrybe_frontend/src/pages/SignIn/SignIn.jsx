@@ -60,13 +60,15 @@ function Signin() {
   useEffect(() => {
     const isValid = validate();
     setIsValid(isValid);
-  }, [validate]);
+  }, [validate, username, password]);
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+    console.group("Submit");
 
     let formData = new FormData();
 
     formData.append("username", username);
+    console.log(username);
     formData.append("password", password);
 
     const config = {
