@@ -110,7 +110,7 @@ function Signup() {
         console.log(response);
         setNavigate(true);
         Cookies.set("heedAccessToken", response?.data?.access_token);
-        localStorage.setItem("auth" , email)
+        localStorage.setItem("auth", email);
       })
       .catch((error) => {});
   };
