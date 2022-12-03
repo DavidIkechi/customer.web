@@ -282,7 +282,7 @@ function App() {
         <Route path="pricing" element={<Pricing />} />
         {/* Error page */}
         <Route path="*" element={<Error />} />
-        <Route path="/von" element={<Von />} />
+        {/* <Route path="/von" element={<Von />} /> */}
       </Routes>
     </>
   );
