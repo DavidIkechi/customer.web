@@ -8,9 +8,8 @@ import empty_state from "../assets/empty_state.png";
 
 const RecentRecording = () => {
   const recentRecording = useMockAuthAndGetRecording();
-  useEffect(() => {
-    // console.log(recentRecording);
-  }, [recentRecording]);
+  console.log(recentRecording);
+  useEffect(() => {}, [recentRecording]);
   return (
     <>
       {recentRecording?.length < 0 ? (

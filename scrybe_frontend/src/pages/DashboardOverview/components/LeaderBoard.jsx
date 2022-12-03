@@ -4,6 +4,12 @@ import telephone from "../assets/telephone.svg";
 import leaderboardIcon from "../assets/leaderboard.svg";
 import { useState, useEffect } from "react";
 
+const bgMap = {
+  0: "#E6F0FF",
+  1: "#EDF9F0",
+  2: "#FFFDEB",
+};
+
 const LeaderBoard = ({ LeaderboardData }) => {
   const [selected, setSelected] = useState([]);
   useEffect(() => {
@@ -49,8 +55,8 @@ const LeaderBoard = ({ LeaderboardData }) => {
               </tr>
             </thead>
             <tbody>
-              {selected.slice(0, 3).map((value) => (
-                <tr>
+              {selected.slice(0, 3).map((value, index) => (
+                <tr style={{ background: bgMap[index] }}>
                   <td>{value.name_id}</td>
                   <td>{value.recordings}</td>
                   <td>{value.score}</td>
