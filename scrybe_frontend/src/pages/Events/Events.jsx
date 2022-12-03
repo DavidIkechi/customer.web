@@ -19,6 +19,10 @@ import NavBar from "../../components/navBar/index";
 import Footer from "../../components/footer/index";
 
 const Events = () => {
+  React.useEffect(() => {
+    // 👇️ scroll to top on page load
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
   return (
     <div className="event-section">
       <NavBar />

@@ -22,8 +22,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from db import Base, engine, SessionLocal
 from sqlalchemy.orm import Session
 import crud, schema
-
-from emails import send_email, verify_token, send_password_reset_email
+from emails import send_email, verify_token, send_password_reset_email, password_verif_token
 from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
@@ -169,7 +168,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     job_status = transcript['status']
     transcript_id = transcript['id']
     
-    db_audio = models.Audio(audio_path=audio_url, job_id = transcript_id, user_id=user_id, size=size, duration=duration, 
+    db_audio = models.Audio(audio_path=audio_url, filename= str(file.filename), job_id = transcript_id, user_id=user_id, size=size, duration=duration, 
                             agent_id=db_agent.id)
 
     db.add(db_audio)
@@ -337,10 +336,27 @@ def get_sentiment_result(id: int, db: Session = Depends(get_db)):
             detail="The analysis doesn't exist",
         )
     return analysis
-@app.get("/audios", summary = "get all audio uploads", response_model=list[schema.Audio], tags=['audios'])
-def read_audios(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    audios = crud.get_audios(db, skip=skip, limit=limit)
+
+
+@app.get("/list-audios-by-user", summary = "list all user audios with their status")
+def list_audios_by_user(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    result = crud.get_audios_by_user(db, user_id=user.id)
+    audios = []
+    for i in result:
+        audio = {
+            "id": i.id,
+            "filename": i.filename,
+            "job_id": i.job_id,
+            "duration": i.duration,
+            "size": i.size,
+            "timestamp": i.timestamp,
+            "job_details": i.job
+
+        }
+        audios.append(audio)
     return audios
+    
+
 
 @app.get('/audios/{audio_id}/sentiment')
 def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
@@ -405,6 +421,59 @@ def get_total_analysis(db: Session = Depends(get_db), user: models.User = Depend
 
     return result
 
+#total-recordings
+@app.get("/total-recordings-user", summary="get total user recordings")
+def total_recordings_user(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    total_recordings = db.query(models.Audio).filter(models.Audio.user_id == user.id)
+    week = datetime.now().isocalendar().week
+    month = datetime.now().month
+    results = {
+        "week": [
+            {"id": 1, "time": "M", "totalRecordings": 0},
+            {"id": 2, "time": "T", "totalRecordings": 0},
+            {"id": 3, "time": "W", "totalRecordings": 0},
+            {"id": 4, "time": "T", "totalRecordings": 0},
+            {"id": 5, "time": "F", "totalRecordings": 0},
+            {"id": 6, "time": "S", "totalRecordings": 0},
+            {"id": 7, "time": "S", "totalRecordings": 0}
+        ],
+        "month": [
+            {"id": 1, "time": "wk1", "totalRecordings": 0},
+            {"id": 2, "time": "wk2", "totalRecordings": 0},
+            {"id": 3, "time": "wk3", "totalRecordings": 0},
+            {"id": 4, "time": "wk4", "totalRecordings": 0}
+        ]
+    }
+    for i in total_recordings:
+        if i.timestamp.isocalendar().week == week:
+            if i.timestamp.weekday() == 0:
+                results["week"][0]["totalRecordings"] += 1
+            elif i.timestamp.weekday() == 1:
+                results["week"][1]["totalRecordings"] += 1
+            elif i.timestamp.weekday() == 2:
+                results["week"][2]["totalRecordings"] += 1
+            elif i.timestamp.weekday() == 3:
+                results["week"][3]["totalRecordings"] += 1
+            elif i.timestamp.weekday() == 4:
+                results["week"][4]["totalRecordings"] += 1
+            elif i.timestamp.weekday() == 5:
+                results["week"][5]["totalRecordings"] += 1
+            elif i.timestamp.weekday() == 6:
+                results["week"][6]["totalRecordings"] += 1
+
+        if i.timestamp.month == month:
+            if i.timestamp.day <= 7:
+                results["month"][0]["totalRecordings"] += 1
+            elif 8 <= i.timestamp.day <= 14:
+                results["month"][1]["totalRecordings"] += 1
+            elif 15 <= i.timestamp.day <= 21:
+                results["month"][2]["totalRecordings"] += 1
+            elif 22 <= i.timestamp.day <= 31:
+                results["month"][3]["totalRecordings"] += 1
+
+    return results
+
+
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     results = db.execute("""SELECT agent_id,
@@ -421,6 +490,37 @@ def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = De
     others = leaderboard[3:]
     return {"Top3 Agents": top3_agents, "Other Agents": others}
 
+#agent total_analysis
+@app.get("/total-agent-analysis", summary="get total agent analysis")
+def get_total_agent_analysis(agent_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    total_analysis = db.query(models.Audio).filter(models.Audio.user_id == user.id, models.Audio.agent_id == agent_id)
+    week = datetime.now().isocalendar().week
+    list_week=[]
+    week_item={}
+    result = {
+        "week": [
+            {"id": 1, "time": "Day 1", "positive": 0, "negative": 0, "neutral": 0},
+            {"id": 2, "time": "Day 2", "positive": 0, "negative": 0, "neutral": 0},
+            {"id": 3, "time": "Day 3", "positive": 0, "negative": 0, "neutral": 0},
+            {"id": 4, "time": "Day 4", "positive": 0, "negative": 0, "neutral": 0},
+            {"id": 5, "time": "Day 5", "positive": 0, "negative": 0, "neutral": 0},
+            {"id": 6, "time": "Day 6", "positive": 0, "negative": 0, "neutral": 0},
+            {"id": 7, "time": "Day 7", "positive": 0, "negative": 0, "neutral": 0}
+        ],
+    }
+    for i in total_analysis:
+        if i.timestamp.isocalendar().week == week:
+            for y in range(7):
+                if i.timestamp.weekday() == y:
+                    if i.overall_sentiment == "Positive":
+                        result["week"][y]["positive"] += 1
+                    elif i.overall_sentiment == "Negative":
+                        result["week"][y]["negative"] += 1
+                    elif i.overall_sentiment == "Neutral":
+                        result["week"][y]["neutral"] += 1
+
+    return result
+
 
 @app.get("/account", summary = "get user profile details", tags=['users'])
 async def my_profile (db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
@@ -428,16 +528,34 @@ async def my_profile (db: Session = Depends(get_db), user: models.User = Depends
     return crud.get_user_profile(db, user_id)
 
 
-@app.post("/forgot_password", tags=['users'])
-async def forgot_password(email: str, db: Session = Depends(get_db)):
-    user_exist = crud.get_user_by_email(db, email)
-    if not user_exist:
-        raise HTTPException(status_code=404, detail="User not Found")
-    #if not user_exist.is_verified:
-        #raise HTTPException(status_code=404, detail="You need to be verified to reset your password!!!")
-    token = await send_password_reset_email([user_exist.email], user_exist)
+
+@app.post('/forgot-password', summary = "get token for password reset", tags=['users'])
+async def forgot_password(email: schema.ForgetPassword, db: Session = Depends(get_db)):
+    user: models.User = crud.get_user_by_email(db, email.email)
+
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    
+    token = await send_password_reset_email([email.email], user)
     return token
     
+
+@app.patch('/reset-password', summary = "reset password", tags=['users'])
+async def reset_password(token: str, new_password: schema.UpdatePassword, db: Session = Depends(get_db)):
+    email = password_verif_token(token)
+    user: models.User = crud.get_user_by_email(db, email)
+        
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    reset_done = crud.reset_password(db, new_password.password, user)
+
+    if not reset_done:
+        raise HTTPException(status_code=500)
+    
+    return reset_done
+
 
 if __name__ == "__main__":
     main()

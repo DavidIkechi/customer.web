@@ -40,6 +40,8 @@ import TryResults from "./pages/TryForFree/tryResults";
 import TermsOfService from "./pages/TermsOfService";
 import Blogs from "./pages/BlogsPage";
 import BlogPostPage from "./pages/BlogPostPage";
+import General from "./pages/HelpAndSupport/components/General";
+import PromotedArticles from "./pages/HelpAndSupport/components/PromotedArticles";
 import SettingsIndex from "./pages/Settings/SettingsIndex";
 import AccountSettings from "./pages/Settings/SettingsPageSubPages/AccountSettings/AccountSettings";
 import NotificationSettings from "./pages/Settings/SettingsPageSubPages/Notifications/NotificationSettings";
@@ -49,9 +51,7 @@ import React, { useState, useEffect } from "react";
 import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
 import { UploadModal } from "./pages/UploadRecordingsModal";
 import Error from "./pages/Error/Error";
-import EmailVerify from "./pages/EmailVerification/EmailVerify";
-
-import WithAuth from "./HOCs";
+import Von from "./pages/Von/Von";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -67,7 +67,8 @@ function App() {
     <>
       <Routes>
         {/* access without sign in */}
-        <Route path="/verification" element={<EmailVerify />} />
+        {/* <Route path="/verification" element={<EmailVerify />} /> */}
+        {/* <Route path="/logout" element={<Logout />} /> */}
         <Route path="/" element={<HomePage />} />
         <Route path="/try" element={<TryForFree />} />
         <Route path="/careers" element={<Careers />} />
@@ -85,6 +86,10 @@ function App() {
         <Route path="/verify-signup" element={<SignUpVerify />} />
         <Route path="/set-new-password" element={<SetNewPassword />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
+        {/* <Route
+          path="/landing-page-sales-team"
+          element={<NewLandingPageSalesTeam />}
+        /> */}
         <Route
           path="/pw-reset-successful"
           element={<PasswordResetSuccessful />}
@@ -114,9 +119,9 @@ function App() {
         <Route
           path="/account"
           element={
-            <WithAuth>
-              <Account />
-            </WithAuth>
+            // <WithAuth>
+            <Account />
+            // </WithAuth>
           }
         />
         <Route path="/leaderboard" element={<LeaderboardPage />} />
@@ -155,7 +160,20 @@ function App() {
           element={<DummyPage someText="report and performance" />}
         />
         <Route path="/upload" element={<DummyPage someText="upload pages" />} />
-        {/* ROutes without working paths */}
+        <Route
+          path="/help"
+          element={<DummyPage someText="help and supprt" />}
+        />
+        <Route path="/demos" element={<DummyPage someText="demo pages" />} />
+        <Route path="/reviews" element={<Reviews />} />
+        <Route path="/blog" element={<Blogs />} />
+        <Route path="/blog/:id" element={<BlogPostPage />} />
+
+        {/* Press  */}
+        <Route path="press" element={<Press />} />
+        <Route path="/partners" element={<PartnersPage />} />
+        <Route path="press-article" element={<PressArticle />} />
+        <Route path="pricing" element={<Pricing />} />
 
         {/* access without sign in */}
 
@@ -183,7 +201,8 @@ function App() {
           />
           {/* ROutes without working paths */}
         </Route>
-
+        <Route path="/help-support-general" element={<General />} />
+        <Route path="/promoted-articles" element={<PromotedArticles />}></Route>
         {/* cant access without signin */}
 
         {/* <Route path="/help-support-general" element={<General />}>
@@ -207,6 +226,7 @@ function App() {
 
         {/* Error page */}
         <Route path="*" element={<Error />} />
+        <Route path="/von" element={<Von />} />
       </Routes>
     </>
   );

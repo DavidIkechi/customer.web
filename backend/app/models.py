@@ -57,18 +57,19 @@ class Agent(Base):
 
 class Audio(Base):
     __tablename__ = "audios"
-
+    job_id = Column(String(255), index=True)
     id = Column(Integer, primary_key=True, index=True)
     audio_path = Column(TEXT)
+    filename = Column(TEXT,  nullable = True)
     job_id = Column(String(255), index=True)
     timestamp = Column(DateTime, index=True, default=datetime.now())
     size = Column(Integer, index=True)
     duration = Column(Integer, index=True)
-    transcript = Column(TEXT)
-    positivity_score = Column(Float, index=True)
-    negativity_score = Column(Float, index=True)
-    neutrality_score = Column(Float, index=True)
-    overall_sentiment = Column(Enum("Positive", "Negative", "Neutral"), index=True)
+    transcript = Column(TEXT, nullable = True)
+    positivity_score = Column(Float, index=True, nullable = True)
+    negativity_score = Column(Float, index=True, nullable = True)
+    neutrality_score = Column(Float, index=True, nullable = True)
+    overall_sentiment = Column(Enum("Positive", "Negative", "Neutral"), index=True, nullable = True)
     most_positive_sentences = Column(JSON, nullable = True)
     most_negative_sentences = Column(JSON, nullable = True)
     agent_id = Column(Integer, ForeignKey("agents.id"))
