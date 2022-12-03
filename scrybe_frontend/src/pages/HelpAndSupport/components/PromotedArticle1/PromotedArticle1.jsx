@@ -48,7 +48,7 @@ function PromotedArticle1() {
               businesses out there but if you are looking for an all in one tool
               that does sentimental analysis to give you a positive or negative
               rating on how customer support performed on calls with customers
-              then Scrybe is the all in one package for you.
+              then Heed is the all in one package for you.
             </p>
           </div>
         </div>
