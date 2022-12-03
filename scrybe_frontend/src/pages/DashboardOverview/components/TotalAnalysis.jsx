@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
+// import { useMockAuthAndTotalAnalysis } from "../hooks";
 import { totalAnalysisData } from "../Data";
 import styles from "../DashboardOverview.module.scss";
 import analysis from "../assets/analytics.svg";
@@ -14,22 +15,24 @@ import {
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement);
 
 const TotalAnalysis = () => {
+  // console.log("mock", useMockAuthAndTotalAnalysis());
+  // const totalAnalysisData = useMockAuthAndTotalAnalysis();
+  // console.log("data", totalAnalysisData);
+  // useEffect(() => {
+  //   console.log(totalAnalysisData);
+  // }, [totalAnalysisData]);
+
   const [selectedTotalAnalysis, setSelectedTotalAnalysis] = useState([]);
+  console.log(selectedTotalAnalysis);
   const [chartData, setChartData] = useState({
     datasets: [],
   });
   const [chartOptions, setChartOptions] = useState({});
 
-  // const [doughnutChart, setDoughnutChart] = useState({
-  //   datasets: [],
-  // });
   useEffect(() => {
     setChartData({
       labels: "",
       datasets: [
-        //   ${data.positive}
-        //   ${data.neutral}
-        //  ${data.negative}
         {
           label: selectedTotalAnalysis.map((data) => data.positive),
           data: [20, 12, 3],
@@ -73,23 +76,23 @@ const TotalAnalysis = () => {
         <div style={{ width: 200 }}>
           <Doughnut options={chartOptions} data={chartData} />
           <div className={styles.chart_inner}>
-            <h1>{selectedTotalAnalysis.map((data) => data.positive)}%</h1>
+            <h1>{selectedTotalAnalysis?.map((data) => data.positive)}%</h1>
             <span>+ve</span>
           </div>
         </div>
         <div className={styles.scale}>
           <h3>
             <span className={styles.positive}>1</span> Positive{" "}
-            {selectedTotalAnalysis.map((data) => data.positive)}%
+            {selectedTotalAnalysis?.map((data) => data.positive)}%
           </h3>
           <h3>
             {" "}
             <span className={styles.neutral}>1</span>Neutral{" "}
-            {selectedTotalAnalysis.map((data) => data.neutral)}
+            {selectedTotalAnalysis?.map((data) => data.neutral)}
           </h3>
           <h3>
             <span className={styles.negative}>1</span> Negative{" "}
-            {selectedTotalAnalysis.map((data) => data.negative)}
+            {selectedTotalAnalysis?.map((data) => data.negative)}
           </h3>
         </div>
       </div>

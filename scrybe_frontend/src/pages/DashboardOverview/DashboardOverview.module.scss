@@ -184,7 +184,7 @@
       width: 100%;
       thead {
         background-color: #fff;
-        border-bottom: 0.716049px solid #b0cad9;
+        // border-bottom: 0.716049px solid #b0cad9;
         th {
           font-weight: normal;
           color: #6a6a6a;
@@ -192,8 +192,11 @@
       }
       tbody {
         color: #6a6a6a;
+
         tr {
           text-align: center;
+          border-spacing: 2rem;
+          border-bottom: solid 1.2rem white;
         }
       }
     }
@@ -283,7 +286,7 @@
   }
   table {
     tr th:first-child {
-      background: #fff;
+      background: inherit;
     }
   }
 }
