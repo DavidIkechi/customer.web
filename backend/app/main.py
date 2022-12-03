@@ -277,18 +277,18 @@ async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...
         except Exception:   
             return {"error": "There was an error uploading the file"}
         # transcript = transcript
-        transcript = transcribe_file(new_url)
-        # get some essential parameters
-        transcript_id = transcript['id']
-        transcript_status = transcript['status']
+    transcript = transcribe_file(new_url)
+    # get some essential parameters
+    transcript_id = transcript['id']
+    transcript_status = transcript['status']
 
-        callback = models.FreeTrial(transcript_id = transcript_id, transcript_status=transcript_status)
+    callback = models.FreeTrial(transcript_id = transcript_id, transcript_status=transcript_status)
 
-        db.add(callback)
-        db.commit()
-        db.refresh(callback)
-        # delete the file
-        os.remove(file.filename)
+    db.add(callback)
+    db.commit()
+    db.refresh(callback)
+    # delete the file
+    os.remove(file.filename)
 
     return {"transcript_id": transcript_id, "status": transcript_status}
 
