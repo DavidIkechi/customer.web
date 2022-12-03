@@ -118,9 +118,9 @@ function App() {
         <Route
           path="/account"
           element={
-            // <WithAuth>
+            <WithAuth>
             <Account />
-            // </WithAuth>
+            </WithAuth>
           }
         />
         <Route path="/leaderboard" element={<LeaderboardPage />} />
