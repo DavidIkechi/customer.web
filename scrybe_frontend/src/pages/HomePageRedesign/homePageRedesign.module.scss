@@ -376,7 +376,7 @@ button {
     }
 }
 
-@media (min-width: 800px), (min-width: 1300px) {
+@media (min-width: 800px) {
 
     //Styling of the first section
 
@@ -559,4 +559,10 @@ button {
             padding: 1.2em 4em;
         }
     }
+}
+
+@media (min-width: 850px), (min-width: 1300px) {
+    .first__section {
+        height: 180vh;
+    }    
 }
