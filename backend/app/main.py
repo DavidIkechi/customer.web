@@ -432,6 +432,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
     month = datetime.now().month
     results = {
         "week": [
+            {"total_recording": 0},
             {"id": 1, "time": "M", "totalRecordings": 0},
             {"id": 2, "time": "T", "totalRecordings": 0},
             {"id": 3, "time": "W", "totalRecordings": 0},
@@ -441,6 +442,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
             {"id": 7, "time": "S", "totalRecordings": 0}
         ],
         "month": [
+            {"total_recording": 0},
             {"id": 1, "time": "wk1", "totalRecordings": 0},
             {"id": 2, "time": "wk2", "totalRecordings": 0},
             {"id": 3, "time": "wk3", "totalRecordings": 0},
@@ -449,30 +451,32 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
     }
     for i in total_recordings:
         if i.timestamp.isocalendar().week == week:
+            results["week"][0]["total_recording"] += 1
             if i.timestamp.weekday() == 0:
-                results["week"][0]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 1:
                 results["week"][1]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 2:
+            elif i.timestamp.weekday() == 1:
                 results["week"][2]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 3:
+            elif i.timestamp.weekday() == 2:
                 results["week"][3]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 4:
+            elif i.timestamp.weekday() == 3:
                 results["week"][4]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 5:
+            elif i.timestamp.weekday() == 4:
                 results["week"][5]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 6:
+            elif i.timestamp.weekday() == 5:
                 results["week"][6]["totalRecordings"] += 1
+            elif i.timestamp.weekday() == 6:
+                results["week"][7]["totalRecordings"] += 1
 
         if i.timestamp.month == month:
+            results["month"][0]["total_recording"] += 1
             if i.timestamp.day <= 7:
-                results["month"][0]["totalRecordings"] += 1
-            elif 8 <= i.timestamp.day <= 14:
                 results["month"][1]["totalRecordings"] += 1
-            elif 15 <= i.timestamp.day <= 21:
+            elif 8 <= i.timestamp.day <= 14:
                 results["month"][2]["totalRecordings"] += 1
-            elif 22 <= i.timestamp.day <= 31:
+            elif 15 <= i.timestamp.day <= 21:
                 results["month"][3]["totalRecordings"] += 1
+            elif 22 <= i.timestamp.day <= 31:
+                results["month"][4]["totalRecordings"] += 1
 
     return results
 
