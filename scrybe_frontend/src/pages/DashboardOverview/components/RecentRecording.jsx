@@ -33,12 +33,12 @@ const RecentRecording = () => {
                 <img src={toneWave} alt="tone wave" />
               </td>
               <td>
-                <span>Recording mp3</span>
+                <span>{recentRecording.audio_path}</span>
                 <span className={styles.bold_td}> Inactive recharge card</span>
               </td>
-              <td>4 mins</td>
-              <td>50mb</td>
-              <td>14/11/22</td>
+              <td>{recentRecording.duration}</td>
+              <td>{recentRecording.size}</td>
+              <td>{recentRecording.timestamp}</td>
             </tr>
             {/* <tr>
             <td>
