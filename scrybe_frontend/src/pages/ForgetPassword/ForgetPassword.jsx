@@ -5,7 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import footerImg from "./assets/forget-pw.svg";
 import styles from "./ForgetPassword.module.scss";
 import axios from "./globalConstant/Api/axios";
-import useInputValidation from "../../Pages/ForgetPassword/globalConstant/hook/useInputValidation";
+import useInputValidation from "./globalConstant/hook/useInputValidation";
 // import heedLogo from "./assets/heed__logo.png";
 // import forgotIcon from "./assets/forgot__icon.png";
 // import { Link } from "react-router-dom";
