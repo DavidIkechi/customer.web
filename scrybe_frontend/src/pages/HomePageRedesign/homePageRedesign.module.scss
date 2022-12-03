@@ -18,7 +18,7 @@ button {
 }
 
 .sect__container {
-  width: 90%;
+  width: 85%;
   max-width: 1440px;
   margin: 0 auto;
 }
@@ -376,7 +376,7 @@ button {
     }
 }
 
-@media (min-width: 800px) {
+@media (min-width: 800px), (min-width: 1300px) {
 
     //Styling of the first section
 
