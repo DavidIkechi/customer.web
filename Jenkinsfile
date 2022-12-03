@@ -23,13 +23,10 @@ pipeline {
 		stage("deploy") {
 		
 			steps {
-				sh "sudo cp -rf ${WORKSPACE}/backend/app/* /home/riches/heed/backend"
-				sh "sudo cp -fr ${WORKSPACE}/scrybe_frontend/* /home/riches/heed/frontend"
-				sh "sudo su - riches && whoami"
-                                //sh "sudo pm2 stop heed"
-				//sh "sudo pm2 stop heed_api"
-				sh "cd /home/riches/heed/frontend && sudo pm2 start --name heed npm -- start"
-				sh "sudo pm2 start /home/riches/heed/backend/main.py --interpreter python3 --name heed_api"
+				sh "sudo pm2 stop heed"
+				sh "sudo pm2 stop heed_api"
+				sh "cd ${WORKSPACE}/backend/app && sudo pm2 start main.py --interpreter python3 --name heed_api"
+				sh "cd ${WORKSPACE}/scrybe_frontend && sudo pm2 start --name heed npm -- start"
 			}
 			
 		}
