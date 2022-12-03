@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from datetime import datetime
 
-from datetime import datetime
+from sqlalchemy_utils import URLType
 
 from db import Base
 
@@ -69,6 +69,7 @@ class Audio(Base):
     positivity_score = Column(Float, index=True, nullable = True)
     negativity_score = Column(Float, index=True, nullable = True)
     neutrality_score = Column(Float, index=True, nullable = True)
+    average_score = Column(Float, index=True, nullable = True)
     overall_sentiment = Column(Enum("Positive", "Negative", "Neutral"), index=True, nullable = True)
     most_positive_sentences = Column(JSON, nullable = True)
     most_negative_sentences = Column(JSON, nullable = True)
@@ -121,13 +122,14 @@ class Analysis(Base):
     agent_id = Column(Integer, ForeignKey("agents.id"))
 
 class UserProfile(Base):
-    __tablename__ = "Accounts"
+    __tablename__ = "accounts"
 
     id = Column(Integer, ForeignKey("users.id"), nullable=True)
     phone_number = Column(String(255))
     company_address = Column(TEXT)
     email = Column(String(255), nullable=True)
     company_id = Column(Integer, ForeignKey("companies.id"))
+    company_logo_url = Column(URLType, nullable=True)
     api_key = Column(String(255), name="uuid", primary_key=True, default=generate_uuid)
 
 
