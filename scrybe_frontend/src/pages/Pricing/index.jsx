@@ -246,7 +246,7 @@ function Pricing() {
         </div>
         <div className={styles.benefits}>
           <div className={styles.benefitdescription}>
-            <h3>Benefits of using Scrybe</h3>
+            <h3>Benefits of using Heed</h3>
             <ul>
               <li>
                 <span>&bull;</span>Converts recorded calls in MP3 format into
