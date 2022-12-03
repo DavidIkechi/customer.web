@@ -1,20 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styles from "./press.module.scss";
-import pressCardone from "./assets/pressCardone.png";
-import pressCardtwo from "./assets/pressCardtwo.png";
-import pressCardthree from "./assets/pressCardthree.png";
-import pressSmcardOne from "./assets/pressSmcardOne.png";
-import pressSmcardTwo from "./assets/pressSmcardTwo.png";
-import pressSmcard from "./assets/pressSmcard.png";
-import headDot from "./assets/headDot.png";
+import Footer from "../../components/Footer";
+import NavBar from "../../components/navBar";
 import arrowLeft from "./assets/arrow__left.png";
-import whiteArrowleft from "./assets/whiteArrowleft.png";
-import logoText from "./assets/logoText.png";
 import bannerImage from "./assets/bannerImage.png";
 import cardlogo from "./assets/cardlogo.png";
-import NavBar from "../../components/navBar";
-import Footer from "../../components/footer";
+import headDot from "./assets/headDot.png";
+import logoText from "./assets/logoText.png";
+import pressCardone from "./assets/pressCardone.png";
+import pressCardthree from "./assets/pressCardthree.png";
+import pressCardtwo from "./assets/pressCardtwo.png";
+import pressSmcard from "./assets/pressSmcard.png";
+import pressSmcardOne from "./assets/pressSmcardOne.png";
+import pressSmcardTwo from "./assets/pressSmcardTwo.png";
+import whiteArrowleft from "./assets/whiteArrowleft.png";
+import styles from "./press.module.scss";
 
 const index = () => {
   return (
