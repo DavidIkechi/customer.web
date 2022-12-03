@@ -4,7 +4,8 @@ import heroImage from "./assets/Group 1000000899.webp";
 import curves from "./assets/Vector 13.webp";
 import { NavLink } from "react-router-dom";
 
-function Hero() {
+function Hero(isHomePageA) {
+  isHomePageA = true;
   return (
     <section className={styles.hero}>
       <div className={styles.container}>
@@ -37,5 +38,4 @@ function Hero() {
     </section>
   );
 }
-
 export default Hero;

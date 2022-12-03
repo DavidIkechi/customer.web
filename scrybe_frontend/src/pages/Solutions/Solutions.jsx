@@ -21,6 +21,10 @@ import happy from "./assets/happy-logo.svg";
 import google from "./assets/googole-logo.svg";
 
 function Solutions() {
+  React.useEffect(() => {
+    // 👇️ scroll to top on page load
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
   return (
     <div className="solution-section">
       <NavBar />

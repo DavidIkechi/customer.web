@@ -1,12 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import data from "./assets/data";
-import { GridView, ListView, TitleSection, SideBarMobile } from "./component";
+import {
+  GridView,
+  ListView,
+  TitleSection,
+  SideBarMobile,
+  Pagination,
+} from "./component";
 import { profileUpload, uploadIcon, buggerMenu } from "./assets/images";
 import SideBar from "./component/SideBar";
 import styles from "./style.module.scss";
 import { HistoryContext } from "./Contexts/HistoryContext";
+let PageSize = 10;
 
 export default function History() {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const currHistoryData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PageSize;
+    const lastPageIndex = firstPageIndex + PageSize;
+    return data.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage]);
+
   const ref = React.useRef(null);
   const refed = React.useRef(null);
   const btnSideClick = ListenForClicks(ref, refed);
@@ -47,18 +62,6 @@ export default function History() {
     }, [ref, refed]);
     return isClicked;
   }
-  // const recordList = data.map((item) => (
-  //   <List
-  //     name={item.name}
-  //     agent={item.agent}
-  //     analysis={item.analysis}
-  //     date={item.date}
-  //     time={item.time}
-  //     lenght={item.lenght}
-  //   />
-  // ));
-
-  // const [show, setShow] = useState(true);
 
   return (
     <div className={styles.history}>
@@ -115,13 +118,15 @@ export default function History() {
             </div>
           )}
         </div>
-        <HistoryContext.Provider value={{ setIsGrid, setIsList }}>
+        <HistoryContext.Provider
+          value={{ setIsGrid, setIsList, currHistoryData }}
+        >
           <TitleSection />
           {isGrid && (
             <div className={styles.history__grids}>
               {width >= 768 ? (
                 <>
-                  {data.slice(0, 20).map((item, i) => (
+                  {currHistoryData.map((item, i) => (
                     <GridView
                       title={item.name}
                       name={item.agent}
@@ -140,7 +145,7 @@ export default function History() {
                 </>
               ) : (
                 <>
-                  {data.slice(0, 10).map((item, i) => (
+                  {currHistoryData.map((item, i) => (
                     <GridView
                       title={item.name}
                       name={item.agent}
@@ -175,7 +180,7 @@ export default function History() {
                           <p>Length</p>
                         </div>
                       </div>
-                      {data.slice(0, 20).map((item, i) => (
+                      {currHistoryData.map((item, i) => (
                         <ListView
                           title={item.name}
                           name={item.agent}
@@ -203,7 +208,7 @@ export default function History() {
                         <p>Sentiment Result</p>
                       </div>
                     </div>
-                    {data.slice(0, 10).map((item, i) => (
+                    {currHistoryData.map((item, i) => (
                       <ListView
                         title={item.name}
                         name={item.agent}
@@ -224,6 +229,15 @@ export default function History() {
             )}
           </div>
         </HistoryContext.Provider>
+        <div className={styles.history__pagination}>
+          <Pagination
+            className="pagination-bar"
+            currentPage={currentPage}
+            totalCount={data.length}
+            pageSize={PageSize}
+            onPageChange={(page) => setCurrentPage(page)}
+          />
+        </div>
       </div>
     </div>
   );

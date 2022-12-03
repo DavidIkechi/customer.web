@@ -21,6 +21,10 @@ import team7 from "./assets/team7.png";
 import team8 from "./assets/team8.png";
 
 function About() {
+  React.useEffect(() => {
+    // 👇️ scroll to top on page load
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
   return (
     <div className="App" data-testid="app-container">
       {/* <NavBar /> */}

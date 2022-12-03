@@ -8,69 +8,111 @@ import style from "./UploadRecordingsModal.module.scss";
 import PauseIcon from "./images/PauseCircle.png";
 import SolidCloseIcon from "./images/solidcircle.png";
 import axios from "axios";
+import checkMarkIcon from "./images/checkMarkIcon.png";
+import copyIcon from "./images/copyIcon.svg";
 
-export function UploadModal({ closeModal }) {
+export function UploadModal() {
   const [showUploadProgress, setShowUploadProgress] = useState(false);
   const [showProgressList, setShowProgressList] = useState(false);
+  const [isUploadComplete, setIsUploadComplete] = useState(false);
   const [showDropDownIcon, setShowDropDownIcon] = useState(true);
-  const [fileList, setFileList] = useState([]);
+  const [closeModal, setCloseModal] = useState(true);
+  const [file, setFile] = useState({ file: { name: "", progress: 0 } });
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
-  const handleUpload = (filesArray) => {
+  const handleUpload = (file) => {
     // handle upload
     // keep track of the prgress in a list
     const myData = new FormData();
-    myData.append("file", filesArray[0]);
-    console.log("file", filesArray[0]);
-    const destinationUrl = "http://localhost:5000/upload-files";
-    axios
-      .request({
-        method: "post",
-        url: destinationUrl,
-        data: myData,
-        onUploadProgress: (p) => {
-          console.log("progress", p.loaded, p.total);
-          //this.setState({
-          //fileprogress: p.loaded / p.total
-          //})
-        },
-      })
-      .then((data) => {
-        //this.setState({
-        //fileprogress: 1.0,
-        //})
-      });
+    myData.append("first_name", firstName);
+    myData.append("last_name", lastName);
+    myData.append("file", file);
+    console.log("file", file);
+    setFile({ file, progress: 0 });
+
+    // const destinationUrl = "https://api.heed.hng.tech/upload_audio";
+    // axios
+    //   .request({
+    //     method: "post",
+    //     url: destinationUrl,
+    //     data: myData,
+    //     onUploadProgress: (p) => {
+    //       setFile({ file, progress: (p.loaded / p.total) * 100 });
+    //       console.log(
+    //         "progress",
+    //         (p.loaded / p.total) * 100,
+    //         p.loaded,
+    //         p.total
+    //       );
+    //     },
+    //   })
+    //   .then((data) => {
+    //     console.log("http response", data);
+    //     setIsUploadComplete(true);
+    //     // show completed phase
+    //     //this.setState({
+    //     //fileprogress: 1.0,
+    //     //})
+    //   });
+
+    setFile({ file, progress: 100 });
+    setTimeout(() => {
+      setIsUploadComplete(true);
+    }, 1000);
   };
 
   return (
-    <div className={style["modal-background"]}>
-      <div className={style["modal-container"]}>
-        <div className={style["modal-header"]}>
-          <h3>Upload audio files</h3>
-          <p>Upload agent records to transcribe</p>
-          <div className={style.close}>
-            <img src={closecircle} alt="" onClick={() => closeModal(false)} />
+    <>
+      {closeModal && (
+        <div className={style["modal-background"]}>
+          <div className={style["modal-container"]}>
+            <div className={style["modal-header"]}>
+              <h3>Upload audio files</h3>
+              {!isUploadComplete ? (
+                <p>Upload agent records to transcribe</p>
+              ) : (
+                <p>Agent call recording uploaded successfully</p>
+              )}
+              <div className={style.close}>
+                <img
+                  src={closecircle}
+                  alt=""
+                  onClick={() => setCloseModal(false)}
+                />
+              </div>
+            </div>
+            <div className={style["modal-body-container"]}>
+              <div className={style["modal-body"]}>
+                {!isUploadComplete && (
+                  <DragAndDrop
+                    setShowUploadProgress={setShowUploadProgress}
+                    setFile={setFile}
+                    setFirstName={setFirstName}
+                    setLastName={setLastName}
+                    handleUpload={handleUpload}
+                  />
+                )}
+                {showUploadProgress && !isUploadComplete && (
+                  <UploadProgress file={file} />
+                )}
+                {/* {showUploadProgress && (
+                  <DropDown
+                    showDropDownIcon={showDropDownIcon}
+                    setShowDropDownIcon={setShowDropDownIcon}
+                    setShowProgressList={setShowProgressList}
+                  />
+                )} */}
+                {showProgressList && !showDropDownIcon && (
+                  <UploadProgressList />
+                )}
+                {isUploadComplete && <UploadComplete />}
+              </div>
+            </div>
           </div>
         </div>
-        <div className={style["modal-body-container"]}>
-          <div className={style["modal-body"]}>
-            <DragAndDrop
-              setShowUploadProgress={setShowUploadProgress}
-              setFileList={setFileList}
-              handleUpload={handleUpload}
-            />
-            {showUploadProgress && showDropDownIcon && <UploadProgress />}
-            {showUploadProgress && (
-              <DropDown
-                showDropDownIcon={showDropDownIcon}
-                setShowDropDownIcon={setShowDropDownIcon}
-                setShowProgressList={setShowProgressList}
-              />
-            )}
-            {showProgressList && !showDropDownIcon && <UploadProgressList />}
-          </div>
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 
@@ -99,7 +141,13 @@ function DropDown({
   );
 }
 
-function DragAndDrop({ setShowUploadProgress, setFileList, handleUpload }) {
+function DragAndDrop({
+  setShowUploadProgress,
+  setFile,
+  setFirstName,
+  setLastName,
+  handleUpload,
+}) {
   const showUploadProgress = () => {
     setShowUploadProgress(true);
   };
@@ -111,17 +159,17 @@ function DragAndDrop({ setShowUploadProgress, setFileList, handleUpload }) {
   const handleDrop = (event) => {
     event.preventDefault();
     // console.log(Array.from(event.dataTransfer.files));
-    const files = event.dataTransfer.files;
-    setFileList(Array.from(files));
-    handleUpload(files);
+    const file = Array.from(event.dataTransfer.files)[0];
+    setFile({ file, progress: 0 });
+    handleUpload(file);
 
     //upload code
     showUploadProgress();
   };
 
-  const handleOnSelectFile = (files) => {
-    setFileList(Array.from(files));
-    handleUpload(files);
+  const handleOnSelectFile = (file) => {
+    setFile({ file: file, progress: 0 });
+    handleUpload(file);
 
     //upload code
     showUploadProgress();
@@ -135,8 +183,22 @@ function DragAndDrop({ setShowUploadProgress, setFileList, handleUpload }) {
     >
       <img src={layer} alt="" />
       <label htmlFor="name" className={style["name-input"]}>
-        <input type="text" name="" id="" placeholder="First Name" />
-        <input type="text" name="" id="" placeholder="Last Name" />
+        <input
+          type="text"
+          id="firstName"
+          required
+          placeholder="First Name"
+          name="firstName"
+          onChange={(event) => setFirstName(event.target.value)}
+        />
+        <input
+          type="text"
+          id="lastName"
+          required
+          placeholder="Last Name"
+          name="lastName"
+          onChange={(event) => setLastName(event.target.value)}
+        />
       </label>
       <h3>Drag and drop agent audio call recordings</h3>
       <div className={style["or-wrapper"]}>
@@ -159,28 +221,29 @@ function DragAndDrop({ setShowUploadProgress, setFileList, handleUpload }) {
         hidden
         multiple
         accept="audio/*"
-        onChange={(event) => handleOnSelectFile(Array.from(event.target.files))}
+        onChange={(event) =>
+          handleOnSelectFile(Array.from(event.target.files)[0])
+        }
       />
     </section>
   );
 }
 
-function UploadProgress() {
-  const progress = 80;
+function UploadProgress({ file }) {
   return (
     <section className={style["upload-progress"]}>
       <div className={style["upload-progress-wrapper"]}>
         <div className={style["upload-icon"]}>
           <img src={uploadIcon} alt="folder-icon" />
-          <p>12/30</p>
+          {/* <p>12/30</p> */}
         </div>
         <div className={style["upload-progress-status1"]}>
           <p>Uploading...</p>
-          <p>File name</p>
+          <p>{file.file?.name}</p>
           <div className={style["progress-wrapper"]}>
             <div
               className={style["progress-bar"]}
-              style={{ width: progress + "%" }}
+              style={{ width: file?.progress + "%" }}
             ></div>
           </div>
         </div>
@@ -216,5 +279,33 @@ function SubUploadProgress() {
         <img src={SolidCloseIcon} alt="close-icon-button" />
       </div>
     </div>
+  );
+}
+
+function UploadComplete() {
+  return (
+    <>
+      <div className={style["upload-complete-wrapper"]}>
+        <div className={style["upload-complete-text"]}>
+          <img src={uploadIcon} alt="folder-icon" />
+          <h3>Upload complete</h3>
+        </div>
+        <div>
+          <img src={checkMarkIcon} alt="check-mark" />
+        </div>
+      </div>
+      <div className={style["btn-wrapper"]}>
+        <button className={style["cancel-btn"]}>Cancel</button>
+        <button className={style["transcribe-btn"]}>Transcribe</button>
+      </div>
+      <label htmlFor="callback" className={style["callback-wrapper"]}>
+        <input
+          className={style["callback"]}
+          type="text"
+          placeholder="Callback Link"
+        />
+        <img src={copyIcon} alt="copy-icon" />
+      </label>
+    </>
   );
 }

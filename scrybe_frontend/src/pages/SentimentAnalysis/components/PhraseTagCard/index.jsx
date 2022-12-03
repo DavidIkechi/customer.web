@@ -5,7 +5,7 @@ import styles from "./PhraseTagCard.module.scss";
 function PhraseTagCard(props) {
   const { tags, title, sentimentData } = props;
   if (sentimentData.transcript) {
-    //TODO: impleented stopword removal and separation of positive and negative words
+    //TODO: implented stopword removal and separation of positive and negative words
   }
   return (
     <AsideCard classtype={`${styles.tags}`}>
