@@ -1,5 +1,7 @@
 import React from "react";
 import styles from "./homePageRedesign.module.scss";
+import Footer from "../../components/footer";
+import NavBar from "../../components/NavbarFree";
 import heroCenter from "./assets/hero__center.png";
 import saveTime from "./assets/save__time.png";
 import easeUse from "./assets/ease__icon.png";
@@ -27,7 +29,8 @@ const Index = () => {
 
   return (
     <div>
-      {/* <div className={styles.header__container}></div> */}
+      <NavBar />
+
       <section className={styles.first__section}>
         <div className={styles.sect__container}>
           <div className={styles.hero__flex}>
@@ -321,7 +324,8 @@ const Index = () => {
           </div>
         </div>
       </section>
-      {/* <div className={styles.footer__container}></div> */}
+
+      <Footer />
     </div>
   );
 };

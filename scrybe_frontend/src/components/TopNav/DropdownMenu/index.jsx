@@ -21,7 +21,10 @@ function DropDownModal({ closeModal }) {
         <Link
           to="/logout"
           className={styles.p}
-          onClick={() => {Cookies.remove("heedAccessToken"); localStorage.removeItem("auth")}}
+          onClick={() => {
+            Cookies.remove("heedAccessToken");
+            localStorage.removeItem("auth");
+          }}
         >
           Logout
         </Link>
