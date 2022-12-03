@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./About.module.scss";
 import Footer from "../../components/footer";
-// import NavBar from "../../components/navBar";
+import NavBar from "../../components/navBar_free";
 import image1 from "./assets/hero__icon.png";
 import icon1 from "./assets/icon1.svg";
 import icon2 from "./assets/icon2.svg";
@@ -27,14 +27,14 @@ function About() {
   }, []);
   return (
     <div className="App" data-testid="app-container">
-      {/* <NavBar /> */}
+      <NavBar />
       <section className={styles.first__section}>
         <div className={styles.sect__container}>
           <div className={styles.first__top}>
             <div className={styles.first__heading}>
               <h1 className={styles.first__head}>
                 Heed helps sales mangers work{" "}
-                <span className={styles.first__inline}>faster </span>, with
+                <span className={styles.first__inline}>faster</span>, with
                 <span className={styles.first__inline}> simplified roles</span>
               </h1>
             </div>
@@ -167,7 +167,7 @@ function About() {
                   <h4 className={styles.icon__head}>The HNG Internship</h4>
                 </div>
               </div>
-              <div className={styles.each__flex}>
+              <div className={`${styles.each__flex} ${styles.reverse}`}>
                 <div className={styles.third__flex}>
                   <div className={styles.comp__icons}>
                     <img src={partner3} alt="companies icon" />
