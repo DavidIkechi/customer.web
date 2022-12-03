@@ -56,6 +56,7 @@ import LandingPageSalesTeam from "./pages/NewLandingPageSalesTeam/index";
 // import HomePageRedesign from "./Pages/HomePageRedesign";
 import WithAuth from "./HOCs";
 import Support from "./pages/Support/support";
+import HomeP from "./pages/HomePageRedesign/index";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
