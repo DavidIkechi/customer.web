@@ -53,7 +53,8 @@ import { UploadModal } from "./pages/UploadRecordingsModal";
 import Error from "./pages/Error/Error";
 import Von from "./pages/Von/Von";
 import LandingPageSalesTeam from "./pages/NewLandingPageSalesTeam/index";
-import HomePageRedesign from "./Pages/HomePageRedesign";
+// import HomePageRedesign from "./Pages/HomePageRedesign";
+import WithAuth from "./HOCs";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -119,7 +120,7 @@ function App() {
           path="/account"
           element={
             <WithAuth>
-            <Account />
+              <Account />
             </WithAuth>
           }
         />
