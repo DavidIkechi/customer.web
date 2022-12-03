@@ -1,11 +1,11 @@
 import React from "react";
-import PersonalInfo from "./PersonalInformationSettings.module.scss";
-import RedirectNav from "../../Components/SettingsPageRedirectNav/SettingsPageRedirectNav";
-import ProfilePic from "../../assets/images/Pic.png";
+import { Link } from "react-router-dom";
+import Footer from "../../../../components/Footer";
 import BlueEditPen from "../../assets/icons/blue-pencil.png";
 import BlackEditPen from "../../assets/icons/edit.svg";
-import { Link } from "react-router-dom";
-import Footer from "../../../../components/footer/index";
+import ProfilePic from "../../assets/images/Pic.png";
+import RedirectNav from "../../Components/SettingsPageRedirectNav/SettingsPageRedirectNav";
+import PersonalInfo from "./PersonalInformationSettings.module.scss";
 
 const PersonalInformation = () => {
   const handleSubmit = (event) => {
