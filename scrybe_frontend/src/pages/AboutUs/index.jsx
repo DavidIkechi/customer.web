@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./About.module.scss";
 import Footer from "../../components/footer";
-import NavBar from "../../components/navBar";
+// import NavBar from "../../components/navBar";
 import image1 from "./assets/hero__icon.png";
 import icon1 from "./assets/icon1.svg";
 import icon2 from "./assets/icon2.svg";
@@ -23,7 +23,7 @@ import team8 from "./assets/team8.png";
 function About() {
   return (
     <div className="App" data-testid="app-container">
-      <NavBar />
+      {/* <NavBar /> */}
       <section className={styles.first__section}>
         <div className={styles.sect__container}>
           <div className={styles.first__top}>
@@ -88,7 +88,7 @@ function About() {
                 <div className={styles.heading__icon}>
                   <h4 className={styles.box__head}>Data Safety</h4>
                   <div className={styles.core__icons}>
-                    <img src={icon1} alt="core icons" />
+                    <img src={icon2} alt="core icons" />
                   </div>
                 </div>
                 <p className={styles.box__text}>
@@ -104,7 +104,7 @@ function About() {
                 <div className={styles.heading__icon}>
                   <h4 className={styles.box__head}>Company's Value</h4>
                   <div className={styles.core__icons}>
-                    <img src={icon2} alt="core icons" />
+                    <img src={icon1} alt="core icons" />
                   </div>
                 </div>
                 <p className={styles.box__text}>
@@ -199,7 +199,7 @@ function About() {
           </div>
 
           <div className={styles.fourth__bottom}>
-            <div className={styles.profile__flex}>
+            <div className={styles.flex__profile}>
               <div className={styles.profile__box}>
                 <div className={styles.profile__icon}>
                   <img src={team1} alt="team members" />
@@ -218,8 +218,25 @@ function About() {
                   <p className={styles.profile__desc}>Advisor</p>
                 </div>
               </div>
-            </div>
-            <div className={styles.profile__flex}>
+              <div className={styles.profile__box}>
+                <div className={styles.profile__icon}>
+                  <img src={team3} alt="team members" />
+                </div>
+                <div className={styles.profile__text}>
+                  <h5 className={styles.profile__name}>Collins Akpaka</h5>
+                  <p className={styles.profile__desc}>CEO</p>
+                </div>
+              </div>
+              <div className={styles.profile__box}>
+                <div className={styles.profile__icon}>
+                  <img src={team4} alt="team members" />
+                </div>
+                <div className={styles.profile__text}>
+                  <h5 className={styles.profile__name}>Delphine Ogbonna</h5>
+                  <p className={styles.profile__desc}>Lead designer</p>
+                </div>
+              </div>
+
               <div className={styles.profile__box}>
                 <div className={styles.profile__icon}>
                   <img src={team5} alt="team members" />
@@ -238,8 +255,6 @@ function About() {
                   <p className={styles.profile__desc}>Front-End Lead</p>
                 </div>
               </div>
-            </div>
-            <div className={styles.profile__flex}>
               <div className={styles.profile__box}>
                 <div className={styles.profile__icon}>
                   <img src={team7} alt="team members" />
@@ -259,76 +274,7 @@ function About() {
                 </div>
               </div>
             </div>
-            <div className={styles.profile__flex}>
-              <div className={styles.profile__box}>
-                <div className={styles.profile__icon}>
-                  <img src={team3} alt="team members" />
-                </div>
-                <div className={styles.profile__text}>
-                  <h5 className={styles.profile__name}>Collins Akpaka</h5>
-                  <p className={styles.profile__desc}>CEO</p>
-                </div>
-              </div>
-              <div className={styles.profile__box}>
-                <div className={styles.profile__icon}>
-                  <img src={team4} alt="team members" />
-                </div>
-                <div className={styles.profile__text}>
-                  <h5 className={styles.profile__name}>Delphine Ogbonna</h5>
-                  <p className={styles.profile__desc}>Lead designer</p>
-                </div>
-              </div>
-            </div>
           </div>
-
-          {/* <div className={styles.row__col}>
-            <div className={styles.row}>
-              <div className={styles.wrap2}>
-                <div className={styles.col}>
-                  <img src={team1} alt="team members" />
-                  <h5>Mark Essien</h5>
-                  <p>Advisor</p>
-                </div>
-                <div className={styles.col}>
-                  <img src={team2} alt="team members" />
-                  <h5>Aigbe Marvelous</h5>
-                  <p>Advisor</p>
-                </div>
-                <div className={styles.col}>
-                  <img src={team3} alt="team members" />
-                  <h5>Collins Akpaka</h5>
-                  <p>CEO</p>
-                </div>
-                <div className={styles.col}>
-                  <img src={team4} alt="team members" />
-                  <h5>Delphine Ogbonna</h5>
-                  <p>Lead designer</p>
-                </div>
-
-                <div className={styles.col}>
-                  <img src={team5} alt="team members" />
-                  <h5>Ugochukwu Odumegwu</h5>
-                  <p>Back-End Lead</p>
-                </div>
-                <div className={styles.col}>
-                  <img src={team6} alt="team members" />
-                  <h5>Tochukwu Bedford</h5>
-                  <p>Front-End Lead</p>
-                </div>
-                <div className={styles.col}>
-                  <img src={team7} alt="team members" />
-                  <h5>Alice Awobite</h5>
-                  <p>Product Designer</p>
-                </div>
-                <div className={styles.col}>
-                  <img src={team8} alt="team members" />
-                  <h5>Favour Mustapha</h5>
-                  <p>Product Designer</p>
-                </div>
-                <div className={styles.col}></div>
-              </div>
-            </div>
-          </div> */}
         </div>
       </section>
 

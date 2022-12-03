@@ -632,9 +632,10 @@ button {
     line-height: 1.25rem;
   }
 
-  .fourth__bottom .profile__flex {
+  .fourth__bottom .flex__profile {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
   }
 
   .fourth__bottom .profile__box {
@@ -664,4 +665,147 @@ button {
     fill: solid;
     line-height: 1rem;
   }
+
 }
+
+
+@media (min-width: 768px) {
+
+
+  //Styling of the first section (desktop view)
+
+  .first__section {
+
+    .first__top .first__heading {
+      width: 60%;
+      margin-bottom: unset;
+    }
+
+    .first__top .first__head {
+      font-size: 2rem;
+    }
+
+    .first__bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .first__bottom .first__subhead {
+      font-size: 1rem;
+      line-height: 1.5rem;
+      margin-bottom: 1em;
+    }
+
+    .first__bottom .first__subtext {
+      flex-basis: 52%;
+    }
+
+    .first__bottom .hero__image {
+      margin-top: unset;
+      flex-basis: 45%;
+    }
+  }
+
+  //Styling of the second section (desktop view)
+
+  .second__section {
+    .second__row {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .head__container .second__head {
+      font-size: 2rem;
+    }
+
+    .second__bottom .each__box {
+      flex-basis: 48%;
+      margin-top: 1.5em;
+    }
+
+    .second__bottom .box__head {
+      font-size: 1.25rem;
+    }
+
+    .second__bottom .box__text {
+      font-size: .9rem;
+    }
+
+  }
+
+  //Styling of the third section (desktop view)
+
+  .third__section {
+     .third__container .third__head {
+        font-size: 2rem;
+      }
+
+      .third__container .third__subtext {
+        margin: 1em auto;
+        width: 70%;
+      }
+
+      .third__container .third__subhead {
+        font-size: 1rem;
+        color: #3F3F3F;
+      }
+
+      .third__bottom .each__flex {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        width: 45%;
+      }
+
+      .third__bottom .comp__icons {
+        width: 2rem;
+      }
+
+      .third__bottom .icon__head {
+        font-size: .9rem;
+      }
+  }
+
+  .fourth__section {
+    .fourth__top .fourth__head {
+      font-size: 2rem;
+      color: #1F1F1F;
+    }
+
+    .fourth__top .fourth__subtext {
+      margin: 0 auto;
+      width: 70%;
+    }
+
+    .fourth__top .fourth__subhead {
+      font-size: 1rem;
+    }
+
+    .fourth__bottom .flex__profile {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .fourth__bottom .profile__box {
+      flex-basis: 22.5%;
+      margin-top: 1.5em;
+    }
+
+    .fourth__bottom .profile__name {
+      font-size: 1rem;
+    }
+
+  .fourth__bottom .profile__desc {
+      font-size: 1rem;
+    }
+  }
+}
+
+// @media (min-width: 850px) {
+ 
+// }
+
+
+

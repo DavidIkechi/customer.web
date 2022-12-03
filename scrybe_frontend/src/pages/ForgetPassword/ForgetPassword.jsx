@@ -6,8 +6,6 @@ import footerImg from "./assets/forget-pw.svg";
 import styles from "./ForgetPassword.module.scss";
 
 function ForgetPassword() {
-  const [userEmail, setUserEmail] = useState("");
-
   const {
     register,
     handleSubmit,
@@ -19,14 +17,14 @@ function ForgetPassword() {
   const [userInfo, setUserInfo] = useState();
   /* eslint-enable no-unused-vars */
   const onSubmit = (data) => {
-    console.log("my email", data);
+    console.log(data);
     setUserInfo(data);
   };
 
   // Watch event for disable button
   const email = watch("email");
 
-  console.log("error email", email);
+  console.log("email", email);
 
   const isValid = email;
 
@@ -39,13 +37,11 @@ function ForgetPassword() {
           >
             <h1>Forgot password</h1>
             <h3>No worries we will send your reset details</h3>
-            <form onSubmit={handleSubmit(onSubmit(userEmail))}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <label htmlFor="email">Email</label>
               <input
                 type="email"
                 name="email"
-                value={userEmail}
-                onChange={(e) => setUserEmail(e.target.value)}
                 id="email"
                 placeholder="Enter your company email"
                 className={`${errors.email && styles.errorInput} `}
@@ -58,19 +54,12 @@ function ForgetPassword() {
                 })}
               />
               <p className={styles.errorMsg}>{errors.email?.message}</p>
-              <button
-                type="submit"
-                className={`${isValid && styles.submitValid}`}
-                disabled={!isValid}
-              >
-                Reset password
-              </button>
-              {/* <input
+              <input
                 type="submit"
                 disabled={!isValid}
                 value="Reset password"
                 className={`${isValid && styles.submitValid}`}
-              /> */}
+              />
               <p>
                 Don’t have an account? <NavLink to={"/"}>Sign up</NavLink>
               </p>
