@@ -112,6 +112,7 @@ def main() -> None:
     )
 
 
+
 @app.get("/")
 async def ping():
     return {"message": "Scrybe Up"}
@@ -147,7 +148,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
         return {"error": "There was an error uploading the file"}
     finally:
         file.file.close()
-    
+
     try:
         result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
         url = result.get("url")
@@ -158,6 +159,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
         
     except Exception:
         return {"error": "There was an error uploading the file"}
+   
     # transcript = transcript
     
     size = audio_details(file.filename)["size"]
@@ -168,8 +170,9 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     job_status = transcript['status']
     transcript_id = transcript['id']
     
-    db_audio = models.Audio(audio_path=audio_url, filename= str(file.filename), job_id = transcript_id, user_id=user_id, size=size, duration=duration, 
-                            agent_id=db_agent.id)
+
+    db_audio = models.Audio(audio_path=audio_url, job_id = transcript_id, user_id=user_id, size=size, duration=duration, 
+                            agent_id=db_agent.id, agent_firstname= db_agent.first_name, agent_lastname=db_agent.last_name)
 
     db.add(db_audio)
     db.commit()
@@ -482,9 +485,13 @@ def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = De
         SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score,
         SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score,
         SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
-        round(positivity_score/(positivity_score+negativity_score+neutrality_score) * 10, 2) AS Avergae_score
+        round(positivity_score/(positivity_score+negativity_score+neutrality_score) * 10, 1) AS Average_score
     FROM audios GROUP BY agent_id
     ORDER BY Positive_score DESC""")
+
+    if not results:
+        raise HTTPException(status_code=404, detail= "Results not found")
+
     leaderboard = [dict(r) for r in results]
     top3_agents = leaderboard[:3]
     others = leaderboard[3:]
@@ -578,17 +585,3 @@ def delete_audios(audios: List[int] = Query(None), db: Session = Depends(get_db)
             db.commit()
             deleted_audios.append(db_audio.audio_path)
     return {"message": "operation successful", "deleted audion(s)": deleted_audios}
-
-
-# @app.get("/download/{id}")
-# async def download(id, db: Session = Depends(get_db)):
-#     db_analysis = crud.get_audio(db, audio_id = id)
-#     # return db_analysis
-#     # if not db_analysis:
-#     #     return{"error": "No Audio With This ID"}
-#     # else:
-    
-#     # with open("example.json", "wb") as f:
-#     print(db_analysis)
-#     return 
-        

@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import email from ".//assets/mail.png";
-import call from ".//assets/phone.png";
+import email from "./assets/mail.png";
+import call from "./assets/phone.png";
 import fb from "./assets/fb.png";
 import ig from "./assets/ig.png";
 import locate from "./assets/location-marker.png";

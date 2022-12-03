@@ -8,7 +8,7 @@ import arrow from "./assets/arrow-right.svg";
 import sentiment from "./assets/sentiment-page.png";
 
 import NavBar from "../../components/navBar";
-import Footer from "../../components/footer";
+import Footer from "../../components/Footer";
 
 function Services() {
   React.useEffect(() => {

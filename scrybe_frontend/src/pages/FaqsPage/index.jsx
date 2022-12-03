@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import styles from "./style.module.scss";
 import FaqComponent from "./FaqComponent";
 import { Hero } from "./assets";
-import Footer from "../../components/footer";
+import Footer from "../../components/Footer";
 import NavBar from "../../components/navBar";
 function FAQs() {
   React.useEffect(() => {

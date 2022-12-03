@@ -12,7 +12,7 @@ import twoIcon from "./assets/two__icon.png";
 import threeIcon from "./assets/three__icon.png";
 import fourIcon from "./assets/four__icon.png";
 import NavBar from "../../components/navBar";
-import Footer from "../../components/footer";
+import Footer from "../../components/Footer";
 import input__ctrl from "../PartnersPage/assets/input__ctrl.png";
 
 const PartnersPage = () => {

@@ -15,8 +15,8 @@ import avi4 from "./assets/avi-4.svg";
 import avi5 from "./assets/avi-5.svg";
 import avi6 from "./assets/avi-6.svg";
 import footerImg from "./assets/reviews-bottom-img.png";
-import NavBar from "../../components/navBar_free";
-import Footer from "../../components/footer";
+import NavBar from "../../components/NavbarFree";
+import Footer from "../../components/Footer";
 
 function Reviews() {
   React.useEffect(() => {
