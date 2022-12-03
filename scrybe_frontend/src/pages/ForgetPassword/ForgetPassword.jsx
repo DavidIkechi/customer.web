@@ -1,95 +1,22 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, redirect } from "react-router-dom";
 import footerImg from "./assets/forget-pw.svg";
 import styles from "./ForgetPassword.module.scss";
-import axios from "./globalConstant/Api/axios";
-import useInputValidation from "./globalConstant/hook/useInputValidation";
+import axios from "axios";
 // import heedLogo from "./assets/heed__logo.png";
 // import forgotIcon from "./assets/forgot__icon.png";
 // import { Link } from "react-router-dom";
 
 function ForgetPassword() {
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const navigate = useNavigate();
-  // const email = watch("email");
-
+  const [userEmail, setUserEmail] = useState();
   const {
-    formData,
-    changeInputValue,
-    onBlur,
-    setFormData,
-    errors,
-    touched,
-    setTouched,
-    validation,
     register,
-  } = useInputValidation({
-    email: "",
-  });
-
-  const { email } = formData;
-
-  const handleSubmit = async (e, formData) => {
-    e.preventDefault();
-
-    try {
-      validation(formData);
-      if (Object.keys(errors).length > 0) {
-        setTouched({
-          email: true,
-        });
-      }
-
-      if (Object.keys(errors).length === 0) {
-        setTouched({
-          email: false,
-        });
-
-        setIsSubmitted(true);
-
-        const { email } = formData;
-        const response = await axios.post(
-          "forgot-password",
-          JSON.stringify({
-            email,
-          })
-        );
-        // .then(res => {
-        // // backend guys are to send email that links to: set-new-password/{token}
-        //   return redirect("/email-sent")
-        // })
-
-        if (response.data.errorState === false) {
-          navigate("/email-sent");
-          setIsSubmitted(false);
-          // Clear input fields
-          setFormData({
-            email: "",
-          });
-        }
-      }
-    } catch (err) {
-      if (!err.response) {
-        navigate("/Error");
-      }
-      if (err.response?.data.errorState === true) {
-        navigate("*");
-      }
-    } finally {
-      setIsSubmitted(false);
-    }
-  };
-
-  // const [userEmail, setUserEmail] = useState();
-  // const {
-  //   register,
-  //   watch,
-  //   formState: { errors },
-  // } = useForm();
-
-  // const { watch } = useForm();
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   //  eslint-disable no-unused-vars
   const [userInfo, setUserInfo] = useState();
@@ -100,6 +27,8 @@ function ForgetPassword() {
   };
 
   // Watch event for disable button
+
+  const email = watch("email");
 
   console.log("email", email);
 
@@ -114,7 +43,19 @@ function ForgetPassword() {
           >
             <h1>Forgot password?</h1>
             <h3>Enter registered email to reset your password</h3>
-            <form onSubmit={(e) => handleSubmit(e, formData)}>
+            <form
+              onSubmit={handleSubmit(() => {
+                axios
+                  .post("/forgot-password", {
+                    email: email,
+                  })
+                  .then((res) => {
+                    // backend guys are to send email that links to: set-new-password/{token}
+                    console.log(res);
+                    return redirect("/email-sent");
+                  });
+              })}
+            >
               <label htmlFor="email">Email</label>
               <input
                 type="email"

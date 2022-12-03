@@ -30,7 +30,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Signup from "./pages/SignUp/SignUp";
 import Successful from "./pages/Successful/Successful";
 import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
-import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
+import ForgetPassword from "./Pages/ForgetPassword/ForgetPassword";
 import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
 import FAQs from "./pages/FaqsPage";
 import LeaderboardPage from "./pages/LeaderBoard/Leaderboard";
