@@ -23,7 +23,7 @@ const TotalAnalysis = () => {
   // }, [totalAnalysisData]);
 
   const [selectedTotalAnalysis, setSelectedTotalAnalysis] = useState([]);
-  console.log(selectedTotalAnalysis);
+  // console.log(selectedTotalAnalysis);
   const [chartData, setChartData] = useState({
     datasets: [],
   });

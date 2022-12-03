@@ -1,7 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-
 import { useMockAuthAndGetRecording } from "../hooks";
 import styles from "../DashboardOverview.module.scss";
 import toneWave from "../assets/tone_wave.svg";
@@ -10,7 +9,7 @@ import empty_state from "../assets/empty_state.png";
 
 const RecentRecording = () => {
   const recentRecording = useMockAuthAndGetRecording();
-  console.log(recentRecording);
+  // console.log(recentRecording);
   useEffect(() => {}, [recentRecording]);
   return (
     <>
