@@ -2,7 +2,7 @@ import React from "react";
 import NotificationCss from "./NotificationSettings.module.scss";
 import RedirectNav from "../../Components/SettingsPageRedirectNav/SettingsPageRedirectNav";
 import OverlayEmail from "../../Components/SettingsPageOverlay/SettingsPageOverlayEmail";
-import Footer from "../../../../components/footer/index";
+import Footer from "../../../../components/Footer";
 
 import { Link } from "react-router-dom";
 

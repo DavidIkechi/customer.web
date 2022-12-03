@@ -79,7 +79,7 @@ function SideBar({
             <p>Overview</p>
           </NavLink>
           <NavLink
-            to="/sentiment-analysis"
+            to="/transcriptions/:userId"
             className={({ isActive }) =>
               isActive
                 ? `${styles.active} ${styles.navLink} ${

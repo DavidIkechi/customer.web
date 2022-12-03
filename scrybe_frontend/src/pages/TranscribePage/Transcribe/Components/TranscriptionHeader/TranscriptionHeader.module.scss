@@ -1,0 +1,92 @@
+@function pix-rem($value, $suffix: rem) {
+  $calculate: calc($value/16);
+  @return #{$calculate}#{$suffix};
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: pix-rem(16) pix-rem(40);
+  background-color: #ffffff;
+  box-shadow: 0 8px 6px -6px rgb(0 0 0 / 0.04);
+  filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.04))
+    drop-shadow(0 2px 2px rgb(0 0 0 / 0.03));
+}
+
+.searchBar {
+  padding: pix-rem(12) pix-rem(60) pix-rem(12) pix-rem(12);
+  border: 1px #a9a9a9 solid;
+  border-radius: 4px;
+  font-family: "Kanit";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 24px;
+  width: 300px;
+}
+
+.headerLeftPanel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: pix-rem(48);
+}
+
+.userPanel {
+  display: flex;
+  align-items: center;
+  column-gap: pix-rem(12);
+}
+
+.userImage {
+  border: 2px #b0d1ff solid;
+  width: pix-rem(48);
+  height: pix-rem(48);
+  border-radius: 50%;
+}
+
+.userInfo {
+  p {
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 20px;
+    color: #a9a9a9;
+  }
+}
+
+.userName {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  cursor: pointer;
+
+  h3 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: #454545;
+    margin: 0;
+  }
+}
+
+.uploadButton {
+  display: flex;
+  align-items: center;
+  background-color: #006cff;
+  padding: pix-rem(12) pix-rem(32);
+  border-radius: 4px;
+  border: none;
+  color: #ffffff;
+  column-gap: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 480px) {
+  .header {
+    display: none;
+  }
+}

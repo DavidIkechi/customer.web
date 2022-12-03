@@ -5,7 +5,7 @@ import HowItWorks from "./HowItWorks/index";
 import WhoWeServe from "./WhoWeServe/index";
 import Subscribe from "./Subscribe";
 import Footer from "../../components/footer/index";
-import Navbar from "../../components/navBar_free/index";
+import Navbar from "../../components/NavBarFree/index";
 const NewLandingPageSalesTeam = () => {
   return (
     <div>
