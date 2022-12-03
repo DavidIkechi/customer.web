@@ -55,6 +55,7 @@ import Von from "./pages/Von/Von";
 import LandingPageSalesTeam from "./pages/NewLandingPageSalesTeam/index";
 // import HomePageRedesign from "./Pages/HomePageRedesign";
 import WithAuth from "./HOCs";
+import Support from "./pages/Support/support";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -283,6 +284,7 @@ function App() {
         {/* Error page */}
         <Route path="*" element={<Error />} />
         {/* <Route path="/von" element={<Von />} /> */}
+        <Route path="/support-team" element={<Support />} />
       </Routes>
     </>
   );
