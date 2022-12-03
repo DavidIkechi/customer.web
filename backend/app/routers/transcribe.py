@@ -88,6 +88,8 @@ def view_transcript(job_id: Union[int, str], db: Session = Depends(_services.get
     overall_sentiment = sentiment_result['overall_sentiment']
     most_negative_sentences = sentiment_result['most_negative_sentences']
     most_positive_sentences = sentiment_result ['most_postive_sentences']
+    total_score = positivity_score + neutrality_score + negativity_score
+    average_score = round((positivity_score/ total_score) * 10, 1)
     
     db_audio = db.query(models.Audio).filter(models.Audio.job_id == job_id).first()
     db_audio_id = db_audio.id
@@ -96,6 +98,7 @@ def view_transcript(job_id: Union[int, str], db: Session = Depends(_services.get
     db_audio.negativity_score, db_audio.neutrality_score=negativity_score, neutrality_score
     db_audio.overall_sentiment, db_audio.most_negative_sentences=overall_sentiment, most_negative_sentences 
     db_audio.most_positive_sentences = most_positive_sentences
+    db_audio.average_score = average_score
     db.commit()
 
     db_agent = db.query(models.Agent).filter(models.Agent.aud_id == db_audio_id).first()
