@@ -8,7 +8,7 @@ import styles from "./SignIn.module.scss";
 import AuthApi from "../../App";
 import { Navigate } from "react-router-dom";
 import { useCallback } from "react";
-import Cookie from "js-cookie";
+import Cookies from "js-cookie";
 function Signin() {
   const emailTest = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
   const passwordTest = new RegExp(/^[a-zA-Z]{8,}$/);
@@ -60,13 +60,15 @@ function Signin() {
   useEffect(() => {
     const isValid = validate();
     setIsValid(isValid);
-  }, [validate]);
+  }, [validate, username, password]);
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+    console.group("Submit");
 
     let formData = new FormData();
 
     formData.append("username", username);
+    console.log(username);
     formData.append("password", password);
 
     const config = {
@@ -83,7 +85,8 @@ function Signin() {
         // console.log(response);
 
         const acessToken = response.data.access_token;
-        Cookie.set("heedAccessToken", response?.data?.access_token);
+        Cookies.set("heedAccessToken", response?.data?.access_token);
+        // localStorage.setItem("auth", email);
         // localStorage.setItem("accessToken", acessToken);
 
         // console.log(response.data.access_token);
@@ -111,7 +114,7 @@ function Signin() {
           <div
             className={`${styles.first} ${styles.signin} ${styles.otherThanSignup}`}
           >
-            <h1>Welcome back, Heed!</h1>
+            <h1>Welcome back, Scryber!</h1>
             <h3>Please enter your details</h3>
             <form onSubmit={handleSubmit}>
               <div
