@@ -468,7 +468,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
                 results["week"][7]["totalRecordings"] += 1
 
         if i.timestamp.month == month:
-            results["week"][0]["total_recordings"] += 1
+            results["month"][0]["total_recordings"] += 1
             if i.timestamp.day <= 7:
                 results["month"][1]["totalRecordings"] += 1
             elif 8 <= i.timestamp.day <= 14:
