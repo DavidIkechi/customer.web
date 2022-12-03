@@ -19,3 +19,4 @@ mysql-connector-python==8.0.31
 boto3==1.26.20
 cloudinary==1.30.0
 bitly-api-python==1.0.3
+sqlalchemy-utils==0.38.3
