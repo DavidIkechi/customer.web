@@ -37,6 +37,12 @@ import os
 
 from dotenv import load_dotenv
 
+from starlette.responses import FileResponse
+from starlette.requests import Request
+from starlette.responses import Response
+import boto3
+import uuid
+
 load_dotenv()
 
 
@@ -101,6 +107,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 def main() -> None:
     uvicorn.run(
         "main:app", 
@@ -138,6 +145,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     else:
         db_agent = db.query(models.Agent).filter(models.Agent.first_name == first_name, 
                                      models.Agent.last_name == last_name).first()
+
     try:
         contents = file.file.read()
         with open(file.filename, 'wb') as f:
@@ -157,7 +165,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
         
     except Exception:
         return {"error": "There was an error uploading the file"}
-   
+
     # transcript = transcript
     
     size = audio_details(file.filename)["size"]
@@ -199,7 +207,8 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     
     return {
         "id":audio_id,
-        "transcript_id": transcript_id
+        "transcript_id": transcript_id,
+        "S3 url": audio_s3_url
     }
 
 # create the endpoint
