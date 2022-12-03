@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { NavLink, redirect } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import footerImg from "./assets/forget-pw.svg";
 import styles from "./ForgetPassword.module.scss";
 import axios from "axios";
@@ -10,7 +10,8 @@ import axios from "axios";
 // import { Link } from "react-router-dom";
 
 function ForgetPassword() {
-  const [userEmail, setUserEmail] = useState();
+  const [userInfo, setUserInfo] = useState();
+  const navigate = useNavigate();
   const {
     register,
     watch,
@@ -18,19 +19,22 @@ function ForgetPassword() {
     formState: { errors },
   } = useForm();
 
-  //  eslint-disable no-unused-vars
-  const [userInfo, setUserInfo] = useState();
-  //  eslint-enable no-unused-vars
-  const onSubmit = (data) => {
-    console.log(data);
+  const baseUrl = "https://api.heed.hng.tech/";
+  const submitCallback = (data) => {
     setUserInfo(data);
+    axios
+      .post(baseUrl + "/forgot-password", {
+        email: userInfo.email,
+      })
+      .then((res) => {
+        /* TODO:
+          - When CheckEmail page is implemented, this page should redirect there instead of SetNewPassword
+        */
+        navigate(`/set-new-password?token=${res.data}`);
+      });
   };
 
-  // Watch event for disable button
-
   const email = watch("email");
-
-  console.log("email", email);
 
   const isValid = email;
 
@@ -43,19 +47,7 @@ function ForgetPassword() {
           >
             <h1>Forgot password?</h1>
             <h3>Enter registered email to reset your password</h3>
-            <form
-              onSubmit={handleSubmit(() => {
-                axios
-                  .post("/forgot-password", {
-                    email: email,
-                  })
-                  .then((res) => {
-                    // backend guys are to send email that links to: set-new-password/{token}
-                    console.log(res);
-                    return redirect("/email-sent");
-                  });
-              })}
-            >
+            <form onSubmit={handleSubmit(submitCallback)}>
               <label htmlFor="email">Email</label>
               <input
                 type="email"
