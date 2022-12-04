@@ -57,7 +57,6 @@ class Agent(Base):
 
 class Audio(Base):
     __tablename__ = "audios"
-    job_id = Column(String(255), index=True)
     id = Column(Integer, primary_key=True, index=True)
     audio_path = Column(TEXT)
     filename = Column(TEXT,  nullable = True)
