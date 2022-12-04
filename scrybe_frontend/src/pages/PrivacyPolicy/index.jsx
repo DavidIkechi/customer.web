@@ -36,7 +36,7 @@ function PrivacyPolicy() {
           <h1>PRIVACY POLICY</h1>
           <p>Effective date: 22-11-16</p>
         </div>
-        <div>
+        <div className="privacy-body">
           <Introduction />
           <Definitions />
           <InformationCollectionUse />

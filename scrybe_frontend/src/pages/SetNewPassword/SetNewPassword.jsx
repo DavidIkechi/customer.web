@@ -18,7 +18,7 @@ function SetNewPassword() {
     formState: { errors },
   } = useForm();
 
-  const baseUrl = "https://api.heed.hng.tech/";
+  const baseUrl = "https://api.heed.hng.tech";
   const submitCallback = (data) => {
     setUserInfo(data);
     axios

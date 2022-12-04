@@ -5,7 +5,7 @@ function DataCollected() {
     <div className="sub-container">
       <h1>4. Types of Data Collected</h1>
       <div>
-        <h1>Personal Data</h1>
+        <h2>Personal Data</h2>
         <p>
           While using our Service, we may ask you to provide us with certain
           personally identifiable information that can be used to contact or
@@ -29,7 +29,7 @@ function DataCollected() {
         </p>
       </div>
       <div>
-        <h1>Usage Data</h1>
+        <h2>Usage Data</h2>
         <p>
           We may also collect information that your browser sends whenever you
           visit our Service or when you access Service by or through any device(
@@ -51,7 +51,7 @@ function DataCollected() {
         </p>
       </div>
       <div>
-        <h1>Tracking Cookies Data</h1>
+        <h2>Tracking Cookies Data</h2>
         <p>
           We use cookies and similar tracking technologies to track the activity
           on our Service and we hold certain information.
@@ -91,7 +91,7 @@ function DataCollected() {
         </ol>
       </div>
       <div>
-        <h1>Other Data</h1>
+        <h2>Other Data</h2>
         <p>
           While using our Service, we may also collect the following
           information: sex, age, date of birth, place of birth, passport

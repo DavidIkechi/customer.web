@@ -61,7 +61,7 @@
   color: #006cff;
 }
 .pricing .hero .container .heroImage {
-  width: min(100%, 38.3125rem);
+  max-width: 100%;
   margin-inline: auto;
 }
 
@@ -111,10 +111,15 @@
   cursor: pointer;
 }
 
-.pricing button .ctaMonth.active {
+.pricing .CTA .CTAs .listItemActive {
   background-color: #004db5;
   color: white;
 }
+.pricing .CTA .CTAs .listItemInActive {
+  background-color: transparent;
+  color: #004db5;
+}
+
 .hidden {
   display: none;
 }
@@ -247,7 +252,7 @@
     width: pix-rem(700);
   }
 }
- .pricingthead {
+.pricing thead {
   background-color: #005584;
   color: #fff;
   font-weight: 500;
@@ -337,7 +342,7 @@
   border-radius: 0.25rem;
   text-align: center;
   margin-right: 2rem;
-  color: #006CFF;
+  color: #006cff;
   @include media(1220px) {
     margin-block: pix-rem(20);
   }
