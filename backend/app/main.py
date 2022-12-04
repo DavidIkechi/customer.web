@@ -13,10 +13,18 @@ from routers.transcribe import transcript_router
 from routers.score import score_count
 import models, json
 from auth import get_active_user, get_current_user, get_admin
-from jwt import (
-    main_login
+from jwt import main_login, get_access_token
 
-)
+
+from authlib.integrations.starlette_client import OAuth
+from authlib.integrations.starlette_client import OAuthError
+from fastapi import FastAPI
+from fastapi import Request
+from starlette.config import Config
+from starlette.middleware.sessions import SessionMiddleware
+from starlette.responses import HTMLResponse
+from starlette.responses import RedirectResponse
+
 
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from db import Base, engine, SessionLocal
@@ -103,6 +111,30 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+# OAuth settings
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID') or None
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET') or None
+if GOOGLE_CLIENT_ID is None or GOOGLE_CLIENT_SECRET is None:
+    raise BaseException('Missing env variables')
+
+# Set up OAuth
+config_data = {'GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID, 'GOOGLE_CLIENT_SECRET': GOOGLE_CLIENT_SECRET}
+starlette_config = Config(environ=config_data)
+oauth = OAuth(starlette_config)
+oauth.register(
+    name='google',
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+    client_kwargs={'scope': 'openid email profile'},
+)
+
+# Set up the middleware to read the request session
+SECRET_KEY = os.getenv('SECRET_KEY') or None
+if SECRET_KEY is None:
+    raise BaseException('Missing SECRET_KEY')
+app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY)
+
 
 
 def main() -> None:
@@ -583,6 +615,51 @@ async def reset_password(token: str, new_password: schema.UpdatePassword, db: Se
         raise HTTPException(status_code=500)
     
     return reset_done
+
+
+
+@app.get('/')
+def public(request: Request):
+    user = request.session.get('user')
+    if user:
+        name = user.get('name')
+        return HTMLResponse(f'<p>Hello {name}!</p><a href=/logout>Logout</a>')
+    return HTMLResponse('<a href=/login>Login</a>')
+
+
+@app.route('/logout')
+async def logout(request: Request):
+    request.session.pop('user', None)
+    return RedirectResponse(url='/')
+
+
+@app.route('/login/google')
+async def login(request: Request):
+    redirect_uri = request.url_for('auth')  # This creates the url for our /auth endpoint
+    return await oauth.google.authorize_redirect(request, redirect_uri)
+
+
+@app.route('/auth/google')
+async def auth(request: Request):
+    try:
+        access_token = await oauth.google.authorize_access_token(request)
+    except OAuthError:
+        raise HTTPException(status_code=500, detail='Something went wrong while authenticating')
+    user_data = access_token['userinfo']
+    print(user_data)
+    email = user_data.email
+    user_db = crud.get_user_by_email(email)
+
+    if not user_db:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    tokens = get_access_token(email)
+    # print ('access_token = ', access_token)
+    # user_data = await oauth.google.parse_id_token(request, access_token)
+    # print('user_data = ', user_data)
+    # request.session['user'] = dict(user_data)
+    return tokens
+
 
 
 if __name__ == "__main__":
