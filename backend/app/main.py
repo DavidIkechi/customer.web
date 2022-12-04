@@ -40,6 +40,11 @@ import os
 
 from dotenv import load_dotenv
 
+from starlette.responses import FileResponse
+from starlette.requests import Request
+from starlette.responses import Response
+import boto3
+
 
 load_dotenv()
 
@@ -133,6 +138,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     first_name = first_name.lower()
     last_name = last_name.lower()
     agent_name = "%s %s" %(first_name, last_name)
+  
     
     # if the agent name is already in the database before creating for the agent.
     if not db.query(models.Agent).filter(models.Agent.first_name == first_name, 
@@ -208,7 +214,8 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     
     return {
         "id":audio_id,
-        "transcript_id": transcript_id
+        "transcript_id": transcript_id,
+        #"s3 url": audio_s3_url
     }
 
 # create the endpoint
@@ -505,19 +512,18 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
 
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    try:
-        results = db.execute("""SELECT agent_id,
-            agent_firstname,
-            agent_lastname,
-            SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score,
-            SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score,
-            SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
-            average_score AS Average_score
-        FROM audios GROUP BY agent_id
-        ORDER BY Positive_score DESC""")
-
-    except Exception:
-        raise {"status_code": 404, "error": "Results not found"}
+    results = db.execute("""SELECT audios.id,
+        agents.first_name,
+        agents.last_name,
+        SUM(CASE WHEN audios.overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score,
+        SUM(CASE WHEN audios.overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score,
+        SUM(CASE WHEN audios.overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
+        round(audios.positivity_score /(audios.positivity_score + audios.neutrality_score + audios.negativity_score) * 10, 1) AS Average_score
+    FROM audios
+    INNER JOIN agents
+    ON audios.agent_id = agents.id
+    GROUP BY audios.agent_id
+    ORDER BY Average_score DESC""")
 
     leaderboard = [dict(r) for r in results]
     top3_agents = leaderboard[:3]
