@@ -506,14 +506,17 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
 
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    results = db.execute("""SELECT agent_id,
-        agent_firstname,
-        agent_lastname,
-        SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score,
-        SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score,
-        SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
-        average_score AS Average_score
-    FROM audios GROUP BY agent_id
+    results = db.execute("""SELECT audios.id,
+        agents.first_name,
+        agents.last_name,
+        SUM(CASE WHEN audios.overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score,
+        SUM(CASE WHEN audios.overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score,
+        SUM(CASE WHEN audios.overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
+        round(audios.positivity_score /(audios.positivity_score + audios.neutrality_score + audios.negativity_score) * 10, 1) AS Average_score
+    FROM audios
+    INNER JOIN agents
+    ON audios.agent_id = agents.id
+    GROUP BY audios.agent_id
     ORDER BY Positive_score DESC""")
 
     leaderboard = [dict(r) for r in results]
