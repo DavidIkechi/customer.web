@@ -6,6 +6,7 @@ import TranscriptionRightBar from "./TranscriptionRightBar/TranscriptionRightBar
 import axios from "axios";
 
 function TranscriptionMain() {
+  const [transcription_id, setTranscriptionId] = useState("");
   const [formattedData, setFormattedData] = useState([]);
 
   const [timeUpdateTracker, setTimeUpdateTracker] = useState(false);
@@ -56,6 +57,12 @@ function TranscriptionMain() {
     fetchAudio();
   }, []);
 
+  const getTranscriptionId = () => {
+    return window.location.pathname.substring(
+      16,
+      window.location.pathname.length
+    );
+  };
   //fetch data from custom API for now.
   const fetchData = () => {
     axios
@@ -67,7 +74,8 @@ function TranscriptionMain() {
         console.log(err);
       });
   };
-  const fetchActualData = () => {
+  //fetch data(transcription text and audio) from our API.
+  const fetchActualData = (transcription_id) => {
     const data =
       "grant_type=password&username=arcteggzz%40gmail.com&password=123456789&scope=&client_id=&client_secret=";
     axios.post("https://api.heed.hng.tech/login", data).then((res) => {
@@ -75,14 +83,10 @@ function TranscriptionMain() {
         Authorization: `Bearer ${res.data.access_token}`,
       };
       axios
-        .get(
-          `https://api.heed.hng.tech/transcription/r0xs7je53o-afe2-4fa7-b61b-3a2588e1e92f`,
-          {
-            headers,
-          }
-        )
+        .get(`https://api.heed.hng.tech/transcription/${transcription_id}`, {
+          headers,
+        })
         .then((newRes) => {
-          // console.log(newRes.data.sentiment_result.transcript);
           setFormattedData(
             generateArray(newRes.data.sentiment_result.transcript)
           );
@@ -90,8 +94,9 @@ function TranscriptionMain() {
     });
   };
   useEffect(() => {
-    fetchActualData();
+    fetchActualData(getTranscriptionId());
   }, []);
+
   // format array function
   const generateArray = (str) => {
     const cleanedData = [];
