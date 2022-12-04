@@ -4,21 +4,24 @@ import AgentRecordings from "./components/AgentRecordings";
 import Charts from "./components/ChartContainer";
 import styles from "./styles/AgentReport.module.scss";
 
-import Sidebar from "../../components/SideBar/index";
+import NewDesignSidebar from "../../components/NewDesignSidebar";
+import TopNav from "../../components/TopNav";
 
 function AgentReport() {
   return (
     <>
-      <Sidebar />
-      <div className={styles.container}>
-        <div className={styles.mainWrapper}>
-          <div className={styles.topDetailsDiv}>
-            <Charts />
-            <AgentDetails />
+      <TopNav />
+      <NewDesignSidebar>
+        <div className={styles.container}>
+          <div className={styles.mainWrapper}>
+            <div className={styles.topDetailsDiv}>
+              <Charts />
+              <AgentDetails />
+            </div>
+            <AgentRecordings />
           </div>
-          <AgentRecordings />
         </div>
-      </div>
+      </NewDesignSidebar>
     </>
   );
 }

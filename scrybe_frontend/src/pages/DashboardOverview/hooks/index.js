@@ -15,9 +15,9 @@ const useMockAuthAndGetRecording = () => {
           headers,
         })
         .then((newRes) => {
-          console.log("newR", newRes);
+          // console.log("newR", newRes);
           setRecentRecordings(newRes.data);
-          console.log("Ndata", newRes.data);
+          // console.log("Ndata", newRes.data);
         });
     });
   }, []);
@@ -27,7 +27,7 @@ const useMockAuthAndGetRecording = () => {
 export { useMockAuthAndGetRecording };
 
 const useMockAuthAndTotalAnalysis = () => {
-  const [totalAnalysis, setTotalAnalysis] = useState({});
+  const [totalAnalysis, setTotalAnalysis] = useState(null);
 
   useEffect(() => {
     const data =
@@ -42,6 +42,7 @@ const useMockAuthAndTotalAnalysis = () => {
         })
         .then((newRes) => {
           setTotalAnalysis(newRes.data);
+          // console.log("Ndata", newRes.data);
         });
     });
   }, []);
@@ -51,7 +52,7 @@ const useMockAuthAndTotalAnalysis = () => {
 export { useMockAuthAndTotalAnalysis };
 
 const useMockAuthAndTotalRecording = () => {
-  const [totalRecording, setTotalRecording] = useState({});
+  const [totalRecording, setTotalRecording] = useState(null);
 
   useEffect(() => {
     const data =

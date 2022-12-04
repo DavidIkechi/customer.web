@@ -101,6 +101,16 @@
     display: flex;
     justify-content: center;
   }
+  .empty_state {
+    padding: 6rem 0;
+    p {
+      font-weight: 300;
+      font-size: 1rem;
+      line-height: 24px;
+      text-align: center;
+      color: #454545;
+    }
+  }
 }
 // analysis
 .analysis {
@@ -148,8 +158,6 @@
         font-weight: 500;
         font-size: 2rem;
         color: #1d1d1d;
-        // width: 40px;
-        // margin: -4px 0px;
       }
       span {
         margin: 0;
@@ -185,6 +193,16 @@
       .negative {
         background: #f88178;
       }
+    }
+  }
+  .empty_state {
+    padding: 6rem 0;
+    p {
+      font-weight: 300;
+      font-size: 1rem;
+      line-height: 24px;
+      text-align: center;
+      color: #454545;
     }
   }
 }
