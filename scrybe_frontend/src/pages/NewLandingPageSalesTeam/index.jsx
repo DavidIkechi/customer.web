@@ -1,11 +1,11 @@
 import React from "react";
-import Hero from "./Hero/index";
+import Footer from "../../components/Footer";
+import Navbar from "../../components/NavbarFree";
 import Help from "./Help/index";
+import Hero from "./Hero/index";
 import HowItWorks from "./HowItWorks/index";
-import WhoWeServe from "./WhoWeServe/index";
 import Subscribe from "./Subscribe";
-import Footer from "../../components/footer/index";
-import Navbar from "../../components/navBar_free/index";
+import WhoWeServe from "./WhoWeServe/index";
 const NewLandingPageSalesTeam = () => {
   return (
     <div>

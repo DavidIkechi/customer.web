@@ -1,14 +1,14 @@
 import React from "react";
-import MainPageCss from "./Settings.module.scss";
-import PersonalInformation from "../SettingsPageSubPages/PersonalInformation/PersonalInformationSettings";
+import SideBar from "../../../components/SideBar";
+import ChevronRight from "../assets/icons/chevron-right.svg";
+import ProfilePic from "../assets/images/Pic.png";
+import Overlay from "../Components/SettingsPageOverlay/SettingsPageOverlay";
 import AccountSetting from "../SettingsPageSubPages/AccountSettings/AccountSettings";
 import Notification from "../SettingsPageSubPages/Notifications/NotificationSettings";
-import Overlay from "../Components/SettingsPageOverlay/SettingsPageOverlay";
-import ProfilePic from "../assets/images/Pic.png";
-import ChevronRight from "../assets/icons/chevron-right.svg";
-import SideBar from "../../../components/SideBar";
+import PersonalInformation from "../SettingsPageSubPages/PersonalInformation/PersonalInformationSettings";
+import MainPageCss from "./Settings.module.scss";
 // import NavBar from "../../../components/navBar/index";
-import Footer from "../../../components/footer/index";
+import Footer from "../../../components/Footer";
 
 import { Link } from "react-router-dom";
 

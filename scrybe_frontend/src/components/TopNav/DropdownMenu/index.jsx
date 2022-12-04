@@ -1,4 +1,4 @@
-import Cookie from "js-cookie";
+import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 import account from "./assets/account.jpg";
 import logout from "./assets/logout.jpg";
@@ -21,7 +21,10 @@ function DropDownModal({ closeModal }) {
         <Link
           to="/logout"
           className={styles.p}
-          onClick={() => Cookie.remove("heedAccessToken")}
+          onClick={() => {
+            Cookies.remove("heedAccessToken");
+            localStorage.removeItem("auth");
+          }}
         >
           Logout
         </Link>
