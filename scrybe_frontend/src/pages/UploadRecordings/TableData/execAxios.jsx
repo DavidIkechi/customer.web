@@ -7,7 +7,7 @@ const headers = {
   Authorization: `Bearer ${token}`,
 };
 export const fetchData = async (url) => {
-  const { data } = await axios.get(url);
+  const { data } = await axios.get(url, headers);
   return data;
 };
 

@@ -98,10 +98,7 @@ const TableData = ({ searchKeyword }) => {
   const timeLeft = 20;
 
   useEffect(() => {
-    const newRecordings = fetchData("list-audios-by-user", {
-      headers: "application/json",
-      contentType: "application/json",
-    });
+    const newRecordings = fetchData("list-audios-by-user");
     console.log(newRecordings);
     // if (newRecordings) {
     //   setAllRecordings([newRecordings]);
