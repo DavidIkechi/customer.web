@@ -89,12 +89,14 @@ origins = [
     "http://localhost:80",
     "http://localhost:3000",
     "http://localhost:5173",
+    "http://localhost:1111",
     "http://localhost:8000",
     "https://heed.hng.tech",
     "http://heed.hng.tech",
     "https://heed.hng.tech:80",
     "https://heed.hng.tech:3000",
     "https://heed.hng.tech:5173",
+    "https://heed.hng.tech:1111",
 ]
 
 app.add_middleware(
