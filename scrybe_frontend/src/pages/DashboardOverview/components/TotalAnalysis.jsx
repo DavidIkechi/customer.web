@@ -1,7 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
-import { totalAnalysisData } from "../Data";
+import { useMockAuthAndTotalAnalysis } from "../hooks";
+// import { totalAnalysisData } from "../Data";
 import styles from "../DashboardOverview.module.scss";
 import analysis from "../assets/analytics.svg";
 import {
@@ -14,22 +15,18 @@ import {
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement);
 
 const TotalAnalysis = () => {
+  const totalAnalysisData = useMockAuthAndTotalAnalysis();
+
   const [selectedTotalAnalysis, setSelectedTotalAnalysis] = useState([]);
   const [chartData, setChartData] = useState({
     datasets: [],
   });
   const [chartOptions, setChartOptions] = useState({});
 
-  // const [doughnutChart, setDoughnutChart] = useState({
-  //   datasets: [],
-  // });
   useEffect(() => {
     setChartData({
       labels: "",
       datasets: [
-        //   ${data.positive}
-        //   ${data.neutral}
-        //  ${data.negative}
         {
           label: selectedTotalAnalysis.map((data) => data.positive),
           data: [20, 12, 3],
@@ -42,12 +39,21 @@ const TotalAnalysis = () => {
       cutout: "60%",
       offset: 0,
       spacing: 0,
-      plugins: { legend: { display: false, position: "bottom" } },
+      plugins: {
+        legend: { display: false, position: "bottom" },
+        tooltip: {
+          enabled: false,
+        },
+      },
     });
   }, [selectedTotalAnalysis]);
 
   useEffect(() => {
-    setSelectedTotalAnalysis(totalAnalysisData.week);
+    if (totalAnalysisData) {
+      setSelectedTotalAnalysis(totalAnalysisData.week);
+    } else {
+      setSelectedTotalAnalysis([]);
+    }
   }, []);
 
   function analysisTimeStampFunc(e) {
@@ -64,48 +70,36 @@ const TotalAnalysis = () => {
           <option value="month">This month</option>
         </select>
       </div>
-      <div className={styles.total_analysis_chart}>
-        <div style={{ width: 200 }}>
-          <Doughnut options={chartOptions} data={chartData} />
+      {selectedTotalAnalysis.length > 0 ? (
+        <div className={styles.total_analysis_chart}>
+          <div className={styles.doughnut_chart}>
+            <Doughnut options={chartOptions} data={chartData} />
+            <div className={styles.chart_inner}>
+              <h1>{selectedTotalAnalysis?.map((data) => data.positive)}%</h1>
+              <span>+ve</span>
+            </div>
+          </div>
+          <div className={styles.scale}>
+            <h3>
+              <span className={styles.positive}>1</span> Positive{" "}
+              {selectedTotalAnalysis?.map((data) => data.positive)}%
+            </h3>
+            <h3>
+              {" "}
+              <span className={styles.neutral}>1</span>Neutral{" "}
+              {selectedTotalAnalysis?.map((data) => data.neutral)}
+            </h3>
+            <h3>
+              <span className={styles.negative}>1</span> Negative{" "}
+              {selectedTotalAnalysis?.map((data) => data.negative)}
+            </h3>
+          </div>
         </div>
-        {/* <div style={{ width: 170 }}>
-          <Doughnut
-            data="test"
-            options={{
-              cutout: "60%",
-              offset: 0,
-              spacing: 0,
-              // plugins: { legend: { display: false, position: "bottom" } },
-            }}
-          />
-        </div> */}
-        {/* <div className={styles.circles}>
-          <div className={styles.meduim}>
-            {selectedTotalAnalysis.map((data) => data.neutral)}%
-          </div>
-          <div className={styles.small}>
-            {selectedTotalAnalysis.map((data) => data.negative)}%
-          </div>
-          <div className={styles.big}>
-            {selectedTotalAnalysis.map((data) => data.positive)}%
-          </div>
-        </div> */}
-        <div className={styles.scale}>
-          <h3>
-            <span className={styles.positive}>1</span> Positive{" "}
-            {selectedTotalAnalysis.map((data) => data.positive)}%
-          </h3>
-          <h3>
-            {" "}
-            <span className={styles.neutral}>1</span>Neutral{" "}
-            {selectedTotalAnalysis.map((data) => data.neutral)}
-          </h3>
-          <h3>
-            <span className={styles.negative}>1</span> Negative{" "}
-            {selectedTotalAnalysis.map((data) => data.negative)}
-          </h3>
+      ) : (
+        <div className={styles.empty_state}>
+          <p>An overview of your teams sentiment analysis report shows here.</p>
         </div>
-      </div>
+      )}
     </div>
   );
 };

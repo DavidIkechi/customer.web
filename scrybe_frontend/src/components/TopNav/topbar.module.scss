@@ -13,7 +13,18 @@
     align-items: center;
     justify-content: center;
     img {
-      margin-right: 1rem;
+      margin-right: 5px;
+    }
+    .logoLink {
+      display: flex;
+      margin-left: 1rem;
+    }
+    p {
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 26px;
+      color: #6a6a6a;
+      // margin-left: 1rem;
     }
     display: none;
   }
@@ -109,7 +120,7 @@
     }
   }
 }
-.showDropup .arrow {
+.showDropup .arrow{
   transform: rotate(180deg);
   -webkit-transform: rotate(180deg);
   -moz-transform: rotate(180deg);

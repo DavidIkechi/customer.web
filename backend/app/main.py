@@ -1,10 +1,12 @@
-from typing import List
+from typing import List, Union
+from pathlib import Path
 from models import Audio
 from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form, Query
 from fastapi_pagination import Page, paginate, Params
 from fastapi.middleware.cors import CORSMiddleware
 from routers.sentiment import sentiment
-from routers.transcribe import transcribe_file
+from routers.transcribe import transcribe_file, get_transcript_result
+from routers import sentiment
 import auth
 from routers.score import score_count
 import uvicorn
@@ -28,6 +30,7 @@ import fastapi as _fastapi
 import cloudinary
 import cloudinary.uploader
 from BitlyAPI import shorten_urls
+import services as _services
 
 from datetime import datetime
 
@@ -36,6 +39,12 @@ import shutil
 import os
 
 from dotenv import load_dotenv
+
+from starlette.responses import FileResponse
+from starlette.requests import Request
+from starlette.responses import Response
+import boto3
+
 
 load_dotenv()
 
@@ -85,12 +94,14 @@ origins = [
     "http://localhost:80",
     "http://localhost:3000",
     "http://localhost:5173",
+    "http://localhost:1111",
     "http://localhost:8000",
     "https://heed.hng.tech",
     "http://heed.hng.tech",
     "https://heed.hng.tech:80",
     "https://heed.hng.tech:3000",
     "https://heed.hng.tech:5173",
+    "https://heed.hng.tech:1111",
 ]
 
 app.add_middleware(
@@ -101,6 +112,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 def main() -> None:
     uvicorn.run(
         "main:app", 
@@ -108,6 +120,7 @@ def main() -> None:
         port=int(os.getenv("PORT")), 
         reload=os.getenv("RELOAD")
     )
+
 
 
 @app.get("/")
@@ -125,6 +138,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     first_name = first_name.lower()
     last_name = last_name.lower()
     agent_name = "%s %s" %(first_name, last_name)
+  
     
     # if the agent name is already in the database before creating for the agent.
     if not db.query(models.Agent).filter(models.Agent.first_name == first_name, 
@@ -137,6 +151,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     else:
         db_agent = db.query(models.Agent).filter(models.Agent.first_name == first_name, 
                                      models.Agent.last_name == last_name).first()
+
     try:
         contents = file.file.read()
         with open(file.filename, 'wb') as f:
@@ -145,10 +160,11 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
         return {"error": "There was an error uploading the file"}
     finally:
         file.file.close()
-    
+
     try:
-        result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
-        url = result.get("url")
+        result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
+                                            chunk_size = 6000000)
+        url = result.get("secure_url")
         urls = [url]
         response = shorten_urls(urls)
         retrieve_url = response[0]
@@ -156,9 +172,10 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
         
     except Exception:
         return {"error": "There was an error uploading the file"}
+
     # transcript = transcript
     
-    size = audio_details(file.filename)["size"]
+    size = Path(file.filename).stat().st_size
     duration = audio_details(file.filename)["mins"]
     transcript = transcribe_file(new_url)
     # get some essential parameters
@@ -166,8 +183,10 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     job_status = transcript['status']
     transcript_id = transcript['id']
     
-    db_audio = models.Audio(audio_path=audio_url, filename= str(file.filename), job_id = transcript_id, user_id=user_id, size=size, duration=duration, 
-                            agent_id=db_agent.id)
+
+    db_audio = models.Audio(audio_path=audio_url, job_id = transcript_id, user_id=user_id, size=size, duration=duration, 
+                            agent_id=db_agent.id, agent_firstname= db_agent.first_name, agent_lastname=db_agent.last_name, 
+                            filename = file.filename)
 
     db.add(db_audio)
     db.commit()
@@ -196,7 +215,8 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     
     return {
         "id":audio_id,
-        "transcript_id": transcript_id
+        "transcript_id": transcript_id,
+        #"s3 url": audio_s3_url
     }
 
 # create the endpoint
@@ -232,6 +252,19 @@ def read_user(user_id: int, db: Session = Depends(get_db), user: models.User = D
     return db_user
 
 
+@app.post("/users/upload_picture", summary="Upload company logo image", status_code=status.HTTP_202_ACCEPTED, tags=['users'])
+def upload_picture(db:Session = Depends(get_db), image_file: UploadFile = File(..., description="Company Profile Image/Logo"), 
+                   current_user:schema.User = Depends(get_active_user)):
+    return crud.upload_user_image(user_id=current_user.id, db=db, image_file=image_file)
+
+@app.patch("/users/update_profile/{user_id}", summary="Update user profile details", status_code=status.HTTP_200_OK, tags=['users'])
+def update_adress(profile:schema.UserProfileUpdate, user_id:int, db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
+    return crud.update_user_profile(db=db, profile=profile, user_id=user_id)
+
+@app.delete("/users/delete_account/{user_id}", summary="delete user account", status_code=status.HTTP_204_NO_CONTENT, tags=['users'])
+def delete_user_account(user_id:int, db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
+    crud.delete_user(db=db, user_id=user_id, current_user=current_user)
+
 @app.get('/verification', summary = "verify a user by email", tags=['users'])
 async def email_verification(request: Request, token: str, db: Session = Depends(get_db)):
 
@@ -247,7 +280,7 @@ async def email_verification(request: Request, token: str, db: Session = Depends
             "data" : f"Hello {user.first_name}, your account has been successfully verified"}
 
 @app.post("/tryForFree")
-async def free_trial(file: UploadFile = File(...)):
+async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...)):
     ####### saving the audio file
     with open(f'{file.filename}', "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
@@ -259,10 +292,57 @@ async def free_trial(file: UploadFile = File(...)):
     elif getSize > fileSize :
         raise HTTPException(status_code = 406, detail="File Must Not Be More Than 5MB")
     else:
-        ######### Load audio file
-        transcript = transcribe_file(file.filename)
-        transcript = transcript
-        return{"transcript": transcript}
+        try:
+            result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
+                                            chunk_size = 6000000)
+            url = result.get("secure_url")
+            urls = [url]
+            response = shorten_urls(urls)
+            retrieve_url = response[0]
+            new_url = retrieve_url.short_url
+        except Exception:   
+            return {"error": "There was an error uploading the file"}
+        # transcript = transcript
+    transcript = transcribe_file(new_url)
+    # get some essential parameters
+    transcript_id = transcript['id']
+    transcript_status = transcript['status']
+
+    callback = models.FreeTrial(transcript_id = transcript_id, transcript_status=transcript_status)
+
+    db.add(callback)
+    db.commit()
+    db.refresh(callback)
+    # delete the file
+    os.remove(file.filename)
+
+    return {"transcript_id": transcript_id, "status": transcript_status}
+
+
+@app.get("/get_transcript/{transcript_id}", description="Retrieving transcript by audio ID")
+def view_transcript(transcript_id: Union[int, str], db: Session = Depends(_services.get_session)):
+    transcript = db.query(models.FreeTrial).filter(models.FreeTrial.transcript_id == transcript_id).first()
+    if not transcript:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, 
+            detail=f"Transcription with id: {transcript_id} was not found")
+    transcript_audio_id = transcript_id
+    
+    
+    transcript_audio = get_transcript_result(transcript_audio_id)
+    transcript.job_status = transcript_audio['status']
+    # db.commit()
+    
+    if transcript_audio['status'] != "completed":
+        return {"status":transcript_audio['status']}
+    else:
+        # get the text.
+        transcripted_word = transcript_audio['text']
+        sentiment_result = sentiment.sentiment(transcripted_word)
+
+        overall_sentiment = sentiment_result['overall_sentiment']
+
+        return {"transcription": transcripted_word, "overall_sentiment_result": overall_sentiment}
 
 
 @app.get('/history', summary = "get user history", response_model=Page[schema.History])
@@ -308,7 +388,9 @@ def list_audios_by_user(db: Session = Depends(get_db), user: models.User = Depen
         audios.append(audio)
     return audios
     
-
+@app.get("/get_uploaded_jobs", summary="List all uploaded jobs with job details", status_code=status.HTTP_200_OK, tags=['jobs'])
+def get_uploaded_jobs(db:Session = Depends(get_db), current_user = Depends(get_active_user), skip: int = 0, limit: int = 0):
+    return crud.get_jobs_uploaded(db=db, skip=skip, limit=limit, current_user=current_user)
 
 @app.get('/audios/{audio_id}/sentiment')
 def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
@@ -381,6 +463,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
     month = datetime.now().month
     results = {
         "week": [
+            {"total_recordings": 0},
             {"id": 1, "time": "M", "totalRecordings": 0},
             {"id": 2, "time": "T", "totalRecordings": 0},
             {"id": 3, "time": "W", "totalRecordings": 0},
@@ -390,6 +473,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
             {"id": 7, "time": "S", "totalRecordings": 0}
         ],
         "month": [
+            {"total_recordings": 0},
             {"id": 1, "time": "wk1", "totalRecordings": 0},
             {"id": 2, "time": "wk2", "totalRecordings": 0},
             {"id": 3, "time": "wk3", "totalRecordings": 0},
@@ -398,46 +482,60 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
     }
     for i in total_recordings:
         if i.timestamp.isocalendar().week == week:
+            results["week"][0]["total_recordings"] += 1
             if i.timestamp.weekday() == 0:
-                results["week"][0]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 1:
                 results["week"][1]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 2:
+            elif i.timestamp.weekday() == 1:
                 results["week"][2]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 3:
+            elif i.timestamp.weekday() == 2:
                 results["week"][3]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 4:
+            elif i.timestamp.weekday() == 3:
                 results["week"][4]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 5:
+            elif i.timestamp.weekday() == 4:
                 results["week"][5]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 6:
+            elif i.timestamp.weekday() == 5:
                 results["week"][6]["totalRecordings"] += 1
+            elif i.timestamp.weekday() == 6:
+                results["week"][7]["totalRecordings"] += 1
 
         if i.timestamp.month == month:
+            results["month"][0]["total_recordings"] += 1
             if i.timestamp.day <= 7:
-                results["month"][0]["totalRecordings"] += 1
-            elif 8 <= i.timestamp.day <= 14:
                 results["month"][1]["totalRecordings"] += 1
-            elif 15 <= i.timestamp.day <= 21:
+            elif 8 <= i.timestamp.day <= 14:
                 results["month"][2]["totalRecordings"] += 1
-            elif 22 <= i.timestamp.day <= 31:
+            elif 15 <= i.timestamp.day <= 21:
                 results["month"][3]["totalRecordings"] += 1
+            elif 22 <= i.timestamp.day <= 31:
+                results["month"][4]["totalRecordings"] += 1
 
     return results
 
 
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    results = db.execute("""SELECT agent_id,
-        agent_firstname,
-        agent_lastname,
-        SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score,
-        SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score,
-        SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
-        round(positivity_score/(positivity_score+negativity_score+neutrality_score) * 10, 2) AS Avergae_score
-    FROM audios GROUP BY agent_id
-    ORDER BY Positive_score DESC""")
-    leaderboard = [dict(r) for r in results]
+    top3_agents = []
+    others = []
+    
+    results = db.query(models.Audio).filter(models.Audio.user_id == user.id).all()
+    leaderboard = []
+    for i in results:
+        # get the agent
+        leader_board = {
+            "first_name": i.agent_firstname,
+            "last_name": i.agent_lastname,
+            "agent_id": i.agent_id,
+            "positive_score": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
+                                                        models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == "Positive").count(), 
+            "negative_score": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
+                                                        models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == 'Negative').count(),
+            "neutral": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
+                                                models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == 'Neutral').count(),
+            "average_score": i.average_score
+        }
+        leaderboard.append(leader_board)
+    leaderboard = sorted(leaderboard, key=lambda k: k['positive_score'], reverse=True)
+
     top3_agents = leaderboard[:3]
     others = leaderboard[3:]
     return {"Top3 Agents": top3_agents, "Other Agents": others}
@@ -530,4 +628,29 @@ def delete_audios(audios: List[int] = Query(None), db: Session = Depends(get_db)
             db.commit()
             deleted_audios.append(db_audio.audio_path)
     return {"message": "operation successful", "deleted audion(s)": deleted_audios}
-            
+
+
+
+@app.get("/download/{id}")
+def download (id: Union[int, str], db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    db_audio = db.query(models.Audio).filter(models.Audio.job_id == id).first()
+
+    if db_audio is None:
+        raise HTTPException(status_code=404, detail="No Audio With This ID")
+    else:
+        positivity_score = float(db_audio.positivity_score)
+        negativity_score = float(db_audio.negativity_score)
+        neutrality_score = float(db_audio.neutrality_score)
+        overall_sentiment = str(db_audio.overall_sentiment)
+        most_positive_sentences = json.loads(db_audio. most_positive_sentences)
+        most_negative_sentences = json.loads(db_audio. most_negative_sentences)
+        transcript = db_audio.transcript
+        sentiment = {"transcript": transcript,
+                    "positivity_score": positivity_score,
+                    "negativity_score": negativity_score,
+                    "neutrality_score": neutrality_score,
+                    "overall_sentiment": overall_sentiment,
+                    "most_positive_sentences": most_positive_sentences,
+                    "most_negative_sentences": most_negative_sentences,
+                    }
+        return sentiment

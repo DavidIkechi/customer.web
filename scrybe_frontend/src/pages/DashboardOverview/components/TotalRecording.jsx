@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { totalRecordingData } from "../Data";
+// import { totalRecordingData } from "../Data";
+import { useMockAuthAndTotalRecording } from "../hooks";
 import { Bar } from "react-chartjs-2";
 import styles from "../DashboardOverview.module.scss";
 import toneWave from "../assets/tone_wave.svg";
@@ -13,6 +14,8 @@ import {
 ChartJS.register(CategoryScale, LinearScale, BarElement);
 
 const TotalRecording = () => {
+  const totalRecordingData = useMockAuthAndTotalRecording();
+
   const [chartData, setChartData] = useState({
     datasets: [],
   });
@@ -26,7 +29,6 @@ const TotalRecording = () => {
         {
           label: "",
           data: selectedTotalRecordings.map((data) => data.totalRecordings),
-
           backgroundColor: ["#B0CAD9", "#005584", "#548DAD", "#004D78"],
           maxBarThickness: 10,
           borderSkipped: "start",
@@ -35,23 +37,32 @@ const TotalRecording = () => {
     });
     setChartOptions({
       responsive: false,
+      spacing: 10,
+      borderSkipped: "bottom",
       plugins: {
         legend: {
           display: false,
+        },
+        tooltip: {
+          enabled: false,
         },
       },
     });
   }, [selectedTotalRecordings]);
 
   useEffect(() => {
-    setSelectedTotalRecordings(totalRecordingData.week);
+    if (totalRecordingData) {
+      setSelectedTotalRecordings(totalRecordingData.week);
+    } else {
+      setSelectedTotalRecordings([]);
+    }
   }, []);
 
   function recordingsTimeStampFunc(e) {
     setSelectedTotalRecordings(totalRecordingData[e.target.value]);
   }
   return (
-    <div className={styles.recordings_container}>
+    <div className={styles.recordings}>
       <div className={styles.recordings__heading}>
         <h1>
           <img src={toneWave} alt="" /> Total Recordings
@@ -64,13 +75,23 @@ const TotalRecording = () => {
           <option value="week">This week</option>
           <option value="month">This month</option>
         </select>
-        {/* <h2 className={styles.thismonth}>
+      </div>
+
+      {/* <h2 className={styles.thismonth}>
       This month <img src={chevron} alt="" />
     </h2> */}
-      </div>
-      <div className={styles.recordings}>
-        <Bar options={chartOptions} data={chartData} />
-      </div>
+      {selectedTotalRecordings.length > 0 ? (
+        <div className={styles.recordings__chart}>
+          <div>
+            <h1 className={styles.totalNumber}>9436</h1>
+            <Bar options={chartOptions} data={chartData} />
+          </div>
+        </div>
+      ) : (
+        <div className={styles.empty_state}>
+          <p>An overview of your teams sentiment analysis report shows here.</p>
+        </div>
+      )}
     </div>
   );
 };

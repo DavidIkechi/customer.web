@@ -8,8 +8,8 @@ import checkIcon from "./assets/check.svg";
 import BenefitsImage from "./assets/benefitsimage.svg";
 import YearPlans from "./components/YearPlan/yearPlans";
 import MonthPlans from "./components/MonthPlan/monthPlans";
-import NavBarFree from "../../components/navBar_free";
-import Footer from "../../components/footer";
+import NavBarFree from "../../components/NavbarFree";
+import Footer from "../../components/Footer";
 
 function Pricing() {
   React.useEffect(() => {
@@ -19,20 +19,23 @@ function Pricing() {
   const plansRef = useRef();
   const [showMonth, setshowMonth] = useState(true);
   const [showYear, setshowYear] = useState(false);
-  const handleChange = () => {
-    plansRef.current.classList.add("active");
-  };
+  const [listmonthActive, setlistmonthActive] = useState(true);
+  const [listyearActive, setlistyearActive] = useState(false);
+
   const toggleYear = () => {
     if (showMonth) {
       setshowMonth(false);
       setshowYear(true);
+      setlistmonthActive(false);
+      setlistyearActive(true);
     }
   };
   const toggleMonth = () => {
-    plansRef.current.classList.toggle("active");
     if (!showMonth) {
       setshowMonth(true);
       setshowYear(false);
+      setlistmonthActive(true);
+      setlistyearActive(false);
     } else {
       showMonth();
     }
@@ -69,17 +72,24 @@ function Pricing() {
           </h2>
           <div className={styles.CTAs}>
             <button
-              className={`${styles.ctaMonth} ${styles.active}`}
+              className={`${styles.ctaMonth} ${
+                listmonthActive
+                  ? styles.listItemActive
+                  : styles.listItemInActiveh4
+              }`}
               onClick={() => {
                 toggleMonth();
-                handleChange();
               }}
             >
               Monthly
             </button>
             <button
               ref={plansRef}
-              className={styles.ctaYear}
+              className={`${styles.ctaYear} ${
+                listyearActive
+                  ? styles.listItemActive
+                  : styles.listItemInActiveh4
+              }`}
               onClick={toggleYear}
             >
               Yearly
@@ -246,7 +256,7 @@ function Pricing() {
         </div>
         <div className={styles.benefits}>
           <div className={styles.benefitdescription}>
-            <h3>Benefits of using Scrybe</h3>
+            <h3>Benefits of using Heed</h3>
             <ul>
               <li>
                 <span>&bull;</span>Converts recorded calls in MP3 format into

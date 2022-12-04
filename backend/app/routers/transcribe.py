@@ -57,7 +57,7 @@ def transcribe_file(file_url):
 
 # ENDPOINT TO GET A PARTICULAR TRANSCRIPT USING THE AUDIO ID
 @transcript_router.get("/{job_id}", description="Retrieving transcript by audio ID")
-def view_transcript(job_id: Union[int, str], db: Session = Depends(_services.get_session), current_user: Union[str , int] = Depends(auth.get_current_user)):
+def view_transcript(job_id: Union[int, str], db: Session = Depends(_services.get_session), current_user: Union[str , int] = Depends(auth.get_active_user)):
     user_id = current_user.id
 
     Job = db.query(models.Audio).filter(models.Audio.job_id == job_id).first()
@@ -88,14 +88,21 @@ def view_transcript(job_id: Union[int, str], db: Session = Depends(_services.get
     overall_sentiment = sentiment_result['overall_sentiment']
     most_negative_sentences = sentiment_result['most_negative_sentences']
     most_positive_sentences = sentiment_result ['most_postive_sentences']
+    total_score = positivity_score + neutrality_score + negativity_score
+    average_score = round((positivity_score/ total_score) * 10, 1)
     
     db_audio = db.query(models.Audio).filter(models.Audio.job_id == job_id).first()
     db_audio_id = db_audio.id
+    db_audio_url = db_audio.audio_path
+    db_audio_filename = db_audio.filename
+    db_audio_size = db_audio.size
+    db_audio_duration = db_audio.duration
 
     db_audio.transcript, db_audio.positivity_score = transcripted_word, positivity_score
     db_audio.negativity_score, db_audio.neutrality_score=negativity_score, neutrality_score
     db_audio.overall_sentiment, db_audio.most_negative_sentences=overall_sentiment, most_negative_sentences 
     db_audio.most_positive_sentences = most_positive_sentences
+    db_audio.average_score = average_score
     db.commit()
 
     db_agent = db.query(models.Agent).filter(models.Agent.aud_id == db_audio_id).first()
@@ -104,9 +111,17 @@ def view_transcript(job_id: Union[int, str], db: Session = Depends(_services.get
     history_create: schema.HistoryCreate = {"user_id":user_id,
                                             "sentiment_result":overall_sentiment,
                                             "agent_name": agent_name,
-                                            "audio_name": agent_name+"transcript"}
+                                            "audio_name": db_audio_filename}
 
     crud.create_history(db, history_create)
+    other_details = {
+        "audio_url": db_audio_url,
+        "audio_size": db_audio_size,
+        "audio_duration": db_audio_duration,
+        "audio_filename": db_audio_filename
+    }
+    
+    sentiment_result.update(other_details)
 
     return {"sentiment_result": sentiment_result}
 

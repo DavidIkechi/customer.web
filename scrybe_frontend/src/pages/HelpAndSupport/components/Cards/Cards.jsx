@@ -22,7 +22,7 @@ function Cards() {
           <Card
             src={general}
             header="General"
-            paragrapgh="Basic Articles that will help you get the most out of scrybe"
+            paragrapgh="Basic Articles that will help you get the most out of Heed"
           />
         </Link>
         <Card
@@ -58,12 +58,6 @@ function Cards() {
           paragrapgh="Information regarding account information
                         and how we handle your data."
         />
-      </div>
-
-      <div className={styles.btn_container}>
-        <button className={styles.transcribe_btn}>
-          Start Transcribing Now
-        </button>
       </div>
     </div>
   );
