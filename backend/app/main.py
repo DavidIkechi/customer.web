@@ -620,10 +620,10 @@ async def reset_password(token: str, new_password: schema.UpdatePassword, db: Se
 
 
 
-@app.route('/logout/google')
-async def logout(request: Request):
-    request.session.pop('user', None)
-    return RedirectResponse(url='/')
+# @app.route('/logout/google')
+# async def logout(request: Request):
+#     request.session.pop('user', None)
+#     return RedirectResponse(url='/')
 
 
 @app.route('/login/google')
@@ -647,10 +647,6 @@ async def auth(request: Request):
         raise HTTPException(status_code=404, detail="User not found")
 
     tokens = get_access_token(email)
-    # print ('access_token = ', access_token)
-    # user_data = await oauth.google.parse_id_token(request, access_token)
-    # print('user_data = ', user_data)
-    # request.session['user'] = dict(user_data)
     return tokens
 
 
