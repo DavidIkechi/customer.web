@@ -3,8 +3,8 @@ import HelpSupportNav from "../HelpSupportNav/HelpSupportNav";
 import Contact from "../Contact/Contact";
 import styles from "./PromotedArticles.module.scss";
 import PromotedArticle1 from "../PromotedArticle1/PromotedArticle1";
-import NavBarFree from "../../../../components/navBar_free";
-import Footer from "../../../../components/footer";
+import NavBarFree from "../../../../components/NavbarFree";
+import Footer from "../../../../components/Footer";
 
 function PromotedArticles() {
   return (

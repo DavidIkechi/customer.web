@@ -1,3 +1,3 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://heedapi.herokuapp.com/";
+axios.defaults.baseURL = "https://api.heed.hng.tech/";

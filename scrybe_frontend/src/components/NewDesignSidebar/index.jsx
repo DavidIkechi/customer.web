@@ -80,7 +80,7 @@ function NewDesignSideBar({
               <p>Overview</p>
             </NavLink>
             <NavLink
-              to="/sentiment-analysis"
+              to="/uploaded-recordings"
               className={({ isActive }) =>
                 isActive
                   ? `${styles.active} ${styles.navLink}`

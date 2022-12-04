@@ -52,6 +52,10 @@ import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
 import { UploadModal } from "./pages/UploadRecordingsModal";
 import Error from "./pages/Error/Error";
 import Von from "./pages/Von/Von";
+import LandingPageSalesTeam from "./pages/NewLandingPageSalesTeam/index";
+import HomePageRedesign from "./pages/HomePageRedesign";
+import WithAuth from "./HOCs";
+import Support from "./pages/Support/support";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -69,7 +73,7 @@ function App() {
         {/* access without sign in */}
         {/* <Route path="/verification" element={<EmailVerify />} /> */}
         {/* <Route path="/logout" element={<Logout />} /> */}
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<HomePageRedesign />} />
         <Route path="/try" element={<TryForFree />} />
         <Route path="/careers" element={<Careers />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
@@ -84,12 +88,12 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/reset-successful" element={<Successful />} />
         <Route path="/verify-signup" element={<SignUpVerify />} />
-        <Route path="/set-new-password" element={<SetNewPassword />} />
+        <Route
+          path="/set-new-password?token=:token"
+          element={<SetNewPassword />}
+        />
         <Route path="/forget-password" element={<ForgetPassword />} />
-        {/* <Route
-          path="/landing-page-sales-team"
-          element={<NewLandingPageSalesTeam />}
-        /> */}
+        <Route path="/sales-team" element={<LandingPageSalesTeam />} />
         <Route
           path="/pw-reset-successful"
           element={<PasswordResetSuccessful />}
@@ -119,9 +123,9 @@ function App() {
         <Route
           path="/account"
           element={
-            // <WithAuth>
-            <Account />
-            // </WithAuth>
+            <WithAuth>
+              <Account />
+            </WithAuth>
           }
         />
         <Route path="/leaderboard" element={<LeaderboardPage />} />
@@ -224,9 +228,66 @@ function App() {
           <Route path="*" element={<PromotedArticle1 />} />
         </Route> */}
 
+        <Route path="/create-account" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/reset-successful" element={<Successful />} />
+        <Route path="/verify-signup" element={<SignUpVerify />} />
+        <Route path="/set-new-password" element={<SetNewPassword />} />
+        <Route path="/forget-password" element={<ForgetPassword />} />
+        <Route
+          path="/pw-reset-successful"
+          element={<PasswordResetSuccessful />}
+        />
+        <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
+        <Route path="/agent-report" element={<AgentReport />} />
+        <Route path="/upload-new-file" element={<UploadModal />} />
+
+        {/* ROutes without working paths */}
+
+        <Route
+          path="/uploaded"
+          element={<DummyPage someText="uploaded recordings" />}
+        />
+        <Route
+          path="/report"
+          element={<DummyPage someText="report and performance" />}
+        />
+        <Route path="/upload" element={<DummyPage someText="upload pages" />} />
+        <Route
+          path="/help"
+          element={<DummyPage someText="help and supprt" />}
+        />
+        <Route path="/demos" element={<DummyPage someText="demo pages" />} />
+        <Route path="/blog" element={<Blogs />} />
+        <Route path="/blog/:id" element={<BlogPostPage />} />
+        <Route path="/reviews" element={<Reviews />} />
+
+        {/* Try Routes */}
+        <Route path="/try-processing" element={<TryProcessing />} />
+        <Route path="/try-results" element={<TryResults />} />
+
+        {/* Settings Pages */}
+        <Route path="/settings" element={<SettingsIndex />} />
+        <Route path="settings/account-security" element={<AccountSettings />} />
+        <Route
+          path="settings/notifications"
+          element={<NotificationSettings />}
+        />
+
+        <Route
+          path="settings/personal-information"
+          element={<PersonalInformation />}
+        />
+
+        {/* Press  */}
+        <Route path="press" element={<Press />} />
+        <Route path="/partners" element={<PartnersPage />} />
+        <Route path="press-article" element={<PressArticle />} />
+        <Route path="pricing" element={<Pricing />} />
         {/* Error page */}
         <Route path="*" element={<Error />} />
-        <Route path="/von" element={<Von />} />
+        {/* <Route path="/von" element={<Von />} /> */}
+        <Route path="/support-team" element={<Support />} />
       </Routes>
     </>
   );
