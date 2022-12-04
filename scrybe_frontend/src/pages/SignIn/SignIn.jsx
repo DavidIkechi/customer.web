@@ -9,7 +9,7 @@ import footerImg from "./assets/signup-img.svg";
 import styles from "./SignIn.module.scss";
 function Signin() {
   const emailTest = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
-  const passwordTest = new RegExp(/^["0-9a-zA-Z!@#$&()\\-`.+,/"]{2,}$/);
+  const passwordTest = new RegExp(/^["0-9a-zA-Z!@#$&()\\-`.+,/"]{8,}$/);
   const Auth = React.useContext(AuthApi);
   const [username, setName] = useState("");
   const [password, setPassword] = useState("");
