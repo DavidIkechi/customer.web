@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const token = Cookies.get("heedAccessToken");
+const token = localStorage.getItem("heedAccessToken");
 const headers = {
   "Content-Type": "application/json",
   Authorization: `Bearer ${token}`,

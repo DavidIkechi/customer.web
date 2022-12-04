@@ -3,6 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 
+import axios from "axios";
 import { PropTypes } from "prop-types";
 import React, { useEffect, useState } from "react";
 import { fetchData } from "./execAxios";
@@ -116,6 +117,21 @@ const TableData = ({ searchKeyword }) => {
     }
     setRecordCheckedList(checkedList);
   };
+
+  // fetch data from backend
+  const fetchData = async () => {
+    const token = localStorage.getItem("heedAccessToken");
+    console.log(token);
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    const data = await axios.get("list-audios-by-user", { headers });
+    console.log(data);
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const deleteBulkRecordings = () => {
     const newRecordings = allRecordings.filter(
