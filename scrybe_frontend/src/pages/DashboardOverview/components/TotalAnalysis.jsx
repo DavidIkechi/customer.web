@@ -1,8 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
-// import { useMockAuthAndTotalAnalysis } from "../hooks";
-import { totalAnalysisData } from "../Data";
+import { useMockAuthAndTotalAnalysis } from "../hooks";
+// import { totalAnalysisData } from "../Data";
 import styles from "../DashboardOverview.module.scss";
 import analysis from "../assets/analytics.svg";
 import {
@@ -15,15 +15,9 @@ import {
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement);
 
 const TotalAnalysis = () => {
-  // console.log("mock", useMockAuthAndTotalAnalysis());
-  // const totalAnalysisData = useMockAuthAndTotalAnalysis();
-  // console.log("data", totalAnalysisData);
-  // useEffect(() => {
-  //   console.log(totalAnalysisData);
-  // }, [totalAnalysisData]);
+  const totalAnalysisData = useMockAuthAndTotalAnalysis();
 
   const [selectedTotalAnalysis, setSelectedTotalAnalysis] = useState([]);
-  // console.log(selectedTotalAnalysis);
   const [chartData, setChartData] = useState({
     datasets: [],
   });
@@ -55,7 +49,11 @@ const TotalAnalysis = () => {
   }, [selectedTotalAnalysis]);
 
   useEffect(() => {
-    setSelectedTotalAnalysis(totalAnalysisData.week);
+    if (totalAnalysisData) {
+      setSelectedTotalAnalysis(totalAnalysisData.week);
+    } else {
+      setSelectedTotalAnalysis([]);
+    }
   }, []);
 
   function analysisTimeStampFunc(e) {
@@ -72,30 +70,36 @@ const TotalAnalysis = () => {
           <option value="month">This month</option>
         </select>
       </div>
-      <div className={styles.total_analysis_chart}>
-        <div className={styles.doughnut_chart}>
-          <Doughnut options={chartOptions} data={chartData} />
-          <div className={styles.chart_inner}>
-            <h1>{selectedTotalAnalysis?.map((data) => data.positive)}%</h1>
-            <span>+ve</span>
+      {selectedTotalAnalysis.length > 0 ? (
+        <div className={styles.total_analysis_chart}>
+          <div className={styles.doughnut_chart}>
+            <Doughnut options={chartOptions} data={chartData} />
+            <div className={styles.chart_inner}>
+              <h1>{selectedTotalAnalysis?.map((data) => data.positive)}%</h1>
+              <span>+ve</span>
+            </div>
+          </div>
+          <div className={styles.scale}>
+            <h3>
+              <span className={styles.positive}>1</span> Positive{" "}
+              {selectedTotalAnalysis?.map((data) => data.positive)}%
+            </h3>
+            <h3>
+              {" "}
+              <span className={styles.neutral}>1</span>Neutral{" "}
+              {selectedTotalAnalysis?.map((data) => data.neutral)}
+            </h3>
+            <h3>
+              <span className={styles.negative}>1</span> Negative{" "}
+              {selectedTotalAnalysis?.map((data) => data.negative)}
+            </h3>
           </div>
         </div>
-        <div className={styles.scale}>
-          <h3>
-            <span className={styles.positive}>1</span> Positive{" "}
-            {selectedTotalAnalysis?.map((data) => data.positive)}%
-          </h3>
-          <h3>
-            {" "}
-            <span className={styles.neutral}>1</span>Neutral{" "}
-            {selectedTotalAnalysis?.map((data) => data.neutral)}
-          </h3>
-          <h3>
-            <span className={styles.negative}>1</span> Negative{" "}
-            {selectedTotalAnalysis?.map((data) => data.negative)}
-          </h3>
+      ) : (
+        <div className={styles.empty_state}>
+          <p>An overview of your teams sentiment analysis report shows here.</p>
         </div>
-      </div>
+      )}
     </div>
   );
 };
