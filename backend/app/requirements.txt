@@ -20,3 +20,5 @@ boto3==1.26.20
 cloudinary==1.30.0
 bitly-api-python==1.0.3
 sqlalchemy-utils==0.38.3
+itsdangerous==2.1.2
+Authlib==1.1.0
