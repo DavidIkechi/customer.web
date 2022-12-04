@@ -8,6 +8,7 @@ import uploadBtn_icon from "./imgs/uploadBtnIcon.svg";
 import usrAvatar from "./imgs/user_avatar.svg";
 import SearchInput from "./SearchInput";
 import styles from "./topbar.module.scss";
+import { NavLink } from "react-router-dom";
 const TopNav = ({ openSidebar, search }) => {
   const [show, setShow] = useState(false);
   return (
@@ -45,10 +46,13 @@ const TopNav = ({ openSidebar, search }) => {
             </div>
           </div>
         </div>
-        <div className={styles.TopNav_btnwrap}>
-          <img src={uploadBtn_icon} alt="" />
-          <button className={styles.TopNav_btn}>Upload</button>
-        </div>
+        <NavLink to="/upload-new-file">
+          <div className={styles.TopNav_btnwrap}>
+            <img src={uploadBtn_icon} alt="" />
+            <button className={styles.TopNav_btn}>Upload</button>
+          </div>
+        </NavLink>
+
         <div className={styles.TopNav_user_mobile}>
           <img src={usrAvatar} alt="john doe" />
         </div>
