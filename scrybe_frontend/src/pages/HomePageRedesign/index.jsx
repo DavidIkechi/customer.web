@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./homePageRedesign.module.scss";
-import Footer from "../../components/footer";
+import Footer from "../../components/Footer";
 import NavBar from "../../components/NavbarFree";
 import heroCenter from "./assets/hero__center.png";
 import saveTime from "./assets/save__time.png";

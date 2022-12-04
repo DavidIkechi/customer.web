@@ -4,104 +4,37 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import footerImg from "./assets/forget-pw.svg";
 import styles from "./ForgetPassword.module.scss";
-import axios from "./globalConstant/Api/axios";
-import useInputValidation from "./globalConstant/hook/useInputValidation";
+import axios from "axios";
 // import heedLogo from "./assets/heed__logo.png";
 // import forgotIcon from "./assets/forgot__icon.png";
 // import { Link } from "react-router-dom";
 
 function ForgetPassword() {
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const navigate = useNavigate();
-  // const email = watch("email");
-
-  const {
-    formData,
-    changeInputValue,
-    onBlur,
-    setFormData,
-    errors,
-    touched,
-    setTouched,
-    validation,
-    register,
-  } = useInputValidation({
-    email: "",
-  });
-
-  const { email } = formData;
-
-  const handleSubmit = async (e, formData) => {
-    e.preventDefault();
-
-    try {
-      validation(formData);
-      if (Object.keys(errors).length > 0) {
-        setTouched({
-          email: true,
-        });
-      }
-
-      if (Object.keys(errors).length === 0) {
-        setTouched({
-          email: false,
-        });
-
-        setIsSubmitted(true);
-
-        const { email } = formData;
-        const response = await axios.post(
-          "forgot-password",
-          JSON.stringify({
-            email,
-          })
-        );
-        // .then(res => {
-        // // backend guys are to send email that links to: set-new-password/{token}
-        //   return redirect("/email-sent")
-        // })
-
-        if (response.data.errorState === false) {
-          navigate("/email-sent");
-          setIsSubmitted(false);
-          // Clear input fields
-          setFormData({
-            email: "",
-          });
-        }
-      }
-    } catch (err) {
-      if (!err.response) {
-        navigate("/Error");
-      }
-      if (err.response?.data.errorState === true) {
-        navigate("*");
-      }
-    } finally {
-      setIsSubmitted(false);
-    }
-  };
-
-  // const [userEmail, setUserEmail] = useState();
-  // const {
-  //   register,
-  //   watch,
-  //   formState: { errors },
-  // } = useForm();
-
-  // const { watch } = useForm();
-
-  //  eslint-disable no-unused-vars
   const [userInfo, setUserInfo] = useState();
-  //  eslint-enable no-unused-vars
-  const onSubmit = (data) => {
-    console.log(data);
+  const navigate = useNavigate();
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const baseUrl = "https://api.heed.hng.tech/";
+  const submitCallback = (data) => {
     setUserInfo(data);
+    axios
+      .post(baseUrl + "/forgot-password", {
+        email: userInfo.email,
+      })
+      .then((res) => {
+        /* TODO:
+          - When CheckEmail page is implemented, this page should redirect there instead of SetNewPassword
+        */
+        navigate(`/set-new-password?token=${res.data}`);
+      });
   };
 
-  // Watch event for disable button
-
-  console.log("email", email);
+  const email = watch("email");
 
   const isValid = email;
 
@@ -114,7 +47,7 @@ function ForgetPassword() {
           >
             <h1>Forgot password?</h1>
             <h3>Enter registered email to reset your password</h3>
-            <form onSubmit={(e) => handleSubmit(e, formData)}>
+            <form onSubmit={handleSubmit(submitCallback)}>
               <label htmlFor="email">Email</label>
               <input
                 type="email"

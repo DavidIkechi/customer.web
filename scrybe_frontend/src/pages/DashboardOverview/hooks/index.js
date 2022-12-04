@@ -15,8 +15,9 @@ const useMockAuthAndGetRecording = () => {
           headers,
         })
         .then((newRes) => {
-          // console.log(newRes);
+          console.log("newR", newRes);
           setRecentRecordings(newRes.data);
+          console.log("Ndata", newRes.data);
         });
     });
   }, []);
@@ -41,7 +42,6 @@ const useMockAuthAndTotalAnalysis = () => {
         })
         .then((newRes) => {
           setTotalAnalysis(newRes.data);
-          console.log("new", newRes.data);
         });
     });
   }, []);
