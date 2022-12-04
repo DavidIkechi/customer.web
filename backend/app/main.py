@@ -639,7 +639,7 @@ async def login(request: Request):
 
 
 @app.route('/auth/google')
-async def auth(request: Request):
+async def auth(request: Request, db: Session = Depends(get_db)):
     try:
         access_token = await oauth.google.authorize_access_token(request)
     except OAuthError:
@@ -647,7 +647,7 @@ async def auth(request: Request):
     user_data = access_token['userinfo']
     print(user_data)
     email = user_data.email
-    user_db = crud.get_user_by_email(email)
+    user_db = crud.get_user_by_email(db, email)
 
     if not user_db:
         raise HTTPException(status_code=404, detail="User not found")
