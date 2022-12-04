@@ -111,10 +111,15 @@
   cursor: pointer;
 }
 
-.pricing button .ctaMonth.active {
+.pricing .CTA .CTAs .listItemActive {
   background-color: #004db5;
   color: white;
 }
+.pricing .CTA .CTAs .listItemInActive {
+  background-color: transparent;
+  color: #004db5;
+}
+
 .hidden {
   display: none;
 }
