@@ -523,7 +523,7 @@ def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = De
     INNER JOIN agents
     ON audios.agent_id = agents.id
     GROUP BY audios.agent_id
-    ORDER BY Positive_score DESC""")
+    ORDER BY Average_score DESC""")
 
     leaderboard = [dict(r) for r in results]
     top3_agents = leaderboard[:3]
