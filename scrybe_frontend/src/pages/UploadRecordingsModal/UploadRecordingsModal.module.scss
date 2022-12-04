@@ -137,7 +137,7 @@
   justify-content: center;
   color: #706F6F;
   align-items: center;
-  margin: 0.7em;
+  margin: 0.7em auto;
 }
 
 .left-or {
@@ -296,6 +296,7 @@
 }
 
 .callback {
+    padding-right: 3em;
     padding: .8em;
     border-radius: 8px;
     border: 1px solid #C5C5C5;
@@ -473,6 +474,10 @@
     font-size: .625rem;
 }
 
+// .or-wrapper {
+//   width: 100%;
+// }
+
 }
 
 @media screen and (max-width: 500px) {
@@ -480,9 +485,19 @@
     width: 70%;
   }
 
-  .name-input input {
+.name-input input {
   width: 35%;
 }
+
+// .or-wrapper {
+//   width: 90%;
+// }
+
+.callback {
+    padding-right: 3em;
+    width: 100%;
+} 
+
 }
 
 @media screen and (max-width: 425px) {
@@ -499,6 +514,24 @@
   width: 70%;
 }
 
+.btn-wrapper {
+  display: block;
+  text-align: center;
+}
+
+// .or-wrapper {
+//   width: 90%;
+// }
+
+.cancel-btn {
+  margin-bottom: 1em;
+}
+
+.callback {
+    padding-right: 3em;
+    width: 100%;
+}
+
 }
 @media screen and (max-width: 320px) {
 .modal-container {
@@ -507,6 +540,23 @@
 
 .name-input {
   display: block;
+}
+
+.btn-wrapper {
+  display: block;
+  text-align: center;
+}
+
+// .or-wrapper {
+//   width: 90%;
+// }
+
+.cancel-btn {
+  margin-bottom: 1em;
+}
+
+.callback {
+    padding-right: 3em;
 }
 
 }
