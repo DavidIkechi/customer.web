@@ -529,6 +529,7 @@ def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = De
                                                         models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == 'Negative').count(),
             "neutral": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
                                                 models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == 'Neutral').count(),
+            "average_score": i.average_score
         }
         leaderboard.append(leader_board)
     leaderboard = sorted(leaderboard, key=lambda k: k['positive_score'], reverse=True)
