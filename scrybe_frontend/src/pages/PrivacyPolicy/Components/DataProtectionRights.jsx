@@ -14,10 +14,10 @@ function DataProtectionRights() {
         Personal Information Of Individuals Within Nigeria Or Residing Outside
         Nigeria But Of Nigerian Descent.
       </p>
-      <h1>
+      <h2>
         1. What personal information we have about you. If you make this
         request, we will return to you.
-      </h1>
+      </h2>
       <ul>
         <li>
           The categories of personal information we have collected about you.
@@ -56,8 +56,8 @@ function DataProtectionRights() {
         personal information we collected about you in the previous 12 months.
       </p>
       <ol>
-        <li>
-          <h1>
+        <h2>
+          <li>
             {" "}
             To delete your personal information. If you make this request, we
             will delete the personal information we hold about you as of the
@@ -67,10 +67,8 @@ function DataProtectionRights() {
             choose to delete your personal information, you may not be able to
             use certain functions that require your personal information to
             operate.
-          </h1>
-        </li>
-        <li>
-          <h1>
+          </li>
+          <li>
             {" "}
             To stop selling your personal information. We don’t sell or rent
             your personal information to any third parties for any purpose. We
@@ -80,8 +78,8 @@ function DataProtectionRights() {
             without monetary consideration may be considered a “sale” under
             Nigeria law. You are the only owner of your Personal Data and can
             request disclosure or deletion at any time.
-          </h1>
-        </li>
+          </li>
+        </h2>
       </ol>
       <p>
         If you submit a request to stop selling your personal information, we

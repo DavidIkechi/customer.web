@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 import axios from "axios";
 import dummyData from "./DummyData";
 import accountStyles from "./account.module.scss";
@@ -7,30 +7,37 @@ import profileImage from "./assets/images/profile-image.png";
 import chevronLeft from "./assets/icons/chevron-left.svg";
 import plus from "./assets/icons/plus.svg";
 import SideBar from "../../components/SideBar";
+import Cookies from "js-cookie";
 
 function Account() {
-  useEffect(() => {
-    (async () => {
-      const response = await axios.get("account");
-    })();
-  }, []);
   const [accountModalIsActive, setAccountModalIsActive] = useState(false);
   const toggleAccountModal = () => {
     setAccountModalIsActive((current) => !current);
   };
 
-  const [accountUser, setAccountUser] = useState(null);
+  const [accountUser, setAccountUser] = useState();
 
   async function getUser() {
-    let user;
-    try {
-      const response = await axios.get("http://scrybe.hng.tech:5000/account");
-      user = response;
-    } catch (error) {
-      user = dummyData;
-    } finally {
-      setAccountUser(user);
-    }
+    await axios
+      // Get user details from backend
+      .get("https://api.heed.hng.tech/account", {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${Cookies.get("heedAccessToken")}`,
+        },
+      })
+      .then((res) => {
+        setAccountUser(res.data);
+      })
+      .catch((err) => {
+        // In case of Error, display paceholder data (temp measure)
+        /* TODO:
+          - Create modal to be displyed to user if server does not respond
+        */
+        setAccountUser(dummyData);
+        console.log("Server returned the following error:");
+        console.log(err);
+      });
   }
 
   useEffect(() => {
@@ -38,6 +45,7 @@ function Account() {
   });
 
   return (
+    // Only render page if the axios request is sent
     accountUser && (
       <SideBar>
         <div className={accountStyles.account__container}>
@@ -110,9 +118,12 @@ function Account() {
             <h1 className={accountStyles.salutation}>Hi Scryber</h1>
             <div className={accountStyles.main_content__div}>
               <section className={accountStyles.profile__section}>
-                <img src={profileImage} alt="User's profile" />
+                <img
+                  src={accountUser.company_logo_url || profileImage}
+                  alt="User's profile"
+                />
                 <div>
-                  <p>{accountUser.name}</p>
+                  <p>{accountUser.first_name + " " + accountUser.last_name}</p>
                   {accountUser.is_admin && <p>Administrator</p>}
                 </div>
               </section>
@@ -124,10 +135,12 @@ function Account() {
                       <p>Email address</p>
                       <p>{accountUser.email}</p>
                     </div>
-                    <div>
-                      <p>Phone Number</p>
-                      <p>{accountUser.phone_number}</p>
-                    </div>
+                    {accountUser.phone_number && (
+                      <div>
+                        <p>Phone Number</p>
+                        <p>{accountUser.phone_number}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className={accountStyles.company_info__div}>
@@ -135,12 +148,14 @@ function Account() {
                   <div>
                     <div>
                       <p>Company name</p>
-                      {/* <p>{accountUser.company.name}</p> */}
+                      <p>{accountUser.company_name}</p>
                     </div>
-                    <div>
-                      <p>Address</p>
-                      {/* <p>{accountUser.company.address}</p> */}
-                    </div>
+                    {accountUser.company_address && (
+                      <div>
+                        <p>Address</p>
+                        <p>{accountUser.company_address}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className={accountStyles.agents__div}>
@@ -155,16 +170,18 @@ function Account() {
                     </button>
                   </span>
                   <div>
-                    {/* <ul>
-                      {accountUser.company.agents.map((agent, index) => {
-                        return (
+                    <ul>
+                      {accountUser.agents.map((agent, index) => {
+                        return agent ? (
                           <li key={index}>
-                            <p>{agent.name}</p>
+                            <p>{agent}</p>
                             <p>{agent.location}</p>
                           </li>
+                        ) : (
+                          <p>You have no agents yet.</p>
                         );
                       })}
-                    </ul> */}
+                    </ul>
                   </div>
                 </div>
                 <div className={accountStyles.developer_tools__div}>
@@ -172,7 +189,7 @@ function Account() {
                   <div>
                     <p>API Key</p>
                     <div>
-                      <p>0123456789AC</p>
+                      <p>{accountUser.api_key}</p>
                       <button type="button">Refresh</button>
                     </div>
                   </div>

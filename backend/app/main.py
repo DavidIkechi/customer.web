@@ -1,4 +1,5 @@
 from typing import List, Union
+from pathlib import Path
 from models import Audio
 from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form, Query
 from fastapi_pagination import Page, paginate, Params
@@ -41,7 +42,7 @@ import services as _services
 
 from datetime import datetime
 
-import json
+
 import shutil
 import os
 
@@ -96,12 +97,14 @@ origins = [
     "http://localhost:80",
     "http://localhost:3000",
     "http://localhost:5173",
+    "http://localhost:1111",
     "http://localhost:8000",
     "https://heed.hng.tech",
     "http://heed.hng.tech",
     "https://heed.hng.tech:80",
     "https://heed.hng.tech:3000",
     "https://heed.hng.tech:5173",
+    "https://heed.hng.tech:1111",
 ]
 
 app.add_middleware(
@@ -197,7 +200,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
 
     # transcript = transcript
     
-    size = audio_details(file.filename)["size"]
+    size = Path(file.filename).stat().st_size
     duration = audio_details(file.filename)["mins"]
     transcript = transcribe_file(new_url)
     # get some essential parameters
@@ -207,7 +210,8 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     
 
     db_audio = models.Audio(audio_path=audio_url, job_id = transcript_id, user_id=user_id, size=size, duration=duration, 
-                            agent_id=db_agent.id, agent_firstname= db_agent.first_name, agent_lastname=db_agent.last_name)
+                            agent_id=db_agent.id, agent_firstname= db_agent.first_name, agent_lastname=db_agent.last_name, 
+                            filename = file.filename)
 
     db.add(db_audio)
     db.commit()
@@ -407,7 +411,9 @@ def list_audios_by_user(db: Session = Depends(get_db), user: models.User = Depen
         audios.append(audio)
     return audios
     
-
+@app.get("/get_uploaded_jobs", summary="List all uploaded jobs with job details", status_code=status.HTTP_200_OK, tags=['jobs'])
+def get_uploaded_jobs(db:Session = Depends(get_db), current_user = Depends(get_active_user), skip: int = 0, limit: int = 0):
+    return crud.get_jobs_uploaded(db=db, skip=skip, limit=limit, current_user=current_user)
 
 @app.get('/audios/{audio_id}/sentiment')
 def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
@@ -674,22 +680,27 @@ def delete_audios(audios: List[int] = Query(None), db: Session = Depends(get_db)
     return {"message": "operation successful", "deleted audion(s)": deleted_audios}
 
 
+
 @app.get("/download/{id}")
-def download (id: int, db: Session = Depends(get_db)):
-    db_audio = crud.get_audio(db, audio_id = id)
-    positivity_score = float(db_audio.positivity_score)
-    negativity_score = float(db_audio.negativity_score)
-    neutrality_score = float(db_audio.neutrality_score)
-    overall_sentiment = str(db_audio.overall_sentiment)
-    most_positive_sentences = json.loads(db_audio. most_positive_sentences)
-    most_negative_sentences = json.loads(db_audio. most_negative_sentences)
-    transcript = db_audio.transcript
-    sentiment = {"transcript": transcript,
-                "positivity_score": positivity_score,
-                "negativity_score": negativity_score,
-                "neutrality_score": neutrality_score,
-                "overall_sentiment": overall_sentiment,
-                "most_positive_sentences": most_positive_sentences,
-                "most_negative_sentences": most_negative_sentences,
-                }
-    return sentiment
+def download (id: Union[int, str], db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    db_audio = db.query(models.Audio).filter(models.Audio.job_id == id).first()
+
+    if db_audio is None:
+        raise HTTPException(status_code=404, detail="No Audio With This ID")
+    else:
+        positivity_score = float(db_audio.positivity_score)
+        negativity_score = float(db_audio.negativity_score)
+        neutrality_score = float(db_audio.neutrality_score)
+        overall_sentiment = str(db_audio.overall_sentiment)
+        most_positive_sentences = json.loads(db_audio. most_positive_sentences)
+        most_negative_sentences = json.loads(db_audio. most_negative_sentences)
+        transcript = db_audio.transcript
+        sentiment = {"transcript": transcript,
+                    "positivity_score": positivity_score,
+                    "negativity_score": negativity_score,
+                    "neutrality_score": neutrality_score,
+                    "overall_sentiment": overall_sentiment,
+                    "most_positive_sentences": most_positive_sentences,
+                    "most_negative_sentences": most_negative_sentences,
+                    }
+        return sentiment
