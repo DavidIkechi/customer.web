@@ -24,7 +24,7 @@ function Signup() {
   const [companyStateTest, setCompanyStateTest] = useState(false);
   const [btn, setBtn] = useState(true);
 
-  const passwordTest = new RegExp(/^[a-zA-Z]{8,}$/),
+  const passwordTest = new RegExp(/^["0-9a-zA-Z!@#$&()\\-`.+,/"]{8,}$/),
     firstNameTest = new RegExp(/^[a-zA-Z]{2,}$/),
     lastNameTest = new RegExp(/^[a-zA-Z]{2,}$/),
     emailTest = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/),
@@ -104,8 +104,9 @@ function Signup() {
       company_name: company_name,
       password: password,
     };
+    console.group(data);
     await axios
-      .post("users", data)
+      .post("create_users", data)
       .then((response) => {
         console.log(response);
         setNavigate(true);

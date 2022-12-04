@@ -53,8 +53,9 @@ import { UploadModal } from "./pages/UploadRecordingsModal";
 import Error from "./pages/Error/Error";
 import Von from "./pages/Von/Von";
 import LandingPageSalesTeam from "./pages/NewLandingPageSalesTeam/index";
-// import HomePageRedesign from "./Pages/HomePageRedesign";
+import HomePageRedesign from "./pages/HomePageRedesign";
 import WithAuth from "./HOCs";
+import Support from "./pages/Support/support";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -72,7 +73,7 @@ function App() {
         {/* access without sign in */}
         {/* <Route path="/verification" element={<EmailVerify />} /> */}
         {/* <Route path="/logout" element={<Logout />} /> */}
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<HomePageRedesign />} />
         <Route path="/try" element={<TryForFree />} />
         <Route path="/careers" element={<Careers />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
@@ -87,7 +88,10 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/reset-successful" element={<Successful />} />
         <Route path="/verify-signup" element={<SignUpVerify />} />
-        <Route path="/set-new-password" element={<SetNewPassword />} />
+        <Route
+          path="/set-new-password?token=:token"
+          element={<SetNewPassword />}
+        />
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/sales-team" element={<LandingPageSalesTeam />} />
         <Route
@@ -283,6 +287,7 @@ function App() {
         {/* Error page */}
         <Route path="*" element={<Error />} />
         {/* <Route path="/von" element={<Von />} /> */}
+        <Route path="/support-team" element={<Support />} />
       </Routes>
     </>
   );

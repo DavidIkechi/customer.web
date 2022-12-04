@@ -33,7 +33,7 @@ import services as _services
 
 from datetime import datetime
 
-
+import json
 import shutil
 import os
 
@@ -258,6 +258,19 @@ def read_user(user_id: int, db: Session = Depends(get_db), user: models.User = D
     return db_user
 
 
+@app.post("/users/upload_picture", summary="Upload company logo image", status_code=status.HTTP_202_ACCEPTED, tags=['users'])
+def upload_picture(db:Session = Depends(get_db), image_file: UploadFile = File(..., description="Company Profile Image/Logo"), 
+                   current_user:schema.User = Depends(get_active_user)):
+    return crud.upload_user_image(user_id=current_user.id, db=db, image_file=image_file)
+
+@app.patch("/users/update_profile/{user_id}", summary="Update user profile details", status_code=status.HTTP_200_OK, tags=['users'])
+def update_adress(profile:schema.UserProfileUpdate, user_id:int, db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
+    return crud.update_user_profile(db=db, profile=profile, user_id=user_id)
+
+@app.delete("/users/delete_account/{user_id}", summary="delete user account", status_code=status.HTTP_204_NO_CONTENT, tags=['users'])
+def delete_user_account(user_id:int, db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
+    crud.delete_user(db=db, user_id=user_id, current_user=current_user)
+
 @app.get('/verification', summary = "verify a user by email", tags=['users'])
 async def email_verification(request: Request, token: str, db: Session = Depends(get_db)):
 
@@ -453,6 +466,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
     month = datetime.now().month
     results = {
         "week": [
+            {"total_recordings": 0},
             {"id": 1, "time": "M", "totalRecordings": 0},
             {"id": 2, "time": "T", "totalRecordings": 0},
             {"id": 3, "time": "W", "totalRecordings": 0},
@@ -462,6 +476,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
             {"id": 7, "time": "S", "totalRecordings": 0}
         ],
         "month": [
+            {"total_recordings": 0},
             {"id": 1, "time": "wk1", "totalRecordings": 0},
             {"id": 2, "time": "wk2", "totalRecordings": 0},
             {"id": 3, "time": "wk3", "totalRecordings": 0},
@@ -470,30 +485,32 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
     }
     for i in total_recordings:
         if i.timestamp.isocalendar().week == week:
+            results["week"][0]["total_recordings"] += 1
             if i.timestamp.weekday() == 0:
-                results["week"][0]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 1:
                 results["week"][1]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 2:
+            elif i.timestamp.weekday() == 1:
                 results["week"][2]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 3:
+            elif i.timestamp.weekday() == 2:
                 results["week"][3]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 4:
+            elif i.timestamp.weekday() == 3:
                 results["week"][4]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 5:
+            elif i.timestamp.weekday() == 4:
                 results["week"][5]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 6:
+            elif i.timestamp.weekday() == 5:
                 results["week"][6]["totalRecordings"] += 1
+            elif i.timestamp.weekday() == 6:
+                results["week"][7]["totalRecordings"] += 1
 
         if i.timestamp.month == month:
+            results["month"][0]["total_recordings"] += 1
             if i.timestamp.day <= 7:
-                results["month"][0]["totalRecordings"] += 1
-            elif 8 <= i.timestamp.day <= 14:
                 results["month"][1]["totalRecordings"] += 1
-            elif 15 <= i.timestamp.day <= 21:
+            elif 8 <= i.timestamp.day <= 14:
                 results["month"][2]["totalRecordings"] += 1
-            elif 22 <= i.timestamp.day <= 31:
+            elif 15 <= i.timestamp.day <= 21:
                 results["month"][3]["totalRecordings"] += 1
+            elif 22 <= i.timestamp.day <= 31:
+                results["month"][4]["totalRecordings"] += 1
 
     return results
 
@@ -607,3 +624,24 @@ def delete_audios(audios: List[int] = Query(None), db: Session = Depends(get_db)
             db.commit()
             deleted_audios.append(db_audio.audio_path)
     return {"message": "operation successful", "deleted audion(s)": deleted_audios}
+
+
+@app.get("/download/{id}")
+def download (id: int, db: Session = Depends(get_db)):
+    db_audio = crud.get_audio(db, audio_id = id)
+    positivity_score = float(db_audio.positivity_score)
+    negativity_score = float(db_audio.negativity_score)
+    neutrality_score = float(db_audio.neutrality_score)
+    overall_sentiment = str(db_audio.overall_sentiment)
+    most_positive_sentences = json.loads(db_audio. most_positive_sentences)
+    most_negative_sentences = json.loads(db_audio. most_negative_sentences)
+    transcript = db_audio.transcript
+    sentiment = {"transcript": transcript,
+                "positivity_score": positivity_score,
+                "negativity_score": negativity_score,
+                "neutrality_score": neutrality_score,
+                "overall_sentiment": overall_sentiment,
+                "most_positive_sentences": most_positive_sentences,
+                "most_negative_sentences": most_negative_sentences,
+                }
+    return sentiment
