@@ -33,7 +33,7 @@ import services as _services
 
 from datetime import datetime
 
-import json
+
 import shutil
 import os
 
@@ -375,7 +375,9 @@ def list_audios_by_user(db: Session = Depends(get_db), user: models.User = Depen
         audios.append(audio)
     return audios
     
-
+@app.get("/get_uploaded_jobs", summary="List all uploaded jobs with job details", status_code=status.HTTP_200_OK, tags=['jobs'])
+def get_uploaded_jobs(db:Session = Depends(get_db), current_user = Depends(get_active_user), skip: int = 0, limit: int = 0):
+    return crud.get_jobs_uploaded(db=db, skip=skip, limit=limit, current_user=current_user)
 
 @app.get('/audios/{audio_id}/sentiment')
 def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
@@ -606,24 +608,3 @@ def delete_audios(audios: List[int] = Query(None), db: Session = Depends(get_db)
             db.commit()
             deleted_audios.append(db_audio.audio_path)
     return {"message": "operation successful", "deleted audion(s)": deleted_audios}
-
-
-@app.get("/download/{id}")
-def download (id: int, db: Session = Depends(get_db)):
-    db_audio = crud.get_audio(db, audio_id = id)
-    positivity_score = float(db_audio.positivity_score)
-    negativity_score = float(db_audio.negativity_score)
-    neutrality_score = float(db_audio.neutrality_score)
-    overall_sentiment = str(db_audio.overall_sentiment)
-    most_positive_sentences = json.loads(db_audio. most_positive_sentences)
-    most_negative_sentences = json.loads(db_audio. most_negative_sentences)
-    transcript = db_audio.transcript
-    sentiment = {"transcript": transcript,
-                "positivity_score": positivity_score,
-                "negativity_score": negativity_score,
-                "neutrality_score": neutrality_score,
-                "overall_sentiment": overall_sentiment,
-                "most_positive_sentences": most_positive_sentences,
-                "most_negative_sentences": most_negative_sentences,
-                }
-    return sentiment
