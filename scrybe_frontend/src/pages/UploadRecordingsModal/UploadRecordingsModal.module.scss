@@ -296,11 +296,11 @@
 }
 
 .callback {
-    padding-right: 3em;
-    padding: .8em;
+    padding: .8em 3em .8em 1em;
     border-radius: 8px;
     border: 1px solid #C5C5C5;
     outline: none;
+    width: 100%;
 }
 
 .callback-wrapper {
@@ -314,6 +314,13 @@
   position: absolute;
   right: 1rem;
 }
+
+@media screen and (max-width: 1300px) {
+  .modal-container {
+    width: 55%;
+  }
+}
+
 
 
 @media screen and (max-width: 1024px) {
@@ -333,6 +340,11 @@
 .upload-progress-status1, 
 .upload-progress-status2 {
     width: 70%;
+}
+
+.callback {
+    padding-right: 3em;
+    width: 100%;
 }
 
 }
@@ -378,6 +390,12 @@
     width: 130px;
     height: 50px;
 }
+
+.callback {
+    padding-right: 3em;
+    width: 100%;
+}
+
 }
 
 @media screen and (max-width: 768px) {
@@ -393,6 +411,25 @@
   width: 35%;
 }
 
+  .btn-wrapper {
+  display: block;
+  text-align: center;
+}
+
+.cancel-btn {
+  margin-bottom: 1em;
+  width: 100%;
+}
+
+.transcribe-btn {
+  width: 100%;
+}
+
+.callback {
+    padding-right: 3em;
+    width: 100%;
+}
+
 /* .modal-body {
     margin: -15px;
 } */
@@ -405,6 +442,27 @@
     font-size: .875rem;
     width: 130px;
     height: 50px;
+}
+}
+
+@media screen and (max-width: 650px) {
+  .btn-wrapper {
+  display: block;
+  text-align: center;
+}
+
+.cancel-btn {
+  margin-bottom: 1em;
+  width: 100%;
+}
+
+.transcribe-btn {
+  width: 100%;
+}
+
+.callback {
+    padding-right: 3em;
+    width: 100%;
 }
 }
 
@@ -474,9 +532,19 @@
     font-size: .625rem;
 }
 
-// .or-wrapper {
-//   width: 100%;
-// }
+.btn-wrapper {
+  display: block;
+  text-align: center;
+}
+
+.cancel-btn {
+  margin-bottom: 1em;
+}
+
+.callback {
+    padding-right: 3em;
+    width: 100%;
+} 
 
 }
 
@@ -489,6 +557,14 @@
   width: 35%;
 }
 
+.btn-wrapper {
+  display: block;
+  text-align: center;
+}
+
+.cancel-btn {
+  margin-bottom: 1em;
+}
 // .or-wrapper {
 //   width: 90%;
 // }
