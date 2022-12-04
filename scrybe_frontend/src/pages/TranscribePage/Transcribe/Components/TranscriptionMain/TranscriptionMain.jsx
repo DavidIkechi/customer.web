@@ -6,7 +6,6 @@ import TranscriptionRightBar from "./TranscriptionRightBar/TranscriptionRightBar
 import axios from "axios";
 
 function TranscriptionMain() {
-  const [transcription_id, setTranscriptionId] = useState("");
   const [formattedData, setFormattedData] = useState([]);
 
   const [timeUpdateTracker, setTimeUpdateTracker] = useState(false);
@@ -17,6 +16,8 @@ function TranscriptionMain() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [audioDuration, setAudioDuration] = useState(0);
+  const [recentRecordings, setRecentRecordings] = useState([]);
+
   const onLoadedMetadata = () => {
     setAudioDuration(Math.round(audioElem.current?.duration));
   };
@@ -49,15 +50,6 @@ function TranscriptionMain() {
       updateCurrentTime();
     } else audioElem.current.pause();
   }, [isPlaying]);
-  useEffect(() => {
-    async function fetchAudio() {
-      const audioSrc =
-        "http://commondatastorage.googleapis.com/codeskulptor-demos/pyman_assets/ateapill.ogg";
-      setAudioSrc(audioSrc);
-    }
-    fetchAudio();
-  }, []);
-
   const getTranscriptionId = () => {
     return window.location.pathname.substring(
       16,
@@ -99,6 +91,7 @@ function TranscriptionMain() {
   };
   useEffect(() => {
     fetchActualData(getTranscriptionId());
+    fetchRecentRecordings();
   }, []);
 
   // format array function
@@ -150,6 +143,22 @@ function TranscriptionMain() {
       return `0${minutes}:${seconds}0`;
   };
 
+  const fetchRecentRecordings = () => {
+    const data =
+      "grant_type=password&username=arcteggzz%40gmail.com&password=123456789&scope=&client_id=&client_secret=";
+    axios.post("https://api.heed.hng.tech/login", data).then((res) => {
+      const headers = {
+        Authorization: `Bearer ${res.data.access_token}`,
+      };
+      axios
+        .get(`https://api.heed.hng.tech/recent-recordings?skip=0&limit=5`, {
+          headers,
+        })
+        .then((newRes) => {
+          setRecentRecordings(newRes.data);
+        });
+    });
+  };
   return (
     <div className={styles.TranscriptionMain}>
       <Dummy
@@ -166,6 +175,7 @@ function TranscriptionMain() {
         audioDuration={audioDuration}
         currentTime={currentTime}
         audioFileSize={audioFileSize}
+        recentRecordings={recentRecordings}
       />
       <audio
         src={audioSrc}
