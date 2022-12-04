@@ -34,7 +34,7 @@ import services as _services
 
 from datetime import datetime
 
-import json
+
 import shutil
 import os
 
@@ -377,7 +377,9 @@ def list_audios_by_user(db: Session = Depends(get_db), user: models.User = Depen
         audios.append(audio)
     return audios
     
-
+@app.get("/get_uploaded_jobs", summary="List all uploaded jobs with job details", status_code=status.HTTP_200_OK, tags=['jobs'])
+def get_uploaded_jobs(db:Session = Depends(get_db), current_user = Depends(get_active_user), skip: int = 0, limit: int = 0):
+    return crud.get_jobs_uploaded(db=db, skip=skip, limit=limit, current_user=current_user)
 
 @app.get('/audios/{audio_id}/sentiment')
 def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
@@ -608,6 +610,7 @@ def delete_audios(audios: List[int] = Query(None), db: Session = Depends(get_db)
             db.commit()
             deleted_audios.append(db_audio.audio_path)
     return {"message": "operation successful", "deleted audion(s)": deleted_audios}
+
 
 
 @app.get("/download/{id}")
