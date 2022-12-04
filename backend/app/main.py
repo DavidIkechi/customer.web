@@ -517,19 +517,15 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
 
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    try:
-        results = db.execute("""SELECT agent_id,
-            agent_firstname,
-            agent_lastname,
-            SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score,
-            SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score,
-            SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
-            average_score AS Average_score
-        FROM audios GROUP BY agent_id
-        ORDER BY Positive_score DESC""")
-
-    except Exception:
-        raise {"status_code": 404, "error": "Results not found"}
+    results = db.execute("""SELECT agent_id,
+        agent_firstname,
+        agent_lastname,
+        SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score,
+        SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score,
+        SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
+        average_score AS Average_score
+    FROM audios GROUP BY agent_id
+    ORDER BY Positive_score DESC""")
 
     leaderboard = [dict(r) for r in results]
     top3_agents = leaderboard[:3]
