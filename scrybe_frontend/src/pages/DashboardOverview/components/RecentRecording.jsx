@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useMockAuthAndGetRecording } from "../hooks";
 import styles from "../DashboardOverview.module.scss";
 import toneWave from "../assets/tone_wave.svg";
@@ -8,9 +9,8 @@ import empty_state from "../assets/empty_state.png";
 
 const RecentRecording = () => {
   const recentRecording = useMockAuthAndGetRecording();
-  useEffect(() => {
-    // console.log(recentRecording);
-  }, [recentRecording]);
+  // console.log(recentRecording);
+  useEffect(() => {}, [recentRecording]);
   return (
     <>
       {recentRecording?.length < 0 ? (
@@ -108,9 +108,9 @@ const RecentRecording = () => {
               Start uploading agent recordings to get an overview of your team’s
               performance.
             </p>
-            <button className={styles.empty_state_btn}>
+            <Link to="/upload-new-file" className={styles.empty_state_btn}>
               <img src={upload} alt="upload" /> Upload
-            </button>
+            </Link>
           </div>
           <div className={styles.empty_state_desktop}>
             <img src={empty_state} alt="No activity found" />
@@ -120,9 +120,9 @@ const RecentRecording = () => {
               below to upload a recording and begin your transcription and
               sentiment analysis.
             </p>
-            <button className={styles.empty_state_btn}>
+            <Link to="/upload-new-file" className={styles.empty_state_btn}>
               <img src={upload} alt="upload" /> Upload
-            </button>
+            </Link>
           </div>
         </div>
       )}
