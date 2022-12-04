@@ -611,19 +611,23 @@ def delete_audios(audios: List[int] = Query(None), db: Session = Depends(get_db)
 @app.get("/download/{id}")
 def download (id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     db_audio = crud.get_audio(db, audio_id = id)
-    positivity_score = float(db_audio.positivity_score)
-    negativity_score = float(db_audio.negativity_score)
-    neutrality_score = float(db_audio.neutrality_score)
-    overall_sentiment = str(db_audio.overall_sentiment)
-    most_positive_sentences = json.loads(db_audio. most_positive_sentences)
-    most_negative_sentences = json.loads(db_audio. most_negative_sentences)
-    transcript = db_audio.transcript
-    sentiment = {"transcript": transcript,
-                "positivity_score": positivity_score,
-                "negativity_score": negativity_score,
-                "neutrality_score": neutrality_score,
-                "overall_sentiment": overall_sentiment,
-                "most_positive_sentences": most_positive_sentences,
-                "most_negative_sentences": most_negative_sentences,
-                }
-    return sentiment
+
+    if db_audio is None:
+        raise HTTPException(status_code=404, detail="No Audio With This ID")
+    else:
+        positivity_score = float(db_audio.positivity_score)
+        negativity_score = float(db_audio.negativity_score)
+        neutrality_score = float(db_audio.neutrality_score)
+        overall_sentiment = str(db_audio.overall_sentiment)
+        most_positive_sentences = json.loads(db_audio. most_positive_sentences)
+        most_negative_sentences = json.loads(db_audio. most_negative_sentences)
+        transcript = db_audio.transcript
+        sentiment = {"transcript": transcript,
+                    "positivity_score": positivity_score,
+                    "negativity_score": negativity_score,
+                    "neutrality_score": neutrality_score,
+                    "overall_sentiment": overall_sentiment,
+                    "most_positive_sentences": most_positive_sentences,
+                    "most_negative_sentences": most_negative_sentences,
+                    }
+        return sentiment
