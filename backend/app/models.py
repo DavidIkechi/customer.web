@@ -137,3 +137,15 @@ class FreeTrial(Base):
     id = Column(Integer, primary_key=True, index=True)
     transcript_id = Column(String(255), index=True)
     transcript_status = Column(TEXT)
+
+class Order(Base):
+    __tablename__ = "orders"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_email = Column(String(255), ForeignKey("users.email"), nullable=True)
+    billing_plan = Column(String(255), index=True)
+    monthly_amount = Column(Float, index=True)
+    annual_amount = Column(Float, index=True)
+    total_amount = Column(Float, index=True)
+    order_date = Column(Date, index=True, default=date.today())
+    next_payment_due_date = Column(Date, index=True)
