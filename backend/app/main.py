@@ -632,7 +632,7 @@ async def reset_password(token: str, new_password: schema.UpdatePassword, db: Se
 #     return RedirectResponse(url='/')
 
 
-@app.route('/login/google')
+@app.get('/login/google')
 async def login(request: Request):
     redirect_uri = request.url_for('auth')  # This creates the url for our /auth endpoint
     return await oauth.google.authorize_redirect(request, redirect_uri)
