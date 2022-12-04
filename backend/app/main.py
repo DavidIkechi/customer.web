@@ -162,8 +162,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
         file.file.close()
 
     try:
-        result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
-                                            chunk_size = 6000000)
+        result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
         url = result.get("secure_url")
         urls = [url]
         response = shorten_urls(urls)
@@ -293,8 +292,7 @@ async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...
         raise HTTPException(status_code = 406, detail="File Must Not Be More Than 5MB")
     else:
         try:
-            result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
-                                            chunk_size = 6000000)
+            result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
             url = result.get("secure_url")
             urls = [url]
             response = shorten_urls(urls)
