@@ -31,7 +31,8 @@ function TranscriptionMain() {
   const updateTranscribedText = () => {
     setTimeUpdateTracker(true);
     if (timeUpdateTracker) console.log(`tracker is true`);
-    formattedData[Math.floor(currentTime / 5)].isActive = true;
+    if (formattedData)
+      formattedData[Math.floor(currentTime / 5)].isActive = true;
     for (
       let i = Math.floor(currentTime / 5) + 1;
       i < formattedData.length;
@@ -66,9 +67,32 @@ function TranscriptionMain() {
         console.log(err);
       });
   };
+  const fetchActualData = () => {
+    const data =
+      "grant_type=password&username=arcteggzz%40gmail.com&password=123456789&scope=&client_id=&client_secret=";
+    axios.post("https://api.heed.hng.tech/login", data).then((res) => {
+      const headers = {
+        Authorization: `Bearer ${res.data.access_token}`,
+      };
+      axios
+        .get(
+          `https://api.heed.hng.tech/transcription/r0xs7je53o-afe2-4fa7-b61b-3a2588e1e92f`,
+          {
+            headers,
+          }
+        )
+        .then((newRes) => {
+          // console.log(newRes.data.sentiment_result.transcript);
+          setFormattedData(
+            generateArray(newRes.data.sentiment_result.transcript)
+          );
+        });
+    });
+  };
   useEffect(() => {
-    fetchData();
+    fetchActualData();
   }, []);
+  // format array function
   const generateArray = (str) => {
     const cleanedData = [];
 
