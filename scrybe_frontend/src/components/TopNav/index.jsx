@@ -17,7 +17,11 @@ const TopNav = ({ openSidebar, search }) => {
     >
       <div className={styles.TopNav_toggle}>
         <img src={toggleNavIcon} alt="" onClick={openSidebar} />
-        <img src={logo} alt="" />
+        {/* <img src={logo} alt="" /> */}
+        <div className={`${styles.logoLink}`}>
+          <img src={logo} alt="heed logo" />
+          <p>Heed</p>
+        </div>
       </div>
       <div className={styles.TopNav_search}>
         <SearchInput inputValue={search} />
