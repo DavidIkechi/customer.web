@@ -127,9 +127,6 @@ async def ping():
 
 @app.post("/upload_audios", tags=['analyse'])
 async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session = Depends(get_db), file: UploadFile=File(...), user: models.User = Depends(get_active_user)):
-
-    s3_client  = boto3.client("s3", aws_access_key_id='AKIAXFO2DMFAQA3J4D2L', aws_secret_access_key='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')
-    bucket = "heed"
     
     user_id = user.id
     company_id = user.company_id
@@ -138,15 +135,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     first_name = first_name.lower()
     last_name = last_name.lower()
     agent_name = "%s %s" %(first_name, last_name)
-
-    audio_file = file.file.read()
-    unique_file_name = file.filename
-    s3_client.upload_file(
-        audio_file,
-        bucket,
-        unique_file_name
-    )
-    audio_s3_url = f"https://{bucket}.s3.amazonaws.com/{unique_file_name}"
+  
     
     # if the agent name is already in the database before creating for the agent.
     if not db.query(models.Agent).filter(models.Agent.first_name == first_name, 
@@ -222,7 +211,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     return {
         "id":audio_id,
         "transcript_id": transcript_id,
-        "s3 url": audio_s3_url
+        #"s3 url": audio_s3_url
     }
 
 # create the endpoint
