@@ -15,9 +15,7 @@ function Checkout() {
           </span>
         </h1>
       </div>
-      <div className={styles.checkoutDetails}>
-
-      </div>
+      <div className={styles.checkoutDetails}></div>
     </div>
   );
 }
