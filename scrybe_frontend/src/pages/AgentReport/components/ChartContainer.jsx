@@ -12,16 +12,18 @@ import {
 import Icon from "../assets/table-icon.png";
 ChartJS.register(CategoryScale, LinearScale, BarElement);
 
-function Charts() {
+function Charts({ selectReport }) {
+  // const agentReport = useAgentReport()
+
   const [option, setOption] = useState({});
 
   const [userData, setUserData] = useState({
     datasets: [],
   });
 
-  const [selectReport, setSelectReport] = useState([]);
-  console.log("selectReport", selectReport);
-  console.log("data", userData);
+  // const [selectReport, setSelectReport] = useState([]);
+  // console.log("selectReport", selectReport);
+  // console.log("data", userData);
 
   useEffect(() => {
     setUserData({
@@ -76,24 +78,24 @@ function Charts() {
     });
   }, [selectReport]);
 
-  useEffect(() => {
-    setSelectReport(agentData.week);
-    console.log(selectReport);
-  }, []);
+  // useEffect(() => {
+  //   setSelectReport(agentData.week);
+  //   // console.log(selectReport);
+  // }, []);
 
-  const handleDate = (e) => {
-    setSelectReport(agentData[e.target.value]);
-  };
+  // const handleDate = (e) => {
+  //   setSelectReport(agentData[e.target.value]);
+  // };
 
   return (
     <div className={styles.chartContainer}>
-      <div className={styles.select}>
+      {/* <div className={styles.select}>
         <p>View by</p>
         <select className={styles.dropdown} onChange={handleDate}>
           <option value="week">This week</option>
           <option value="month">This month</option>
         </select>
-      </div>
+      </div> */}
       <div className={styles.chartWrap}>
         <div className={styles.chartHeader}>
           <div className={styles.chartText}>

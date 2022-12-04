@@ -1,41 +1,18 @@
-import PropTypes from "prop-types";
-import { React, useEffect, useState } from "react";
+import { React } from "react";
 import styles from "../styles/AgentDetails.module.scss";
-import axios from "axios";
+import { useAgentReport } from "../hooks";
 
 function AgentDetails() {
-  const [details, setDetails] = useState([]);
-  const getDetails = async () => {
-    try {
-      await axios
-        .get("https://638b959081df38ab346c7d6e.mockapi.io/details")
-        .then((res) => {
-          setDetails(res.data);
-        });
-    } catch (error) {}
-  };
-
-  useEffect(() => {
-    getDetails();
-  }, []);
+  const agentReport = useAgentReport();
 
   return (
     <>
-      {details.length === 0 ? (
-        <p>Nothing to show yet</p>
+      {agentReport.length === 0 ? (
+        <p className={styles.empty}>An overview of agent report shows here</p>
       ) : (
-        details.map((detail) => {
+        agentReport.map((detail) => {
           return (
             <div className={styles.agentDetails} key={detail.id}>
-              <div className={styles.agentId}>
-                <p className={styles.secondp}>
-                  Agent ID: &nbsp; &nbsp; {detail.agent_id}
-                </p>
-                <p className={styles.secondp}>
-                  Rank: &nbsp; &nbsp; {detail.rank}
-                </p>
-              </div>
-
               <div className={styles.details}>
                 <div className={styles.callDetails}>
                   <p className={styles.title}>Total Calls</p>
@@ -48,11 +25,11 @@ function AgentDetails() {
                   <p className={styles.dash}>-</p>
                   {detail.missed > 0 ? (
                     <p className={`${styles.number} ${styles.fail}`}>
-                      {detail.missed}
+                      {detail.missed}%
                     </p>
                   ) : (
                     <p className={`${styles.number} ${styles.success}`}>
-                      {detail.missed}
+                      {detail.missed}%
                     </p>
                   )}
                   {/* <p className={styles.number}>{detail.missed}</p> */}
@@ -63,11 +40,11 @@ function AgentDetails() {
                   <p className={styles.dash}>-</p>
                   {detail.positive >= 10 ? (
                     <p className={`${styles.number} ${styles.success}`}>
-                      {detail.positive}
+                      {detail.positive}%
                     </p>
                   ) : (
                     <p className={`${styles.number} ${styles.fail}`}>
-                      {detail.positive}
+                      {detail.positive}%
                     </p>
                   )}
                 </div>
@@ -77,11 +54,11 @@ function AgentDetails() {
                   <p className={styles.dash}>-</p>
                   {detail.neutral >= 10 ? (
                     <p className={`${styles.number} ${styles.neutral}`}>
-                      {detail.neutral}
+                      {detail.neutral}%
                     </p>
                   ) : (
                     <p className={`${styles.number} ${styles.fail}`}>
-                      {detail.neutral}
+                      {detail.neutral}%
                     </p>
                   )}
                 </div>
@@ -91,11 +68,11 @@ function AgentDetails() {
                   <p className={styles.dash}>-</p>
                   {detail.negative >= 5 ? (
                     <p className={`${styles.number} ${styles.fail}`}>
-                      {detail.negative}
+                      {detail.negative}%
                     </p>
                   ) : (
                     <p className={`${styles.number} ${styles.success}`}>
-                      {detail.negative}
+                      {detail.negative}%
                     </p>
                   )}
                 </div>
