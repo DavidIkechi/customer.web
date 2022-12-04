@@ -31,7 +31,7 @@
 
   .navOpener {
     position: absolute;
-    right: -16px;
+    right: 0px;
     top: 32px;
     border: 2px solid $blue-500;
     border-radius: 50%;
@@ -72,7 +72,8 @@
   }
 
   .navLinks {
-    margin: pix-rem(100) 0 0 0;
+    margin: pix-rem(10) 0 0 0;
+    // margin-top: 1rem;
     width: 100%;
   }
 
@@ -96,7 +97,7 @@
     p {
       display: inline;
       font-weight: 300;
-      font-size: 20px;
+      font-size: 16px;
       line-height: 26px;
       color: #6a6a6a;
       cursor: pointer;
@@ -125,4 +126,22 @@
       scale: 1.2;
     }
   }
+  .needSearchMobile {
+    display: none;
+  }
+  .needSearchDesktop {
+    display: block !important;
+  }
 }
+
+@media screen and (max-width: 768px) {
+  .needSearchMobile {
+    display: block !important;
+  }
+}
+
+// @media screen and (min-width: 768px) and (max-width: 980px) {
+//   .needSearchDesktop {
+//     display: block !important;
+//   }
+// }

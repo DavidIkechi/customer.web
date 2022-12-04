@@ -1,0 +1,135 @@
+@use "../../../functions.scss" as *;
+
+.subscribe {
+  background: #002d6b;
+  border-radius: 32px;
+  margin-left: 10rem;
+  margin-right: 10rem;
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 12rem;
+  margin-top: 5rem;
+  @include media(884px) {
+    padding: 3rem;
+  }
+  @include media(550px) {
+    margin: 2rem;
+    padding: 2rem;
+  }
+  @include media(410px) {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .subscribeHeading {
+    font-family: "Kanit";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 60px;
+    text-align: center;
+    color: #ffffff;
+    @include media(884px) {
+      font-size: 36px;
+      width: 100%;
+    }
+    @include media(884px) {
+      font-size: 36px;
+      width: 100%;
+    }
+    @include media(550px) {
+      font-size: 28px;
+    }
+  }
+  .subscribeparagraph {
+    font-family: "Kanit";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 30px;
+    text-align: center;
+    color: #fefefe;
+    width: 50%;
+    margin: 1rem auto 2rem;
+    @include media(1000px) {
+      width: 70%;
+    }
+    @include media(884px) {
+      width: 100%;
+    }
+    @include media(550px) {
+      font-size: 18px;
+    }
+  }
+  .inputs {
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    @include media(550px) {
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    > input {
+      //   background: #ffffff;
+      //   border-radius: 8px;
+      //   font-family: "Kanit";
+      //   font-style: normal;
+      //   font-weight: 300;
+      //   font-size: 16px;
+      //   line-height: 24px;
+      //   color: #959494;
+      //   padding: 1rem 0rem;
+      padding: 15px 10px;
+    //   width: 40%;
+      border: 1px solid #d0d5dd;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+      outline: none;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 18.2px;
+      color: rgba(184, 184, 184, 1);
+      @include media(550px) {
+        width: 100%;
+      }
+    }
+    > button {
+      // background: #3366FF;
+      // border-radius: 8px;
+      // font-family: 'Kanit';
+      // font-style: normal;
+      // font-weight: 500;
+      // font-size: 20px;
+      // border: none;
+      // line-height: 36px;
+      // color: #FFFFFF;
+      // cursor: pointer;
+      // padding: 1rem 2rem;
+      // width: 35%;
+      padding: 15px 10px;
+      width: 30%;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 19.2px;
+      border: none;
+      cursor: pointer;
+      background-color: #3388ff;
+      color: #ffffff;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      @include media(8084px) {
+        width: 45%;
+      }
+      @include media(550px) {
+        width: 70%;
+      }
+      @include media(410px) {
+        width: 100%;
+      }
+    }
+  }
+}

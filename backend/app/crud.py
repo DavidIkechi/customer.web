@@ -1,10 +1,11 @@
 # crud operations for the backend app
 from sqlalchemy.orm import Session
-from fastapi import HTTPException
+from fastapi import HTTPException, status, UploadFile, File, Depends, Response
 import models, schema
 from random import randint
 from passlib.context import CryptContext
 from fastapi import HTTPException 
+import shutil
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -57,18 +58,67 @@ def update_user(db: Session, user: schema.user_update, user_id: int):
     db.refresh(db_user)
     return db_user
 
+
+def update_user_profile(db:Session, profile:schema.UserProfileUpdate, user_id:int):
+    user_profile = db.query(models.UserProfile).filter(models.UserProfile.id == user_id).first()
+    if user_profile is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                        detail=f"The Profile for user with id {user_id} does not exist")
+        
+    if user_profile.id != user_id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , 
+                                    detail="Not authorized to perform requested action")
+    user_profile.phone_number = profile.phone_number
+    user_profile.company_address = profile.company_address
+    user_profile.company_logo_url = profile.company_logo_url
+    db.commit()
+    db.refresh(user_profile)
+    return user_profile
+
+def upload_user_image(db:Session , user_id:int, image_file:UploadFile):
+    user_profile = db.query(models.UserProfile).filter(models.UserProfile.id == user_id).first()
+    file_location = f"media/{image_file.filename}"
+    with open(file_location ,"wb") as profile_img:
+        shutil.copyfileobj(image_file.file, profile_img)
+    image_url = str(f"media/{image_file.filename}")
+    user_profile.company_logo_url = image_url
+    db.commit()
+    db.refresh(user_profile)
+    return {"image_url": image_url}
+
+    
+def delete_user(db: Session, user_id: int, current_user):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"The user with id {user_id} does not exist")
+    if user_id != current_user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , 
+                                detail="Not authorized to perform requested action")
+        
+    user_profile= db.query(models.UserProfile).filter(models.UserProfile.id == user.id).first()
+    db.delete(user)
+    db.delete(user_profile)
+    db.commit()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
 def get_audio(db: Session, audio_id: int):
     return db.query(models.Audio).filter(models.Audio.id == audio_id).first()
 
 def get_audios(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Audio).offset(skip).limit(limit).all()
 
+def get_audios_by_user(db: Session, user_id: int):
+    return db.query(models.Audio).filter(models.Audio.user_id == user_id).all()
+
 def get_company(db: Session, company_id: int):
     return db.query(models.Company).filter(models.Company.id == company_id).first()
 
 def create_audio(db: Session, audio: schema.Audio, agent_id: int):
     db_audio = models.Audio(audio_path=audio.audio_path, size=audio.size, duration=audio.duration, transcript=audio.transcript, timestamp=audio.timestamp, positivity_score=audio.positivity_score,
-    negativity_score=audio.negativity_score, neutrality_score=audio.neutrality_score, overall_sentiment=audio.overall_sentiment, most_positive_sentences =audio.most_positive_sentences, most_negative_sentences = audio.most_negative_sentences, agent_id=agent_id)
+    negativity_score=audio.negativity_score, neutrality_score=audio.neutrality_score, overall_sentiment=audio.overall_sentiment, most_positive_sentences =audio.most_positive_sentences, most_negative_sentences = audio.most_negative_sentences, agent_id=agent_id, agent_firstname = db_agent.first_name, agent_lastname = db_agent.last_name)
+
     db.add(db_audio)
     db.commit()
     db.refresh(db_audio)
@@ -96,7 +146,7 @@ def get_agent(db: Session, agent_id: int):
 def get_agents_by_company_id(db: Session, company_id: int):
     return db.query(models.Agent).filter(models.Agent.company_id == company_id).all()
 
-def create_agent(db: Session, agent: schema.Agent, company_id: int):
+def create_agent(db: Session, agent: schema.AgentCreate, company_id: int):
     db_agent = models.Agent(first_name=agent.first_name, last_name=agent.last_name, company_id=company_id)
     db.add(db_agent)
     db.commit()
@@ -138,7 +188,7 @@ def create_user_profile(db: Session, company_id: int, user_email: str):
 
 def get_user_profile(db: Session, user_id: int):
     agents = []
-    user_profile = db.query(models.UserProfile).filter(models.User.id == user_id).first()
+    user_profile = db.query(models.UserProfile).filter(models.UserProfile.id == user_id).first()
     company = db.query(models.Company).filter(models.Company.id ==user_profile.company_id).first()
     user = db.query(models.User).filter(models.User.id == user_id).first()
     for agent in db.query(models.Agent).filter(models.Agent.company_id == user_profile.company_id).all():
@@ -152,8 +202,22 @@ def get_user_profile(db: Session, user_id: int):
         "phone_number": user_profile.phone_number,
         "email": user.email,
         "company_address": company.address,
+        "company_logo_url": user_profile.company_logo_url,
         "api_key": user_profile.api_key
     }
 
 def get_user_profile_by_email(db: Session, email: str):
     return db.query(models.User).filter(models.User.email == email).first()
+
+
+def reset_password(db: Session, password: str, user: models.User):
+
+    user.password = pwd_context.hash(password)
+
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+    return user
+
+
+

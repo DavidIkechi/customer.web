@@ -16,9 +16,13 @@ import winingWay from "./assets/winning-way.png";
 import business from "./assets/business.png";
 
 import NavBar from "../../components/navBar/index";
-import Footer from "../../components/footer/index";
+import Footer from "../../components/Footer";
 
 const Events = () => {
+  React.useEffect(() => {
+    // 👇️ scroll to top on page load
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
   return (
     <div className="event-section">
       <NavBar />

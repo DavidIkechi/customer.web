@@ -18,11 +18,11 @@ function Cards() {
       </div>
 
       <div className={styles.cards_holder}>
-        <Link to="/help-general">
+        <Link to="/help-support-general">
           <Card
             src={general}
             header="General"
-            paragrapgh="Basic Articles that will help you get the most out of scrybe"
+            paragrapgh="Basic Articles that will help you get the most out of Heed"
           />
         </Link>
         <Card

@@ -1,0 +1,15 @@
+MAIL_USERNAME="animo.group100@gmail.com"
+MAIL_PASSWORD="heeiovmgrudlmtvi"
+MAIL_FROM="heed"
+MAIL_SERVER="heed"
+MAIL_FROM="heed"
+JWT_ACCESS_SECRET_KEY="mysecret_you_dont_know" 
+JWT_REFRESH_SECRET_KEY="another_secret"
+PASS='heeiovmgrudlmtvi'
+EMAIL='animo.group100@gmail.com'
+SECRET='Testing1234347278'
+API_KEY='f99bb50c-7593-400d-a3a9-24af5672b8bd'
+MODEL_KEY='1753db23-31b7-4461-9d27-61c8c3966a9e'
+ASSEMBLY_KEY="5e33949cff4749f4aa10297858aae03d"
+SECRET_P="123456"
+

@@ -1,15 +1,15 @@
 @function pix-rem($value, $suffix: rem) {
-    $calculate: calc($value/16);
-    @return #{$calculate}#{$suffix};
+  $calculate: calc($value/16);
+  @return #{$calculate}#{$suffix};
 }
 
 .TranscriptionRightBar {
-    width: 320px;
+  width: 320px;
 }
 
-@media screen and (max-width: 480px) {
-    .TranscriptionRightBar {
-        left: 0;
-        width: 100%;
-    }
+@media screen and (max-width: 960px) {
+  .TranscriptionRightBar {
+    left: 0;
+    width: 100%;
+  }
 }

@@ -2,6 +2,7 @@ import React from "react";
 import logoutIllusration from "./assets/logout-illustration.png";
 import logoWithText from "../../assets/scrybe_logo_with_text.svg";
 import logoutStyles from "./logout.module.scss";
+import Cookies from "js-cookie";
 
 function Logout() {
   return (

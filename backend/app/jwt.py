@@ -6,7 +6,6 @@ from passlib.context import CryptContext
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 import models
-
 from crud import get_user_by_email
 # from db import engine, SessionLocal
 
@@ -14,6 +13,7 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
+
 
 #Can be found in .env file at base directory
 JWT_ACCESS_SECRET_KEY = os.getenv("JWT_ACCESS_SECRET_KEY")
