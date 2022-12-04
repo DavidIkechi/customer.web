@@ -618,16 +618,9 @@ async def reset_password(token: str, new_password: schema.UpdatePassword, db: Se
 
 
 
-@app.get('/')
-def public(request: Request):
-    user = request.session.get('user')
-    if user:
-        name = user.get('name')
-        return HTMLResponse(f'<p>Hello {name}!</p><a href=/logout>Logout</a>')
-    return HTMLResponse('<a href=/login>Login</a>')
 
 
-@app.route('/logout')
+@app.route('/logout/google')
 async def logout(request: Request):
     request.session.pop('user', None)
     return RedirectResponse(url='/')
