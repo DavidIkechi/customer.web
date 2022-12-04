@@ -609,8 +609,8 @@ def delete_audios(audios: List[int] = Query(None), db: Session = Depends(get_db)
 
 
 @app.get("/download/{id}")
-def download (id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    db_audio = crud.get_audio(db, audio_id = id)
+def download (id: Union[int, str], db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    db_audio = db.query(models.Audio).filter(models.Audio.job_id == id).first()
 
     if db_audio is None:
         raise HTTPException(status_code=404, detail="No Audio With This ID")
