@@ -31,7 +31,6 @@ function Pricing() {
     }
   };
   const toggleMonth = () => {
-    plansRef.current.classList.toggle("active");
     if (!showMonth) {
       setshowMonth(true);
       setshowYear(false);
