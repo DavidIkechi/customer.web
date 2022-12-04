@@ -56,6 +56,7 @@ import LandingPageSalesTeam from "./pages/NewLandingPageSalesTeam/index";
 import HomePageRedesign from "./pages/HomePageRedesign";
 import WithAuth from "./HOCs";
 import Support from "./pages/Support/support";
+import EmailVerificationSuccess from "./pages/EmailVerifySuccess/index";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -288,6 +289,11 @@ function App() {
         <Route path="*" element={<Error />} />
         {/* <Route path="/von" element={<Von />} /> */}
         <Route path="/support-team" element={<Support />} />
+        {/* // EmailVerificationSuccess */}
+        <Route
+          path="/verification?token=:token"
+          element={<EmailVerificationSuccess />}
+        />
       </Routes>
     </>
   );
