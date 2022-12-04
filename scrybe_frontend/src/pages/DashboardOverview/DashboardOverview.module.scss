@@ -4,6 +4,31 @@
   padding: 0;
   width: 100%;
 }
+.dashboard_overviewParent {
+  width: 100%;
+  display: flex;
+  position: relative;
+
+  .dashboard_overviewCol {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow-y: scroll;
+  }
+}
+
+.sidebaroverlay {
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  background: rgba(18, 18, 18, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -76,6 +101,16 @@
     display: flex;
     justify-content: center;
   }
+  .empty_state {
+    padding: 6rem 0;
+    p {
+      font-weight: 300;
+      font-size: 1rem;
+      line-height: 24px;
+      text-align: center;
+      color: #454545;
+    }
+  }
 }
 // analysis
 .analysis {
@@ -108,7 +143,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: 0.8rem;
+    padding-top: 1.3rem;
+    .doughnut_chart {
+      width: 200px;
+      height: 230px;
+    }
     .chart_inner {
       margin-top: -8rem;
       margin-bottom: 100px;
@@ -119,8 +158,6 @@
         font-weight: 500;
         font-size: 2rem;
         color: #1d1d1d;
-        // width: 40px;
-        // margin: -4px 0px;
       }
       span {
         margin: 0;
@@ -158,6 +195,16 @@
       }
     }
   }
+  .empty_state {
+    padding: 6rem 0;
+    p {
+      font-weight: 300;
+      font-size: 1rem;
+      line-height: 24px;
+      text-align: center;
+      color: #454545;
+    }
+  }
 }
 // leaderboard
 .leaderboard {
@@ -188,15 +235,20 @@
         th {
           font-weight: normal;
           color: #6a6a6a;
+          padding: 10px;
         }
       }
       tbody {
         color: #6a6a6a;
 
         tr {
+          padding: 1rem 0;
           text-align: center;
           border-spacing: 2rem;
           border-bottom: solid 1.2rem white;
+          td {
+            padding: 1rem 0;
+          }
         }
       }
     }
@@ -303,11 +355,11 @@
     flex-direction: column;
     gap: 2rem;
   }
-  .recordings {
-    &__chart {
-      margin-left: -3rem;
-    }
-  }
+  // .recordings {
+  //   &__chart {
+  //     margin-left: -3rem;
+  //   }
+  // }
 
   .recent_recordings {
     caption {
