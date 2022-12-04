@@ -4,50 +4,49 @@
 @import "../../../assets/styles/_reset.scss";
 @import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap");
 
+
+
 .container {
-  height: 100%;
-  width: 100%;
-  background-color: #f9f9f9;
-  // padding: 5px;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  background-color: #f9f9f9;
   position: relative;
+  transition: all 2s ease-in;
 
-  .sidebarContainer{
-    height: 100%;
-  }
-
-  @include mixins.sm {
-    height: 100%;
-    width: 100%;
-    background-color: #f9f9f9;
-    padding: 25px;
-  }
+ 
   .mainWrapper {
     margin: 0px auto;
-    width: 100%;
-    background-color: #ececec;
-    padding: 1em 1em;
-    @include mixins.sm {
-      max-width: 1160px;
-      height: 90%;
-      background-color: #ececec;
-      padding: 40px;
+    width: 80%;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 20px;
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      h1 {
+        color: #434342;
+        font-size: 32px;
+        font-weight: 600;
+      }
+
+      img {
+        cursor: pointer;
+        width: 15px;
+      }
     }
+   
     .topDetailsDiv {
       display: flex;
-      flex-direction: column-reverse;
+      flex-direction: row-reverse;
+      align-items: flex-start;
       justify-content: space-between;
-      margin-bottom: 30px;
-      @include mixins.sm {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        height: 40%;
-      }
+      
     }
   }
 }
