@@ -11,6 +11,7 @@ import VerdictCard from "./components/VerdictCard";
 import PhraseTagCard from "./components/PhraseTagCard";
 import SideBar from "../../components/SideBar";
 import { useMockEnd } from "./hooks";
+import NewDesignSideBar from "../../components/NewDesignSidebar/index";
 
 function SentimentAnalysis() {
   const [isMobileAsideOpen, setIsMobileAsideOpen] = useState(false);
@@ -58,7 +59,7 @@ function SentimentAnalysis() {
   };
 
   return (
-    <SideBar>
+    <NewDesignSideBar>
       <div className={styles.page__container}>
         <div className={styles.audio__mobile}>
           <AudioCard />
@@ -123,7 +124,7 @@ function SentimentAnalysis() {
           />
         </aside>
       </div>
-    </SideBar>
+    </NewDesignSideBar>
   );
 }
 
