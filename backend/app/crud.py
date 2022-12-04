@@ -88,19 +88,19 @@ def upload_user_image(db:Session , user_id:int, image_file:UploadFile):
 
     
 def delete_user(db: Session, user_id: int, current_user):
-    user = db.query(models.User).filter(models.User.id == user_id).first()
-    if user is None:
+    deleted_user = db.query(models.User).filter(models.User.id == user_id).first()
+    if deleted_user is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"The user with id {user_id} does not exist")
     if user_id != current_user.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , 
                                 detail="Not authorized to perform requested action")
         
-    user_profile= db.query(models.UserProfile).filter(models.UserProfile.id == user.id).first()
-    db.delete(user)
+    user_profile= db.query(models.UserProfile).filter(models.UserProfile.id == deleted_user.id).first()
+    db.delete(deleted_user)
     db.delete(user_profile)
     db.commit()
-    return Response(status_code=status.HTTP_204_NO_CONTENT)
+    return {"message":f"User with id{deleted_user.id} has been deleted"}
 
 
 def get_audio(db: Session, audio_id: int):
@@ -117,12 +117,25 @@ def get_company(db: Session, company_id: int):
 
 def create_audio(db: Session, audio: schema.Audio, agent_id: int):
     db_audio = models.Audio(audio_path=audio.audio_path, size=audio.size, duration=audio.duration, transcript=audio.transcript, timestamp=audio.timestamp, positivity_score=audio.positivity_score,
-    negativity_score=audio.negativity_score, neutrality_score=audio.neutrality_score, overall_sentiment=audio.overall_sentiment, most_positive_sentences =audio.most_positive_sentences, most_negative_sentences = audio.most_negative_sentences, agent_id=agent_id, agent_firstname = db_agent.first_name, agent_lastname = db_agent.last_name)
+    negativity_score=audio.negativity_score, neutrality_score=audio.neutrality_score, overall_sentiment=audio.overall_sentiment, most_positive_sentences =audio.most_positive_sentences, most_negative_sentences = audio.most_negative_sentences, agent_id=agent_id, agent_firstname = db_audio.agent_firstname, agent_lastname = db_audio.agent_lastname)
 
     db.add(db_audio)
     db.commit()
     db.refresh(db_audio)
     return db_audio
+
+def get_jobs_uploaded(db:Session, current_user, skip: int = 0, limit: int = 0):
+    job_list = []
+    all_audios = get_audios_by_user(db, user_id=current_user.id)
+    for audio in all_audios:
+        new_data = {"transcript_id" :audio.job_id,
+                    "job_status":audio.job.job_status,
+                    "agent_name":f"{audio.agent_firstname} {audio.agent_lastname}",
+                    "audio_url" :audio.audio_path
+                    }
+        
+        job_list.append(new_data)
+    return job_list
 
 def get_job(db: Session, job_id: int):
     return db.query(models.Job).filter(models.Job.id == job_id).first()

@@ -6,6 +6,7 @@
 import axios from "axios";
 import { PropTypes } from "prop-types";
 import React, { useEffect, useState } from "react";
+import { fetchData } from "./execAxios";
 import closeModalIcon from "./imgs/close-icon.svg";
 import deleteIcon from "./imgs/delete-icon.svg";
 import notfoundImg from "./imgs/notfound.svg";
@@ -96,6 +97,16 @@ const TableData = ({ searchKeyword }) => {
     setOpenModal(false);
   };
   const timeLeft = 20;
+
+  useEffect(() => {
+    const newRecordings = fetchData("list-audios-by-user");
+    console.log(newRecordings);
+    // if (newRecordings) {
+    //   setAllRecordings([newRecordings]);
+    // } else {
+    //   setAllRecordings(recordings);
+    // }
+  }, []);
 
   const getChecked = (e) => {
     let checkedList = [...recordCheckedList];

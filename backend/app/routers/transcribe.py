@@ -91,6 +91,10 @@ def view_transcript(job_id: Union[int, str], db: Session = Depends(_services.get
     
     db_audio = db.query(models.Audio).filter(models.Audio.job_id == job_id).first()
     db_audio_id = db_audio.id
+    db_audio_url = db_audio.audio_path
+    db_audio_filename = db_audio.filename
+    db_audio_size = db_audio.size
+    db_audio_duration = db_audio.duration
 
     db_audio.transcript, db_audio.positivity_score = transcripted_word, positivity_score
     db_audio.negativity_score, db_audio.neutrality_score=negativity_score, neutrality_score
@@ -104,9 +108,17 @@ def view_transcript(job_id: Union[int, str], db: Session = Depends(_services.get
     history_create: schema.HistoryCreate = {"user_id":user_id,
                                             "sentiment_result":overall_sentiment,
                                             "agent_name": agent_name,
-                                            "audio_name": agent_name+"transcript"}
+                                            "audio_name": db_audio_filename}
 
     crud.create_history(db, history_create)
+    other_details = {
+        "audio_url": db_audio_url,
+        "audio_size": db_audio_size,
+        "audio_duration": db_audio_duration,
+        "audio_filename": db_audio_filename
+    }
+    
+    sentiment_result.update(other_details)
 
     return {"sentiment_result": sentiment_result}
 

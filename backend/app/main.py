@@ -1,4 +1,5 @@
 from typing import List, Union
+from pathlib import Path
 from models import Audio
 from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form, Query
 from fastapi_pagination import Page, paginate, Params
@@ -33,7 +34,7 @@ import services as _services
 
 from datetime import datetime
 
-import json
+
 import shutil
 import os
 
@@ -93,12 +94,14 @@ origins = [
     "http://localhost:80",
     "http://localhost:3000",
     "http://localhost:5173",
+    "http://localhost:1111",
     "http://localhost:8000",
     "https://heed.hng.tech",
     "http://heed.hng.tech",
     "https://heed.hng.tech:80",
     "https://heed.hng.tech:3000",
     "https://heed.hng.tech:5173",
+    "https://heed.hng.tech:1111",
 ]
 
 app.add_middleware(
@@ -171,7 +174,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
 
     # transcript = transcript
     
-    size = audio_details(file.filename)["size"]
+    size = Path(file.filename).stat().st_size
     duration = audio_details(file.filename)["mins"]
     transcript = transcribe_file(new_url)
     # get some essential parameters
@@ -181,7 +184,8 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     
 
     db_audio = models.Audio(audio_path=audio_url, job_id = transcript_id, user_id=user_id, size=size, duration=duration, 
-                            agent_id=db_agent.id, agent_firstname= db_agent.first_name, agent_lastname=db_agent.last_name)
+                            agent_id=db_agent.id, agent_firstname= db_agent.first_name, agent_lastname=db_agent.last_name, 
+                            filename = file.filename)
 
     db.add(db_audio)
     db.commit()
@@ -382,7 +386,9 @@ def list_audios_by_user(db: Session = Depends(get_db), user: models.User = Depen
         audios.append(audio)
     return audios
     
-
+@app.get("/get_uploaded_jobs", summary="List all uploaded jobs with job details", status_code=status.HTTP_200_OK, tags=['jobs'])
+def get_uploaded_jobs(db:Session = Depends(get_db), current_user = Depends(get_active_user), skip: int = 0, limit: int = 0):
+    return crud.get_jobs_uploaded(db=db, skip=skip, limit=limit, current_user=current_user)
 
 @app.get('/audios/{audio_id}/sentiment')
 def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
@@ -612,6 +618,7 @@ def delete_audios(audios: List[int] = Query(None), db: Session = Depends(get_db)
             db.commit()
             deleted_audios.append(db_audio.audio_path)
     return {"message": "operation successful", "deleted audion(s)": deleted_audios}
+
 
 
 @app.get("/download/{id}")
