@@ -7,6 +7,7 @@ function AudioControl({
   isPlaying,
   audioDuration,
   currentTime,
+  audioFileSize,
 }) {
   const PlayPause = () => {
     setIsPlaying(!isPlaying);
@@ -56,7 +57,7 @@ function AudioControl({
           </svg>
           <div className={styles.AudioName}>
             <h2>Recording mp3</h2>
-            <p>4.0 mb</p>
+            <p>{`${audioFileSize}.0 mb`}</p>
           </div>
         </div>
 

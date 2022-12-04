@@ -10,6 +10,7 @@ function TranscriptionRightBar({
   isPlaying,
   audioDuration,
   currentTime,
+  audioFileSize,
 }) {
   return (
     <div className={styles.TranscriptionRightBar}>
@@ -19,6 +20,7 @@ function TranscriptionRightBar({
         setIsPlaying={setIsPlaying}
         audioDuration={audioDuration}
         currentTime={currentTime}
+        audioFileSize={audioFileSize}
       />
       <SentimentAnalysis />
       <RecordingList />
