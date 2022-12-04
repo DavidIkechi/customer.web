@@ -7,7 +7,7 @@ import styles from "./try_state_1.module.scss";
 import RecordingLogo from "../../assets/Recording-logo.png";
 
 export default function TryState1() {
-  const [files, setFiles] = useState(null);
+  const [files, setFiles] = useState();
   const inputRef = useRef();
 
   const handleDragOver = (event) => {
@@ -15,21 +15,37 @@ export default function TryState1() {
   };
   const handleDrop = (event) => {
     event.preventDefault();
-    console.log(event.dataTransfer.files);
-    setFiles(event.dataTransfer.files);
+    setFiles(event.dataTransfer.files[0]);
   };
+  // const uploadFiles = async (e) => {
+  //   axios
+  //   .post("https://api.heed.hng.tech/tryForFree", files)
+  //   .then((response) => {
+  //     console.log(response);
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //   });
+  // };
 
   const uploadFiles = () => {
     axios
-      .post("https://api.heed.hng.tech/tryForFree", files)
-      .then((response) => {
+      .post("https://api.heed.hng.tech/tryForFree", { files })
+      .then(function (response) {
         console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
       });
-    // console.log("the name");
   };
+
+  // const uploadFiles = () => {
+  //   axios
+  //     .post("https://api.heed.hng.tech/tryForFree", files)
+  //     .then((response) => {
+  //       console.log(response);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
   if (files)
     return (
@@ -44,9 +60,7 @@ export default function TryState1() {
               <img src={RecordingLogo} alt="some" />
             </div>
             <div>
-              {Array.from(files).map((file, idx) => (
-                <h4 key={idx}>{file.name}</h4>
-              ))}
+              <h4>{files.name}</h4>
             </div>
             <div className={styles.Or}>
               <div className={styles.orLeft} />
@@ -59,8 +73,8 @@ export default function TryState1() {
             <input
               type="file"
               onChange={(event) => {
-                setFiles(event.target.files);
-                console.log(event.target.files);
+                setFiles(event.target.files[0]);
+                console.log(event.target.files[0]);
               }}
               name="file"
               hidden
@@ -76,7 +90,16 @@ export default function TryState1() {
             {/* 
               <Link to="/try-processing">
               </Link> */}
-            <button onClick={uploadFiles}>upload</button>
+            {/* <div>
+              <input
+                type="file"
+                onChange={(event) => {
+                  setFiles(event.target.files);
+                  console.log(event.target.files);
+                }}
+              />
+              <button onClick={uploadFiles}>upload</button>
+            </div> */}
             <button
               onClick={uploadFiles}
               className={styles.selectButton2}
@@ -136,12 +159,22 @@ export default function TryState1() {
             <input
               type="file"
               onChange={(event) => {
-                setFiles(event.target.files);
-                console.log(event.target.files);
+                setFiles(event.target.files[0]);
+                console.log(event.target.files[0]);
               }}
               hidden
               ref={inputRef}
             />
+            {/* <div>
+              <input
+                type="file"
+                onChange={(event) => {
+                  setFiles(event.target.files);
+                  console.log(event.target.files);
+                }}
+              />
+              <button onClick={uploadFiles}>upload</button>
+            </div> */}
 
             <p
               className={styles.Upload}

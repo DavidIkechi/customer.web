@@ -2,7 +2,7 @@ import React from "react";
 
 function Payments() {
   return (
-    <div>
+    <div className="sub-container">
       <h1>16. Payments</h1>
       <p>
         We may provide paid products and/or services within Service. In that
