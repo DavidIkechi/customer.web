@@ -157,6 +157,23 @@
   width: 100%;
   background: #ffffff;
   position: relative;
+
+  .expired {
+    font-family: "Kanit";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 26px;
+    text-align: center;
+    margin-top: 3rem;
+    color: #a9a9a9;
+    transform: translate(50%);
+    width: 100% !important;
+    -webkit-transform: translate(50%);
+    -moz-transform: translate(50%);
+    -ms-transform: translate(50%);
+    -o-transform: translate(50%);
+  }
 }
 .not_found_wrap {
   margin: 3rem 0;

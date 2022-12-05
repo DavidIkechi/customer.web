@@ -6,9 +6,11 @@
 import axios from "axios";
 import { PropTypes } from "prop-types";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { formatAudioLen } from "../../../helpers/formatAudioLen/index";
 import { formatAudioSize } from "../../../helpers/formatAudioSize/index";
 import { formatDate } from "../../../helpers/formatDate";
+import { shortenfilename } from "../../../helpers/shortenFileLen";
 import closeModalIcon from "./imgs/close-icon.svg";
 import deleteIcon from "./imgs/delete-icon.svg";
 import notfoundImg from "./imgs/notfound.svg";
@@ -16,7 +18,6 @@ import dropdownIcon from "./imgs/select-arrow.svg";
 import soundwave from "./imgs/soundwave.svg";
 import uploadBtn_icon from "./imgs/uploadBtnIcon.svg";
 import styles from "./tabledata.module.scss";
-import { Link } from "react-router-dom";
 
 // dummy recordings
 const recordings = [
@@ -94,6 +95,7 @@ const TableData = ({ searchKeyword }) => {
   const [recordingsProcessed, setRecordingsProcessed] = useState(false);
   const [openDeletePopup, setOpenDeletePopup] = useState(false);
   const [deleted, setDeleted] = useState(false);
+  const [sessionExpired, setSessionExpired] = useState(false);
   const handleOpen = () => {
     setOpenModal(true);
   };
@@ -134,10 +136,16 @@ const TableData = ({ searchKeyword }) => {
     Authorization: `Bearer ${token}`,
   };
   const fetchData = async () => {
-    const data = await axios.get("list-audios-by-user", { headers });
-    setAllRecordings(data.data);
-    // console.log(data);
+    await axios.get("list-audios-by-user", { headers }).then((res) => {
+      if (res.status === 200) {
+        setSessionExpired(false);
+        setAllRecordings(res.data);
+      } else if (res.status === 401) {
+        setSessionExpired(true);
+      }
+    });
   };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -262,77 +270,90 @@ const TableData = ({ searchKeyword }) => {
                 <th />
               </tr>
             </thead>
-            {searchRecordings(allRecordings).length > 0 ? (
-              <tbody className={styles.uploaded_table_body}>
-                {searchRecordings(allRecordings).map((recording) => {
-                  const job_status = recording?.job_details?.job_status;
+            {sessionExpired ? (
+              <>
+                {searchRecordings(allRecordings).length > 0 ? (
+                  <tbody className={styles.uploaded_table_body}>
+                    {searchRecordings(allRecordings).map((recording) => {
+                      const job_status = recording?.job_details?.job_status;
 
-                  return (
-                    <tr key={recording?.id}>
-                      <td
-                        className={styles.uploaded_table_body_checkbox_img_wrap}
-                      >
-                        <input
-                          type="checkbox"
-                          value={recording?.id}
-                          name="checkbox"
-                          onChange={getChecked}
-                          id="checkbox"
-                          className={styles.uploaded_table_body_checkbox}
-                        />
-                        <img
-                          src={soundwave}
-                          alt="soundwave-icon"
-                          className={styles.uploaded_table_body_cell_img}
-                        />
-                      </td>
-                      <td>{recording?.filename}</td>
-                      <td>{formatAudioLen(recording?.duration)}</td>
-                      <td>{formatAudioSize(recording?.size)} mb</td>
-                      <td>{formatDate(recording?.timestamp)}</td>
-                      <td>
-                        <strong
-                          style={{
-                            color:
-                              // eslint-disable-next-line no-nested-ternary
-                              job_status === "Processing" ||
-                              job_status === "queued"
-                                ? "#FFB800"
-                                : job_status === "Successful" ||
-                                  job_status === "completed"
-                                ? "#3bb031"
-                                : "#ff291b",
-                          }}
-                        >
-                          {job_status}{" "}
-                          {job_status === "Failed" && (
-                            <a href="!" className={styles.retry}>
-                              retry
-                            </a>
-                          )}
-                        </strong>
-                      </td>
-                      <td
-                        className={
-                          styles["uploaded-table-body-cell delete-btn"]
-                        }
-                        onClick={() => deleteRecording(recording?.id)}
-                      >
-                        <img
-                          src={deleteIcon}
-                          alt="delete-icon "
-                          className={styles.delete_icon}
-                        />
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
+                      return (
+                        <tr key={recording?.id}>
+                          <td
+                            className={
+                              styles.uploaded_table_body_checkbox_img_wrap
+                            }
+                          >
+                            <input
+                              type="checkbox"
+                              value={recording?.id}
+                              name="checkbox"
+                              onChange={getChecked}
+                              id="checkbox"
+                              className={styles.uploaded_table_body_checkbox}
+                            />
+                            <img
+                              src={soundwave}
+                              alt="soundwave-icon"
+                              className={styles.uploaded_table_body_cell_img}
+                            />
+                          </td>
+                          <td>{shortenfilename(recording?.filename)}</td>
+                          <td>{formatAudioLen(recording?.duration)}</td>
+                          <td>{formatAudioSize(recording?.size)} mb</td>
+                          <td>{formatDate(recording?.timestamp)}</td>
+                          <td>
+                            <strong
+                              style={{
+                                color:
+                                  // eslint-disable-next-line no-nested-ternary
+                                  job_status === "Processing" ||
+                                  job_status === "queued"
+                                    ? "#FFB800"
+                                    : job_status === "Successful" ||
+                                      job_status === "completed"
+                                    ? "#3bb031"
+                                    : "#ff291b",
+                              }}
+                            >
+                              {job_status}{" "}
+                              {job_status === "completed" && (
+                                <Link
+                                  to={`/transcriptions/{${recording?.job_id}}`}
+                                  className={styles.retry}
+                                >
+                                  result
+                                </Link>
+                              )}
+                            </strong>
+                          </td>
+                          <td
+                            className={
+                              styles["uploaded-table-body-cell delete-btn"]
+                            }
+                            onClick={() => deleteRecording(recording?.id)}
+                          >
+                            <img
+                              src={deleteIcon}
+                              alt="delete-icon "
+                              className={styles.delete_icon}
+                            />
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                ) : (
+                  <div className={styles.not_found_wrap}>
+                    <img src={notfoundImg} alt="not found" />
+                    <p>Sorry, we couldn’t find any results</p>
+                  </div>
+                )}
+              </>
             ) : (
-              <div className={styles.not_found_wrap}>
-                <img src={notfoundImg} alt="not found" />
-                <p>Sorry, we couldn’t find any results</p>
-              </div>
+              <h1 className={styles.expired}>
+                Your Session has has expired, please signin again
+              </h1>
             )}
           </table>
         </div>
@@ -385,12 +406,12 @@ const TableData = ({ searchKeyword }) => {
                 </p>
               </div> */}
             </div>
-            <Link
+            {/* <Link
               to={`transcription/{job_d}`}
               className={`${styles.view_resultbtn} `}
             >
               View Result
-            </Link>
+            </Link> */}
           </div>
         )}
       </div>
