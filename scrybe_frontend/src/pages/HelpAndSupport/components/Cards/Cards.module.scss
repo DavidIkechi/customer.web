@@ -2,6 +2,7 @@
   padding: 3.5rem 0;
   width: min(100%, 75.25rem);
   margin-inline: auto;
+  margin-block-end: 2rem;
 
   a {
     text-decoration: none;
@@ -28,7 +29,7 @@
 }
 
 .cards_holder {
-  margin-top: 2rem;
+  margin-top: 1rem;
   display: flex;
   justify-content: space-between;
 }

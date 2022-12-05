@@ -7,7 +7,7 @@
 .pricing .hero {
   background-color: #e6f0ff;
   padding: 1rem;
-
+  position: relative;
   overflow-x: visible;
   margin-bottom: pix-rem(40);
   @include media(1220px) {
@@ -67,7 +67,7 @@
 
 .pricing .hero .curves {
   position: absolute;
-  top: 10%;
+  top: -20%;
   left: 0;
   right: 0;
   bottom: 0;
@@ -76,7 +76,7 @@
   height: 90vh;
 
   @include media(1220px) {
-    top: pix-rem(260);
+    height: 75vh;
   }
 }
 
