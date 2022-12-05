@@ -692,3 +692,21 @@ def download (id: Union[int, str], db: Session = Depends(get_db), user: models.U
                     "most_negative_sentences": most_negative_sentences,
                     }
         return sentiment
+
+    
+    
+@app.get("/AgentDetails", summary = "get agent performance report", tags=['Agent Performance Report'])
+def get_agent_performance(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    data_result = db.execute("""SELECT COUNT (agent_id) AS 'Total calls',
+    first_name || ' ' || last_name AS Name,
+    
+    SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive,
+    SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative,
+    SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral,
+    ROUND ( (SUM(positivity_score )/SUM(positivity_score + negativity_score + neutrality_score))*10) AS "Average Score"
+    FROM Agents INNER JOIN Audios on agents.id =audios.agent_id 
+    GROUP BY first_name ,last_name ORDER BY Name;""")
+
+    AgentDetails = [dict(result) for result in data_result]
+
+    return {"Agent Performance Report": AgentDetails}

@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "../DashboardOverview.module.scss";
 import toneWave from "../assets/tone_wave.svg";
@@ -7,10 +7,9 @@ import upload from "../assets/upload.svg";
 import empty_state from "../assets/empty_state.png";
 
 const RecentRecording = ({ recentRecording }) => {
-  useEffect(() => {}, [recentRecording]);
   return (
     <>
-      {recentRecording?.length < 0 ? (
+      {recentRecording?.length > 0 ? (
         <table className={styles.recent_recordings}>
           <caption>Recent recordings </caption>
           <thead>
@@ -25,19 +24,18 @@ const RecentRecording = ({ recentRecording }) => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                <img src={toneWave} alt="tone wave" />
-              </td>
-              <td>
-                {recentRecording.audio_path}
-                {/* <span>{recentRecording.audio_path}</span> */}
-                {/* <span className={styles.bold_td}> Inactive recharge card</span> */}
-              </td>
-              <td>{recentRecording.duration}</td>
-              <td>{recentRecording.size}</td>
-              <td>{recentRecording.timestamp}</td>
-            </tr>
+            {recentRecording.map((data) => (
+              <tr>
+                <td>
+                  <img src={toneWave} alt="tone wave" />
+                </td>
+                <td>{data.audio_path}</td>
+                <td>{data.duration}</td>
+                <td>{data.size}</td>
+                <td>{data.timestamp}</td>
+              </tr>
+            ))}
+
             {/* <tr>
             <td>
               <img src={toneWave} alt="tone wave" />

@@ -50,7 +50,7 @@ const TotalAnalysis = ({ totalAnalysisData }) => {
     } else {
       setSelectedTotalAnalysis([]);
     }
-  }, []);
+  }, [totalAnalysisData]);
 
   function analysisTimeStampFunc(e) {
     setSelectedTotalAnalysis(totalAnalysisData[e.target.value]);
