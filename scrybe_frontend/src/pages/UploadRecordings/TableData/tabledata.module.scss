@@ -149,15 +149,6 @@
   overflow-x: auto;
   // overflow-y: hidden;
   height: fit-content;
-}
-
-.uploaded_table {
-  border-collapse: collapse;
-  margin: 25px 0;
-  width: 100%;
-  background: #ffffff;
-  position: relative;
-
   .expired {
     font-family: "Kanit";
     font-style: normal;
@@ -167,13 +158,21 @@
     text-align: center;
     margin-top: 3rem;
     color: #a9a9a9;
-    transform: translate(50%);
     width: 100% !important;
-    -webkit-transform: translate(50%);
-    -moz-transform: translate(50%);
-    -ms-transform: translate(50%);
-    -o-transform: translate(50%);
+    // // transform: translate(50%);
+    // -webkit-transform: translate(50%);
+    // -moz-transform: translate(50%);
+    // -ms-transform: translate(50%);
+    // -o-transform: translate(50%);
   }
+}
+
+.uploaded_table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  width: 100%;
+  background: #ffffff;
+  position: relative;
 }
 .not_found_wrap {
   margin: 3rem 0;
@@ -529,6 +528,9 @@
 
   .modalbox {
     width: 300px !important;
+  }
+  .expired {
+    font-size: 16px;
   }
 }
 
