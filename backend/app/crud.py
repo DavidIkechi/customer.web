@@ -124,9 +124,9 @@ def create_audio(db: Session, audio: schema.Audio, agent_id: int):
     db.refresh(db_audio)
     return db_audio
 
-def get_jobs_uploaded(db:Session, current_user, skip: int = 0, limit: int = 0):
+def get_jobs_uploaded(db:Session, current_user, skip: int , limit: int ):
     job_list = []
-    all_audios = get_audios_by_user(db, user_id=current_user.id)
+    all_audios = db.query(models.Audio).filter(models.Audio.user_id == current_user.id).offset(skip).limit(limit).all()
     for audio in all_audios:
         new_data = {"transcript_id" :audio.job_id,
                     "job_status":audio.job.job_status,

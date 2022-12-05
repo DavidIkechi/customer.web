@@ -376,7 +376,7 @@ def list_audios_by_user(db: Session = Depends(get_db), user: models.User = Depen
     return audios
     
 @app.get("/get_uploaded_jobs", summary="List all uploaded jobs with job details", status_code=status.HTTP_200_OK, tags=['jobs'])
-def get_uploaded_jobs(db:Session = Depends(get_db), current_user = Depends(get_active_user), skip: int = 0, limit: int = 0):
+def get_uploaded_jobs(db:Session = Depends(get_db), current_user = Depends(get_active_user), skip: int = 0, limit: int = 2):
     return crud.get_jobs_uploaded(db=db, skip=skip, limit=limit, current_user=current_user)
 
 @app.get('/audios/{audio_id}/sentiment')
