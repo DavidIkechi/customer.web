@@ -29,7 +29,7 @@ const RecentRecording = ({ recentRecording }) => {
                 <td>
                   <img src={toneWave} alt="tone wave" />
                 </td>
-                <td>{data.audio_path}</td>
+                <td>{data.filename}</td>
                 <td>{data.duration}</td>
                 <td>{data.size}</td>
                 <td>{data.timestamp}</td>
