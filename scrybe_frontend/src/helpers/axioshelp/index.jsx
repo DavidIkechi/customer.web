@@ -1,5 +1,4 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 
 const token = localStorage.getItem("heedAccessToken");
 const headers = {

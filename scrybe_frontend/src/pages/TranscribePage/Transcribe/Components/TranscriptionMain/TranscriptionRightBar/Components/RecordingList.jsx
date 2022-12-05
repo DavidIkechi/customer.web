@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./RecordingList.module.scss";
-import AudioFilesData from "./AudioFilesData";
+// import AudioFilesData from "./AudioFilesData";
 
-function RecordingList() {
+function RecordingList({ recentRecordings }) {
   return (
     <div className={styles.RecordingList}>
       <input
@@ -28,7 +28,7 @@ function RecordingList() {
         </svg>
       </div>
       <div className={styles.audioList}>
-        {AudioFilesData.map((list) => {
+        {recentRecordings.map((list, index) => {
           return (
             <div className={styles.AudioInfo} key={list.id}>
               <svg
@@ -47,8 +47,8 @@ function RecordingList() {
                 </g>
               </svg>
               <div className={styles.AudioName}>
-                <h2>{list.name}</h2>
-                <p>{list.size}</p>
+                <h2>{`Recording 0${index + 1} .mp3`}</h2>
+                <p>{`${list.size}.0 mb`}</p>
               </div>
             </div>
           );

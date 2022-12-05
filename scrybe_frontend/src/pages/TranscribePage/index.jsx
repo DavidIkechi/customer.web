@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./TranscribePage.module.scss";
-import SideBar from "../../components/SideBar";
+import NewDesignSideBar from "../../components/NewDesignSidebar";
 import Transcribe from "./Transcribe/Transcribe";
 
 function TranscribePage() {
@@ -15,9 +15,9 @@ function TranscribePage() {
 
   return (
     <div className={styles.TranscribePage}>
-      <SideBar>
+      <NewDesignSideBar>
         <Transcribe />
-      </SideBar>
+      </NewDesignSideBar>
     </div>
   );
 }

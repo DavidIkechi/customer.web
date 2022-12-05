@@ -20,6 +20,15 @@ export function UploadModal() {
   const [file, setFile] = useState({ file: { name: "", progress: 0 } });
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [link, setLink] = useState("");
+
+  // const isNamesValid = () => {
+  //   console.log("isNamesValid");
+  //   if(!firstName.length || !lastName.length){
+  //     return false;
+  //   }
+  //   return true;
+  // }
 
   const handleUpload = (file) => {
     // handle upload
@@ -31,35 +40,43 @@ export function UploadModal() {
     console.log("file", file);
     setFile({ file, progress: 0 });
 
-    // const destinationUrl = "https://api.heed.hng.tech/upload_audio";
-    // axios
-    //   .request({
-    //     method: "post",
-    //     url: destinationUrl,
-    //     data: myData,
-    //     onUploadProgress: (p) => {
-    //       setFile({ file, progress: (p.loaded / p.total) * 100 });
-    //       console.log(
-    //         "progress",
-    //         (p.loaded / p.total) * 100,
-    //         p.loaded,
-    //         p.total
-    //       );
-    //     },
-    //   })
-    //   .then((data) => {
-    //     console.log("http response", data);
-    //     setIsUploadComplete(true);
-    //     // show completed phase
-    //     //this.setState({
-    //     //fileprogress: 1.0,
-    //     //})
-    //   });
+    const destinationUrl = "https://api.heed.hng.tech/upload_audios";
+    const token = localStorage.getItem("heedAccessToken");
+    // const token =
+    //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0b3Npbl9veWVsYW1pQHlhaG9vLmNvbSIsImV4cCI6MTY3MDE4NDM4NH0.owGrGZrgZ8fBy-B28uXuJQS7H0DKiP6X18S4HMgW4pw";
+    const headers = { Authorization: `Bearer ${token}` };
+    axios
+      .request({
+        method: "post",
+        url: destinationUrl,
+        data: myData,
+        headers,
+        onUploadProgress: (p) => {
+          setFile({ file, progress: (p.loaded / p.total) * 100 });
+          console.log(
+            "progress",
+            (p.loaded / p.total) * 100,
+            p.loaded,
+            p.total
+          );
+        },
+      })
+      .then((response) => {
+        console.log("http response", response.data);
+        setIsUploadComplete(true);
+        setLink(
+          `https://heed.hng.tech/transcriptions/${response.data.transcript_id}`
+        );
+        // show completed phase
+        //this.setState({
+        //fileprogress: 1.0,
+        //})
+      });
 
-    setFile({ file, progress: 100 });
-    setTimeout(() => {
-      setIsUploadComplete(true);
-    }, 1000);
+    // setFile({ file, progress: 100 });
+    // setTimeout(() => {
+    //   setIsUploadComplete(true);
+    // }, 1000);
   };
 
   return (
@@ -91,6 +108,7 @@ export function UploadModal() {
                     setFirstName={setFirstName}
                     setLastName={setLastName}
                     handleUpload={handleUpload}
+                    // isNamesValid={isNamesValid}
                   />
                 )}
                 {showUploadProgress && !isUploadComplete && (
@@ -106,7 +124,7 @@ export function UploadModal() {
                 {showProgressList && !showDropDownIcon && (
                   <UploadProgressList />
                 )}
-                {isUploadComplete && <UploadComplete />}
+                {isUploadComplete && <UploadComplete link={link} />}
               </div>
             </div>
           </div>
@@ -147,6 +165,7 @@ function DragAndDrop({
   setFirstName,
   setLastName,
   handleUpload,
+  // isNamesValid,
 }) {
   const showUploadProgress = () => {
     setShowUploadProgress(true);
@@ -160,14 +179,14 @@ function DragAndDrop({
     event.preventDefault();
     // console.log(Array.from(event.dataTransfer.files));
     const file = Array.from(event.dataTransfer.files)[0];
-    setFile({ file, progress: 0 });
-    handleUpload(file);
-
-    //upload code
-    showUploadProgress();
+    handleOnSelectFile(file);
   };
 
   const handleOnSelectFile = (file) => {
+    // if (!isNamesValid()) {
+    //   alert("Fill in your name");
+    //   return;
+    // }
     setFile({ file: file, progress: 0 });
     handleUpload(file);
 
@@ -282,7 +301,7 @@ function SubUploadProgress() {
   );
 }
 
-function UploadComplete() {
+function UploadComplete({ link }) {
   return (
     <>
       <div className={style["upload-complete-wrapper"]}>
@@ -303,8 +322,15 @@ function UploadComplete() {
           className={style["callback"]}
           type="text"
           placeholder="Callback Link"
+          value={link}
         />
-        <img src={copyIcon} alt="copy-icon" />
+        <img
+          src={copyIcon}
+          alt="copy-icon"
+          onClick={() => {
+            navigator.clipboard.writeText(link);
+          }}
+        />
       </label>
     </>
   );
