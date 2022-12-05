@@ -463,7 +463,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
     month = datetime.now().month
     results = {
         "week": [
-            {"total_recordings": 0},
+            {"total_recording": 0},
             {"id": 1, "time": "M", "totalRecordings": 0},
             {"id": 2, "time": "T", "totalRecordings": 0},
             {"id": 3, "time": "W", "totalRecordings": 0},
@@ -473,7 +473,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
             {"id": 7, "time": "S", "totalRecordings": 0}
         ],
         "month": [
-            {"total_recordings": 0},
+            {"total_recording": 0},
             {"id": 1, "time": "wk1", "totalRecordings": 0},
             {"id": 2, "time": "wk2", "totalRecordings": 0},
             {"id": 3, "time": "wk3", "totalRecordings": 0},
@@ -482,7 +482,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
     }
     for i in total_recordings:
         if i.timestamp.isocalendar().week == week:
-            results["week"][0]["total_recordings"] += 1
+            results["week"][0]["total_recording"] += 1
             if i.timestamp.weekday() == 0:
                 results["week"][1]["totalRecordings"] += 1
             elif i.timestamp.weekday() == 1:
@@ -499,7 +499,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
                 results["week"][7]["totalRecordings"] += 1
 
         if i.timestamp.month == month:
-            results["month"][0]["total_recordings"] += 1
+            results["month"][0]["total_recording"] += 1
             if i.timestamp.day <= 7:
                 results["month"][1]["totalRecordings"] += 1
             elif 8 <= i.timestamp.day <= 14:
@@ -545,10 +545,10 @@ def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = De
 def get_total_agent_analysis(agent_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     total_analysis = db.query(models.Audio).filter(models.Audio.user_id == user.id, models.Audio.agent_id == agent_id)
     week = datetime.now().isocalendar().week
-    list_week=[]
-    week_item={}
+    month = datetime.now().month
     result = {
         "week": [
+            {"total_recording": 0},
             {"id": 1, "time": "Day 1", "positive": 0, "negative": 0, "neutral": 0},
             {"id": 2, "time": "Day 2", "positive": 0, "negative": 0, "neutral": 0},
             {"id": 3, "time": "Day 3", "positive": 0, "negative": 0, "neutral": 0},
@@ -557,17 +557,55 @@ def get_total_agent_analysis(agent_id: int, db: Session = Depends(get_db), user:
             {"id": 6, "time": "Day 6", "positive": 0, "negative": 0, "neutral": 0},
             {"id": 7, "time": "Day 7", "positive": 0, "negative": 0, "neutral": 0}
         ],
+        "month": [
+            {"total_recording": 0},
+            {"id": 1, "time": "wk1", "positive": 0, "negative": 0, "neutral": 0},
+            {"id": 2, "time": "wk2", "positive": 0, "negative": 0, "neutral": 0},
+            {"id": 3, "time": "wk3", "positive": 0, "negative": 0, "neutral": 0},
+            {"id": 4, "time": "wk4", "positive": 0, "negative": 0, "neutral": 0}
+        ]
     }
     for i in total_analysis:
         if i.timestamp.isocalendar().week == week:
+            result["week"][0]["total_recording"] += 1
             for y in range(7):
                 if i.timestamp.weekday() == y:
                     if i.overall_sentiment == "Positive":
-                        result["week"][y]["positive"] += 1
+                        result["week"][y+1]["positive"] += 1
                     elif i.overall_sentiment == "Negative":
-                        result["week"][y]["negative"] += 1
+                        result["week"][y+1]["negative"] += 1
                     elif i.overall_sentiment == "Neutral":
-                        result["week"][y]["neutral"] += 1
+                        result["week"][y+1]["neutral"] += 1
+        if i.timestamp.month == month:
+            result["month"][0]["total_recording"] += 1
+            if i.timestamp.day <= 7:
+                if i.overall_sentiment == "Positive":
+                    result["month"][1]["positive"] += 1
+                elif i.overall_sentiment == "Negative":
+                    result["month"][1]["negative"] += 1
+                elif i.overall_sentiment == "Neutral":
+                    result["month"][1]["neutral"] += 1
+            elif 8 <= i.timestamp.day <= 14:
+                if i.overall_sentiment == "Positive":
+                    result["month"][2]["positive"] += 1
+                elif i.overall_sentiment == "Negative":
+                    result["month"][2]["negative"] += 1
+                elif i.overall_sentiment == "Neutral":
+                    result["month"][2]["neutral"] += 1
+            elif 15 <= i.timestamp.day <= 21:
+                if i.overall_sentiment == "Positive":
+                    result["month"][3]["positive"] += 1
+                elif i.overall_sentiment == "Negative":
+                    result["month"][3]["negative"] += 1
+                elif i.overall_sentiment == "Neutral":
+                    result["month"][3]["neutral"] += 1
+            elif 22 <= i.timestamp.day <= 31:
+                if i.overall_sentiment == "Positive":
+                    result["month"][4]["positive"] += 1
+                elif i.overall_sentiment == "Negative":
+                    result["month"][4]["negative"] += 1
+                elif i.overall_sentiment == "Neutral":
+                    result["month"][4]["neutral"] += 1
 
     return result
 
