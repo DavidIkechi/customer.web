@@ -1,7 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-// import { totalRecordingData } from "../Data";
-import { useMockAuthAndTotalRecording } from "../hooks";
 import { Bar } from "react-chartjs-2";
 import styles from "../DashboardOverview.module.scss";
 import toneWave from "../assets/tone_wave.svg";
@@ -13,9 +11,7 @@ import {
 } from "chart.js";
 ChartJS.register(CategoryScale, LinearScale, BarElement);
 
-const TotalRecording = () => {
-  const totalRecordingData = useMockAuthAndTotalRecording();
-
+const TotalRecording = ({ totalRecordingData }) => {
   const [chartData, setChartData] = useState({
     datasets: [],
   });
