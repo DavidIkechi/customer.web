@@ -1,98 +1,55 @@
 import React from "react";
 import styles from "../styles/Table.module.scss";
 import Icon from "../assets/table-icon.png";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function Table() {
+  const [record, setRecord] = useState([]);
+  const getRecord = async () => {
+    try {
+      await axios
+        .get("https://638b959081df38ab346c7d6e.mockapi.io/recordings")
+        .then((res) => {
+          setRecord(res.data);
+          console.log(res.data);
+        });
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getRecord();
+  }, []);
+
   return (
     <div>
-      <table className={styles.table}>
-        <thead style={{ textAlign: "left", marginBottom: 20 }}>
-          <th style={{ width: "70%", marginRight: "5px" }}>Name</th>
-          <th style={{ marginLeft: "5px", marginRight: "5px" }}>Length</th>
-          <th style={{ marginLeft: "5px", marginRight: "5px" }}>Size</th>
-          <th style={{ marginLeft: "5px", marginRight: "5px" }}>Uploaded</th>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <div className={styles.nameImg}>
-                  <img src={Icon} alt="icon" className={styles.img} />
-                </div>
-                <div className={styles.tableName}>
-                  <p className={styles.tableTitle}>Recording1name.mp3</p>
-                  <p className={styles.tableDescription}>
-                    Inactive recharge card, line barred
-                  </p>
-                </div>
-              </div>
-            </td>
-            <td style={{ paddingHorizontal: "5px" }}>4 mins</td>
-            <td style={{ paddingHorizontal: "5px" }}>50mb</td>
-            <td style={{ paddingHorizontal: "5px" }}>13/11/22</td>
-          </tr>
-          <tr>
-            <td>
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <div className={styles.nameImg}>
-                  <img src={Icon} alt="icon" className={styles.img} />
-                </div>
-                <div className={styles.tableName}>
-                  <p className={styles.tableTitle}>Recording1name.mp3</p>
-                  <p className={styles.tableDescription}>
-                    Inactive recharge card, line barred
-                  </p>
-                </div>
-              </div>
-            </td>
-            <td>4 mins</td>
-            <td>50mb</td>
-            <td>13/11/22</td>
-          </tr>
-          <tr>
-            <td>
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <div className={styles.nameImg}>
-                  <img src={Icon} alt="icon" className={styles.img} />
-                </div>
-                <div className={styles.tableName}>
-                  <p className={styles.tableTitle}>Recording1name.mp3</p>
-                  <p className={styles.tableDescription}>
-                    Inactive recharge card, line barred
-                  </p>
-                </div>
-              </div>
-            </td>
-            <td>4 mins</td>
-            <td>50mb</td>
-            <td>13/11/22</td>
-          </tr>
-          <tr>
-            <td>
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <div className={styles.nameImg}>
-                  <img src={Icon} alt="icon" className={styles.img} />
-                </div>
-                <div className={styles.tableName}>
-                  <p className={styles.tableTitle}>Recording1name.mp3</p>
-                  <p className={styles.tableDescription}>
-                    Inactive recharge card, line barred
-                  </p>
-                </div>
-              </div>
-            </td>
-            <td>4 mins</td>
-            <td>50mb</td>
-            <td>13/11/22</td>
-          </tr>
-        </tbody>
-      </table>
+      <div className={styles.table}>
+        <div className={styles.head}>
+          <p style={{ width: "79%" }}>Name</p>
+          <p>Length</p>
+          <p>Size</p>
+          <p>Uploaded</p>
+        </div>
+
+        <div className={styles.records}>
+          <div className={styles.detail}>
+            <div className={styles.nameImg}>
+              <img src={Icon} alt="icon" className={styles.img} />
+            </div>
+            <div className={styles.tableName}>
+              <p className={styles.tableTitle}>Recording1name.mp3</p>
+              <p className={styles.tableDescription}>
+                Inactive recharge card, line barred
+              </p>
+            </div>
+          </div>
+          <div className={styles.property}>
+            <p>4 mins</p>
+            <p>50mb</p>
+            <p>13/11/22</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
