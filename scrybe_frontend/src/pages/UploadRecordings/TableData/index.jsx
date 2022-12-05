@@ -248,7 +248,7 @@ const TableData = ({ searchKeyword }) => {
                       >
                         <input
                           type="checkbox"
-                          value={recording?.id}
+                          value={recording?.job_id}
                           name="checkbox"
                           onChange={getChecked}
                           id="checkbox"
