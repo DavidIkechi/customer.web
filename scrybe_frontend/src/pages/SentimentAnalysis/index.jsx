@@ -60,9 +60,10 @@ function SentimentAnalysis() {
   };
 
   return (
+    <>
+    <NavbarFree />
     <NewDesignSideBar>
       <div className={styles.page__container}>
-        <NavbarFree />
         <div className={styles.audio__mobile}>
           <AudioCard />
         </div>
@@ -127,6 +128,7 @@ function SentimentAnalysis() {
         </aside>
       </div>
     </NewDesignSideBar>
+    </>
   );
 }
 
