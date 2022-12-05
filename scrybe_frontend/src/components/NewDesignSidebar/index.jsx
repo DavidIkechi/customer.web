@@ -49,8 +49,6 @@ function NewDesignSideBar({
     };
     const res = await axios.get("account", config);
     console.log(res);
-    // const activeUser = fetchCurrentUser();
-    // console.log(activeUser);
     setCurrentUser(res.data);
   };
   useEffect(() => {
