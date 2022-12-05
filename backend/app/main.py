@@ -15,8 +15,8 @@ from routers.score import score_count
 import models, json
 from auth import get_active_user, get_current_user, get_admin
 from jwt import (
-    main_login
-
+    main_login,
+    verify_password
 )
 
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -605,6 +605,21 @@ async def reset_password(token: str, new_password: schema.UpdatePassword, db: Se
         raise HTTPException(status_code=500)
     
     return reset_done
+
+
+
+@app.patch('/change-password', summary = "change password", tags=['users'])
+async def change_password(change_password: schema.ChangePassword, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    its_password = verify_password(change_password.old_password, user.password)
+
+    if not its_password:
+        raise HTTPException(status_code=500, detail='Password does not match')
+
+    password_changed = crud.reset_password(db, change_password.new_password, user)
+
+    return password_changed
+
+
 
 
 if __name__ == "__main__":
