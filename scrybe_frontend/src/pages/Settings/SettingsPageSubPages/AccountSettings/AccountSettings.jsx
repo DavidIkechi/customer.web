@@ -5,6 +5,7 @@ import Footer from "../../../../components/Footer";
 import RedirectNav from "../../Components/SettingsPageRedirectNav/SettingsPageRedirectNav";
 import AccountPageCss from "./AccountSettings.module.scss";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const AccountSettings = () => {
   const currentDate = new Date().toLocaleDateString("en-GB");
@@ -16,22 +17,28 @@ const AccountSettings = () => {
     formState: { errors },
   } = useForm();
 
-  /* TODO:
-    - Test API call on Heed API when endpoint has been created
-  */
-  // const baseUrl = "https://api.heed.hng.tech";
-  const baseUrl = "https://638bbd137220b45d2295e955.mockapi.io";
+  const baseUrl = "https://api.heed.hng.tech";
   const submitCallback = () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("heedAccessToken")}`,
+      },
+    };
     axios
-      .post(baseUrl + "/change-password", {
-        password: password,
+      .patch(baseUrl + "/change-password", config, {
+        old_password: password,
+        new_password: confirmPassword,
       })
       .then((res) => {
         /* TODO:
           - Display a success modal if server returns 200
+          - Designer is currently working on the modal
         */
         if (res.status >= 200 && res.status < 300)
           console.log("Password reset successful", res.data);
+      })
+      .catch((err) => {
+        console.log("Server returned the following error", err);
       });
   };
 
