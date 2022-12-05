@@ -1,5 +1,13 @@
-// this file will be used to fetch the current user from local storage
+import axios from "axios";
+
+// this file will be used to fetch the current user from backend
+const config = {
+  withCredentials: true,
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
+  },
+};
 export const fetchCurrentUser = async () => {
-  const currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
-  return currentUser;
+  const res = await axios.get("account", config);
+  return res.data;
 };
