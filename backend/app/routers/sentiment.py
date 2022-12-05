@@ -19,12 +19,12 @@ def sentiment(transcript):
             postive_sentences.append({"sentence": sentence, "positivity_score": individual_sentiment['pos']})
     most_negative_sentences =json.dumps(negative_sentences)
     most_postive_sentences = json.dumps(postive_sentences)
-    if sentiment['neg'] > sentiment['pos']:
-        overall_sentiment = "Negative"
-    elif sentiment['pos'] > sentiment['neg']:
-        overall_sentiment = "Positive"
-    else:
-        overall_sentiment = "Neutral"
+    result = {
+        "Negative": sentiment['neg'],
+        "Positive": sentiment['pos'],
+        "Neutral": sentiment['neu']
+    }
+    overall_sentiment = max(result, key=result.get)
     sentiment = {
             "transcript": transcript,
             "positivity_score": sentiment['pos'],

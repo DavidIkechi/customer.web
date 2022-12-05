@@ -163,7 +163,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
 
     try:
         result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
-        url = result.get("url")
+        url = result.get("secure_url")
         urls = [url]
         response = shorten_urls(urls)
         retrieve_url = response[0]
@@ -293,7 +293,7 @@ async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...
     else:
         try:
             result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
-            url = result.get("url")
+            url = result.get("secure_url")
             urls = [url]
             response = shorten_urls(urls)
             retrieve_url = response[0]
@@ -512,20 +512,28 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
 
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    results = db.execute("""SELECT audios.id,
-        agents.first_name,
-        agents.last_name,
-        SUM(CASE WHEN audios.overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score,
-        SUM(CASE WHEN audios.overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score,
-        SUM(CASE WHEN audios.overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
-        round(audios.positivity_score /(audios.positivity_score + audios.neutrality_score + audios.negativity_score) * 10, 1) AS Average_score
-    FROM audios
-    INNER JOIN agents
-    ON audios.agent_id = agents.id
-    GROUP BY audios.agent_id
-    ORDER BY Average_score DESC""")
+    top3_agents = []
+    others = []
+    
+    results = db.query(models.Audio).filter(models.Audio.user_id == user.id).all()
+    leaderboard = []
+    for i in results:
+        # get the agent
+        leader_board = {
+            "first_name": i.agent_firstname,
+            "last_name": i.agent_lastname,
+            "agent_id": i.agent_id,
+            "positive_score": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
+                                                        models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == "Positive").count(), 
+            "negative_score": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
+                                                        models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == 'Negative').count(),
+            "neutral": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
+                                                models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == 'Neutral').count(),
+            "average_score": i.average_score
+        }
+        leaderboard.append(leader_board)
+    leaderboard = sorted(leaderboard, key=lambda k: k['positive_score'], reverse=True)
 
-    leaderboard = [dict(r) for r in results]
     top3_agents = leaderboard[:3]
     others = leaderboard[3:]
     return {"Top3 Agents": top3_agents, "Other Agents": others}
