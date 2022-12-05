@@ -11,8 +11,8 @@
   overflow-x: visible;
   margin-bottom: pix-rem(40);
   @include media(1220px) {
-    min-height: pix-rem(840);
-    margin-bottom: pix-rem(60);
+   
+  
     margin-inline: auto;
   }
 }
@@ -76,7 +76,8 @@
   height: 90vh;
 
   @include media(1220px) {
-    height: 75vh;
+    height: 150vh;
+   
   }
 }
 
@@ -86,6 +87,10 @@
   flex-direction: column;
   text-align: center;
   margin: 10rem auto 3rem;
+
+   @include media(1220px) {
+    margin-top: pix-rem(200);
+  }
 }
 
 .pricing .CTA .CTAs {
