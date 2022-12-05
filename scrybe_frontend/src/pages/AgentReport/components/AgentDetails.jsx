@@ -1,37 +1,94 @@
-import PropTypes from "prop-types";
-import React from "react";
+import { React } from "react";
 import styles from "../styles/AgentDetails.module.scss";
+import { useAgentReport } from "../hooks";
 
 function AgentDetails() {
+  const agentReport = useAgentReport();
+
   return (
-    <div className={styles.agentDetails}>
-      <p className={styles.firstp}>Agent Performance Report</p>
-      <p className={styles.secondp}>Name: Delphine Ogbonna</p>
-      <p className={styles.secondp}>Email: chinyeredelphine@yahoo.com</p>
-      <div className={styles.details}>
-        <DetailsRow title="Total calls" number="50" />
-        <DetailsRow title="Positive" number="30 (60%)" />
-        <DetailsRow title="Neutral" number="13 (30%)" />
-        <DetailsRow title="Negative" number="5 (10%)" />
-        <DetailsRow title="Average Score - 10" number="8" />
-      </div>
-    </div>
+    <>
+      {agentReport.length === 0 ? (
+        <p className={styles.empty}>An overview of agent report shows here</p>
+      ) : (
+        agentReport.map((detail) => {
+          return (
+            <div className={styles.agentDetails} key={detail.id}>
+              <div className={styles.details}>
+                <div className={styles.callDetails}>
+                  <p className={styles.title}>Total Calls</p>
+                  <p className={styles.dash}>-</p>
+                  <p className={styles.total}>{detail.total_calls}</p>
+                </div>
+
+                <div className={styles.callDetails}>
+                  <p className={styles.title}>Call Missed</p>
+                  <p className={styles.dash}>-</p>
+                  {detail.missed > 0 ? (
+                    <p className={`${styles.number} ${styles.fail}`}>
+                      {detail.missed}%
+                    </p>
+                  ) : (
+                    <p className={`${styles.number} ${styles.success}`}>
+                      {detail.missed}%
+                    </p>
+                  )}
+                  {/* <p className={styles.number}>{detail.missed}</p> */}
+                </div>
+
+                <div className={styles.callDetails}>
+                  <p className={styles.title}>Positive</p>
+                  <p className={styles.dash}>-</p>
+                  {detail.positive >= 10 ? (
+                    <p className={`${styles.number} ${styles.success}`}>
+                      {detail.positive}%
+                    </p>
+                  ) : (
+                    <p className={`${styles.number} ${styles.fail}`}>
+                      {detail.positive}%
+                    </p>
+                  )}
+                </div>
+
+                <div className={styles.callDetails}>
+                  <p className={styles.title}>Neutral</p>
+                  <p className={styles.dash}>-</p>
+                  {detail.neutral >= 10 ? (
+                    <p className={`${styles.number} ${styles.neutral}`}>
+                      {detail.neutral}%
+                    </p>
+                  ) : (
+                    <p className={`${styles.number} ${styles.fail}`}>
+                      {detail.neutral}%
+                    </p>
+                  )}
+                </div>
+
+                <div className={styles.callDetails}>
+                  <p className={styles.title}>Negative</p>
+                  <p className={styles.dash}>-</p>
+                  {detail.negative >= 5 ? (
+                    <p className={`${styles.number} ${styles.fail}`}>
+                      {detail.negative}%
+                    </p>
+                  ) : (
+                    <p className={`${styles.number} ${styles.success}`}>
+                      {detail.negative}%
+                    </p>
+                  )}
+                </div>
+
+                <div className={styles.callDetails}>
+                  <p className={styles.title}>Average Score/ 10</p>
+                  <p className={styles.dash}>-</p>
+                  <p className={styles.total}>{detail.avg}</p>
+                </div>
+              </div>
+            </div>
+          );
+        })
+      )}
+    </>
   );
 }
-
-function DetailsRow({ title, number }) {
-  return (
-    <div className={styles.callDetails}>
-      <p className={styles.title}>{title}</p>
-      <p>--</p>
-      <p className={styles.number}>{number}</p>
-    </div>
-  );
-}
-
-DetailsRow.propTypes = {
-  title: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
-};
 
 export default AgentDetails;
