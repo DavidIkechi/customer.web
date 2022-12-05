@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import Footer from "../../../../components/Footer";
 import RedirectNav from "../../Components/SettingsPageRedirectNav/SettingsPageRedirectNav";
 import AccountPageCss from "./AccountSettings.module.scss";
+import axios from "axios";
 
 const AccountSettings = () => {
   const currentDate = new Date().toLocaleDateString("en-GB");
@@ -14,6 +15,25 @@ const AccountSettings = () => {
     watch,
     formState: { errors },
   } = useForm();
+
+  /* TODO:
+    - Test API call on Heed API when endpoint has been created
+  */
+  // const baseUrl = "https://api.heed.hng.tech";
+  const baseUrl = "https://638bbd137220b45d2295e955.mockapi.io";
+  const submitCallback = () => {
+    axios
+      .post(baseUrl + "/change-password", {
+        password: password,
+      })
+      .then((res) => {
+        /* TODO:
+          - Display a success modal if server returns 200
+        */
+        if (res.status >= 200 && res.status < 300)
+          console.log("Password reset successful", res.data);
+      });
+  };
 
   // Watch event for disable button
   const password = watch("password");
@@ -29,7 +49,10 @@ const AccountSettings = () => {
           <h2>Account security</h2>
           <p>Change your password</p>
         </div>
-        <form className={AccountPageCss.form}>
+        <form
+          className={AccountPageCss.form}
+          onSubmit={handleSubmit(submitCallback)}
+        >
           <div className={AccountPageCss.formGroup}>
             <label htmlFor="Password">Enter new password:</label>
             <input
