@@ -1,15 +1,13 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import footerImg from "./assets/reset-pw.png";
 import styles from "./SetNewPassword.module.scss";
 
 function SetNewPassword() {
-  const [userInfo, setUserInfo] = useState({});
   const navigate = useNavigate();
-  const query = new URLSearchParams(useLocation());
+  const location = useLocation();
 
   const {
     register,
@@ -18,12 +16,12 @@ function SetNewPassword() {
     formState: { errors },
   } = useForm();
 
-  const baseUrl = "https://api.heed.hng.tech/";
-  const submitCallback = (data) => {
-    setUserInfo(data);
+  const baseUrl = "https://api.heed.hng.tech";
+  const submitCallback = () => {
+    const query = new URLSearchParams(location.search);
     axios
       .patch(baseUrl + "/reset-password?token=" + query.get("token"), {
-        password: userInfo.password,
+        password: password,
       })
       .then((res) => {
         if (res.status === 200) navigate("/pw-reset-successful");
@@ -82,7 +80,7 @@ function SetNewPassword() {
               <input
                 type="submit"
                 value="Reset password"
-                className={`${isValid && "submit-valid"}`}
+                className={`${isValid && styles.submitValid}`}
               />
             </form>
           </div>

@@ -2,12 +2,22 @@ import React from "react";
 import styles from "./SentimentAnalysis.module.scss";
 import { Link } from "react-router-dom";
 
-function SentimentAnalysis() {
+function SentimentAnalysis({ donwloadData }) {
   const getTranscriptionID = () => {
     let location = window.location.pathname;
     return location.substring(16, location.length);
   };
   const audioId = getTranscriptionID();
+  const exportData = () => {
+    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
+      JSON.stringify(donwloadData)
+    )}`;
+    const link = document.createElement("a");
+    link.href = jsonString;
+    link.download = "data.json";
+
+    link.click();
+  };
   return (
     <div className={styles.SentimentAnalysis}>
       <h2>Sentiment analysis</h2>
@@ -34,7 +44,7 @@ function SentimentAnalysis() {
             View analysis
           </a>
         </button>
-        <div className={styles.downloadButton}>
+        <div className={styles.downloadButton} onClick={exportData}>
           <svg
             width="48"
             height="48"
