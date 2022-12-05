@@ -12,10 +12,11 @@ import PhraseTagCard from "./components/PhraseTagCard";
 import SideBar from "../../components/SideBar";
 import { useMockEnd } from "./hooks";
 import NewDesignSideBar from "../../components/NewDesignSidebar/index";
-import NavbarFree from '../../components/NavbarFree'
+import TopNav from '../../components/TopNav';
 
 function SentimentAnalysis() {
   const [isMobileAsideOpen, setIsMobileAsideOpen] = useState(false);
+  const [toggleSidebar, setToggleSidebar] = useState(false);
   const params = useParams();
   const sentimentData = useMockEnd(parseInt(params.AudioId));
 
@@ -61,8 +62,16 @@ function SentimentAnalysis() {
 
   return (
     <>
-    <NavbarFree />
-    <NewDesignSideBar>
+    <TopNav 
+     openSidebar = { ()=>{
+      setToggleSidebar(!toggleSidebar);
+     }}
+    />
+    <NewDesignSideBar
+    toggleSidebar = {toggleSidebar}
+    needSearchMobile = "needSearchMobile"
+    closeSidebar = {()=>setToggleSidebar(!toggleSidebar)}
+    >
       <div className={styles.page__container}>
         <div className={styles.audio__mobile}>
           <AudioCard />
