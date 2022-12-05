@@ -1,27 +1,17 @@
-import React from "react";
-import AgentDetails from "./components/AgentDetails";
-import AgentRecordings from "./components/AgentRecordings";
-import Charts from "./components/ChartContainer";
+import { React, useRef } from "react";
 import styles from "./styles/AgentReport.module.scss";
+import Content from "./Content";
 
-import NewDesignSidebar from "../../components/NewDesignSidebar";
-import TopNav from "../../components/TopNav";
-
+// onClick={() => modal.showModal()}
 function AgentReport() {
+  let modal = useRef();
+  // let handleDate;
+
   return (
     <>
-      <TopNav />
-      <NewDesignSidebar>
-        <div className={styles.container}>
-          <div className={styles.mainWrapper}>
-            <div className={styles.topDetailsDiv}>
-              <Charts />
-              <AgentDetails />
-            </div>
-            <AgentRecordings />
-          </div>
-        </div>
-      </NewDesignSidebar>
+      <dialog className={styles.container} ref={(mode) => (modal = mode)}>
+        <Content />
+      </dialog>
     </>
   );
 }
