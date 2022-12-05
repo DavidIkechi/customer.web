@@ -57,7 +57,7 @@ def transcribe_file(file_url):
 
 # ENDPOINT TO GET A PARTICULAR TRANSCRIPT USING THE AUDIO ID
 @transcript_router.get("/{job_id}", description="Retrieving transcript by audio ID")
-def view_transcript(job_id: Union[int, str], db: Session = Depends(_services.get_session), current_user: Union[str , int] = Depends(auth.get_current_user)):
+def view_transcript(job_id: Union[int, str], db: Session = Depends(_services.get_session), current_user: Union[str , int] = Depends(auth.get_active_user)):
     user_id = current_user.id
 
     Job = db.query(models.Audio).filter(models.Audio.job_id == job_id).first()

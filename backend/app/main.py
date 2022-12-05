@@ -40,6 +40,11 @@ import os
 
 from dotenv import load_dotenv
 
+from starlette.responses import FileResponse
+from starlette.requests import Request
+from starlette.responses import Response
+import boto3
+
 
 load_dotenv()
 
@@ -89,12 +94,14 @@ origins = [
     "http://localhost:80",
     "http://localhost:3000",
     "http://localhost:5173",
+    "http://localhost:1111",
     "http://localhost:8000",
     "https://heed.hng.tech",
     "http://heed.hng.tech",
     "https://heed.hng.tech:80",
     "https://heed.hng.tech:3000",
     "https://heed.hng.tech:5173",
+    "https://heed.hng.tech:1111",
 ]
 
 app.add_middleware(
@@ -131,6 +138,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     first_name = first_name.lower()
     last_name = last_name.lower()
     agent_name = "%s %s" %(first_name, last_name)
+  
     
     # if the agent name is already in the database before creating for the agent.
     if not db.query(models.Agent).filter(models.Agent.first_name == first_name, 
@@ -155,7 +163,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
 
     try:
         result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
-        url = result.get("url")
+        url = result.get("secure_url")
         urls = [url]
         response = shorten_urls(urls)
         retrieve_url = response[0]
@@ -206,7 +214,8 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     
     return {
         "id":audio_id,
-        "transcript_id": transcript_id
+        "transcript_id": transcript_id,
+        #"s3 url": audio_s3_url
     }
 
 # create the endpoint
@@ -284,7 +293,7 @@ async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...
     else:
         try:
             result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
-            url = result.get("url")
+            url = result.get("secure_url")
             urls = [url]
             response = shorten_urls(urls)
             retrieve_url = response[0]
@@ -503,21 +512,28 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
 
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    try:
-        results = db.execute("""SELECT agent_id,
-            agent_firstname,
-            agent_lastname,
-            SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score,
-            SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score,
-            SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
-            average_score AS Average_score
-        FROM audios GROUP BY agent_id
-        ORDER BY Positive_score DESC""")
+    top3_agents = []
+    others = []
+    
+    results = db.query(models.Audio).filter(models.Audio.user_id == user.id).all()
+    leaderboard = []
+    for i in results:
+        # get the agent
+        leader_board = {
+            "first_name": i.agent_firstname,
+            "last_name": i.agent_lastname,
+            "agent_id": i.agent_id,
+            "positive_score": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
+                                                        models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == "Positive").count(), 
+            "negative_score": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
+                                                        models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == 'Negative').count(),
+            "neutral": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
+                                                models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == 'Neutral').count(),
+            "average_score": i.average_score
+        }
+        leaderboard.append(leader_board)
+    leaderboard = sorted(leaderboard, key=lambda k: k['positive_score'], reverse=True)
 
-    except Exception:
-        raise {"status_code": 404, "error": "Results not found"}
-
-    leaderboard = [dict(r) for r in results]
     top3_agents = leaderboard[:3]
     others = leaderboard[3:]
     return {"Top3 Agents": top3_agents, "Other Agents": others}
