@@ -48,7 +48,6 @@ function NewDesignSideBar({
       },
     };
     const res = await axios.get("account", config);
-    console.log(res);
     setCurrentUser(res.data);
   };
   useEffect(() => {
@@ -164,7 +163,7 @@ function NewDesignSideBar({
                   ? currentUser?.company_logo_url
                   : usrAvatar
               }
-              alt={currentUser?.name}
+              alt={currentUser?.first_name}
             />
             <div className={styles.generalSidebar_user_desktop_nameDetails}>
               <div className={styles.generalSidebar_user_desktop_name_arr}>
