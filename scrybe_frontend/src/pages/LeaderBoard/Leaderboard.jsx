@@ -1,5 +1,5 @@
 import styles from "./Leaderboard.module.scss";
-import NewDesignSideBar from "../../components/NewDesignSideBar";
+import NewDesignSideBar from "../../components/NewDesignSidebar";
 import TopNav from "../../components/TopNav";
 import React from "react";
 import axios from "axios";
