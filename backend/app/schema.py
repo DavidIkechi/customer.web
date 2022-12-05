@@ -127,7 +127,7 @@ class Analysis(AudioBase):
     pass
 
 class Recordings(BaseModel):
-    audio_path: str
+    filename: str
     size: int
     duration: int
     timestamp: datetime
