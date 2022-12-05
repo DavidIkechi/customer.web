@@ -39,7 +39,6 @@ const TableData = ({ searchKeyword }) => {
 
   useEffect(() => {
     const newRecordings = fetchData("list-audios-by-user");
-    console.log(newRecordings);
     setAllRecordings([newRecordings.data]);
   }, []);
 
@@ -111,7 +110,6 @@ const TableData = ({ searchKeyword }) => {
       });
   };
 
-  console.log(sessionExpired);
   const allRecordingsProcessed = () => {
     const allProcessed = allRecordings.every(
       (item) =>
@@ -134,10 +132,8 @@ const TableData = ({ searchKeyword }) => {
     });
   };
 
-  console.log(isFetching);
   useEffect(() => {
     allRecordingsProcessed();
-    console.log(allRecordings);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allRecordings, searchKeyword]);
   return (
