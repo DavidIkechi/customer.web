@@ -44,6 +44,7 @@ from starlette.responses import FileResponse
 from starlette.requests import Request
 from starlette.responses import Response
 import boto3
+import uuid
 
 
 load_dotenv()
@@ -130,6 +131,17 @@ async def ping():
 
 @app.post("/upload_audios", tags=['analyse'])
 async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session = Depends(get_db), file: UploadFile=File(...), user: models.User = Depends(get_active_user)):
+        
+    s3 = boto3.client('s3',aws_access_key_id="AKIAXFO2DMFAQA3J4D2L",
+                          aws_secret_access_key="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",
+                          )
+
+    s3.create_bucket(
+        Bucket='heed',
+        CreateBucketConfiguration={
+        'LocationConstraint': 'us-east-1'
+        }
+    )
     
     user_id = user.id
     company_id = user.company_id
@@ -151,6 +163,15 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     else:
         db_agent = db.query(models.Agent).filter(models.Agent.first_name == first_name, 
                                      models.Agent.last_name == last_name).first()
+
+    audio_file = file.file
+    filename = file.filename
+    s3.upload_fileobj(
+        audio_file,
+        'heed',
+        filename
+    )
+    audio_s3_url = f"https://{bucket}.s3.amazonaws.com/{filename}"
 
     try:
         contents = file.file.read()
