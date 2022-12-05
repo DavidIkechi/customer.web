@@ -12,6 +12,7 @@ import PhraseTagCard from "./components/PhraseTagCard";
 import SideBar from "../../components/SideBar";
 import { useMockEnd } from "./hooks";
 import NewDesignSideBar from "../../components/NewDesignSidebar/index";
+import NavbarFree from '../../components/NavbarFree'
 
 function SentimentAnalysis() {
   const [isMobileAsideOpen, setIsMobileAsideOpen] = useState(false);
@@ -61,6 +62,7 @@ function SentimentAnalysis() {
   return (
     <NewDesignSideBar>
       <div className={styles.page__container}>
+        <NavbarFree />
         <div className={styles.audio__mobile}>
           <AudioCard />
         </div>
