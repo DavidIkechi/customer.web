@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
+const currentUser = localStorage.getItem("heedAccessToken") || null;
 
 const useAuth = () => {
   const navigate = useNavigate();

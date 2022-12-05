@@ -1,6 +1,7 @@
 @use "../../../pages/AgentReport/styles/_mixins.scss" as mixin;
 
 .recordings {
+  margin-top: 2rem;
   .title {
     font-size: 16px;
     margin: 20px 0px;

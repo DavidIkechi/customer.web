@@ -162,8 +162,9 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
         file.file.close()
 
     try:
-        result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
-        url = result.get("url")
+        result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
+                                            chunk_size = 6000000)
+        url = result.get("secure_url")
         urls = [url]
         response = shorten_urls(urls)
         retrieve_url = response[0]
@@ -292,8 +293,9 @@ async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...
         raise HTTPException(status_code = 406, detail="File Must Not Be More Than 5MB")
     else:
         try:
-            result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
-            url = result.get("url")
+            result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
+                                            chunk_size = 6000000)
+            url = result.get("secure_url")
             urls = [url]
             response = shorten_urls(urls)
             retrieve_url = response[0]
@@ -512,20 +514,28 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
 
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    results = db.execute("""SELECT audios.id,
-        agents.first_name,
-        agents.last_name,
-        SUM(CASE WHEN audios.overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score,
-        SUM(CASE WHEN audios.overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score,
-        SUM(CASE WHEN audios.overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
-        round(audios.positivity_score /(audios.positivity_score + audios.neutrality_score + audios.negativity_score) * 10, 1) AS Average_score
-    FROM audios
-    INNER JOIN agents
-    ON audios.agent_id = agents.id
-    GROUP BY audios.agent_id
-    ORDER BY Average_score DESC""")
+    top3_agents = []
+    others = []
+    
+    results = db.query(models.Audio).filter(models.Audio.user_id == user.id).all()
+    leaderboard = []
+    for i in results:
+        # get the agent
+        leader_board = {
+            "first_name": i.agent_firstname,
+            "last_name": i.agent_lastname,
+            "agent_id": i.agent_id,
+            "positive_score": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
+                                                        models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == "Positive").count(), 
+            "negative_score": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
+                                                        models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == 'Negative').count(),
+            "neutral": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
+                                                models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == 'Neutral').count(),
+            "average_score": i.average_score
+        }
+        leaderboard.append(leader_board)
+    leaderboard = sorted(leaderboard, key=lambda k: k['positive_score'], reverse=True)
 
-    leaderboard = [dict(r) for r in results]
     top3_agents = leaderboard[:3]
     others = leaderboard[3:]
     return {"Top3 Agents": top3_agents, "Other Agents": others}
@@ -645,8 +655,6 @@ def download (id: Union[int, str], db: Session = Depends(get_db), user: models.U
                     }
         return sentiment
 
-
-
 @app.post("/orders", description="creating an order by selecting a billing plan")
 async def create_order(order: schema.OrderCreate, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     user_email = user.email
@@ -705,3 +713,22 @@ async def get_order_summary (order_id: int, db: Session = Depends(get_db), user:
     if order_summary is None:
         raise HTTPException(status_code=404, detail="Order not found")
     return order_summary
+
+    
+    
+@app.get("/AgentDetails", summary = "get agent performance report", tags=['Agent Performance Report'])
+def get_agent_performance(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    data_result = db.execute("""SELECT COUNT (agent_id) AS 'Total calls',
+    first_name || ' ' || last_name AS Name,
+    
+    SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive,
+    SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative,
+    SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral,
+    ROUND ( (SUM(positivity_score )/SUM(positivity_score + negativity_score + neutrality_score))*10) AS "Average Score"
+    FROM Agents INNER JOIN Audios on agents.id =audios.agent_id 
+    GROUP BY first_name ,last_name ORDER BY Name;""")
+
+    AgentDetails = [dict(result) for result in data_result]
+
+    return {"Agent Performance Report": AgentDetails}
+

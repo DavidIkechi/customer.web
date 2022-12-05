@@ -68,6 +68,7 @@ class Audio(Base):
     positivity_score = Column(Float, index=True, nullable = True)
     negativity_score = Column(Float, index=True, nullable = True)
     neutrality_score = Column(Float, index=True, nullable = True)
+    average_score = Column(Float, index=True, nullable = True)
     overall_sentiment = Column(Enum("Positive", "Negative", "Neutral"), index=True, nullable = True)
     most_positive_sentences = Column(JSON, nullable = True)
     most_negative_sentences = Column(JSON, nullable = True)

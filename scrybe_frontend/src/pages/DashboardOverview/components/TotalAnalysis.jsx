@@ -1,8 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
-import { useMockAuthAndTotalAnalysis } from "../hooks";
-// import { totalAnalysisData } from "../Data";
 import styles from "../DashboardOverview.module.scss";
 import analysis from "../assets/analytics.svg";
 import {
@@ -14,9 +12,7 @@ import {
 } from "chart.js";
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement);
 
-const TotalAnalysis = () => {
-  const totalAnalysisData = useMockAuthAndTotalAnalysis();
-
+const TotalAnalysis = ({ totalAnalysisData }) => {
   const [selectedTotalAnalysis, setSelectedTotalAnalysis] = useState([]);
   const [chartData, setChartData] = useState({
     datasets: [],
@@ -54,7 +50,7 @@ const TotalAnalysis = () => {
     } else {
       setSelectedTotalAnalysis([]);
     }
-  }, []);
+  }, [totalAnalysisData]);
 
   function analysisTimeStampFunc(e) {
     setSelectedTotalAnalysis(totalAnalysisData[e.target.value]);
