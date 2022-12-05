@@ -181,3 +181,8 @@ class Order(OrderBase):
     annual_amount: float
     order_date: datetime
     next_payment_due_date: datetime
+
+
+class ChangePassword(BaseModel):
+    old_password: str
+    new_password: str
