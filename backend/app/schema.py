@@ -130,6 +130,7 @@ class Recordings(BaseModel):
     filename: str
     size: int
     duration: int
+    job_id: str
     timestamp: datetime
 
     class Config:
