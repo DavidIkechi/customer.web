@@ -17,7 +17,7 @@
       padding-block: pix-rem(20);
     }
   }
-  .signinDesign{
+  .signinDesign {
     cursor: pointer;
   }
   &__closed {
@@ -87,10 +87,15 @@
     padding-inline: pix-rem(16);
     position: relative;
 
-    button {
-      a {
+    a {
+      text-decoration: none !important;
+      button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        cursor: pointer;
+
         // color: white;
-        text-decoration: none;
       }
     }
   }
@@ -123,6 +128,7 @@
   &__ctas {
     display: flex;
     gap: pix-rem(24);
+    cursor: pointer;
     @include media($mobile) {
       padding-top: pix-rem(40);
       flex-direction: column;
