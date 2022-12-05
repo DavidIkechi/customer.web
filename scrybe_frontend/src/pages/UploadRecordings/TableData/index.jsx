@@ -136,24 +136,30 @@ const TableData = ({ searchKeyword }) => {
     fetchData();
   }, []);
 
-  const deleteBulkRecordings = () => {
-    const newRecordings = allRecordings.filter(
-      (item) => !recordCheckedList.includes(item.id.toString())
-    );
-    setAllRecordings(newRecordings);
+  const deleteBulkRecordings = async () => {
+    const newRecordings = await axios.delete(`audios-delete`, [
+      recordCheckedList,
+    ]);
+
+    // setAllRecordings(newRecordings);
     setRecordCheckedList([]);
     handleClose();
     setOpenDeletePopup(false);
   };
 
-  const deleteRecording = (id) => {
-    const newRecordings = allRecordings.filter((item) => item.id !== id);
-    setAllRecordings(newRecordings);
+  const deleteRecording = async (id) => {
+    const newRecordings = await axios.delete(`audios-delete`, [id]);
+    console.log(newRecordings);
+    // setAllRecordings(newRecordings);
+    // setAllRecordings(newRecordings);
   };
 
   const allRecordingsProcessed = () => {
     const allProcessed = allRecordings.every(
-      (item) => item?.job_details?.job_status !== "Processing"
+      (item) =>
+        item?.job_details?.job_status !== "Processing" &&
+        item?.job_details?.job_status !== "Pending" &&
+        item?.job_details?.job_status !== "queued"
     );
     if (allProcessed) {
       setRecordingsProcessed(true);
@@ -162,14 +168,15 @@ const TableData = ({ searchKeyword }) => {
     }
   };
 
-  // const searchRecordings = (allrecords) => {
-  //   return allrecords.filter((item) => {
-  //     return JSON.stringify(item.filename).includes(
-  //       searchKeyword.toLowerCase()
-  //     );
-  //   });
-  // };
+  const searchRecordings = (allrecords) => {
+    return allrecords.filter((item) => {
+      return JSON.stringify(item?.filename)
+        ?.toLowerCase()
+        .includes(searchKeyword.toLowerCase());
+    });
+  };
 
+  console.log(recordCheckedList);
   useEffect(() => {
     allRecordingsProcessed();
     console.log(allRecordings);
@@ -178,7 +185,7 @@ const TableData = ({ searchKeyword }) => {
   return (
     <div
       className={`${styles.uploaded_recordings} ${
-        allRecordings.length < 1 ? styles.no_items_found : ""
+        searchRecordings(allRecordings).length < 1 ? styles.no_items_found : ""
       } ${recordingsProcessed ? styles.processed : ""}`}
     >
       <div className={styles.overall_table}>
@@ -236,9 +243,9 @@ const TableData = ({ searchKeyword }) => {
                 <th />
               </tr>
             </thead>
-            {allRecordings.length > 0 ? (
+            {searchRecordings(allRecordings).length > 0 ? (
               <tbody className={styles.uploaded_table_body}>
-                {allRecordings.map((recording) => {
+                {searchRecordings(allRecordings).map((recording) => {
                   const job_status = recording?.job_details?.job_status;
 
                   return (
@@ -310,7 +317,7 @@ const TableData = ({ searchKeyword }) => {
             )}
           </table>
         </div>
-        {allRecordings.length > 0 && (
+        {searchRecordings(allRecordings).length > 0 && (
           <div className={styles.uploaded_recordings_options}>
             <div className={styles.bulkbtn_calbackurl_wrap}>
               <div className={styles.bulkselect_wrap}>
