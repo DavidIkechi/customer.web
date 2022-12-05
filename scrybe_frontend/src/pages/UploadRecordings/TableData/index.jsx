@@ -16,6 +16,7 @@ import dropdownIcon from "./imgs/select-arrow.svg";
 import soundwave from "./imgs/soundwave.svg";
 import uploadBtn_icon from "./imgs/uploadBtnIcon.svg";
 import styles from "./tabledata.module.scss";
+import { Link } from "react-router-dom";
 
 // dummy recordings
 const recordings = [
@@ -92,6 +93,7 @@ const TableData = ({ searchKeyword }) => {
   const [openModal, setOpenModal] = useState(false);
   const [recordingsProcessed, setRecordingsProcessed] = useState(false);
   const [openDeletePopup, setOpenDeletePopup] = useState(false);
+  const [deleted, setDeleted] = useState(false);
   const handleOpen = () => {
     setOpenModal(true);
   };
@@ -100,14 +102,19 @@ const TableData = ({ searchKeyword }) => {
   };
   const timeLeft = 20;
 
+  // timeer to reload the page after 50 seconds
+  const timer = () => {
+    setTimeout(() => {
+      window.location.reload();
+    }, 50000);
+
+    return () => clearTimeout(timer);
+  };
+
   useEffect(() => {
     const newRecordings = fetchData("list-audios-by-user");
     console.log(newRecordings);
-    // if (newRecordings) {
     setAllRecordings([newRecordings.data]);
-    // } else {
-    //   setAllRecordings(recordings);
-    // }
   }, []);
 
   const getChecked = (e) => {
@@ -121,13 +128,12 @@ const TableData = ({ searchKeyword }) => {
   };
 
   // fetch data from backend
+  const token = localStorage.getItem("heedAccessToken");
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
   const fetchData = async () => {
-    const token = localStorage.getItem("heedAccessToken");
-    console.log(token);
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
     const data = await axios.get("list-audios-by-user", { headers });
     setAllRecordings(data.data);
     // console.log(data);
@@ -137,21 +143,34 @@ const TableData = ({ searchKeyword }) => {
   }, []);
 
   const deleteBulkRecordings = async () => {
-    const newRecordings = await axios.delete(`audios-delete`, [
-      recordCheckedList,
-    ]);
-
-    // setAllRecordings(newRecordings);
-    setRecordCheckedList([]);
+    const audioToInt = recordCheckedList.map((item) => parseInt(item, 10));
+    console.log(audioToInt);
+    await axios
+      .delete(`audios/delete?audios=${[audioToInt]}`, {
+        headers,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          setDeleted(true);
+          setRecordCheckedList([]);
+          fetchData();
+        }
+      });
     handleClose();
     setOpenDeletePopup(false);
   };
 
   const deleteRecording = async (id) => {
-    const newRecordings = await axios.delete(`audios-delete`, [id]);
-    console.log(newRecordings);
-    // setAllRecordings(newRecordings);
-    // setAllRecordings(newRecordings);
+    await axios
+      .delete(`audios/delete?audios=${[id]}`, {
+        headers,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          setDeleted(true);
+          fetchData();
+        }
+      });
   };
 
   const allRecordingsProcessed = () => {
@@ -255,7 +274,7 @@ const TableData = ({ searchKeyword }) => {
                       >
                         <input
                           type="checkbox"
-                          value={recording?.job_id}
+                          value={recording?.id}
                           name="checkbox"
                           onChange={getChecked}
                           id="checkbox"
@@ -297,7 +316,7 @@ const TableData = ({ searchKeyword }) => {
                         className={
                           styles["uploaded-table-body-cell delete-btn"]
                         }
-                        onClick={() => deleteRecording(recording?.job_id)}
+                        onClick={() => deleteRecording(recording?.id)}
                       >
                         <img
                           src={deleteIcon}
@@ -366,7 +385,12 @@ const TableData = ({ searchKeyword }) => {
                 </p>
               </div> */}
             </div>
-            <div className={`${styles.view_resultbtn} `}>View Result</div>
+            <Link
+              to={`transcription/{job_d}`}
+              className={`${styles.view_resultbtn} `}
+            >
+              View Result
+            </Link>
           </div>
         )}
       </div>
