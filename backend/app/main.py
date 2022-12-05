@@ -607,8 +607,6 @@ def get_total_agent_analysis(agent_id: int, db: Session = Depends(get_db), user:
                 elif i.overall_sentiment == "Neutral":
                     result["month"][4]["neutral"] += 1
 
-        
-
     return result
 
 
