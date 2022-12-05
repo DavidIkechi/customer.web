@@ -10,6 +10,7 @@ import SolidCloseIcon from "./images/solidcircle.png";
 import axios from "axios";
 import checkMarkIcon from "./images/checkMarkIcon.png";
 import copyIcon from "./images/copyIcon.svg";
+import { Link } from "react-router-dom";
 
 export function UploadModal() {
   const [showUploadProgress, setShowUploadProgress] = useState(false);
@@ -64,9 +65,7 @@ export function UploadModal() {
       .then((response) => {
         console.log("http response", response.data);
         setIsUploadComplete(true);
-        setLink(
-          `https://heed.hng.tech/transcriptions/${response.data.transcript_id}`
-        );
+        setLink(response.data.transcript_id);
         // show completed phase
         //this.setState({
         //fileprogress: 1.0,
@@ -124,7 +123,12 @@ export function UploadModal() {
                 {showProgressList && !showDropDownIcon && (
                   <UploadProgressList />
                 )}
-                {isUploadComplete && <UploadComplete link={link} />}
+                {isUploadComplete && (
+                  <UploadComplete
+                    link={`https://heed.hng.tech/transcriptions/${link}`}
+                    transcript_id={link}
+                  />
+                )}
               </div>
             </div>
           </div>
@@ -301,7 +305,7 @@ function SubUploadProgress() {
   );
 }
 
-function UploadComplete({ link }) {
+function UploadComplete({ link, transcript_id }) {
   return (
     <>
       <div className={style["upload-complete-wrapper"]}>
@@ -314,8 +318,12 @@ function UploadComplete({ link }) {
         </div>
       </div>
       <div className={style["btn-wrapper"]}>
-        <button className={style["cancel-btn"]}>Cancel</button>
-        <button className={style["transcribe-btn"]}>Transcribe</button>
+        <a href="upload-new-file">
+          <button className={style["cancel-btn"]}>Cancel</button>
+        </a>
+        <Link className={style["link"]} to={`/transcriptions/${transcript_id}`}>
+          <button className={style["transcribe-btn"]}>Transcribe</button>
+        </Link>
       </div>
       <label htmlFor="callback" className={style["callback-wrapper"]}>
         <input
