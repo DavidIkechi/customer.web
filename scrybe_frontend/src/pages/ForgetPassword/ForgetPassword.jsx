@@ -69,7 +69,8 @@ function ForgetPassword() {
                 className={`${isValid && styles.submitValid}`}
               />
               <p>
-                Don't have an account? <NavLink to={"/"}>Sign up</NavLink>
+                Don't have an account?{" "}
+                <NavLink to={"/create-account"}>Sign up</NavLink>
               </p>
             </form>
           </div>
