@@ -663,7 +663,7 @@ async def auth(request: Request, db: Session = Depends(get_db)):
     email = user_data.email
     user_db = crud.get_user_by_email(db, email)
 
-    if not user_db:
+    if user_db is None:
         raise HTTPException(status_code=404, detail="User not found, Are you sure this is the email you used when signing up for the platform?")
 
     tokens = get_access_token(email)
