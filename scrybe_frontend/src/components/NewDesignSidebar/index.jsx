@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import { PropTypes } from "prop-types";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import SearchInput from "./SearchInput";
 // import styles from "./SideBar.module.scss";
@@ -13,7 +14,7 @@ import myScrybe from "./icons/my-scrybe.svg";
 import settings from "./icons/settings.svg";
 import usrAvatar from "./icons/user_avatar.svg";
 
-import axios from "axios";
+import { fetchCurrentUser } from "../../helpers/fetchCurrentUser/index";
 import styles from "./generalSidebar.module.scss";
 
 /**
@@ -39,51 +40,7 @@ function NewDesignSideBar({
   closeSidebar,
   toggleSidebar,
 }) {
-  const [currentUser, setCurrentUser] = React.useState(null);
-  const f = async () => {
-    const config = {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
-      },
-    };
-    const res = await axios.get("account", config);
-    console.log(res);
-    // const activeUser = fetchCurrentUser();
-    // console.log(activeUser);
-    setCurrentUser(res.data);
-  };
-  useEffect(() => {
-    {
-      /**
-          api_key
-      : 
-      "1fa2ba5a-5f0a-4fce-a663-44d64ee3b853"
-      company_address
-      : 
-      null
-      company_logo_url
-      : 
-      null
-      company_name
-      : 
-      "zurikoko"
-      email
-      : 
-      "dprincecoder@gmail.com"
-      first_name
-      : 
-      "Prince"
-      last_name
-      : 
-      "Azubuike"
-      phone_number
-      : 
-      null
-  */
-    }
-    f();
-  }, []);
+  const activeUser = fetchCurrentUser();
   return (
     <div
       className={`${styles.generalSidebar}
@@ -161,25 +118,19 @@ function NewDesignSideBar({
         <div className={styles.generalSidebar__bottom}>
           <div className={styles.generalSidebar_user_desktop}>
             <img
-              src={
-                currentUser?.company_logo_url
-                  ? currentUser?.company_logo_url
-                  : usrAvatar
-              }
-              alt={currentUser?.name}
+              src={activeUser?.profilePic ? activeUser?.profilePic : usrAvatar}
+              alt={activeUser?.name}
             />
             <div className={styles.generalSidebar_user_desktop_nameDetails}>
               <div className={styles.generalSidebar_user_desktop_name_arr}>
                 <p className={styles.name}>
-                  {currentUser?.first_name
-                    ? `${currentUser?.first_name} ${currentUser?.last_name}`
-                    : "John Doe"}
+                  {activeUser?.name ? activeUser?.name : "John Doe"}
                 </p>
                 <img src={dropdown_arr} alt="dropdown arrow" />
               </div>
               <p className={styles.workspace_name}>
-                {currentUser?.company_name
-                  ? currentUser?.company_name
+                {activeUser?.workspace_name
+                  ? activeUser?.workspace_name
                   : "Office workspace"}
               </p>
             </div>
@@ -190,5 +141,13 @@ function NewDesignSideBar({
     </div>
   );
 }
+
+// prop type
+NewDesignSideBar.propTypes = {
+  toggleSidebar: PropTypes.bool.isRequired,
+  closeSidebar: PropTypes.func.isRequired,
+  getValue: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+};
 
 export default NewDesignSideBar;
