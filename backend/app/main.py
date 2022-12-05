@@ -162,7 +162,8 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
         file.file.close()
 
     try:
-        result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
+        result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
+                                            chunk_size = 6000000)
         url = result.get("secure_url")
         urls = [url]
         response = shorten_urls(urls)
@@ -292,7 +293,8 @@ async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...
         raise HTTPException(status_code = 406, detail="File Must Not Be More Than 5MB")
     else:
         try:
-            result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
+            result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
+                                            chunk_size = 6000000)
             url = result.get("secure_url")
             urls = [url]
             response = shorten_urls(urls)
@@ -652,3 +654,21 @@ def download (id: Union[int, str], db: Session = Depends(get_db), user: models.U
                     "most_negative_sentences": most_negative_sentences,
                     }
         return sentiment
+
+    
+    
+@app.get("/AgentDetails", summary = "get agent performance report", tags=['Agent Performance Report'])
+def get_agent_performance(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    data_result = db.execute("""SELECT COUNT (agent_id) AS 'Total calls',
+    first_name || ' ' || last_name AS Name,
+    
+    SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive,
+    SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative,
+    SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral,
+    ROUND ( (SUM(positivity_score )/SUM(positivity_score + negativity_score + neutrality_score))*10) AS "Average Score"
+    FROM Agents INNER JOIN Audios on agents.id =audios.agent_id 
+    GROUP BY first_name ,last_name ORDER BY Name;""")
+
+    AgentDetails = [dict(result) for result in data_result]
+
+    return {"Agent Performance Report": AgentDetails}
