@@ -6,7 +6,9 @@
 import axios from "axios";
 import { PropTypes } from "prop-types";
 import React, { useEffect, useState } from "react";
-import { fetchData } from "./execAxios";
+import { formatAudioLen } from "../../../helpers/formatAudioLen/index";
+import { formatAudioSize } from "../../../helpers/formatAudioSize/index";
+import { formatDate } from "../../../helpers/formatDate";
 import closeModalIcon from "./imgs/close-icon.svg";
 import deleteIcon from "./imgs/delete-icon.svg";
 import notfoundImg from "./imgs/notfound.svg";
@@ -85,7 +87,7 @@ const recordings = [
 ];
 
 const TableData = ({ searchKeyword }) => {
-  const [allRecordings, setAllRecordings] = useState(recordings);
+  const [allRecordings, setAllRecordings] = useState([]);
   const [recordCheckedList, setRecordCheckedList] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [recordingsProcessed, setRecordingsProcessed] = useState(false);
@@ -102,7 +104,7 @@ const TableData = ({ searchKeyword }) => {
     const newRecordings = fetchData("list-audios-by-user");
     console.log(newRecordings);
     // if (newRecordings) {
-    //   setAllRecordings([newRecordings]);
+    setAllRecordings([newRecordings.data]);
     // } else {
     //   setAllRecordings(recordings);
     // }
@@ -127,7 +129,8 @@ const TableData = ({ searchKeyword }) => {
       Authorization: `Bearer ${token}`,
     };
     const data = await axios.get("list-audios-by-user", { headers });
-    console.log(data);
+    setAllRecordings(data.data);
+    // console.log(data);
   };
   useEffect(() => {
     fetchData();
@@ -150,7 +153,7 @@ const TableData = ({ searchKeyword }) => {
 
   const allRecordingsProcessed = () => {
     const allProcessed = allRecordings.every(
-      (item) => item.status !== "Processing"
+      (item) => item?.job_details?.job_status !== "Processing"
     );
     if (allProcessed) {
       setRecordingsProcessed(true);
@@ -159,22 +162,23 @@ const TableData = ({ searchKeyword }) => {
     }
   };
 
-  const searchRecordings = (allrecords) => {
-    return allrecords.filter((item) => {
-      return JSON.stringify(item.fileName)
-        .toLowerCase()
-        .includes(searchKeyword.toLowerCase());
-    });
-  };
+  // const searchRecordings = (allrecords) => {
+  //   return allrecords.filter((item) => {
+  //     return JSON.stringify(item.filename).includes(
+  //       searchKeyword.toLowerCase()
+  //     );
+  //   });
+  // };
 
   useEffect(() => {
     allRecordingsProcessed();
+    console.log(allRecordings);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allRecordings, searchKeyword]);
   return (
     <div
       className={`${styles.uploaded_recordings} ${
-        searchRecordings(allRecordings).length < 1 ? styles.no_items_found : ""
+        allRecordings.length < 1 ? styles.no_items_found : ""
       } ${recordingsProcessed ? styles.processed : ""}`}
     >
       <div className={styles.overall_table}>
@@ -232,63 +236,71 @@ const TableData = ({ searchKeyword }) => {
                 <th />
               </tr>
             </thead>
-            {searchRecordings(allRecordings).length > 0 ? (
+            {allRecordings.length > 0 ? (
               <tbody className={styles.uploaded_table_body}>
-                {searchRecordings(allRecordings).map((recording) => (
-                  <tr key={recording.id}>
-                    <td
-                      className={styles.uploaded_table_body_checkbox_img_wrap}
-                    >
-                      <input
-                        type="checkbox"
-                        value={recording.id}
-                        name="checkbox"
-                        onChange={getChecked}
-                        id="checkbox"
-                        className={styles.uploaded_table_body_checkbox}
-                      />
-                      <img
-                        src={soundwave}
-                        alt="soundwave-icon"
-                        className={styles.uploaded_table_body_cell_img}
-                      />
-                    </td>
-                    <td>{recording.fileName}</td>
-                    <td>{recording.length}</td>
-                    <td>{recording.size}</td>
-                    <td>{recording.date}</td>
-                    <td>
-                      <strong
-                        style={{
-                          color:
-                            // eslint-disable-next-line no-nested-ternary
-                            recording.status === "Processing"
-                              ? "#FFB800"
-                              : recording.status === "Successful"
-                              ? "#3bb031"
-                              : "#ff291b",
-                        }}
+                {allRecordings.map((recording) => {
+                  const job_status = recording?.job_details?.job_status;
+
+                  return (
+                    <tr key={recording?.id}>
+                      <td
+                        className={styles.uploaded_table_body_checkbox_img_wrap}
                       >
-                        {recording.status}{" "}
-                        {recording.status === "Failed" && (
-                          <a href="!" className={styles.retry}>
-                            retry
-                          </a>
-                        )}
-                      </strong>
-                    </td>
-                    <td
-                      className={styles["uploaded-table-body-cell delete-btn"]}
-                      onClick={() => deleteRecording(recording.id)}
-                    >
-                      <img
-                        src={deleteIcon}
-                        alt="delete-icon "
-                        className={styles.delete_icon}
-                      />
-                    </td>
-                  </tr>
-                ))}
+                        <input
+                          type="checkbox"
+                          value={recording?.id}
+                          name="checkbox"
+                          onChange={getChecked}
+                          id="checkbox"
+                          className={styles.uploaded_table_body_checkbox}
+                        />
+                        <img
+                          src={soundwave}
+                          alt="soundwave-icon"
+                          className={styles.uploaded_table_body_cell_img}
+                        />
+                      </td>
+                      <td>{recording?.filename}</td>
+                      <td>{formatAudioLen(recording?.duration)}</td>
+                      <td>{formatAudioSize(recording?.size)} mb</td>
+                      <td>{formatDate(recording?.timestamp)}</td>
+                      <td>
+                        <strong
+                          style={{
+                            color:
+                              // eslint-disable-next-line no-nested-ternary
+                              job_status === "Processing" ||
+                              job_status === "queued"
+                                ? "#FFB800"
+                                : job_status === "Successful" ||
+                                  job_status === "completed"
+                                ? "#3bb031"
+                                : "#ff291b",
+                          }}
+                        >
+                          {job_status}{" "}
+                          {job_status === "Failed" && (
+                            <a href="!" className={styles.retry}>
+                              retry
+                            </a>
+                          )}
+                        </strong>
+                      </td>
+                      <td
+                        className={
+                          styles["uploaded-table-body-cell delete-btn"]
+                        }
+                        onClick={() => deleteRecording(recording?.job_id)}
+                      >
+                        <img
+                          src={deleteIcon}
+                          alt="delete-icon "
+                          className={styles.delete_icon}
+                        />
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             ) : (
               <div className={styles.not_found_wrap}>
@@ -298,7 +310,7 @@ const TableData = ({ searchKeyword }) => {
             )}
           </table>
         </div>
-        {searchRecordings(allRecordings).length > 0 && (
+        {allRecordings.length > 0 && (
           <div className={styles.uploaded_recordings_options}>
             <div className={styles.bulkbtn_calbackurl_wrap}>
               <div className={styles.bulkselect_wrap}>
