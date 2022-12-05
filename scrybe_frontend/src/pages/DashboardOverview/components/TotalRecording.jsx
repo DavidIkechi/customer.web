@@ -85,7 +85,10 @@ const TotalRecording = ({ totalRecordingData }) => {
         </div>
       ) : (
         <div className={styles.empty_state}>
-          <p>An overview of your teams sentiment analysis report shows here.</p>
+          <p>
+            You will see an overview of your activities here when you start
+            uploading.
+          </p>
         </div>
       )}
     </div>
