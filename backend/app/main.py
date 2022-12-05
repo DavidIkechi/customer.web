@@ -32,7 +32,7 @@ import cloudinary.uploader
 from BitlyAPI import shorten_urls
 import services as _services
 
-from datetime import datetime
+from datetime import datetime, timedelta, date
 
 
 import shutil
@@ -655,34 +655,34 @@ async def create_order(order: schema.OrderCreate, db: Session = Depends(get_db),
     db.commit()
     db.refresh(db_order)
 
-    if  db_order.billing_plan== "startup monthly":
+    if  db_order.billing_plan== "startup monthly" or "Startup Monthly" or "STARTUP MONTHLY":
         db_order.monthly_amount = 7500
         db_order.total_amount = 7500
         db_order.next_payment_due_date = date.today() + timedelta(days=30)
 
-    elif db_order.billing_plan== "growing monthly":
+    elif db_order.billing_plan== "growing monthly" or "Growing Monthly" or "GROWING MONTHLY":
         db_order.monthly_amount = 13500
         db_order.total_amount = 13500
         db_order.next_payment_due_date = date.today() + timedelta(days=30)
 
-    elif db_order.billing_plan== "enterprise monthly":
+    elif db_order.billing_plan== "enterprise monthly" or "Enterprise Monthly" or "ENTERPRISE MONTHLY":
         db_order.monthly_amount = 24000
         db_order.total_amount = 24000
         db_order.next_payment_due_date = date.today() + timedelta(days=30)
 
-    elif db_order.billing_plan== "startup annually":
+    elif db_order.billing_plan== "startup annually" or "Startup Annually" or "STARTUP ANNUALLY":
         db_order.monthly_amount = 7500
         db_order.total_amount = 6500 * 12
         db_order.annual_amount = 6500 * 12
         db_order.next_payment_due_date = date.today() + timedelta(days=365)
 
-    elif db_order.billing_plan== "growing annually":
+    elif db_order.billing_plan== "growing annually" or "Growing Annually" or "GROWING ANNUALLY":
         db_order.monthly_amount = 13500
         db_order.total_amount = 10000 * 12
         db_order.annual_amount = 10000 * 12
         db_order.next_payment_due_date = date.today() + timedelta(days=365)
 
-    elif db_order.billing_plan== "enterprise annually":
+    elif db_order.billing_plan== "enterprise annually" or "Enterprise Annually" or "ENTERPRISE ANNUALLY":
         db_order.monthly_amount = 21000
         db_order.total_amount = 21000 * 12
         db_order.annual_amount = 21000 * 12
