@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-const baseURL = "https://heedapi.herokuapp.com";
+const baseURL = "https://api.heed.hng.tech";
 const useMockAuthAndReadSentiment = (id) => {
   const [sentimentData, setSentimentData] = useState({});
   useEffect(() => {
@@ -11,7 +11,7 @@ const useMockAuthAndReadSentiment = (id) => {
         Authorization: `Bearer ${res.data.access_token}`,
       };
       axios
-        .get(baseURL + `/audios/${id}/sentiment`, { headers })
+        .get(baseURL + `/trascription/${id}`, { headers })
         .then((newRes) => {
           setSentimentData(newRes.data);
         })
