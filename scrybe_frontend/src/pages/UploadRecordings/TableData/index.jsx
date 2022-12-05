@@ -95,7 +95,7 @@ const TableData = ({ searchKeyword }) => {
   const [recordingsProcessed, setRecordingsProcessed] = useState(false);
   const [openDeletePopup, setOpenDeletePopup] = useState(false);
   const [deleted, setDeleted] = useState(false);
-  const [sessionExpired, setSessionExpired] = useState(false);
+  const [sessionExpired, setSessionExpired] = useState(true);
   const handleOpen = () => {
     setOpenModal(true);
   };
@@ -140,7 +140,7 @@ const TableData = ({ searchKeyword }) => {
       if (res.status === 200) {
         setSessionExpired(false);
         setAllRecordings(res.data);
-      } else if (res.status === 401) {
+      } else {
         setSessionExpired(true);
       }
     });
@@ -181,6 +181,7 @@ const TableData = ({ searchKeyword }) => {
       });
   };
 
+  console.log(sessionExpired);
   const allRecordingsProcessed = () => {
     const allProcessed = allRecordings.every(
       (item) =>
@@ -271,6 +272,13 @@ const TableData = ({ searchKeyword }) => {
               </tr>
             </thead>
             {sessionExpired ? (
+              <h1 className={styles.expired}>
+                Your Session has has expired, please signin again
+                <p>
+                  <Link to="/signin">Signin</Link>
+                </p>
+              </h1>
+            ) : (
               <>
                 {searchRecordings(allRecordings).length > 0 ? (
                   <tbody className={styles.uploaded_table_body}>
@@ -350,10 +358,6 @@ const TableData = ({ searchKeyword }) => {
                   </div>
                 )}
               </>
-            ) : (
-              <h1 className={styles.expired}>
-                Your Session has has expired, please signin again
-              </h1>
             )}
           </table>
         </div>
