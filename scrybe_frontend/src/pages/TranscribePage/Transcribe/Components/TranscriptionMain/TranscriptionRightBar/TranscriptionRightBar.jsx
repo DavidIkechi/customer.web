@@ -12,6 +12,7 @@ function TranscriptionRightBar({
   currentTime,
   audioFileSize,
   recentRecordings,
+  donwloadData,
 }) {
   return (
     <div className={styles.TranscriptionRightBar}>
@@ -23,7 +24,7 @@ function TranscriptionRightBar({
         currentTime={currentTime}
         audioFileSize={audioFileSize}
       />
-      <SentimentAnalysis />
+      <SentimentAnalysis donwloadData={donwloadData} />
       <RecordingList recentRecordings={recentRecordings} />
     </div>
   );
