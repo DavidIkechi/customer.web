@@ -27,8 +27,14 @@ SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://"+DB_CONNECTION
 # SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_app.db"
 
 
+
 engine = create_engine(
+<<<<<<< HEAD
     SQLALCHEMY_DATABASE_URL#, connect_args = {"check_same_thread": False}
+=======
+    SQLALCHEMY_DATABASE_URL
+
+>>>>>>> 0a1aaa818acc5a5c1be0cd699b8cf4dc1ce81e87
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

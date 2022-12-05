@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from datetime import datetime
 
-from datetime import datetime
+from sqlalchemy_utils import URLType
 
 from db import Base
 
@@ -57,7 +57,6 @@ class Agent(Base):
 
 class Audio(Base):
     __tablename__ = "audios"
-    job_id = Column(String(255), index=True)
     id = Column(Integer, primary_key=True, index=True)
     audio_path = Column(TEXT)
     filename = Column(TEXT,  nullable = True)
@@ -73,8 +72,8 @@ class Audio(Base):
     most_positive_sentences = Column(JSON, nullable = True)
     most_negative_sentences = Column(JSON, nullable = True)
     agent_id = Column(Integer, ForeignKey("agents.id"))
-    agent_firstname = Column(String, index=True)
-    agent_lastname = Column(String, index=True)
+    agent_firstname = Column(String(255), index=True)
+    agent_lastname = Column(String(255), index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     job = relationship("Job", back_populates="audio", uselist=False)
     user = relationship("User", back_populates="audios")
@@ -121,13 +120,14 @@ class Analysis(Base):
     agent_id = Column(Integer, ForeignKey("agents.id"))
 
 class UserProfile(Base):
-    __tablename__ = "Accounts"
+    __tablename__ = "accounts"
 
     id = Column(Integer, ForeignKey("users.id"), nullable=True)
     phone_number = Column(String(255))
     company_address = Column(TEXT)
     email = Column(String(255), nullable=True)
     company_id = Column(Integer, ForeignKey("companies.id"))
+    company_logo_url = Column(URLType, nullable=True)
     api_key = Column(String(255), name="uuid", primary_key=True, default=generate_uuid)
 
 

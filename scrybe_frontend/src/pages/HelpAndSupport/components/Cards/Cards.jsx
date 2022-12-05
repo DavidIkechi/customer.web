@@ -59,12 +59,6 @@ function Cards() {
                         and how we handle your data."
         />
       </div>
-
-      <div className={styles.btn_container}>
-        <button className={styles.transcribe_btn}>
-          Start Transcribing Now
-        </button>
-      </div>
     </div>
   );
 }

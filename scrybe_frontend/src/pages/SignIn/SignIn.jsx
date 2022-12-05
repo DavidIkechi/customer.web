@@ -1,25 +1,24 @@
 import React, { useEffect } from "react";
-import axios from "axios";
 // import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useCallback, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import AuthApi from "../../App";
+import axios from "../ForgetPassword/globalConstant/Api/axios";
 import footerImg from "./assets/signup-img.svg";
 import styles from "./SignIn.module.scss";
-import AuthApi from "../../App";
-import { Navigate } from "react-router-dom";
-import { useCallback } from "react";
-import Cookies from "js-cookie";
 function Signin() {
   const emailTest = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
-  const passwordTest = new RegExp(/^[a-zA-Z]{8,}$/);
+  const passwordTest = new RegExp(/^["0-9a-zA-Z!@#$&()\\-`.+,/"]{8,}$/);
   const Auth = React.useContext(AuthApi);
   const [username, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [navigate, setNavigate] = useState(false);
+  // const [navigate, setNavigate] = useState(false);
   const [isValid, setIsValid] = useState(true);
   const [emailStateTest, setEmailStateTest] = useState(false);
   const [passStateTest, setPassStateTest] = useState(false);
 
+  const navigate = useNavigate();
   const tester = (e, reg, func) => {
     if (reg.test(e.target.value)) {
       func(true);
@@ -60,50 +59,65 @@ function Signin() {
   useEffect(() => {
     const isValid = validate();
     setIsValid(isValid);
-  }, [validate]);
+  }, [validate, username, password]);
+
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+    console.group("Submit");
 
     let formData = new FormData();
 
     formData.append("username", username);
+    console.log(username);
     formData.append("password", password);
 
     const config = {
       withCredentials: true,
       headers: {
-        "content-type": "multipart/form-data",
+        "content-type": "Application/json",
       },
     };
 
-    const response = await axios
-      .post("login", formData, config)
+    const response = await axios.post("login", formData, config);
+    console.log(response);
+    if (response.status === 200) {
+      localStorage.setItem("heedAccessToken", response.data.access_token);
+      localStorage.setItem("heedRefreshToken", response.data.refresh_token);
+      Cookies.set("heedAccessToken", response.data.access_token);
+      localStorage.setItem("heedAccessTokenType", response.data.token_type);
+      localStorage.setItem("currentUserEmail", username);
+      localStorage.setItem("auth", username);
 
-      .then((response) => {
-        // console.log(response);
+      // Auth.setAuth(true);
+      navigate("/dashboard");
+    }
 
-        const acessToken = response.data.access_token;
-        Cookies.set("heedAccessToken", response?.data?.access_token);
-        // localStorage.setItem("auth", email);
-        // localStorage.setItem("accessToken", acessToken);
+    // const response = await axios
+    //   .post("login", formData, config)
 
-        // console.log(response.data.access_token);
+    //   .then((response) => {
+    //     console.log(response);
 
-        axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${response.data["access_token"]}`;
+    //     // const acessToken = response.data.access_token;
+    //     // Cookies.set("heedAccessToken", response?.data?.access_token);
+    //     // localStorage.setItem("auth", email);
+    //     // localStorage.setItem("accessToken", acessToken);
 
-        setNavigate(true);
-      })
+    //     // console.log(response.data.access_token);
 
-      .catch((error) => {});
+    //     axios.defaults.headers.common[
+    //       "Authorization"
+    //     ] = `Bearer ${response.data["access_token"]}`;
+
+    //     // setNavigate(true);
+    //   })
+
+    //   .catch((error) => {});
+
+    // if (navigate) {
+    //   return <Navigate to="/" />;
+    // }
   };
-  // console.log(response.data);
-  // Cookies.set("token", response.data.access_token);
-
-  if (navigate) {
-    return <Navigate to="/account" />;
-  }
 
   return (
     <>
@@ -112,7 +126,7 @@ function Signin() {
           <div
             className={`${styles.first} ${styles.signin} ${styles.otherThanSignup}`}
           >
-            <h1>Welcome back, Heed!</h1>
+            <h1>Welcome back, Scryber!</h1>
             <h3>Please enter your details</h3>
             <form onSubmit={handleSubmit}>
               <div

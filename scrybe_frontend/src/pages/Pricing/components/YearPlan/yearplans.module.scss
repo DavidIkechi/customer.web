@@ -1,7 +1,5 @@
 @use "../../../../functions.scss" as *;
 
-
-
 .year .plans {
   display: flex;
   gap: 23px;
@@ -36,6 +34,10 @@
   margin-top: 2rem;
   background-color: #006cff;
   border-radius: 4px;
+}
+
+.plansCard a:hover {
+  background-color: #549dff;
 }
 
 .FtnBtn {

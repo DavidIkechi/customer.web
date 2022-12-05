@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { totalRecordingData } from "../Data";
 import { Bar } from "react-chartjs-2";
 import styles from "../DashboardOverview.module.scss";
 import toneWave from "../assets/tone_wave.svg";
@@ -12,7 +11,7 @@ import {
 } from "chart.js";
 ChartJS.register(CategoryScale, LinearScale, BarElement);
 
-const TotalRecording = () => {
+const TotalRecording = ({ totalRecordingData }) => {
   const [chartData, setChartData] = useState({
     datasets: [],
   });
@@ -26,7 +25,6 @@ const TotalRecording = () => {
         {
           label: "",
           data: selectedTotalRecordings.map((data) => data.totalRecordings),
-
           backgroundColor: ["#B0CAD9", "#005584", "#548DAD", "#004D78"],
           maxBarThickness: 10,
           borderSkipped: "start",
@@ -49,7 +47,11 @@ const TotalRecording = () => {
   }, [selectedTotalRecordings]);
 
   useEffect(() => {
-    setSelectedTotalRecordings(totalRecordingData.week);
+    if (totalRecordingData) {
+      setSelectedTotalRecordings(totalRecordingData.week);
+    } else {
+      setSelectedTotalRecordings([]);
+    }
   }, []);
 
   function recordingsTimeStampFunc(e) {
@@ -74,12 +76,18 @@ const TotalRecording = () => {
       {/* <h2 className={styles.thismonth}>
       This month <img src={chevron} alt="" />
     </h2> */}
-      <div className={styles.recordings__chart}>
-        <div>
-          <h1 className={styles.totalNumber}>9436</h1>
-          <Bar options={chartOptions} data={chartData} />
+      {selectedTotalRecordings.length > 0 ? (
+        <div className={styles.recordings__chart}>
+          <div>
+            <h1 className={styles.totalNumber}>9436</h1>
+            <Bar options={chartOptions} data={chartData} />
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className={styles.empty_state}>
+          <p>An overview of your teams sentiment analysis report shows here.</p>
+        </div>
+      )}
     </div>
   );
 };

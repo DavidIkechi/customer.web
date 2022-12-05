@@ -1,14 +1,10 @@
-import React from "react";
 import axios from "axios";
+import React from "react";
 // import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import footerImg from "./assets/signup-img.svg";
 import styles from "./SignUp.module.scss";
-import { Navigate } from "react-router-dom";
-import { useCallback } from "react";
-import { useEffect } from "react";
-import Cookies from "js-cookie";
 
 function Signup() {
   const [first_name, setFirstName] = useState("");
@@ -16,7 +12,6 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [company_name, setCompany] = useState("");
   const [password, setPassword] = useState("");
-  const [navigate, setNavigate] = useState(false);
   const [emailStateTest, setEmailStateTest] = useState(false);
   const [passStateTest, setPassStateTest] = useState(false);
   const [nameStateTest, setNameStateTest] = useState(false);
@@ -24,7 +19,8 @@ function Signup() {
   const [companyStateTest, setCompanyStateTest] = useState(false);
   const [btn, setBtn] = useState(true);
 
-  const passwordTest = new RegExp(/^[a-zA-Z]{8,}$/),
+  const navigate = useNavigate();
+  const passwordTest = new RegExp(/^["0-9a-zA-Z!@#$&()\\-`.+,/"]{8,}$/),
     firstNameTest = new RegExp(/^[a-zA-Z]{2,}$/),
     lastNameTest = new RegExp(/^[a-zA-Z]{2,}$/),
     emailTest = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/),
@@ -104,20 +100,15 @@ function Signup() {
       company_name: company_name,
       password: password,
     };
-    await axios
-      .post("users", data)
-      .then((response) => {
-        console.log(response);
-        setNavigate(true);
-        Cookies.set("heedAccessToken", response?.data?.access_token);
-        localStorage.setItem("auth", email);
-      })
-      .catch((error) => {});
+    console.log(data);
+    const res = await axios.post("create_users", data);
+    console.log(res);
+    if (res.status === 200) {
+      navigate("/verify-signup");
+    } else {
+      console.log(res);
+    }
   };
-
-  if (navigate) {
-    return <Navigate to="/verify-signup" />;
-  }
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
