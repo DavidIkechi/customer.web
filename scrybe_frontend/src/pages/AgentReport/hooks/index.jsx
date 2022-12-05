@@ -47,28 +47,30 @@ const useAgentReport = () => {
 };
 export { useAgentReport };
 
-const useAgentDetails = () => {
-  const [agentDets, setAgentDets] = useState({});
+// const useAgentDetails = () => {
+//   const [agentDets, setAgentDets] = useState({});
+//   const [data_id, setData_id] = useState('4')
 
-  // useEffect(() => {
-  //   const data =
-  //     "grant_type=&username=rambeybello%40gmail.com&password=aaaaaaaa&scope=&client_id=&client_secret=";
-  //   axios.post("https://api.heed.hng.tech/login", data).then((res) => {
-  //     const headers = {
-  //       Authorization: `Bearer ${res.data.access_token}`,
-  //     };
-  //     axios
-  //       .get("api url", {
-  //         headers,
-  //       })
-  //       .then((newRes) => {
-  //         // console.log(newRes);
-  //         setAgentDets(newRes.data);
-  //       });
-  //   });
-  // }, []);
+//   useEffect(() => {
+//     const data =
+//       "grant_type=&username=rambeybello%40gmail.com&password=aaaaaaaa&scope=&client_id=&client_secret=";
+//     axios.post("https://api.heed.hng.tech/login", data).then((res) => {
+//       const headers = {
+//         Authorization: `Bearer ${res.data.access_token}`,
+//       };
+//       axios
+//         .get(`https://api.heed.hng.tech/total-agent-analysis?agent_id=${data_id}`, {
+//           headers,
+//         })
+//         .then((res) => {
+//           console.log(res);
+//           console.log('rt');
+//           setAgentDets(res.data);
+//         });
+//     });
+//   }, []);
 
-  return agentDets;
-};
+//   return agentDets;
+// };
 
-export { useAgentDetails };
+// export { useAgentDetails };

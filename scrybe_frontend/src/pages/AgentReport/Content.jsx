@@ -4,20 +4,52 @@ import close from "./assets/icon.svg";
 import Charts from "./components/ChartContainer";
 import AgentDetails from "./components/AgentDetails";
 import { useState, useEffect } from "react";
+import axios from "axios";
 import { agentData } from "./components/Data";
 import { useAgentReport } from "./hooks";
 
 const Content = () => {
   const agentReport = useAgentReport();
 
+  // chart data
+
+  const [agentDets, setAgentDets] = useState({});
+  const [data_id, setData_id] = useState("5");
+
+  useEffect(() => {
+    const data =
+      "grant_type=&username=rambeybello%40gmail.com&password=aaaaaaaa&scope=&client_id=&client_secret=";
+    axios.post("https://api.heed.hng.tech/login", data).then((res) => {
+      const headers = {
+        Authorization: `Bearer ${res.data.access_token}`,
+      };
+      axios
+        .get(
+          `https://api.heed.hng.tech/total-agent-analysis?agent_id=${data_id}`,
+          {
+            headers,
+          }
+        )
+        .then((res) => {
+          console.log(res.data);
+          setAgentDets(res.data);
+        });
+    });
+  }, []);
+
+  // console.log(agentDets);
+  // chart data
+
   const [selectReport, setSelectReport] = useState([]);
 
   const handleDate = (e) => {
     setSelectReport(agentData[e.target.value]);
+    // setSelectReport(agentDets[e.target.value]);
   };
 
   useEffect(() => {
     setSelectReport(agentData.week);
+    // setSelectReport(agentDets.week);
     // console.log(selectReport);
   }, []);
 

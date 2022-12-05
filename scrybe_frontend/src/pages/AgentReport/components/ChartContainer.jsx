@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { useAgentReport } from "../hooks";
+// import { useAgentReport } from "../hooks";
 import styles from "../styles/Chart.module.scss";
 import { Bar } from "react-chartjs-2";
-import { agentData } from "./Data";
+// import { agentData } from "./Data";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -20,10 +20,6 @@ function Charts({ selectReport }) {
   const [userData, setUserData] = useState({
     datasets: [],
   });
-
-  // const [selectReport, setSelectReport] = useState([]);
-  // console.log("selectReport", selectReport);
-  // console.log("data", userData);
 
   useEffect(() => {
     setUserData({
@@ -78,24 +74,8 @@ function Charts({ selectReport }) {
     });
   }, [selectReport]);
 
-  // useEffect(() => {
-  //   setSelectReport(agentData.week);
-  //   // console.log(selectReport);
-  // }, []);
-
-  // const handleDate = (e) => {
-  //   setSelectReport(agentData[e.target.value]);
-  // };
-
   return (
     <div className={styles.chartContainer}>
-      {/* <div className={styles.select}>
-        <p>View by</p>
-        <select className={styles.dropdown} onChange={handleDate}>
-          <option value="week">This week</option>
-          <option value="month">This month</option>
-        </select>
-      </div> */}
       <div className={styles.chartWrap}>
         <div className={styles.chartHeader}>
           <div className={styles.chartText}>
@@ -108,7 +88,11 @@ function Charts({ selectReport }) {
           </div>
         </div>
         <div className={styles.chartImg}>
-          <Bar data={userData} options={option} />;
+          {selectReport.length === 0 ? (
+            <p>Agent Reports show here</p>
+          ) : (
+            <Bar data={userData} options={option} />
+          )}
         </div>
       </div>
     </div>

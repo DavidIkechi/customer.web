@@ -98,7 +98,7 @@ function App() {
           element={<PasswordResetSuccessful />}
         />
         <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
-        <Route path="/agent-report" element={<AgentReport />} />
+        <Route path="/agent-report/:Agent_id" element={<AgentReport />} />
         <Route path="/upload-new-file" element={<UploadModal />} />
 
         <Route path="/demos" element={<DummyPage someText="demo pages" />} />
