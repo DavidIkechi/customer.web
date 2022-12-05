@@ -111,6 +111,12 @@
   cursor: pointer;
 }
 
+.pricing .CTA .CTAs .ctaMonth:hover,
+.pricing .CTA .CTAs .ctaYear:hover {
+  background-color: #549dff;
+  color: white;
+}
+
 .pricing .CTA .CTAs .listItemActive {
   background-color: #004db5;
   color: white;
