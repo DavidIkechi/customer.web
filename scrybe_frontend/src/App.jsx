@@ -55,6 +55,7 @@ import TryProcessing from "./pages/TryForFree/tryProcessing";
 import TryResults from "./pages/TryForFree/tryResults";
 import UploadedRecordings from "./pages/UploadRecordings";
 import { UploadModal } from "./pages/UploadRecordingsModal";
+import Logout from "./pages/Logout";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -293,6 +294,7 @@ function App() {
           path="/verification?token=:token"
           element={<EmailVerificationSuccess />}
         /> */}
+        <Route path="/logout" element={<Logout />} />
       </Routes>
     </>
   );
