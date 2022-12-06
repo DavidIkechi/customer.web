@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import SearchInput from "./SearchInput";
 // import styles from "./SideBar.module.scss";
 import closeIcon from "./icons/closeIcon.svg";
@@ -15,6 +15,7 @@ import usrAvatar from "./icons/user_avatar.svg";
 
 import axios from "axios";
 import styles from "./generalSidebar.module.scss";
+import DropDownModal from "./DropdownMenu";
 
 /**
  * Wrap your component with this component to get a sidebar with a logo, a search input field and a list of links.
@@ -40,7 +41,7 @@ function NewDesignSideBar({
   toggleSidebar,
 }) {
   const [currentUser, setCurrentUser] = React.useState(null);
-  const f = async () => {
+  const fetchUser = async () => {
     const config = {
       withCredentials: true,
       headers: {
@@ -50,36 +51,9 @@ function NewDesignSideBar({
     const res = await axios.get("account", config);
     setCurrentUser(res.data);
   };
+  const [show, setShow] = useState(false);
   useEffect(() => {
-    {
-      /**
-          api_key
-      : 
-      "1fa2ba5a-5f0a-4fce-a663-44d64ee3b853"
-      company_address
-      : 
-      null
-      company_logo_url
-      : 
-      null
-      company_name
-      : 
-      "zurikoko"
-      email
-      : 
-      "dprincecoder@gmail.com"
-      first_name
-      : 
-      "Prince"
-      last_name
-      : 
-      "Azubuike"
-      phone_number
-      : 
-      null
-  */
-    }
-    f();
+    fetchUser();
   }, []);
   return (
     <div
@@ -167,12 +141,18 @@ function NewDesignSideBar({
             />
             <div className={styles.generalSidebar_user_desktop_nameDetails}>
               <div className={styles.generalSidebar_user_desktop_name_arr}>
-                <p className={styles.name}>
+                <Link to="/account" className={styles.name}>
                   {currentUser?.first_name
                     ? `${currentUser?.first_name} ${currentUser?.last_name}`
                     : "John Doe"}
-                </p>
-                <img src={dropdown_arr} alt="dropdown arrow" />
+                </Link>
+                <img
+                  src={dropdown_arr}
+                  alt="dropdown arrow"
+                  onClick={() => setShow((prev) => !prev)}
+                  className={styles.arrow}
+                />
+                {show && <DropDownModal closeModal={() => setShow(false)} />}
               </div>
               <p className={styles.workspace_name}>
                 {currentUser?.company_name

@@ -281,7 +281,6 @@ button {
 
     .first__bottom {
       display: flex;
-      align-items: center;
       justify-content: space-between;
     }
 
@@ -298,6 +297,11 @@ button {
     .first__bottom .hero__image {
       margin-top: unset;
       flex-basis: 45%;
+      margin-top: 1.2em;
+    }
+
+    .first__bottom .hero__figure {
+      width: 100%;
     }
   }
 
@@ -405,9 +409,20 @@ button {
   }
 }
 
-// @media (min-width: 850px) {
- 
-// }
+@media (min-width: 1000px), (min-width: 4000px) {
+    .first__bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+}
+
+
+@media only screen and (min-width: 1515px) {
+    .sect__container {
+        padding: 0 2.5em;
+    }
+}
 
 
 

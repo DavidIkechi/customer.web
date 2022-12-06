@@ -11,7 +11,6 @@ import { useDashBoardData } from "./hooks/index";
 
 function DashboardOverview() {
   const { recentRecording, totalAnalysis, totalRecording } = useDashBoardData();
-
   const [toggleSidebar, setToggleSidebar] = React.useState(false);
 
   return (
