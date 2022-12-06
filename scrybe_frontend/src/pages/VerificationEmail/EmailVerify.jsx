@@ -1,18 +1,21 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import mail from "./assets/mail.svg";
 import styles from "./Email.module.scss";
 
 const EmailVerify = () => {
   const query = new URLSearchParams(useLocation);
-  const token = query.get("token");
+  // const token = query.get("token");
+  const {token} = useParams();
   console.log(token);
   useEffect(() => {
     handleSubmit();
   }, []);
   const handleSubmit = async () => {
     try {
+      // let token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF5ZW5wcmVAZ21haWwuY29tIn0.LSsSIjvkCHI5tfg2Hj3Q3Ov2MwFrNFdn6W9jC2UXo4Q";
       const response = await axios.get(`https://api.heed.hng.tech/verification?token=${token}`);
       console.log(response);
     } catch (err) {

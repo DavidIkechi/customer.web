@@ -243,7 +243,7 @@ function App() {
         <Route path="/partners" element={<PartnersPage />} />
         <Route path="press-article" element={<PressArticle />} />
         <Route path="pricing" element={<Pricing />} />
-        <Route path="/emailverification" element={<EmailVerify />} />
+        <Route path="/emailverification/:token" element={<EmailVerify />} />
         <Route path="*" element={<Error />} />
         <Route path="/support-team" element={<Support />} />
         <Route path="/logout" element={<Logout />} />
