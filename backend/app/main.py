@@ -610,12 +610,13 @@ async def reset_password(token: str, new_password: schema.UpdatePassword, db: Se
 
 @app.patch('/change-password', summary = "change password", tags=['users'])
 async def change_password(change_password: schema.ChangePassword, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    user_db: models.User = crud.get_user_by_email(db, user.email)
     its_password = verify_password(change_password.old_password, user.password)
 
     if not its_password:
         raise HTTPException(status_code=500, detail='Password does not match')
 
-    password_changed = crud.reset_password(db, change_password.new_password, user)
+    password_changed = crud.reset_password(db, change_password.new_password, user_db)
 
     return password_changed
 
