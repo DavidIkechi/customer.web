@@ -156,7 +156,7 @@ class UserProfile(BaseModel):
 class UserProfileUpdate(BaseModel):
     phone_number: Optional[str]
     company_address: Optional[str]
-    company_logo_url: Optional[str]
+
 
 
 class ForgetPassword(BaseModel):

@@ -70,7 +70,6 @@ def update_user_profile(db:Session, profile:schema.UserProfileUpdate, user_id:in
                                     detail="Not authorized to perform requested action")
     user_profile.phone_number = profile.phone_number
     user_profile.company_address = profile.company_address
-    user_profile.company_logo_url = profile.company_logo_url
     db.commit()
     db.refresh(user_profile)
     return user_profile
@@ -100,7 +99,7 @@ def delete_user(db: Session, user_id: int, current_user):
     db.delete(deleted_user)
     db.delete(user_profile)
     db.commit()
-    return {"message":f"User with id{deleted_user.id} has been deleted"}
+    return {"message":f"User {deleted_user.first_name} with id:{deleted_user.id} has been deleted"}
 
 
 def get_audio(db: Session, audio_id: int):
@@ -117,7 +116,7 @@ def get_company(db: Session, company_id: int):
 
 def create_audio(db: Session, audio: schema.Audio, agent_id: int):
     db_audio = models.Audio(audio_path=audio.audio_path, size=audio.size, duration=audio.duration, transcript=audio.transcript, timestamp=audio.timestamp, positivity_score=audio.positivity_score,
-    negativity_score=audio.negativity_score, neutrality_score=audio.neutrality_score, overall_sentiment=audio.overall_sentiment, most_positive_sentences =audio.most_positive_sentences, most_negative_sentences = audio.most_negative_sentences, agent_id=agent_id, agent_firstname = db_audio.agent_firstname, agent_lastname = db_audio.agent_lastname)
+    negativity_score=audio.negativity_score, neutrality_score=audio.neutrality_score, overall_sentiment=audio.overall_sentiment, most_positive_sentences =audio.most_positive_sentences, most_negative_sentences = audio.most_negative_sentences, agent_id=agent_id, agent_firstname = db_audio.first_name, agent_lastname = db_audio.last_name)
 
     db.add(db_audio)
     db.commit()
@@ -193,7 +192,7 @@ def get_analysis(db: Session, analysis_id = int):
 def create_user_profile(db: Session, company_id: int, user_email: str):
     user = get_user_by_email(db, user_email)
     user_id = user.id
-    db_profile = models.UserProfile(id=user_id, company_id = company_id)
+    db_profile = models.UserProfile(id=user_id, company_id = company_id, email=user_email)
     db.add(db_profile)
     db.commit()
     db.refresh(db_profile)
