@@ -5,19 +5,19 @@ import Charts from "./components/ChartContainer";
 import AgentDetails from "./components/AgentDetails";
 import { useState, useEffect } from "react";
 import { useAgentReport } from "./hooks";
-import { useAgentDetails } from "./hooks";
+import { useAgentAnalysis } from "./hooks";
 
 const Content = () => {
-  const agentReport = useAgentReport();
-  const agentDetail = useAgentDetails();
+  const agentReportData = useAgentReport();
+  const agentAnalysisData = useAgentAnalysis();
   const [selectReport, setSelectReport] = useState([]);
 
   useEffect(() => {
-    setSelectReport(agentDetail.week);
-  }, [agentDetail]);
+    setSelectReport(agentAnalysisData.week);
+  }, [agentAnalysisData]);
 
   const handleDate = (e) => {
-    setSelectReport(agentDetail[e.target.value]);
+    setSelectReport(agentAnalysisData[e.target.value]);
   };
 
   return (
@@ -30,11 +30,11 @@ const Content = () => {
       <div className={styles.idcont}>
         <div className={styles.agentId}>
           <p className={styles.secondp}>
-            Agent ID: &nbsp; &nbsp; {agentReport?.str_agent_id}
+            Agent ID: &nbsp; &nbsp; {agentReportData?.str_agent_id}
           </p>
 
           <p className={styles.secondp}>
-            Rank: &nbsp; &nbsp; {agentReport?.rank}
+            Rank: &nbsp; &nbsp; {agentReportData?.rank}
           </p>
         </div>
 

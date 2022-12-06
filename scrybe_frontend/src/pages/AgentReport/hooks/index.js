@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 // pass id as paraameteer
 const useAgentReport = () => {
-  const [recentReport, setRecentReports] = useState([]);
+  const [recentAgentReport, setAgentRecentReports] = useState([]);
 
   const [id, setId] = useState("13");
   useEffect(() => {
@@ -18,17 +18,17 @@ const useAgentReport = () => {
           headers,
         })
         .then((res) => {
-          setRecentReports(res.data.Agent_Performance_Report);
+          setAgentRecentReports(res.data.Agent_Performance_Report);
         });
     });
   }, []);
 
-  return recentReport;
+  return recentAgentReport;
 };
 export { useAgentReport };
 
-const useAgentDetails = () => {
-  const [agentDets, setAgentDets] = useState({});
+const useAgentAnalysis = () => {
+  const [agentAnalysis, setAnalysis] = useState({});
   const [data_id, setData_id] = useState("13");
 
   useEffect(() => {
@@ -45,11 +45,11 @@ const useAgentDetails = () => {
           }
         )
         .then((res) => {
-          setAgentDets(res.data);
+          setAnalysis(res.data);
         });
     });
   }, []);
-  return agentDets;
+  return agentAnalysis;
 };
 
-export { useAgentDetails };
+export { useAgentAnalysis };
