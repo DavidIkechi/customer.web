@@ -1,11 +1,42 @@
 import React from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 import styles from "../NewSetNewPassword/setPassword.module.scss";
 import setPassword from "../NewSetNewPassword/assets/set__pswd.png";
 import eyeOff from "../NewSetNewPassword/assets/eye__off.png";
 import heedLogo from "../NewSetNewPassword/assets/heed__logo.png";
 // import { Link } from "react-router-dom";
 
-const index = () => {
+const Index = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const baseUrl = "https://api.heed.hng.tech";
+  const submitCallback = () => {
+    const query = new URLSearchParams(location.search);
+    axios
+      .patch(baseUrl + "/reset-password?token=" + query.get("token"), {
+        password: password,
+      })
+      .then((res) => {
+        if (res.status === 200) navigate("/pw-reset-successful");
+      });
+  };
+
+  // Watch event for disable button
+  const password = watch("password");
+  const password2 = watch("password2");
+
+  const isValid = password && password2;
+
   return (
     <div>
       <div className={styles.overall__container}>
@@ -30,7 +61,10 @@ const index = () => {
                   </p>
                 </div>
               </div>
-              <form className={styles.form__container}>
+              <form
+                className={styles.form__container}
+                onSubmit={handleSubmit(submitCallback)}
+              >
                 <div className={styles.input__flex}>
                   <label htmlFor="email" className={styles.label__name}>
                     New password
@@ -38,9 +72,20 @@ const index = () => {
                       type="email"
                       name="email"
                       id="email"
-                      className={styles.email}
+                      // className={styles.email}
                       placeholder="Enter your new password"
+                      className={`${errors.password && styles.errorInput} `}
+                      {...register("password", {
+                        required: "Password is required",
+                        minLength: {
+                          value: 8,
+                          message: "Password must be at least 8 characters",
+                        },
+                      })}
                     />
+                    <p className={styles.errorMsg}>
+                      {errors.password?.message}
+                    </p>
                   </label>
                   <span className={styles.eye__content}>
                     <img
@@ -50,7 +95,12 @@ const index = () => {
                     />
                   </span>
                 </div>
-                <div className={styles.form__action}>
+                <input
+                  type="submit"
+                  value="Reset password"
+                  className={`${isValid && styles.form__button}`}
+                />
+                {/* <div className={styles.form__action}>
                   <button
                     type="submit"
                     value="Reset password"
@@ -58,7 +108,7 @@ const index = () => {
                   >
                     Reset password
                   </button>
-                </div>
+                </div> */}
               </form>
             </div>
           </div>
@@ -83,4 +133,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
