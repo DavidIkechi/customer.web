@@ -89,7 +89,7 @@ function Charts({ selectReport }) {
           {selectReport?.length > 0 ? (
             <p className={styles.empty}>
               You will see an overview of your activities here when you start
-              uploading.
+              analysing.
             </p>
           ) : (
             <Bar data={userData} options={option} />
