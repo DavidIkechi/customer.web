@@ -99,7 +99,7 @@ def delete_user(db: Session, user_id: int, current_user):
     db.delete(deleted_user)
     db.delete(user_profile)
     db.commit()
-    return {"message":f"User with id{deleted_user.id} has been deleted"}
+    return {"message":f"User {deleted_user.first_name} with id:{deleted_user.id} has been deleted"}
 
 
 def get_audio(db: Session, audio_id: int):
