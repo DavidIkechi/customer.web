@@ -156,6 +156,10 @@
     font-size: 30px;
     line-height: 26px;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     margin-top: 3rem;
     color: #a9a9a9;
     width: 100% !important;
@@ -164,6 +168,19 @@
     // -moz-transform: translate(50%);
     // -ms-transform: translate(50%);
     // -o-transform: translate(50%);
+    p {
+      background: #006cff;
+      border-radius: 4px;
+      // display: block;
+      padding: 12px 32px;
+      width: max-content;
+      height: max-content;
+      margin-top: 1rem;
+      a {
+        color: #fff;
+        text-decoration: none;
+      }
+    }
   }
 }
 
