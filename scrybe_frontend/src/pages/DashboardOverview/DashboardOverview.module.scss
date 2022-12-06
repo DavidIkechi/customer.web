@@ -255,11 +255,11 @@
   }
 }
 // recent_recordings
-.recent_recordings {
+table.recent_recordings {
   background: #ffffff;
   width: 100%;
-  caption {
-    font-weight: 600;
+  font-weight: 600;
+  h1 {
     font-size: 1.3rem;
     line-height: 26px;
     color: #000000;

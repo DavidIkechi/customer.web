@@ -11,7 +11,7 @@ const RecentRecording = ({ recentRecording }) => {
     <>
       {recentRecording?.length > 0 ? (
         <table className={styles.recent_recordings}>
-          <caption>Recent recordings </caption>
+          <h1>Recent recordings </h1>
           <thead>
             <tr>
               <th scope="col">Name</th>
@@ -35,63 +35,6 @@ const RecentRecording = ({ recentRecording }) => {
                 <td>{data.timestamp}</td>
               </tr>
             ))}
-
-            {/* <tr>
-            <td>
-              <img src={toneWave} alt="tone wave" />
-            </td>
-            <td>
-              <span>Recording mp3</span>
-              <span className={styles.bold_td}>
-                Inactive recharge card
-              </span>{" "}
-            </td>
-            <td>4 mins</td>
-            <td>50mb</td>
-            <td>14/11/22</td>
-          </tr>
-          <tr>
-            <td>
-              <img src={toneWave} alt="tone wave" />
-            </td>
-            <td>
-              <span>Recording mp3</span>
-              <span className={styles.bold_td}>
-                Inactive recharge card
-              </span>{" "}
-            </td>
-            <td>4 mins</td>
-            <td>50mb</td>
-            <td>14/11/22</td>
-          </tr>
-          <tr>
-            <td>
-              <img src={toneWave} alt="tone wave" />
-            </td>
-            <td>
-              <span>Recording mp3</span>
-              <span className={styles.bold_td}>
-                Inactive recharge card
-              </span>{" "}
-            </td>
-            <td>4 mins</td>
-            <td>50mb</td>
-            <td>14/11/22</td>
-          </tr>
-          <tr>
-            <td>
-              <img src={toneWave} alt="tone wave" />
-            </td>
-            <td>
-              <span>Recording mp3</span>
-              <span className={styles.bold_td}>
-                Inactive recharge card
-              </span>{" "}
-            </td>
-            <td>4 mins</td>
-            <td>50mb</td>
-            <td>14/11/22</td>
-          </tr> */}
           </tbody>
         </table>
       ) : (
