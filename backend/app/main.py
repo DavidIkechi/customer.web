@@ -122,7 +122,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 # OAuth settings
 GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID') or None
 GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET') or None
