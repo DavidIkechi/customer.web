@@ -339,19 +339,7 @@ const TableData = ({ searchKeyword }) => {
                   }
                 </div>
               </div>
-              {/* <div className={styles.calbackurl_wrap}>
-                <p>This process might take up to 20 minutes. </p>
-                <p className={styles.callback_url}>
-                  Can’t wait? <span>Click here to copy your call back URL</span>{" "}
-                </p>
-              </div> */}
             </div>
-            {/* <Link
-              to={`transcription/{job_d}`}
-              className={`${styles.view_resultbtn} `}
-            >
-              View Result
-            </Link> */}
           </div>
         )}
       </div>
