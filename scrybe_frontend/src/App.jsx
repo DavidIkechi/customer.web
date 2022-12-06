@@ -37,10 +37,10 @@ import HomePageRedesign from "./pages/HomePageRedesign";
 import LeaderboardPage from "./pages/LeaderBoard/Leaderboard";
 import LandingPageSalesTeam from "./pages/NewLandingPageSalesTeam/index";
 import PartnersPage from "./pages/PartnersPage";
-import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
+// import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Reviews from "./pages/Reviews/Reviews";
-import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
+// import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
 import SettingsIndex from "./pages/Settings/SettingsIndex";
 import AccountSettings from "./pages/Settings/SettingsPageSubPages/AccountSettings/AccountSettings";
 import NotificationSettings from "./pages/Settings/SettingsPageSubPages/Notifications/NotificationSettings";
@@ -57,6 +57,10 @@ import UploadedRecordings from "./pages/UploadRecordings";
 import { UploadModal } from "./pages/UploadRecordingsModal";
 import Logout from "./pages/Logout";
 import EmailVerify from "./pages/VerificationEmail/EmailVerify";
+import ForgetPasswordNew from "./pages/ForgotPasswordNew/Index";
+import CheckMail from "./pages/CheckMail/index";
+import NewSetNewPassword from "./pages/NewSetNewPassword";
+import NewPasswordResetSuccessful from "./pages/NewPasswordResetSuccessful";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -89,16 +93,26 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/reset-successful" element={<Successful />} />
         <Route path="/verify-signup" element={<SignUpVerify />} />
-        <Route
+        {/* <Route
           path="/set-new-password?token=:token"
           element={<SetNewPassword />}
+        /> */}
+        {/* <Route path="/forget-password" element={<ForgetPassword />} /> */}
+        <Route path="/forget-password" element={<ForgetPasswordNew />} />
+        <Route path="/check-mail" element={<CheckMail />} />
+        <Route
+          path="/set-new-password?token=:token"
+          element={<NewSetNewPassword />}
         />
-        <Route path="/forget-password" element={<ForgetPassword />} />
-        <Route path="/sales-team" element={<LandingPageSalesTeam />} />
         <Route
           path="/pw-reset-successful"
-          element={<PasswordResetSuccessful />}
+          element={<NewPasswordResetSuccessful />}
         />
+        <Route path="/sales-team" element={<LandingPageSalesTeam />} />
+        {/* <Route
+          path="/pw-reset-successful"
+          element={<PasswordResetSuccessful />}
+        /> */}
         <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
         <Route path="/agent-report/:Agent_id" element={<AgentReport />} />
         <Route path="/upload-new-file" element={<UploadModal />} />
@@ -233,12 +247,12 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/reset-successful" element={<Successful />} />
         <Route path="/verify-signup" element={<SignUpVerify />} />
-        <Route path="/set-new-password" element={<SetNewPassword />} />
+        {/* <Route path="/set-new-password" element={<SetNewPassword />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route
           path="/pw-reset-successful"
           element={<PasswordResetSuccessful />}
-        />
+        /> */}
         <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
         <Route path="/agent-report" element={<AgentReport />} />
         <Route path="/upload-new-file" element={<UploadModal />} />
