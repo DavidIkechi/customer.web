@@ -7,6 +7,9 @@ import AuthApi from "../../App";
 import axios from "../ForgetPassword/globalConstant/Api/axios";
 import footerImg from "./assets/signup-img.svg";
 import styles from "./SignIn.module.scss";
+import heedLogo from "./assets/heedLogo.png";
+import googleLogo from "./assets/googleLogo.png";
+
 function Signin() {
   const emailTest = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
   const passwordTest = new RegExp(/^["0-9a-zA-Z!@#$&()\\-`.+,/"]{8,}$/);
@@ -126,9 +129,19 @@ function Signin() {
           <div
             className={`${styles.first} ${styles.signin} ${styles.otherThanSignup}`}
           >
-            <h1>Welcome back, Scryber!</h1>
+            <img className={styles.heedLogo} src={heedLogo} alt="logo" />
+            <h1>Welcome back</h1>
             <h3>Please enter your details</h3>
             <form onSubmit={handleSubmit}>
+              <label className="googleSignup-wrapper" htmlFor="googleSignup">
+                <input
+                  className=""
+                  type="text"
+                  placeholder="Sign up with google"
+                />
+                <img src={googleLogo} alt="google-logo" />
+              </label>
+
               <div
                 className={styles.fieldss}
                 onClick={() => setEmailStateTest(true)}
