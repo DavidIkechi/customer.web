@@ -56,6 +56,7 @@ import TryResults from "./pages/TryForFree/tryResults";
 import UploadedRecordings from "./pages/UploadRecordings";
 import { UploadModal } from "./pages/UploadRecordingsModal";
 import Logout from "./pages/Logout";
+import EmailVerify from "./pages/VerificationEmail/EmailVerify";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -284,7 +285,8 @@ function App() {
         <Route path="/partners" element={<PartnersPage />} />
         <Route path="press-article" element={<PressArticle />} />
         <Route path="pricing" element={<Pricing />} />
-        {/* Error page */}
+        <Route path ="/emailverification" element={<EmailVerify/>} />
+        {/* Error page */} 
         <Route path="*" element={<Error />} />
         {/* <Route path="/von" element={<Von />} /> */}
         <Route path="/support-team" element={<Support />} />
