@@ -532,45 +532,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
 
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    top3_agents = []
-    others = []
-    
-    results = db.query(models.Audio).filter(models.Audio.user_id == user.id).all()
-    leaderboard = []
-    
-    agents = dict()
-    full_names = []
-
-    for i in results:
-        full_name = i.agent_firstname + " " + i.agent_lastname
-        full_names.append(full_name)
-
-    for i in full_names:
-        average_scores = []
-        per_agent = {
-        "firstname": "", "lastname": "", "agent_id": "", "positive_score": 0, "negative_score": 0, "neutral_score":0,
-        "average_score": 0
-    }
-        for j in results:
-            if j.agent_firstname + " " + j.agent_lastname == i:
-                per_agent["firstname"] = j.agent_firstname
-                per_agent["lastname"] = j.agent_lastname
-                per_agent["agent_id"] = j.agent_id
-                if j.overall_sentiment == "Positive":
-                    per_agent["positive_score"] += 1
-                if j.overall_sentiment == "Negative":
-                    per_agent["negative_score"] += 1
-                if j.overall_sentiment == "Neutral":
-                    per_agent["neutral_score"] += 1
-                average_scores.append(j.average_score)
-                per_agent["average_score"] = sum(average_scores)/len(average_scores)
-        agents[i] = per_agent
-        
-    for i in agents.values():
-        leaderboard.append(i)
-    leaderboard = sorted(leaderboard, key=lambda k: k['average_score'], reverse=True)
-
-
+    leaderboard = crud.get_leaderboard(db, user.id)
     top3_agents = leaderboard[:3]
     others = leaderboard[3:]
     return {"Top3 Agents": top3_agents, "Other Agents": others}
@@ -791,32 +753,13 @@ async def get_order_summary (order_id: int, db: Session = Depends(get_db), user:
     
 @app.get("/AgentDetails", summary = "get agent performance report", tags=['Agent Performance Report'])
 def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    data_result = db.execute("""SELECT COUNT(agent_id) AS 'Total calls',
-    CONCAT(CONCAT(agent_firstname, ' '), agent_lastname) AS 'Name',
-    
-    SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive,
-    SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative,
-    SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral,
-    SUM(average_score)/COUNT(average_score) AS 'Average Score'
-    FROM audios INNER JOIN agents on audios.agent_id = agents.id 
-    GROUP BY agent_firstname ,agent_lastname ORDER BY 'Name';""")
-    
-    # data_result = db.query(models.Agent).filter(us)
-    # try: 
-    AgentDetails = [dict(result) for result in data_result]
-    leaderboard = sorted(AgentDetails, key=lambda k: k['Average Score'], reverse=True)
-    print(leaderboard)
-    for i in leaderboard:
-        i['Rank'] = leaderboard.index(i) + 1
-    result = {}
-    agent_details = db.query(models.Audio).filter(models.Audio.user_id == user.id, models.Audio.agent_id == agent_id).all()
     try:
+        leaderboard = crud.get_leaderboard(db, user.id)
         for i in leaderboard:
-            for j in agent_details:
-                if i["Name"] == j.agent_firstname + " " + j.agent_lastname:
-                    result = i
-                    break
-
+            if i["agent_id"] == agent_id:
+                result = i
+                break
+        result["str_agent_id"] = "AG"+str(1000000 + agent_id) + "DE"
         return {"Agent Performance Report": result}
     except:
         return {"message": "agent does not exist"}
