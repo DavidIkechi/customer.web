@@ -1,8 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
-import { useMockAuthAndTotalAnalysis } from "../hooks";
-// import { totalAnalysisData } from "../Data";
 import styles from "../DashboardOverview.module.scss";
 import analysis from "../assets/analytics.svg";
 import {
@@ -14,9 +12,7 @@ import {
 } from "chart.js";
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement);
 
-const TotalAnalysis = () => {
-  const totalAnalysisData = useMockAuthAndTotalAnalysis();
-
+const TotalAnalysis = ({ totalAnalysisData }) => {
   const [selectedTotalAnalysis, setSelectedTotalAnalysis] = useState([]);
   const [chartData, setChartData] = useState({
     datasets: [],
@@ -29,7 +25,11 @@ const TotalAnalysis = () => {
       datasets: [
         {
           label: selectedTotalAnalysis.map((data) => data.positive),
-          data: [20, 12, 3],
+          data: [
+            selectedTotalAnalysis.map((data) => data.positive),
+            selectedTotalAnalysis.map((data) => data.neutral),
+            selectedTotalAnalysis.map((data) => data.negative),
+          ],
           backgroundColor: ["#76C86F", "#FFCE54", "#FF7589"],
           borderWidth: 0,
         },
@@ -42,7 +42,7 @@ const TotalAnalysis = () => {
       plugins: {
         legend: { display: false, position: "bottom" },
         tooltip: {
-          enabled: false,
+          enabled: true,
         },
       },
     });
@@ -54,7 +54,7 @@ const TotalAnalysis = () => {
     } else {
       setSelectedTotalAnalysis([]);
     }
-  }, []);
+  }, [totalAnalysisData]);
 
   function analysisTimeStampFunc(e) {
     setSelectedTotalAnalysis(totalAnalysisData[e.target.value]);

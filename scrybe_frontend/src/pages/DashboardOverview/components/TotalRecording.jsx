@@ -1,7 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-// import { totalRecordingData } from "../Data";
-import { useMockAuthAndTotalRecording } from "../hooks";
 import { Bar } from "react-chartjs-2";
 import styles from "../DashboardOverview.module.scss";
 import toneWave from "../assets/tone_wave.svg";
@@ -13,9 +11,7 @@ import {
 } from "chart.js";
 ChartJS.register(CategoryScale, LinearScale, BarElement);
 
-const TotalRecording = () => {
-  const totalRecordingData = useMockAuthAndTotalRecording();
-
+const TotalRecording = ({ totalRecordingData }) => {
   const [chartData, setChartData] = useState({
     datasets: [],
   });
@@ -56,7 +52,7 @@ const TotalRecording = () => {
     } else {
       setSelectedTotalRecordings([]);
     }
-  }, []);
+  }, [totalRecordingData]);
 
   function recordingsTimeStampFunc(e) {
     setSelectedTotalRecordings(totalRecordingData[e.target.value]);
@@ -83,13 +79,18 @@ const TotalRecording = () => {
       {selectedTotalRecordings.length > 0 ? (
         <div className={styles.recordings__chart}>
           <div>
-            <h1 className={styles.totalNumber}>9436</h1>
+            <h1 className={styles.totalNumber}>
+              {selectedTotalRecordings.map((data) => data.total_recording)}
+            </h1>
             <Bar options={chartOptions} data={chartData} />
           </div>
         </div>
       ) : (
         <div className={styles.empty_state}>
-          <p>An overview of your teams sentiment analysis report shows here.</p>
+          <p>
+            You will see an overview of your activities here when you start
+            uploading.
+          </p>
         </div>
       )}
     </div>

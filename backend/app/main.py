@@ -14,10 +14,18 @@ from routers.transcribe import transcript_router
 from routers.score import score_count
 import models, json
 from auth import get_active_user, get_current_user, get_admin
-from jwt import (
-    main_login
+from jwt import main_login, get_access_token
 
-)
+
+from authlib.integrations.starlette_client import OAuth
+from authlib.integrations.starlette_client import OAuthError
+from fastapi import FastAPI
+from fastapi import Request
+from starlette.config import Config
+from starlette.middleware.sessions import SessionMiddleware
+from starlette.responses import HTMLResponse
+from starlette.responses import RedirectResponse
+
 
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from db import Base, engine, SessionLocal
@@ -32,7 +40,7 @@ import cloudinary.uploader
 from BitlyAPI import shorten_urls
 import services as _services
 
-from datetime import datetime
+from datetime import datetime, timedelta, date
 
 
 import shutil
@@ -44,7 +52,15 @@ from starlette.responses import FileResponse
 from starlette.requests import Request
 from starlette.responses import Response
 import boto3
+from elasticapm.contrib.starlette import make_apm_client, ElasticAPM
 
+apm_config = {
+    'SERVICE_NAME': 'Heed',
+    'SERVER_URL': 'http://localhost:8200',
+    'ENVIRONMENT': 'production',
+    'GLOBAL_LABELS': 'platform=DemoPlatform, application=DemoApplication'
+}
+apm = make_apm_client(apm_config)
 
 load_dotenv()
 
@@ -59,7 +75,7 @@ def get_db():
 
 
 description = """
-Scrybe API helps you analyse sentiments in your customer support calls
+Heed API helps you analyse sentiments in your customer support calls
 """
 
 tags_metadata = [
@@ -78,7 +94,7 @@ models.Base.metadata.create_all(engine)
 
 
 app = FastAPI(
-    title="Scrybe API",
+    title="Heed API",
     description=description,
     version="0.0.1",
     openapi_tags=tags_metadata,
@@ -88,6 +104,7 @@ app = FastAPI(
 )
 
 app.include_router(transcript_router)
+app.add_middleware(ElasticAPM, client=apm)
 
 origins = [
     "http://localhost",
@@ -111,6 +128,30 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+# OAuth settings
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID') or None
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET') or None
+if GOOGLE_CLIENT_ID is None or GOOGLE_CLIENT_SECRET is None:
+    raise BaseException('Missing env variables')
+
+# Set up OAuth
+config_data = {'GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID, 'GOOGLE_CLIENT_SECRET': GOOGLE_CLIENT_SECRET}
+starlette_config = Config(environ=config_data)
+oauth = OAuth(starlette_config)
+oauth.register(
+    name='google',
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+    client_kwargs={'scope': 'openid email profile'},
+)
+
+# Set up the middleware to read the request session
+SECRET_KEY = os.getenv('SECRET_KEY') or None
+if SECRET_KEY is None:
+    raise BaseException('Missing SECRET_KEY')
+app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY)
+
 
 
 def main() -> None:
@@ -162,7 +203,8 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
         file.file.close()
 
     try:
-        result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
+        result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
+                                            chunk_size = 6000000)
         url = result.get("secure_url")
         urls = [url]
         response = shorten_urls(urls)
@@ -174,7 +216,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
 
     # transcript = transcript
     
-    size = Path(file.filename).stat().st_size
+    size = Path(file.filename).stat().st_size / 1048576
     duration = audio_details(file.filename)["mins"]
     transcript = transcribe_file(new_url)
     # get some essential parameters
@@ -251,18 +293,52 @@ def read_user(user_id: int, db: Session = Depends(get_db), user: models.User = D
     return db_user
 
 
-@app.post("/users/upload_picture", summary="Upload company logo image", status_code=status.HTTP_202_ACCEPTED, tags=['users'])
-def upload_picture(db:Session = Depends(get_db), image_file: UploadFile = File(..., description="Company Profile Image/Logo"), 
-                   current_user:schema.User = Depends(get_active_user)):
-    return crud.upload_user_image(user_id=current_user.id, db=db, image_file=image_file)
+# @app.post("/users/upload_picture", summary="Upload company logo image", status_code=status.HTTP_202_ACCEPTED, tags=['users'])
+# def upload_picture(db:Session = Depends(get_db), image_file: UploadFile = File(..., description="Company Profile Image/Logo"), 
+#                    current_user:schema.User = Depends(get_active_user)):
+#     return crud.upload_user_image(user_id=current_user.id, db=db, image_file=image_file)
 
-@app.patch("/users/update_profile/{user_id}", summary="Update user profile details", status_code=status.HTTP_200_OK, tags=['users'])
-def update_adress(profile:schema.UserProfileUpdate, user_id:int, db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
-    return crud.update_user_profile(db=db, profile=profile, user_id=user_id)
+# @app.patch("/users/update_profile", summary="Update user profile details", status_code=status.HTTP_200_OK, tags=['users'])
+# def update_adress(profile:schema.UserProfileUpdate, db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
+#     return crud.update_user_profile(db=db, profile=profile, user_id=current_user.id)
 
-@app.delete("/users/delete_account/{user_id}", summary="delete user account", status_code=status.HTTP_204_NO_CONTENT, tags=['users'])
-def delete_user_account(user_id:int, db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
-    crud.delete_user(db=db, user_id=user_id, current_user=current_user)
+@app.patch("/users/update_profile", summary="Update user profile details", status_code=status.HTTP_200_OK, tags=['users'])
+def update_profile( firstname:str = Form(), lastname:str = Form(), company_name: str = Form(), company_address:str = Form(), phone_number: str = Form(), db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user),
+                  image_file: UploadFile = File(..., description="Company Profile Image/Logo")):
+    user_profile = db.query(models.UserProfile).filter(models.UserProfile.id == current_user.id).first()
+    if user_profile is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                        detail=f"The Profile for user with id {current_user.id} does not exist")
+        
+    if user_profile.id != current_user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , 
+                                    detail="Not authorized to perform requested action")
+        
+    user = db.query(models.User).filter(models.User.id == user_profile.id).first()
+    company = db.query(models.Company).filter(models.Company.id == user.company_id).first()
+    company.name = company_name.lower()
+    user.firstname = firstname.lower()
+    user.last_name = lastname.lower()
+    user_profile.phone_number = phone_number.lower()
+    user_profile.company_address = company_address.lower()
+    try:
+        image_response = cloudinary.uploader.upload(image_file.file)
+        image_url = image_response.get("secure_url") 
+        user_profile.company_logo_url = image_url        
+    except Exception:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="There was an error uploading the file")
+    
+    db.commit() 
+    # db.refresh(company)
+    db.refresh(user_profile)
+    return user_profile
+
+    
+           
+
+@app.delete("/users/delete_account", summary="delete user account", tags=['users'])
+def delete_user_account(db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
+    return crud.delete_user(db=db, user_id=current_user.id, current_user=current_user)
 
 @app.get('/verification', summary = "verify a user by email", tags=['users'])
 async def email_verification(request: Request, token: str, db: Session = Depends(get_db)):
@@ -292,7 +368,8 @@ async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...
         raise HTTPException(status_code = 406, detail="File Must Not Be More Than 5MB")
     else:
         try:
-            result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
+            result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
+                                            chunk_size = 6000000)
             url = result.get("secure_url")
             urls = [url]
             response = shorten_urls(urls)
@@ -387,7 +464,7 @@ def list_audios_by_user(db: Session = Depends(get_db), user: models.User = Depen
     return audios
     
 @app.get("/get_uploaded_jobs", summary="List all uploaded jobs with job details", status_code=status.HTTP_200_OK, tags=['jobs'])
-def get_uploaded_jobs(db:Session = Depends(get_db), current_user = Depends(get_active_user), skip: int = 0, limit: int = 0):
+def get_uploaded_jobs(db:Session = Depends(get_db), current_user = Depends(get_active_user), skip: int = 0, limit: int = 2):
     return crud.get_jobs_uploaded(db=db, skip=skip, limit=limit, current_user=current_user)
 
 @app.get('/audios/{audio_id}/sentiment')
@@ -461,7 +538,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
     month = datetime.now().month
     results = {
         "week": [
-            {"total_recordings": 0},
+            {"total_recording": 0},
             {"id": 1, "time": "M", "totalRecordings": 0},
             {"id": 2, "time": "T", "totalRecordings": 0},
             {"id": 3, "time": "W", "totalRecordings": 0},
@@ -471,7 +548,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
             {"id": 7, "time": "S", "totalRecordings": 0}
         ],
         "month": [
-            {"total_recordings": 0},
+            {"total_recording": 0},
             {"id": 1, "time": "wk1", "totalRecordings": 0},
             {"id": 2, "time": "wk2", "totalRecordings": 0},
             {"id": 3, "time": "wk3", "totalRecordings": 0},
@@ -480,7 +557,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
     }
     for i in total_recordings:
         if i.timestamp.isocalendar().week == week:
-            results["week"][0]["total_recordings"] += 1
+            results["week"][0]["total_recording"] += 1
             if i.timestamp.weekday() == 0:
                 results["week"][1]["totalRecordings"] += 1
             elif i.timestamp.weekday() == 1:
@@ -497,7 +574,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
                 results["week"][7]["totalRecordings"] += 1
 
         if i.timestamp.month == month:
-            results["month"][0]["total_recordings"] += 1
+            results["month"][0]["total_recording"] += 1
             if i.timestamp.day <= 7:
                 results["month"][1]["totalRecordings"] += 1
             elif 8 <= i.timestamp.day <= 14:
@@ -512,41 +589,20 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
 
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    top3_agents = []
-    others = []
-    
-    results = db.query(models.Audio).filter(models.Audio.user_id == user.id).all()
-    leaderboard = []
-    for i in results:
-        # get the agent
-        leader_board = {
-            "first_name": i.agent_firstname,
-            "last_name": i.agent_lastname,
-            "agent_id": i.agent_id,
-            "positive_score": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
-                                                        models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == "Positive").count(), 
-            "negative_score": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
-                                                        models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == 'Negative').count(),
-            "neutral": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
-                                                models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == 'Neutral').count(),
-            "average_score": i.average_score
-        }
-        leaderboard.append(leader_board)
-    leaderboard = sorted(leaderboard, key=lambda k: k['positive_score'], reverse=True)
-
+    leaderboard = crud.get_leaderboard(db, user.id)
     top3_agents = leaderboard[:3]
     others = leaderboard[3:]
-    return {"Top3 Agents": top3_agents, "Other Agents": others}
+    return {"Top3_Agents": top3_agents, "Other_Agents": others}
 
 #agent total_analysis
 @app.get("/total-agent-analysis", summary="get total agent analysis")
 def get_total_agent_analysis(agent_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     total_analysis = db.query(models.Audio).filter(models.Audio.user_id == user.id, models.Audio.agent_id == agent_id)
     week = datetime.now().isocalendar().week
-    list_week=[]
-    week_item={}
+    month = datetime.now().month
     result = {
         "week": [
+            {"total_recording": 0},
             {"id": 1, "time": "Day 1", "positive": 0, "negative": 0, "neutral": 0},
             {"id": 2, "time": "Day 2", "positive": 0, "negative": 0, "neutral": 0},
             {"id": 3, "time": "Day 3", "positive": 0, "negative": 0, "neutral": 0},
@@ -555,17 +611,55 @@ def get_total_agent_analysis(agent_id: int, db: Session = Depends(get_db), user:
             {"id": 6, "time": "Day 6", "positive": 0, "negative": 0, "neutral": 0},
             {"id": 7, "time": "Day 7", "positive": 0, "negative": 0, "neutral": 0}
         ],
+        "month": [
+            {"total_recording": 0},
+            {"id": 1, "time": "wk1", "positive": 0, "negative": 0, "neutral": 0},
+            {"id": 2, "time": "wk2", "positive": 0, "negative": 0, "neutral": 0},
+            {"id": 3, "time": "wk3", "positive": 0, "negative": 0, "neutral": 0},
+            {"id": 4, "time": "wk4", "positive": 0, "negative": 0, "neutral": 0}
+        ]
     }
     for i in total_analysis:
         if i.timestamp.isocalendar().week == week:
+            result["week"][0]["total_recording"] += 1
             for y in range(7):
                 if i.timestamp.weekday() == y:
                     if i.overall_sentiment == "Positive":
-                        result["week"][y]["positive"] += 1
+                        result["week"][y+1]["positive"] += 1
                     elif i.overall_sentiment == "Negative":
-                        result["week"][y]["negative"] += 1
+                        result["week"][y+1]["negative"] += 1
                     elif i.overall_sentiment == "Neutral":
-                        result["week"][y]["neutral"] += 1
+                        result["week"][y+1]["neutral"] += 1
+        if i.timestamp.month == month:
+            result["month"][0]["total_recording"] += 1
+            if i.timestamp.day <= 7:
+                if i.overall_sentiment == "Positive":
+                    result["month"][1]["positive"] += 1
+                elif i.overall_sentiment == "Negative":
+                    result["month"][1]["negative"] += 1
+                elif i.overall_sentiment == "Neutral":
+                    result["month"][1]["neutral"] += 1
+            elif 8 <= i.timestamp.day <= 14:
+                if i.overall_sentiment == "Positive":
+                    result["month"][2]["positive"] += 1
+                elif i.overall_sentiment == "Negative":
+                    result["month"][2]["negative"] += 1
+                elif i.overall_sentiment == "Neutral":
+                    result["month"][2]["neutral"] += 1
+            elif 15 <= i.timestamp.day <= 21:
+                if i.overall_sentiment == "Positive":
+                    result["month"][3]["positive"] += 1
+                elif i.overall_sentiment == "Negative":
+                    result["month"][3]["negative"] += 1
+                elif i.overall_sentiment == "Neutral":
+                    result["month"][3]["neutral"] += 1
+            elif 22 <= i.timestamp.day <= 31:
+                if i.overall_sentiment == "Positive":
+                    result["month"][4]["positive"] += 1
+                elif i.overall_sentiment == "Negative":
+                    result["month"][4]["negative"] += 1
+                elif i.overall_sentiment == "Neutral":
+                    result["month"][4]["neutral"] += 1
 
     return result
 
@@ -603,6 +697,40 @@ async def reset_password(token: str, new_password: schema.UpdatePassword, db: Se
         raise HTTPException(status_code=500)
     
     return reset_done
+
+
+
+
+
+# @app.route('/logout/google')
+# async def logout(request: Request):
+#     request.session.pop('user', None)
+#     return RedirectResponse(url='/')
+
+
+@app.get('/login/google')
+async def login(request: Request):
+    redirect_uri = request.url_for('auth')  # This creates the url for our /auth endpoint
+    return await oauth.google.authorize_redirect(request, redirect_uri)
+
+
+@app.get('/auth/google')
+async def auth(request: Request, db: Session = Depends(get_db)):
+    try:
+        access_token = await oauth.google.authorize_access_token(request)
+    except OAuthError:
+        raise HTTPException(status_code=500, detail='Something went wrong while authenticating')
+    user_data = access_token['userinfo']
+    print(user_data)
+    email = user_data.email
+    user_db = crud.get_user_by_email(db, email)
+
+    if user_db is None:
+        raise HTTPException(status_code=404, detail="User not found, Are you sure this is the email you used when signing up for the platform?")
+
+    tokens = get_access_token(email)
+    return tokens
+
 
 
 if __name__ == "__main__":
@@ -652,3 +780,77 @@ def download (id: Union[int, str], db: Session = Depends(get_db), user: models.U
                     "most_negative_sentences": most_negative_sentences,
                     }
         return sentiment
+
+@app.post("/orders", description="creating an order by selecting a billing plan")
+async def create_order(order: schema.OrderCreate, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    user_email = user.email
+    db_order = models.Order(billing_plan=order.billing_plan, user_email=user_email)
+    db.add(db_order)
+    db.commit()
+    db.refresh(db_order)
+
+    if  db_order.billing_plan== "startup monthly" or "Startup Monthly" or "STARTUP MONTHLY":
+        db_order.monthly_amount = 7500
+        db_order.total_amount = 7500
+        db_order.next_payment_due_date = date.today() + timedelta(days=30)
+
+    elif db_order.billing_plan== "growing monthly" or "Growing Monthly" or "GROWING MONTHLY":
+        db_order.monthly_amount = 13500
+        db_order.total_amount = 13500
+        db_order.next_payment_due_date = date.today() + timedelta(days=30)
+
+    elif db_order.billing_plan== "enterprise monthly" or "Enterprise Monthly" or "ENTERPRISE MONTHLY":
+        db_order.monthly_amount = 24000
+        db_order.total_amount = 24000
+        db_order.next_payment_due_date = date.today() + timedelta(days=30)
+
+    elif db_order.billing_plan== "startup annually" or "Startup Annually" or "STARTUP ANNUALLY":
+        db_order.monthly_amount = 7500
+        db_order.total_amount = 6500 * 12
+        db_order.annual_amount = 6500 * 12
+        db_order.next_payment_due_date = date.today() + timedelta(days=365)
+
+    elif db_order.billing_plan== "growing annually" or "Growing Annually" or "GROWING ANNUALLY":
+        db_order.monthly_amount = 13500
+        db_order.total_amount = 10000 * 12
+        db_order.annual_amount = 10000 * 12
+        db_order.next_payment_due_date = date.today() + timedelta(days=365)
+
+    elif db_order.billing_plan== "enterprise annually" or "Enterprise Annually" or "ENTERPRISE ANNUALLY":
+        db_order.monthly_amount = 21000
+        db_order.total_amount = 21000 * 12
+        db_order.annual_amount = 21000 * 12
+        db_order.next_payment_due_date = date.today() + timedelta(days=365)
+
+    db.add(db_order)
+    db.commit()
+    db.refresh(db_order)
+    return db_order
+    
+
+@app.get("/orders", description="Retrieving orders by user email")
+async def get_order_summary (db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    user_email = user.email
+    return crud.get_order_summary_by_email(db, user_email)
+
+@app.get("/orders/{order_id}", description="Retrieving a specific order by id")
+async def get_order_summary (order_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    order_summary = crud.get_order_summary_by_id(db, order_id=order_id)
+    if order_summary is None:
+        raise HTTPException(status_code=404, detail="Order not found")
+    return order_summary
+
+    
+    
+@app.get("/AgentDetails", summary = "get agent performance report", tags=['Agent Performance Report'])
+def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    try:
+        leaderboard = crud.get_leaderboard(db, user.id)
+        for i in leaderboard:
+            if i["agent_id"] == agent_id:
+                result = i
+                break
+        return {"Agent_Performance_Report": result}
+    except:
+        return {"message": "agent does not exist"}
+

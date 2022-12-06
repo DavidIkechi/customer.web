@@ -27,7 +27,9 @@ function Articles() {
           <Link>
             <h3>Article: How to get your downloads in real time</h3>
           </Link>
-          <h3>Article: How to get your downloads in real time</h3>
+          <Link>
+            <h3>Article: How to get your downloads in real time</h3>
+          </Link>
         </div>
       </div>
     </div>

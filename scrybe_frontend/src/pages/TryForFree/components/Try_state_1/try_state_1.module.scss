@@ -29,6 +29,13 @@
         line-height: 26px;
         margin-top: 4vh;
       }
+      .div.active{
+        display: block;
+        text-align: center;
+      }
+      .div p{
+        display: none;
+      }
 
       .Or {
         color: #706f6f;
@@ -74,6 +81,7 @@
         background: #ececec;
         color: #c5c5c5;
         margin-top: 2vh;
+        width: 50%;
         border-radius: 4px;
         padding: 1.8vh 9%;
         border: 0;
@@ -84,6 +92,7 @@
         margin-top: 2vh;
         border-radius: 4px;
         padding: 1.8vh 9%;
+        width: 50%;
         border: 0;
         cursor: pointer;
       }
@@ -95,7 +104,7 @@
     font-weight: 400;
     font-size: 1.1rem;
     line-height: 26px;
-    padding: 0 6%;
+    padding: 0 8%;
     margin-bottom: 5vh;
     margin-top: 10vh;
 
@@ -188,6 +197,7 @@
               background: #ececec;
               color: #c5c5c5;
               margin-top: 2vh;
+              width: 50%;
               border-radius: 4px;
               padding: 1.5vh 9%;
               border: 0;
@@ -199,6 +209,7 @@
               margin-top: 2vh;
               border-radius: 4px;
               padding: 1.5vh 9%;
+              width: 50%;
               border: 0;
               cursor: pointer;
             }
@@ -210,7 +221,7 @@
           font-weight: 400;
           font-size: 1.1rem;
           line-height: 26px;
-          padding: 0 6%;
+          padding: 0 8%;
           margin-bottom: 5vh;
           margin-top: 10vh;
       
@@ -306,6 +317,7 @@
               color: #c5c5c5;
               margin-top: 2vh;
               border-radius: 4px;
+              width: 50%;
               padding: 1.5vh 9%;
               border: 0;
             }
@@ -313,6 +325,7 @@
               background: #006cff;
               color: #ffffff;
               margin-top: 2vh;
+              width: 50%;
               border-radius: 4px;
               padding: 1.5vh 9%;
               border: 0;
@@ -349,7 +362,7 @@
     .recordingSection {
     
         .recordingDrag {
-          margin: 10vh 5% 3vh;
+          margin: 10vh 8% 3vh;
           display: flex;
           justify-content: center;
           border: 2px dashed #006cff;
@@ -424,6 +437,7 @@
               color: #c5c5c5;
               margin-top: 2vh;
               font-size: 0.8em;
+              width: 50%;
               border-radius: 4px;
               padding: 1.2vh 9%;
               border: 0;
@@ -431,6 +445,7 @@
             .selectButton2 {
               background: #006cff;
               color: #ffffff;
+              width: 50%;
               margin-top: 2vh;
               font-size: 0.8em;
               border-radius: 4px;
@@ -446,7 +461,7 @@
           font-weight: 400;
           font-size: 0.8em;
           line-height: 23px;
-          padding: 0 2%;
+          padding: 0 8%;
           margin-bottom: 5vh;
           margin-top: 7vh;
       
