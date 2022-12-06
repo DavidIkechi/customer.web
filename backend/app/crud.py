@@ -215,7 +215,7 @@ def get_user_profile(db: Session, user_id: int):
         "agents": agents,
         "phone_number": user_profile.phone_number,
         "email": user.email,
-        "company_address": company.address,
+        "company_address": user_profile.company_address,
         "company_logo_url": user_profile.company_logo_url,
         "api_key": user_profile.api_key
     }
