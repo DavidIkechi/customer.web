@@ -1,16 +1,16 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import styles from "./SideBar.module.scss";
-import logoSVG from "./assets/logo.svg";
 import arrowDown from "./assets/icons/arrow-down.svg";
+import logoSVG from "./assets/logo.svg";
+import styles from "./SideBar.module.scss";
 // import insight from "./assets/icons/insight.svg";
 import leaderboard from "./assets/icons/leaderboard.svg";
 // import monthlyAnalysis from "./assets/icons/monthly-analysis.svg";
-import settings from "./assets/icons/settings.svg";
-import SearchInput from "./SearchInput";
-import myScrybe from "./assets/icons/my-scrybe.svg";
+import SearchInput from "../SearchInput/index";
 import analysis from "./assets/icons/analysis.svg";
+import myScrybe from "./assets/icons/my-scrybe.svg";
+import settings from "./assets/icons/settings.svg";
 
 /**
  * Wrap your component with this component to get a sidebar with a logo, a search input field and a list of links.
@@ -60,7 +60,7 @@ function SideBar({
             styles[`${needSearchMobile}`]
           }`}
         >
-          <SearchInput sidebarIsActive={sidebarOpen} inputValue={getValue} />
+          <SearchInput inputValue={getValue} />
         </div>
         <div className={styles.navLinks}>
           <NavLink
