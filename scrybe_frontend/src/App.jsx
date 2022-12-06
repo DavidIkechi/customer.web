@@ -94,7 +94,6 @@ function App() {
           element={<SetNewPassword />}
         />
         <Route path="/forget-password" element={<ForgetPassword />} />
-        <Route path="/check-mail" element={<CheckMail />} />
         <Route path="/sales-team" element={<LandingPageSalesTeam />} />
         <Route
           path="/pw-reset-successful"
