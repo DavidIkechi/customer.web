@@ -7,12 +7,13 @@ import styles from "./Email.module.scss";
 const EmailVerify = () => {
   const query = new URLSearchParams(useLocation);
   const token = query.get("token");
+  console.log(token);
   useEffect(() => {
     handleSubmit();
   }, []);
   const handleSubmit = async () => {
     try {
-      const response = await axios.get("/verification", { token });
+      const response = await axios.get(`https://api.heed.hng.tech/verification?token=${token}`);
       console.log(response);
     } catch (err) {
       console.log(err);
