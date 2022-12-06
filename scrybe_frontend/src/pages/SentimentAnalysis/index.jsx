@@ -19,7 +19,7 @@ function SentimentAnalysis() {
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const params = useParams();
   const sentimentData = useMockAuthAndReadSentiment(params.AudioId);
-
+  console.log(params.AudioId)
   const positiveTags = [
     "brave",
     "good",

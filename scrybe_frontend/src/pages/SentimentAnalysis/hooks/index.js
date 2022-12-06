@@ -5,8 +5,9 @@ const useMockAuthAndReadSentiment = (id) => {
   const [sentimentData, setSentimentData] = useState({});
   useEffect(() => {
     const data =
-      "grant_type=&username=tochibedford.work%40gmail.com&password=12345678&scope=&client_id=&client_secret=";
+      "grant_type=&username=tochibedford.work%40gmail.com&password=123456789&scope=&client_id=&client_secret=";
     axios.post(baseURL + "/login", data).then((res) => {
+      console.log(res)
       const headers = {
         Authorization: `Bearer ${res.data.access_token}`,
       };
