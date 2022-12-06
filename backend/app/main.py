@@ -123,7 +123,8 @@ def main() -> None:
         reload=os.getenv("RELOAD")
     )
 
-
+AWS_KEY_ID = os.getenv['AWS_KEY_ID']
+AWS_SECRET_KEY = os.getenv['AWS_SECRET_KEY']
 
 @app.get("/")
 async def ping():
@@ -175,8 +176,8 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     except Exception:
         return {"error": "There was an error uplooaadding the file"}
 
-    s3 = boto3.client('s3', aws_access_key_id="AKIAYLVTTOR4ZJSIOK56",
-        aws_secret_access_key="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"
+    s3 = boto3.client('s3', aws_access_key_id= AWS_KEY_ID,
+        aws_secret_access_key= AWS_SECRET_KEY
         )
     audio_file = file.file.read()
     bucket = "hng-heed"
