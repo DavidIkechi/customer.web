@@ -27,7 +27,7 @@ function ForgetPassword() {
         /* TODO:
           - When CheckEmail page is implemented, this page should redirect there instead of SetNewPassword
         */
-        navigate(`/set-new-password?token=${res.data}`);
+        navigate("/check-mail");
       });
   };
 

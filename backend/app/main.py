@@ -14,10 +14,18 @@ from routers.transcribe import transcript_router
 from routers.score import score_count
 import models, json
 from auth import get_active_user, get_current_user, get_admin
-from jwt import (
-    main_login,
-    verify_password
-)
+from jwt import main_login, get_access_token, verify_password
+
+
+from authlib.integrations.starlette_client import OAuth
+from authlib.integrations.starlette_client import OAuthError
+from fastapi import FastAPI
+from fastapi import Request
+from starlette.config import Config
+from starlette.middleware.sessions import SessionMiddleware
+from starlette.responses import HTMLResponse
+from starlette.responses import RedirectResponse
+
 
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from db import Base, engine, SessionLocal
@@ -43,8 +51,18 @@ from dotenv import load_dotenv
 from starlette.responses import FileResponse
 from starlette.requests import Request
 from starlette.responses import Response
-import boto3
+import boto3, io
+import uuid
+import random, string 
+from elasticapm.contrib.starlette import make_apm_client, ElasticAPM
 
+apm_config = {
+    'SERVICE_NAME': 'Heed',
+    'SERVER_URL': 'http://localhost:8200',
+    'ENVIRONMENT': 'production',
+    'GLOBAL_LABELS': 'platform=DemoPlatform, application=DemoApplication'
+}
+apm = make_apm_client(apm_config)
 
 load_dotenv()
 
@@ -59,7 +77,7 @@ def get_db():
 
 
 description = """
-Scrybe API helps you analyse sentiments in your customer support calls
+Heed API helps you analyse sentiments in your customer support calls
 """
 
 tags_metadata = [
@@ -78,7 +96,7 @@ models.Base.metadata.create_all(engine)
 
 
 app = FastAPI(
-    title="Scrybe API",
+    title="Heed API",
     description=description,
     version="0.0.1",
     openapi_tags=tags_metadata,
@@ -88,6 +106,7 @@ app = FastAPI(
 )
 
 app.include_router(transcript_router)
+app.add_middleware(ElasticAPM, client=apm)
 
 origins = [
     "http://localhost",
@@ -112,6 +131,29 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# OAuth settings
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID') or None
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET') or None
+if GOOGLE_CLIENT_ID is None or GOOGLE_CLIENT_SECRET is None:
+    raise BaseException('Missing env variables')
+
+# Set up OAuth
+config_data = {'GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID, 'GOOGLE_CLIENT_SECRET': GOOGLE_CLIENT_SECRET}
+starlette_config = Config(environ=config_data)
+oauth = OAuth(starlette_config)
+oauth.register(
+    name='google',
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+    client_kwargs={'scope': 'openid email profile'},
+)
+
+# Set up the middleware to read the request session
+SECRET_KEY = os.getenv('SECRET_KEY') or None
+if SECRET_KEY is None:
+    raise BaseException('Missing SECRET_KEY')
+app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY)
+
+
 
 def main() -> None:
     uvicorn.run(
@@ -121,7 +163,8 @@ def main() -> None:
         reload=os.getenv("RELOAD")
     )
 
-
+AWS_KEY_ID = os.getenv("AWS_KEY_ID")
+AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
 
 @app.get("/")
 async def ping():
@@ -158,8 +201,8 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
             f.write(contents)
     except Exception:
         return {"error": "There was an error uploading the file"}
-    finally:
-        file.file.close()
+    #finally:
+        f#ile.file.close()
 
     try:
         result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
@@ -171,7 +214,22 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
         new_url = retrieve_url.short_url
         
     except Exception:
-        return {"error": "There was an error uploading the file"}
+        return {"error": "There was an error uploaading the file"}
+
+    s3 = boto3.client('s3', aws_access_key_id= AWS_KEY_ID,
+        aws_secret_access_key= AWS_SECRET_KEY
+        )
+    audio_file = file.file.read()
+    bucket = "hng-heed"
+
+    s3.upload_fileobj(
+        io.BytesIO(audio_file),
+        bucket,
+        file.filename,
+        ExtraArgs = {"ACL": "public-read"}
+    )
+    audio_s3_url = f"https://{bucket}.s3.amazonaws.com/{file.filename}"
+
 
     # transcript = transcript
     
@@ -216,7 +274,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     return {
         "id":audio_id,
         "transcript_id": transcript_id,
-        #"s3 url": audio_s3_url
+        "s3 bucket url": audio_s3_url
     }
 
 # create the endpoint
@@ -252,18 +310,52 @@ def read_user(user_id: int, db: Session = Depends(get_db), user: models.User = D
     return db_user
 
 
-@app.post("/users/upload_picture", summary="Upload company logo image", status_code=status.HTTP_202_ACCEPTED, tags=['users'])
-def upload_picture(db:Session = Depends(get_db), image_file: UploadFile = File(..., description="Company Profile Image/Logo"), 
-                   current_user:schema.User = Depends(get_active_user)):
-    return crud.upload_user_image(user_id=current_user.id, db=db, image_file=image_file)
+# @app.post("/users/upload_picture", summary="Upload company logo image", status_code=status.HTTP_202_ACCEPTED, tags=['users'])
+# def upload_picture(db:Session = Depends(get_db), image_file: UploadFile = File(..., description="Company Profile Image/Logo"), 
+#                    current_user:schema.User = Depends(get_active_user)):
+#     return crud.upload_user_image(user_id=current_user.id, db=db, image_file=image_file)
 
-@app.patch("/users/update_profile/{user_id}", summary="Update user profile details", status_code=status.HTTP_200_OK, tags=['users'])
-def update_adress(profile:schema.UserProfileUpdate, user_id:int, db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
-    return crud.update_user_profile(db=db, profile=profile, user_id=user_id)
+# @app.patch("/users/update_profile", summary="Update user profile details", status_code=status.HTTP_200_OK, tags=['users'])
+# def update_adress(profile:schema.UserProfileUpdate, db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
+#     return crud.update_user_profile(db=db, profile=profile, user_id=current_user.id)
 
-@app.delete("/users/delete_account/{user_id}", summary="delete user account", status_code=status.HTTP_204_NO_CONTENT, tags=['users'])
-def delete_user_account(user_id:int, db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
-    crud.delete_user(db=db, user_id=user_id, current_user=current_user)
+@app.patch("/users/update_profile", summary="Update user profile details", status_code=status.HTTP_200_OK, tags=['users'])
+def update_profile( firstname:str = Form(), lastname:str = Form(), company_name: str = Form(), company_address:str = Form(), phone_number: str = Form(), db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user),
+                  image_file: UploadFile = File(..., description="Company Profile Image/Logo")):
+    user_profile = db.query(models.UserProfile).filter(models.UserProfile.id == current_user.id).first()
+    if user_profile is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                        detail=f"The Profile for user with id {current_user.id} does not exist")
+        
+    if user_profile.id != current_user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , 
+                                    detail="Not authorized to perform requested action")
+        
+    user = db.query(models.User).filter(models.User.id == user_profile.id).first()
+    company = db.query(models.Company).filter(models.Company.id == user.company_id).first()
+    company.name = company_name.lower()
+    user.firstname = firstname.lower()
+    user.last_name = lastname.lower()
+    user_profile.phone_number = phone_number.lower()
+    user_profile.company_address = company_address.lower()
+    try:
+        image_response = cloudinary.uploader.upload(image_file.file)
+        image_url = image_response.get("secure_url") 
+        user_profile.company_logo_url = image_url        
+    except Exception:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="There was an error uploading the file")
+    
+    db.commit() 
+    # db.refresh(company)
+    db.refresh(user_profile)
+    return user_profile
+
+    
+           
+
+@app.delete("/users/delete_account", summary="delete user account", tags=['users'])
+def delete_user_account(db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
+    return crud.delete_user(db=db, user_id=current_user.id, current_user=current_user)
 
 @app.get('/verification', summary = "verify a user by email", tags=['users'])
 async def email_verification(request: Request, token: str, db: Session = Depends(get_db)):
@@ -389,7 +481,7 @@ def list_audios_by_user(db: Session = Depends(get_db), user: models.User = Depen
     return audios
     
 @app.get("/get_uploaded_jobs", summary="List all uploaded jobs with job details", status_code=status.HTTP_200_OK, tags=['jobs'])
-def get_uploaded_jobs(db:Session = Depends(get_db), current_user = Depends(get_active_user), skip: int = 0, limit: int = 0):
+def get_uploaded_jobs(db:Session = Depends(get_db), current_user = Depends(get_active_user), skip: int = 0, limit: int = 2):
     return crud.get_jobs_uploaded(db=db, skip=skip, limit=limit, current_user=current_user)
 
 @app.get('/audios/{audio_id}/sentiment')
@@ -514,48 +606,10 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
 
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    top3_agents = []
-    others = []
-    
-    results = db.query(models.Audio).filter(models.Audio.user_id == user.id).all()
-    leaderboard = []
-    
-    agents = dict()
-    full_names = []
-
-    for i in results:
-        full_name = i.agent_firstname + " " + i.agent_lastname
-        full_names.append(full_name)
-
-    for i in full_names:
-        average_scores = []
-        per_agent = {
-        "firstname": "", "lastname": "", "agent_id": "", "positive_score": 0, "negative_score": 0, "neutral_score":0,
-        "average_score": 0
-    }
-        for j in results:
-            if j.agent_firstname + " " + j.agent_lastname == i:
-                per_agent["firstname"] = j.agent_firstname
-                per_agent["lastname"] = j.agent_lastname
-                per_agent["agent_id"] = j.agent_id
-                if j.overall_sentiment == "Positive":
-                    per_agent["positive_score"] += 1
-                if j.overall_sentiment == "Negative":
-                    per_agent["negative_score"] += 1
-                if j.overall_sentiment == "Neutral":
-                    per_agent["neutral_score"] += 1
-                average_scores.append(j.average_score)
-                per_agent["average_score"] = sum(average_scores)/len(average_scores)
-        agents[i] = per_agent
-        
-    for i in agents.values():
-        leaderboard.append(i)
-    leaderboard = sorted(leaderboard, key=lambda k: k['average_score'], reverse=True)
-
-
+    leaderboard = crud.get_leaderboard(db, user.id)
     top3_agents = leaderboard[:3]
     others = leaderboard[3:]
-    return {"Top3 Agents": top3_agents, "Other Agents": others}
+    return {"Top3_Agents": top3_agents, "Other_Agents": others}
 
 #agent total_analysis
 @app.get("/total-agent-analysis", summary="get total agent analysis")
@@ -685,6 +739,36 @@ async def change_password(change_password: schema.ChangePassword, db: Session = 
 
 
 
+# @app.route('/logout/google')
+# async def logout(request: Request):
+#     request.session.pop('user', None)
+#     return RedirectResponse(url='/')
+
+
+@app.get('/login/google')
+async def login(request: Request):
+    redirect_uri = request.url_for('auth')  # This creates the url for our /auth endpoint
+    return await oauth.google.authorize_redirect(request, redirect_uri)
+
+
+@app.get('/auth/google')
+async def auth(request: Request, db: Session = Depends(get_db)):
+    try:
+        access_token = await oauth.google.authorize_access_token(request)
+    except OAuthError:
+        raise HTTPException(status_code=500, detail='Something went wrong while authenticating')
+    user_data = access_token['userinfo']
+    print(user_data)
+    email = user_data.email
+    user_db = crud.get_user_by_email(db, email)
+
+    if user_db is None:
+        raise HTTPException(status_code=404, detail="User not found, Are you sure this is the email you used when signing up for the platform?")
+
+    tokens = get_access_token(email)
+    return tokens
+
+
 
 if __name__ == "__main__":
     main()
@@ -797,31 +881,13 @@ async def get_order_summary (order_id: int, db: Session = Depends(get_db), user:
     
 @app.get("/AgentDetails", summary = "get agent performance report", tags=['Agent Performance Report'])
 def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    data_result = db.execute("""SELECT COUNT(agent_id) AS 'Total calls',
-    CONCAT(CONCAT(first_name, ' '), last_name) AS 'Name',
-    
-    SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive,
-    SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative,
-    SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral,
-    SUM(average_score)/COUNT(average_score) AS "Average Score"
-    FROM agents INNER JOIN audios on agents.id = audios.agent_id 
-    GROUP BY first_name ,last_name ORDER BY 'Name';""")
-    # try: 
-    AgentDetails = [dict(result) for result in data_result]
-    leaderboard = sorted(AgentDetails, key=lambda k: k['Average Score'], reverse=True)
-    print(leaderboard)
-    for i in leaderboard:
-        i['Rank'] = leaderboard.index(i) + 1
-    result = {}
-    agent_details = db.query(models.Audio).filter(models.Audio.user_id == user.id, models.Audio.agent_id == agent_id).all()
     try:
+        leaderboard = crud.get_leaderboard(db, user.id)
         for i in leaderboard:
-            for j in agent_details:
-                if i["Name"] == j.agent_firstname + " " + j.agent_lastname:
-                    result = i
-                    break
-
-        return {"Agent Performance Report": result}
+            if i["agent_id"] == agent_id:
+                result = i
+                break
+        return {"Agent_Performance_Report": result}
     except:
         return {"message": "agent does not exist"}
 
