@@ -22,7 +22,6 @@ const TopNav = ({ openSidebar, search }) => {
       },
     };
     const res = await axios.get("account", config);
-    console.log(res);
     setCurrentUser(res.data);
   };
 

@@ -90,7 +90,29 @@ button {
     border: none;
     border-radius: .3rem;
     width: 100%;
+    cursor: pointer;
+  }
 
+  .hero__bottom .hero__buttonOne {
+    background-color: #006CFF;
+    color: #FFFFFF;
+  }
+
+  .hero__bottom .hero__buttonOne:hover {
+    border: 1px solid #006CFF;
+    background-color: #FFFFFF;
+    color: #006CFF;
+  }
+
+  .hero__bottom .hero__buttonTwo {
+    border: 1px solid #006CFF;
+    background-color: #FFFFFF;
+    color: #006CFF;
+  }
+
+  .hero__bottom .hero__buttonTwo:hover {
+    background-color: #006CFF;
+    color: #FFFFFF;
   }
 
   .hero__bottom .hero__image {
@@ -331,6 +353,13 @@ button {
         outline: none;
         border: none;
         border-radius: .25rem;
+        cursor: pointer;
+    }
+
+    .bottom__fifth .fifth__action:hover {
+        border: 1px solid #006CFF;
+        background-color: #FFFFFF;
+        color: #006CFF;
     }
 }
 
@@ -535,5 +564,20 @@ button {
         .bottom__fifth .fifth__action {
             padding: 1.2em 4em;
         }
+    }
+}
+
+
+// @media (min-width: 1526px), (min-width: 4000px) {
+//     .sect__container {
+//         width: 84%;
+//         max-width: 4000px;
+//         margin: 0 auto;
+//     }
+// }
+
+@media only screen and (min-width: 1515px) {
+    .sect__container {
+        padding: 0 2.5em;
     }
 }
