@@ -782,16 +782,19 @@ def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: mo
     SUM(average_score)/COUNT(average_score) AS "Average Score"
     FROM Agents INNER JOIN Audios on agents.id =audios.agent_id 
     GROUP BY first_name ,last_name ORDER BY Name;""")
+    try: 
+        AgentDetails = [dict(result) for result in data_result]
+        leaderboard = sorted(AgentDetails, key=lambda k: k['Average Score'], reverse=True)
+        for i in leaderboard:
+            i['Rank'] = leaderboard.index(i) + 1
 
-    AgentDetails = [dict(result) for result in data_result]
-    leaderboard = sorted(AgentDetails, key=lambda k: k['Average Score'], reverse=True)
-    for i in leaderboard:
-        i['Rank'] = leaderboard.index(i) + 1
+        agent_details = db.query(models.Audio).filter(models.Audio.user_id == user.id, models.Audio.agent_id == agent_id)
+        for i in leaderboard:
+            for j in agent_details:
+                if i["Name"] == j.agent_firstname + " " + j.agent_lastname:
+                    result = i
 
-    agent_details = db.query(models.Audio).filter(models.Audio.user_id == user.id, models.Audio.agent_id == agent_id)
-    for i, j in zip(leaderboard, agent_details):
-        if i["Name"] == j.agent_firstname + " " + j.agent_lastname:
-            result = i
-
-    return {"Agent Performance Report": result}
+        return {"Agent Performance Report": result}
+    except:
+        return {"message": "agent does not exist"}
 
