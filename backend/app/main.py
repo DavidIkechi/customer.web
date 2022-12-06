@@ -52,7 +52,15 @@ from starlette.responses import FileResponse
 from starlette.requests import Request
 from starlette.responses import Response
 import boto3
+from elasticapm.contrib.starlette import make_apm_client, ElasticAPM
 
+apm_config = {
+    'SERVICE_NAME': 'Heed',
+    'SERVER_URL': 'http://localhost:8200',
+    'ENVIRONMENT': 'production',
+    'GLOBAL_LABELS': 'platform=DemoPlatform, application=DemoApplication'
+}
+apm = make_apm_client(apm_config)
 
 load_dotenv()
 
@@ -96,6 +104,7 @@ app = FastAPI(
 )
 
 app.include_router(transcript_router)
+app.add_middleware(ElasticAPM, client=apm)
 
 origins = [
     "http://localhost",
