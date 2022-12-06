@@ -19,7 +19,7 @@ function DropDownModal({ closeModal }) {
       <div className={styles.list}>
         <img src={logout} alt="" />
         <Link
-          to="/logout"
+          to="/signin"
           className={styles.p}
           onClick={() => {
             Cookies.remove("heedAccessToken");
