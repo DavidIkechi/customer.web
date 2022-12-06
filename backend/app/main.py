@@ -59,7 +59,7 @@ def get_db():
 
 
 description = """
-Scrybe API helps you analyse sentiments in your customer support calls
+Heed API helps you analyse sentiments in your customer support calls
 """
 
 tags_metadata = [
@@ -78,7 +78,7 @@ models.Base.metadata.create_all(engine)
 
 
 app = FastAPI(
-    title="Scrybe API",
+    title="Heed API",
     description=description,
     version="0.0.1",
     openapi_tags=tags_metadata,
@@ -779,7 +779,7 @@ def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: mo
     SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive,
     SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative,
     SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral,
-    SUM(average_score)/COUNT(average_score) AS "Average Score"
+    SUM(average_score)/COUNT(average_score) AS 'Average Score'
     FROM agents INNER JOIN audios on agents.id = audios.agent_id 
     GROUP BY first_name ,last_name ORDER BY 'Name';""")
     # try: 
