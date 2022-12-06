@@ -51,7 +51,9 @@ from dotenv import load_dotenv
 from starlette.responses import FileResponse
 from starlette.requests import Request
 from starlette.responses import Response
-import boto3
+import boto3, io
+import uuid
+import random, string 
 from elasticapm.contrib.starlette import make_apm_client, ElasticAPM
 
 apm_config = {
@@ -129,7 +131,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 # OAuth settings
 GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID') or None
 GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET') or None
@@ -162,7 +163,8 @@ def main() -> None:
         reload=os.getenv("RELOAD")
     )
 
-
+AWS_KEY_ID = os.getenv("AWS_KEY_ID")
+AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
 
 @app.get("/")
 async def ping():
@@ -199,8 +201,8 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
             f.write(contents)
     except Exception:
         return {"error": "There was an error uploading the file"}
-    finally:
-        file.file.close()
+    #finally:
+        f#ile.file.close()
 
     try:
         result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
@@ -212,7 +214,22 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
         new_url = retrieve_url.short_url
         
     except Exception:
-        return {"error": "There was an error uploading the file"}
+        return {"error": "There was an error uploaading the file"}
+
+    s3 = boto3.client('s3', aws_access_key_id= AWS_KEY_ID,
+        aws_secret_access_key= AWS_SECRET_KEY
+        )
+    audio_file = file.file.read()
+    bucket = "hng-heed"
+
+    s3.upload_fileobj(
+        io.BytesIO(audio_file),
+        bucket,
+        file.filename,
+        ExtraArgs = {"ACL": "public-read"}
+    )
+    audio_s3_url = f"https://{bucket}.s3.amazonaws.com/{file.filename}"
+
 
     # transcript = transcript
     
@@ -257,7 +274,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     return {
         "id":audio_id,
         "transcript_id": transcript_id,
-        #"s3 url": audio_s3_url
+        "s3 bucket url": audio_s3_url
     }
 
 # create the endpoint
@@ -464,7 +481,7 @@ def list_audios_by_user(db: Session = Depends(get_db), user: models.User = Depen
     return audios
     
 @app.get("/get_uploaded_jobs", summary="List all uploaded jobs with job details", status_code=status.HTTP_200_OK, tags=['jobs'])
-def get_uploaded_jobs(db:Session = Depends(get_db), current_user = Depends(get_active_user), skip: int = 0, limit: int = 0):
+def get_uploaded_jobs(db:Session = Depends(get_db), current_user = Depends(get_active_user), skip: int = 0, limit: int = 2):
     return crud.get_jobs_uploaded(db=db, skip=skip, limit=limit, current_user=current_user)
 
 @app.get('/audios/{audio_id}/sentiment')
