@@ -774,14 +774,16 @@ async def get_order_summary (order_id: int, db: Session = Depends(get_db), user:
 @app.get("/AgentDetails", summary = "get agent performance report", tags=['Agent Performance Report'])
 def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     data_result = db.execute("""SELECT COUNT(agent_id) AS 'Total calls',
-    CONCAT(CONCAT(first_name, ' '), last_name) AS 'Name',
+    CONCAT(CONCAT(agent_firstname, ' '), agent_lastname) AS 'Name',
     
     SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive,
     SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative,
     SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral,
     SUM(average_score)/COUNT(average_score) AS 'Average Score'
-    FROM agents INNER JOIN audios on agents.id = audios.agent_id 
-    GROUP BY first_name ,last_name ORDER BY 'Name';""")
+    FROM audios INNER JOIN agents on audios.agent_id = agents.id 
+    GROUP BY agent_firstname ,agent_lastname ORDER BY 'Name';""")
+    
+    # data_result = db.query(models.Agent).filter(us)
     # try: 
     AgentDetails = [dict(result) for result in data_result]
     leaderboard = sorted(AgentDetails, key=lambda k: k['Average Score'], reverse=True)
