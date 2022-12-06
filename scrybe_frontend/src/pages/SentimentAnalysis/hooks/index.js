@@ -7,14 +7,14 @@ const useMockAuthAndReadSentiment = (id) => {
     const data =
       "grant_type=&username=tochibedford.work%40gmail.com&password=123456789&scope=&client_id=&client_secret=";
     axios.post(baseURL + "/login", data).then((res) => {
-      console.log(res)
       const headers = {
         Authorization: `Bearer ${res.data.access_token}`,
       };
       axios
-        .get(baseURL + `/trascription/${id}`, { headers })
+        .get(baseURL + `/transcription/${id}`, { headers })
         .then((newRes) => {
-          setSentimentData(newRes.data);
+          console.log("Test 1", newRes);
+          setSentimentData(newRes.data.sentiment_result);
         })
         .catch((err) => {
           console.log(err);
