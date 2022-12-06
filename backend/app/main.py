@@ -32,7 +32,7 @@ import cloudinary.uploader
 from BitlyAPI import shorten_urls
 import services as _services
 
-from datetime import datetime
+from datetime import datetime, timedelta, date
 
 
 import shutil
@@ -162,7 +162,8 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
         file.file.close()
 
     try:
-        result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
+        result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
+                                            chunk_size = 6000000)
         url = result.get("secure_url")
         urls = [url]
         response = shorten_urls(urls)
@@ -174,7 +175,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
 
     # transcript = transcript
     
-    size = Path(file.filename).stat().st_size
+    size = Path(file.filename).stat().st_size / 1048576
     duration = audio_details(file.filename)["mins"]
     transcript = transcribe_file(new_url)
     # get some essential parameters
@@ -292,7 +293,8 @@ async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...
         raise HTTPException(status_code = 406, detail="File Must Not Be More Than 5MB")
     else:
         try:
-            result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
+            result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
+                                            chunk_size = 6000000)
             url = result.get("secure_url")
             urls = [url]
             response = shorten_urls(urls)
@@ -461,7 +463,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
     month = datetime.now().month
     results = {
         "week": [
-            {"total_recordings": 0},
+            {"total_recording": 0},
             {"id": 1, "time": "M", "totalRecordings": 0},
             {"id": 2, "time": "T", "totalRecordings": 0},
             {"id": 3, "time": "W", "totalRecordings": 0},
@@ -471,7 +473,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
             {"id": 7, "time": "S", "totalRecordings": 0}
         ],
         "month": [
-            {"total_recordings": 0},
+            {"total_recording": 0},
             {"id": 1, "time": "wk1", "totalRecordings": 0},
             {"id": 2, "time": "wk2", "totalRecordings": 0},
             {"id": 3, "time": "wk3", "totalRecordings": 0},
@@ -480,7 +482,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
     }
     for i in total_recordings:
         if i.timestamp.isocalendar().week == week:
-            results["week"][0]["total_recordings"] += 1
+            results["week"][0]["total_recording"] += 1
             if i.timestamp.weekday() == 0:
                 results["week"][1]["totalRecordings"] += 1
             elif i.timestamp.weekday() == 1:
@@ -497,7 +499,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
                 results["week"][7]["totalRecordings"] += 1
 
         if i.timestamp.month == month:
-            results["month"][0]["total_recordings"] += 1
+            results["month"][0]["total_recording"] += 1
             if i.timestamp.day <= 7:
                 results["month"][1]["totalRecordings"] += 1
             elif 8 <= i.timestamp.day <= 14:
@@ -517,22 +519,39 @@ def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = De
     
     results = db.query(models.Audio).filter(models.Audio.user_id == user.id).all()
     leaderboard = []
+    
+    agents = dict()
+    full_names = []
+
     for i in results:
-        # get the agent
-        leader_board = {
-            "first_name": i.agent_firstname,
-            "last_name": i.agent_lastname,
-            "agent_id": i.agent_id,
-            "positive_score": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
-                                                        models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == "Positive").count(), 
-            "negative_score": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
-                                                        models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == 'Negative').count(),
-            "neutral": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
-                                                models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == 'Neutral').count(),
-            "average_score": i.average_score
-        }
-        leaderboard.append(leader_board)
-    leaderboard = sorted(leaderboard, key=lambda k: k['positive_score'], reverse=True)
+        full_name = i.agent_firstname + " " + i.agent_lastname
+        full_names.append(full_name)
+
+    for i in full_names:
+        average_scores = []
+        per_agent = {
+        "firstname": "", "lastname": "", "agent_id": "", "positive_score": 0, "negative_score": 0, "neutral_score":0,
+        "average_score": 0
+    }
+        for j in results:
+            if j.agent_firstname + " " + j.agent_lastname == i:
+                per_agent["firstname"] = j.agent_firstname
+                per_agent["lastname"] = j.agent_lastname
+                per_agent["agent_id"] = j.agent_id
+                if j.overall_sentiment == "Positive":
+                    per_agent["positive_score"] += 1
+                if j.overall_sentiment == "Negative":
+                    per_agent["negative_score"] += 1
+                if j.overall_sentiment == "Neutral":
+                    per_agent["neutral_score"] += 1
+                average_scores.append(j.average_score)
+                per_agent["average_score"] = sum(average_scores)/len(average_scores)
+        agents[i] = per_agent
+        
+    for i in agents.values():
+        leaderboard.append(i)
+    leaderboard = sorted(leaderboard, key=lambda k: k['average_score'], reverse=True)
+
 
     top3_agents = leaderboard[:3]
     others = leaderboard[3:]
@@ -543,10 +562,10 @@ def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = De
 def get_total_agent_analysis(agent_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     total_analysis = db.query(models.Audio).filter(models.Audio.user_id == user.id, models.Audio.agent_id == agent_id)
     week = datetime.now().isocalendar().week
-    list_week=[]
-    week_item={}
+    month = datetime.now().month
     result = {
         "week": [
+            {"total_recording": 0},
             {"id": 1, "time": "Day 1", "positive": 0, "negative": 0, "neutral": 0},
             {"id": 2, "time": "Day 2", "positive": 0, "negative": 0, "neutral": 0},
             {"id": 3, "time": "Day 3", "positive": 0, "negative": 0, "neutral": 0},
@@ -555,17 +574,55 @@ def get_total_agent_analysis(agent_id: int, db: Session = Depends(get_db), user:
             {"id": 6, "time": "Day 6", "positive": 0, "negative": 0, "neutral": 0},
             {"id": 7, "time": "Day 7", "positive": 0, "negative": 0, "neutral": 0}
         ],
+        "month": [
+            {"total_recording": 0},
+            {"id": 1, "time": "wk1", "positive": 0, "negative": 0, "neutral": 0},
+            {"id": 2, "time": "wk2", "positive": 0, "negative": 0, "neutral": 0},
+            {"id": 3, "time": "wk3", "positive": 0, "negative": 0, "neutral": 0},
+            {"id": 4, "time": "wk4", "positive": 0, "negative": 0, "neutral": 0}
+        ]
     }
     for i in total_analysis:
         if i.timestamp.isocalendar().week == week:
+            result["week"][0]["total_recording"] += 1
             for y in range(7):
                 if i.timestamp.weekday() == y:
                     if i.overall_sentiment == "Positive":
-                        result["week"][y]["positive"] += 1
+                        result["week"][y+1]["positive"] += 1
                     elif i.overall_sentiment == "Negative":
-                        result["week"][y]["negative"] += 1
+                        result["week"][y+1]["negative"] += 1
                     elif i.overall_sentiment == "Neutral":
-                        result["week"][y]["neutral"] += 1
+                        result["week"][y+1]["neutral"] += 1
+        if i.timestamp.month == month:
+            result["month"][0]["total_recording"] += 1
+            if i.timestamp.day <= 7:
+                if i.overall_sentiment == "Positive":
+                    result["month"][1]["positive"] += 1
+                elif i.overall_sentiment == "Negative":
+                    result["month"][1]["negative"] += 1
+                elif i.overall_sentiment == "Neutral":
+                    result["month"][1]["neutral"] += 1
+            elif 8 <= i.timestamp.day <= 14:
+                if i.overall_sentiment == "Positive":
+                    result["month"][2]["positive"] += 1
+                elif i.overall_sentiment == "Negative":
+                    result["month"][2]["negative"] += 1
+                elif i.overall_sentiment == "Neutral":
+                    result["month"][2]["neutral"] += 1
+            elif 15 <= i.timestamp.day <= 21:
+                if i.overall_sentiment == "Positive":
+                    result["month"][3]["positive"] += 1
+                elif i.overall_sentiment == "Negative":
+                    result["month"][3]["negative"] += 1
+                elif i.overall_sentiment == "Neutral":
+                    result["month"][3]["neutral"] += 1
+            elif 22 <= i.timestamp.day <= 31:
+                if i.overall_sentiment == "Positive":
+                    result["month"][4]["positive"] += 1
+                elif i.overall_sentiment == "Negative":
+                    result["month"][4]["negative"] += 1
+                elif i.overall_sentiment == "Neutral":
+                    result["month"][4]["neutral"] += 1
 
     return result
 
@@ -652,3 +709,95 @@ def download (id: Union[int, str], db: Session = Depends(get_db), user: models.U
                     "most_negative_sentences": most_negative_sentences,
                     }
         return sentiment
+
+@app.post("/orders", description="creating an order by selecting a billing plan")
+async def create_order(order: schema.OrderCreate, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    user_email = user.email
+    db_order = models.Order(billing_plan=order.billing_plan, user_email=user_email)
+    db.add(db_order)
+    db.commit()
+    db.refresh(db_order)
+
+    if  db_order.billing_plan== "startup monthly" or "Startup Monthly" or "STARTUP MONTHLY":
+        db_order.monthly_amount = 7500
+        db_order.total_amount = 7500
+        db_order.next_payment_due_date = date.today() + timedelta(days=30)
+
+    elif db_order.billing_plan== "growing monthly" or "Growing Monthly" or "GROWING MONTHLY":
+        db_order.monthly_amount = 13500
+        db_order.total_amount = 13500
+        db_order.next_payment_due_date = date.today() + timedelta(days=30)
+
+    elif db_order.billing_plan== "enterprise monthly" or "Enterprise Monthly" or "ENTERPRISE MONTHLY":
+        db_order.monthly_amount = 24000
+        db_order.total_amount = 24000
+        db_order.next_payment_due_date = date.today() + timedelta(days=30)
+
+    elif db_order.billing_plan== "startup annually" or "Startup Annually" or "STARTUP ANNUALLY":
+        db_order.monthly_amount = 7500
+        db_order.total_amount = 6500 * 12
+        db_order.annual_amount = 6500 * 12
+        db_order.next_payment_due_date = date.today() + timedelta(days=365)
+
+    elif db_order.billing_plan== "growing annually" or "Growing Annually" or "GROWING ANNUALLY":
+        db_order.monthly_amount = 13500
+        db_order.total_amount = 10000 * 12
+        db_order.annual_amount = 10000 * 12
+        db_order.next_payment_due_date = date.today() + timedelta(days=365)
+
+    elif db_order.billing_plan== "enterprise annually" or "Enterprise Annually" or "ENTERPRISE ANNUALLY":
+        db_order.monthly_amount = 21000
+        db_order.total_amount = 21000 * 12
+        db_order.annual_amount = 21000 * 12
+        db_order.next_payment_due_date = date.today() + timedelta(days=365)
+
+    db.add(db_order)
+    db.commit()
+    db.refresh(db_order)
+    return db_order
+    
+
+@app.get("/orders", description="Retrieving orders by user email")
+async def get_order_summary (db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    user_email = user.email
+    return crud.get_order_summary_by_email(db, user_email)
+
+@app.get("/orders/{order_id}", description="Retrieving a specific order by id")
+async def get_order_summary (order_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    order_summary = crud.get_order_summary_by_id(db, order_id=order_id)
+    if order_summary is None:
+        raise HTTPException(status_code=404, detail="Order not found")
+    return order_summary
+
+    
+    
+@app.get("/AgentDetails", summary = "get agent performance report", tags=['Agent Performance Report'])
+def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    data_result = db.execute("""SELECT COUNT(agent_id) AS 'Total calls',
+    CONCAT(CONCAT(first_name, ' '), last_name) AS 'Name',
+    
+    SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive,
+    SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative,
+    SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral,
+    SUM(average_score)/COUNT(average_score) AS "Average Score"
+    FROM agents INNER JOIN audios on agents.id = audios.agent_id 
+    GROUP BY first_name ,last_name ORDER BY 'Name';""")
+    # try: 
+    AgentDetails = [dict(result) for result in data_result]
+    leaderboard = sorted(AgentDetails, key=lambda k: k['Average Score'], reverse=True)
+    print(leaderboard)
+    for i in leaderboard:
+        i['Rank'] = leaderboard.index(i) + 1
+    result = {}
+    agent_details = db.query(models.Audio).filter(models.Audio.user_id == user.id, models.Audio.agent_id == agent_id).all()
+    try:
+        for i in leaderboard:
+            for j in agent_details:
+                if i["Name"] == j.agent_firstname + " " + j.agent_lastname:
+                    result = i
+                    break
+
+        return {"Agent Performance Report": result}
+    except:
+        return {"message": "agent does not exist"}
+

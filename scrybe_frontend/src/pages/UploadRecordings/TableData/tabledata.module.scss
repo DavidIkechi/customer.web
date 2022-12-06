@@ -149,6 +149,22 @@
   overflow-x: auto;
   // overflow-y: hidden;
   height: fit-content;
+  .expired {
+    font-family: "Kanit";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 26px;
+    text-align: center;
+    margin-top: 3rem;
+    color: #a9a9a9;
+    width: 100% !important;
+    // // transform: translate(50%);
+    // -webkit-transform: translate(50%);
+    // -moz-transform: translate(50%);
+    // -ms-transform: translate(50%);
+    // -o-transform: translate(50%);
+  }
 }
 
 .uploaded_table {
@@ -512,6 +528,9 @@
 
   .modalbox {
     width: 300px !important;
+  }
+  .expired {
+    font-size: 16px;
   }
 }
 

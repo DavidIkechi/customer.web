@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import logo from "../../assets/heed_logo_with_text.svg";
 import styles from "./nav.module.scss";
 
@@ -100,12 +100,12 @@ function NavBar() {
             <NavLink to="/about-us">About Us</NavLink>
           </div>
           <div className={styles.nav__ctas}>
-            <button type="button">
-              <NavLink to="/signin">Login</NavLink>
-            </button>
-            <button type="button">
-              <NavLink to="/try">Try for Free</NavLink>
-            </button>
+            <NavLink to="/signin">
+              <button type="button">Login</button>
+            </NavLink>
+            <NavLink to="/try">
+              <button type="button">Try for Free</button>
+            </NavLink>
           </div>
 
           <div className={styles.nav__ctl}>
