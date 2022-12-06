@@ -1,5 +1,6 @@
 import React from "react";
-import SideBar from "../../../components/SideBar";
+import { useNavigate } from "react-router-dom";
+import NewDesignSidebar from "../../../components/NewDesignSidebar";
 import ChevronRight from "../assets/icons/chevron-right.svg";
 import ProfilePic from "../assets/images/Pic.png";
 import Overlay from "../Components/SettingsPageOverlay/SettingsPageOverlay";
@@ -7,10 +8,8 @@ import AccountSetting from "../SettingsPageSubPages/AccountSettings/AccountSetti
 import Notification from "../SettingsPageSubPages/Notifications/NotificationSettings";
 import PersonalInformation from "../SettingsPageSubPages/PersonalInformation/PersonalInformationSettings";
 import MainPageCss from "./Settings.module.scss";
-// import NavBar from "../../../components/navBar/index";
-import Footer from "../../../components/Footer";
 import axios from "axios";
-import Cookies from "js-cookie";
+import TopNav from "../../../components/TopNav";
 
 import { Link } from "react-router-dom";
 
@@ -41,6 +40,9 @@ const MainPage = () => {
   const [accountUser, setAccountUser] = React.useState();
 
   const [showModal, setShowModal] = React.useState(false);
+  const [toggleSidebar, setToggleSidebar] = React.useState(false);
+
+  const navigate = useNavigate();
 
   const togglePage = (page) => {
     if (page === "Personal information") {
@@ -66,16 +68,21 @@ const MainPage = () => {
       .get("https://api.heed.hng.tech/account", {
         withCredentials: true,
         headers: {
-          Authorization: `Bearer ${Cookies.get("heedAccessToken")}`,
+          Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
         },
       })
       .then((res) => {
         setAccountUser(res.data);
       })
       .catch((err) => {
-        // In case of error, log to the console
-        console.log("Server returned the following error:");
-        console.log(err);
+        // Redirect to Signin Page if authentication error
+        if (err.response.status === 401) {
+          navigate("/signin");
+        } else {
+          // In case of error, log to the console
+          console.log("Server returned the following error:");
+          console.log(err);
+        }
       });
   }
 
@@ -95,9 +102,18 @@ const MainPage = () => {
     // Only render page if the axios request is sent
     accountUser && (
       <>
-        <SideBar>
-          <div className={MainPageCss.mainpage__wrapper}>
+        <div className={MainPageCss.mainpage__wrapper}>
+          <NewDesignSidebar
+            toggleSidebar={toggleSidebar}
+            needSearchMobile="needSearchMobile"
+            closeSidebar={() => setToggleSidebar(!toggleSidebar)}
+          >
             <div className={MainPageCss.mainpage__container}>
+              <TopNav
+                openSidebar={() => {
+                  setToggleSidebar(!toggleSidebar);
+                }}
+              />
               <div className={MainPageCss.mainpage_container}>
                 <div className={MainPageCss.mainpage_wrapper}>
                   <div className={MainPageCss.mainpage_header}>
@@ -232,12 +248,9 @@ const MainPage = () => {
                   {isNotificationPage && !isMobile && <Notification />}
                 </div>
               </div>
-              <div className={MainPageCss.mainpage_footer}>
-                <Footer />
-              </div>
             </div>
-          </div>
-        </SideBar>
+          </NewDesignSidebar>
+        </div>
       </>
     )
   );
