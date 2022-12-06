@@ -43,7 +43,7 @@ from dotenv import load_dotenv
 from starlette.responses import FileResponse
 from starlette.requests import Request
 from starlette.responses import Response
-import boto3
+import boto3, io
 import uuid
 import random, string 
 
@@ -160,14 +160,28 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
                                      models.Agent.last_name == last_name).first()
 
 
+    s3 = boto3.client('s3', aws_access_key_id="AKIAYLVTTOR4ZJSIOK56",
+        aws_secret_access_key="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"
+        )
+    audio_file = file.file.read()
+    bucket = "hng-heed"
+
+    s3.upload_fileobj(
+        io.BytesIO(audio_file),
+        bucket,
+        file.filename,
+        ExtraArgs = {"ACL": "public-read"}
+    )
+    audio_s3_url = f"https://{bucket}.s3.amazonaws.com/{file.filename}"
+
     try:
         contents = file.file.read()
         with open(file.filename, 'wb') as f:
             f.write(contents)
     except Exception:
         return {"error": "There was an error uploading the file"}
-    #finally:
-        #file.file.close()
+    finally:
+        file.file.close()
 
     try:
         result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
@@ -180,6 +194,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
         
     except Exception:
         return {"error": "There was an error uploading the file"}
+
 
     # transcript = transcript
     
@@ -216,20 +231,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     db.add(db_job)
     db.commit()
     db.refresh(db_job)
-    """
-    s3 = boto3.client('s3', aws_access_key_id="AKIAXFO2DMFAQA3J4D2L",
-        aws_secret_access_key="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"
-        )
-    audio_file = file.file.read()
-    with open(file.filename, 'wb') as f:
-        f.write(audio_file)
-    bucket = "code-bearer"
-    s3.upload_file(
-        f.filename,
-        bucket,
-        file.filename
-    )
-    """
+    
     # delete the file
     os.remove(file.filename)
 
@@ -237,7 +239,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     return {
         "id":audio_id,
         "transcript_id": transcript_id,
-        #"s3 url": audio_s3_url
+        "s3 bucket url": audio_s3_url
     }
 
 # create the endpoint
