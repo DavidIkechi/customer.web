@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "../SetNewPassword/setPassword.module.scss";
-import setPassword from "../SetNewPassword/assets/set__pswd.png";
-import eyeOff from "../SetNewPassword/assets/eye__off.png";
-import heedLogo from "../SetNewPassword/assets/heed__logo.png";
+import styles from "../NewSetNewPassword/setPassword.module.scss";
+import setPassword from "../NewSetNewPassword/assets/set__pswd.png";
+import eyeOff from "../NewSetNewPassword/assets/eye__off.png";
+import heedLogo from "../NewSetNewPassword/assets/heed__logo.png";
 // import { Link } from "react-router-dom";
 
 const index = () => {

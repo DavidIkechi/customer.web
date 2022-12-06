@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "../PasswordResetSuccessful/resetSuccessful.module.scss";
-import resetSuccess from "../PasswordResetSuccessful/assets/resetSuccess.png";
-import heedLogo from "../PasswordResetSuccessful/assets/heed__logo.png";
+import styles from "../NewPasswordResetSuccessful/resetSuccessful.module.scss";
+import resetSuccess from "../NewPasswordResetSuccessful/assets/resetSuccess.png";
+import heedLogo from "../NewPasswordResetSuccessful/assets/heed__logo.png";
 import { Link } from "react-router-dom";
 
 const index = () => {
