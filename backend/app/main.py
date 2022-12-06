@@ -174,7 +174,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
         new_url = retrieve_url.short_url
         
     except Exception:
-        return {"error": "There was an error uplooaadding the file"}
+        return {"error": "There was an error uploaading the file"}
 
     s3 = boto3.client('s3', aws_access_key_id= AWS_KEY_ID,
         aws_secret_access_key= AWS_SECRET_KEY
