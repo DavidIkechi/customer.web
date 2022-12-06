@@ -5,7 +5,6 @@ import Footer from "../../../../components/Footer";
 import RedirectNav from "../../Components/SettingsPageRedirectNav/SettingsPageRedirectNav";
 import AccountPageCss from "./AccountSettings.module.scss";
 import axios from "axios";
-import Cookies from "js-cookie";
 
 const AccountSettings = () => {
   const currentDate = new Date().toLocaleDateString("en-GB");
@@ -21,13 +20,14 @@ const AccountSettings = () => {
   const submitCallback = () => {
     const config = {
       headers: {
-        Authorization: `Bearer ${Cookies.get("heedAccessToken")}`,
+        Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
+        Accept: "application/json",
       },
     };
     axios
       .patch(baseUrl + "/change-password", config, {
-        old_password: password,
-        new_password: confirmPassword,
+        old_password: old_password,
+        new_password: new_password,
       })
       .then((res) => {
         /* TODO:
@@ -43,10 +43,10 @@ const AccountSettings = () => {
   };
 
   // Watch event for disable button
-  const password = watch("password");
-  const confirmPassword = watch("confirmPassword");
+  const old_password = watch("old_password");
+  const new_password = watch("new_password");
 
-  const isValid = password && confirmPassword;
+  const isValid = old_password && new_password;
 
   return (
     <div className="">
@@ -61,14 +61,14 @@ const AccountSettings = () => {
           onSubmit={handleSubmit(submitCallback)}
         >
           <div className={AccountPageCss.formGroup}>
-            <label htmlFor="Password">Enter new password:</label>
+            <label htmlFor="Password">Enter your current password:</label>
             <input
               type="password"
-              name="password"
-              id="Password"
+              name="old_password"
+              id="old_password"
               className={`${errors.password && AccountPageCss.errorInput} `}
               placeholder="Enter a new password"
-              {...register("password", {
+              {...register("old_password", {
                 required: "Password is required",
                 minLength: {
                   value: 8,
@@ -81,13 +81,13 @@ const AccountSettings = () => {
             </p>
           </div>
           <div className={AccountPageCss.formGroup}>
-            <label htmlFor="confirmPassword">Retype password:</label>
+            <label htmlFor="confirmPassword">Enter your new password:</label>
             <input
               type="password"
-              name="confirmPassword"
-              id="confirmPassword"
+              name="new_password"
+              id="new_password"
               placeholder="Enter Password again"
-              {...register("confirmPassword", {
+              {...register("new_password", {
                 required: "Password is required",
                 minLength: {
                   value: 8,

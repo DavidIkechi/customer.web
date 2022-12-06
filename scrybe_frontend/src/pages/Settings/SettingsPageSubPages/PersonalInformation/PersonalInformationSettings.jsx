@@ -8,6 +8,7 @@ import BlackEditPen from "../../assets/icons/edit.svg";
 import ProfilePic from "../../assets/images/Pic.png";
 import RedirectNav from "../../Components/SettingsPageRedirectNav/SettingsPageRedirectNav";
 import PersonalInfo from "./PersonalInformationSettings.module.scss";
+import Cookies from "js-cookie";
 
 const PersonalInformation = ({ accountUser }) => {
   const {
@@ -19,10 +20,12 @@ const PersonalInformation = ({ accountUser }) => {
 
   const baseUrl = "https://api.heed.hng.tech";
   const submitCallback = () => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
     const config = {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
+        Accept: "application/json",
+        // Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
+        Authorization: `Bearer ${Cookies.get("heedAccessToken")}`,
       },
     };
     axios
@@ -31,12 +34,15 @@ const PersonalInformation = ({ accountUser }) => {
         last_name: last_name,
         phone_number: phone_number,
         company_address: company_address,
-        company_image: company_image,
+        image_file: "string",
       })
       .then((res) => {
         if (res.status) {
           console.log("success");
         }
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -68,11 +74,7 @@ const PersonalInformation = ({ accountUser }) => {
             </div>
           </div>
           <div className={PersonalInfo.PersonalInfo_form}>
-            <form
-              onSubmit={handleSubmit(submitCallback)}
-              action="
-							  "
-            >
+            <form onSubmit={handleSubmit(submitCallback)}>
               <div className={PersonalInfo.row}>
                 <div className={PersonalInfo.formGroup}>
                   <label htmlFor="first_name">First name</label>
@@ -80,7 +82,9 @@ const PersonalInformation = ({ accountUser }) => {
                     type="text"
                     name="first_name"
                     id="first_name"
+                    value={accountUser.first_name}
                     placeholder={accountUser.first_name}
+                    {...register("first_name")}
                   />
                 </div>
                 <div className={PersonalInfo.formGroup}>
@@ -89,7 +93,9 @@ const PersonalInformation = ({ accountUser }) => {
                     type="text"
                     name="last_name"
                     id="last_name"
+                    value={accountUser.last_name}
                     placeholder={accountUser.last_name}
+                    {...register("last_name")}
                   />
                 </div>
               </div>
@@ -99,16 +105,39 @@ const PersonalInformation = ({ accountUser }) => {
                   type="tel"
                   name="phone_number"
                   id="phone_number"
+                  value={accountUser.phone_number}
                   placeholder={accountUser.phone_number}
+                  {...register("phone_number")}
                 />
               </div>
-              <div
+              <div className={PersonalInfo.formGroup}>
+                <label htmlFor="">Company name</label>
+                <input
+                  type="text"
+                  name="company_name"
+                  id="company_name"
+                  value={accountUser.company_name}
+                  placeholder={accountUser.company_name}
+                  {...register("company_name")}
+                />
+              </div>
+              <div className={PersonalInfo.formGroup}>
+                <label htmlFor="">Company address</label>
+                <input
+                  type="text"
+                  name="company_address"
+                  id="company_address"
+                  value={accountUser.company_address}
+                  placeholder={accountUser.company_address}
+                  {...register("company_address")}
+                />
+              </div>
+              {/* <div
                 className={`${PersonalInfo.formGroup} ${PersonalInfo.editInput}`}
               >
                 <label htmlFor="">Email address</label>
-                <input type="email" placeholder={accountUser.email} />
+                <input type="email" name placeholder={accountUser.email} />
                 <div className={PersonalInfo.verified}>
-                  {/* <p className={PersonalInfo.message}>{isVerified ? "Verified" : "Unverified"}</p> */}
                 </div>
                 <Link
                   to="/personal-information/edit"
@@ -117,10 +146,9 @@ const PersonalInformation = ({ accountUser }) => {
                   <img src={BlackEditPen} alt="" />
                   <p>EDIT</p>
                 </Link>
-              </div>
+              </div> */}
               <div className={`${PersonalInfo.formSubmit} formSubmit`}>
-                <button>Save changes</button>
-                <Link to="">Verify email</Link>
+                <button type="submit">Save changes</button>
               </div>
             </form>
           </div>
