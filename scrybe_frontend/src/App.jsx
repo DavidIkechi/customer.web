@@ -121,14 +121,7 @@ function App() {
         <Route path="/history" element={<History />} />
         <Route path="/events" element={<Events />} />
         <Route path="/dashboard" element={<DashboardOverview />} />
-        <Route
-          path="/account"
-          element={
-            <WithAuth>
-              <Account />
-            </WithAuth>
-          }
-        />
+        <Route path="/account" element={<Account />} />
         <Route path="/leaderboard" element={<LeaderboardPage />} />
         <Route path="/homeB" element={<HomePageB />} />
         <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
