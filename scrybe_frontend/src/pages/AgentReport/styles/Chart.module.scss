@@ -94,10 +94,10 @@
 
     .chartImg {
       object-fit: cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 67%;
+      // display: flex;
+      // align-items: center;
+      // justify-content: center;
+      height: 100%;
       width: 100%;
       min-width: 60%;
       padding-bottom: 0.2rem;
@@ -118,6 +118,11 @@
       .chartImg>img {
         width: 100%;
         min-height: 100%;
+      }
+
+      .empty {
+        text-align: center;
+        font-weight: 300;
       }
     }
   }
