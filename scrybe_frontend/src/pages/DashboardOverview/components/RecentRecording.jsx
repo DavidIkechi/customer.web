@@ -11,16 +11,18 @@ const RecentRecording = ({ recentRecording }) => {
     <>
       {recentRecording?.length > 0 ? (
         <table className={styles.recent_recordings}>
-          <h1>Recent recordings </h1>
+          <caption>Recent recordings </caption>
           <thead>
             <tr>
-              <th scope="col">Name</th>
-              <th scope="col" className={styles.notvisible}>
-                Recording
+              <th scope="col" style={{ textAlign: "left" }}>
+                Name
               </th>
+              <th scope="col"></th>
               <th scope="col">Length</th>
               <th scope="col">Size</th>
-              <th scope="col">Uploaded</th>
+              <th scope="col" style={{ textAlign: "right" }}>
+                Uploaded
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -29,9 +31,9 @@ const RecentRecording = ({ recentRecording }) => {
                 <td>
                   <img src={toneWave} alt="tone wave" />
                 </td>
-                <td>{data.filename}</td>
-                <td>{data.duration}</td>
-                <td>{data.size}</td>
+                <td style={{ textAlign: "left" }}>{data.filename}</td>
+                <td>{data.duration} mins</td>
+                <td>{data.size} mb</td>
                 <td>{data.timestamp}</td>
               </tr>
             ))}
