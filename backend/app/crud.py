@@ -160,7 +160,7 @@ def get_agents_by_company_id(db: Session, company_id: int):
     return db.query(models.Agent).filter(models.Agent.company_id == company_id).all()
 
 def create_agent(db: Session, agent: schema.AgentCreate, company_id: int):
-    db_agent = models.Agent(first_name=agent.first_name, last_name=agent.last_name, company_id=company_id)
+    db_agent = models.Agent(first_name=agent.first_name, last_name=agent.last_name, location=agent.location, company_id=company_id)
     db.add(db_agent)
     db.commit()
     db.refresh(db_agent)
@@ -205,7 +205,7 @@ def get_user_profile(db: Session, user_id: int):
     company = db.query(models.Company).filter(models.Company.id ==user_profile.company_id).first()
     user = db.query(models.User).filter(models.User.id == user_id).first()
     for agent in db.query(models.Agent).filter(models.Agent.company_id == user_profile.company_id).all():
-        agents.append(agent.first_name + " " + agent.last_name)
+        agents.append({"first_name": agent.first_name, "last_name": agent.last_name, "location": agent.location})
 
     return {
         "first_name": user.first_name,

@@ -75,7 +75,7 @@ class AgentBase(BaseModel):
     last_name: str
 
 class AgentCreate(AgentBase):
-    pass
+    location: str
 
 class Agent(AgentBase):
     id: int
