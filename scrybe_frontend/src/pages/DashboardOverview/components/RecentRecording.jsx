@@ -7,6 +7,9 @@ import upload from "../assets/upload.svg";
 import empty_state from "../assets/empty_state.png";
 
 const RecentRecording = ({ recentRecording }) => {
+  // console.log(recentRecording[0]);
+  // const date = recentRecording.map((data) => data.timestamp);
+  // console.log(date);
   return (
     <>
       {recentRecording?.length > 0 ? (
@@ -34,7 +37,11 @@ const RecentRecording = ({ recentRecording }) => {
                 <td style={{ textAlign: "left" }}>{data.filename}</td>
                 <td>{data.duration} mins</td>
                 <td>{data.size} mb</td>
-                <td>{data.timestamp}</td>
+                <td>
+                  {data.timestamp.charAt(11) === "0"
+                    ? data.timestamp.replace("T0", " ")
+                    : data.timestamp.replace("T", " ")}
+                </td>
               </tr>
             ))}
           </tbody>
