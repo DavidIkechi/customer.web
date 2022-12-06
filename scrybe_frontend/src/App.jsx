@@ -72,8 +72,6 @@ function App() {
     <>
       <Routes>
         {/* access without sign in */}
-        {/* <Route path="/verification" element={<EmailVerify />} /> */}
-        {/* <Route path="/logout" element={<Logout />} /> */}
         <Route path="/" element={<HomePageRedesign />} />
         <Route path="/try" element={<TryForFree />} />
         <Route path="/careers" element={<Careers />} />
@@ -89,74 +87,90 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/reset-successful" element={<Successful />} />
         <Route path="/verify-signup" element={<SignUpVerify />} />
+        <Route path="/support-team" element={<Support />} />
+        <Route path="/logout" element={<Logout />} />
         <Route
           path="/set-new-password?token=:token"
           element={<SetNewPassword />}
         />
+        <Route path="/emailverification" element={<EmailVerify />} />
+        <Route path="/try-processing" element={<TryProcessing />} />
+        <Route path="/try-results" element={<TryResults />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/sales-team" element={<LandingPageSalesTeam />} />
         <Route
           path="/pw-reset-successful"
           element={<PasswordResetSuccessful />}
         />
-        <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
-        <Route path="/agent-report/:Agent_id" element={<AgentReport />} />
-        <Route path="/upload-new-file" element={<UploadModal />} />
-
+        <Route path="*" element={<Error />} />
         <Route path="/demos" element={<DummyPage someText="demo pages" />} />
         <Route path="/blog" element={<Blogs />} />
         <Route path="/blog/:id" element={<BlogPostPage />} />
-
-        {/* Press  */}
         <Route path="press" element={<Press />} />
         <Route path="/partners" element={<PartnersPage />} />
         <Route path="press-article" element={<PressArticle />} />
         <Route path="pricing" element={<Pricing />} />
-
-        <Route
-          path="/sentiment-analysis/:AudioId"
-          element={<SentimentAnalysis />}
-        />
-        <Route path="/transcriptions/:userId" element={<TranscribePage />} />
-        <Route path="/history" element={<History />} />
         <Route path="/events" element={<Events />} />
-        <Route path="/dashboard" element={<DashboardOverview />} />
-        <Route
-          path="/account"
-          element={
-            <WithAuth>
-              <Account />
-            </WithAuth>
-          }
-        />
-        <Route path="/leaderboard" element={<LeaderboardPage />} />
-        <Route path="/homeB" element={<HomePageB />} />
-        <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
-        <Route path="/agent-report/:agentId" element={<AgentReport />} />
         <Route path="/reviews" element={<Reviews />} />
-
-        {/* Try Routes */}
         <Route path="/try-processing" element={<TryProcessing />} />
         <Route path="/try-results/:transcribeId" element={<TryResults />} />
-        {/*  */}
-
-        {/* Settings Pages */}
-        <Route path="/settings" element={<SettingsIndex />} />
-        <Route path="settings/account-security" element={<AccountSettings />} />
-        <Route
-          path="settings/notifications"
-          element={<NotificationSettings />}
-        />
-        {/*  */}
-
         <Route
           path="settings/personal-information"
           element={<PersonalInformation />}
         />
+        <Route path="/reviews" element={<Reviews />} />
+        <Route path="/blog" element={<Blogs />} />
+        <Route path="/blog/:id" element={<BlogPostPage />} />
+        <Route path="press" element={<Press />} />
+        <Route path="/partners" element={<PartnersPage />} />
+        <Route path="press-article" element={<PressArticle />} />
+        <Route path="pricing" element={<Pricing />} />
+        <Route path="/help-support-general" element={<General />} />
+        <Route path="/promoted-articles" element={<PromotedArticles />}></Route>
 
-        {/* ROutes without working paths */}
+        {/* access without sign in */}
 
-        <Route
+        {/* cant access without signin */}
+
+        <Route element={<RequireToken />}>
+          <Route
+            path="/account"
+            element={
+              <WithAuth>
+                <Account />
+              </WithAuth>
+            }
+          />
+          <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
+          <Route path="/agent-report/:Agent_id" element={<AgentReport />} />
+          <Route path="/upload-new-file" element={<UploadModal />} />
+          <Route
+            path="/sentiment-analysis/:AudioId"
+            element={<SentimentAnalysis />}
+          />
+          <Route path="/transcriptions/:userId" element={<TranscribePage />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/dashboard" element={<DashboardOverview />} />
+          <Route path="/leaderboard" element={<LeaderboardPage />} />
+          <Route path="/homeB" element={<HomePageB />} />
+          <Route path="/agent-report/:agentId" element={<AgentReport />} />
+          <Route path="/settings" element={<SettingsIndex />} />
+          <Route
+            path="settings/account-security"
+            element={<AccountSettings />}
+          />
+          <Route
+            path="settings/notifications"
+            element={<NotificationSettings />}
+          />
+          <Route
+            path="settings/personal-information"
+            element={<PersonalInformation />}
+          />
+        </Route>
+        {/* cant access without signin */}
+
+        {/* <Route
           path="/uploaded"
           element={<DummyPage someText="uploaded recordings" />}
         />
@@ -169,46 +183,14 @@ function App() {
           path="/help"
           element={<DummyPage someText="help and supprt" />}
         />
-        <Route path="/demos" element={<DummyPage someText="demo pages" />} />
-        <Route path="/reviews" element={<Reviews />} />
-        <Route path="/blog" element={<Blogs />} />
-        <Route path="/blog/:id" element={<BlogPostPage />} />
+        <Route path="/demos" element={<DummyPage someText="demo pages" />} /> */}
 
-        {/* Press  */}
-        <Route path="press" element={<Press />} />
-        <Route path="/partners" element={<PartnersPage />} />
-        <Route path="press-article" element={<PressArticle />} />
-        <Route path="pricing" element={<Pricing />} />
-
-        {/* access without sign in */}
-
+        {/* <Route path="/verification" element={<EmailVerify />} /> */}
+        {/* <Route path="/logout" element={<Logout />} /> */}
         {/* <Route path="/industry" exact element={<Industry />} /> */}
         {/* <Route path="/industry-article" element={<IndustryArticles />} />
         <Route path="/how-it-works" element={<HowitWorks />} /> */}
         {/* leaderboard */}
-
-        {/* cant access without signin */}
-
-        <Route element={<RequireToken />}>
-          {/* ROutes without working paths */}
-
-          <Route
-            path="/dummyuploaded"
-            element={<DummyPage someText="uploaded recordings" />}
-          />
-          <Route
-            path="/dummyreport"
-            element={<DummyPage someText="report and performance" />}
-          />
-          <Route
-            path="/dummyupload"
-            element={<DummyPage someText="upload pages" />}
-          />
-          {/* ROutes without working paths */}
-        </Route>
-        <Route path="/help-support-general" element={<General />} />
-        <Route path="/promoted-articles" element={<PromotedArticles />}></Route>
-        {/* cant access without signin */}
 
         {/* <Route path="/help-support-general" element={<General />}>
           <Route index element={<General1 />} />
@@ -229,7 +211,7 @@ function App() {
           <Route path="*" element={<PromotedArticle1 />} />
         </Route> */}
 
-        <Route path="/create-account" element={<Signup />} />
+        {/* <Route path="/create-account" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/reset-successful" element={<Successful />} />
         <Route path="/verify-signup" element={<SignUpVerify />} />
@@ -238,12 +220,12 @@ function App() {
         <Route
           path="/pw-reset-successful"
           element={<PasswordResetSuccessful />}
-        />
-        <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
+        /> */}
+        {/* <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
         <Route path="/agent-report" element={<AgentReport />} />
-        <Route path="/upload-new-file" element={<UploadModal />} />
+        <Route path="/upload-new-file" element={<UploadModal />} /> */}
 
-        {/* ROutes without working paths */}
+        {/* ROutes without working paths
 
         <Route
           path="/uploaded"
@@ -258,17 +240,13 @@ function App() {
           path="/help"
           element={<DummyPage someText="help and supprt" />}
         />
-        <Route path="/demos" element={<DummyPage someText="demo pages" />} />
-        <Route path="/blog" element={<Blogs />} />
+        <Route path="/demos" element={<DummyPage someText="demo pages" />} /> */}
+        {/* <Route path="/blog" element={<Blogs />} />
         <Route path="/blog/:id" element={<BlogPostPage />} />
-        <Route path="/reviews" element={<Reviews />} />
-
-        {/* Try Routes */}
-        <Route path="/try-processing" element={<TryProcessing />} />
-        <Route path="/try-results" element={<TryResults />} />
+        <Route path="/reviews" element={<Reviews />} /> */}
 
         {/* Settings Pages */}
-        <Route path="/settings" element={<SettingsIndex />} />
+        {/* <Route path="/settings" element={<SettingsIndex />} />
         <Route path="settings/account-security" element={<AccountSettings />} />
         <Route
           path="settings/notifications"
@@ -278,25 +256,24 @@ function App() {
         <Route
           path="settings/personal-information"
           element={<PersonalInformation />}
-        />
+        /> */}
 
         {/* Press  */}
-        <Route path="press" element={<Press />} />
+        {/* <Route path="press" element={<Press />} />
         <Route path="/partners" element={<PartnersPage />} />
         <Route path="press-article" element={<PressArticle />} />
-        <Route path="pricing" element={<Pricing />} />
-        <Route path="/emailverification" element={<EmailVerify />} />
+        <Route path="pricing" element={<Pricing />} /> */}
+
         {/* Error page */}
-        <Route path="*" element={<Error />} />
+
         {/* <Route path="/von" element={<Von />} /> */}
-        <Route path="/support-team" element={<Support />} />
+
         {/* // EmailVerificationSuccess */}
         {/* <Route
           exact
           path="/verification?token=:token"
           element={<EmailVerificationSuccess />}
         /> */}
-        <Route path="/logout" element={<Logout />} />
       </Routes>
     </>
   );
