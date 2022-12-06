@@ -759,7 +759,6 @@ def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: mo
             if i["agent_id"] == agent_id:
                 result = i
                 break
-        result["str_agent_id"] = "AG"+str(1000000 + agent_id) + "DE"
         return {"Agent Performance Report": result}
     except:
         return {"message": "agent does not exist"}

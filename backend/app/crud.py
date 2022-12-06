@@ -280,5 +280,6 @@ def get_leaderboard(db: Session, user_id: int):
         leaderboard = sorted(leaderboard, key=lambda k: k['average_score'], reverse=True)
         for i in leaderboard:
             i['rank'] = leaderboard.index(i) + 1
+            i["str_agent_id"] = "AG" + str(1000000 + i.agent_id) + "DE"
 
         return leaderboard
