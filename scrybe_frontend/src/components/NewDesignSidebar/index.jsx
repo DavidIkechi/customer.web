@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import SearchInput from "./SearchInput";
 // import styles from "./SideBar.module.scss";
@@ -15,6 +15,7 @@ import usrAvatar from "./icons/user_avatar.svg";
 
 import axios from "axios";
 import styles from "./generalSidebar.module.scss";
+import DropDownModal from "./DropdownMenu";
 
 /**
  * Wrap your component with this component to get a sidebar with a logo, a search input field and a list of links.
@@ -50,6 +51,7 @@ function NewDesignSideBar({
     const res = await axios.get("account", config);
     setCurrentUser(res.data);
   };
+  const [show, setShow] = useState(false);
   useEffect(() => {
     fetchUser();
   }, []);
@@ -144,7 +146,13 @@ function NewDesignSideBar({
                     ? `${currentUser?.first_name} ${currentUser?.last_name}`
                     : "John Doe"}
                 </Link>
-                <img src={dropdown_arr} alt="dropdown arrow" />
+                <img
+                  src={dropdown_arr}
+                  alt="dropdown arrow"
+                  onClick={() => setShow((prev) => !prev)}
+                  className={styles.arrow}
+                />
+                {show && <DropDownModal closeModal={() => setShow(false)} />}
               </div>
               <p className={styles.workspace_name}>
                 {currentUser?.company_name
