@@ -7,6 +7,9 @@ import upload from "../assets/upload.svg";
 import empty_state from "../assets/empty_state.png";
 
 const RecentRecording = ({ recentRecording }) => {
+  // console.log(recentRecording[0]);
+  // const date = recentRecording.map((data) => data.timestamp);
+  // console.log(date);
   return (
     <>
       {recentRecording?.length > 0 ? (
@@ -14,13 +17,15 @@ const RecentRecording = ({ recentRecording }) => {
           <caption>Recent recordings </caption>
           <thead>
             <tr>
-              <th scope="col">Name</th>
-              <th scope="col" className={styles.notvisible}>
-                Recording
+              <th scope="col" style={{ textAlign: "left" }}>
+                Name
               </th>
+              <th scope="col"></th>
               <th scope="col">Length</th>
               <th scope="col">Size</th>
-              <th scope="col">Uploaded</th>
+              <th scope="col" style={{ textAlign: "right" }}>
+                Uploaded
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -29,69 +34,16 @@ const RecentRecording = ({ recentRecording }) => {
                 <td>
                   <img src={toneWave} alt="tone wave" />
                 </td>
-                <td>{data.filename}</td>
-                <td>{data.duration}</td>
-                <td>{data.size}</td>
-                <td>{data.timestamp}</td>
+                <td style={{ textAlign: "left" }}>{data.filename}</td>
+                <td>{data.duration} mins</td>
+                <td>{data.size} mb</td>
+                <td>
+                  {data.timestamp.charAt(11) === "0"
+                    ? data.timestamp.replace("T0", " ")
+                    : data.timestamp.replace("T", " ")}
+                </td>
               </tr>
             ))}
-
-            {/* <tr>
-            <td>
-              <img src={toneWave} alt="tone wave" />
-            </td>
-            <td>
-              <span>Recording mp3</span>
-              <span className={styles.bold_td}>
-                Inactive recharge card
-              </span>{" "}
-            </td>
-            <td>4 mins</td>
-            <td>50mb</td>
-            <td>14/11/22</td>
-          </tr>
-          <tr>
-            <td>
-              <img src={toneWave} alt="tone wave" />
-            </td>
-            <td>
-              <span>Recording mp3</span>
-              <span className={styles.bold_td}>
-                Inactive recharge card
-              </span>{" "}
-            </td>
-            <td>4 mins</td>
-            <td>50mb</td>
-            <td>14/11/22</td>
-          </tr>
-          <tr>
-            <td>
-              <img src={toneWave} alt="tone wave" />
-            </td>
-            <td>
-              <span>Recording mp3</span>
-              <span className={styles.bold_td}>
-                Inactive recharge card
-              </span>{" "}
-            </td>
-            <td>4 mins</td>
-            <td>50mb</td>
-            <td>14/11/22</td>
-          </tr>
-          <tr>
-            <td>
-              <img src={toneWave} alt="tone wave" />
-            </td>
-            <td>
-              <span>Recording mp3</span>
-              <span className={styles.bold_td}>
-                Inactive recharge card
-              </span>{" "}
-            </td>
-            <td>4 mins</td>
-            <td>50mb</td>
-            <td>14/11/22</td>
-          </tr> */}
           </tbody>
         </table>
       ) : (

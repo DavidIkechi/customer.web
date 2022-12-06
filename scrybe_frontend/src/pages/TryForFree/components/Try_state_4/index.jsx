@@ -1,17 +1,55 @@
 // eslint-disable-next-line no-warning-comments
 // TODO disable eslint warning for this todo ;)
 import React from "react";
+import axios from "axios";
 import ProgressBar from "../ProgressBar/index";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styles from "./try_state_4.module.scss";
 import RecordingName from "../../assets/recording-name-1.png";
+import { useEffect, useState } from "react";
+// import { useState } from "react";
 
 export default function TryFourth() {
+  const { transcribeId } = useParams();
+  const [display, setDisplay] = useState({});
+
+  useEffect(() => {
+    if (transcribeId) {
+      console.log(transcribeId);
+      console.log("");
+      getResults(transcribeId);
+    }
+  }, [transcribeId]);
+  const getResults = async (transcribeId) => {
+    const formData = new FormData();
+    formData.append("transcript_id", transcribeId);
+    try {
+      const response = await axios({
+        method: "get",
+        url: `https://api.heed.hng.tech/get_transcript/${transcribeId}`,
+        // data: formData,
+        headers: { "Content-Type": "application/json" },
+      });
+      const results = response.data;
+      setDisplay(results);
+      console.log(results);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <section className={styles.transcribeAnalysis}>
       <div className={styles.Analysis}>
         <h2>Transcription and Sentiment Analysis</h2>
-
+        <div className={styles.callback}>
+          <h3>
+            Please copy this transcribe url below to access your results or
+            refresh after some time.
+          </h3>
+          <p>https://heed.hng.tech/try-results/{transcribeId}</p>
+        </div>
         <div className={styles.recordingName}>
           <div className={styles.recordingImage}>
             <img src={RecordingName} alt="some" />
@@ -23,16 +61,7 @@ export default function TryFourth() {
         </div>
 
         <div className={styles.allWords}>
-          <p>
-            "I am glad to be onboarded on Scrybe. Thank you for joining the
-            team. Do you require further assistance? Yes, please. How do I view
-            your pricing plan? To view the current pricing plan, kindly visit
-            https://srcybe.com . Navigate to the pricing page from the header of
-            our website. Okay... I am bad at navigating though No worries, just
-            look at the top of your screen. Oh, yes.... seen. Thank you. Thank
-            you for your time. We hope you have a wonderful experience with
-            scrybe."
-          </p>
+          <p>"{display.transcription}"</p>
         </div>
 
         <hr />
@@ -58,7 +87,10 @@ export default function TryFourth() {
 
             <div className={styles.verdict}>
               <p>Verdict:</p>
-              <h5>Customer is Satisfied</h5>
+              <h5>
+                Overall Sentiment of this call is{" "}
+                {display.overall_sentiment_result}
+              </h5>
             </div>
           </div>
         </div>

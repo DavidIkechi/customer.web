@@ -18,16 +18,11 @@ import Solutions from "./pages/Solutions/Solutions";
 import TermsAndCondition from "./pages/TermsAndCondition";
 import TranscribePage from "./pages/TranscribePage";
 import TryForFree from "./pages/TryForFree";
-// import Industry from "./pages/Industry";
-// import IndustryArticles from "./pages/Industry/IndustryArticles/IndustryArticle1";
-// import HowitWorks from "./pages/HowItWorks";
-import React, { useEffect, useState } from "react";
 import WithAuth from "./HOCs";
 import Account from "./pages/Account";
 import BlogPostPage from "./pages/BlogPostPage";
 import Blogs from "./pages/BlogsPage";
 import Careers from "./pages/Careers";
-import EmailVerificationSuccess from "./pages/EmailVerifySuccess/index";
 import Error from "./pages/Error/Error";
 import FAQs from "./pages/FaqsPage";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
@@ -56,23 +51,14 @@ import TryResults from "./pages/TryForFree/tryResults";
 import UploadedRecordings from "./pages/UploadRecordings";
 import { UploadModal } from "./pages/UploadRecordingsModal";
 import Logout from "./pages/Logout";
-
-const AuthApi = React.createContext();
-const TokenApi = React.createContext();
+import EmailVerify from "./pages/VerificationEmail/EmailVerify";
+import CheckMail from "./pages/CheckMail";
 
 function App() {
-  const [accessTokens, setAccessTokens] = useState("");
-
-  useEffect(() => {
-    setAccessTokens(localStorage.getItem("accessToken"));
-  }, []);
-
   return (
     <>
       <Routes>
         {/* access without sign in */}
-        {/* <Route path="/verification" element={<EmailVerify />} /> */}
-        {/* <Route path="/logout" element={<Logout />} /> */}
         <Route path="/" element={<HomePageRedesign />} />
         <Route path="/try" element={<TryForFree />} />
         <Route path="/careers" element={<Careers />} />
@@ -136,7 +122,7 @@ function App() {
 
         {/* Try Routes */}
         <Route path="/try-processing" element={<TryProcessing />} />
-        <Route path="/try-results" element={<TryResults />} />
+        <Route path="/try-results/:transcribeId" element={<TryResults />} />
         {/*  */}
 
         {/* Settings Pages */}
@@ -179,13 +165,6 @@ function App() {
         <Route path="press-article" element={<PressArticle />} />
         <Route path="pricing" element={<Pricing />} />
 
-        {/* access without sign in */}
-
-        {/* <Route path="/industry" exact element={<Industry />} /> */}
-        {/* <Route path="/industry-article" element={<IndustryArticles />} />
-        <Route path="/how-it-works" element={<HowitWorks />} /> */}
-        {/* leaderboard */}
-
         {/* cant access without signin */}
 
         <Route element={<RequireToken />}>
@@ -207,26 +186,6 @@ function App() {
         </Route>
         <Route path="/help-support-general" element={<General />} />
         <Route path="/promoted-articles" element={<PromotedArticles />}></Route>
-        {/* cant access without signin */}
-
-        {/* <Route path="/help-support-general" element={<General />}>
-          <Route index element={<General1 />} />
-          <Route path="articles" element={<General2 />} />
-        </Route> */}
-        {/* <Route
-          path="/help-support-general/promoted-articles"
-          element={<PromotedArticles />}
-        >
-          <Route index element={<PromotedArticle1 />} />
-          <Route path="*" element={<PromotedArticle1 />} />
-        </Route> */}
-        {/* <Route
-          path="/help-support/promoted-articles"
-          element={<PromotedArticles />}
-        >
-          <Route index element={<PromotedArticle1 />} />
-          <Route path="*" element={<PromotedArticle1 />} />
-        </Route> */}
 
         <Route path="/create-account" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
@@ -284,17 +243,11 @@ function App() {
         <Route path="/partners" element={<PartnersPage />} />
         <Route path="press-article" element={<PressArticle />} />
         <Route path="pricing" element={<Pricing />} />
-        {/* Error page */}
+        <Route path="/emailverification" element={<EmailVerify />} />
         <Route path="*" element={<Error />} />
-        {/* <Route path="/von" element={<Von />} /> */}
         <Route path="/support-team" element={<Support />} />
-        {/* // EmailVerificationSuccess */}
-        {/* <Route
-          exact
-          path="/verification?token=:token"
-          element={<EmailVerificationSuccess />}
-        /> */}
         <Route path="/logout" element={<Logout />} />
+        <Route path="/check-mail" element={<CheckMail />} />
       </Routes>
     </>
   );

@@ -14,10 +14,18 @@ from routers.transcribe import transcript_router
 from routers.score import score_count
 import models, json
 from auth import get_active_user, get_current_user, get_admin
-from jwt import (
-    main_login
+from jwt import main_login, get_access_token
 
-)
+
+from authlib.integrations.starlette_client import OAuth
+from authlib.integrations.starlette_client import OAuthError
+from fastapi import FastAPI
+from fastapi import Request
+from starlette.config import Config
+from starlette.middleware.sessions import SessionMiddleware
+from starlette.responses import HTMLResponse
+from starlette.responses import RedirectResponse
+
 
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from db import Base, engine, SessionLocal
@@ -44,7 +52,15 @@ from starlette.responses import FileResponse
 from starlette.requests import Request
 from starlette.responses import Response
 import boto3
+from elasticapm.contrib.starlette import make_apm_client, ElasticAPM
 
+apm_config = {
+    'SERVICE_NAME': 'Heed',
+    'SERVER_URL': 'http://localhost:8200',
+    'ENVIRONMENT': 'production',
+    'GLOBAL_LABELS': 'platform=DemoPlatform, application=DemoApplication'
+}
+apm = make_apm_client(apm_config)
 
 load_dotenv()
 
@@ -88,6 +104,7 @@ app = FastAPI(
 )
 
 app.include_router(transcript_router)
+app.add_middleware(ElasticAPM, client=apm)
 
 origins = [
     "http://localhost",
@@ -111,6 +128,30 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+# OAuth settings
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID') or None
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET') or None
+if GOOGLE_CLIENT_ID is None or GOOGLE_CLIENT_SECRET is None:
+    raise BaseException('Missing env variables')
+
+# Set up OAuth
+config_data = {'GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID, 'GOOGLE_CLIENT_SECRET': GOOGLE_CLIENT_SECRET}
+starlette_config = Config(environ=config_data)
+oauth = OAuth(starlette_config)
+oauth.register(
+    name='google',
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+    client_kwargs={'scope': 'openid email profile'},
+)
+
+# Set up the middleware to read the request session
+SECRET_KEY = os.getenv('SECRET_KEY') or None
+if SECRET_KEY is None:
+    raise BaseException('Missing SECRET_KEY')
+app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY)
+
 
 
 def main() -> None:
@@ -548,48 +589,10 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
 
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    top3_agents = []
-    others = []
-    
-    results = db.query(models.Audio).filter(models.Audio.user_id == user.id).all()
-    leaderboard = []
-    
-    agents = dict()
-    full_names = []
-
-    for i in results:
-        full_name = i.agent_firstname + " " + i.agent_lastname
-        full_names.append(full_name)
-
-    for i in full_names:
-        average_scores = []
-        per_agent = {
-        "firstname": "", "lastname": "", "agent_id": "", "positive_score": 0, "negative_score": 0, "neutral_score":0,
-        "average_score": 0
-    }
-        for j in results:
-            if j.agent_firstname + " " + j.agent_lastname == i:
-                per_agent["firstname"] = j.agent_firstname
-                per_agent["lastname"] = j.agent_lastname
-                per_agent["agent_id"] = j.agent_id
-                if j.overall_sentiment == "Positive":
-                    per_agent["positive_score"] += 1
-                if j.overall_sentiment == "Negative":
-                    per_agent["negative_score"] += 1
-                if j.overall_sentiment == "Neutral":
-                    per_agent["neutral_score"] += 1
-                average_scores.append(j.average_score)
-                per_agent["average_score"] = sum(average_scores)/len(average_scores)
-        agents[i] = per_agent
-        
-    for i in agents.values():
-        leaderboard.append(i)
-    leaderboard = sorted(leaderboard, key=lambda k: k['average_score'], reverse=True)
-
-
+    leaderboard = crud.get_leaderboard(db, user.id)
     top3_agents = leaderboard[:3]
     others = leaderboard[3:]
-    return {"Top3 Agents": top3_agents, "Other Agents": others}
+    return {"Top3_Agents": top3_agents, "Other_Agents": others}
 
 #agent total_analysis
 @app.get("/total-agent-analysis", summary="get total agent analysis")
@@ -694,6 +697,40 @@ async def reset_password(token: str, new_password: schema.UpdatePassword, db: Se
         raise HTTPException(status_code=500)
     
     return reset_done
+
+
+
+
+
+# @app.route('/logout/google')
+# async def logout(request: Request):
+#     request.session.pop('user', None)
+#     return RedirectResponse(url='/')
+
+
+@app.get('/login/google')
+async def login(request: Request):
+    redirect_uri = request.url_for('auth')  # This creates the url for our /auth endpoint
+    return await oauth.google.authorize_redirect(request, redirect_uri)
+
+
+@app.get('/auth/google')
+async def auth(request: Request, db: Session = Depends(get_db)):
+    try:
+        access_token = await oauth.google.authorize_access_token(request)
+    except OAuthError:
+        raise HTTPException(status_code=500, detail='Something went wrong while authenticating')
+    user_data = access_token['userinfo']
+    print(user_data)
+    email = user_data.email
+    user_db = crud.get_user_by_email(db, email)
+
+    if user_db is None:
+        raise HTTPException(status_code=404, detail="User not found, Are you sure this is the email you used when signing up for the platform?")
+
+    tokens = get_access_token(email)
+    return tokens
+
 
 
 if __name__ == "__main__":
@@ -807,33 +844,13 @@ async def get_order_summary (order_id: int, db: Session = Depends(get_db), user:
     
 @app.get("/AgentDetails", summary = "get agent performance report", tags=['Agent Performance Report'])
 def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    data_result = db.execute("""SELECT COUNT(agent_id) AS 'Total calls',
-    CONCAT(CONCAT(agent_firstname, ' '), agent_lastname) AS 'Name',
-    
-    SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive,
-    SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative,
-    SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral,
-    SUM(average_score)/COUNT(average_score) AS 'Average Score'
-    FROM audios INNER JOIN agents on audios.agent_id = agents.id 
-    GROUP BY agent_firstname ,agent_lastname ORDER BY 'Name';""")
-    
-    # data_result = db.query(models.Agent).filter(us)
-    # try: 
-    AgentDetails = [dict(result) for result in data_result]
-    leaderboard = sorted(AgentDetails, key=lambda k: k['Average Score'], reverse=True)
-    print(leaderboard)
-    for i in leaderboard:
-        i['Rank'] = leaderboard.index(i) + 1
-    result = {}
-    agent_details = db.query(models.Audio).filter(models.Audio.user_id == user.id, models.Audio.agent_id == agent_id).all()
     try:
+        leaderboard = crud.get_leaderboard(db, user.id)
         for i in leaderboard:
-            for j in agent_details:
-                if i["Name"] == j.agent_firstname + " " + j.agent_lastname:
-                    result = i
-                    break
-
-        return {"Agent Performance Report": result}
+            if i["agent_id"] == agent_id:
+                result = i
+                break
+        return {"Agent_Performance_Report": result}
     except:
         return {"message": "agent does not exist"}
 
