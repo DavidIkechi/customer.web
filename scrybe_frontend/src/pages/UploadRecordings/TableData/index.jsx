@@ -29,12 +29,7 @@ const TableData = ({ searchKeyword }) => {
   // const [deleted, setDeleted] = useState(false);
   const [sessionExpired, setSessionExpired] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
-  const handleOpen = () => {
-    setOpenModal(true);
-  };
-  const handleClose = () => {
-    setOpenModal(false);
-  };
+
   // const timeLeft = 20;
 
   useEffect(() => {
@@ -86,6 +81,16 @@ const TableData = ({ searchKeyword }) => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const handleOpen = () => {
+    setOpenModal(true);
+  };
+  const handleClose = () => {
+    setOpenDeletePopup(false);
+    setRecordCheckedList([]);
+    setOpenModal(false);
+    fetchData();
+  };
 
   const deleteBulkRecordings = async () => {
     const audioToInt = recordCheckedList.map((item) => parseInt(item, 10));
