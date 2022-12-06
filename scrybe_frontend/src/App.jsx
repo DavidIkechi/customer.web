@@ -56,6 +56,7 @@ import TryResults from "./pages/TryForFree/tryResults";
 import UploadedRecordings from "./pages/UploadRecordings";
 import { UploadModal } from "./pages/UploadRecordingsModal";
 import Logout from "./pages/Logout";
+import CheckMail from "./pages/CheckMail";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -93,6 +94,7 @@ function App() {
           element={<SetNewPassword />}
         />
         <Route path="/forget-password" element={<ForgetPassword />} />
+        <Route path="/check-mail" element={<CheckMail />} />
         <Route path="/sales-team" element={<LandingPageSalesTeam />} />
         <Route
           path="/pw-reset-successful"
