@@ -665,6 +665,14 @@ async def reset_password(token: str, new_password: schema.UpdatePassword, db: Se
 
 @app.patch('/change-password', summary = "change password", tags=['users'])
 async def change_password(change_password: schema.ChangePassword, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    pwd_match = change_password.old_password == change_password.new_password
+    is_less_than_eight = len(change_password.new_password) < 8
+
+    if pwd_match:
+        raise HTTPException(status_code=500, detail='New password same as old password')
+    elif is_less_than_eight:
+        raise HTTPException(status_code=500, detail='Password should be at least 8 characters')
+
     user_db: models.User = crud.get_user_by_email(db, user.email)
     its_password = verify_password(change_password.old_password, user.password)
 
