@@ -28,21 +28,15 @@ const Content = () => {
       </div>
 
       <div className={styles.idcont}>
-        <>
-          {agentReport.map((detail) => {
-            return (
-              <div className={styles.agentId}>
-                <p className={styles.secondp}>
-                  Agent ID: &nbsp; &nbsp; {detail.agent_id}
-                </p>
+        <div className={styles.agentId}>
+          <p className={styles.secondp}>
+            Agent ID: &nbsp; &nbsp; {agentReport?.str_agent_id}
+          </p>
 
-                <p className={styles.secondp}>
-                  Rank: &nbsp; &nbsp; {detail.rank}
-                </p>
-              </div>
-            );
-          })}
-        </>
+          <p className={styles.secondp}>
+            Rank: &nbsp; &nbsp; {agentReport?.rank}
+          </p>
+        </div>
 
         <div className={styles.select}>
           <p>View by</p>
