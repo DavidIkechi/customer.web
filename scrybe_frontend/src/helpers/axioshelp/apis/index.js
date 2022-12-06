@@ -5,10 +5,6 @@ class Service {
     this.request = request;
   }
 
-  async SignUp(data) {
-    return this.request.post(`/login`, data);
-  }
-
   async GetTotalUserRecordings() {
     return this.request.get(`/total-recordings-user`);
   }
