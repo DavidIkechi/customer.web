@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import SearchInput from "./SearchInput";
-// import styles from "./SideBar.module.scss";
 import closeIcon from "./icons/closeIcon.svg";
 import logoSVG from "./icons/logo.svg";
 // import insight from "./assets/icons/insight.svg";
@@ -11,11 +9,11 @@ import analysis from "./icons/analysis.svg";
 import dropdown_arr from "./icons/dropdownArr.svg";
 import myScrybe from "./icons/my-scrybe.svg";
 import settings from "./icons/settings.svg";
-import usrAvatar from "./icons/user_avatar.svg";
 
 import axios from "axios";
-import styles from "./generalSidebar.module.scss";
+import SearchInput from "../SearchInput";
 import DropDownModal from "./DropdownMenu";
+import styles from "./generalSidebar.module.scss";
 
 /**
  * Wrap your component with this component to get a sidebar with a logo, a search input field and a list of links.
@@ -132,10 +130,11 @@ function NewDesignSideBar({
         <div className={styles.generalSidebar__bottom}>
           <div className={styles.generalSidebar_user_desktop}>
             <img
+              className={styles.userimg}
               src={
                 currentUser?.company_logo_url
                   ? currentUser?.company_logo_url
-                  : usrAvatar
+                  : "img/dummy.png"
               }
               alt={currentUser?.first_name}
             />

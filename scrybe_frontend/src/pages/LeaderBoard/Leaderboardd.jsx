@@ -48,21 +48,20 @@ function Leaderboard() {
 
   async function accessData() {
     const token = localStorage.getItem("heedAccessToken");
-    // console.log(token);
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
         "content-type": "Application/json",
       },
     };
-    const response = await axios
-      .get("https://api.heed.hng.tech/leaderboard", config)
-      .catch((error) => {
-        console.error(error);
-      });
-    const arr = response.data["Top3_Agents"];
+    const response = await axios.get(
+      "https://api.heed.hng.tech/leaderboard",
+      config
+    );
+    // console.log(response);
+    const arr = response.data["Top3 Agents"];
     setLeaderboard(arr);
-    const otherAgents = response.data["Other_Agents"];
+    const otherAgents = response.data["Other Agents"];
     setOtherAgent(otherAgents);
   }
 
@@ -124,11 +123,11 @@ function Leaderboard() {
             </div>
 
             <div className={styles.Profile_container}>
-              {leaderboard.map((profile) => (
+              {/* {leaderboard.map((profile) => (
                 <LeaderBoardDisplay key={profile.agent_id} person={profile} />
-              ))}
+              ))} */}
 
-              {/* <div className={styles.Profile1}>
+              <div className={styles.Profile1}>
                 <div className={styles.Profile_content}>
                   <div className={styles.Profile_img}>
                     <img src={ProfileName} className="" alt="profile1" />
@@ -168,15 +167,17 @@ function Leaderboard() {
                   </h1>
                   <p className={styles.Agent_position}> 3rd</p>
                 </div>
-              </div> */}
+              </div>
             </div>
+
+            {/* <div className={styles.Profile_Tabular_Container}>
+              {/* {otherAgent.map((profile) => (
+                <OtherAgentDisplay key={profile.agent_id} person={profile} />
+              ))} */}
           </div>
         </section>
 
         <section className={styles.Tabular_Container}>
-          {otherAgent.map((profile) => (
-            <OtherAgentDisplay key={profile.agent_id} person={profile} />
-          ))}
           <div className={styles.Tabular_Content_Container}>
             <div className={styles.Header_title}>
               <p className={styles.Hide_for_mobile}>ID NUMBER</p>
@@ -195,15 +196,6 @@ function Leaderboard() {
               </span>
             </div>
             <hr></hr>
-            {/* <div className={styles.Header_content}>
-              <div className={styles.Header_profile_container}>
-                <img src={ProfileName} className="" alt="profile1" />
-                <p>AG685500DE</p>
-              </div>
-              <p>24</p>
-              <p>5/10</p>
-              <p>5th</p>
-            </div>
             <div className={styles.Header_content}>
               <div className={styles.Header_profile_container}>
                 <img src={ProfileName} className="" alt="profile1" />
@@ -230,7 +222,16 @@ function Leaderboard() {
               <p>24</p>
               <p>5/10</p>
               <p>5th</p>
-            </div> */}
+            </div>
+            <div className={styles.Header_content}>
+              <div className={styles.Header_profile_container}>
+                <img src={ProfileName} className="" alt="profile1" />
+                <p>AG685500DE</p>
+              </div>
+              <p>24</p>
+              <p>5/10</p>
+              <p>5th</p>
+            </div>
           </div>
         </section>
       </div>
@@ -238,36 +239,68 @@ function Leaderboard() {
   );
 }
 
-function LeaderBoardDisplay({ person }) {
-  return (
-    <div className={styles.Profile1}>
-      <div className={styles.Profile_content}>
-        <div className={styles.Profile_img}>
-          <img src={ProfileName} className="" alt="profile1" />
-        </div>
-        <h2>{person.str_agent_id}</h2>
-        <p>No. of calls taken this week: {person.total_calls}</p>
-        <h1>
-          {person.average_score} <span className={styles.small_text}>/10</span>
-        </h1>
-        <p className={styles.Agent_position}> {person.rank}th</p>
-      </div>
-    </div>
-  );
-}
+// function LeaderBoardDisplay({ person }) {
+//   return (
+//     <div className={styles.Profile1}>
+//       <div className={styles.Profile_img}>
+//         <img src={Profile1} className="" alt="profile1" />
+//       </div>
+//       <div className={styles.Profile_content}>
+//         <h2>
+//           {person.first_name} {person.last_name}
+//         </h2>
+//         <h1>{person.average_score}</h1>
+//         <p>Calls Received</p>
+//         <div className={styles.Like_container}>
+//           <div className={styles.Like_content1}>
+//             <div className={styles.Like_icon_content}>
+//               <img src={GreenLike} className="" alt="profile1" />
+//               <p>{person.positive_score}</p>
+//             </div>
+//             <p className={styles.Like_text}> POS.CALLS</p>
+//           </div>
 
-function OtherAgentDisplay({ person }) {
-  return (
-    <div className={styles.Header_content}>
-      <div className={styles.Header_profile_container}>
-        <img src={ProfileName} className="" alt="profile1" />
-        <p>{person.str_agent_id}</p>
-      </div>
-      <p>{person.total_calls}</p>
-      <p>{person.average_score}/10</p>
-      <p>{person.rank}th</p>
-    </div>
-  );
-}
+//           <div className={styles.Like_content1}>
+//             <div className={styles.Like_icon_content}>
+//               <img src={BlackLike} className="" alt="profile1" />
+//               <p>{person.neutral}</p>
+//             </div>
+//             <p className={styles.Like_text}> NEU.CALLS</p>
+//           </div>
+
+//           <div className={styles.Like_content1}>
+//             <div className={styles.Like_icon_content}>
+//               <img src={GreenLike} className="" alt="profile1" />
+//               <p>{person.negative_score}</p>
+//             </div>
+//             <p className={styles.Like_text}>NEG.CALLS</p>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// function OtherAgentDisplay({ person }) {
+//   return (
+//     <div className={styles.Profile_Tabular}>
+//       <div className={styles.Profile_Tabular_Content}>
+//         <div className={styles.Profile_Tabular_Content1}>
+//           <img src={ProfileName} className="" alt="profile1" />
+//           <p>
+//             {person.first_name} {person.last_name}
+//           </p>
+//         </div>
+
+//         <div className={styles.Profile_Tabular_Content2}>
+//           <p className={styles.Profile_tabular_number}>
+//             {person.average_score}
+//           </p>
+//           <p className={styles.Profile_tabular_score}> AVG Score</p>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
 
 export default Leaderboard;

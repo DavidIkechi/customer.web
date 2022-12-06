@@ -51,3 +51,4 @@ uvicorn==0.20.0
 itsdangerous==2.1.2
 Authlib==1.1.0
 httpx==0.23.1
+elastic-apm==6.13.2

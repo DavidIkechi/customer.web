@@ -273,7 +273,7 @@ const TableData = ({ searchKeyword }) => {
                                   {job_status}{" "}
                                   {job_status === "completed" && (
                                     <Link
-                                      to={`/transcriptions/{${recording?.job_id}}`}
+                                      to={`/transcriptions/${recording?.job_id}`}
                                       className={styles.retry}
                                     >
                                       result
