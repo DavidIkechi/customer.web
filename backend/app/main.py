@@ -245,13 +245,13 @@ def upload_picture(db:Session = Depends(get_db), image_file: UploadFile = File(.
                    current_user:schema.User = Depends(get_active_user)):
     return crud.upload_user_image(user_id=current_user.id, db=db, image_file=image_file)
 
-@app.patch("/users/update_profile/{user_id}", summary="Update user profile details", status_code=status.HTTP_200_OK, tags=['users'])
-def update_adress(profile:schema.UserProfileUpdate, user_id:int, db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
-    return crud.update_user_profile(db=db, profile=profile, user_id=user_id)
+@app.patch("/users/update_profile", summary="Update user profile details", status_code=status.HTTP_200_OK, tags=['users'])
+def update_adress(profile:schema.UserProfileUpdate, db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
+    return crud.update_user_profile(db=db, profile=profile, user_id=current_user.id)
 
-@app.delete("/users/delete_account/{user_id}", summary="delete user account", status_code=status.HTTP_204_NO_CONTENT, tags=['users'])
-def delete_user_account(user_id:int, db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
-    crud.delete_user(db=db, user_id=user_id, current_user=current_user)
+@app.delete("/users/delete_account", summary="delete user account", status_code=status.HTTP_204_NO_CONTENT, tags=['users'])
+def delete_user_account(db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
+    crud.delete_user(db=db, user_id=current_user.id, current_user=current_user)
 
 @app.get('/verification', summary = "verify a user by email", tags=['users'])
 async def email_verification(request: Request, token: str, db: Session = Depends(get_db)):

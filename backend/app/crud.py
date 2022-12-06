@@ -179,7 +179,7 @@ def get_analysis(db: Session, analysis_id = int):
 def create_user_profile(db: Session, company_id: int, user_email: str):
     user = get_user_by_email(db, user_email)
     user_id = user.id
-    db_profile = models.UserProfile(id=user_id, company_id = company_id)
+    db_profile = models.UserProfile(id=user_id, company_id = company_id, email=user_email)
     db.add(db_profile)
     db.commit()
     db.refresh(db_profile)
