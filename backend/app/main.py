@@ -652,7 +652,7 @@ async def login(request: Request):
     return await oauth.google.authorize_redirect(request, redirect_uri)
 
 
-@app.route('/auth/google')
+@app.get('/auth/google')
 async def auth(request: Request, db: Session = Depends(get_db)):
     try:
         access_token = await oauth.google.authorize_access_token(request)
