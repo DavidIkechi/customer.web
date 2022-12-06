@@ -137,7 +137,7 @@ function App() {
 
         {/* Try Routes */}
         <Route path="/try-processing" element={<TryProcessing />} />
-        <Route path="/try-results" element={<TryResults />} />
+        <Route path="/try-results/:transcribeId" element={<TryResults />} />
         {/*  */}
 
         {/* Settings Pages */}
