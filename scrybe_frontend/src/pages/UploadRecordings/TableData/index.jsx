@@ -35,7 +35,7 @@ const TableData = ({ searchKeyword }) => {
   const handleClose = () => {
     setOpenModal(false);
   };
-  const timeLeft = 20;
+  // const timeLeft = 20;
 
   useEffect(() => {
     const newRecordings = fetchData("list-audios-by-user");
@@ -60,21 +60,27 @@ const TableData = ({ searchKeyword }) => {
   };
   const fetchData = async () => {
     setIsFetching(true);
-    await axios
-      .get("list-audios-by-user", { headers })
-      .then((res) => {
-        if (res.status === 200) {
-          setSessionExpired(false);
-          setAllRecordings(res.data);
-          setIsFetching(false);
-        }
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          setSessionExpired(true);
-          setIsFetching(false);
-        }
-      });
+    try {
+      await axios
+        .get("list-audios-by-user", { headers })
+        .then((res) => {
+          if (res.status === 200) {
+            setSessionExpired(false);
+            setAllRecordings(res.data);
+            setIsFetching(false);
+          }
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            setSessionExpired(true);
+            setIsFetching(false);
+          }
+        });
+    } catch (error) {
+      console.log(error);
+      setSessionExpired(true);
+      setIsFetching(false);
+    }
   };
 
   useEffect(() => {
@@ -83,7 +89,6 @@ const TableData = ({ searchKeyword }) => {
 
   const deleteBulkRecordings = async () => {
     const audioToInt = recordCheckedList.map((item) => parseInt(item, 10));
-    console.log(audioToInt);
     await axios
       .delete(`audios/delete?audios=${[audioToInt]}`, {
         headers,
@@ -175,10 +180,10 @@ const TableData = ({ searchKeyword }) => {
         </div>
         <div className={styles.uploaded_header}>
           <h1>Transcription Status </h1>
-          <h2 className={styles.est_time_left}>
+          {/* <h2 className={styles.est_time_left}>
             Estimated Time Left:{" "}
             <strong className={styles.est_time_left_num}>{timeLeft}</strong> Min
-          </h2>
+          </h2> */}
           <div className={styles.UploadedNavbarRec_btnwrap}>
             <img src={uploadBtn_icon} alt="" />
             <button className={styles.UploadedNavbarRec_btn}>Upload</button>
@@ -191,7 +196,9 @@ const TableData = ({ searchKeyword }) => {
             <>
               {sessionExpired ? (
                 <h1 className={styles.expired}>
-                  Your Session has has expired, please signin again
+                  <small>
+                    Your Session has has expired, please signin again
+                  </small>
                   <p>
                     <Link to="/signin">Signin</Link>
                   </p>
@@ -242,7 +249,7 @@ const TableData = ({ searchKeyword }) => {
                               </td>
                               <td>{shortenfilename(recording?.filename)}</td>
                               <td>{formatAudioLen(recording?.duration)}</td>
-                              <td>{formatAudioSize(recording?.size)} mb</td>
+                              <td>{formatAudioSize(recording?.size)}</td>
                               <td>{formatDate(recording?.timestamp)}</td>
                               <td>
                                 <strong

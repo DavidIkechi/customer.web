@@ -1,8 +1,5 @@
-export const formatAudioLen = (len) => {
-  let minutes = Math.floor((len % 3600) / 60);
-  minutes = minutes < 10 ? `0${minutes}` : minutes;
-  let seconds = Math.floor(len % 60);
-  seconds = seconds < 10 ? `0${seconds}` : seconds;
-  let output = `${minutes}:${seconds}`;
-  return output;
+export const formatAudioLen = (num) => {
+  const minutes = Math.floor(num / 60);
+  const seconds = num % 60;
+  return `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
 };
