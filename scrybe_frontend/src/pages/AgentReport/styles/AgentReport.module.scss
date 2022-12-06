@@ -1,72 +1,141 @@
-@use "./_mixins.scss" as mixins;
+// @use "./_mixins.scss" as mixins;
 @import "../../../assets/styles/utilities/_functionsANDmedia.scss";
 @import "../../../assets/styles/utilities/_variables.scss";
 @import "../../../assets/styles/_reset.scss";
-@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap");
+
+
 
 .container {
-  height: 100%;
-  width: 100%;
-  background-color: #f9f9f9;
-  // padding: 5px;
+  height: 100vh;
+  border: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  background-color: #f9f9f9;
   position: relative;
+  transition: all 2s ease-in;
 
-  .sidebarContainer{
-    height: 100%;
-  }
-
-  @include mixins.sm {
-    height: 100%;
-    width: 100%;
-    background-color: #f9f9f9;
-    padding: 25px;
-  }
+ 
   .mainWrapper {
     margin: 0px auto;
-    width: 100%;
-    background-color: #ececec;
-    padding: 1em 1em;
-    @include mixins.sm {
-      max-width: 1160px;
-      height: 90%;
-      background-color: #ececec;
-      padding: 40px;
+    width: 80%;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 20px;
+
+    .header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      justify-content: space-between;
+
+      h1 {
+        color: #434342;
+        font-size: 32px;
+        font-weight: 600;
+      }
+
+      img {
+        cursor: pointer;
+        width: 15px;
+      }
     }
+
+    .idcont {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .agentId {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        width: 40%;
+        margin-top: 1rem;
+    
+        p {
+          color: #3F3F3F;
+          font-size: 16px;
+          font-weight: 300;
+        }
+      }
+
+      .select {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    
+        p {
+          font-weight: 300;
+          color: #262626;
+        }
+    
+        .dropdown {
+          padding: 4px 10px;
+          border: 1px solid #006CFF;
+          cursor: pointer;
+          font-weight: 300;
+          color: #262626;
+        }
+      }
+    }
+   
     .topDetailsDiv {
       display: flex;
-      flex-direction: column-reverse;
+      flex-direction: row-reverse;
+      align-items: center;
       justify-content: space-between;
-      margin-bottom: 30px;
-      @include mixins.sm {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        height: 40%;
+      
+      // @include mixins.sm {
+      //   flex-direction: column-reverse;
+      // }
+    }
+  }
+}
+
+@media screen and (max-width: 944px) {
+  .container {
+    height: auto;
+    .mainWrapper {
+      .header, .idcont {
+        width: 90%;
+        margin: auto;
+      }
+      .topDetailsDiv {
+        flex-direction: column-reverse;
+        gap: 2rem;
       }
     }
   }
 }
 
-// .container {
-//   height: 100%;
-//   width: 100%;
-//   background-color: #f9f9f9;
-//   padding: 30px;
-//   .mainWrapper {
-//     max-width: 1160px;
-//     height: 90%;
-//     background-color: #ececec;
-//     padding: 40px;
-//     .topDetailsDiv {
-//       display: flex;
-//       justify-content: space-between;
-//       margin-bottom: 20px;
-//       height: 40%;
-//     }
-//   }
-// }
+
+@media screen and (max-width: 888px) {
+  .container {
+    .mainWrapper {
+      width: 90%;
+
+      .header {
+        h1 {
+          font-size: 20px;
+        }
+      }
+      .idcont {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1rem;
+
+        .agentId {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+          margin-bottom: 0;
+          width: 100%;
+        }
+      }
+    }
+  }
+}

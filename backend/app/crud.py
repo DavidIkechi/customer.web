@@ -102,6 +102,7 @@ def delete_user(db: Session, user_id: int, current_user):
     return {"message":f"User {deleted_user.first_name} with id:{deleted_user.id} has been deleted"}
 
 
+
 def get_audio(db: Session, audio_id: int):
     return db.query(models.Audio).filter(models.Audio.id == audio_id).first()
 
@@ -116,12 +117,26 @@ def get_company(db: Session, company_id: int):
 
 def create_audio(db: Session, audio: schema.Audio, agent_id: int):
     db_audio = models.Audio(audio_path=audio.audio_path, size=audio.size, duration=audio.duration, transcript=audio.transcript, timestamp=audio.timestamp, positivity_score=audio.positivity_score,
-    negativity_score=audio.negativity_score, neutrality_score=audio.neutrality_score, overall_sentiment=audio.overall_sentiment, most_positive_sentences =audio.most_positive_sentences, most_negative_sentences = audio.most_negative_sentences, agent_id=agent_id, agent_firstname = db_audio.agent_first_name, agent_lastname = db_audio.agent_last_name)
+    negativity_score=audio.negativity_score, neutrality_score=audio.neutrality_score, overall_sentiment=audio.overall_sentiment, most_positive_sentences =audio.most_positive_sentences, most_negative_sentences = audio.most_negative_sentences, agent_id=agent_id, agent_firstname = db_audio.agent_firstname, agent_lastname = db_audio.agent_lastname)
+
 
     db.add(db_audio)
     db.commit()
     db.refresh(db_audio)
     return db_audio
+
+def get_jobs_uploaded(db:Session, current_user, skip: int = 0, limit: int = 0):
+    job_list = []
+    all_audios = get_audios_by_user(db, user_id=current_user.id)
+    for audio in all_audios:
+        new_data = {"transcript_id" :audio.job_id,
+                    "job_status":audio.job.job_status,
+                    "agent_name":f"{audio.agent_firstname} {audio.agent_lastname}",
+                    "audio_url" :audio.audio_path
+                    }
+        
+        job_list.append(new_data)
+    return job_list
 
 def get_job(db: Session, job_id: int):
     return db.query(models.Job).filter(models.Job.id == job_id).first()
@@ -218,5 +233,12 @@ def reset_password(db: Session, password: str, user: models.User):
     db.refresh(user)
     return user
 
+def get_order_summary_by_email(db: Session, user_email: str):
+    user_email = user_email
+    order_summary = db.query(models.Order).filter(models.Order.user_email==user_email).all()
+    return order_summary
 
-
+def get_order_summary_by_id(db: Session, order_id: str):
+    order_id = order_id
+    order_summary = db.query(models.Order).filter(models.Order.id==order_id).first()
+    return order_summary

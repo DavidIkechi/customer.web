@@ -2,7 +2,7 @@ function UseOfData() {
   return (
     <div className="sub-container">
       <h1>5. Use of Data</h1>
-      <p>Scrybe uses the collected data for various purposes:</p>
+      <p>Heed uses the collected data for various purposes:</p>
       <ol>
         <li>to provide and maintain our Service</li>
         <li> to notify you about changes to our Service.</li>

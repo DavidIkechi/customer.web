@@ -127,9 +127,10 @@ class Analysis(AudioBase):
     pass
 
 class Recordings(BaseModel):
-    audio_path: str
+    filename: str
     size: int
     duration: int
+    job_id: str
     timestamp: datetime
 
     class Config:
@@ -166,3 +167,18 @@ class ForgetPassword(BaseModel):
 class UpdatePassword(BaseModel):
     password: str
 
+
+class OrderBase(BaseModel):
+    billing_plan: str 
+
+class OrderCreate(OrderBase):
+    pass
+
+class Order(OrderBase):
+    id: int 
+    user_email: str
+    billing_plan: str 
+    monthly_amount: float 
+    annual_amount: float
+    order_date: datetime
+    next_payment_due_date: datetime

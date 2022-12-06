@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./homePageRedesign.module.scss";
-import Footer from "../../components/footer";
+import Footer from "../../components/Footer";
 import NavBar from "../../components/NavbarFree";
 import heroCenter from "./assets/hero__center.png";
 import saveTime from "./assets/save__time.png";
@@ -11,21 +11,21 @@ import transScreen from "./assets/trans__screen.png";
 import analyzeScreen from "./assets/analyze__screen.png";
 import clientOne from "./assets/client__one.png";
 import clientTwo from "./assets/client__two.png";
-import { useState } from "react";
+// import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Index = () => {
-  const [supportColor, setSupportColor] = useState(true);
-  const [saleColor, setSaleColor] = useState(false);
-  const [supportText, setSupportText] = useState(true);
-  const [saleText, setSaleText] = useState(false);
+  // const [supportColor, setSupportColor] = useState(true);
+  // const [saleColor, setSaleColor] = useState(false);
+  // const [supportText, setSupportText] = useState(true);
+  // const [saleText, setSaleText] = useState(false);
 
-  function toggleColor() {
-    setSupportColor((preval) => !preval);
-    setSaleColor((preval) => !preval);
-    setSupportText((preval) => !preval);
-    setSaleText((preval) => !preval);
-  }
+  // function toggleColor() {
+  //   setSupportColor((preval) => !preval);
+  //   setSaleColor((preval) => !preval);
+  //   setSupportText((preval) => !preval);
+  //   setSaleText((preval) => !preval);
+  // }
 
   return (
     <div>
@@ -54,26 +54,26 @@ const Index = () => {
             <div className={styles.hero__bottom}>
               <div className={styles.hero__action}>
                 <div className={styles.button__content}>
-                  <Link style={{ width: "48%" }}>
+                  <Link to="/support-team" style={{ width: "48%" }}>
                     <button
                       className={styles.hero__buttonOne}
-                      style={{
-                        backgroundColor: supportColor ? "#006CFF" : "#FFFFFF",
-                        color: supportText ? "#FFFFFF" : "#006CFF",
-                      }}
-                      onClick={toggleColor}
+                      // style={{
+                      //   backgroundColor: supportColor ? "#006CFF" : "#FFFFFF",
+                      //   color: supportText ? "#FFFFFF" : "#006CFF",
+                      // }}
+                      // onClick={toggleColor}
                     >
                       For Support
                     </button>
                   </Link>
-                  <Link style={{ width: "48%" }}>
+                  <Link to="/sales-team" style={{ width: "48%" }}>
                     <button
                       className={styles.hero__buttonTwo}
-                      style={{
-                        backgroundColor: saleColor ? "#006CFF" : "#FFFFFF",
-                        color: saleText ? "#FFFFFF" : "#006CFF",
-                      }}
-                      onClick={toggleColor}
+                      // style={{
+                      //   backgroundColor: saleColor ? "#006CFF" : "#FFFFFF",
+                      //   color: saleText ? "#FFFFFF" : "#006CFF",
+                      // }}
+                      // onClick={toggleColor}
                     >
                       For Sales
                     </button>
@@ -318,7 +318,7 @@ const Index = () => {
             </div>
           </div>
           <div className={styles.bottom__fifth}>
-            <Link>
+            <Link to="/try">
               <button className={styles.fifth__action}>Try Now</button>
             </Link>
           </div>

@@ -12,9 +12,13 @@ function TranscriptionMain() {
 
   const [audioSrc, setAudioSrc] = useState("");
   const audioElem = useRef();
+  const [audioFileSize, setAudioFileSize] = useState("");
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [audioDuration, setAudioDuration] = useState(0);
+  const [recentRecordings, setRecentRecordings] = useState([]);
+  const [donwloadData, setDownloadData] = useState({});
+
   const onLoadedMetadata = () => {
     setAudioDuration(Math.round(audioElem.current?.duration));
   };
@@ -31,7 +35,8 @@ function TranscriptionMain() {
   const updateTranscribedText = () => {
     setTimeUpdateTracker(true);
     if (timeUpdateTracker) console.log(`tracker is true`);
-    formattedData[Math.floor(currentTime / 5)].isActive = true;
+    if (formattedData)
+      formattedData[Math.floor(currentTime / 5)].isActive = true;
     for (
       let i = Math.floor(currentTime / 5) + 1;
       i < formattedData.length;
@@ -46,15 +51,12 @@ function TranscriptionMain() {
       updateCurrentTime();
     } else audioElem.current.pause();
   }, [isPlaying]);
-  useEffect(() => {
-    async function fetchAudio() {
-      const audioSrc =
-        "http://commondatastorage.googleapis.com/codeskulptor-demos/pyman_assets/ateapill.ogg";
-      setAudioSrc(audioSrc);
-    }
-    fetchAudio();
-  }, []);
-
+  const getTranscriptionId = () => {
+    return window.location.pathname.substring(
+      16,
+      window.location.pathname.length
+    );
+  };
   //fetch data from custom API for now.
   const fetchData = () => {
     axios
@@ -66,9 +68,34 @@ function TranscriptionMain() {
         console.log(err);
       });
   };
+  //fetch data(transcription text and audio) from our API.
+  const fetchActualData = (transcription_id) => {
+    const data =
+      "grant_type=password&username=arcteggzz%40gmail.com&password=123456789&scope=&client_id=&client_secret=";
+    axios.post("https://api.heed.hng.tech/login", data).then((res) => {
+      const headers = {
+        Authorization: `Bearer ${res.data.access_token}`,
+      };
+      axios
+        .get(`https://api.heed.hng.tech/transcription/${transcription_id}`, {
+          headers,
+        })
+        .then((newRes) => {
+          setFormattedData(
+            generateArray(newRes.data.sentiment_result.transcript)
+          );
+          setAudioSrc(newRes.data.sentiment_result.audio_url);
+          setAudioFileSize(newRes.data.sentiment_result.audio_size);
+          setDownloadData(newRes.data);
+        });
+    });
+  };
   useEffect(() => {
-    fetchData();
+    fetchActualData(getTranscriptionId());
+    fetchRecentRecordings();
   }, []);
+
+  // format array function
   const generateArray = (str) => {
     const cleanedData = [];
 
@@ -117,6 +144,22 @@ function TranscriptionMain() {
       return `0${minutes}:${seconds}0`;
   };
 
+  const fetchRecentRecordings = () => {
+    const data =
+      "grant_type=password&username=arcteggzz%40gmail.com&password=123456789&scope=&client_id=&client_secret=";
+    axios.post("https://api.heed.hng.tech/login", data).then((res) => {
+      const headers = {
+        Authorization: `Bearer ${res.data.access_token}`,
+      };
+      axios
+        .get(`https://api.heed.hng.tech/recent-recordings?skip=0&limit=5`, {
+          headers,
+        })
+        .then((newRes) => {
+          setRecentRecordings(newRes.data);
+        });
+    });
+  };
   return (
     <div className={styles.TranscriptionMain}>
       <Dummy
@@ -132,6 +175,9 @@ function TranscriptionMain() {
         setIsPlaying={setIsPlaying}
         audioDuration={audioDuration}
         currentTime={currentTime}
+        audioFileSize={audioFileSize}
+        recentRecordings={recentRecordings}
+        donwloadData={donwloadData}
       />
       <audio
         src={audioSrc}
