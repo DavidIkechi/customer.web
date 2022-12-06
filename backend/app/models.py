@@ -122,7 +122,7 @@ class Analysis(Base):
 
 class UserProfile(Base):
     __tablename__ = "accounts"
-
+    
     id = Column(Integer, ForeignKey("users.id"), nullable=True)
     phone_number = Column(String(255))
     company_address = Column(TEXT)
