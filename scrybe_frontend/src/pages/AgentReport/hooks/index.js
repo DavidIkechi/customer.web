@@ -31,20 +31,18 @@ const useAgentReport = () => {
 
   const [id, setId] = useState("13");
   useEffect(() => {
-    const data =
-      "grant_type=&username=abbyfade10%40gmail.com&password=string123&scope=&client_id=&client_secret=";
-    axios.post("https://api.heed.hng.tech/login", data).then((res) => {
-      const headers = {
-        Authorization: `Bearer ${res.data.access_token}`,
-      };
-      axios
-        .get(`https://api.heed.hng.tech/AgentDetails?agent_id=${id}`, {
-          headers,
-        })
-        .then((res) => {
-          setAgentRecentReports(res.data.Agent_Performance_Report);
-        });
-    });
+    const token = localStorage.getItem("heedAccessToken");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "content-type": "Application/json",
+      },
+    };
+    axios
+      .get(`https://api.heed.hng.tech/AgentDetails?agent_id=${id}`, config)
+      .then((res) => {
+        setAgentRecentReports(res.data.Agent_Performance_Report);
+      });
   }, []);
 
   return recentAgentReport;
@@ -56,22 +54,21 @@ const useAgentAnalysis = () => {
   const [data_id, setData_id] = useState("13");
 
   useEffect(() => {
-    const data = `grant_type=&username=abbyfade10%40gmail.com&password=string123&scope=&client_id=&client_secret=`;
-    axios.post("https://api.heed.hng.tech/login", data).then((res) => {
-      const headers = {
-        Authorization: `Bearer ${res.data.access_token}`,
-      };
-      axios
-        .get(
-          `https://api.heed.hng.tech/total-agent-analysis?agent_id=${data_id}`,
-          {
-            headers,
-          }
-        )
-        .then((res) => {
-          setAnalysis(res.data);
-        });
-    });
+    const token = localStorage.getItem("heedAccessToken");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "content-type": "Application/json",
+      },
+    };
+    axios
+      .get(
+        `https://api.heed.hng.tech/total-agent-analysis?agent_id=${data_id}`,
+        config
+      )
+      .then((res) => {
+        setAnalysis(res.data);
+      });
   }, []);
   return agentAnalysis;
 };
