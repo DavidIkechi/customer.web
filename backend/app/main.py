@@ -773,26 +773,29 @@ async def get_order_summary (order_id: int, db: Session = Depends(get_db), user:
     
 @app.get("/AgentDetails", summary = "get agent performance report", tags=['Agent Performance Report'])
 def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    data_result = db.execute("""SELECT COUNT (agent_id) AS 'Total calls',
-    first_name || ' ' || last_name AS Name,
+    data_result = db.execute("""SELECT COUNT(agent_id) AS 'Total calls',
+    CONCAT(CONCAT(first_name, ' '), last_name) AS 'Name',
     
     SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive,
     SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative,
     SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral,
     SUM(average_score)/COUNT(average_score) AS "Average Score"
-    FROM Agents INNER JOIN Audios on agents.id =audios.agent_id 
-    GROUP BY first_name ,last_name ORDER BY Name;""")
-    try: 
-        AgentDetails = [dict(result) for result in data_result]
-        leaderboard = sorted(AgentDetails, key=lambda k: k['Average Score'], reverse=True)
-        for i in leaderboard:
-            i['Rank'] = leaderboard.index(i) + 1
-
-        agent_details = db.query(models.Audio).filter(models.Audio.user_id == user.id, models.Audio.agent_id == agent_id)
+    FROM agents INNER JOIN audios on agents.id = audios.agent_id 
+    GROUP BY first_name ,last_name ORDER BY 'Name';""")
+    # try: 
+    AgentDetails = [dict(result) for result in data_result]
+    leaderboard = sorted(AgentDetails, key=lambda k: k['Average Score'], reverse=True)
+    print(leaderboard)
+    for i in leaderboard:
+        i['Rank'] = leaderboard.index(i) + 1
+    result = {}
+    agent_details = db.query(models.Audio).filter(models.Audio.user_id == user.id, models.Audio.agent_id == agent_id).all()
+    try:
         for i in leaderboard:
             for j in agent_details:
                 if i["Name"] == j.agent_firstname + " " + j.agent_lastname:
                     result = i
+                    break
 
         return {"Agent Performance Report": result}
     except:

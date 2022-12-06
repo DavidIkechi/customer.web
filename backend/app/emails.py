@@ -24,9 +24,9 @@ conf = ConnectionConfig(
     MAIL_FROM = os.getenv('EMAIL'),
     MAIL_PORT = 465,
     MAIL_SERVER = 'smtp.gmail.com',
-    MAIL_STARTTLS = False,
+    MAIL_TLS = False,
     USE_CREDENTIALS = True,
-    MAIL_SSL_TLS= True,
+    MAIL_SSL= True,
     VALIDATE_CERTS = True
 )
 
