@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { useAgentReport } from "./hooks";
 import { useAgentAnalysis } from "./hooks";
 
+// { recentAgentReport, agentAnalysis}
 const Content = () => {
   const agentReportData = useAgentReport();
   const agentAnalysisData = useAgentAnalysis();
@@ -47,8 +48,13 @@ const Content = () => {
         </div>
       </div>
       <div className={styles.topDetailsDiv}>
-        <Charts selectReport={selectReport} />
-        <AgentDetails />
+        <Charts
+          // agentAnalysis={agentAnalysis}
+          selectReport={selectReport}
+        />
+        <AgentDetails
+        // recentAgentReport={recentAgentReport}
+        />
       </div>
     </div>
   );

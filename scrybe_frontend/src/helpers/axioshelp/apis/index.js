@@ -21,9 +21,13 @@ class Service {
     return this.request.get("/recent-recordings?skip=0&limit=5");
   }
 
-  // async AgentDetails(id) {
-  //   return this.request.get(`/Agent_Details?agent_id=${id}`);
-  // }
+  async getAgentReport(id) {
+    return this.request.get(`/AgentDetails?agent_id=${id}`);
+  }
+
+  async getAgentAnalysis(id) {
+    return this.request.get(`/total-agent-analysis?agent_id=${id}`);
+  }
 }
 
 const ApiService = new Service(api);
