@@ -56,7 +56,7 @@ import TryResults from "./pages/TryForFree/tryResults";
 import UploadedRecordings from "./pages/UploadRecordings";
 import { UploadModal } from "./pages/UploadRecordingsModal";
 import Logout from "./pages/Logout";
-import CheckMail from "./pages/CheckMail";
+import EmailVerify from "./pages/VerificationEmail/EmailVerify";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -138,7 +138,7 @@ function App() {
 
         {/* Try Routes */}
         <Route path="/try-processing" element={<TryProcessing />} />
-        <Route path="/try-results" element={<TryResults />} />
+        <Route path="/try-results/:transcribeId" element={<TryResults />} />
         {/*  */}
 
         {/* Settings Pages */}
@@ -286,6 +286,7 @@ function App() {
         <Route path="/partners" element={<PartnersPage />} />
         <Route path="press-article" element={<PressArticle />} />
         <Route path="pricing" element={<Pricing />} />
+        <Route path="/emailverification" element={<EmailVerify />} />
         {/* Error page */}
         <Route path="*" element={<Error />} />
         {/* <Route path="/von" element={<Von />} /> */}

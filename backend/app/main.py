@@ -52,7 +52,15 @@ from starlette.responses import FileResponse
 from starlette.requests import Request
 from starlette.responses import Response
 import boto3
+from elasticapm.contrib.starlette import make_apm_client, ElasticAPM
 
+apm_config = {
+    'SERVICE_NAME': 'Heed',
+    'SERVER_URL': 'http://localhost:8200',
+    'ENVIRONMENT': 'production',
+    'GLOBAL_LABELS': 'platform=DemoPlatform, application=DemoApplication'
+}
+apm = make_apm_client(apm_config)
 
 load_dotenv()
 
@@ -96,6 +104,7 @@ app = FastAPI(
 )
 
 app.include_router(transcript_router)
+app.add_middleware(ElasticAPM, client=apm)
 
 origins = [
     "http://localhost",
@@ -549,7 +558,7 @@ def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = De
     leaderboard = crud.get_leaderboard(db, user.id)
     top3_agents = leaderboard[:3]
     others = leaderboard[3:]
-    return {"Top3 Agents": top3_agents, "Other Agents": others}
+    return {"Top3_Agents": top3_agents, "Other_Agents": others}
 
 #agent total_analysis
 @app.get("/total-agent-analysis", summary="get total agent analysis")
@@ -807,7 +816,7 @@ def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: mo
             if i["agent_id"] == agent_id:
                 result = i
                 break
-        return {"Agent Performance Report": result}
+        return {"Agent_Performance_Report": result}
     except:
         return {"message": "agent does not exist"}
 
