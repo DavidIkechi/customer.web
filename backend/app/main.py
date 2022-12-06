@@ -336,9 +336,9 @@ def update_profile( firstname:str = Form(), lastname:str = Form(), company_name:
     
            
 
-@app.delete("/users/delete_account", summary="delete user account", tags=['users'])
-def delete_user_account(db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
-    return crud.delete_user(db=db, user_id=current_user.id, current_user=current_user)
+@app.delete("/users/delete_account/{user_id}", summary="delete user account", tags=['users'])
+def delete_user_account(user_id: int , db:Session = Depends(get_db), current_user:schema.User = Depends(get_admin)):
+    return crud.delete_user(db=db, user_id=user_id)
 
 @app.get('/verification', summary = "verify a user by email", tags=['users'])
 async def email_verification(request: Request, token: str, db: Session = Depends(get_db)):
