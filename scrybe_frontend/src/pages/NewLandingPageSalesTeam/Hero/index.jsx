@@ -5,7 +5,7 @@ import HeroImage from "../Assets/heroImage.png";
 
 const Hero = () => {
   return (
-    <div className={styles.HeroContainer}>
+    <div className={styles.HeroContainer} id={styles.Img_container}>
       <div className={styles.HeroTexts}>
         <h1 className={styles.PageHeading}>
           Analyze sales team call record to understand customer feedback and

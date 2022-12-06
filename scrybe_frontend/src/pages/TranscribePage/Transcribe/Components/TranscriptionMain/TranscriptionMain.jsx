@@ -17,6 +17,7 @@ function TranscriptionMain() {
   const [currentTime, setCurrentTime] = useState(0);
   const [audioDuration, setAudioDuration] = useState(0);
   const [recentRecordings, setRecentRecordings] = useState([]);
+  const [donwloadData, setDownloadData] = useState({});
 
   const onLoadedMetadata = () => {
     setAudioDuration(Math.round(audioElem.current?.duration));
@@ -80,12 +81,12 @@ function TranscriptionMain() {
           headers,
         })
         .then((newRes) => {
-          console.log(newRes.data);
           setFormattedData(
             generateArray(newRes.data.sentiment_result.transcript)
           );
           setAudioSrc(newRes.data.sentiment_result.audio_url);
           setAudioFileSize(newRes.data.sentiment_result.audio_size);
+          setDownloadData(newRes.data);
         });
     });
   };
@@ -176,6 +177,7 @@ function TranscriptionMain() {
         currentTime={currentTime}
         audioFileSize={audioFileSize}
         recentRecordings={recentRecordings}
+        donwloadData={donwloadData}
       />
       <audio
         src={audioSrc}

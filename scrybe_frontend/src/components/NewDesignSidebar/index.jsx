@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import SearchInput from "./SearchInput";
 // import styles from "./SideBar.module.scss";
 import closeIcon from "./icons/closeIcon.svg";
@@ -40,7 +40,7 @@ function NewDesignSideBar({
   toggleSidebar,
 }) {
   const [currentUser, setCurrentUser] = React.useState(null);
-  const f = async () => {
+  const fetchUser = async () => {
     const config = {
       withCredentials: true,
       headers: {
@@ -51,35 +51,7 @@ function NewDesignSideBar({
     setCurrentUser(res.data);
   };
   useEffect(() => {
-    {
-      /**
-          api_key
-      : 
-      "1fa2ba5a-5f0a-4fce-a663-44d64ee3b853"
-      company_address
-      : 
-      null
-      company_logo_url
-      : 
-      null
-      company_name
-      : 
-      "zurikoko"
-      email
-      : 
-      "dprincecoder@gmail.com"
-      first_name
-      : 
-      "Prince"
-      last_name
-      : 
-      "Azubuike"
-      phone_number
-      : 
-      null
-  */
-    }
-    f();
+    fetchUser();
   }, []);
   return (
     <div
@@ -167,11 +139,11 @@ function NewDesignSideBar({
             />
             <div className={styles.generalSidebar_user_desktop_nameDetails}>
               <div className={styles.generalSidebar_user_desktop_name_arr}>
-                <p className={styles.name}>
+                <Link to="/account" className={styles.name}>
                   {currentUser?.first_name
                     ? `${currentUser?.first_name} ${currentUser?.last_name}`
                     : "John Doe"}
-                </p>
+                </Link>
                 <img src={dropdown_arr} alt="dropdown arrow" />
               </div>
               <p className={styles.workspace_name}>
