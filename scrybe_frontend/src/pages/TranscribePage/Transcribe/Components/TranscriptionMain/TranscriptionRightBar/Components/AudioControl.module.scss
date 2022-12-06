@@ -99,13 +99,16 @@
 .moreButton {
   display: none;
 }
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 960px) {
   .AudioControl {
     width: 100%;
     padding: pix-rem(16) pix-rem(24);
     border-radius: 2px;
     display: flex;
     justify-content: space-between;
+    box-shadow: 0 8px 6px -6px rgb(0 0 0 / 0.02);
+    filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.02))
+      drop-shadow(0 2px 2px rgb(0 0 0 / 0.02));
   }
 
   .ControlButtons {

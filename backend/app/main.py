@@ -1,4 +1,5 @@
 from typing import List, Union
+from pathlib import Path
 from models import Audio
 from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form, Query
 from fastapi_pagination import Page, paginate, Params
@@ -13,10 +14,18 @@ from routers.transcribe import transcript_router
 from routers.score import score_count
 import models, json
 from auth import get_active_user, get_current_user, get_admin
-from jwt import (
-    main_login
+from jwt import main_login, get_access_token
 
-)
+
+from authlib.integrations.starlette_client import OAuth
+from authlib.integrations.starlette_client import OAuthError
+from fastapi import FastAPI
+from fastapi import Request
+from starlette.config import Config
+from starlette.middleware.sessions import SessionMiddleware
+from starlette.responses import HTMLResponse
+from starlette.responses import RedirectResponse
+
 
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from db import Base, engine, SessionLocal
@@ -38,6 +47,12 @@ import shutil
 import os
 
 from dotenv import load_dotenv
+
+from starlette.responses import FileResponse
+from starlette.requests import Request
+from starlette.responses import Response
+import boto3
+
 
 load_dotenv()
 
@@ -87,12 +102,14 @@ origins = [
     "http://localhost:80",
     "http://localhost:3000",
     "http://localhost:5173",
+    "http://localhost:1111",
     "http://localhost:8000",
     "https://heed.hng.tech",
     "http://heed.hng.tech",
     "https://heed.hng.tech:80",
     "https://heed.hng.tech:3000",
     "https://heed.hng.tech:5173",
+    "https://heed.hng.tech:1111",
 ]
 
 app.add_middleware(
@@ -103,6 +120,31 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+# OAuth settings
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID') or None
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET') or None
+if GOOGLE_CLIENT_ID is None or GOOGLE_CLIENT_SECRET is None:
+    raise BaseException('Missing env variables')
+
+# Set up OAuth
+config_data = {'GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID, 'GOOGLE_CLIENT_SECRET': GOOGLE_CLIENT_SECRET}
+starlette_config = Config(environ=config_data)
+oauth = OAuth(starlette_config)
+oauth.register(
+    name='google',
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+    client_kwargs={'scope': 'openid email profile'},
+)
+
+# Set up the middleware to read the request session
+SECRET_KEY = os.getenv('SECRET_KEY') or None
+if SECRET_KEY is None:
+    raise BaseException('Missing SECRET_KEY')
+app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY)
+
+
+
 def main() -> None:
     uvicorn.run(
         "main:app", 
@@ -110,6 +152,7 @@ def main() -> None:
         port=int(os.getenv("PORT")), 
         reload=os.getenv("RELOAD")
     )
+
 
 
 @app.get("/")
@@ -127,6 +170,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     first_name = first_name.lower()
     last_name = last_name.lower()
     agent_name = "%s %s" %(first_name, last_name)
+  
     
     # if the agent name is already in the database before creating for the agent.
     if not db.query(models.Agent).filter(models.Agent.first_name == first_name, 
@@ -139,6 +183,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     else:
         db_agent = db.query(models.Agent).filter(models.Agent.first_name == first_name, 
                                      models.Agent.last_name == last_name).first()
+
     try:
         contents = file.file.read()
         with open(file.filename, 'wb') as f:
@@ -147,10 +192,10 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
         return {"error": "There was an error uploading the file"}
     finally:
         file.file.close()
-    
+
     try:
         result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
-        url = result.get("url")
+        url = result.get("secure_url")
         urls = [url]
         response = shorten_urls(urls)
         retrieve_url = response[0]
@@ -158,9 +203,10 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
         
     except Exception:
         return {"error": "There was an error uploading the file"}
+
     # transcript = transcript
     
-    size = audio_details(file.filename)["size"]
+    size = Path(file.filename).stat().st_size
     duration = audio_details(file.filename)["mins"]
     transcript = transcribe_file(new_url)
     # get some essential parameters
@@ -168,8 +214,10 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     job_status = transcript['status']
     transcript_id = transcript['id']
     
-    db_audio = models.Audio(audio_path=audio_url, filename= str(file.filename), job_id = transcript_id, user_id=user_id, size=size, duration=duration, 
-                            agent_id=db_agent.id)
+
+    db_audio = models.Audio(audio_path=audio_url, job_id = transcript_id, user_id=user_id, size=size, duration=duration, 
+                            agent_id=db_agent.id, agent_firstname= db_agent.first_name, agent_lastname=db_agent.last_name, 
+                            filename = file.filename)
 
     db.add(db_audio)
     db.commit()
@@ -198,7 +246,8 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     
     return {
         "id":audio_id,
-        "transcript_id": transcript_id
+        "transcript_id": transcript_id,
+        #"s3 url": audio_s3_url
     }
 
 # create the endpoint
@@ -276,7 +325,7 @@ async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...
     else:
         try:
             result = cloudinary.uploader.upload(file.filename, resource_type = "auto")
-            url = result.get("url")
+            url = result.get("secure_url")
             urls = [url]
             response = shorten_urls(urls)
             retrieve_url = response[0]
@@ -284,18 +333,18 @@ async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...
         except Exception:   
             return {"error": "There was an error uploading the file"}
         # transcript = transcript
-        transcript = transcribe_file(new_url)
-        # get some essential parameters
-        transcript_id = transcript['id']
-        transcript_status = transcript['status']
+    transcript = transcribe_file(new_url)
+    # get some essential parameters
+    transcript_id = transcript['id']
+    transcript_status = transcript['status']
 
-        callback = models.FreeTrial(transcript_id = transcript_id, transcript_status=transcript_status)
+    callback = models.FreeTrial(transcript_id = transcript_id, transcript_status=transcript_status)
 
-        db.add(callback)
-        db.commit()
-        db.refresh(callback)
-        # delete the file
-        os.remove(file.filename)
+    db.add(callback)
+    db.commit()
+    db.refresh(callback)
+    # delete the file
+    os.remove(file.filename)
 
     return {"transcript_id": transcript_id, "status": transcript_status}
 
@@ -369,7 +418,9 @@ def list_audios_by_user(db: Session = Depends(get_db), user: models.User = Depen
         audios.append(audio)
     return audios
     
-
+@app.get("/get_uploaded_jobs", summary="List all uploaded jobs with job details", status_code=status.HTTP_200_OK, tags=['jobs'])
+def get_uploaded_jobs(db:Session = Depends(get_db), current_user = Depends(get_active_user), skip: int = 0, limit: int = 0):
+    return crud.get_jobs_uploaded(db=db, skip=skip, limit=limit, current_user=current_user)
 
 @app.get('/audios/{audio_id}/sentiment')
 def read_sentiment(audio_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
@@ -442,6 +493,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
     month = datetime.now().month
     results = {
         "week": [
+            {"total_recordings": 0},
             {"id": 1, "time": "M", "totalRecordings": 0},
             {"id": 2, "time": "T", "totalRecordings": 0},
             {"id": 3, "time": "W", "totalRecordings": 0},
@@ -451,6 +503,7 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
             {"id": 7, "time": "S", "totalRecordings": 0}
         ],
         "month": [
+            {"total_recordings": 0},
             {"id": 1, "time": "wk1", "totalRecordings": 0},
             {"id": 2, "time": "wk2", "totalRecordings": 0},
             {"id": 3, "time": "wk3", "totalRecordings": 0},
@@ -459,46 +512,60 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
     }
     for i in total_recordings:
         if i.timestamp.isocalendar().week == week:
+            results["week"][0]["total_recordings"] += 1
             if i.timestamp.weekday() == 0:
-                results["week"][0]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 1:
                 results["week"][1]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 2:
+            elif i.timestamp.weekday() == 1:
                 results["week"][2]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 3:
+            elif i.timestamp.weekday() == 2:
                 results["week"][3]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 4:
+            elif i.timestamp.weekday() == 3:
                 results["week"][4]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 5:
+            elif i.timestamp.weekday() == 4:
                 results["week"][5]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 6:
+            elif i.timestamp.weekday() == 5:
                 results["week"][6]["totalRecordings"] += 1
+            elif i.timestamp.weekday() == 6:
+                results["week"][7]["totalRecordings"] += 1
 
         if i.timestamp.month == month:
+            results["month"][0]["total_recordings"] += 1
             if i.timestamp.day <= 7:
-                results["month"][0]["totalRecordings"] += 1
-            elif 8 <= i.timestamp.day <= 14:
                 results["month"][1]["totalRecordings"] += 1
-            elif 15 <= i.timestamp.day <= 21:
+            elif 8 <= i.timestamp.day <= 14:
                 results["month"][2]["totalRecordings"] += 1
-            elif 22 <= i.timestamp.day <= 31:
+            elif 15 <= i.timestamp.day <= 21:
                 results["month"][3]["totalRecordings"] += 1
+            elif 22 <= i.timestamp.day <= 31:
+                results["month"][4]["totalRecordings"] += 1
 
     return results
 
 
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    results = db.execute("""SELECT agent_id,
-        agent_firstname,
-        agent_lastname,
-        SUM(CASE WHEN overall_sentiment= 'Positive' THEN 1 ELSE 0 END) AS Positive_score,
-        SUM(CASE WHEN overall_sentiment= 'Negative' THEN 1 ELSE 0 END) AS Negative_score,
-        SUM(CASE WHEN overall_sentiment= 'Neutral' THEN 1 ELSE 0 END) AS Neutral_score,
-        round(positivity_score/(positivity_score+negativity_score+neutrality_score) * 10, 2) AS Avergae_score
-    FROM audios GROUP BY agent_id
-    ORDER BY Positive_score DESC""")
-    leaderboard = [dict(r) for r in results]
+    top3_agents = []
+    others = []
+    
+    results = db.query(models.Audio).filter(models.Audio.user_id == user.id).all()
+    leaderboard = []
+    for i in results:
+        # get the agent
+        leader_board = {
+            "first_name": i.agent_firstname,
+            "last_name": i.agent_lastname,
+            "agent_id": i.agent_id,
+            "positive_score": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
+                                                        models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == "Positive").count(), 
+            "negative_score": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
+                                                        models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == 'Negative').count(),
+            "neutral": db.query(models.Audio).filter(models.Audio.user_id == user.id, 
+                                                models.Audio.agent_id == i.agent_id, models.Audio.overall_sentiment == 'Neutral').count(),
+            "average_score": i.average_score
+        }
+        leaderboard.append(leader_board)
+    leaderboard = sorted(leaderboard, key=lambda k: k['positive_score'], reverse=True)
+
     top3_agents = leaderboard[:3]
     others = leaderboard[3:]
     return {"Top3 Agents": top3_agents, "Other Agents": others}
@@ -570,6 +637,40 @@ async def reset_password(token: str, new_password: schema.UpdatePassword, db: Se
     return reset_done
 
 
+
+
+
+# @app.route('/logout/google')
+# async def logout(request: Request):
+#     request.session.pop('user', None)
+#     return RedirectResponse(url='/')
+
+
+@app.get('/login/google')
+async def login(request: Request):
+    redirect_uri = request.url_for('auth')  # This creates the url for our /auth endpoint
+    return await oauth.google.authorize_redirect(request, redirect_uri)
+
+
+@app.route('/auth/google')
+async def auth(request: Request, db: Session = Depends(get_db)):
+    try:
+        access_token = await oauth.google.authorize_access_token(request)
+    except OAuthError:
+        raise HTTPException(status_code=500, detail='Something went wrong while authenticating')
+    user_data = access_token['userinfo']
+    print(user_data)
+    email = user_data.email
+    user_db = crud.get_user_by_email(db, email)
+
+    if user_db is None:
+        raise HTTPException(status_code=404, detail="User not found, Are you sure this is the email you used when signing up for the platform?")
+
+    tokens = get_access_token(email)
+    return tokens
+
+
+
 if __name__ == "__main__":
     main()
 
@@ -593,15 +694,27 @@ def delete_audios(audios: List[int] = Query(None), db: Session = Depends(get_db)
     return {"message": "operation successful", "deleted audion(s)": deleted_audios}
 
 
-# @app.get("/download/{id}")
-# async def download(id, db: Session = Depends(get_db)):
-#     db_analysis = crud.get_audio(db, audio_id = id)
-#     # return db_analysis
-#     # if not db_analysis:
-#     #     return{"error": "No Audio With This ID"}
-#     # else:
-    
-#     # with open("example.json", "wb") as f:
-#     print(db_analysis)
-#     return 
-        
+
+@app.get("/download/{id}")
+def download (id: Union[int, str], db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    db_audio = db.query(models.Audio).filter(models.Audio.job_id == id).first()
+
+    if db_audio is None:
+        raise HTTPException(status_code=404, detail="No Audio With This ID")
+    else:
+        positivity_score = float(db_audio.positivity_score)
+        negativity_score = float(db_audio.negativity_score)
+        neutrality_score = float(db_audio.neutrality_score)
+        overall_sentiment = str(db_audio.overall_sentiment)
+        most_positive_sentences = json.loads(db_audio. most_positive_sentences)
+        most_negative_sentences = json.loads(db_audio. most_negative_sentences)
+        transcript = db_audio.transcript
+        sentiment = {"transcript": transcript,
+                    "positivity_score": positivity_score,
+                    "negativity_score": negativity_score,
+                    "neutrality_score": neutrality_score,
+                    "overall_sentiment": overall_sentiment,
+                    "most_positive_sentences": most_positive_sentences,
+                    "most_negative_sentences": most_negative_sentences,
+                    }
+        return sentiment

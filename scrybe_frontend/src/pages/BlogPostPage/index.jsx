@@ -8,7 +8,7 @@ import arrowRight from "./assets/arrow_right.svg";
 import utils from "./assets/utils.module.scss";
 import styles from "./styles.module.scss";
 import Button from "./Button";
-import NavBar from "../../components/navBar_free";
+import NavBar from "../../components/NavbarFree";
 
 function BlogPostPage() {
   React.useEffect(() => {
