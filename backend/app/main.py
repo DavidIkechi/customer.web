@@ -154,6 +154,26 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
         db_agent = db.query(models.Agent).filter(models.Agent.first_name == first_name, 
                                      models.Agent.last_name == last_name).first()
 
+    try:
+        contents = file.file.read()
+        with open(file.filename, 'wb') as f:
+            f.write(contents)
+    except Exception:
+        return {"error": "There was an error uploading the file"}
+    #finally:
+        f#ile.file.close()
+
+    try:
+        result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
+                                            chunk_size = 6000000)
+        url = result.get("secure_url")
+        urls = [url]
+        response = shorten_urls(urls)
+        retrieve_url = response[0]
+        new_url = retrieve_url.short_url
+        
+    except Exception:
+        return {"error": "There was an error uplooaadding the file"}
 
     s3 = boto3.client('s3', aws_access_key_id="AKIAYLVTTOR4ZJSIOK56",
         aws_secret_access_key="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"
@@ -168,27 +188,6 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
         ExtraArgs = {"ACL": "public-read"}
     )
     audio_s3_url = f"https://{bucket}.s3.amazonaws.com/{file.filename}"
-
-    try:
-        contents = file.file.read()
-        with open(file.filename, 'wb') as f:
-            f.write(contents)
-    except Exception:
-        return {"error": "There was an error uploading the file"}
-    finally:
-        file.file.close()
-
-    try:
-        result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
-                                            chunk_size = 6000000)
-        url = result.get("secure_url")
-        urls = [url]
-        response = shorten_urls(urls)
-        retrieve_url = response[0]
-        new_url = retrieve_url.short_url
-        
-    except Exception:
-        return {"error": "There was an error uploading the file"}
 
 
     # transcript = transcript
