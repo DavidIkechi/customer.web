@@ -7,6 +7,7 @@ import AuthApi from "../../App";
 import axios from "../ForgetPassword/globalConstant/Api/axios";
 import footerImg from "./assets/signup-img.svg";
 import styles from "./SignIn.module.scss";
+import Loading from "../../components/Loading";
 function Signin() {
   const emailTest = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
   const passwordTest = new RegExp(/^["0-9a-zA-Z!@#$&()\\-`.+,/"]{8,}$/);
@@ -17,6 +18,7 @@ function Signin() {
   const [isValid, setIsValid] = useState(true);
   const [emailStateTest, setEmailStateTest] = useState(false);
   const [passStateTest, setPassStateTest] = useState(false);
+  const [isLoading , setIsLoading] = useState(false)
 
   const navigate = useNavigate();
   const tester = (e, reg, func) => {
@@ -77,9 +79,10 @@ function Signin() {
         "content-type": "Application/json",
       },
     };
-
+    setIsLoading(true);
     const response = await axios.post("login", formData, config);
     console.log(response);
+    setIsLoading(false);
     if (response.status === 200) {
       localStorage.setItem("heedAccessToken", response.data.access_token);
       localStorage.setItem("heedRefreshToken", response.data.refresh_token);
@@ -212,12 +215,18 @@ function Signin() {
                   Forgot password?
                 </NavLink>
               </div>
+              {isLoading ? (
+            <Loading />
+          ) : (
+            <>
               <input
                 type="submit"
                 value="Sign in"
                 className={`${styles.submitValid}`}
                 disabled={!isValid}
               />
+            </>
+          )}
               <p>
                 Don’t have an account?
                 <NavLink to={"/create-account"}>Sign up</NavLink>
