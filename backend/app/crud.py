@@ -241,3 +241,45 @@ def get_order_summary_by_id(db: Session, order_id: str):
     order_id = order_id
     order_summary = db.query(models.Order).filter(models.Order.id==order_id).first()
     return order_summary
+
+def get_leaderboard(db: Session, user_id: int):
+        results = db.query(models.Audio).filter(models.Audio.user_id == user_id).all()
+        leaderboard = []
+        
+        agents = dict()
+        full_names = []
+
+        for i in results:
+            full_name = i.agent_firstname + " " + i.agent_lastname
+            full_names.append(full_name)
+
+        for i in full_names:
+            average_scores = []
+            per_agent = {
+            "firstname": "", "lastname": "", "agent_id": "", "total_calls": 0, "positive_score": 0, "negative_score": 0, "neutral_score":0,
+            "average_score": 0
+        }
+            for j in results:
+                if j.agent_firstname + " " + j.agent_lastname == i:
+                    per_agent["firstname"] = j.agent_firstname
+                    per_agent["lastname"] = j.agent_lastname
+                    per_agent["agent_id"] = j.agent_id
+                    per_agent["total_calls"] += 1
+                    if j.overall_sentiment == "Positive":
+                        per_agent["positive_score"] += 1
+                    if j.overall_sentiment == "Negative":
+                        per_agent["negative_score"] += 1
+                    if j.overall_sentiment == "Neutral":
+                        per_agent["neutral_score"] += 1
+                    average_scores.append(j.average_score)
+                    per_agent["average_score"] = round(sum(average_scores)/len(average_scores), 2) 
+            agents[i] = per_agent
+            
+        for i in agents.values():
+            leaderboard.append(i)
+        leaderboard = sorted(leaderboard, key=lambda k: k['average_score'], reverse=True)
+        for i in leaderboard:
+            i['rank'] = leaderboard.index(i) + 1
+            i["str_agent_id"] = "AG" + str(1000000 + i.agent_id) + "DE"
+
+        return leaderboard
