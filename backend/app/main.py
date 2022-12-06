@@ -123,8 +123,8 @@ def main() -> None:
         reload=os.getenv("RELOAD")
     )
 
-AWS_KEY_ID = os.getenv['AWS_KEY_ID']
-AWS_SECRET_KEY = os.getenv['AWS_SECRET_KEY']
+AWS_KEY_ID = os.getenv("AWS_KEY_ID")
+AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
 
 @app.get("/")
 async def ping():
