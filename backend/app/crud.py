@@ -231,5 +231,12 @@ def reset_password(db: Session, password: str, user: models.User):
     db.refresh(user)
     return user
 
+def get_order_summary_by_email(db: Session, user_email: str):
+    user_email = user_email
+    order_summary = db.query(models.Order).filter(models.Order.user_email==user_email).all()
+    return order_summary
 
-
+def get_order_summary_by_id(db: Session, order_id: str):
+    order_id = order_id
+    order_summary = db.query(models.Order).filter(models.Order.id==order_id).first()
+    return order_summary

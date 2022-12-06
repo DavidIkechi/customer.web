@@ -86,13 +86,14 @@
     .generalSidebar__bottom {
       padding: 0 1rem;
       display: none;
+      width: 100%;
       .generalSidebar_user_desktop {
         display: flex;
         img {
           margin-right: 1rem;
         }
         .generalSidebar_user_desktop_nameDetails {
-          width: 125px !important;
+          // width: 125px !important;
           height: 48px;
           position: relative;
           .generalSidebar_user_desktop_name_arr {
@@ -105,6 +106,7 @@
               line-height: 20px;
               margin-right: 0.5rem;
               color: #454545;
+              text-decoration: none;
             }
           }
           .workspace_name {

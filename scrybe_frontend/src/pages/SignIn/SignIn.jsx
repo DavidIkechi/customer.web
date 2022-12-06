@@ -60,6 +60,7 @@ function Signin() {
     const isValid = validate();
     setIsValid(isValid);
   }, [validate, username, password]);
+
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     console.group("Submit");
@@ -125,7 +126,7 @@ function Signin() {
           <div
             className={`${styles.first} ${styles.signin} ${styles.otherThanSignup}`}
           >
-            <h1>Welcome back, Scryber!</h1>
+            <h1>Welcome back, Heed!</h1>
             <h3>Please enter your details</h3>
             <form onSubmit={handleSubmit}>
               <div

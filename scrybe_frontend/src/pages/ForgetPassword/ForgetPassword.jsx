@@ -1,6 +1,5 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import footerImg from "./assets/forget-pw.svg";
 import styles from "./ForgetPassword.module.scss";
@@ -10,7 +9,6 @@ import axios from "axios";
 // import { Link } from "react-router-dom";
 
 function ForgetPassword() {
-  const [userInfo, setUserInfo] = useState();
   const navigate = useNavigate();
   const {
     register,
@@ -19,12 +17,11 @@ function ForgetPassword() {
     formState: { errors },
   } = useForm();
 
-  const baseUrl = "https://api.heed.hng.tech/";
-  const submitCallback = (data) => {
-    setUserInfo(data);
+  const baseUrl = "https://api.heed.hng.tech";
+  const submitCallback = () => {
     axios
       .post(baseUrl + "/forgot-password", {
-        email: userInfo.email,
+        email: email,
       })
       .then((res) => {
         /* TODO:
@@ -72,7 +69,8 @@ function ForgetPassword() {
                 className={`${isValid && styles.submitValid}`}
               />
               <p>
-                Don't have an account? <NavLink to={"/"}>Sign up</NavLink>
+                Don't have an account?{" "}
+                <NavLink to={"/create-account"}>Sign up</NavLink>
               </p>
             </form>
           </div>
