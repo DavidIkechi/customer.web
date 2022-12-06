@@ -285,8 +285,8 @@ function App() {
         <Route path="/partners" element={<PartnersPage />} />
         <Route path="press-article" element={<PressArticle />} />
         <Route path="pricing" element={<Pricing />} />
-        <Route path ="/emailverification" element={<EmailVerify/>} />
-        {/* Error page */} 
+        <Route path="/emailverification" element={<EmailVerify />} />
+        {/* Error page */}
         <Route path="*" element={<Error />} />
         {/* <Route path="/von" element={<Von />} /> */}
         <Route path="/support-team" element={<Support />} />
