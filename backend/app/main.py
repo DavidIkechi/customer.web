@@ -104,7 +104,7 @@ app = FastAPI(
 )
 
 app.include_router(transcript_router)
-pp.add_middleware(ElasticAPM, client=apm)
+app.add_middleware(ElasticAPM, client=apm)
 
 origins = [
     "http://localhost",
