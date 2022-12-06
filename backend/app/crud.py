@@ -5,7 +5,8 @@ import models, schema
 from random import randint
 from passlib.context import CryptContext
 from fastapi import HTTPException 
-import shutil
+import cloudinary
+import cloudinary.uploader
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -68,19 +69,24 @@ def update_user_profile(db:Session, profile:schema.UserProfileUpdate, user_id:in
     if user_profile.id != user_id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , 
                                     detail="Not authorized to perform requested action")
+    user = db.query(models.User).filter(models.User.id == user_profile.id).first()
+    user.firstname = profile.first_name
+    user.last_name = profile.last_name
     user_profile.phone_number = profile.phone_number
     user_profile.company_address = profile.company_address
     db.commit()
     db.refresh(user_profile)
     return user_profile
 
+
 def upload_user_image(db:Session , user_id:int, image_file:UploadFile):
     user_profile = db.query(models.UserProfile).filter(models.UserProfile.id == user_id).first()
-    file_location = f"media/{image_file.filename}"
-    with open(file_location ,"wb") as profile_img:
-        shutil.copyfileobj(image_file.file, profile_img)
-    image_url = str(f"media/{image_file.filename}")
-    user_profile.company_logo_url = image_url
+    try:
+        image_response = cloudinary.uploader.upload(image_file.file)
+        image_url = image_response.get("secure_url") 
+        user_profile.company_logo_url = image_url        
+    except Exception:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="There was an error uploading the file")
     db.commit()
     db.refresh(user_profile)
     return {"image_url": image_url}
