@@ -232,20 +232,26 @@ const MainPage = () => {
                     style={{ display: !isPage ? "none" : "block" }}
                     className={MainPageCss.external}
                   >
-                    {isPage && !isMobile && <PersonalInformation />}
+                    {isPage && !isMobile && (
+                      <PersonalInformation accountUser={accountUser} />
+                    )}
                   </div>
                 )}
                 <div
                   style={{ display: !isAccountPage ? "none" : "block" }}
                   className={MainPageCss.external}
                 >
-                  {isAccountPage && !isMobile && <AccountSetting />}
+                  {isAccountPage && !isMobile && (
+                    <AccountSetting accountUser={accountUser} />
+                  )}
                 </div>
                 <div
                   style={{ display: !isNotificationPage ? "none" : "block" }}
                   className={MainPageCss.external}
                 >
-                  {isNotificationPage && !isMobile && <Notification />}
+                  {isNotificationPage && !isMobile && (
+                    <Notification accountUser={accountUser} />
+                  )}
                 </div>
               </div>
             </div>
