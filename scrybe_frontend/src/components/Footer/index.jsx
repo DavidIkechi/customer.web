@@ -1,11 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import email from "./assets/mail.png";
-import call from "./assets/phone.png";
 import fb from "./assets/fb.png";
 import ig from "./assets/ig.png";
 import locate from "./assets/location-marker.png";
 import logo from "./assets/logo.png";
+import email from "./assets/mail.png";
+import call from "./assets/phone.png";
 import twitter from "./assets/twit.png";
 import styles from "./footer.module.scss";
 
@@ -15,7 +15,7 @@ function Footer() {
       <div className={styles.footerContent}>
         <div className={styles.footerLeft}>
           <div>
-            <img src={logo} alt="" srcset="" className={styles.logo} />
+            <img src={logo} alt="" className={styles.logo} />
             <div>
               <p className={styles.provide}>
                 Providing businesses with intelligent, accurate, and precise
@@ -28,13 +28,13 @@ function Footer() {
             <p style={{ marginTop: "0rem" }}>Join Our Community</p>
             <div className={styles.socials}>
               <a href="https://heed.hng.tech">
-                <img src={ig} alt="" srcset="" />
+                <img src={ig} alt="" />
               </a>
               <a href="https://heed.hng.tech">
-                <img src={fb} alt="" srcset="" />
+                <img src={fb} alt="" />
               </a>
               <a href="https://heed.hng.tech">
-                <img src={twitter} alt="" srcset="" />
+                <img src={twitter} alt="" />
               </a>
             </div>
           </div>
