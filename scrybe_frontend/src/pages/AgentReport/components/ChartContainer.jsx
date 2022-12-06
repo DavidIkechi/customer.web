@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
-// import { useAgentReport } from "../hooks";
 import styles from "../styles/Chart.module.scss";
 import { Bar } from "react-chartjs-2";
-// import { agentData } from "./Data";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,8 +11,6 @@ import Icon from "../assets/table-icon.png";
 ChartJS.register(CategoryScale, LinearScale, BarElement);
 
 function Charts({ selectReport }) {
-  // const agentReport = useAgentReport()
-
   const [option, setOption] = useState({});
 
   const [userData, setUserData] = useState({
@@ -23,21 +19,21 @@ function Charts({ selectReport }) {
 
   useEffect(() => {
     setUserData({
-      labels: selectReport.map((data) => data.day),
+      labels: selectReport?.map((data) => data.time),
       datasets: [
         {
           label: "Positive",
-          data: selectReport.map((data) => data.positive),
+          data: selectReport?.map((data) => data.positive),
           backgroundColor: "#76C86F",
         },
         {
           label: "Neutral",
-          data: selectReport.map((data) => data.neutral),
+          data: selectReport?.map((data) => data.neutral),
           backgroundColor: "#FFCE54",
         },
         {
           label: "Negative",
-          data: selectReport.map((data) => data.negative),
+          data: selectReport?.map((data) => data.negative),
           backgroundColor: "#FF7589",
         },
       ],
@@ -64,7 +60,7 @@ function Charts({ selectReport }) {
           },
           position: "bottom",
           labels: {
-            boxWidth: 15,
+            boxWidth: 13,
             useBorderRadius: true,
             borderRadius: 4,
           },
@@ -84,12 +80,17 @@ function Charts({ selectReport }) {
               Total calls recieved
             </p>
 
-            <p className={styles.calltxt}>50</p>
+            {selectReport?.map((record) => {
+              return <p className={styles.calltxt}>{record.total_recording}</p>;
+            })}
           </div>
         </div>
         <div className={styles.chartImg}>
-          {selectReport.length === 0 ? (
-            <p>Agent Reports show here</p>
+          {selectReport?.length > 0 ? (
+            <p className={styles.empty}>
+              You will see an overview of your activities here when you start
+              uploading.
+            </p>
           ) : (
             <Bar data={userData} options={option} />
           )}
