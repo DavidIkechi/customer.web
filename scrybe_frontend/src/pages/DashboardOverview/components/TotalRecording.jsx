@@ -80,9 +80,7 @@ const TotalRecording = ({ totalRecordingData }) => {
         <div className={styles.recordings__chart}>
           <div>
             <h1 className={styles.totalNumber}>
-              {selectedTotalRecordings.map(
-                (data) => data.selectedTotalRecordings
-              )}
+              {selectedTotalRecordings.map((data) => data.total_recording)}
             </h1>
             <Bar options={chartOptions} data={chartData} />
           </div>
