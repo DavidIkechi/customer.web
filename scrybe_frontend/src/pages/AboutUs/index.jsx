@@ -1,12 +1,11 @@
 import React from "react";
 import Footer from "../../components/Footer";
-import NavBar from "../../components/navBar";
+import NavBar from "../../components/NavbarFree";
 import styles from "./About.module.scss";
 import icon1 from "./assets/icon1.svg";
 import icon2 from "./assets/icon2.svg";
 import icon3 from "./assets/icon3.svg";
 import icon4 from "./assets/icon4.svg";
-import image1 from "./assets/image1.svg";
 import partner1 from "./assets/partner1.svg";
 import partner2 from "./assets/partner2.svg";
 import partner3 from "./assets/partner3.svg";
@@ -19,6 +18,7 @@ import team5 from "./assets/team5.png";
 import team6 from "./assets/team6.png";
 import team7 from "./assets/team7.png";
 import team8 from "./assets/team8.png";
+import HeroIcon from "./assets/hero__icon.png";
 
 function About() {
   React.useEffect(() => {
@@ -62,7 +62,11 @@ function About() {
               </p>
             </div>
             <div className={styles.hero__image}>
-              <img src={image1} alt="hero figure" />
+              <img
+                src={HeroIcon}
+                alt="hero figure"
+                className={styles.hero__figure}
+              />
             </div>
           </div>
         </div>
