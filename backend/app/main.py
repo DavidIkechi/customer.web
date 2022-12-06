@@ -517,7 +517,7 @@ def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = De
     leaderboard = crud.get_leaderboard(db, user.id)
     top3_agents = leaderboard[:3]
     others = leaderboard[3:]
-    return {"Top3_Agents": top3_agents, "Other_Agents": others}
+    return {"Top3 Agents": top3_agents, "Other Agents": others}
 
 #agent total_analysis
 @app.get("/total-agent-analysis", summary="get total agent analysis")
@@ -742,7 +742,7 @@ def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: mo
                 result = i
                 break
 
-        return {"Agent_Performance_Report": result}
+        return {"Agent Performance Report": result}
     except:
         return {"message": "agent does not exist"}
 
