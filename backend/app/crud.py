@@ -106,11 +106,6 @@ def delete_user(db: Session, user_id: int, current_user):
     db.delete(user_profile)
     db.commit()
     return {"message":f"User {deleted_user.first_name} with id:{deleted_user.id} has been deleted"}
-<<<<<<< HEAD
-=======
-
->>>>>>> 7d90d4cf3fabcb6a9d02d082fd6071c45288c822
-
 
 def get_audio(db: Session, audio_id: int):
     return db.query(models.Audio).filter(models.Audio.id == audio_id).first()
@@ -126,12 +121,8 @@ def get_company(db: Session, company_id: int):
 
 def create_audio(db: Session, audio: schema.Audio, agent_id: int):
     db_audio = models.Audio(audio_path=audio.audio_path, size=audio.size, duration=audio.duration, transcript=audio.transcript, timestamp=audio.timestamp, positivity_score=audio.positivity_score,
-<<<<<<< HEAD
-    negativity_score=audio.negativity_score, neutrality_score=audio.neutrality_score, overall_sentiment=audio.overall_sentiment, most_positive_sentences =audio.most_positive_sentences, most_negative_sentences = audio.most_negative_sentences, agent_id=agent_id, agent_firstname = db_audio.agent_first_name, agent_lastname = db_audio.agent_last_name)
-=======
     negativity_score=audio.negativity_score, neutrality_score=audio.neutrality_score, overall_sentiment=audio.overall_sentiment, most_positive_sentences =audio.most_positive_sentences, most_negative_sentences = audio.most_negative_sentences, agent_id=agent_id, agent_firstname = db_audio.agent_firstname, agent_lastname = db_audio.agent_lastname)
 
->>>>>>> 7d90d4cf3fabcb6a9d02d082fd6071c45288c822
 
     db.add(db_audio)
     db.commit()
