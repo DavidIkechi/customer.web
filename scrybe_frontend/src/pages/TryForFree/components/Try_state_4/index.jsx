@@ -41,16 +41,15 @@ export default function TryFourth() {
 
   return (
     <section className={styles.transcribeAnalysis}>
-     
       <div className={styles.Analysis}>
         <h2>Transcription and Sentiment Analysis</h2>
         <div className={styles.callback}>
-        <h3>
-          Please copy this transcribe url below to access your results or
-          refresh after some time.
-        </h3>
-        <p>https://heed.hng.tech/try-results/{transcribeId}</p>
-      </div>
+          <h3>
+            Please copy this transcribe url below to access your results or
+            refresh after some time.
+          </h3>
+          <p>https://heed.hng.tech/try-results/{transcribeId}</p>
+        </div>
         <div className={styles.recordingName}>
           <div className={styles.recordingImage}>
             <img src={RecordingName} alt="some" />
