@@ -86,6 +86,11 @@
                   gap: 0rem;
                }
             }
+            >img{
+               @include media(550px) {
+                  width: 15%;
+               }
+            }
         }
         .paragraph{
             font-family: 'Kanit';

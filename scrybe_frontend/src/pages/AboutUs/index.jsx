@@ -62,7 +62,11 @@ function About() {
               </p>
             </div>
             <div className={styles.hero__image}>
-              <img src={HeroIcon} alt="hero figure" />
+              <img
+                src={HeroIcon}
+                alt="hero figure"
+                className={styles.hero__figure}
+              />
             </div>
           </div>
         </div>

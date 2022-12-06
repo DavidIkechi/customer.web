@@ -52,7 +52,7 @@ const TotalRecording = ({ totalRecordingData }) => {
     } else {
       setSelectedTotalRecordings([]);
     }
-  }, []);
+  }, [totalRecordingData]);
 
   function recordingsTimeStampFunc(e) {
     setSelectedTotalRecordings(totalRecordingData[e.target.value]);
@@ -79,7 +79,9 @@ const TotalRecording = ({ totalRecordingData }) => {
       {selectedTotalRecordings.length > 0 ? (
         <div className={styles.recordings__chart}>
           <div>
-            <h1 className={styles.totalNumber}>9436</h1>
+            <h1 className={styles.totalNumber}>
+              {selectedTotalRecordings.map((data) => data.total_recording)}
+            </h1>
             <Bar options={chartOptions} data={chartData} />
           </div>
         </div>

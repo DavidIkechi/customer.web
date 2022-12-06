@@ -27,7 +27,7 @@ function ForgetPassword() {
         /* TODO:
           - When CheckEmail page is implemented, this page should redirect there instead of SetNewPassword
         */
-        navigate(`/set-new-password?token=${res.data}`);
+        navigate("/check-mail");
       });
   };
 
@@ -69,7 +69,8 @@ function ForgetPassword() {
                 className={`${isValid && styles.submitValid}`}
               />
               <p>
-                Don't have an account? <NavLink to={"/"}>Sign up</NavLink>
+                Don't have an account?{" "}
+                <NavLink to={"/create-account"}>Sign up</NavLink>
               </p>
             </form>
           </div>

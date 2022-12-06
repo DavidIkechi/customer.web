@@ -1,0 +1,497 @@
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500;600;700&display=swap");
+
+/* Implementing new design for Leaderbaord*/
+.right_section h2 {
+  color: #434342;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.right_section p {
+  font-size: 16px;
+  font-weight: 300;
+  text-align: justify;
+  margin-bottom: 0.5rem;
+}
+
+.long_paragraph {
+  font-size: 16px;
+  font-weight: 300;
+  text-align: justify;
+  margin-right: 12rem;
+}
+
+.right_section h6 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+/* End of styling new design for Leaderbord */
+
+
+.content_container {
+  background-color: #fefefd;
+  // display: grid;
+  // grid-template-columns: 0.8fr 2.5fr;
+  width: 100%;
+  font-family: "Kanit", sans-serif;
+  height: 100vh;
+    position: relative;
+    overflow-y: scroll;
+
+}
+
+.right_section {
+  background-color: #fefefd;
+  //   margin-left: 15px;
+  //   margin-right: 15px;
+  padding: 2rem;
+}
+
+.InputWithIcon {
+  position: relative;
+}
+
+.InputWithIcon img {
+  position: absolute;
+  left: 0;
+  top: 10px;
+  padding: 0 20px;
+}
+
+input {
+  width: 120%;
+  border: 1px solid #c5c5c5b2;
+  padding: 8px 15px;
+  border-radius: 5px;
+  // background-color: #ECECEC;
+  outline: none;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.InputWithIcon input {
+  padding-left: 20px;
+}
+
+select {
+  outline: none;
+  border-radius: 5px;
+  background-color: none;
+  font-size: 16px;
+  color: #6a6a6a;
+  font-weight: 300;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid #006cff;
+}
+
+.right_content2_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.calender_content {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+}
+
+#sort_by {
+  font-size: 16px;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: rem;
+}
+
+.Profile_container {
+  display: flex;
+  flex-direction: row;
+  // grid-template-columns: 2fr 2fr 2fr;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.Profile1 {
+  text-align: center;
+  margin-top: 3rem;
+  background-color: #e6f0ff;
+}
+
+.Profile2 {
+  text-align: center;
+  margin-top: 3rem;
+  background-color: #edf9f0;
+}
+
+.Profile3 {
+  text-align: center;
+  margin-top: 3rem;
+  background-color: #fffdeb;
+}
+
+.Profile_content {
+  // background-color: rgb(213, 17, 17);
+  padding: 1rem 2rem;
+}
+
+.Like_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.Like_icon_content {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.Like_content1 {
+  gap: 2rem;
+}
+
+.Like_text {
+  font-size: 10px;
+}
+
+.Profile_content h2 {
+  font-size: 20px;
+  font-weight: 600;
+  padding-top: 1rem;
+}
+
+.Profile_img img {
+  margin-right: auto;
+  margin-left: auto;
+  display: block;
+}
+
+.Profile_content h1 {
+  font-size: 48px;
+  font-weight: 600;
+  color: #006cff;
+}
+
+.Profile_content p {
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.small_text {
+  font-size: 14px;
+  color: #6a6a6a;
+  font-weight: 600;
+}
+
+.Agent_position {
+  font-size: 20px;
+  font-weight: 300;
+  color: #454545;
+}
+
+.right_section_top {
+  display: flex;
+  flex-direction: row;
+  background-color: #ffffff;
+  padding-bottom: 0.5rem;
+  justify-content: space-between;
+}
+
+/* Tabular Styling */
+
+.Hide_for_desktop{
+  display: none;
+}
+.Tabular_Container {
+padding: 1rem 4rem;
+
+}
+
+.Tabular_Content_Container {
+  background-color: #ffffff;
+  padding: 1.5rem;
+}
+
+.Header_title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.Header_title p{
+  font-size: 18px;
+  font-weight: 400;
+}
+
+hr {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.Header_content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.Header_content p{
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.Header_profile_container {
+  display: flex;
+  flex-direction: row;
+  gap: 0.8rem;
+}
+
+/* Media query*/
+@media screen and (min-width: 950px) and (max-width: 1180px) {
+  .left_section {
+    display: none;
+  }
+
+  .Tabular_Container {
+    padding: 0rem 0rem;
+
+    }
+
+  .content_container {
+    background-color: #f1f1f1;
+    display: grid;
+    grid-template-columns: 2.5fr;
+    font-family: "Kanit", sans-serif;
+  }
+}
+
+@media screen and (min-width: 401px) and (max-width: 949px) {
+  .left_section {
+    display: none;
+  }
+
+  .Tabular_Container {
+    padding: 0rem 0rem;
+
+    }
+
+  .content_container {
+    background-color: #f1f1f1;
+    display: grid;
+    grid-template-columns: 2.5fr;
+    font-family: "Kanit", sans-serif;
+  }
+
+  .Profile_container {
+    padding: 25px;
+    display: grid;
+    grid-template-columns: 2fr;
+    gap: 1.5rem;
+  }
+
+  .Page_num_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    margin-bottom: 5rem;
+  }
+
+  input {
+    width: 80%;
+  }
+
+  //    .right_section_top{
+  //     display: flex;
+  //     flex-direction: row;
+  //     background-color: #ffffff;
+  //     margin-bottom: 2rem;
+  //     padding-bottom: 0.5rem;
+  //     padding-top: 1rem;
+  //     padding-left: 2rem;
+  //     padding-right: 2rem;
+  //     justify-content: space-between;
+
+  //  }
+}
+
+/* For Topbar only  */
+@media screen and (min-width: 461px) and (max-width: 650px) {
+  .Upload_profile_container {
+    display: flex;
+    flex-direction: row;
+    gap: 5rem;
+  }
+
+
+  .Tabular_Container {
+    padding: 0rem 0rem;
+
+    }
+
+  input {
+    width: 80%;
+  }
+
+  .long_paragraph {
+    font-size: 16px;
+    font-weight: 300;
+    text-align: justify;
+    margin-right: 0rem;
+  }
+
+  #sort_by {
+    font-size: 14px;
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: rem;
+  }
+}
+
+@media screen and (min-width: 401px) and (max-width: 460px) {
+  .Upload_profile_container {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .Tabular_Container {
+    padding: 0rem 0rem;
+
+    }
+
+    .Hide_for_mobile{
+      display: none;
+    }
+
+    .Hide_for_desktop{
+      display: block;
+    }
+
+    .Header_title {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .Header_content p{
+      font-size: 14px;
+      font-weight: 300;
+    }
+
+    .Header_title p{
+      font-size: 16px;
+      font-weight: 400;
+
+    }
+
+  input {
+    width: 80%;
+  }
+
+  #hide_for_mobile {
+    display: none;
+  }
+
+  .long_paragraph {
+    font-size: 16px;
+    font-weight: 300;
+    text-align: justify;
+    margin-right: 0rem;
+  }
+
+  .right_content2_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 2rem;
+    gap: 1rem;
+  }
+}
+
+@media screen and (min-width: 350px) and (max-width: 400px) {
+  .left_section {
+    display: none;
+  }
+
+  .Hide_for_mobile{
+    display: none;
+  }
+
+  .Hide_for_desktop{
+    display: block;
+  }
+
+  .Header_title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .Header_content p{
+    font-size: 14px;
+    font-weight: 300;
+  }
+
+  .Header_title p{
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .Profile_container {
+    padding: 25px;
+    display: grid;
+    grid-template-columns: 2fr;
+    gap: 1.5rem;
+  }
+
+  .Tabular_Container {
+    padding: 0rem 0rem;
+
+    }
+
+    .Hide_for_mobile{
+       display: none;
+    }
+  .right_section {
+    background-color: #ececec;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  input {
+    width: 80%;
+  }
+  .right_content2_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 2rem;
+    gap: 1rem;
+  }
+
+  .long_paragraph {
+    font-size: 16px;
+    font-weight: 300;
+    text-align: justify;
+    margin-right: 0rem;
+  }
+
+
+}
+
+// @media (max-width: 350px) {
+
+//   .Upload_button{
+//     display: none;
+//   }
+// }
