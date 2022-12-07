@@ -1,6 +1,4 @@
 import axios from "axios";
-
-// this file will be used to fetch the current user from backend
 const config = {
   withCredentials: true,
   headers: {
@@ -8,6 +6,11 @@ const config = {
   },
 };
 export const fetchCurrentUser = async () => {
-  const res = await axios.get("account", config);
-  return res.data;
+  try {
+    const res = await axios.get("account", config);
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
