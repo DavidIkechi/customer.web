@@ -3,8 +3,10 @@ import React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
+import ApiService from "../../helpers/axioshelp/apis";
 import footerImg from "./assets/signup-img.svg";
 import styles from "./SignUp.module.scss";
+import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
 
 function Signup() {
   const [first_name, setFirstName] = useState("");
@@ -101,11 +103,13 @@ function Signup() {
       password: password,
     };
     setIsLoading(true);
-    const res = await axios.post("create_users", data);
-    setIsLoading(false);
-    if (res.status === 200) {
+    try {
+      const res = await ApiService.SignUp(data);
+      setIsLoading(false);
+
       navigate("/verify-signup");
-    } else {
+    } catch (error) {
+      console.log(ErrorHandler(error));
     }
   };
 

@@ -6,7 +6,7 @@ class Service {
   }
 
   async SignUp(data) {
-    return this.request.post(`/login`, data);
+    return this.request.post(`/create_users`, data);
   }
 
   async GetTotalUserRecordings() {
