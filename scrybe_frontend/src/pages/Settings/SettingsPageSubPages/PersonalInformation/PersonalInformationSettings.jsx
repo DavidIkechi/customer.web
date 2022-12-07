@@ -1,16 +1,14 @@
 import axios from "axios";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import Footer from "../../../../components/Footer";
 import BlueEditPen from "../../assets/icons/blue-pencil.png";
 import BlackEditPen from "../../assets/icons/edit.svg";
 import ProfilePic from "../../assets/images/Pic.png";
 import RedirectNav from "../../Components/SettingsPageRedirectNav/SettingsPageRedirectNav";
 import PersonalInfo from "./PersonalInformationSettings.module.scss";
-import Cookies from "js-cookie";
 
 const PersonalInformation = ({ accountUser }) => {
+  // const [file, setFile] = useState({ file: { name: "", progress: 0 } });
   const {
     register,
     handleSubmit,
@@ -18,84 +16,107 @@ const PersonalInformation = ({ accountUser }) => {
     formState: { errors },
   } = useForm();
 
-  const baseUrl = "https://api.heed.hng.tech";
   const submitCallback = () => {
     // window.scrollTo(0, 0);
-    const config = {
-      headers: {
-        Accept: "application/json",
-        // Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
-        Authorization: `Bearer ${Cookies.get("heedAccessToken")}`,
-      },
+    console.log(company_image[0]);
+    const token = localStorage.getItem("heedAccessToken");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
     };
+    const data = new FormData();
+    data.append("firstname", firstname || accountUser.first_name);
+    data.append("lastname", lastname || accountUser.last_name);
+    data.append("company_name", company_name || accountUser.company_name);
+    data.append(
+      "company_address",
+      company_address || accountUser.company_address
+    );
+    data.append("phone_number", phone_number || accountUser.phone_number);
+    data.append("image_file", company_image[0] || accountUser.company_logo_url);
     axios
-      .patch(baseUrl + "/users/update_profile", config, {
-        first_name: first_name,
-        last_name: last_name,
-        phone_number: phone_number,
-        company_address: company_address,
-        image_file: "string",
+      .request({
+        method: "patch",
+        url: "https://api.heed.hng.tech/users/update_profile",
+        data: data,
+        headers,
       })
       .then((res) => {
         if (res.status) {
-          console.log("success");
+          console.log(res.data);
         }
       })
       .catch((err) => {
-        console.log(err);
+        // if (err) console.log(err.toJSON());
+        console.log(err.response);
       });
   };
 
-  const first_name = watch("first_name");
-  const last_name = watch("last_name");
+  const firstname = watch("firstname");
+  const lastname = watch("lastname");
   const phone_number = watch("phone_number");
+  const company_name = watch("company_name");
   const company_address = watch("company_address");
   const company_image = watch("company_image");
 
   const isValid =
-    first_name || last_name || phone_number || company_address || company_image;
+    firstname ||
+    lastname ||
+    phone_number ||
+    company_name ||
+    company_address ||
+    company_image;
 
   return (
     <>
       <RedirectNav />
       <div className="PersonalInfo-Container">
         <div className={PersonalInfo.PersonalInfo_wrapper}>
-          <div className={PersonalInfo.PersonalInfo_header}>
-            <img
-              className={PersonalInfo.profilePic}
-              src={ProfilePic}
-              alt="profile pic"
-            />
-            <div className={PersonalInfo.changeImg}>
-              <Link to="">
-                <img src={BlueEditPen} alt="pencil icon to edit profile pic" />
-                <span>Change profile picture</span>
-              </Link>
-            </div>
-          </div>
           <div className={PersonalInfo.PersonalInfo_form}>
             <form onSubmit={handleSubmit(submitCallback)}>
+              <div className={`${PersonalInfo.PersonalInfo_header}`}>
+                <img
+                  className={PersonalInfo.profilePic}
+                  src={accountUser.company_logo_url}
+                  alt="profile pic"
+                />
+                <div className={PersonalInfo.changeImg}>
+                  <label htmlFor="company_image">
+                    <img
+                      src={BlueEditPen}
+                      alt="pencil icon to edit profile pic"
+                    />
+                    <span>Change profile picture</span>
+                  </label>
+                </div>
+                <input
+                  type="file"
+                  name="company_image"
+                  id="company_image"
+                  value={accountUser.company_image_url}
+                  hidden
+                  {...register("company_image")}
+                />
+              </div>
               <div className={PersonalInfo.row}>
                 <div className={PersonalInfo.formGroup}>
-                  <label htmlFor="first_name">First name</label>
+                  <label htmlFor="firstname">First name</label>
                   <input
                     type="text"
-                    name="first_name"
-                    id="first_name"
-                    value={accountUser.first_name}
+                    name="firstname"
+                    id="firstname"
                     placeholder={accountUser.first_name}
-                    {...register("first_name")}
+                    {...register("firstname")}
                   />
                 </div>
                 <div className={PersonalInfo.formGroup}>
                   <label htmlFor="">Last name</label>
                   <input
                     type="text"
-                    name="last_name"
-                    id="last_name"
-                    value={accountUser.last_name}
+                    name="lastname"
+                    id="lastname"
                     placeholder={accountUser.last_name}
-                    {...register("last_name")}
+                    {...register("lastname")}
                   />
                 </div>
               </div>
@@ -105,7 +126,6 @@ const PersonalInformation = ({ accountUser }) => {
                   type="tel"
                   name="phone_number"
                   id="phone_number"
-                  value={accountUser.phone_number}
                   placeholder={accountUser.phone_number}
                   {...register("phone_number")}
                 />
@@ -116,7 +136,6 @@ const PersonalInformation = ({ accountUser }) => {
                   type="text"
                   name="company_name"
                   id="company_name"
-                  value={accountUser.company_name}
                   placeholder={accountUser.company_name}
                   {...register("company_name")}
                 />
@@ -127,7 +146,6 @@ const PersonalInformation = ({ accountUser }) => {
                   type="text"
                   name="company_address"
                   id="company_address"
-                  value={accountUser.company_address}
                   placeholder={accountUser.company_address}
                   {...register("company_address")}
                 />
@@ -152,9 +170,6 @@ const PersonalInformation = ({ accountUser }) => {
               </div>
             </form>
           </div>
-        </div>
-        <div className={PersonalInfo.subpages_footer}>
-          <Footer />
         </div>
       </div>
     </>
