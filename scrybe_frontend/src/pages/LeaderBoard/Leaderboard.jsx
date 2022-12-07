@@ -22,37 +22,6 @@ function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState([]);
   const [otherAgent, setOtherAgent] = useState([]);
 
-  // function loadAgentActivity() {
-  //   // NOTE: you don't need to loginevery time you are making this call
-  //   // const userCredentials = {
-  //   //   username: "tekkieware@gmail.com",
-  //   //   password: "123456",
-  //   // };
-  //   // axios
-  //   //   .post("https://api.heed.hng.tech/login", userCredentials)
-  //   //   .then((response) => {
-  //   //     console.log("token response===>", response.data);
-  //   //   });
-  //   // Before i push, remove line 55 & uncomment line 54, confirm that the token stored in the local storage has a key of token, personally array functions, handle promise, http protocol, axios api  //
-  //   // const token = localStorage.getItem("heedAccessToken");
-  //   const token =
-  //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZWtraWV3YXJlQGdtYWlsLmNvbSIsImV4cCI6MTY3MDE4Nzk5NH0.wQOff8gY8EZhDetiuIY_MevgyaqU0-jUDhtCc6rS9aQ"; //access_token
-  //   const headers = { Authorization: `Bearer ${token}` };
-  //   axios
-  //     .get("https://api.heed.hng.tech/leaderboard", { headers })
-  //     .then((response) => {
-  //       console.log(response.data["Top3 Agents"]);
-  //       const arr = response.data["Top3 Agents"];
-  //       console.log(response.data["Other Agents"]);
-  //       const otherAgents = response.data["Other Agents"];
-  //       setLeaderboard(arr);
-  //       setOtherAgent(otherAgents);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }
-
   async function accessData() {
     const token = localStorage.getItem("heedAccessToken");
     const config = {
@@ -186,16 +155,6 @@ function Leaderboard() {
         </section>
 
         <section className={styles.Tabular_Container}>
-          {otherAgent.map((profile) => (
-            <OtherAgentDisplay
-              key={profile.agent_id}
-              person={profile}
-              handleAgent={handleAgent}
-              agent_id={profile.agent_id}
-              rank={profile.rank}
-              show={profile.str_agent_id}
-            />
-          ))}
           <div className={styles.Tabular_Content_Container}>
             <div className={styles.Header_title}>
               <p className={styles.Hide_for_mobile}>ID NUMBER</p>
@@ -214,6 +173,16 @@ function Leaderboard() {
               </span>
             </div>
             <hr></hr>
+            {otherAgent.map((profile) => (
+              <OtherAgentDisplay
+                key={profile.agent_id}
+                person={profile}
+                handleAgent={handleAgent}
+                agent_id={profile.agent_id}
+                rank={profile.rank}
+                show={profile.str_agent_id}
+              />
+            ))}
             {/* <div className={styles.Header_content}>
               <div className={styles.Header_profile_container}>
                 <img src={ProfileName} className="" alt="profile1" />
@@ -268,6 +237,8 @@ function LeaderBoardDisplay({
   return (
     <div
       className={styles.Profile1}
+      id={styles.border}
+      style={{ background: bgMap[index] }}
       onClick={() => handleAgent(agent_id, rank, show)}
     >
       <div className={styles.Profile_content}>
