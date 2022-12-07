@@ -26,9 +26,9 @@ function Account() {
 
   async function getUser() {
     try {
-      // const res = await ApiService.Account();
-      // console.log("hey");
-      // setAccountUser(res.data);
+      const res = await ApiService.Account();
+      console.log("hey");
+      setAccountUser(res.data);
     } catch (err) {
       console.log("err");
       if (err.response.status === 401) {
@@ -212,15 +212,14 @@ function Account() {
                     {accountUser?.is_admin && <p>Administrator</p>}
                   </div>
                 </div>
-              </div>
-              <div className={accountStyles.profile__settings_btn}>
-                <Link to="/settings">Edit Profile</Link>
-              </div>
-            </section>
-            <section className={accountStyles.body__section}>
-              <div className={accountStyles.personal_info__div}>
-                <p>Personal Information</p>
-                <div>
+                <div className={accountStyles.profile__settings_btn}>
+                  <Link to="/settings">Edit Profile</Link>
+                </div>
+              </section>
+              <section className={accountStyles.body__section}>
+                <div className={accountStyles.personal_info__div}>
+                  <p>Personal Information</p>
+                </div>
                 <div className={accountStyles.profile__settings_btn}>
                   <Link to="/settings">Go to Settings</Link>
                 </div>
