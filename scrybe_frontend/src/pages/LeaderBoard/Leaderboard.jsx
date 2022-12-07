@@ -20,7 +20,9 @@ function Leaderboard() {
   const [toggleSidebar, setToggleSidebar] = React.useState(false);
 
   const [leaderboard, setLeaderboard] = useState([]);
+  const [data, setData] = useState(null);
   const [otherAgent, setOtherAgent] = useState([]);
+  const [range, setRange] = useState("week");
 
   async function accessData() {
     const token = localStorage.getItem("heedAccessToken");
@@ -36,6 +38,7 @@ function Leaderboard() {
         console.error(error);
       });
     const arr = response.data.week.Top3_Agents;
+    setData(response.data);
     setLeaderboard(arr);
     const otherAgents = response.data.week.Other_Agents;
     setOtherAgent(otherAgents);
@@ -44,6 +47,19 @@ function Leaderboard() {
   useEffect(() => {
     accessData();
   }, []);
+
+  useEffect(() => {
+    if (data) {
+      if (range === "week") {
+        setLeaderboard(data.week.Top3_Agents);
+        setOtherAgent(data.week.Other_Agents);
+      }
+      if (range === "month") {
+        setLeaderboard(data.month.Top3_Agents);
+        setOtherAgent(data.month.Other_Agents);
+      }
+    }
+  }, [range, data]);
 
   // implemented by rambey
   const [controll, setControll] = useState(false);
@@ -131,9 +147,13 @@ function Leaderboard() {
                 <div>
                   <p id={styles.sort_by}>Sort by </p>
                 </div>
-                <select id="calender-value" name="calender">
-                  <option value="This week">This week</option>
-                  <option value="This month">This month</option>
+                <select
+                  id="calender-value"
+                  name="calender"
+                  onChange={(e) => setRange(e.target.value)}
+                >
+                  <option value="week">This week</option>
+                  <option value="month">This month</option>
                 </select>
               </div>
             </div>
