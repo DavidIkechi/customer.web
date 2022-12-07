@@ -1,6 +1,7 @@
 .uploaded_recordings {
   padding: 2rem !important;
   background: #f9f9f9;
+  // height: 100%;
 }
 
 .no_items_found .uploaded_table_wrap {
@@ -287,6 +288,7 @@
   justify-content: space-between;
   align-items: center;
   margin: 1rem;
+  padding: 1rem 0;
   .bulkbtn_calbackurl_wrap {
     display: flex !important;
     margin-left: 2rem;
@@ -352,8 +354,8 @@
       line-height: 24px;
       color: #434343;
       background: #ffffff;
-      cursor: pointer;
       appearance: none;
+      user-select: none;
       -webkit-appearance: none;
       -moz-appearance: none;
       -ms-appearance: none;
@@ -379,7 +381,7 @@
       }
       .bulkselect_children {
         position: absolute;
-        top: 0;
+        top: 100%;
         left: 0;
         width: max-content;
         height: max-content;
@@ -395,6 +397,17 @@
         font-size: 14px;
         line-height: 20px;
         display: none;
+        strong {
+          padding: 2px 0;
+          font-family: "Kanit";
+          font-style: normal;
+          font-weight: 300;
+          font-size: 14px;
+          line-height: 20px;
+          color: #535353;
+          text-align: center;
+          padding-top: 5px;
+        }
         p {
           padding: 2px 0;
           font-family: "Kanit";
@@ -403,6 +416,22 @@
           font-size: 14px;
           line-height: 20px;
           color: #535353;
+          cursor: pointer;
+          text-align: center;
+          padding-top: 5px;
+          transition: all 0.3s ease-in-out;
+          -webkit-transition: all 0.3s ease-in-out;
+          -moz-transition: all 0.3s ease-in-out;
+          -ms-transition: all 0.3s ease-in-out;
+          -o-transition: all 0.3s ease-in-out;
+          &:hover {
+            color: #006cff;
+            transform: scale(1.1);
+            -webkit-transform: scale(1.1);
+            -moz-transform: scale(1.1);
+            -ms-transform: scale(1.1);
+            -o-transform: scale(1.1);
+          }
         }
         :nth-child(1) {
           border-bottom: 0.5px solid rgba(18, 18, 18, 0.1);
