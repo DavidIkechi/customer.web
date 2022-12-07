@@ -255,8 +255,7 @@ function App() {
         {/* Press  */}
         {/* <Route path="press" element={<Press />} />
         <Route path="/partners" element={<PartnersPage />} />
-        <Route path="press-article" element={<PressArticle />} />
-        <Route path="pricing" element={<Pricing />} /> */}
+        <Route path="press-article" element={<PressArticle />} /> */}
       </Routes>
     </>
   );
