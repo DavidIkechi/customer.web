@@ -4,57 +4,24 @@ import close from "./assets/icon.svg";
 import Charts from "./components/ChartContainer";
 import AgentDetails from "./components/AgentDetails";
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { agentData } from "./components/Data";
 import { useAgentReport } from "./hooks";
+import { useAgentAnalysis } from "./hooks";
 
+// { recentAgentReport, agentAnalysis}
 const Content = () => {
-  const agentReport = useAgentReport();
-
-  // chart data
-
-  const [agentDets, setAgentDets] = useState({});
-  const [data_id, setData_id] = useState("5");
-
-  useEffect(() => {
-    const data =
-      "grant_type=&username=rambeybello%40gmail.com&password=aaaaaaaa&scope=&client_id=&client_secret=";
-    axios.post("https://api.heed.hng.tech/login", data).then((res) => {
-      const headers = {
-        Authorization: `Bearer ${res.data.access_token}`,
-      };
-      axios
-        .get(
-          `https://api.heed.hng.tech/total-agent-analysis?agent_id=${data_id}`,
-          {
-            headers,
-          }
-        )
-        .then((res) => {
-          console.log(res.data);
-          setAgentDets(res.data);
-        });
-    });
-  }, []);
-
-  // console.log(agentDets);
-  // chart data
-
+  const agentReportData = useAgentReport();
+  const agentAnalysisData = useAgentAnalysis();
   const [selectReport, setSelectReport] = useState([]);
 
+  useEffect(() => {
+    setSelectReport(agentAnalysisData.week);
+  }, [agentAnalysisData]);
+
   const handleDate = (e) => {
-    setSelectReport(agentData[e.target.value]);
-    // setSelectReport(agentDets[e.target.value]);
+    setSelectReport(agentAnalysisData[e.target.value]);
   };
 
-  useEffect(() => {
-    setSelectReport(agentData.week);
-    // setSelectReport(agentDets.week);
-    // console.log(selectReport);
-  }, []);
-
   return (
-    // <div className={styles.container}>
     <div className={styles.mainWrapper}>
       <div className={styles.header}>
         <h1>Agent Report</h1>
@@ -62,21 +29,15 @@ const Content = () => {
       </div>
 
       <div className={styles.idcont}>
-        <>
-          {agentReport.map((detail) => {
-            return (
-              <div className={styles.agentId}>
-                <p className={styles.secondp}>
-                  Agent ID: &nbsp; &nbsp; {detail.agent_id}
-                </p>
+        <div className={styles.agentId}>
+          <p className={styles.secondp}>
+            Agent ID: &nbsp; &nbsp; {agentReportData?.str_agent_id}
+          </p>
 
-                <p className={styles.secondp}>
-                  Rank: &nbsp; &nbsp; {detail.rank}
-                </p>
-              </div>
-            );
-          })}
-        </>
+          <p className={styles.secondp}>
+            Rank: &nbsp; &nbsp; {agentReportData?.rank}
+          </p>
+        </div>
 
         <div className={styles.select}>
           <p>View by</p>
@@ -87,11 +48,15 @@ const Content = () => {
         </div>
       </div>
       <div className={styles.topDetailsDiv}>
-        <Charts selectReport={selectReport} />
-        <AgentDetails />
+        <Charts
+          // agentAnalysis={agentAnalysis}
+          selectReport={selectReport}
+        />
+        <AgentDetails
+        // recentAgentReport={recentAgentReport}
+        />
       </div>
     </div>
-    // </div>
   );
 };
 

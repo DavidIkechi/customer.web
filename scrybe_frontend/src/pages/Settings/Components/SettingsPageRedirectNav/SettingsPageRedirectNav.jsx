@@ -7,7 +7,7 @@ const RedirectNav = () => {
   return (
     <div>
       <div
-        style={{ backgroundColor: window.innerWidth > 768 ? "#e6f0ff" : "" }}
+        style={{ backgroundColor: window.innerWidth > 768 ? "#FFF9C2" : "" }}
         className={RedirectNavCss.nav}
       >
         <Link to="/settings" className={RedirectNavCss.nav__link}>

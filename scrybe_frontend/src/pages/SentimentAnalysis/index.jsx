@@ -9,8 +9,8 @@ import SentimentAside from "./components/SentimentAside";
 import OverAllSentimentCard from "./components/OverallSentimentCard";
 import VerdictCard from "./components/VerdictCard";
 import PhraseTagCard from "./components/PhraseTagCard";
-import SideBar from "../../components/SideBar";
-import { useMockEnd } from "./hooks";
+// import SideBar from "../../components/SideBar";
+import { useMockAuthAndReadSentiment } from "./hooks";
 import NewDesignSideBar from "../../components/NewDesignSidebar/index";
 import TopNav from "../../components/TopNav";
 
@@ -18,8 +18,8 @@ function SentimentAnalysis() {
   const [isMobileAsideOpen, setIsMobileAsideOpen] = useState(false);
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const params = useParams();
-  const sentimentData = useMockEnd(parseInt(params.AudioId));
-
+  const sentimentData = useMockAuthAndReadSentiment(params.AudioId);
+  console.log(params.AudioId);
   const positiveTags = [
     "brave",
     "good",

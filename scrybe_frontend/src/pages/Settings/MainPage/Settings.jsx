@@ -1,5 +1,6 @@
 import React from "react";
-import SideBar from "../../../components/SideBar";
+import { useNavigate } from "react-router-dom";
+import NewDesignSidebar from "../../../components/NewDesignSidebar";
 import ChevronRight from "../assets/icons/chevron-right.svg";
 import ProfilePic from "../assets/images/Pic.png";
 import Overlay from "../Components/SettingsPageOverlay/SettingsPageOverlay";
@@ -7,8 +8,8 @@ import AccountSetting from "../SettingsPageSubPages/AccountSettings/AccountSetti
 import Notification from "../SettingsPageSubPages/Notifications/NotificationSettings";
 import PersonalInformation from "../SettingsPageSubPages/PersonalInformation/PersonalInformationSettings";
 import MainPageCss from "./Settings.module.scss";
-// import NavBar from "../../../components/navBar/index";
-import Footer from "../../../components/Footer";
+import axios from "axios";
+import TopNav from "../../../components/TopNav";
 
 import { Link } from "react-router-dom";
 
@@ -16,9 +17,8 @@ const MainPage = () => {
   const cardDetails = [
     {
       path: "personal-information",
-      title: "Personal information",
-      description:
-        "Change/verify your email address, and set your profile picture",
+      title: "Account information",
+      description: "Change your account details and set your profile picture",
     },
     {
       path: "account-security",
@@ -36,8 +36,12 @@ const MainPage = () => {
   const [isPage, setPage] = React.useState(true);
   const [isAccountPage, setIsAccountPage] = React.useState(false);
   const [isNotificationPage, setIsNotificationPage] = React.useState(false);
+  const [accountUser, setAccountUser] = React.useState();
 
   const [showModal, setShowModal] = React.useState(false);
+  const [toggleSidebar, setToggleSidebar] = React.useState(false);
+
+  const navigate = useNavigate();
 
   const togglePage = (page) => {
     if (page === "Personal information") {
@@ -57,6 +61,34 @@ const MainPage = () => {
     }
   };
 
+  async function getUser() {
+    await axios
+      // Get user details from backend
+      .get("https://api.heed.hng.tech/account", {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
+        },
+      })
+      .then((res) => {
+        setAccountUser(res.data);
+      })
+      .catch((err) => {
+        // Redirect to Signin Page if authentication error
+        if (err.response.status === 401) {
+          navigate("/signin");
+        } else {
+          // In case of error, log to the console
+          console.log("Server returned the following error:");
+          console.log(err);
+        }
+      });
+  }
+
+  React.useEffect(() => {
+    getUser();
+  });
+
   React.useEffect(() => {
     if (window.innerWidth < 768) {
       setIsMobile(true);
@@ -67,9 +99,18 @@ const MainPage = () => {
 
   return (
     <>
-      <SideBar>
-        <div className={MainPageCss.mainpage__wrapper}>
+      <div className={MainPageCss.mainpage__wrapper}>
+        <NewDesignSidebar
+          toggleSidebar={toggleSidebar}
+          needSearchMobile="needSearchMobile"
+          closeSidebar={() => setToggleSidebar(!toggleSidebar)}
+        >
           <div className={MainPageCss.mainpage__container}>
+            <TopNav
+              openSidebar={() => {
+                setToggleSidebar(!toggleSidebar);
+              }}
+            />
             <div className={MainPageCss.mainpage_container}>
               <div className={MainPageCss.mainpage_wrapper}>
                 <div className={MainPageCss.mainpage_header}>
@@ -77,14 +118,26 @@ const MainPage = () => {
                 </div>
                 <div className={MainPageCss.mainpage_profileCard}>
                   <div className={MainPageCss.image}>
-                    <img src={ProfilePic} alt="profile" className="" />
+                    {accountUser &&
+                      (accountUser?.company_logo_url ? (
+                        <img
+                          src={accountUser?.company_logo_url}
+                          alt="User's profile"
+                        />
+                      ) : (
+                        accountUser?.first_name[0] +
+                        "" +
+                        accountUser?.last_name[0]
+                      ))}
                   </div>
                   <div className={MainPageCss.mainpage_textContent}>
-                    <h2>John Doe</h2>
-                    <p className={MainPageCss.title}>Administrator</p>
-                    <p className={MainPageCss.email}>
-                      johndoe.admin@businessemail.com
-                    </p>
+                    <h2>
+                      {accountUser?.first_name + " " + accountUser?.last_name}
+                    </h2>
+                    {accountUser?.is_admin && (
+                      <p className={MainPageCss.title}>Administrator</p>
+                    )}
+                    <p className={MainPageCss.email}>{accountUser?.email}</p>
                   </div>
                 </div>
                 <section className={MainPageCss.mainpage_options}>
@@ -105,7 +158,9 @@ const MainPage = () => {
                         <img src={ChevronRight} alt="" />
                       </div>
                       <p
-                        style={{ color: isPage && !isMobile ? "#002D6B" : "" }}
+                        style={{
+                          color: isPage && !isMobile ? "#002D6B" : "",
+                        }}
                       >
                         {cardDetails[0].description}
                       </p>
@@ -194,12 +249,9 @@ const MainPage = () => {
                 {isNotificationPage && !isMobile && <Notification />}
               </div>
             </div>
-            <div className={MainPageCss.mainpage_footer}>
-              <Footer />
-            </div>
           </div>
-        </div>
-      </SideBar>
+        </NewDesignSidebar>
+      </div>
     </>
   );
 };
