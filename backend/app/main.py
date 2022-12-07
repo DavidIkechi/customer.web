@@ -14,7 +14,7 @@ from routers.transcribe import transcript_router
 from routers.score import score_count
 import models, json
 from auth import get_active_user, get_current_user, get_admin
-from jwt import main_login, get_access_token, verify_password
+from jwt import main_login, get_access_token
 
 
 from authlib.integrations.starlette_client import OAuth
@@ -321,16 +321,51 @@ def read_user(user_id: int, db: Session = Depends(get_db), user: models.User = D
 
 @app.patch("/users/update_profile", summary="Update user profile details", status_code=status.HTTP_200_OK, tags=['users'])
 def update_profile( 
-                   first_name:Optional[str] = Form(None), 
-                   last_name:Optional[str] = Form(None), 
+                   firstname:Optional[str] = Form(None), 
+                   lastname:Optional[str] = Form(None), 
                    company_name: Optional[str] = Form(None), 
                    company_address:Optional[str] = Form(None), 
                    phone_number: Optional[str] = Form(None), 
                    db:Session = Depends(get_db), 
                    current_user:schema.User = Depends(get_active_user),
                   image_file: Optional[UploadFile] = File(None, description="Company Profile Image/Logo")):
-    return crud.update_user_profile(db=db, first_name=firstname, last_name=lastname,company_address=company_address,
-                               company_name=company_name, phone_number=phone_number, current_user=current_user, image_file=image_file)
+    user_profile = db.query(models.UserProfile).filter(models.UserProfile.id == current_user.id).first()
+    if user_profile is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                        detail=f"The Profile for user with id {current_user.id} does not exist")
+        
+    if user_profile.id != current_user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , 
+                                    detail="Not authorized to perform requested action")
+        
+    user = db.query(models.User).filter(models.User.id == user_profile.id).first()
+    company = db.query(models.Company).filter(models.Company.id == user.company_id).first()
+    field_names = [company_name, company_address, phone_number, firstname, lastname, image_file]
+    for field in field_names:
+        if field == None:
+            pass
+        elif field is company_name:
+            company.name = company_name
+        elif field is company_address:
+            user_profile.company_address = company_address
+        elif field is phone_number:
+            user_profile.phone_number = phone_number
+        elif field is firstname:
+            user.first_name = firstname  
+        elif field is lastname:
+           user.last_name = lastname
+        else:
+            try:
+                image_response = cloudinary.uploader.upload(image_file.file)
+                image_url = image_response.get("secure_url") 
+                user_profile.company_logo_url = image_url        
+            except Exception:
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="There was an error uploading the file")
+
+    db.commit() 
+    db.refresh(company)
+    db.refresh(user_profile)
+    return user_profile
 
     
            
@@ -698,26 +733,6 @@ async def reset_password(token: str, new_password: schema.UpdatePassword, db: Se
     return reset_done
 
 
-
-@app.patch('/change-password', summary = "change password", tags=['users'])
-async def change_password(change_password: schema.ChangePassword, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    pwd_match = change_password.old_password == change_password.new_password
-    is_less_than_eight = len(change_password.new_password) < 8
-
-    if pwd_match:
-        raise HTTPException(status_code=500, detail='New password same as old password')
-    elif is_less_than_eight:
-        raise HTTPException(status_code=500, detail='Password should be at least 8 characters')
-
-    user_db: models.User = crud.get_user_by_email(db, user.email)
-    its_password = verify_password(change_password.old_password, user.password)
-
-    if not its_password:
-        raise HTTPException(status_code=500, detail='Password does not match')
-
-    password_changed = crud.reset_password(db, change_password.new_password, user_db)
-
-    return password_changed
 
 
 
