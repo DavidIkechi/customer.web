@@ -186,7 +186,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     # if the agent name is already in the database before creating for the agent.
     if not db.query(models.Agent).filter(models.Agent.first_name == first_name, 
                                      models.Agent.last_name == last_name).first():
-        db_agent = models.Agent(first_name=first_name, last_name=last_name, company_id=company_id)
+        db_agent = models.Agent(first_name=first_name, last_name=last_name, location = " ", company_id=company_id)
         # Add Agent
         db.add(db_agent)
         db.commit()
