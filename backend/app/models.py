@@ -1,8 +1,8 @@
 # models for database [SQLAlchemy]
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Enum, Float, JSON, TEXT
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Enum, Float, JSON, TEXT, Date
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from datetime import datetime
+from datetime import datetime, date
 
 from sqlalchemy_utils import URLType
 
@@ -122,7 +122,7 @@ class Analysis(Base):
 
 class UserProfile(Base):
     __tablename__ = "accounts"
-
+    
     id = Column(Integer, ForeignKey("users.id"), nullable=True)
     phone_number = Column(String(255))
     company_address = Column(TEXT)
@@ -138,3 +138,15 @@ class FreeTrial(Base):
     id = Column(Integer, primary_key=True, index=True)
     transcript_id = Column(String(255), index=True)
     transcript_status = Column(TEXT)
+
+class Order(Base):
+    __tablename__ = "orders"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_email = Column(String(255), ForeignKey("users.email"), nullable=True)
+    billing_plan = Column(String(255), index=True)
+    monthly_amount = Column(Float, index=True)
+    annual_amount = Column(Float, index=True)
+    total_amount = Column(Float, index=True)
+    order_date = Column(Date, index=True, default=date.today())
+    next_payment_due_date = Column(Date, index=True)
