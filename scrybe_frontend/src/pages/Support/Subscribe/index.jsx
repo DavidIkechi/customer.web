@@ -13,10 +13,11 @@ const Subscribe = () => {
       </p>
       <div className={styles.inputs}>
         <input
+          className={styles.input_value}
           type={"email"}
           placeholder="  &nbsp; &nbsp;Enter Your Email Address"
         />
-        <button>Subscribe Now</button>
+        <button className={styles.subscribe_button}>Subscribe Now</button>
       </div>
     </div>
   );
