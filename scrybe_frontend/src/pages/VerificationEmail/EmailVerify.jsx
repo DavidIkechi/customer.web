@@ -7,7 +7,7 @@ import mail from "./assets/mail.svg";
 import styles from "./Email.module.scss";
 
 const EmailVerify = () => {
-  const [message , setMessage] =useState("")
+  const [message, setMessage] = useState("");
   const query = new URLSearchParams(useLocation);
   // const token = query.get("token");
   const { token } = useParams();
@@ -23,7 +23,6 @@ const EmailVerify = () => {
       );
       console.log(response.data);
       setMessage(response.data);
-      
     } catch (err) {
       console.log(err);
     }
@@ -33,9 +32,7 @@ const EmailVerify = () => {
       <div className={styles.popup}>
         <img src={mail} alt="mail" />
         <p className={styles.status}>Verified!</p>
-        <p className={styles.msg}>
-         {message}
-        </p>
+        <p className={styles.msg}>{message}</p>
         <Link to="/signin">Login</Link>
       </div>
     </div>
