@@ -18,7 +18,7 @@ function Account() {
 
   const navigate = useNavigate();
 
-  const { register, handleSubmit, watch } = useForm();
+  const { register, handleSubmit, watch, reset } = useForm();
 
   async function getUser() {
     await axios
@@ -54,22 +54,28 @@ function Account() {
         Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
       },
     };
-    axios
-      .post(
-        baseUrl + "/agent",
-        {
-          first_name: first_name,
-          last_name: last_name,
-          /*location: location,*/
-        },
-        config
-      )
-      .then((res) => {
-        if (res.status === 200) toggleAccountModal();
-      })
-      .catch((err) => {
-        console.log("this is the error:", err.response);
-      });
+    first_name &&
+      last_name &&
+      location &&
+      axios
+        .post(
+          baseUrl + "/agent",
+          {
+            first_name: first_name,
+            last_name: last_name,
+            location: location,
+          },
+          config
+        )
+        .then((res) => {
+          if (res.status === 200) {
+            toggleAccountModal();
+            reset();
+          }
+        })
+        .catch((err) => {
+          console.log("this is the error:", err.response);
+        });
   };
 
   useEffect(() => {
@@ -78,7 +84,7 @@ function Account() {
 
   const first_name = watch("first_name");
   const last_name = watch("last_name");
-  // const location = watch("location");
+  const location = watch("location");
 
   return (
     <NewDesignSidebar
@@ -243,8 +249,8 @@ function Account() {
                     {accountUser?.agents?.map((agent, index) => {
                       return agent ? (
                         <li key={index}>
-                          <p>{agent}</p>
-                          <p>{agent.location}</p>
+                          <p>{agent.first_name + " " + agent.last_name}</p>
+                          <p>{agent.location ? agent.location : "Abuja"}</p>
                         </li>
                       ) : (
                         <p>You have no agents yet.</p>
