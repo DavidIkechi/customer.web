@@ -345,7 +345,7 @@
       padding: 0 1rem;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       // flex-direction: column;
       font-family: "Kanit";
       font-style: normal;
@@ -378,6 +378,9 @@
       }
       .selectActive {
         color: #006cff;
+      }
+      .dumyBtn {
+        text-align: center;
       }
       .bulkselect_children {
         position: absolute;
@@ -446,6 +449,9 @@
       border: 1px solid #006cff;
     }
   }
+}
+.selectChecked .bulkselect {
+  justify-content: space-between !important;
 }
 
 .processed .view_resultbtn {

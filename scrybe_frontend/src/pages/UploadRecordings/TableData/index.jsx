@@ -91,12 +91,12 @@ const TableData = ({ searchKeyword }) => {
     setOpenModal(false);
     fetchData();
   };
-
+  // api.heed.hng.tech/audios/delete?audios=6&audios=7
   const deleteBulkRecordings = async () => {
     const audioToInt = recordCheckedList.map((item) => Number(item));
-    console.log(audioToInt);
+    const params = audioToInt.map((i) => i).join("&audios=");
     await axios
-      .delete(`audios/delete?audios=${[audioToInt]}`, {
+      .delete(`audios/delete?audios=${params}`, {
         headers,
       })
       .then((res) => {
@@ -310,7 +310,11 @@ const TableData = ({ searchKeyword }) => {
         </div>
         {searchRecordings(allRecordings).length > 0 && (
           <div className={styles.uploaded_recordings_options}>
-            <div className={styles.bulkbtn_calbackurl_wrap}>
+            <div
+              className={`${styles.bulkbtn_calbackurl_wrap} ${
+                recordCheckedList.length > 0 && styles.selectChecked
+              }`}
+            >
               <div className={styles.bulkselect_wrap}>
                 <div
                   className={`${styles.bulkselect} ${
@@ -323,7 +327,7 @@ const TableData = ({ searchKeyword }) => {
                         {recordCheckedList.length} File(s) Selected
                       </p>
                     ) : (
-                      " Bulk Actions"
+                      <p className={styles.dumyBtn}>Bulk Actions</p>
                     )}
                   </div>
                   {recordCheckedList.length > 0 && (
