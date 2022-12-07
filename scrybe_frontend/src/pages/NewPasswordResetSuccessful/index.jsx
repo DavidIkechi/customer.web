@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "../CheckMail/checkMail.module.scss";
-import checkMail from "../CheckMail/assets/check__mail.png";
-import heedLogo from "../CheckMail/assets/heed__logo.png";
+import styles from "../NewPasswordResetSuccessful/resetSuccessful.module.scss";
+import resetSuccess from "../NewPasswordResetSuccessful/assets/resetSuccess.png";
+import heedLogo from "../NewPasswordResetSuccessful/assets/heed__logo.png";
 import { Link } from "react-router-dom";
 
 const index = () => {
@@ -21,37 +21,28 @@ const index = () => {
             <div className={styles.bottom__content}>
               <div className={styles.second__top}>
                 <div className={styles.second__heading}>
-                  <h1 className={styles.second__head}>Check your Email</h1>
+                  <h1 className={styles.second__head}>Password reset</h1>
                 </div>
                 <div className={styles.second__subtext}>
                   <p className={styles.second__subhead}>
-                    A password reset link has been sent to your email along with
-                    reset instructions.
+                    Your password has been successfully set. click below to
+                    login.
                   </p>
                 </div>
               </div>
               <form className={styles.form__container}>
                 <div className={styles.form__action}>
-                  <a
-                    href="https://mail.google.com/"
-                    target="_blank"
-                    rel="noreferrer"
-                    type="submit"
-                    value="Reset password"
-                    className={styles.form__button}
-                  >
-                    Open email
-                  </a>
+                  <Link to="/signin">
+                    <button
+                      type="submit"
+                      value="Reset password"
+                      className={styles.form__button}
+                    >
+                      Continue
+                    </button>
+                  </Link>
                 </div>
               </form>
-              <div className={styles.link__container}>
-                <p className={styles.link__text}>
-                  Didn't receive an email?
-                  <span className={styles.link__content}>
-                    <Link className={styles.option__link}>click to resend</Link>
-                  </span>
-                </p>
-              </div>
             </div>
           </div>
         </section>
@@ -66,7 +57,7 @@ const index = () => {
               </div>
             </div>
             <div className={styles.check__icon}>
-              <img src={checkMail} alt="checkmail icon" />
+              <img src={resetSuccess} alt="Password Reset Successful icon" />
             </div>
           </div>
         </section>
