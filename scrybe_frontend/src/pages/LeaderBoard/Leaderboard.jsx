@@ -49,8 +49,6 @@ function Leaderboard() {
     }
   }, [range, data]);
 
-  console.log(leaderboard, otherAgent);
-
   // implemented by rambey
   const [controll, setControll] = useState(false);
   const [rank, setRank] = useState();
@@ -169,16 +167,6 @@ function Leaderboard() {
         </section>
 
         <section className={styles.Tabular_Container}>
-          {otherAgent.map((profile) => (
-            <OtherAgentDisplay
-              key={profile.agent_id}
-              person={profile}
-              handleAgent={handleAgent}
-              agent_id={profile.agent_id}
-              rank={profile.rank}
-              show={profile.str_agent_id}
-            />
-          ))}
           <div className={styles.Tabular_Content_Container}>
             <div className={styles.Header_title}>
               <p className={styles.Hide_for_mobile}>ID NUMBER</p>
@@ -197,6 +185,16 @@ function Leaderboard() {
               </span>
             </div>
             <hr></hr>
+            {otherAgent.map((profile) => (
+              <OtherAgentDisplay
+                key={profile.agent_id}
+                person={profile}
+                handleAgent={handleAgent}
+                agent_id={profile.agent_id}
+                rank={profile.rank}
+                show={profile.str_agent_id}
+              />
+            ))}
             {/* <div className={styles.Header_content}>
               <div className={styles.Header_profile_container}>
                 <img src={ProfileName} className="" alt="profile1" />
@@ -251,6 +249,8 @@ function LeaderBoardDisplay({
   return (
     <div
       className={styles.Profile1}
+      id={styles.border}
+      style={{ background: bgMap[index] }}
       onClick={() => handleAgent(agent_id, rank, show)}
     >
       <div className={styles.Profile_content}>
