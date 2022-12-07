@@ -121,8 +121,6 @@ function App() {
         <Route path="/help-support-general" element={<General />} />
         <Route path="/promoted-articles" element={<PromotedArticles />}></Route>
 
-        {/* access without sign in */}
-
         {/* cant access without signin */}
 
         <Route element={<RequireToken />}>
@@ -162,100 +160,6 @@ function App() {
             element={<PersonalInformation />}
           />
         </Route>
-        {/* cant access without signin */}
-
-        {/* <Route
-          path="/uploaded"
-          element={<DummyPage someText="uploaded recordings" />}
-        />
-        <Route
-          path="/report"
-          element={<DummyPage someText="report and performance" />}
-        />
-        <Route path="/upload" element={<DummyPage someText="upload pages" />} />
-        <Route
-          path="/help"
-          element={<DummyPage someText="help and supprt" />}
-        />
-        <Route path="/demos" element={<DummyPage someText="demo pages" />} /> */}
-
-        {/* <Route path="/verification" element={<EmailVerify />} /> */}
-        {/* <Route path="/logout" element={<Logout />} /> */}
-        {/* <Route path="/industry" exact element={<Industry />} /> */}
-        {/* <Route path="/industry-article" element={<IndustryArticles />} />
-        <Route path="/how-it-works" element={<HowitWorks />} /> */}
-        {/* leaderboard */}
-
-        {/* <Route path="/help-support-general" element={<General />}>
-          <Route index element={<General1 />} />
-          <Route path="articles" element={<General2 />} />
-        </Route> */}
-        {/* <Route
-          path="/help-support-general/promoted-articles"
-          element={<PromotedArticles />}
-        >
-          <Route index element={<PromotedArticle1 />} />
-          <Route path="*" element={<PromotedArticle1 />} />
-        </Route> */}
-        {/* <Route
-          path="/help-support/promoted-articles"
-          element={<PromotedArticles />}
-        >
-          <Route index element={<PromotedArticle1 />} />
-          <Route path="*" element={<PromotedArticle1 />} />
-        </Route> */}
-
-        {/* <Route path="/create-account" element={<Signup />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/reset-successful" element={<Successful />} />
-        <Route path="/verify-signup" element={<SignUpVerify />} />
-        <Route path="/set-new-password" element={<SetNewPassword />} />
-        <Route path="/forget-password" element={<ForgetPassword />} />
-        <Route
-          path="/pw-reset-successful"
-          element={<PasswordResetSuccessful />}
-        /> */}
-        {/* <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
-        <Route path="/agent-report" element={<AgentReport />} />
-        <Route path="/upload-new-file" element={<UploadModal />} /> */}
-
-        {/* ROutes without working paths
-
-        <Route
-          path="/uploaded"
-          element={<DummyPage someText="uploaded recordings" />}
-        />
-        <Route
-          path="/report"
-          element={<DummyPage someText="report and performance" />}
-        />
-        <Route path="/upload" element={<DummyPage someText="upload pages" />} />
-        <Route
-          path="/help"
-          element={<DummyPage someText="help and supprt" />}
-        />
-        <Route path="/demos" element={<DummyPage someText="demo pages" />} /> */}
-        {/* <Route path="/blog" element={<Blogs />} />
-        <Route path="/blog/:id" element={<BlogPostPage />} />
-        <Route path="/reviews" element={<Reviews />} /> */}
-
-        {/* Settings Pages */}
-        {/* <Route path="/settings" element={<SettingsIndex />} />
-        <Route path="settings/account-security" element={<AccountSettings />} />
-        <Route
-          path="settings/notifications"
-          element={<NotificationSettings />}
-        />
-
-        <Route
-          path="settings/personal-information"
-          element={<PersonalInformation />}
-        /> */}
-
-        {/* Press  */}
-        {/* <Route path="press" element={<Press />} />
-        <Route path="/partners" element={<PartnersPage />} />
-        <Route path="press-article" element={<PressArticle />} /> */}
       </Routes>
     </>
   );
