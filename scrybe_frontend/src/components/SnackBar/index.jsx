@@ -3,13 +3,14 @@ import React, { useEffect, useState } from "react";
 import Alert from "../Alert";
 import "./index.css";
 
-const SnackBar = ({ response }) => {
+const SnackBar = ({ response, setResponse }) => {
   const [open, setOpen] = useState(false);
-  const [className, setClassName] = useState("r");
+  const [className, setClassName] = useState("");
 
   useEffect(() => {
     if (response.message === "") {
       setOpen(false);
+      setClassName("");
     } else {
       setOpen(true);
       setClassName("show");
@@ -17,9 +18,10 @@ const SnackBar = ({ response }) => {
       setTimeout(() => {
         setOpen(false);
         setClassName("");
-      }, 4000);
+        setResponse({ type: "", message: "" });
+      }, 3000);
     }
-  }, [response]);
+  }, [response, setResponse]);
 
   return (
     <div id="snackbar" className={className}>

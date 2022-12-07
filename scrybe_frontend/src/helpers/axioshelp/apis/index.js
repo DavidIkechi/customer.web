@@ -9,6 +9,10 @@ class Service {
     return this.request.post(`/create_users`, data);
   }
 
+  async SignIn(data) {
+    return this.request.post(`/login`, data);
+  }
+
   async GetTotalUserRecordings() {
     return this.request.get(`/total-recordings-user`);
   }

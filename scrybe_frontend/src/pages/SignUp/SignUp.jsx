@@ -111,9 +111,8 @@ function Signup() {
 
       navigate("/verify-signup");
     } catch (error) {
-      console.log(error);
       setIsLoading(false);
-      console.log(ErrorHandler(error));
+      setResponse(ErrorHandler(error));
     }
   };
 
@@ -125,7 +124,7 @@ function Signup() {
 
   return (
     <>
-      <SnackBar response={response} />
+      <SnackBar response={response} setResponse={setResponse} />
       <main className={styles.signUpWrapper}>
         <div className={styles.signup}>
           <div className={styles.first}>

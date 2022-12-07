@@ -1,27 +1,27 @@
 const ErrorHandler = (err) => {
   if (err.code === "ERR_NETWORK") {
     return {
-      type: "error",
+      type: "Error",
       message: "You are offline",
     };
   }
   if (err.code === "ERR_BAD_REQUEST") {
     if (err.response.data) {
       return {
-        type: "error",
-        message: err.response.data.message
-          ? err.response.data.message
+        type: "Error",
+        message: err.response.data.detail
+          ? err.response.data.detail
           : "Something went wrong",
       };
     } else {
       return {
-        type: "error",
+        type: "Error",
         message: "Something went wrong",
       };
     }
   }
   return {
-    type: "error",
+    type: "Error",
     message: "Something went wrong",
   };
 };
