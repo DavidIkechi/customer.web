@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import List, Union, Optional
 from pathlib import Path
 from models import Audio
 from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form, Query
@@ -14,7 +14,7 @@ from routers.transcribe import transcript_router
 from routers.score import score_count
 import models, json
 from auth import get_active_user, get_current_user, get_admin
-from jwt import main_login, get_access_token, verify_password
+from jwt import main_login, get_access_token
 
 
 from authlib.integrations.starlette_client import OAuth
@@ -57,7 +57,7 @@ import random, string
 from elasticapm.contrib.starlette import make_apm_client, ElasticAPM
 
 apm_config = {
-    'SERVICE_NAME': 'Heed',
+    'SERVICE_NAME': 'Heed_api',
     'SERVER_URL': 'http://localhost:8200',
     'ENVIRONMENT': 'production',
     'GLOBAL_LABELS': 'platform=DemoPlatform, application=DemoApplication'
@@ -320,8 +320,15 @@ def read_user(user_id: int, db: Session = Depends(get_db), user: models.User = D
 #     return crud.update_user_profile(db=db, profile=profile, user_id=current_user.id)
 
 @app.patch("/users/update_profile", summary="Update user profile details", status_code=status.HTTP_200_OK, tags=['users'])
-def update_profile( firstname:str = Form(), lastname:str = Form(), company_name: str = Form(), company_address:str = Form(), phone_number: str = Form(), db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user),
-                  image_file: UploadFile = File(..., description="Company Profile Image/Logo")):
+def update_profile( 
+                   firstname:Optional[str] = Form(None), 
+                   lastname:Optional[str] = Form(None), 
+                   company_name: Optional[str] = Form(None), 
+                   company_address:Optional[str] = Form(None), 
+                   phone_number: Optional[str] = Form(None), 
+                   db:Session = Depends(get_db), 
+                   current_user:schema.User = Depends(get_active_user),
+                  image_file: Optional[UploadFile] = File(None, description="Company Profile Image/Logo")):
     user_profile = db.query(models.UserProfile).filter(models.UserProfile.id == current_user.id).first()
     if user_profile is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
@@ -333,29 +340,39 @@ def update_profile( firstname:str = Form(), lastname:str = Form(), company_name:
         
     user = db.query(models.User).filter(models.User.id == user_profile.id).first()
     company = db.query(models.Company).filter(models.Company.id == user.company_id).first()
-    company.name = company_name.lower()
-    user.firstname = firstname.lower()
-    user.last_name = lastname.lower()
-    user_profile.phone_number = phone_number.lower()
-    user_profile.company_address = company_address.lower()
-    try:
-        image_response = cloudinary.uploader.upload(image_file.file)
-        image_url = image_response.get("secure_url") 
-        user_profile.company_logo_url = image_url        
-    except Exception:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="There was an error uploading the file")
-    
+    field_names = [company_name, company_address, phone_number, firstname, lastname, image_file]
+    for field in field_names:
+        if field == None:
+            pass
+        elif field is company_name:
+            company.name = company_name
+        elif field is company_address:
+            user_profile.company_address = company_address
+        elif field is phone_number:
+            user_profile.phone_number = phone_number
+        elif field is firstname:
+            user.first_name = firstname  
+        elif field is lastname:
+           user.last_name = lastname
+        else:
+            try:
+                image_response = cloudinary.uploader.upload(image_file.file)
+                image_url = image_response.get("secure_url") 
+                user_profile.company_logo_url = image_url        
+            except Exception:
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="There was an error uploading the file")
+
     db.commit() 
-    # db.refresh(company)
+    db.refresh(company)
     db.refresh(user_profile)
     return user_profile
 
     
            
 
-@app.delete("/users/delete_account", summary="delete user account", tags=['users'])
-def delete_user_account(db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
-    return crud.delete_user(db=db, user_id=current_user.id, current_user=current_user)
+@app.delete("/users/delete_account/{user_id}", summary="delete user account", tags=['users'])
+def delete_user_account(user_id: int , db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
+    return crud.delete_user(db=db, user_id=user_id)
 
 @app.get('/verification', summary = "verify a user by email", tags=['users'])
 async def email_verification(request: Request, token: str, db: Session = Depends(get_db)):
@@ -607,9 +624,15 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     leaderboard = crud.get_leaderboard(db, user.id)
-    top3_agents = leaderboard[:3]
-    others = leaderboard[3:]
-    return {"Top3_Agents": top3_agents, "Other_Agents": others}
+    results = {"week":{"Top3_Agents": [], "Other_Agents": []},
+            "month":{"Top3_Agents": [], "Other_Agents": []}
+    }
+    results["week"]["Top3_Agents"] = leaderboard[0][:3]
+    results["week"]["Other_Agents"] = leaderboard[0][3:]
+    results["month"]["Top3_Agents"] = leaderboard[1][:3]
+    results["month"]["Other_Agents"] = leaderboard[1][3:]
+
+    return results
 
 #agent total_analysis
 @app.get("/total-agent-analysis", summary="get total agent analysis")
@@ -716,26 +739,6 @@ async def reset_password(token: str, new_password: schema.UpdatePassword, db: Se
     return reset_done
 
 
-
-@app.patch('/change-password', summary = "change password", tags=['users'])
-async def change_password(change_password: schema.ChangePassword, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    pwd_match = change_password.old_password == change_password.new_password
-    is_less_than_eight = len(change_password.new_password) < 8
-
-    if pwd_match:
-        raise HTTPException(status_code=500, detail='New password same as old password')
-    elif is_less_than_eight:
-        raise HTTPException(status_code=500, detail='Password should be at least 8 characters')
-
-    user_db: models.User = crud.get_user_by_email(db, user.email)
-    its_password = verify_password(change_password.old_password, user.password)
-
-    if not its_password:
-        raise HTTPException(status_code=500, detail='Password does not match')
-
-    password_changed = crud.reset_password(db, change_password.new_password, user_db)
-
-    return password_changed
 
 
 
@@ -882,12 +885,17 @@ async def get_order_summary (order_id: int, db: Session = Depends(get_db), user:
 @app.get("/AgentDetails", summary = "get agent performance report", tags=['Agent Performance Report'])
 def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     try:
+        result = {}
         leaderboard = crud.get_leaderboard(db, user.id)
-        for i in leaderboard:
+        for i in leaderboard[0]:
             if i["agent_id"] == agent_id:
-                result = i
+                result["week"] = i
                 break
-        return {"Agent_Performance_Report": result}
+        for j in leaderboard[1]:
+            if j["agent_id"] == agent_id:
+                result["month"] = j
+                break
+        return {"Agent_Performance_Report": {"week": result["week"], "month": result["month"]}}
     except:
         return {"message": "agent does not exist"}
 

@@ -33,16 +33,15 @@
 
 /* End of styling new design for Leaderbord */
 
-
 .content_container {
   background-color: #fefefd;
   // display: grid;
   // grid-template-columns: 0.8fr 2.5fr;
   width: 100%;
   font-family: "Kanit", sans-serif;
-   height: 100vh;
-    position: relative;
-    overflow-y: scroll;
+  height: 100vh;
+  position: relative;
+  overflow-y: scroll;
 }
 
 .right_section {
@@ -117,12 +116,12 @@ select {
   gap: 1.5rem;
   align-items: center;
   justify-content: center;
+
 }
 
 .Profile1 {
   text-align: center;
   margin-top: 3rem;
-  background-color: #e6f0ff;
 }
 
 .Profile2 {
@@ -210,12 +209,11 @@ select {
 
 /* Tabular Styling */
 
-.Hide_for_desktop{
+.Hide_for_desktop {
   display: none;
 }
 .Tabular_Container {
-padding: 1rem 4rem;
-
+  padding: 1rem 4rem;
 }
 
 .Tabular_Content_Container {
@@ -229,7 +227,7 @@ padding: 1rem 4rem;
   justify-content: space-between;
 }
 
-.Header_title p{
+.Header_title p {
   font-size: 18px;
   font-weight: 400;
 }
@@ -246,7 +244,7 @@ hr {
   margin-bottom: 1rem;
 }
 
-.Header_content p{
+.Header_content p {
   font-size: 16px;
   font-weight: 300;
 }
@@ -265,8 +263,7 @@ hr {
 
   .Tabular_Container {
     padding: 0rem 0rem;
-
-    }
+  }
 
   .content_container {
     background-color: #f1f1f1;
@@ -283,8 +280,7 @@ hr {
 
   .Tabular_Container {
     padding: 0rem 0rem;
-
-    }
+  }
 
   .content_container {
     background-color: #f1f1f1;
@@ -335,11 +331,9 @@ hr {
     gap: 5rem;
   }
 
-
   .Tabular_Container {
     padding: 0rem 0rem;
-
-    }
+  }
 
   input {
     width: 80%;
@@ -369,33 +363,31 @@ hr {
 
   .Tabular_Container {
     padding: 0rem 0rem;
+  }
 
-    }
+  .Hide_for_mobile {
+    display: none;
+  }
 
-    .Hide_for_mobile{
-      display: none;
-    }
+  .Hide_for_desktop {
+    display: block;
+  }
 
-    .Hide_for_desktop{
-      display: block;
-    }
+  .Header_title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 
-    .Header_title {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-    }
+  .Header_content p {
+    font-size: 14px;
+    font-weight: 300;
+  }
 
-    .Header_content p{
-      font-size: 14px;
-      font-weight: 300;
-    }
-
-    .Header_title p{
-      font-size: 16px;
-      font-weight: 400;
-
-    }
+  .Header_title p {
+    font-size: 16px;
+    font-weight: 400;
+  }
 
   input {
     width: 80%;
@@ -426,11 +418,11 @@ hr {
     display: none;
   }
 
-  .Hide_for_mobile{
+  .Hide_for_mobile {
     display: none;
   }
 
-  .Hide_for_desktop{
+  .Hide_for_desktop {
     display: block;
   }
 
@@ -440,12 +432,12 @@ hr {
     justify-content: space-between;
   }
 
-  .Header_content p{
+  .Header_content p {
     font-size: 14px;
     font-weight: 300;
   }
 
-  .Header_title p{
+  .Header_title p {
     font-size: 16px;
     font-weight: 400;
   }
@@ -459,12 +451,11 @@ hr {
 
   .Tabular_Container {
     padding: 0rem 0rem;
+  }
 
-    }
-
-    .Hide_for_mobile{
-       display: none;
-    }
+  .Hide_for_mobile {
+    display: none;
+  }
   .right_section {
     background-color: #ececec;
     margin-left: 0;
@@ -488,8 +479,6 @@ hr {
     text-align: justify;
     margin-right: 0rem;
   }
-
-
 }
 
 // @media (max-width: 350px) {

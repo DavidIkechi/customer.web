@@ -1,14 +1,20 @@
-import styles from "./Leaderboardd.module.scss";
+import styles from "./Leaderboard.module.scss";
 import NewDesignSideBar from "../../components/NewDesignSidebar";
 import TopNav from "../../components/TopNav";
 import React from "react";
 import axios from "axios";
 import { useState, useEffect, useRef } from "react";
-import SearchIcon from "./images/search-icon.svg";
+import SearchIcon from "./images/search-icon.png";
 import ProfileName from "./images/profile-circle.png";
 import CallIcon from "./images/Call-icon.png";
 import LeaderBoardIcon from "./images/leaderboard-icon.png";
 import AgentReport from "../AgentReport";
+
+const bgMap = {
+  0: "#E6F0FF",
+  1: "#EDF9F0",
+  2: "#FFFDEB",
+};
 
 function Leaderboard() {
   const [toggleSidebar, setToggleSidebar] = React.useState(false);
@@ -16,9 +22,39 @@ function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState([]);
   const [otherAgent, setOtherAgent] = useState([]);
 
+  // function loadAgentActivity() {
+  //   // NOTE: you don't need to loginevery time you are making this call
+  //   // const userCredentials = {
+  //   //   username: "tekkieware@gmail.com",
+  //   //   password: "123456",
+  //   // };
+  //   // axios
+  //   //   .post("https://api.heed.hng.tech/login", userCredentials)
+  //   //   .then((response) => {
+  //   //     console.log("token response===>", response.data);
+  //   //   });
+  //   // Before i push, remove line 55 & uncomment line 54, confirm that the token stored in the local storage has a key of token, personally array functions, handle promise, http protocol, axios api  //
+  //   // const token = localStorage.getItem("heedAccessToken");
+  //   const token =
+  //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZWtraWV3YXJlQGdtYWlsLmNvbSIsImV4cCI6MTY3MDE4Nzk5NH0.wQOff8gY8EZhDetiuIY_MevgyaqU0-jUDhtCc6rS9aQ"; //access_token
+  //   const headers = { Authorization: `Bearer ${token}` };
+  //   axios
+  //     .get("https://api.heed.hng.tech/leaderboard", { headers })
+  //     .then((response) => {
+  //       console.log(response.data["Top3 Agents"]);
+  //       const arr = response.data["Top3 Agents"];
+  //       console.log(response.data["Other Agents"]);
+  //       const otherAgents = response.data["Other Agents"];
+  //       setLeaderboard(arr);
+  //       setOtherAgent(otherAgents);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }
+
   async function accessData() {
     const token = localStorage.getItem("heedAccessToken");
-    // console.log(token);
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -38,7 +74,6 @@ function Leaderboard() {
 
   useEffect(() => {
     accessData();
-    // loadAgentActivity();
   }, []);
 
   // implemented by rambey
@@ -135,10 +170,11 @@ function Leaderboard() {
             </div>
 
             <div className={styles.Profile_container}>
-              {leaderboard.map((profile) => (
+              {leaderboard.map((profile, index) => (
                 <LeaderBoardDisplay
                   key={profile.agent_id}
                   person={profile}
+                  index={index}
                   handleAgent={handleAgent}
                   agent_id={profile.agent_id}
                   rank={profile.rank}
@@ -150,26 +186,16 @@ function Leaderboard() {
         </section>
 
         <section className={styles.Tabular_Container}>
-          {/* // implemented by rambey */}
-          {/* {otherAgent.map((profile) => (
-            <OtherAgentDisplay key={profile.agent_id} person={profile} />
-          ))} */}
-          {otherAgent.map((profile) => {
-            {
-              /* console.log(profile) */
-            }
-            return (
-              <OtherAgentDisplay
-                key={profile.agent_id}
-                agent_id={profile.agent_id}
-                person={profile}
-                handleAgent={handleAgent}
-                rank={profile.rank}
-                show={profile.str_agent_id}
-              />
-            );
-          })}
-          {/* // implemented by rambey */}
+          {otherAgent.map((profile) => (
+            <OtherAgentDisplay
+              key={profile.agent_id}
+              person={profile}
+              handleAgent={handleAgent}
+              agent_id={profile.agent_id}
+              rank={profile.rank}
+              show={profile.str_agent_id}
+            />
+          ))}
           <div className={styles.Tabular_Content_Container}>
             <div className={styles.Header_title}>
               <p className={styles.Hide_for_mobile}>ID NUMBER</p>
@@ -188,6 +214,42 @@ function Leaderboard() {
               </span>
             </div>
             <hr></hr>
+            {/* <div className={styles.Header_content}>
+              <div className={styles.Header_profile_container}>
+                <img src={ProfileName} className="" alt="profile1" />
+                <p>AG685500DE</p>
+              </div>
+              <p>24</p>
+              <p>5/10</p>
+              <p>5th</p>
+            </div>
+            <div className={styles.Header_content}>
+              <div className={styles.Header_profile_container}>
+                <img src={ProfileName} className="" alt="profile1" />
+                <p>AG685500DE</p>
+              </div>
+              <p>24</p>
+              <p>5/10</p>
+              <p>5th</p>
+            </div>
+            <div className={styles.Header_content}>
+              <div className={styles.Header_profile_container}>
+                <img src={ProfileName} className="" alt="profile1" />
+                <p>AG685500DE</p>
+              </div>
+              <p>24</p>
+              <p>5/10</p>
+              <p>5th</p>
+            </div>
+            <div className={styles.Header_content}>
+              <div className={styles.Header_profile_container}>
+                <img src={ProfileName} className="" alt="profile1" />
+                <p>AG685500DE</p>
+              </div>
+              <p>24</p>
+              <p>5/10</p>
+              <p>5th</p>
+            </div> */}
           </div>
         </section>
       </div>
@@ -195,7 +257,14 @@ function Leaderboard() {
   );
 }
 
-function LeaderBoardDisplay({ person, handleAgent, agent_id, rank, show }) {
+function LeaderBoardDisplay({
+  person,
+  index,
+  handleAgent,
+  agent_id,
+  rank,
+  show,
+}) {
   return (
     <div
       className={styles.Profile1}

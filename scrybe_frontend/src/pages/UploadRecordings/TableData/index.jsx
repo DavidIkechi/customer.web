@@ -32,10 +32,10 @@ const TableData = ({ searchKeyword }) => {
 
   // const timeLeft = 20;
 
-  useEffect(() => {
-    const newRecordings = fetchData("list-audios-by-user");
-    setAllRecordings([newRecordings.data]);
-  }, []);
+  // useEffect(() => {
+  //   const newRecordings = fetchData("list-audios-by-user");
+  //   setAllRecordings([newRecordings.data]);
+  // }, []);
 
   const getChecked = (e) => {
     let checkedList = [...recordCheckedList];
@@ -91,11 +91,12 @@ const TableData = ({ searchKeyword }) => {
     setOpenModal(false);
     fetchData();
   };
-
+  // api.heed.hng.tech/audios/delete?audios=6&audios=7
   const deleteBulkRecordings = async () => {
-    const audioToInt = recordCheckedList.map((item) => parseInt(item, 10));
+    const audioToInt = recordCheckedList.map((item) => Number(item));
+    const params = audioToInt.map((i) => i).join("&audios=");
     await axios
-      .delete(`audios/delete?audios=${[audioToInt]}`, {
+      .delete(`audios/delete?audios=${params}`, {
         headers,
       })
       .then((res) => {
@@ -201,9 +202,7 @@ const TableData = ({ searchKeyword }) => {
             <>
               {sessionExpired ? (
                 <h1 className={styles.expired}>
-                  <small>
-                    Your Session has has expired, please signin again
-                  </small>
+                  <small>Your Session has expired, please signin again</small>
                   <p>
                     <Link to="/signin">Signin</Link>
                   </p>
@@ -311,7 +310,11 @@ const TableData = ({ searchKeyword }) => {
         </div>
         {searchRecordings(allRecordings).length > 0 && (
           <div className={styles.uploaded_recordings_options}>
-            <div className={styles.bulkbtn_calbackurl_wrap}>
+            <div
+              className={`${styles.bulkbtn_calbackurl_wrap} ${
+                recordCheckedList.length > 0 && styles.selectChecked
+              }`}
+            >
               <div className={styles.bulkselect_wrap}>
                 <div
                   className={`${styles.bulkselect} ${
@@ -324,7 +327,7 @@ const TableData = ({ searchKeyword }) => {
                         {recordCheckedList.length} File(s) Selected
                       </p>
                     ) : (
-                      " Bulk Actions"
+                      <p className={styles.dumyBtn}>Bulk Actions</p>
                     )}
                   </div>
                   {recordCheckedList.length > 0 && (
@@ -341,11 +344,11 @@ const TableData = ({ searchKeyword }) => {
                         openDeletePopup && styles.openPopup
                       }`}
                     >
-                      <p>
+                      <strong>
                         {recordCheckedList.length > 0
                           ? `${recordCheckedList.length} File(s) Selected`
                           : " Bulk Actions"}
-                      </p>
+                      </strong>
                       <p onClick={handleOpen}>Delete</p>
                     </div>
                   }
