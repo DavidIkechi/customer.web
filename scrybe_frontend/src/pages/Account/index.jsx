@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import accountStyles from "./account.module.scss";
-import profileImage from "./assets/images/profile-image.png";
 import chevronLeft from "./assets/icons/chevron-left.svg";
 import plus from "./assets/icons/plus.svg";
 import NewDesignSidebar from "../../components/NewDesignSidebar";
@@ -19,12 +18,7 @@ function Account() {
 
   const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, watch } = useForm();
 
   async function getUser() {
     await axios
@@ -61,14 +55,17 @@ function Account() {
       },
     };
     axios
-      .post(baseUrl + "/agent", config, {
-        first_name: first_name,
-        last_name: last_name,
-        location: location,
-      })
+      .post(
+        baseUrl + "/agent",
+        {
+          first_name: first_name,
+          last_name: last_name,
+          /*location: location,*/
+        },
+        config
+      )
       .then((res) => {
         if (res.status === 200) toggleAccountModal();
-        console.log("this is the response", res.data);
       })
       .catch((err) => {
         console.log("this is the error:", err.response);
@@ -81,7 +78,7 @@ function Account() {
 
   const first_name = watch("first_name");
   const last_name = watch("last_name");
-  const location = watch("location");
+  // const location = watch("location");
 
   return (
     <NewDesignSidebar
@@ -139,7 +136,10 @@ function Account() {
                     id="submit-btn"
                     value="Submit"
                     name="submit-btn"
-                    onClick={handleSubmit(submitCallback)}
+                    onClick={(e) => {
+                      handleSubmit(submitCallback);
+                      e.target.current.reset();
+                    }}
                   />
                 </label>
                 <label htmlFor="cancel-btn">
@@ -158,11 +158,15 @@ function Account() {
         <TopNav />
         <div className={accountStyles.account__div}>
           <section className={accountStyles.mobile_head__section}>
-            <span>
+            <button type="button" onClick={() => navigate(-1)}>
               <img src={chevronLeft} alt="left arrow" />
-            </span>
+            </button>
             <h1>Profile</h1>
           </section>
+          <div className={accountStyles.plan_info__div}>
+            <p>You are using the limited free plan.</p>
+            <p>Go unlimited with Pro version</p>
+          </div>
           {/* <h1 className={accountStyles.salutation}>Hi Heeder</h1> */}
           <div className={accountStyles.main_content__div}>
             <section className={accountStyles.profile__section}>
@@ -259,10 +263,6 @@ function Account() {
                 </div>
               </div>
             </section>
-          </div>
-          <div className={accountStyles.plan_info__div}>
-            <p>You are using the limited free plan.</p>
-            <p>Go unlimited with Pro version</p>
           </div>
         </div>
       </div>
