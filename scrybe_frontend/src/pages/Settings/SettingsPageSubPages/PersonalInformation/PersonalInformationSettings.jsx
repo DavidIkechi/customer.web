@@ -13,27 +13,34 @@ const PersonalInformation = ({ accountUser }) => {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
 
   const submitCallback = () => {
-    // window.scrollTo(0, 0);
-    console.log(company_image[0]);
+    window.scrollTo(0, 0);
     const token = localStorage.getItem("heedAccessToken");
     const headers = {
       Authorization: `Bearer ${token}`,
       "Content-Type": "multipart/form-data",
     };
     const data = new FormData();
-    data.append("firstname", firstname || accountUser.first_name);
-    data.append("lastname", lastname || accountUser.last_name);
-    data.append("company_name", company_name || accountUser.company_name);
-    data.append(
-      "company_address",
-      company_address || accountUser.company_address
-    );
-    data.append("phone_number", phone_number || accountUser.phone_number);
-    data.append("image_file", company_image[0] || accountUser.company_logo_url);
+    if (firstname) {
+      data.append("firstname", firstname);
+    }
+    if (lastname) {
+      data.append("lastname", lastname);
+    }
+    if (company_name) {
+      data.append("company_name", company_name);
+    }
+    if (company_address) {
+      data.append("company_address", company_address);
+    }
+    if (phone_number) {
+      data.append("phone_number", phone_number);
+    }
+    if (company_image[0]) data.append("image_file", company_image[0]);
     axios
       .request({
         method: "patch",
@@ -43,6 +50,7 @@ const PersonalInformation = ({ accountUser }) => {
       })
       .then((res) => {
         if (res.status) {
+          reset();
           console.log(res.data);
         }
       })
@@ -59,13 +67,13 @@ const PersonalInformation = ({ accountUser }) => {
   const company_address = watch("company_address");
   const company_image = watch("company_image");
 
-  const isValid =
-    firstname ||
-    lastname ||
-    phone_number ||
-    company_name ||
-    company_address ||
-    company_image;
+  // const isValid =
+  //   firstname ||
+  //   lastname ||
+  //   phone_number ||
+  //   company_name ||
+  //   company_address ||
+  //   company_image;
 
   return (
     <>
