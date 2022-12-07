@@ -32,7 +32,6 @@ const TableData = ({ searchKeyword }) => {
 
   // const timeLeft = 20;
 
-
   const getChecked = (e) => {
     let checkedList = [...recordCheckedList];
     if (e.target.checked) {
