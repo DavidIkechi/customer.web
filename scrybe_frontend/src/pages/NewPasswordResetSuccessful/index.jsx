@@ -32,7 +32,7 @@ const index = () => {
               </div>
               <form className={styles.form__container}>
                 <div className={styles.form__action}>
-                  <Link>
+                  <Link to="/signin">
                     <button
                       type="submit"
                       value="Reset password"
