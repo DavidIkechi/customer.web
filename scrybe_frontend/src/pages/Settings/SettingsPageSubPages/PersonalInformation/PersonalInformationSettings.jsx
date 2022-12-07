@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import BlueEditPen from "../../assets/icons/blue-pencil.png";
 import BlackEditPen from "../../assets/icons/edit.svg";
@@ -7,8 +7,9 @@ import ProfilePic from "../../assets/images/Pic.png";
 import RedirectNav from "../../Components/SettingsPageRedirectNav/SettingsPageRedirectNav";
 import PersonalInfo from "./PersonalInformationSettings.module.scss";
 
-const PersonalInformation = ({ accountUser }) => {
-  // const [file, setFile] = useState({ file: { name: "", progress: 0 } });
+const PersonalInformation = () => {
+  const [accountUser, setAccountUser] = useState();
+
   const {
     register,
     handleSubmit,
@@ -60,6 +61,29 @@ const PersonalInformation = ({ accountUser }) => {
       });
   };
 
+  async function getUser() {
+    await axios
+      // Get user details from backend
+      .get("https://api.heed.hng.tech/account", {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
+        },
+      })
+      .then((res) => {
+        setAccountUser(res.data);
+      })
+      .catch((err) => {
+        // In case of error, log to the console
+        console.log("Server returned the following error:");
+        console.log(err);
+      });
+  }
+
+  useEffect(() => {
+    getUser();
+  });
+
   const firstname = watch("firstname");
   const lastname = watch("lastname");
   const phone_number = watch("phone_number");
@@ -85,7 +109,7 @@ const PersonalInformation = ({ accountUser }) => {
               <div className={`${PersonalInfo.PersonalInfo_header}`}>
                 <img
                   className={PersonalInfo.profilePic}
-                  src={accountUser.company_logo_url}
+                  src={accountUser?.company_logo_url}
                   alt="profile pic"
                 />
                 <div className={PersonalInfo.changeImg}>
@@ -101,7 +125,7 @@ const PersonalInformation = ({ accountUser }) => {
                   type="file"
                   name="company_image"
                   id="company_image"
-                  value={accountUser.company_image_url}
+                  value={accountUser?.company_image_url}
                   hidden
                   {...register("company_image")}
                 />
@@ -113,7 +137,7 @@ const PersonalInformation = ({ accountUser }) => {
                     type="text"
                     name="firstname"
                     id="firstname"
-                    placeholder={accountUser.first_name}
+                    placeholder={accountUser?.first_name}
                     {...register("firstname")}
                   />
                 </div>
@@ -123,7 +147,7 @@ const PersonalInformation = ({ accountUser }) => {
                     type="text"
                     name="lastname"
                     id="lastname"
-                    placeholder={accountUser.last_name}
+                    placeholder={accountUser?.last_name}
                     {...register("lastname")}
                   />
                 </div>
@@ -134,7 +158,7 @@ const PersonalInformation = ({ accountUser }) => {
                   type="tel"
                   name="phone_number"
                   id="phone_number"
-                  placeholder={accountUser.phone_number}
+                  placeholder={accountUser?.phone_number}
                   {...register("phone_number")}
                 />
               </div>
@@ -144,7 +168,7 @@ const PersonalInformation = ({ accountUser }) => {
                   type="text"
                   name="company_name"
                   id="company_name"
-                  placeholder={accountUser.company_name}
+                  placeholder={accountUser?.company_name}
                   {...register("company_name")}
                 />
               </div>
@@ -154,7 +178,7 @@ const PersonalInformation = ({ accountUser }) => {
                   type="text"
                   name="company_address"
                   id="company_address"
-                  placeholder={accountUser.company_address}
+                  placeholder={accountUser?.company_address}
                   {...register("company_address")}
                 />
               </div>
@@ -162,7 +186,7 @@ const PersonalInformation = ({ accountUser }) => {
                 className={`${PersonalInfo.formGroup} ${PersonalInfo.editInput}`}
               >
                 <label htmlFor="">Email address</label>
-                <input type="email" name placeholder={accountUser.email} />
+                <input type="email" name placeholder={accountUser?.email} />
                 <div className={PersonalInfo.verified}>
                 </div>
                 <Link
