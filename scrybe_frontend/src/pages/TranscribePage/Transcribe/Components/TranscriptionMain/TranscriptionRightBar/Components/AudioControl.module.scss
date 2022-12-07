@@ -16,6 +16,7 @@
 .AudioInfo {
   display: flex;
   column-gap: pix-rem(16);
+  overflow: hidden;
 
   .AudioName {
     h2 {
@@ -23,6 +24,7 @@
       font-size: 16px;
       line-height: 24px;
       color: #313131;
+      white-space: nowrap;
     }
 
     p {
@@ -52,9 +54,7 @@
 .RewindButton:hover,
 .PlayButton:hover,
 .ForwardButton:hover {
-  background-color: #e6f0ff;
-  border-radius: 4px;
-  transform: scale(1.25);
+  transform: scale(1.75);
 }
 
 .AudioTimer {
@@ -71,28 +71,10 @@
     color: #828282;
   }
 
-  .AudioSlider {
+  input {
     width: pix-rem(180);
-    position: relative;
     cursor: pointer;
-
-    .AudioFull {
-      height: 4px;
-      width: 100%;
-      background: #ececec;
-      border-radius: 8px;
-    }
-
-    .AudioIndicator {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 4px;
-      width: 35%;
-      background: #004db5;
-      border-radius: 8px;
-      z-index: 2;
-    }
+    padding: 0;
   }
 }
 
