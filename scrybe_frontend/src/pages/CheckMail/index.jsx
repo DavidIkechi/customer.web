@@ -32,13 +32,16 @@ const index = () => {
               </div>
               <form className={styles.form__container}>
                 <div className={styles.form__action}>
-                  <button
+                  <a
+                    href="https://mail.google.com/"
+                    target="_blank"
+                    rel="noreferrer"
                     type="submit"
                     value="Reset password"
                     className={styles.form__button}
                   >
                     Open email
-                  </button>
+                  </a>
                 </div>
               </form>
               <div className={styles.link__container}>
