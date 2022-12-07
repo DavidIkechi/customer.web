@@ -57,7 +57,7 @@ import random, string
 from elasticapm.contrib.starlette import make_apm_client, ElasticAPM
 
 apm_config = {
-    'SERVICE_NAME': 'Heed',
+    'SERVICE_NAME': 'Heed_api',
     'SERVER_URL': 'http://localhost:8200',
     'ENVIRONMENT': 'production',
     'GLOBAL_LABELS': 'platform=DemoPlatform, application=DemoApplication'
