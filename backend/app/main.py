@@ -887,12 +887,14 @@ def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: mo
     try:
         result = {}
         leaderboard = crud.get_leaderboard(db, user.id)
-        for i,j in zip(leaderboard[0], leaderboard[1]):
+        for i in leaderboard[0]:
             if i["agent_id"] == agent_id:
                 result["week"] = i
+                break
+        for j in leaderboard[1]:
             if j["agent_id"] == agent_id:
-                result["month"] = i
-            break
+                result["month"] = j
+                break
         return {"Agent_Performance_Report": {"week": result["week"], "month": result["month"]}}
     except:
         return {"message": "agent does not exist"}
