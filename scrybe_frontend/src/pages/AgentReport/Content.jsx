@@ -5,19 +5,20 @@ import Charts from "./components/ChartContainer";
 import AgentDetails from "./components/AgentDetails";
 import { useState, useEffect } from "react";
 import { useAgentReport } from "./hooks";
-import { useAgentDetails } from "./hooks";
+import { useAgentAnalysis } from "./hooks";
 
+// { recentAgentReport, agentAnalysis}
 const Content = () => {
-  const agentReport = useAgentReport();
-  const agentDetail = useAgentDetails();
+  const agentReportData = useAgentReport();
+  const agentAnalysisData = useAgentAnalysis();
   const [selectReport, setSelectReport] = useState([]);
 
   useEffect(() => {
-    setSelectReport(agentDetail.week);
-  }, [agentDetail]);
+    setSelectReport(agentAnalysisData.week);
+  }, [agentAnalysisData]);
 
   const handleDate = (e) => {
-    setSelectReport(agentDetail[e.target.value]);
+    setSelectReport(agentAnalysisData[e.target.value]);
   };
 
   return (
@@ -28,21 +29,15 @@ const Content = () => {
       </div>
 
       <div className={styles.idcont}>
-        <>
-          {agentReport.map((detail) => {
-            return (
-              <div className={styles.agentId}>
-                <p className={styles.secondp}>
-                  Agent ID: &nbsp; &nbsp; {detail.agent_id}
-                </p>
+        <div className={styles.agentId}>
+          <p className={styles.secondp}>
+            Agent ID: &nbsp; &nbsp; {agentReportData?.str_agent_id}
+          </p>
 
-                <p className={styles.secondp}>
-                  Rank: &nbsp; &nbsp; {detail.rank}
-                </p>
-              </div>
-            );
-          })}
-        </>
+          <p className={styles.secondp}>
+            Rank: &nbsp; &nbsp; {agentReportData?.rank}
+          </p>
+        </div>
 
         <div className={styles.select}>
           <p>View by</p>
@@ -53,8 +48,13 @@ const Content = () => {
         </div>
       </div>
       <div className={styles.topDetailsDiv}>
-        <Charts selectReport={selectReport} />
-        <AgentDetails />
+        <Charts
+          // agentAnalysis={agentAnalysis}
+          selectReport={selectReport}
+        />
+        <AgentDetails
+        // recentAgentReport={recentAgentReport}
+        />
       </div>
     </div>
   );

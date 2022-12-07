@@ -4,6 +4,7 @@ from typing import List, Optional
 from pydantic import BaseModel, EmailStr, Extra
 from uuid import UUID, uuid1
 
+
 class UserBase(BaseModel):
     first_name: str
     last_name: str
@@ -155,9 +156,11 @@ class UserProfile(BaseModel):
 
     
 class UserProfileUpdate(BaseModel):
+    first_name: str
+    last_name: str
     phone_number: Optional[str]
     company_address: Optional[str]
-    company_logo_url: Optional[str]
+
 
 
 class ForgetPassword(BaseModel):
@@ -182,3 +185,8 @@ class Order(OrderBase):
     annual_amount: float
     order_date: datetime
     next_payment_due_date: datetime
+
+
+class ChangePassword(BaseModel):
+    old_password: str
+    new_password: str

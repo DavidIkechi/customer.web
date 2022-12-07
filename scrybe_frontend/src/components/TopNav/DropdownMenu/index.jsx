@@ -32,12 +32,12 @@ function DropDownModal({ closeModal }) {
   return (
     <div className={styles.dropdown}>
       <div className={styles.opacity} onClick={closeModal}></div>
-      <div className={styles.list}>
-        <img src={account} alt="" />
-        <Link to="/account" className={styles.p}>
-          Account
-        </Link>
-      </div>
+      <Link to="/account">
+        <div className={styles.list}>
+          <img src={account} alt="" />
+          <p className={styles.p}>Account</p>
+        </div>
+      </Link>
       <div className={styles.list}>
         <img src={support} alt="" />
         <p className={styles.p}>Support</p>

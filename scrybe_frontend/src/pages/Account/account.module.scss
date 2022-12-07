@@ -9,7 +9,7 @@
 
 .add_agent__div {
   z-index: 9999;
-  position: absolute;
+  position: fixed;
   width: 100vw;
   height: 100vh;
   top: 0;
@@ -223,11 +223,6 @@
   gap: pix-rem(32);
   text-align: center;
 
-  img {
-    width: pix-rem(100);
-    border-radius: pix-rem(200);
-    border: 1px solid #00456B;
-  }
   p:first-of-type {
     font-weight: 600;
     font-size: pix-rem(32);
@@ -238,20 +233,60 @@
     font-size: pix-rem(16);
     line-height: pix-rem(24);
   }
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   
   @include easyMediaQueries("min-width:1024px"){
     flex-direction: row;
     align-items: center;
     text-align: start;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
 
-    div {
-      display: flex;
-      flex-direction: column;
-      gap: pix-rem(8);
-    }
-    img {
-      width: pix-rem(120);
-    }
+.user_profile__img {
+  border-radius: pix-rem(200);
+  border: 1px solid #00456B;
+  width: pix-rem(100);
+  height: pix-rem(100);
+
+  img {
+    height: pix-rem(100);
+    object-fit: contain;
+  }
+}
+
+.user_profile__div {
+  flex-direction: column;
+  gap: pix-rem(32);
+  h1 {
+    font-weight: 600;
+    font-size: pix-rem(32);
+    line-height: pix-rem(40);
+  }
+  
+
+  @include easyMediaQueries("min-width:1024px") {
+    flex-direction: row;
+  }
+}
+
+.profile__settings_btn {
+  a {
+    padding: pix-rem(16);
+    border: none;
+    border-radius: pix-rem(4);
+    background-color: $blue-500;
+    color: $neutral-100;
+    font-weight: 500;
+    font-size: pix-rem(14);
+    line-height: pix-rem(24);
+    cursor: pointer;
   }
 }
 
@@ -541,7 +576,14 @@
   gap: pix-rem(8);
   padding-top: pix-rem(12);
   padding-bottom: pix-rem(12);
-  margin-top: pix-rem(40);
+  position: absolute;
+  right: 0;
+  left: 0;
+  width: 280px;
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
 
   p {
     color: $green-900;
@@ -557,10 +599,9 @@
   }
 
   @include easyMediaQueries("min-width:1024px") {
-    position: absolute;
+    width: 650px;
     flex-direction: row;
     top: pix-rem(25);
-    right: pix-rem(40);
     padding: pix-rem(12) pix-rem(32);
 
     p {
