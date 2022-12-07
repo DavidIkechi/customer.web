@@ -24,7 +24,7 @@ function ForgetPassword() {
         email: email,
       })
       .then((res) => {
-        navigate(`/set-new-password?token=${res.data}`);
+        navigate("/check-mail");
       });
   };
 

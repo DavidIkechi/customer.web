@@ -2,13 +2,12 @@ import axios from "axios";
 import { PropTypes } from "prop-types";
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import SearchInput from "../SearchInput";
 import DropDownModal from "./DropdownMenu";
 import dropdown_arr from "./imgs/dropdownArr.svg";
 import logo from "./imgs/logo.svg";
 import toggleNavIcon from "./imgs/toggleNavIcon.svg";
 import uploadBtn_icon from "./imgs/uploadBtnIcon.svg";
-import usrAvatar from "./imgs/user_avatar.svg";
-import SearchInput from "./SearchInput";
 import styles from "./topbar.module.scss";
 const TopNav = ({ openSidebar, search }) => {
   const [show, setShow] = useState(false);
@@ -48,7 +47,15 @@ const TopNav = ({ openSidebar, search }) => {
       <div className={styles.TopNav_user_btn}>
         <div className={styles.TopNav_user}>
           <div className={styles.TopNav_user_desktop}>
-            <img src={usrAvatar} alt="john doe" />
+            <img
+              className={styles.userimg}
+              src={
+                currentUser?.company_logo_url
+                  ? currentUser?.company_logo_url
+                  : "img/dummy.png"
+              }
+              alt="john doe"
+            />
             <div className={styles.TopNav_user_desktop_nameDetails}>
               <div className={styles.TopNav_user_desktop_name_arr}>
                 <p className={styles.name}>
@@ -72,19 +79,22 @@ const TopNav = ({ openSidebar, search }) => {
             </div>
           </div>
         </div>
-        <NavLink to="/upload-new-file">
-          <div className={styles.TopNav_btnwrap}>
-            <img src={uploadBtn_icon} alt="" />
-            <button className={styles.TopNav_btn}>Upload</button>
-          </div>
-        </NavLink>
+        {currentUser && (
+          <NavLink to="/upload-new-file">
+            <div className={styles.TopNav_btnwrap}>
+              <img src={uploadBtn_icon} alt="" />
+              <button className={styles.TopNav_btn}>Upload</button>
+            </div>
+          </NavLink>
+        )}
 
         <div className={styles.TopNav_user_mobile}>
           <img
+            className={styles.userimg}
             src={
               currentUser?.company_logo_url
                 ? currentUser?.company_logo_url
-                : usrAvatar
+                : "img/dummy.png"
             }
             alt={currentUser?.first_name}
           />

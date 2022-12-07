@@ -18,16 +18,11 @@ import Solutions from "./pages/Solutions/Solutions";
 import TermsAndCondition from "./pages/TermsAndCondition";
 import TranscribePage from "./pages/TranscribePage";
 import TryForFree from "./pages/TryForFree";
-// import Industry from "./pages/Industry";
-// import IndustryArticles from "./pages/Industry/IndustryArticles/IndustryArticle1";
-// import HowitWorks from "./pages/HowItWorks";
-import React, { useEffect, useState } from "react";
-import WithAuth from "./HOCs";
+// import WithAuth from "./HOCs";
 import Account from "./pages/Account";
 import BlogPostPage from "./pages/BlogPostPage";
 import Blogs from "./pages/BlogsPage";
 import Careers from "./pages/Careers";
-import EmailVerificationSuccess from "./pages/EmailVerifySuccess/index";
 import Error from "./pages/Error/Error";
 import FAQs from "./pages/FaqsPage";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
@@ -66,19 +61,12 @@ const AuthApi = React.createContext();
 const TokenApi = React.createContext();
 
 function App() {
-  const [accessTokens, setAccessTokens] = useState("");
-
-  useEffect(() => {
-    setAccessTokens(localStorage.getItem("accessToken"));
-  }, []);
-
   return (
     <>
       <Routes>
         {/* access without sign in */}
-        {/* <Route path="/verification" element={<EmailVerify />} /> */}
-        {/* <Route path="/logout" element={<Logout />} /> */}
         <Route path="/" element={<HomePageRedesign />} />
+        <Route path="/check-mail" element={<CheckMail />} />
         <Route path="/try" element={<TryForFree />} />
         <Route path="/careers" element={<Careers />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
@@ -117,105 +105,71 @@ function App() {
         <Route path="/demos" element={<DummyPage someText="demo pages" />} />
         <Route path="/blog" element={<Blogs />} />
         <Route path="/blog/:id" element={<BlogPostPage />} />
-
-        {/* Press  */}
         <Route path="press" element={<Press />} />
         <Route path="/partners" element={<PartnersPage />} />
         <Route path="press-article" element={<PressArticle />} />
         <Route path="pricing" element={<Pricing />} />
-
-        <Route
-          path="/sentiment-analysis/:AudioId"
-          element={<SentimentAnalysis />}
-        />
-        <Route path="/transcriptions/:userId" element={<TranscribePage />} />
-        <Route path="/history" element={<History />} />
         <Route path="/events" element={<Events />} />
         <Route path="/dashboard" element={<DashboardOverview />} />
-        <Route
-          path="/account"
-          element={
-            <WithAuth>
-              <Account />
-            </WithAuth>
-          }
-        />
         <Route path="/leaderboard" element={<LeaderboardPage />} />
         <Route path="/homeB" element={<HomePageB />} />
         <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
         <Route path="/agent-report/:agentId" element={<AgentReport />} />
         <Route path="/reviews" element={<Reviews />} />
-
-        {/* Try Routes */}
         <Route path="/try-processing" element={<TryProcessing />} />
-        <Route path="/try-results" element={<TryResults />} />
-        {/*  */}
-
-        {/* Settings Pages */}
-        <Route path="/settings" element={<SettingsIndex />} />
-        <Route path="settings/account-security" element={<AccountSettings />} />
-        <Route
-          path="settings/notifications"
-          element={<NotificationSettings />}
-        />
-        {/*  */}
-
+        <Route path="/try-results/:transcribeId" element={<TryResults />} />
         <Route
           path="settings/personal-information"
           element={<PersonalInformation />}
         />
-
-        {/* ROutes without working paths */}
-
-        <Route
-          path="/uploaded"
-          element={<DummyPage someText="uploaded recordings" />}
-        />
-        <Route
-          path="/report"
-          element={<DummyPage someText="report and performance" />}
-        />
-        <Route path="/upload" element={<DummyPage someText="upload pages" />} />
-        <Route
-          path="/help"
-          element={<DummyPage someText="help and supprt" />}
-        />
-        <Route path="/demos" element={<DummyPage someText="demo pages" />} />
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/blog" element={<Blogs />} />
         <Route path="/blog/:id" element={<BlogPostPage />} />
-
-        {/* Press  */}
         <Route path="press" element={<Press />} />
         <Route path="/partners" element={<PartnersPage />} />
         <Route path="press-article" element={<PressArticle />} />
         <Route path="pricing" element={<Pricing />} />
-
-        {/* access without sign in */}
-
-        {/* <Route path="/industry" exact element={<Industry />} /> */}
-        {/* <Route path="/industry-article" element={<IndustryArticles />} />
-        <Route path="/how-it-works" element={<HowitWorks />} /> */}
-        {/* leaderboard */}
+        <Route path="/help-support-general" element={<General />} />
+        <Route path="/promoted-articles" element={<PromotedArticles />}></Route>
 
         {/* cant access without signin */}
 
         <Route element={<RequireToken />}>
-          {/* ROutes without working paths */}
-
+          {/* <Route
+            path="/account"
+            element={
+              <WithAuth>
+                <Account />
+              </WithAuth>
+            }
+          /> */}
+          <Route path="/account" element={<Account />} />
+          <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
+          <Route path="/agent-report/:Agent_id" element={<AgentReport />} />
+          <Route path="/upload-new-file" element={<UploadModal />} />
           <Route
-            path="/dummyuploaded"
-            element={<DummyPage someText="uploaded recordings" />}
+            path="/sentiment-analysis/:AudioId"
+            element={<SentimentAnalysis />}
+          />
+          <Route path="/transcriptions/:userId" element={<TranscribePage />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/dashboard" element={<DashboardOverview />} />
+          <Route path="/leaderboard" element={<LeaderboardPage />} />
+          <Route path="/homeB" element={<HomePageB />} />
+          <Route path="/agent-report/:agentId" element={<AgentReport />} />
+          <Route path="/settings" element={<SettingsIndex />} />
+          <Route
+            path="settings/account-security"
+            element={<AccountSettings />}
           />
           <Route
-            path="/dummyreport"
-            element={<DummyPage someText="report and performance" />}
+            path="settings/notifications"
+            element={<NotificationSettings />}
           />
           <Route
-            path="/dummyupload"
-            element={<DummyPage someText="upload pages" />}
+            path="settings/personal-information"
+            element={<PersonalInformation />}
           />
-          {/* ROutes without working paths */}
         </Route>
         <Route path="/help-support-general" element={<General />} />
         <Route path="/promoted-articles" element={<PromotedArticles />}></Route>

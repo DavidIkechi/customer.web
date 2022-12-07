@@ -3,7 +3,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Background from "../../assets/Try-background.png";
-import TryPic from "../../assets/Try-hero.png";
+import TryPic from "../../assets/Try-hero.svg";
 import styles from "./try_hero.module.scss";
 
 export default function tryHero() {
@@ -17,7 +17,7 @@ export default function tryHero() {
             Try our other features when you sign up with us.
           </p>
           <Link to="/signin" className={styles.HeroButton}>
-            Sign Up Now
+            Start Free Trial
           </Link>
         </div>
         <div className={styles.Hero2}>

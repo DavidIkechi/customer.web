@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import List, Union, Optional
 from pathlib import Path
 from models import Audio
 from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form, Query
@@ -51,8 +51,18 @@ from dotenv import load_dotenv
 from starlette.responses import FileResponse
 from starlette.requests import Request
 from starlette.responses import Response
-import boto3
+import boto3, io
+import uuid
+import random, string 
+from elasticapm.contrib.starlette import make_apm_client, ElasticAPM
 
+apm_config = {
+    'SERVICE_NAME': 'Heed_api',
+    'SERVER_URL': 'http://localhost:8200',
+    'ENVIRONMENT': 'production',
+    'GLOBAL_LABELS': 'platform=DemoPlatform, application=DemoApplication'
+}
+apm = make_apm_client(apm_config)
 
 load_dotenv()
 
@@ -96,6 +106,7 @@ app = FastAPI(
 )
 
 app.include_router(transcript_router)
+app.add_middleware(ElasticAPM, client=apm)
 
 origins = [
     "http://localhost",
@@ -119,7 +130,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 # OAuth settings
 GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID') or None
@@ -153,7 +163,8 @@ def main() -> None:
         reload=os.getenv("RELOAD")
     )
 
-
+AWS_KEY_ID = os.getenv("AWS_KEY_ID")
+AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
 
 @app.get("/")
 async def ping():
@@ -190,8 +201,8 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
             f.write(contents)
     except Exception:
         return {"error": "There was an error uploading the file"}
-    finally:
-        file.file.close()
+    #finally:
+        f#ile.file.close()
 
     try:
         result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
@@ -203,7 +214,22 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
         new_url = retrieve_url.short_url
         
     except Exception:
-        return {"error": "There was an error uploading the file"}
+        return {"error": "There was an error uploaading the file"}
+
+    s3 = boto3.client('s3', aws_access_key_id= AWS_KEY_ID,
+        aws_secret_access_key= AWS_SECRET_KEY
+        )
+    audio_file = file.file.read()
+    bucket = "hng-heed"
+
+    s3.upload_fileobj(
+        io.BytesIO(audio_file),
+        bucket,
+        file.filename,
+        ExtraArgs = {"ACL": "public-read"}
+    )
+    audio_s3_url = f"https://{bucket}.s3.amazonaws.com/{file.filename}"
+
 
     # transcript = transcript
     
@@ -248,7 +274,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     return {
         "id":audio_id,
         "transcript_id": transcript_id,
-        #"s3 url": audio_s3_url
+        "s3 bucket url": audio_s3_url
     }
 
 # create the endpoint
@@ -284,18 +310,69 @@ def read_user(user_id: int, db: Session = Depends(get_db), user: models.User = D
     return db_user
 
 
-@app.post("/users/upload_picture", summary="Upload company logo image", status_code=status.HTTP_202_ACCEPTED, tags=['users'])
-def upload_picture(db:Session = Depends(get_db), image_file: UploadFile = File(..., description="Company Profile Image/Logo"), 
-                   current_user:schema.User = Depends(get_active_user)):
-    return crud.upload_user_image(user_id=current_user.id, db=db, image_file=image_file)
+# @app.post("/users/upload_picture", summary="Upload company logo image", status_code=status.HTTP_202_ACCEPTED, tags=['users'])
+# def upload_picture(db:Session = Depends(get_db), image_file: UploadFile = File(..., description="Company Profile Image/Logo"), 
+#                    current_user:schema.User = Depends(get_active_user)):
+#     return crud.upload_user_image(user_id=current_user.id, db=db, image_file=image_file)
 
-@app.patch("/users/update_profile/{user_id}", summary="Update user profile details", status_code=status.HTTP_200_OK, tags=['users'])
-def update_adress(profile:schema.UserProfileUpdate, user_id:int, db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
-    return crud.update_user_profile(db=db, profile=profile, user_id=user_id)
+# @app.patch("/users/update_profile", summary="Update user profile details", status_code=status.HTTP_200_OK, tags=['users'])
+# def update_adress(profile:schema.UserProfileUpdate, db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
+#     return crud.update_user_profile(db=db, profile=profile, user_id=current_user.id)
 
-@app.delete("/users/delete_account/{user_id}", summary="delete user account", status_code=status.HTTP_204_NO_CONTENT, tags=['users'])
-def delete_user_account(user_id:int, db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
-    crud.delete_user(db=db, user_id=user_id, current_user=current_user)
+@app.patch("/users/update_profile", summary="Update user profile details", status_code=status.HTTP_200_OK, tags=['users'])
+def update_profile( 
+                   firstname:Optional[str] = Form(None), 
+                   lastname:Optional[str] = Form(None), 
+                   company_name: Optional[str] = Form(None), 
+                   company_address:Optional[str] = Form(None), 
+                   phone_number: Optional[str] = Form(None), 
+                   db:Session = Depends(get_db), 
+                   current_user:schema.User = Depends(get_active_user),
+                  image_file: Optional[UploadFile] = File(None, description="Company Profile Image/Logo")):
+    user_profile = db.query(models.UserProfile).filter(models.UserProfile.id == current_user.id).first()
+    if user_profile is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                        detail=f"The Profile for user with id {current_user.id} does not exist")
+        
+    if user_profile.id != current_user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , 
+                                    detail="Not authorized to perform requested action")
+        
+    user = db.query(models.User).filter(models.User.id == user_profile.id).first()
+    company = db.query(models.Company).filter(models.Company.id == user.company_id).first()
+    field_names = [company_name, company_address, phone_number, firstname, lastname, image_file]
+    for field in field_names:
+        if field == None:
+            pass
+        elif field is company_name:
+            company.name = company_name
+        elif field is company_address:
+            user_profile.company_address = company_address
+        elif field is phone_number:
+            user_profile.phone_number = phone_number
+        elif field is firstname:
+            user.first_name = firstname  
+        elif field is lastname:
+           user.last_name = lastname
+        else:
+            try:
+                image_response = cloudinary.uploader.upload(image_file.file)
+                image_url = image_response.get("secure_url") 
+                user_profile.company_logo_url = image_url        
+            except Exception:
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="There was an error uploading the file")
+
+    db.commit() 
+    db.refresh(company)
+    db.refresh(user_profile)
+    return user_profile
+
+    
+           
+
+@app.delete("/users/delete_account/{user_id}", summary="delete user account", tags=['users'])
+def delete_user_account(user_id: int , db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
+    return crud.delete_user(db=db, user_id=user_id)
 
 @app.get('/verification', summary = "verify a user by email", tags=['users'])
 async def email_verification(request: Request, token: str, db: Session = Depends(get_db)):
@@ -421,7 +498,7 @@ def list_audios_by_user(db: Session = Depends(get_db), user: models.User = Depen
     return audios
     
 @app.get("/get_uploaded_jobs", summary="List all uploaded jobs with job details", status_code=status.HTTP_200_OK, tags=['jobs'])
-def get_uploaded_jobs(db:Session = Depends(get_db), current_user = Depends(get_active_user), skip: int = 0, limit: int = 0):
+def get_uploaded_jobs(db:Session = Depends(get_db), current_user = Depends(get_active_user), skip: int = 0, limit: int = 2):
     return crud.get_jobs_uploaded(db=db, skip=skip, limit=limit, current_user=current_user)
 
 @app.get('/audios/{audio_id}/sentiment')
@@ -547,9 +624,15 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     leaderboard = crud.get_leaderboard(db, user.id)
-    top3_agents = leaderboard[:3]
-    others = leaderboard[3:]
-    return {"Top3 Agents": top3_agents, "Other Agents": others}
+    results = {"week":{"Top3_Agents": [], "Other_Agents": []},
+            "month":{"Top3_Agents": [], "Other_Agents": []}
+    }
+    results["week"]["Top3_Agents"] = leaderboard[0][:3]
+    results["week"]["Other_Agents"] = leaderboard[0][3:]
+    results["month"]["Top3_Agents"] = leaderboard[1][:3]
+    results["month"]["Other_Agents"] = leaderboard[1][3:]
+
+    return results
 
 #agent total_analysis
 @app.get("/total-agent-analysis", summary="get total agent analysis")
@@ -802,12 +885,17 @@ async def get_order_summary (order_id: int, db: Session = Depends(get_db), user:
 @app.get("/AgentDetails", summary = "get agent performance report", tags=['Agent Performance Report'])
 def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     try:
+        result = {}
         leaderboard = crud.get_leaderboard(db, user.id)
-        for i in leaderboard:
+        for i in leaderboard[0]:
             if i["agent_id"] == agent_id:
-                result = i
+                result["week"] = i
                 break
-        return {"Agent Performance Report": result}
+        for j in leaderboard[1]:
+            if j["agent_id"] == agent_id:
+                result["month"] = j
+                break
+        return {"Agent_Performance_Report": {"week": result["week"], "month": result["month"]}}
     except:
         return {"message": "agent does not exist"}
 
