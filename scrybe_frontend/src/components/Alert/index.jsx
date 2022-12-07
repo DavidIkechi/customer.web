@@ -1,28 +1,28 @@
 import React from "react";
-import "./index.css";
+import styles from "./Alert.module.scss";
 
 const Alert = ({ type, message }) => {
-  let className = "alert alert-dismissible";
+  let className = styles.alert;
   switch (type) {
     case "Error":
-      className = "alert alert-error alert-dismissible";
+      className = styles.alert_error;
       break;
     case "Warning":
-      className = "alert alert-warning alert-dismissible";
+      className = styles.alert_warning;
       break;
     case "Info":
-      className = "alert alert-info alert-dismissible";
+      className = styles.alert_info;
       break;
     case "Success":
-      className = "alert alert-success alert-dismissible";
+      className = styles.alert_success;
       break;
     default:
-      className = "alert alert-dismissible";
+      className = styles.alert;
   }
 
   return (
     <div className={className} role="alert">
-      <div className="title">
+      <div className={styles.title}>
         <h4>{type}</h4>
         {/* <button
           onClick={() => setState(false)}

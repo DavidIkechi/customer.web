@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import Alert from "../Alert";
-import "./index.css";
+import styles from "./SnackBar.module.scss";
 
 const SnackBar = ({ response, setResponse }) => {
   const [open, setOpen] = useState(false);
@@ -13,7 +13,7 @@ const SnackBar = ({ response, setResponse }) => {
       setClassName("");
     } else {
       setOpen(true);
-      setClassName("show");
+      setClassName(styles.show);
 
       setTimeout(() => {
         setOpen(false);
