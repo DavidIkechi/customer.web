@@ -199,7 +199,7 @@ function Account() {
                 </div>
               </div>
               <div className={accountStyles.profile__settings_btn}>
-                <Link to="/settings">Go to Settings</Link>
+                <Link to="/settings">Edit Profile</Link>
               </div>
             </section>
             <section className={accountStyles.body__section}>
