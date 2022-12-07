@@ -22,7 +22,7 @@ function Account() {
 
   const navigate = useNavigate();
 
-  const { register, handleSubmit, watch } = useForm();
+  const { register, handleSubmit, watch, reset } = useForm();
 
   async function getUser() {
     try {
@@ -48,6 +48,28 @@ function Account() {
         Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
       },
     };
+    first_name &&
+      last_name &&
+      location &&
+      axios
+        .post(
+          baseUrl + "/agent",
+          {
+            first_name: first_name,
+            last_name: last_name,
+            location: location,
+          },
+          config
+        )
+        .then((res) => {
+          if (res.status === 200) {
+            toggleAccountModal();
+            reset();
+          }
+        })
+        .catch((err) => {
+          console.log("this is the error:", err.response);
+        });
     // axios
     //   .post(
     //     baseUrl + "/agent",
@@ -72,7 +94,7 @@ function Account() {
 
   const first_name = watch("first_name");
   const last_name = watch("last_name");
-  // const location = watch("location");
+  const location = watch("location");
 
   return (
     <>
@@ -190,6 +212,15 @@ function Account() {
                     {accountUser?.is_admin && <p>Administrator</p>}
                   </div>
                 </div>
+              </div>
+              <div className={accountStyles.profile__settings_btn}>
+                <Link to="/settings">Edit Profile</Link>
+              </div>
+            </section>
+            <section className={accountStyles.body__section}>
+              <div className={accountStyles.personal_info__div}>
+                <p>Personal Information</p>
+                <div>
                 <div className={accountStyles.profile__settings_btn}>
                   <Link to="/settings">Go to Settings</Link>
                 </div>
