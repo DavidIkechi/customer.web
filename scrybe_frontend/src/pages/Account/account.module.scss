@@ -158,13 +158,13 @@
   background-color: $grey-50;
   position: relative;
   min-height: 100vh;
-  padding: pix-rem(85) pix-rem(16) pix-rem(36) pix-rem(16);
+  padding: pix-rem(36) pix-rem(16) pix-rem(36) pix-rem(16);
   display: flex;
   flex-direction: column;
   gap: pix-rem(40);
 
   @include easyMediaQueries("min-width:1024px") {
-    padding: pix-rem(85) pix-rem(40);
+    padding: pix-rem(40);
   }
 }
 
@@ -175,15 +175,16 @@
   position: relative;
   height: pix-rem(40);
 
-  span {
+  button {
     position: absolute;
     left: 0;
-    background-color: $green-50;
+    background-color: white;
     width: pix-rem(40);
     height: pix-rem(40);
     display: flex;
     justify-content: center;
     align-items: center;
+    border: none;
     border-radius: pix-rem(8);
   }
   h1 {
@@ -250,14 +251,13 @@
 }
 
 .user_profile__img {
-  border-radius: pix-rem(200);
-  border: 1px solid #00456B;
-  width: pix-rem(100);
-  height: pix-rem(100);
-
   img {
-    height: pix-rem(100);
-    object-fit: contain;
+    width: pix-rem(100);
+    object-fit: cover;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    border: 1px solid #00456B;
+    font-size: 14px !important;
   }
 }
 
@@ -576,10 +576,7 @@
   gap: pix-rem(8);
   padding-top: pix-rem(12);
   padding-bottom: pix-rem(12);
-  position: absolute;
-  right: 0;
-  left: 0;
-  width: 280px;
+  width: pix-rem(280);
   display: flex;
   justify-content: center;
   margin-left: auto;
