@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import List, Union, Optional
 from pathlib import Path
 from models import Audio
 from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form, Query
@@ -320,35 +320,17 @@ def read_user(user_id: int, db: Session = Depends(get_db), user: models.User = D
 #     return crud.update_user_profile(db=db, profile=profile, user_id=current_user.id)
 
 @app.patch("/users/update_profile", summary="Update user profile details", status_code=status.HTTP_200_OK, tags=['users'])
-def update_profile( firstname:str = Form(), lastname:str = Form(), company_name: str = Form(), company_address:str = Form(), phone_number: str = Form(), db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user),
-                  image_file: UploadFile = File(..., description="Company Profile Image/Logo")):
-    user_profile = db.query(models.UserProfile).filter(models.UserProfile.id == current_user.id).first()
-    if user_profile is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                        detail=f"The Profile for user with id {current_user.id} does not exist")
-        
-    if user_profile.id != current_user.id:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , 
-                                    detail="Not authorized to perform requested action")
-        
-    user = db.query(models.User).filter(models.User.id == user_profile.id).first()
-    company = db.query(models.Company).filter(models.Company.id == user.company_id).first()
-    company.name = company_name.lower()
-    user.firstname = firstname.lower()
-    user.last_name = lastname.lower()
-    user_profile.phone_number = phone_number.lower()
-    user_profile.company_address = company_address.lower()
-    try:
-        image_response = cloudinary.uploader.upload(image_file.file)
-        image_url = image_response.get("secure_url") 
-        user_profile.company_logo_url = image_url        
-    except Exception:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="There was an error uploading the file")
-    
-    db.commit() 
-    # db.refresh(company)
-    db.refresh(user_profile)
-    return user_profile
+def update_profile( 
+                   first_name:Optional[str] = Form(None), 
+                   last_name:Optional[str] = Form(None), 
+                   company_name: Optional[str] = Form(None), 
+                   company_address:Optional[str] = Form(None), 
+                   phone_number: Optional[str] = Form(None), 
+                   db:Session = Depends(get_db), 
+                   current_user:schema.User = Depends(get_active_user),
+                  image_file: Optional[UploadFile] = File(None, description="Company Profile Image/Logo")):
+    return crud.update_user_profile(db=db, first_name=firstname, last_name=lastname,company_address=company_address,
+                               company_name=company_name, phone_number=phone_number, current_user=current_user, image_file=image_file)
 
     
            
