@@ -18,7 +18,7 @@ import Solutions from "./pages/Solutions/Solutions";
 import TermsAndCondition from "./pages/TermsAndCondition";
 import TranscribePage from "./pages/TranscribePage";
 import TryForFree from "./pages/TryForFree";
-import WithAuth from "./HOCs";
+// import WithAuth from "./HOCs";
 import Account from "./pages/Account";
 import BlogPostPage from "./pages/BlogPostPage";
 import Blogs from "./pages/BlogsPage";
@@ -100,7 +100,6 @@ function App() {
         <Route path="pricing" element={<Pricing />} />
         <Route path="/events" element={<Events />} />
         <Route path="/dashboard" element={<DashboardOverview />} />
-        <Route path="/account" element={<Account />} />
         <Route path="/leaderboard" element={<LeaderboardPage />} />
         <Route path="/homeB" element={<HomePageB />} />
         <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
@@ -127,14 +126,15 @@ function App() {
         {/* cant access without signin */}
 
         <Route element={<RequireToken />}>
-          <Route
+          {/* <Route
             path="/account"
             element={
               <WithAuth>
                 <Account />
               </WithAuth>
             }
-          />
+          /> */}
+          <Route path="/account" element={<Account />} />
           <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
           <Route path="/agent-report/:Agent_id" element={<AgentReport />} />
           <Route path="/upload-new-file" element={<UploadModal />} />
