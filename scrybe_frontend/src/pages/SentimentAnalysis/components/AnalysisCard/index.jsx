@@ -3,6 +3,47 @@ import SkeletonLoader from "../SkeletonLoader";
 import styles from "./AnalysisCard.module.scss";
 
 function AnalysisCard({ sentimentData }) {
+  let totalList = [];
+  const transcriptElements = [];
+  if (sentimentData.transcript) {
+    let mostNegative = JSON.parse(sentimentData.most_negative_sentences);
+    let mostPositive = JSON.parse(sentimentData.most_postive_sentences); //there's a typo in the data key coming from the backend
+    mostNegative = mostNegative.map((item) => {
+      item.start = sentimentData.transcript.indexOf(item.sentence);
+      item.end = item.start + item.sentence.length;
+      item.type = "neg";
+      return item;
+    });
+    mostPositive = mostPositive.map((item) => {
+      item.start = sentimentData.transcript.indexOf(item.sentence);
+      item.end = item.start + item.sentence.length;
+      item.type = "pos";
+      return item;
+    });
+    let textCountNeg = 0;
+    let textCountPos = 0;
+    console.log(mostNegative[textCountNeg]);
+    while (
+      textCountNeg < mostNegative.length &&
+      textCountPos < mostPositive.length
+    ) {
+      if (mostNegative[textCountNeg].start < mostPositive[textCountPos].start) {
+        totalList.push(mostNegative[textCountNeg]);
+        textCountNeg++;
+      } else {
+        totalList.push(mostPositive[textCountNeg]);
+        textCountPos++;
+      }
+    }
+    totalList = totalList
+      .concat(mostNegative.slice(textCountNeg))
+      .concat(mostPositive.slice(textCountPos));
+
+    console.log(totalList);
+    // while (textCount < sentimentData.transcript.length) {
+    //   textCount +=
+    // }
+  }
   return (
     <div className={styles.card}>
       <div className={styles.time}>
