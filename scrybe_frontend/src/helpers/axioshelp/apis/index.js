@@ -6,6 +6,10 @@ class Service {
   }
 
   async SignUp(data) {
+    return this.request.post(`/create_users`, data);
+  }
+
+  async SignIn(data) {
     return this.request.post(`/login`, data);
   }
 

@@ -3,11 +3,12 @@ import NewDesignSideBar from "../../components/NewDesignSidebar";
 import TopNav from "../../components/TopNav";
 import React from "react";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import SearchIcon from "./images/search-icon.png";
 import ProfileName from "./images/profile-circle.png";
 import CallIcon from "./images/Call-icon.png";
 import LeaderBoardIcon from "./images/leaderboard-icon.png";
+import AgentReport from "../AgentReport";
 
 const bgMap = {
   0: "#E6F0FF",
@@ -34,15 +35,44 @@ function Leaderboard() {
       .catch((error) => {
         console.error(error);
       });
-    const arr = response.data["Top3_Agents"];
+    const arr = response.data.week.Top3_Agents;
     setLeaderboard(arr);
-    const otherAgents = response.data["Other_Agents"];
+    const otherAgents = response.data.week.Other_Agents;
     setOtherAgent(otherAgents);
   }
 
   useEffect(() => {
     accessData();
   }, []);
+
+  // implemented by rambey
+  const [controll, setControll] = useState(false);
+  const [rank, setRank] = useState();
+  const [agentShow, setAgentShow] = useState();
+
+  let modal = useRef();
+
+  const [agent_id, setAgent_id] = useState("");
+  const handleAgent = (agent_id, rank, show) => {
+    modal.showModal();
+    setAgent_id(agent_id);
+    setRank(rank);
+    setAgentShow(show);
+    setControll(true);
+  };
+
+  const agentStyle = {
+    position: "absolute",
+    zIndex: 9999,
+    width: "80%",
+    margin: "auto",
+    top: "0",
+    left: "0",
+    border: "0",
+    borderRadius: "20px",
+  };
+
+  // // implemented by rambey
 
   return (
     <NewDesignSideBar
@@ -51,6 +81,18 @@ function Leaderboard() {
       closeSidebar={() => setToggleSidebar(!toggleSidebar)}
     >
       <div className={styles.content_container}>
+        {/* // implemented by rambey */}
+        <dialog ref={(popup) => (modal = popup)} style={agentStyle}>
+          <AgentReport
+            modal={modal}
+            rank={rank}
+            show={agentShow}
+            controll={controll}
+            agent_id={agent_id}
+          />
+        </dialog>
+        {/*  */}
+
         <section>
           <div className={styles.right_section_top}>
             <TopNav
@@ -102,50 +144,12 @@ function Leaderboard() {
                   key={profile.agent_id}
                   person={profile}
                   index={index}
+                  handleAgent={handleAgent}
+                  agent_id={profile.agent_id}
+                  rank={profile.rank}
+                  show={profile.str_agent_id}
                 />
               ))}
-
-              {/* <div className={styles.Profile1}>
-                <div className={styles.Profile_content}>
-                  <div className={styles.Profile_img}>
-                    <img src={ProfileName} className="" alt="profile1" />
-                  </div>
-                  <h2>ID: AG685500DE</h2>
-                  <p>No. of calls taken this week: 152</p>
-                  <h1>
-                    10 <span className={styles.small_text}>/10</span>
-                  </h1>
-                  <p className={styles.Agent_position}> 1st</p>
-                </div>
-              </div>
-
-              <div className={styles.Profile2}>
-                <div className={styles.Profile_content}>
-                  <div className={styles.Profile_img}>
-                    <img src={ProfileName} className="" alt="profile1" />
-                  </div>
-                  <h2>ID: AG685500DE</h2>
-                  <p>No. of calls taken this week: 152</p>
-                  <h1>
-                    7.5 <span className={styles.small_text}>/10</span>
-                  </h1>
-                  <p className={styles.Agent_position}> 2nd</p>
-                </div>
-              </div>
-
-              <div className={styles.Profile3}>
-                <div className={styles.Profile_content}>
-                  <div className={styles.Profile_img}>
-                    <img src={ProfileName} className="" alt="profile1" />
-                  </div>
-                  <h2>ID: AG685500DE</h2>
-                  <p>No. of calls taken this week: 152</p>
-                  <h1>
-                    5 <span className={styles.small_text}>/10</span>
-                  </h1>
-                  <p className={styles.Agent_position}> 3rd</p>
-                </div>
-              </div> */}
             </div>
           </div>
         </section>
@@ -170,7 +174,14 @@ function Leaderboard() {
             </div>
             <hr></hr>
             {otherAgent.map((profile) => (
-              <OtherAgentDisplay key={profile.agent_id} person={profile} />
+              <OtherAgentDisplay
+                key={profile.agent_id}
+                person={profile}
+                handleAgent={handleAgent}
+                agent_id={profile.agent_id}
+                rank={profile.rank}
+                show={profile.str_agent_id}
+              />
             ))}
             {/* <div className={styles.Header_content}>
               <div className={styles.Header_profile_container}>
@@ -215,12 +226,20 @@ function Leaderboard() {
   );
 }
 
-function LeaderBoardDisplay({ person, index }) {
+function LeaderBoardDisplay({
+  person,
+  index,
+  handleAgent,
+  agent_id,
+  rank,
+  show,
+}) {
   return (
     <div
       className={styles.Profile1}
       id={styles.border}
       style={{ background: bgMap[index] }}
+      onClick={() => handleAgent(agent_id, rank, show)}
     >
       <div className={styles.Profile_content}>
         <div className={styles.Profile_img}>
@@ -237,12 +256,14 @@ function LeaderBoardDisplay({ person, index }) {
   );
 }
 
-function OtherAgentDisplay({ person }) {
+function OtherAgentDisplay({ person, handleAgent, agent_id, rank, show }) {
   return (
     <div className={styles.Header_content}>
       <div className={styles.Header_profile_container}>
         <img src={ProfileName} className="" alt="profile1" />
-        <p>{person.str_agent_id}</p>
+        <p onClick={() => handleAgent(agent_id, rank, show)}>
+          {person.str_agent_id}
+        </p>
       </div>
       <p>{person.total_calls}</p>
       <p>{person.average_score}/10</p>

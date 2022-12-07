@@ -57,7 +57,7 @@ import random, string
 from elasticapm.contrib.starlette import make_apm_client, ElasticAPM
 
 apm_config = {
-    'SERVICE_NAME': 'Heed',
+    'SERVICE_NAME': 'Heed_api',
     'SERVER_URL': 'http://localhost:8200',
     'ENVIRONMENT': 'production',
     'GLOBAL_LABELS': 'platform=DemoPlatform, application=DemoApplication'
@@ -371,7 +371,7 @@ def update_profile(
            
 
 @app.delete("/users/delete_account/{user_id}", summary="delete user account", tags=['users'])
-def delete_user_account(user_id: int , db:Session = Depends(get_db), current_user:schema.User = Depends(get_admin)):
+def delete_user_account(user_id: int , db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
     return crud.delete_user(db=db, user_id=user_id)
 
 @app.get('/verification', summary = "verify a user by email", tags=['users'])
@@ -887,12 +887,14 @@ def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: mo
     try:
         result = {}
         leaderboard = crud.get_leaderboard(db, user.id)
-        for i,j in zip(leaderboard[0], leaderboard[1]):
+        for i in leaderboard[0]:
             if i["agent_id"] == agent_id:
                 result["week"] = i
+                break
+        for j in leaderboard[1]:
             if j["agent_id"] == agent_id:
-                result["month"] = i
-            break
+                result["month"] = j
+                break
         return {"Agent_Performance_Report": {"week": result["week"], "month": result["month"]}}
     except:
         return {"message": "agent does not exist"}

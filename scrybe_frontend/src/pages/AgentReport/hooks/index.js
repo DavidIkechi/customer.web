@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import ApiService from "../../../helpers/axioshelp/apis";
+// import ApiService from "../../../helpers/axioshelp/apis";
 
 // pass id as paraameteer
 
@@ -26,10 +26,9 @@ import ApiService from "../../../helpers/axioshelp/apis";
 
 // export { useAgentPerformanceData }
 
-const useAgentReport = () => {
+const useAgentReport = (props) => {
   const [recentAgentReport, setAgentRecentReports] = useState([]);
 
-  const [id, setId] = useState("13");
   useEffect(() => {
     const token = localStorage.getItem("heedAccessToken");
     const config = {
@@ -38,20 +37,26 @@ const useAgentReport = () => {
         "content-type": "Application/json",
       },
     };
-    axios
-      .get(`https://api.heed.hng.tech/AgentDetails?agent_id=${id}`, config)
-      .then((res) => {
-        setAgentRecentReports(res.data.Agent_Performance_Report);
-      });
-  }, []);
+    console.log(props);
+    if (props?.controll) {
+      axios
+        .get(
+          `https://api.heed.hng.tech/AgentDetails?agent_id=${props?.agent_id}`,
+          config
+        )
+        .then((res) => {
+          setAgentRecentReports(res.data.Agent_Performance_Report);
+        });
+      console.log(props.controll);
+    }
+  }, [props]);
 
   return recentAgentReport;
 };
 export { useAgentReport };
 
-const useAgentAnalysis = () => {
+const useAgentAnalysis = (props) => {
   const [agentAnalysis, setAnalysis] = useState({});
-  const [data_id, setData_id] = useState("13");
 
   useEffect(() => {
     const token = localStorage.getItem("heedAccessToken");
@@ -61,15 +66,17 @@ const useAgentAnalysis = () => {
         "content-type": "Application/json",
       },
     };
-    axios
-      .get(
-        `https://api.heed.hng.tech/total-agent-analysis?agent_id=${data_id}`,
-        config
-      )
-      .then((res) => {
-        setAnalysis(res.data);
-      });
-  }, []);
+    if (props?.controll) {
+      axios
+        .get(
+          `https://api.heed.hng.tech/total-agent-analysis?agent_id=${props?.agent_id}`,
+          config
+        )
+        .then((res) => {
+          setAnalysis(res.data);
+        });
+    }
+  }, [props]);
   return agentAnalysis;
 };
 
