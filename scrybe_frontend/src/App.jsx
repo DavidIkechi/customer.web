@@ -100,10 +100,7 @@ function App() {
         {/* <Route path="/forget-password" element={<ForgetPassword />} /> */}
         <Route path="/forget-password" element={<ForgetPasswordNew />} />
         <Route path="/check-mail" element={<CheckMail />} />
-        <Route
-          path="/set-new-password?token=:token"
-          element={<NewSetNewPassword />}
-        />
+        <Route path="/set-new-password" element={<NewSetNewPassword />} />
         <Route
           path="/pw-reset-successful"
           element={<NewPasswordResetSuccessful />}

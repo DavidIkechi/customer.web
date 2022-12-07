@@ -33,9 +33,8 @@ const Index = () => {
 
   // Watch event for disable button
   const password = watch("password");
-  const password2 = watch("password2");
 
-  const isValid = password && password2;
+  const isValid = password;
 
   return (
     <div>
@@ -69,9 +68,9 @@ const Index = () => {
                   <label htmlFor="email" className={styles.label__name}>
                     New password
                     <input
-                      type="email"
-                      name="email"
-                      id="email"
+                      type="password"
+                      name="password"
+                      id="password"
                       // className={styles.email}
                       placeholder="Enter your new password"
                       className={`${errors.password && styles.errorInput} `}
