@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useEffect } from "react";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import mail from "./assets/mail.svg";
 import styles from "./Email.module.scss";
 
 const EmailVerify = () => {
+  const [message , setMessage] =useState("")
   const query = new URLSearchParams(useLocation);
   // const token = query.get("token");
   const { token } = useParams();
@@ -19,7 +21,9 @@ const EmailVerify = () => {
       const response = await axios.get(
         `https://api.heed.hng.tech/verification?token=${token}`
       );
-      console.log(response);
+      console.log(response.data);
+      setMessage(response.data);
+      
     } catch (err) {
       console.log(err);
     }
@@ -30,7 +34,7 @@ const EmailVerify = () => {
         <img src={mail} alt="mail" />
         <p className={styles.status}>Verified!</p>
         <p className={styles.msg}>
-          Hello there, your account has been successfully verified
+         {message}
         </p>
         <Link to="/signin">Login</Link>
       </div>
