@@ -19,7 +19,6 @@ function SentimentAnalysis() {
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const params = useParams();
   const sentimentData = useMockAuthAndReadSentiment(params.AudioId);
-  console.log(params.AudioId);
   const positiveTags = [
     "brave",
     "good",
@@ -74,7 +73,7 @@ function SentimentAnalysis() {
       >
         <div className={styles.page__container}>
           <div className={styles.audio__mobile}>
-            <AudioCard />
+            <AudioCard sentimentData={sentimentData} />
           </div>
           <div className={styles.sentiment__tab__opener}>
             <div className={styles.opener__content} onClick={openSentimentTab}>
@@ -113,7 +112,7 @@ function SentimentAnalysis() {
             </div>
           </main>
           <aside className={styles.aside__container}>
-            <AudioCard />
+            <AudioCard sentimentData={sentimentData} />
             <OverAllSentimentCard sentimentData={sentimentData} />
             <VerdictCard sentimentData={sentimentData} />
             <PhraseTagCard

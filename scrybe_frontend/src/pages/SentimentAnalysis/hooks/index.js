@@ -13,7 +13,6 @@ const useMockAuthAndReadSentiment = (id) => {
       axios
         .get(baseURL + `/transcription/${id}`, { headers })
         .then((newRes) => {
-          console.log("Test 1", newRes);
           setSentimentData(newRes.data.sentiment_result);
         })
         .catch((err) => {
