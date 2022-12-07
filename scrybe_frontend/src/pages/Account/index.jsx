@@ -136,10 +136,7 @@ function Account() {
                     id="submit-btn"
                     value="Submit"
                     name="submit-btn"
-                    onClick={(e) => {
-                      handleSubmit(submitCallback);
-                      e.target.current.reset();
-                    }}
+                    onClick={handleSubmit(submitCallback)}
                   />
                 </label>
                 <label htmlFor="cancel-btn">
@@ -155,7 +152,11 @@ function Account() {
             </form>
           </div>
         </div>
-        <TopNav />
+        <TopNav
+          openSidebar={() => {
+            setToggleSidebar(!toggleSidebar);
+          }}
+        />
         <div className={accountStyles.account__div}>
           <section className={accountStyles.mobile_head__section}>
             <button type="button" onClick={() => navigate(-1)}>
