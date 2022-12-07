@@ -13,11 +13,24 @@ import master from "./assets/Mastercard.png";
 import axios from "axios";
 
 function Checkout() {
+  const [dataArray, setDataArray] = useState([]);
+
+  const token = localStorage.getItem("heedAccessToken");
+  console.log(token);
+
   const fetchOrders = async () => {
-    await axios.get("orders").then((res) => {
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+
+    await axios.get("orders", { headers }).then((res) => {
       console.log(res);
+      setDataArray(res.data);
     });
   };
+
+  console.log(dataArray);
 
   useEffect(() => {
     fetchOrders();
