@@ -12,7 +12,11 @@ const Help = () => {
         </h2>
         <div className={styles.HelpBox}>
           <div className={styles.HelpIconWithText}>
-            <img src={UsefulInsights} alt="useful insights" />
+            <img
+              src={UsefulInsights}
+              alt="useful insights"
+              className={styles.icon_size}
+            />
 
             <h3>Useful Insights</h3>
           </div>
@@ -25,16 +29,21 @@ const Help = () => {
       <div className={styles.HelpBoxesOnly}>
         <div className={styles.HelpBox1}>
           <div className={styles.HelpIconWithText}>
-            <img src={Productivity} alt="Productivity" />
+            <img
+              src={Productivity}
+              alt="Productivity"
+              className={styles.icon_size}
+            />
             <h3>Productivity</h3>
           </div>
           <p className={styles.paragraph}>
-            Boost the effectiveness of operations in your support department.
+            Boost the effectiveness of <br />
+            operations in your support <br /> department.
           </p>
         </div>
         <div className={styles.HelpBox2}>
           <div className={styles.HelpIconWithText}>
-            <img src={Customer} alt="customer" />
+            <img src={Customer} alt="customer" className={styles.icon_size} />
             <h3>Customer Experience</h3>
           </div>
           <p className={styles.paragraph}>

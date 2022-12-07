@@ -3,6 +3,8 @@
 .HowItWorks{
     background: #E6F0FF;
     padding: 4rem;
+    padding-left: 7rem;
+    padding-right: 7rem;
     display: flex;
     justify-content: space-around;
     @include media(800px) {
@@ -49,14 +51,14 @@
             font-size: 24px;
             line-height: 32px;
             color: #313131;
-            margin: 4rem 0rem 1rem;
+            margin: 1rem 0rem 1rem;
             @include media(550px) {
                 gap: 1rem;
               }
         }
         .bulletsBody{
             display: flex;
-            gap: 5rem;
+            gap: 4rem;
             @include media(550px) {
                 gap:3rem;
             }
