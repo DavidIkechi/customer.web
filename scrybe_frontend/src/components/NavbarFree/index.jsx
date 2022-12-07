@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 // import axios from "axios";
 import logo from "../../assets/heed_logo_with_text.svg";
 import styles from "./nav.module.scss";
@@ -24,7 +24,10 @@ function NavBar() {
     <nav className={styles.nav}>
       <div className={` ${styles.nav_content}`}>
         <div className={styles.nav__img}>
-          <img src={logo} alt="Company Logo" />
+          <Link to="/">
+            {" "}
+            <img src={logo} alt="Company Logo" />
+          </Link>
         </div>
 
         <div
