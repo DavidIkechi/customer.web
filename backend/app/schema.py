@@ -156,8 +156,6 @@ class UserProfile(BaseModel):
 
     
 class UserProfileUpdate(BaseModel):
-    first_name: str
-    last_name: str
     phone_number: Optional[str]
     company_address: Optional[str]
 
@@ -185,3 +183,8 @@ class Order(OrderBase):
     annual_amount: float
     order_date: datetime
     next_payment_due_date: datetime
+
+
+class ChangePassword(BaseModel):
+    old_password: str
+    new_password: str
