@@ -3,48 +3,18 @@ import NewDesignSideBar from "../../components/NewDesignSidebar";
 import TopNav from "../../components/TopNav";
 import React from "react";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import SearchIcon from "./images/search-icon.svg";
 import ProfileName from "./images/profile-circle.png";
 import CallIcon from "./images/Call-icon.png";
 import LeaderBoardIcon from "./images/leaderboard-icon.png";
+import AgentReport from "../AgentReport";
 
 function Leaderboard() {
   const [toggleSidebar, setToggleSidebar] = React.useState(false);
 
   const [leaderboard, setLeaderboard] = useState([]);
   const [otherAgent, setOtherAgent] = useState([]);
-
-  // function loadAgentActivity() {
-  //   // NOTE: you don't need to loginevery time you are making this call
-  //   // const userCredentials = {
-  //   //   username: "tekkieware@gmail.com",
-  //   //   password: "123456",
-  //   // };
-  //   // axios
-  //   //   .post("https://api.heed.hng.tech/login", userCredentials)
-  //   //   .then((response) => {
-  //   //     console.log("token response===>", response.data);
-  //   //   });
-  //   // Before i push, remove line 55 & uncomment line 54, confirm that the token stored in the local storage has a key of token, personally array functions, handle promise, http protocol, axios api  //
-  //   // const token = localStorage.getItem("heedAccessToken");
-  //   const token =
-  //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZWtraWV3YXJlQGdtYWlsLmNvbSIsImV4cCI6MTY3MDE4Nzk5NH0.wQOff8gY8EZhDetiuIY_MevgyaqU0-jUDhtCc6rS9aQ"; //access_token
-  //   const headers = { Authorization: `Bearer ${token}` };
-  //   axios
-  //     .get("https://api.heed.hng.tech/leaderboard", { headers })
-  //     .then((response) => {
-  //       console.log(response.data["Top3 Agents"]);
-  //       const arr = response.data["Top3 Agents"];
-  //       console.log(response.data["Other Agents"]);
-  //       const otherAgents = response.data["Other Agents"];
-  //       setLeaderboard(arr);
-  //       setOtherAgent(otherAgents);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }
 
   async function accessData() {
     const token = localStorage.getItem("heedAccessToken");
@@ -60,9 +30,9 @@ function Leaderboard() {
       .catch((error) => {
         console.error(error);
       });
-    const arr = response.data["Top3_Agents"];
+    const arr = response.data.week.Top3_Agents;
     setLeaderboard(arr);
-    const otherAgents = response.data["Other_Agents"];
+    const otherAgents = response.data.week.Other_Agents;
     setOtherAgent(otherAgents);
   }
 
@@ -71,6 +41,35 @@ function Leaderboard() {
     // loadAgentActivity();
   }, []);
 
+  // implemented by rambey
+  const [controll, setControll] = useState(false);
+  const [rank, setRank] = useState();
+  const [agentShow, setAgentShow] = useState();
+
+  let modal = useRef();
+
+  const [agent_id, setAgent_id] = useState("");
+  const handleAgent = (agent_id, rank, show) => {
+    modal.showModal();
+    setAgent_id(agent_id);
+    setRank(rank);
+    setAgentShow(show);
+    setControll(true);
+  };
+
+  const agentStyle = {
+    position: "absolute",
+    zIndex: 9999,
+    width: "80%",
+    margin: "auto",
+    top: "0",
+    left: "0",
+    border: "0",
+    borderRadius: "20px",
+  };
+
+  // // implemented by rambey
+
   return (
     <NewDesignSideBar
       toggleSidebar={toggleSidebar}
@@ -78,6 +77,18 @@ function Leaderboard() {
       closeSidebar={() => setToggleSidebar(!toggleSidebar)}
     >
       <div className={styles.content_container}>
+        {/* // implemented by rambey */}
+        <dialog ref={(popup) => (modal = popup)} style={agentStyle}>
+          <AgentReport
+            modal={modal}
+            rank={rank}
+            show={agentShow}
+            controll={controll}
+            agent_id={agent_id}
+          />
+        </dialog>
+        {/*  */}
+
         <section>
           <div className={styles.right_section_top}>
             <TopNav
@@ -125,58 +136,40 @@ function Leaderboard() {
 
             <div className={styles.Profile_container}>
               {leaderboard.map((profile) => (
-                <LeaderBoardDisplay key={profile.agent_id} person={profile} />
+                <LeaderBoardDisplay
+                  key={profile.agent_id}
+                  person={profile}
+                  handleAgent={handleAgent}
+                  agent_id={profile.agent_id}
+                  rank={profile.rank}
+                  show={profile.str_agent_id}
+                />
               ))}
-
-              {/* <div className={styles.Profile1}>
-                <div className={styles.Profile_content}>
-                  <div className={styles.Profile_img}>
-                    <img src={ProfileName} className="" alt="profile1" />
-                  </div>
-                  <h2>ID: AG685500DE</h2>
-                  <p>No. of calls taken this week: 152</p>
-                  <h1>
-                    10 <span className={styles.small_text}>/10</span>
-                  </h1>
-                  <p className={styles.Agent_position}> 1st</p>
-                </div>
-              </div>
-
-              <div className={styles.Profile2}>
-                <div className={styles.Profile_content}>
-                  <div className={styles.Profile_img}>
-                    <img src={ProfileName} className="" alt="profile1" />
-                  </div>
-                  <h2>ID: AG685500DE</h2>
-                  <p>No. of calls taken this week: 152</p>
-                  <h1>
-                    7.5 <span className={styles.small_text}>/10</span>
-                  </h1>
-                  <p className={styles.Agent_position}> 2nd</p>
-                </div>
-              </div>
-
-              <div className={styles.Profile3}>
-                <div className={styles.Profile_content}>
-                  <div className={styles.Profile_img}>
-                    <img src={ProfileName} className="" alt="profile1" />
-                  </div>
-                  <h2>ID: AG685500DE</h2>
-                  <p>No. of calls taken this week: 152</p>
-                  <h1>
-                    5 <span className={styles.small_text}>/10</span>
-                  </h1>
-                  <p className={styles.Agent_position}> 3rd</p>
-                </div>
-              </div> */}
             </div>
           </div>
         </section>
 
         <section className={styles.Tabular_Container}>
-          {otherAgent.map((profile) => (
+          {/* // implemented by rambey */}
+          {/* {otherAgent.map((profile) => (
             <OtherAgentDisplay key={profile.agent_id} person={profile} />
-          ))}
+          ))} */}
+          {otherAgent.map((profile) => {
+            {
+              /* console.log(profile) */
+            }
+            return (
+              <OtherAgentDisplay
+                key={profile.agent_id}
+                agent_id={profile.agent_id}
+                person={profile}
+                handleAgent={handleAgent}
+                rank={profile.rank}
+                show={profile.str_agent_id}
+              />
+            );
+          })}
+          {/* // implemented by rambey */}
           <div className={styles.Tabular_Content_Container}>
             <div className={styles.Header_title}>
               <p className={styles.Hide_for_mobile}>ID NUMBER</p>
@@ -195,42 +188,6 @@ function Leaderboard() {
               </span>
             </div>
             <hr></hr>
-            {/* <div className={styles.Header_content}>
-              <div className={styles.Header_profile_container}>
-                <img src={ProfileName} className="" alt="profile1" />
-                <p>AG685500DE</p>
-              </div>
-              <p>24</p>
-              <p>5/10</p>
-              <p>5th</p>
-            </div>
-            <div className={styles.Header_content}>
-              <div className={styles.Header_profile_container}>
-                <img src={ProfileName} className="" alt="profile1" />
-                <p>AG685500DE</p>
-              </div>
-              <p>24</p>
-              <p>5/10</p>
-              <p>5th</p>
-            </div>
-            <div className={styles.Header_content}>
-              <div className={styles.Header_profile_container}>
-                <img src={ProfileName} className="" alt="profile1" />
-                <p>AG685500DE</p>
-              </div>
-              <p>24</p>
-              <p>5/10</p>
-              <p>5th</p>
-            </div>
-            <div className={styles.Header_content}>
-              <div className={styles.Header_profile_container}>
-                <img src={ProfileName} className="" alt="profile1" />
-                <p>AG685500DE</p>
-              </div>
-              <p>24</p>
-              <p>5/10</p>
-              <p>5th</p>
-            </div> */}
           </div>
         </section>
       </div>
@@ -238,9 +195,12 @@ function Leaderboard() {
   );
 }
 
-function LeaderBoardDisplay({ person }) {
+function LeaderBoardDisplay({ person, handleAgent, agent_id, rank, show }) {
   return (
-    <div className={styles.Profile1}>
+    <div
+      className={styles.Profile1}
+      onClick={() => handleAgent(agent_id, rank, show)}
+    >
       <div className={styles.Profile_content}>
         <div className={styles.Profile_img}>
           <img src={ProfileName} className="" alt="profile1" />
@@ -256,12 +216,14 @@ function LeaderBoardDisplay({ person }) {
   );
 }
 
-function OtherAgentDisplay({ person }) {
+function OtherAgentDisplay({ person, handleAgent, agent_id, rank, show }) {
   return (
     <div className={styles.Header_content}>
       <div className={styles.Header_profile_container}>
         <img src={ProfileName} className="" alt="profile1" />
-        <p>{person.str_agent_id}</p>
+        <p onClick={() => handleAgent(agent_id, rank, show)}>
+          {person.str_agent_id}
+        </p>
       </div>
       <p>{person.total_calls}</p>
       <p>{person.average_score}/10</p>
