@@ -607,9 +607,15 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
 @app.get("/leaderboard", summary = "get agent leaderboard", tags=['agent leaderboard'])
 def get_agents_leaderboard(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     leaderboard = crud.get_leaderboard(db, user.id)
-    top3_agents = leaderboard[:3]
-    others = leaderboard[3:]
-    return {"Top3_Agents": top3_agents, "Other_Agents": others}
+    results = {"week":{"Top3_Agents": [], "Other_Agents": []},
+            "month":{"Top3_Agents": [], "Other_Agents": []}
+    }
+    results["week"]["Top3_Agents"] = leaderboard[0][:3]
+    results["week"]["Other_Agents"] = leaderboard[0][3:]
+    results["month"]["Top3_Agents"] = leaderboard[1][:3]
+    results["month"]["Other_Agents"] = leaderboard[1][3:]
+
+    return results
 
 #agent total_analysis
 @app.get("/total-agent-analysis", summary="get total agent analysis")
@@ -882,12 +888,15 @@ async def get_order_summary (order_id: int, db: Session = Depends(get_db), user:
 @app.get("/AgentDetails", summary = "get agent performance report", tags=['Agent Performance Report'])
 def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     try:
+        result = {}
         leaderboard = crud.get_leaderboard(db, user.id)
-        for i in leaderboard:
+        for i,j in zip(leaderboard[0], leaderboard[1]):
             if i["agent_id"] == agent_id:
-                result = i
-                break
-        return {"Agent_Performance_Report": result}
+                result["week"] = i
+            if j["agent_id"] == agent_id:
+                result["month"] = i
+            break
+        return {"Agent_Performance_Report": {"week": result["week"], "month": result["month"]}}
     except:
         return {"message": "agent does not exist"}
 
