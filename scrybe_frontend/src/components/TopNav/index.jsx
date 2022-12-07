@@ -79,12 +79,14 @@ const TopNav = ({ openSidebar, search }) => {
             </div>
           </div>
         </div>
-        <NavLink to="/upload-new-file">
-          <div className={styles.TopNav_btnwrap}>
-            <img src={uploadBtn_icon} alt="" />
-            <button className={styles.TopNav_btn}>Upload</button>
-          </div>
-        </NavLink>
+        {currentUser && (
+          <NavLink to="/upload-new-file">
+            <div className={styles.TopNav_btnwrap}>
+              <img src={uploadBtn_icon} alt="" />
+              <button className={styles.TopNav_btn}>Upload</button>
+            </div>
+          </NavLink>
+        )}
 
         <div className={styles.TopNav_user_mobile}>
           <img
