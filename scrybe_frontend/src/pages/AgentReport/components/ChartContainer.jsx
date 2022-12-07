@@ -10,6 +10,7 @@ import {
 import Icon from "../assets/table-icon.png";
 ChartJS.register(CategoryScale, LinearScale, BarElement);
 
+// agentAnalysis
 function Charts({ selectReport }) {
   const [option, setOption] = useState({});
 
@@ -81,18 +82,22 @@ function Charts({ selectReport }) {
             </p>
 
             {selectReport?.map((record) => {
-              return <p className={styles.calltxt}>{record.total_recording}</p>;
+              return (
+                <p className={styles.calltxt} key={record.id}>
+                  {record.total_recording}
+                </p>
+              );
             })}
           </div>
         </div>
         <div className={styles.chartImg}>
-          {selectReport?.length > 0 ? (
+          {selectReport?.length >= 0 ? (
+            <Bar data={userData} options={option} />
+          ) : (
             <p className={styles.empty}>
               You will see an overview of your activities here when you start
               analysing.
             </p>
-          ) : (
-            <Bar data={userData} options={option} />
           )}
         </div>
       </div>
