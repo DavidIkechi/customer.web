@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./yearplans.module.scss";
-import currency from "../../assets/naira.svg";
+import currency from "../../assets/dollar.svg";
 import startUpIcon from "../../assets/star.svg";
 import growingIcon from "../../assets/auto_graph.svg";
 import enterpriseIcon from "../../assets/corporate_fare.svg";
@@ -27,7 +27,7 @@ function YearPlans({ yearState }) {
               <div className={styles.plansPricingCurrency}>
                 <img src={currency} alt="currency symbol" />
               </div>
-              <h4>6,500</h4>
+              <h4>15</h4>
             </div>
             <p>per month</p>
           </div>
@@ -69,7 +69,7 @@ function YearPlans({ yearState }) {
               <div className={styles.plansPricingCurrency}>
                 <img src={currency} alt="currency symbol" />
               </div>
-              <h4>10,000</h4>
+              <h4>23</h4>
             </div>
             <p>per month</p>
           </div>
@@ -115,7 +115,7 @@ function YearPlans({ yearState }) {
               <div className={styles.plansPricingCurrency}>
                 <img src={currency} alt="currency symbol" />
               </div>
-              <h4>21,000</h4>
+              <h4>47</h4>
             </div>
             <p>per month</p>
           </div>
