@@ -323,10 +323,11 @@
   
   @include easyMediaQueries("min-width:1024px") {
     gap: pix-rem(40);
+    justify-content: space-between;
 
     > {
       div {
-        width: min(calc(50% - pix-rem(20)), 28rem);
+        width: min(calc(50% - pix-rem(20)), 34rem);
         gap: pix-rem(16);
 
         > {
