@@ -1,34 +1,39 @@
 import React from "react";
+import "./index.css";
 
 const Alert = ({ type, message }) => {
+  let className = "alert alert-dismissible";
+  switch (type) {
+    case "Error":
+      className = "alert alert-error alert-dismissible";
+      break;
+    case "Warning":
+      className = "alert alert-warning alert-dismissible";
+      break;
+    case "Info":
+      className = "alert alert-info alert-dismissible";
+      break;
+    case "Success":
+      className = "alert alert-success alert-dismissible";
+      break;
+    default:
+      className = "alert alert-dismissible";
+  }
+
   return (
-    <>
-      {type === "error" ? (
-        <div class="alert alert-error alert-dismissible" role="alert">
-          <p>
-            <strong>Error!</strong> {message}
-          </p>
-          <button
-            type="button"
-            class="btn-close"
-            data-dismiss="alert"
-            aria-label="Close"
-          ></button>
-        </div>
-      ) : (
-        <div class="alert alert-success alert-dismissible" role="alert">
-          <p>
-            <strong>Success!</strong> {message}
-          </p>
-          <button
-            type="button"
-            class="btn-close"
-            data-dismiss="alert"
-            aria-label="Close"
-          ></button>
-        </div>
-      )}
-    </>
+    <div className={className} role="alert">
+      <div className="title">
+        <h4>{type}</h4>
+        {/* <button
+          onClick={() => setState(false)}
+          type="button"
+          className="btn-close"
+          data-dismiss="alert"
+          aria-label="Close"
+        ></button> */}
+      </div>
+      <p>{message}</p>
+    </div>
   );
 };
 

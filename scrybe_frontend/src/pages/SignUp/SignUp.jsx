@@ -7,6 +7,7 @@ import ApiService from "../../helpers/axioshelp/apis";
 import footerImg from "./assets/signup-img.svg";
 import styles from "./SignUp.module.scss";
 import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
+import SnackBar from "../../components/SnackBar";
 
 function Signup() {
   const [first_name, setFirstName] = useState("");
@@ -21,6 +22,7 @@ function Signup() {
   const [companyStateTest, setCompanyStateTest] = useState(false);
   const [btn, setBtn] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [response, setResponse] = useState({ type: "", message: "" });
 
   const navigate = useNavigate();
   const passwordTest = new RegExp(/^["0-9a-zA-Z!@#$&()\\-`.+,/"]{8,}$/),
@@ -104,11 +106,13 @@ function Signup() {
     };
     setIsLoading(true);
     try {
-      const res = await ApiService.SignUp(data);
+      await ApiService.SignUp(data);
       setIsLoading(false);
 
       navigate("/verify-signup");
     } catch (error) {
+      console.log(error);
+      setIsLoading(false);
       console.log(ErrorHandler(error));
     }
   };
@@ -121,6 +125,7 @@ function Signup() {
 
   return (
     <>
+      <SnackBar response={response} />
       <main className={styles.signUpWrapper}>
         <div className={styles.signup}>
           <div className={styles.first}>

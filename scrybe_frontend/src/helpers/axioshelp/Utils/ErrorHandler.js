@@ -7,10 +7,11 @@ const ErrorHandler = (err) => {
   }
   if (err.code === "ERR_BAD_REQUEST") {
     if (err.response.data) {
-      console.log(err.response.data.message);
       return {
         type: "error",
-        message: err.response.data.message,
+        message: err.response.data.message
+          ? err.response.data.message
+          : "Something went wrong",
       };
     } else {
       return {
