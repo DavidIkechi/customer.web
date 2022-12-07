@@ -6,17 +6,18 @@
 
 
 .container {
-  height: 100vh;
+  // height: 100vh;
   border: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  background-color: #f9f9f9;
-  position: relative;
+  // z-index: 99999;
+  // background-color: #f9f9f9;
+  // position: absolute;
   transition: all 2s ease-in;
 
- 
+
   .mainWrapper {
     margin: 0px auto;
     width: 80%;
