@@ -387,6 +387,10 @@ async def email_verification(request: Request, token: str, db: Session = Depends
         return{
             "status" : "ok",
             "data" : f"Hello {user.first_name}, your account has been successfully verified"}
+    return {
+        "status": "ok",
+        "data" : f"Hello {user.first_name}, you already have an active account with Heed!"
+    }
 
 @app.post("/tryForFree")
 async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...)):
