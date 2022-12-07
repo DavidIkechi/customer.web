@@ -6,6 +6,21 @@ import Proptypes from "prop-types";
 import SkeletonLoader from "../SkeletonLoader";
 
 function AudioCard({ sentimentData }) {
+  const fileNameEllipsis = (filename) => {
+    if (filename.length > 15) {
+      let firstPart = filename.substring(
+        0,
+        Math.min(15, parseInt(filename.length / 2))
+      );
+      let secondPart = filename.substring(
+        Math.max(parseInt(filename.length / 2) + 2, filename.length - 6)
+      );
+      let result = firstPart + "..." + secondPart;
+      return result;
+    } else {
+      return filename;
+    }
+  };
   return (
     <AsideCard classtype={styles.audio__file}>
       <div className={styles.audio__icon__container}>
@@ -14,19 +29,13 @@ function AudioCard({ sentimentData }) {
       <div className={styles.audio__text}>
         {sentimentData.audio_filename ? (
           <div className={styles.audio__name}>
-            {(() => {
-              let firstPart = sentimentData.audio_filename.substring(0, 20);
-              let secondPart = sentimentData.audio_filename.substring(
-                sentimentData.audio_filename.length - 4
-              );
-              let result = firstPart + "..." + secondPart;
-              return result;
-            })()}
+            {/* {fileNameEllipsis(sentimentData.audio_filename)} */}
+            {fileNameEllipsis("abcdefghijklmn.mp3")}
           </div>
         ) : (
           <SkeletonLoader type="text" numberOfLines={1} />
         )}
-        {sentimentData ? (
+        {sentimentData.audio_size ? (
           <div className={styles.audio__size}>
             {sentimentData.audio_size} mb
           </div>
