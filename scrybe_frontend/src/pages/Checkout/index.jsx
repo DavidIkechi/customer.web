@@ -1,13 +1,28 @@
 import React from "react";
-// import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
 // import { Route, Routes } from "react-router-dom";
+
 import styles from "./checkout.module.scss";
 import startUpIcon from "./assets/star.svg";
 import currency from "./assets/naira.svg";
 import tag from "./assets/sell.svg";
+import checkIcon from "./assets/check.svg";
+import visa from "./assets/VisaInc.png";
+import master from "./assets/Mastercard.png";
+import axios from "axios";
 
 function Checkout() {
+  const fetchOrders = async () => {
+    await axios.get("orders").then((res) => {
+      console.log(res);
+    });
+  };
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
   return (
     <div className={styles.checkout}>
       <div className={styles.container}>
@@ -128,7 +143,7 @@ function Checkout() {
             </div>
             <div className={styles.checkoutFormSections}>
               <div className={styles.checkoutSectionHeading}>
-                <h2>3.Card detials </h2>
+                <h2>3. Card details </h2>
               </div>
               <div className={styles.checkoutFormFields}>
                 <form id="my-form">
@@ -174,7 +189,55 @@ function Checkout() {
               <button className={styles.formButton}>Proceed</button>
             </div>
           </div>
-          <div className={styles.orderDetails}></div>
+          <div className={styles.orderDetails}>
+            <div className={styles.featuresSection}>
+              <h2>Features of Starup plan</h2>
+              <div className={styles.pricingFeatures}>
+                <div className={styles.pricingFeaturesItem}>
+                  <img src={checkIcon} alt="check-mark icon" />
+                  <p>Ai-Powered call transcriptions</p>
+                </div>
+                <div className={styles.pricingFeaturesItem}>
+                  <img src={checkIcon} alt="check-mark icon" />
+                  <p>Call Tracking & Recording</p>
+                </div>
+                <div className={styles.pricingFeaturesItem}>
+                  <img src={checkIcon} alt="check-mark icon" />
+                  <p> Business Hours</p>
+                </div>
+                <div className={styles.pricingFeaturesItem}>
+                  <img src={checkIcon} alt="check-mark icon" />
+                  <p>Email & Chat Support</p>
+                </div>
+                <div className={styles.support}>
+                  <p>
+                    If you have any questions or need more information, please
+                    contact us through <span>support</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h2>Features of Starup plan</h2>
+              <div>
+                <div className={styles.cardTypes}>
+                  <img src={visa} alt="visa icon" />
+                  <img src={master} alt="visa icon" />
+                </div>
+              </div>
+            </div>
+            <div className={styles.orderSummary}>
+              <h2>Features of Starup plan</h2>
+              <div className={styles.planDetails}>
+                <p>Heed Startup Plan (annual)</p>
+                <p>₦78,000 per year</p>
+              </div>
+              <div className={styles.totalSummary}>
+                <p>Total</p>
+                <p>₦78,000 per year</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
