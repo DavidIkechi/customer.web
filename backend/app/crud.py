@@ -7,6 +7,7 @@ from passlib.context import CryptContext
 from fastapi import HTTPException 
 import cloudinary
 import cloudinary.uploader
+from datetime import datetime
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -252,39 +253,69 @@ def get_leaderboard(db: Session, user_id: int):
         leaderboard = []
         
         agents = dict()
-        full_names = []
+        unique_ids = []
+        week = datetime.now().isocalendar().week
+        month = datetime.now().month
 
         for i in results:
-            full_name = i.agent_firstname + " " + i.agent_lastname
-            full_names.append(full_name)
+            unique_id = i.agent_id
+            unique_ids.append(unique_id)
 
-        for i in full_names:
+        for i in unique_ids:
             average_scores = []
-            per_agent = {
-            "firstname": "", "lastname": "", "agent_id": "", "total_calls": 0, "positive_score": 0, "negative_score": 0, "neutral_score":0,
-            "average_score": 0
-        }
+            per_agent = {"week": {"firstname": "", "lastname": "", "agent_id": "", "total_calls": 0, "positive_score": 0, "negative_score": 0, "neutral_score":0,
+            "average_score": 0},
+            "month": {"firstname": "", "lastname": "", "agent_id": "", "total_calls": 0, "positive_score": 0, "negative_score": 0, "neutral_score":0,
+            "average_score": 0}
+             }
             for j in results:
-                if j.agent_firstname + " " + j.agent_lastname == i:
-                    per_agent["firstname"] = j.agent_firstname
-                    per_agent["lastname"] = j.agent_lastname
-                    per_agent["agent_id"] = j.agent_id
-                    per_agent["total_calls"] += 1
-                    if j.overall_sentiment == "Positive":
-                        per_agent["positive_score"] += 1
-                    if j.overall_sentiment == "Negative":
-                        per_agent["negative_score"] += 1
-                    if j.overall_sentiment == "Neutral":
-                        per_agent["neutral_score"] += 1
-                    average_scores.append(j.average_score)
-                    per_agent["average_score"] = round(sum(average_scores)/len(average_scores), 2) 
+                if j.agent_id == i:
+                    if j.timestamp.isocalendar().week == week:
+                        per_agent["week"]["firstname"] = j.agent_firstname
+                        per_agent["week"]["lastname"] = j.agent_lastname
+                        per_agent["week"]["agent_id"] = j.agent_id
+                        per_agent["week"]["total_calls"] += 1
+                        if j.overall_sentiment == "Positive":
+                            per_agent["week"]["positive_score"] += 1
+                        if j.overall_sentiment == "Negative":
+                            per_agent["week"]["negative_score"] += 1
+                        if j.overall_sentiment == "Neutral":
+                            per_agent["week"]["neutral_score"] += 1
+                        average_scores.append(j.average_score)
+                        per_agent["week"]["average_score"] = round(sum(average_scores)/len(average_scores), 2)
+
+                    if j.timestamp.month == month:
+                        per_agent["month"]["firstname"] = j.agent_firstname
+                        per_agent["month"]["lastname"] = j.agent_lastname
+                        per_agent["month"]["agent_id"] = j.agent_id
+                        per_agent["month"]["total_calls"] += 1
+                        if j.overall_sentiment == "Positive":
+                            per_agent["month"]["positive_score"] += 1
+                        if j.overall_sentiment == "Negative":
+                            per_agent["month"]["negative_score"] += 1
+                        if j.overall_sentiment == "Neutral":
+                            per_agent["month"]["neutral_score"] += 1
+                        average_scores.append(j.average_score)
+                        per_agent["month"]["average_score"] = round(sum(average_scores)/len(average_scores), 2) 
             agents[i] = per_agent
             
+        leaderboard_week = []
+        leaderboard_month = []
         for i in agents.values():
-            leaderboard.append(i)
-        leaderboard = sorted(leaderboard, key=lambda k: k['average_score'], reverse=True)
-        for i in leaderboard:
-            i['rank'] = leaderboard.index(i) + 1
+            leaderboard_week.append(i["week"])
+            leaderboard_month.append(i["month"])
+        leaderboard_week = sorted(leaderboard_week, key=lambda k: k['average_score'], reverse=True)
+        leaderboard_month = sorted(leaderboard_month, key=lambda k: k['average_score'], reverse=True)
+
+        for i in leaderboard_week:
+            i['rank'] = leaderboard_week.index(i) + 1
             i["str_agent_id"] = "AG" + str(1000000 + i['agent_id']) + "DE"
+
+        for i in leaderboard_month:
+            i['rank'] = leaderboard_month.index(i) + 1
+            i["str_agent_id"] = "AG" + str(1000000 + i['agent_id']) + "DE"
+        
+        leaderboard.append(leaderboard_week)
+        leaderboard.append(leaderboard_month)
 
         return leaderboard
