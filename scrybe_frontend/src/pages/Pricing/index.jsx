@@ -43,7 +43,6 @@ function Pricing() {
 
   return (
     <>
-      {" "}
       <NavBarFree />
       <div className={styles.pricing}>
         <div className={styles.hero}>

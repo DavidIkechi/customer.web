@@ -32,11 +32,6 @@ const TableData = ({ searchKeyword }) => {
 
   // const timeLeft = 20;
 
-  // useEffect(() => {
-  //   const newRecordings = fetchData("list-audios-by-user");
-  //   setAllRecordings([newRecordings.data]);
-  // }, []);
-
   const getChecked = (e) => {
     let checkedList = [...recordCheckedList];
     if (e.target.checked) {
