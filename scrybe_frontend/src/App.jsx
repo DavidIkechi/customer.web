@@ -56,6 +56,7 @@ import TryResults from "./pages/TryForFree/tryResults";
 import UploadedRecordings from "./pages/UploadRecordings";
 import { UploadModal } from "./pages/UploadRecordingsModal";
 import Logout from "./pages/Logout";
+import Checkout from "./pages/Checkout";
 
 const AuthApi = React.createContext();
 const TokenApi = React.createContext();
@@ -111,6 +112,7 @@ function App() {
         <Route path="/partners" element={<PartnersPage />} />
         <Route path="press-article" element={<PressArticle />} />
         <Route path="pricing" element={<Pricing />} />
+        <Route path="checkout" element={<Checkout />} />
 
         <Route
           path="/sentiment-analysis/:AudioId"
