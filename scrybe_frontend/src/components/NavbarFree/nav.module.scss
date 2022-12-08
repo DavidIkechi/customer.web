@@ -131,6 +131,37 @@
     display: flex;
     gap: pix-rem(24);
     cursor: pointer;
+
+    a {
+      font-size: clamp(0.625rem, 0.489rem + 0.68vw, 1rem);
+      cursor: pointer;
+      border: 1px solid #006cff;
+      transition: scale 0.3s;
+      &:hover {
+        scale: 1.05;
+      }
+
+      &:nth-child(1) {
+        color: #006cff;
+        .ctas__button {
+          color: #006cff;
+        }
+        &:hover {
+          background-color: #006cff;
+          color: white;
+          .ctas__button {
+            color: white;
+          }
+        }
+      }
+      &:nth-child(2) {
+        background-color: #006cff;
+        .ctas__button {
+          color: white;
+        }
+      }
+    }
+
     @include media($mobile) {
       padding-top: pix-rem(40);
       flex-direction: column;
@@ -144,39 +175,6 @@
         text-align: center;
         max-width: pix-rem(178);
         flex: 1;
-      }
-      &:nth-child(1) {
-        background-color: transparent;
-        a {
-          color: #006cff;
-        }
-        border: 1px solid #006cff;
-        font-size: clamp(0.625rem, 0.489rem + 0.68vw, 1rem);
-        cursor: pointer;
-        &:hover {
-          background-color: #006cff;
-          & > a {
-            color: #fff;
-          }
-        }
-        & > a {
-          color: #006cff;
-        }
-      }
-      &:nth-child(2) {
-        background-color: #006cff;
-        color: white;
-        font-size: clamp(0.625rem, 0.489rem + 0.68vw, 1rem);
-        &:hover {
-          background-color: #fff;
-          border: 1px solid #006cff;
-          a {
-            color: #006cff;
-          }
-        }
-        & > a {
-          color: #fff;
-        }
       }
     }
   }

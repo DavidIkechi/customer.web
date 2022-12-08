@@ -31,10 +31,14 @@ function NavBar() {
           </div>
           <div className={styles.nav__ctas}>
             <NavLink to="/signin">
-              <button type="button">Login</button>
+              <button type="button" className={styles.ctas__button}>
+                Login
+              </button>
             </NavLink>
             <NavLink to="/try">
-              <button type="button">Try for Free</button>
+              <button type="button" className={styles.ctas__button}>
+                Try for Free
+              </button>
             </NavLink>
           </div>
 
