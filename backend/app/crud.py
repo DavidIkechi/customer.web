@@ -8,9 +8,12 @@ from fastapi import HTTPException
 import cloudinary
 import cloudinary.uploader
 from datetime import datetime
+import uuid
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+def generate_uuid():
+    return str(uuid.uuid4())
 
 def get_user(db: Session, user_id: int):
     return db.query(models.User).filter(models.User.id == user_id).first()
@@ -319,3 +322,11 @@ def get_leaderboard(db: Session, user_id: int):
         leaderboard.append(leaderboard_month)
 
         return leaderboard
+
+def refresh_api_key(db:Session, user_id:int):
+    key = generate_uuid()
+    user_profile = db.query(models.UserProfile).filter(models.UserProfile.id == user_id).first()
+    user_profile.api_key = key
+    db.commit()
+    db.refresh(user_profile)
+    return key
