@@ -215,7 +215,7 @@ function Account() {
             <p>You are using the limited free plan.</p>
             <p>Go unlimited with Pro version</p>
           </div>
-          {/* <h1 className={accountStyles.salutation}>Hi Heeder</h1> */}
+          <h1 className={accountStyles.salutation}>Hi Heedr</h1>
           <div className={accountStyles.main_content__div}>
             <section className={accountStyles.profile__section}>
               <div className={accountStyles.user_profile__div}>
@@ -236,7 +236,7 @@ function Account() {
                       {accountUser?.first_name + " " + accountUser?.last_name}
                     </h1>
                   )}
-                  {accountUser?.is_admin && <p>Administrator</p>}
+                  <p>Administrator</p>
                 </div>
               </div>
               <div className={accountStyles.profile__settings_btn}>
@@ -282,7 +282,6 @@ function Account() {
                     <span>
                       <img src={plus} alt="plus icon" />
                     </span>
-                    &nbsp;
                   </button>
                 </span>
                 <div>

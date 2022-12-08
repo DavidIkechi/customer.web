@@ -289,10 +289,22 @@
     font-size: pix-rem(32);
     line-height: pix-rem(40);
   }
+
+  div:last-of-type {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
   
 
   @include easyMediaQueries("min-width:1024px") {
     flex-direction: row;
+
+    div:last-of-type {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 }
 
@@ -307,6 +319,11 @@
     font-size: pix-rem(14);
     line-height: pix-rem(24);
     cursor: pointer;
+  }
+
+  a:hover {
+    background-color: $blue-600;
+    color: $grey-10;
   }
 }
 
@@ -436,11 +453,23 @@
           display: flex;
           gap: pix-rem(14);
           align-items: center;
+          padding: 0 pix-rem(12);
+          justify-content: center;
+
+          span:last-of-type {
+            display: flex;
+            align-items: center;
+          }
 
           img {
             display: inline;
             width: pix-rem(16);
           }
+        }
+        
+        button:hover {
+          border-radius: pix-rem(5);
+          background-color: rgba(0, 0, 0, 0.062);
         }
       }
     }
