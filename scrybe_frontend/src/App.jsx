@@ -57,8 +57,8 @@ import CheckMail from "./pages/CheckMail/index";
 import NewSetNewPassword from "./pages/NewSetNewPassword";
 import NewPasswordResetSuccessful from "./pages/NewPasswordResetSuccessful";
 
-const AuthApi = React.createContext();
-const TokenApi = React.createContext();
+// const AuthApi = React.createContext();
+// const TokenApi = React.createContext();
 
 function App() {
   return (
