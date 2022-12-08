@@ -127,6 +127,14 @@
       max-width: pix-rem(86);
     }
   }
+  .activeDashboard {
+  background-color: #006cff;
+  color: white;
+  &:hover {
+    background-color: transparent !important;
+    color: #006cff !important;
+  }
+}
   &__ctas {
     display: flex;
     gap: pix-rem(24);
@@ -191,3 +199,4 @@
     }
   }
 }
+

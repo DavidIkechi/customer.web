@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/heed_logo_with_text.svg";
-// import { headers } from "../../helpers/axioshelp";
+import { headers } from "../../helpers/axioshelp";
 import styles from "./nav.module.scss";
 
 function NavBar() {
@@ -10,14 +10,8 @@ function NavBar() {
   const [activeUser, setActiveUser] = useState(false);
 
   const fetchUser = async () => {
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
-    };
-    console.log(headers);
     try {
-      const res = await axios.get("account", headers);
-      console.log(res);
+      const res = await axios.get("account", { headers });
       if (res.status === 200) {
         setActiveUser(res.data);
       }
@@ -55,7 +49,10 @@ function NavBar() {
           </div>
           <div className={styles.nav__ctas}>
             {activeUser ? (
-              <NavLink to="/dashboard" className={styles.ctas__button}>
+              <NavLink
+                to="/dashboard"
+                className={`${styles.ctas__button} ${styles.activeDashboard}`}
+              >
                 {" "}
                 Dashboard{" "}
               </NavLink>
