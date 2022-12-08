@@ -1,24 +1,26 @@
-import { React, useRef } from "react";
+import { React } from "react";
 import styles from "./styles/AgentReport.module.scss";
 import Content from "./Content";
 // import { useAgentPerformanceData } from './hooks/index'
 
 // onClick={() => modal.showModal()}
-function AgentReport() {
-  let modal = useRef();
-
+function AgentReport({ modal, agent_id, controll, rank, show }) {
   // const { recentAgentReport, agentAnalysis } = useAgentPerformanceData()
   // console.log(recentAgentReport);
   // console.log(agentAnalysis);
-
   return (
     <>
-      <dialog className={styles.container} ref={(mode) => (modal = mode)}>
+      <div className={styles.container}>
         <Content
-        // recentAgentReport={recentAgentReport}
-        // agentAnalysis={agentAnalysis}
+          modal={modal}
+          controll={controll}
+          agent_id={agent_id}
+          show={show}
+          rank={rank}
+          // recentAgentReport={recentAgentReport}
+          // agentAnalysis={agentAnalysis}
         />
-      </dialog>
+      </div>
     </>
   );
 }

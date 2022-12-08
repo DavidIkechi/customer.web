@@ -1,8 +1,20 @@
 import React from "react";
 import styles from "./RecordingList.module.scss";
-// import AudioFilesData from "./AudioFilesData";
+import recordingIcon from "../../../../../assets/recording call.png";
+import { Link } from "react-router-dom";
 
 function RecordingList({ recentRecordings }) {
+  const formatBytes = (bytes, decimals = 0) => {
+    if (!+bytes) return "0 bytes";
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ["bytes", "kb", "mb", "GB", "TB", "PB", "EB", "ZB", "YB"];
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+  };
   return (
     <div className={styles.RecordingList}>
       <input
@@ -30,29 +42,23 @@ function RecordingList({ recentRecordings }) {
       <div className={styles.audioList}>
         {recentRecordings.map((list, index) => {
           return (
-            <div className={styles.AudioInfo} key={list.id}>
-              <svg
-                width="52"
-                height="52"
-                viewBox="0 0 52 52"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect width="52" height="52" rx="26" fill="#E6F0FF" />
-                <g mask="url(#mask0_1919_29315)">
-                  <path
-                    d="M21.5 31.5V20.5H22.5V31.5H21.5ZM25.5 35.5V16.5H26.5V35.5H25.5ZM17.5 27.5V24.5H18.5V27.5H17.5ZM29.5 31.5V20.5H30.5V31.5H29.5ZM33.5 27.5V24.5H34.5V27.5H33.5Z"
-                    fill="#002D6B"
-                  />
-                </g>
-              </svg>
+            <Link className={styles.AudioInfo} key={list.id} to="/">
+              {/* <Link className={styles.AudioInfo} key={list.id} to={`/transcriptions/${list.tracnscription_id}`}> */}
+              <img src={recordingIcon} alt="recording-Icon" />
               <div className={styles.AudioName}>
-                <h2>{`Recording 0${index + 1} .mp3`}</h2>
-                <p>{`${list.size}.0 mb`}</p>
+                <h2>{list.filename}</h2>
+                <p>{`${formatBytes(list.size)}`}</p>
               </div>
-            </div>
+            </Link>
           );
         })}
+        {/* <div className={styles.AudioInfo}>
+          <img src={recordingIcon} alt="recording-Icon" />
+          <div className={styles.AudioName}>
+            <h2>{`Recording 0${3 + 1} .mp3`}</h2>
+            <p>{`.0 mb`}</p>
+          </div>
+        </div> */}
       </div>
     </div>
   );

@@ -56,19 +56,25 @@
     justify-content: flex-end;
     gap: pix-rem(20);
 
+    .download__button {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
     button {
-      padding: clamp(pix-rem(12), 0.7vw, pix-rem(24));
+      padding: clamp(pix-rem(12), 0.5vw, pix-rem(24));
       background-color: transparent;
       border-radius: pix-rem(4);
       border: 1px solid #006cff;
       color: #006cff;
-      font-size: clamp(pix-rem(16), 1vw, pix-rem(32));
+      font-size: clamp(pix-rem(16), 1.2vw, pix-rem(32));
       font-weight: 500;
       cursor: pointer;
 
       img {
         width: clamp(pix-rem(16), 0.7vw, pix-rem(32));
-        height: clamp(pix-rem(16), 0.7vw, pix-rem(32));
+        height: 100%;
       }
     }
 

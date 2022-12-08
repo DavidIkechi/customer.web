@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-// import axios from "axios";
+import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/heed_logo_with_text.svg";
 import styles from "./nav.module.scss";
 
@@ -10,21 +9,15 @@ function NavBar() {
   function handleClick() {
     setClicked((pre) => !pre);
   }
-  // const [loggedIn, setLoggedIn] = useState([null]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get("https://heedapi.herokuapp.com/docs#/users/read_users_users_get")
-  //     .then((response) => {
-  //       setLoggedIn(response.data);
-  //     });
-  // }, []);
 
   return (
     <nav className={styles.nav}>
       <div className={` ${styles.nav_content}`}>
         <div className={styles.nav__img}>
-          <img src={logo} alt="Company Logo" />
+          <Link to="/">
+            {" "}
+            <img src={logo} alt="Company Logo" />
+          </Link>
         </div>
 
         <div
@@ -38,10 +31,14 @@ function NavBar() {
           </div>
           <div className={styles.nav__ctas}>
             <NavLink to="/signin">
-              <button type="button">Login</button>
+              <button type="button" className={styles.ctas__button}>
+                Login
+              </button>
             </NavLink>
             <NavLink to="/try">
-              <button type="button">Try for Free</button>
+              <button type="button" className={styles.ctas__button}>
+                Try for Free
+              </button>
             </NavLink>
           </div>
 

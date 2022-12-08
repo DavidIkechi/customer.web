@@ -3,37 +3,35 @@ import styles from "../styles/AgentDetails.module.scss";
 import { useAgentReport } from "../hooks";
 
 // recentAgentReport
-function AgentDetails() {
-  const agentReportData = useAgentReport();
+function AgentDetails({ selectData }) {
+  // const agentReportData = useAgentReport(props);
+  // console.log(agentReportData);
 
   return (
     <>
-      {agentReportData?.length === 0 ? (
+      {selectData?.length === 0 ? (
         <p className={styles.empty}>
           You will see an overview of your detail here.
         </p>
       ) : (
-        <div
-          className={styles.agentDetails}
-          key={agentReportData?.str_agent_id}
-        >
+        <div className={styles.agentDetails} key={selectData?.str_agent_id}>
           <div className={styles.details}>
             <div className={styles.callDetails}>
               <p className={styles.title}>Total Calls</p>
               <p className={styles.dash}>-</p>
-              <p className={styles.total}>{agentReportData?.total_calls}</p>
+              <p className={styles.total}>{selectData?.total_calls}</p>
             </div>
 
             <div className={styles.callDetails}>
               <p className={styles.title}>Positive</p>
               <p className={styles.dash}>-</p>
-              {agentReportData?.positive_score >= 5 ? (
+              {selectData?.positive_score >= 5 ? (
                 <p className={`${styles.number} ${styles.success}`}>
-                  {agentReportData?.positive_score}%
+                  {selectData?.positive_score}%
                 </p>
               ) : (
                 <p className={`${styles.number} ${styles.fail}`}>
-                  {agentReportData?.positive_score}%
+                  {selectData?.positive_score}%
                 </p>
               )}
             </div>
@@ -41,13 +39,13 @@ function AgentDetails() {
             <div className={styles.callDetails}>
               <p className={styles.title}>Neutral</p>
               <p className={styles.dash}>-</p>
-              {agentReportData?.neutral_score >= 5 ? (
+              {selectData?.neutral_score >= 5 ? (
                 <p className={`${styles.number} ${styles.neutral}`}>
-                  {agentReportData?.neutral_score}%
+                  {selectData?.neutral_score}%
                 </p>
               ) : (
                 <p className={`${styles.number} ${styles.fail}`}>
-                  {agentReportData?.neutral_score}%
+                  {selectData?.neutral_score}%
                 </p>
               )}
             </div>
@@ -55,13 +53,13 @@ function AgentDetails() {
             <div className={styles.callDetails}>
               <p className={styles.title}>Negative</p>
               <p className={styles.dash}>-</p>
-              {agentReportData?.negative_score >= 5 ? (
+              {selectData?.negative_score >= 5 ? (
                 <p className={`${styles.number} ${styles.fail}`}>
-                  {agentReportData?.negative_score}%
+                  {selectData?.negative_score}%
                 </p>
               ) : (
                 <p className={`${styles.number} ${styles.success}`}>
-                  {agentReportData?.negative_score}%
+                  {selectData?.negative_score}%
                 </p>
               )}
             </div>
@@ -69,7 +67,7 @@ function AgentDetails() {
             <div className={styles.callDetails}>
               <p className={styles.title}>Average Score/ 10</p>
               <p className={styles.dash}>-</p>
-              <p className={styles.total}>{agentReportData?.average_score}</p>
+              <p className={styles.total}>{selectData?.average_score}</p>
             </div>
           </div>
         </div>

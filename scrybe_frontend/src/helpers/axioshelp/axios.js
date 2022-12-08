@@ -5,7 +5,7 @@ const baseURL = "https://api.heed.hng.tech/";
 const headers = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Credentials": true,
-  "Content-Type": "application/json, charset=utf-8",
+  "content-type": "Application/json",
 };
 
 const axiosInstance = axios.create({
