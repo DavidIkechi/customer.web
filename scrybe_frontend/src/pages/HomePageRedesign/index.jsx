@@ -11,22 +11,9 @@ import transScreen from "./assets/trans__screen.png";
 import analyzeScreen from "./assets/analyze__screen.png";
 import clientOne from "./assets/client__one.png";
 import clientTwo from "./assets/client__two.png";
-// import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Index = () => {
-  // const [supportColor, setSupportColor] = useState(true);
-  // const [saleColor, setSaleColor] = useState(false);
-  // const [supportText, setSupportText] = useState(true);
-  // const [saleText, setSaleText] = useState(false);
-
-  // function toggleColor() {
-  //   setSupportColor((preval) => !preval);
-  //   setSaleColor((preval) => !preval);
-  //   setSupportText((preval) => !preval);
-  //   setSaleText((preval) => !preval);
-  // }
-
   return (
     <div>
       <NavBar />
@@ -55,26 +42,12 @@ const Index = () => {
               <div className={styles.hero__action}>
                 <div className={styles.button__content}>
                   <Link to="/support-team" style={{ width: "48%" }}>
-                    <button
-                      className={styles.hero__buttonOne}
-                      // style={{
-                      //   backgroundColor: supportColor ? "#006CFF" : "#FFFFFF",
-                      //   color: supportText ? "#FFFFFF" : "#006CFF",
-                      // }}
-                      // onClick={toggleColor}
-                    >
+                    <button className={styles.hero__buttonOne}>
                       For Support
                     </button>
                   </Link>
                   <Link to="/sales-team" style={{ width: "48%" }}>
-                    <button
-                      className={styles.hero__buttonTwo}
-                      // style={{
-                      //   backgroundColor: saleColor ? "#006CFF" : "#FFFFFF",
-                      //   color: saleText ? "#FFFFFF" : "#006CFF",
-                      // }}
-                      // onClick={toggleColor}
-                    >
+                    <button className={styles.hero__buttonTwo}>
                       For Sales
                     </button>
                   </Link>
@@ -324,8 +297,11 @@ const Index = () => {
           </div>
         </div>
       </section>
+      <div>
+        <Footer />
+      </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

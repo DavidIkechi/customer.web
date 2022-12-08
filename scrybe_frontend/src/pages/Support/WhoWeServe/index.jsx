@@ -10,7 +10,7 @@ const WhoWeServe = () => {
     <div className={styles.WhoWEServe}>
       <p className={styles.heading}>Who We Serve?</p>
       <div
-        classname={styles.images}
+        className={styles.images}
         style={{
           display: "flex",
           justifyContent: "center",

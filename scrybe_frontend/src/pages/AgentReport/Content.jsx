@@ -8,35 +8,39 @@ import { useAgentReport } from "./hooks";
 import { useAgentAnalysis } from "./hooks";
 
 // { recentAgentReport, agentAnalysis}
-const Content = () => {
-  const agentReportData = useAgentReport();
-  const agentAnalysisData = useAgentAnalysis();
+const Content = (props) => {
+  const agentReportData = useAgentReport(props);
+  const agentAnalysisData = useAgentAnalysis(props);
+
+  const [selectData, setSelectData] = useState([]);
   const [selectReport, setSelectReport] = useState([]);
 
   useEffect(() => {
     setSelectReport(agentAnalysisData.week);
-  }, [agentAnalysisData]);
+    setSelectData(agentReportData.week);
+  }, [agentAnalysisData, agentReportData]);
 
   const handleDate = (e) => {
     setSelectReport(agentAnalysisData[e.target.value]);
+    setSelectData(agentReportData[e.target.value]);
   };
+
+  // console.log(props.agent_id);
 
   return (
     <div className={styles.mainWrapper}>
       <div className={styles.header}>
         <h1>Agent Report</h1>
-        <img src={close} alt="close" />
+        <img src={close} alt="close" onClick={() => props?.modal.close()} />
       </div>
 
       <div className={styles.idcont}>
         <div className={styles.agentId}>
           <p className={styles.secondp}>
-            Agent ID: &nbsp; &nbsp; {agentReportData?.str_agent_id}
+            Agent ID: &nbsp; &nbsp; {props?.show}
           </p>
 
-          <p className={styles.secondp}>
-            Rank: &nbsp; &nbsp; {agentReportData?.rank}
-          </p>
+          <p className={styles.secondp}>Rank: &nbsp; &nbsp; {props?.rank}</p>
         </div>
 
         <div className={styles.select}>
@@ -53,7 +57,8 @@ const Content = () => {
           selectReport={selectReport}
         />
         <AgentDetails
-        // recentAgentReport={recentAgentReport}
+          selectData={selectData}
+          // recentAgentReport={recentAgentReport}
         />
       </div>
     </div>
