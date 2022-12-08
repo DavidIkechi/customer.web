@@ -52,12 +52,12 @@
     width: 100%;
     .faqHero__text {
       margin: 0 2rem;
-      h1 {
-        font-weight: 600;
-        font-size: 72px;
-        margin-right: 4rem;
-        width: 600px;
-      }
+      // h1 {
+      //   font-weight: 600;
+      //   font-size: 72px;
+      //   margin-right: 4rem;
+      //   width: 600px;
+      // }
     }
   }
 
@@ -79,7 +79,8 @@
     }
     h1 {
       font-weight: 600;
-      font-size: 72px;
+      font-size: 4em;
+      width: 50%;
       span {
         color: var(--primary-blue);
       }
@@ -139,6 +140,22 @@
 
 .faq__title {
   font-family: kanit;
+  margin-bottom: 10vh;
+  h2{
+    font-size: 2rem;
+  }
+  p{
+    font-size: 1.2rem;
+    font-weight: 400;
+  }
+
+  h2{
+    font-size: 2.2rem;
+  }
+  p{
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
   @include display();
   flex-direction: column;
   @media (max-width: 450px) {
@@ -150,5 +167,5 @@
 }
 
 .faq__accordion {
-  max-width: 600px;
+  max-width: 900px;
 }

@@ -3,7 +3,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Background from "../../assets/Try-background.png";
-import TryPic from "../../assets/Try-hero.svg";
+// import TryPic from "../../assets/Try-hero.svg";
 import styles from "./try_hero.module.scss";
 
 export default function tryHero() {
@@ -21,7 +21,10 @@ export default function tryHero() {
           </Link>
         </div>
         <div className={styles.Hero2}>
-          <img src={TryPic} alt="some" />
+          <img
+            src="https://res.cloudinary.com/djufngoed/image/upload/v1670423929/Try-hero_zjxwlj.webp"
+            alt="Hero_image"
+          />
         </div>
 
         <Link to="/signin" className={styles.HeroButtonMobile}>

@@ -69,7 +69,10 @@ export default function TryState1() {
         >
           <div className={styles.recordingContent}>
             <div className={styles.recordingImageContainer}>
-              <img src={RecordingLogo} alt="some" />
+              <img
+                src="https://res.cloudinary.com/djufngoed/image/upload/v1670423929/Recording-logo_hgu6yo.webp"
+                alt="some"
+              />
             </div>
             <div>
               <h4>{selectedFile.name}</h4>

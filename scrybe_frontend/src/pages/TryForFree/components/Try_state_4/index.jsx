@@ -52,7 +52,10 @@ export default function TryFourth() {
         </div>
         <div className={styles.recordingName}>
           <div className={styles.recordingImage}>
-            <img src={RecordingName} alt="some" />
+            <img
+              src="https://res.cloudinary.com/djufngoed/image/upload/v1670423928/recording-name-1_mhlgbq.webp"
+              alt="recording_file"
+            />
           </div>
           <div className={styles.recordingText}>
             <p>Recording 1 name. mp3</p>
