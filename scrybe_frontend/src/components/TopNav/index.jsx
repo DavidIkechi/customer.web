@@ -11,6 +11,7 @@ import toggleNavIcon from "./imgs/toggleNavIcon.svg";
 import uploadBtn_icon from "./imgs/uploadBtnIcon.svg";
 import styles from "./topbar.module.scss";
 import DummyImg from "./imgs/dummy.png";
+import { headers } from "../../helpers/axioshelp";
 
 const TopNav = ({ openSidebar, search }) => {
   const [show, setShow] = useState(false);
@@ -18,13 +19,7 @@ const TopNav = ({ openSidebar, search }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const getUserAccount = async () => {
-    const config = {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
-      },
-    };
-    const res = await axios.get("account", config);
+    const res = await axios.get("account", { headers });
     setCurrentUser(res.data);
   };
 
