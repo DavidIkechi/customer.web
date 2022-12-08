@@ -8,7 +8,7 @@ import styles from "./nav.module.scss";
 
 function NavBar() {
   const [clicked, setClicked] = useState(false);
-  const [activeUser, setActiveUser] = useState(false);
+  const [activeUser, setActiveUser] = useState(null);
 
   const fetchUser = async () => {
     try {
@@ -17,7 +17,8 @@ function NavBar() {
         setActiveUser(res.data);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error)
+      setActiveUser(null);
     }
   };
 
@@ -28,7 +29,7 @@ function NavBar() {
     localStorage.removeItem("currentUserEmail");
     localStorage.removeItem("auth");
     localStorage.removeItem("heedAccessTokenType");
-    setActiveUser(false);
+    setActiveUser(null);
   };
 
   useEffect(() => {
