@@ -11,26 +11,21 @@ const bgMap = {
 };
 
 const LeaderBoard = ({ LeaderboardData }) => {
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState({});
   useEffect(() => {
     setSelected(LeaderboardData.week);
   }, [LeaderboardData.week]);
-
-  // useEffect(() => {
-  //   LeaderboardData.week.length = 3;
-  //   LeaderboardData.month.length = 3;
-  //   setSelected(LeaderboardData.week);
-  // }, [LeaderboardData.week, LeaderboardData.month]);
+  console.log("leader", LeaderboardData);
 
   function selectFunc(e) {
     setSelected(LeaderboardData[e.target.value]);
+    console.log("clicked", LeaderboardData[e.target.value]);
   }
 
   return (
     <div className={styles.leaderboard}>
       <div className={styles.leaderboard__heading}>
         <h1>
-          {" "}
           <img src={leaderboardIcon} alt="leader board" />
           Agents Leaderboard
         </h1>
@@ -55,76 +50,21 @@ const LeaderBoard = ({ LeaderboardData }) => {
               </tr>
             </thead>
             <tbody>
-              {selected.slice(0, 3).map((value, index) => (
-                <tr style={{ background: bgMap[index] }}>
-                  <td>{value.name_id}</td>
-                  <td>{value.recordings}</td>
-                  <td>{value.score}</td>
-                  <td>{value.position}</td>
-                </tr>
-              ))}
+              {selected &&
+                selected.Top3_Agents.map((value, index) => (
+                  <tr style={{ background: bgMap[index] }}>
+                    <td>{value.str_agent_id}</td>
+                    <td>{value.total_calls}</td>
+                    <td>{value.average_score}</td>
+                    <td>{value.rank}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
-          {/* <div>
-            // <h2> {`${value.position} ${value.name}`}</h2>
-            //{" "}
-            <h2>
-              // {value.score}% <span>P</span>
-              //{" "}
-            </h2>
-            //{" "}
-          </div> */}
         </div>
       </div>
-      {/* <div className={styles.agents_desktop}>
-        <div className={styles.agentLCon}>
-          <div className={styles.agentL}>
-            <span>
-              <img src={crown} alt="crown" />
-            </span>
-            <img src={agent} alt="agent" />
-            <span className={styles.one}>1</span>
-          </div>
-        </div>
-        <div className={styles.other_agents}>
-          <div>
-            <h2>
-              {" "}
-              <img src={second} alt="2nd" /> Agent 2
-            </h2>
-            <h2>
-              93% <span>P</span>
-            </h2>
-          </div>
-          <div>
-            <h2>
-              <img src={third} alt="3rd" /> Agent 3
-            </h2>
-            <h2>
-              93% <span>P</span>
-            </h2>
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };
 
 export default LeaderBoard;
-
-// function Agents(data) {
-//   const dat = data.map((d) => console.log(d));
-//   console.log("testing", dat);
-//   return (
-//     <>
-//       {data.map((value, index) => (
-//         <div>
-//           <h2>{value.position} Agent 7</h2>
-//           <h2>
-//             {value.score}% <span>P</span>
-//           </h2>
-//         </div>
-//       ))}
-//     </>
-//   );
-// }
