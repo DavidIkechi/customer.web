@@ -218,6 +218,10 @@
     margin: 10px 0;
     box-shadow: 0 1px 2px #10182820;
     background-color: transparent;
+
+    &:focus {
+      border: 1px solid #1570ef;
+    }
   }
 
   .chkContainer {
@@ -257,6 +261,27 @@
   height: pix-rem(24);
   border: 1px solid #99a3b5;
   border-radius: 3px;
+}
+
+.chkContainer input:checked ~ .chkbox {
+  border: 2px solid #1570ef;
+}
+
+.chkbox::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  height: pix-rem(16);
+  width: pix-rem(10);
+  border: solid #1570ef;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+  border-radius: 2px;
+  display: none;
+}
+
+.chkContainer input:checked ~ .chkbox::after {
+  display: block;
 }
 
 .checkboxsection {
