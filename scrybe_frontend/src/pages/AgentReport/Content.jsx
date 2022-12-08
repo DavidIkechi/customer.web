@@ -25,13 +25,11 @@ const Content = (props) => {
     setSelectData(agentReportData[e.target.value]);
   };
 
-  // console.log(props.agent_id);
-
   return (
     <div className={styles.mainWrapper}>
       <div className={styles.header}>
         <h1>Agent Report</h1>
-        <img src={close} alt="close" onClick={() => props?.modal.close()} />
+        <img src={close} alt="close" onClick={() => props?.setModal(false)} />
       </div>
 
       <div className={styles.idcont}>

@@ -6,21 +6,17 @@
 
 
 .container {
-  // height: 100vh;
   border: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  // z-index: 99999;
-  // background-color: #f9f9f9;
-  // position: absolute;
   transition: all 2s ease-in;
 
 
   .mainWrapper {
     margin: 0px auto;
-    width: 80%;
+    width: 100%;
     background-color: #fff;
     padding: 30px;
     border-radius: 20px;
@@ -90,20 +86,36 @@
       gap: 1rem;
       justify-content: space-between;
       
-      // @include mixins.sm {
-      //   flex-direction: column-reverse;
-      // }
     }
   }
 }
 
-@media screen and (max-width: 944px) {
+@media screen and (max-width: 955px) {
   .container {
     height: auto;
     .mainWrapper {
+      width: 100%;
+
       .header, .idcont {
         width: 90%;
         margin: auto;
+      }
+
+      .idcont {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+          margin-bottom: 1rem;
+
+          .agentId {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 0;
+            width: 100%;
+          }
+        
+
       }
       .topDetailsDiv {
         flex-direction: column-reverse;
@@ -117,27 +129,14 @@
 @media screen and (max-width: 888px) {
   .container {
     .mainWrapper {
-      width: 90%;
+      width: 100%;
 
       .header {
         h1 {
           font-size: 20px;
         }
       }
-      .idcont {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-        margin-bottom: 1rem;
-
-        .agentId {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 1rem;
-          margin-bottom: 0;
-          width: 100%;
-        }
-      }
+     
     }
   }
 }

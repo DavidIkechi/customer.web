@@ -45,7 +45,7 @@ import PersonalInformation from "./pages/Settings/SettingsPageSubPages/PersonalI
 import Signin from "./pages/SignIn/SignIn";
 import Signup from "./pages/SignUp/SignUp";
 import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
-import Successful from "./pages/Successful/Successful";
+// import Successful from "./pages/Successful/Successful";
 import Support from "./pages/Support/support";
 import TermsOfService from "./pages/TermsOfService";
 import TryProcessing from "./pages/TryForFree/tryProcessing";
@@ -54,11 +54,18 @@ import UploadedRecordings from "./pages/UploadRecordings";
 import { UploadModal } from "./pages/UploadRecordingsModal";
 import Logout from "./pages/Logout";
 import EmailVerify from "./pages/VerificationEmail/EmailVerify";
+// import CheckMail from "./pages/CheckMail";
+import NewSignin from "./pages/NewSignin/NewSignin";
+import NewSignup from "./pages/NewSignup/NewSignup";
 import StartUp from "./pages/Checkout/Startup";
 import Growing from "./pages/Checkout/Growing";
 import Enterprise from "./pages/Checkout/Enterprise";
 // import CheckMail from "./pages/CheckMail";
-import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
+
+// import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
+import ForgetPasswordNew from "./pages/ForgotPasswordNew/Index";
+import NewSetNewPassword from "./pages/NewSetNewPassword";
+import NewPasswordResetSuccessful from "./pages/NewPasswordResetSuccessful";
 
 function App() {
   return (
@@ -66,6 +73,8 @@ function App() {
       <Routes>
         {/* access without sign in */}
         <Route path="/" element={<HomePageRedesign />} />
+        <Route path="/signup" element={<NewSignup />} />
+        <Route path="/login" element={<NewSignin />} />
         <Route path="/check-mail" element={<CheckMail />} />
         <Route path="/try" element={<TryForFree />} />
         <Route path="/careers" element={<Careers />} />
@@ -79,18 +88,20 @@ function App() {
         <Route path="/help-support" element={<HelpSupport />} />
         <Route path="/create-account" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
-        <Route path="/reset-successful" element={<Successful />} />
+        {/* <Route path="/reset-successful" element={<Successful />} /> */}
         <Route path="/verify-signup" element={<SignUpVerify />} />
         <Route path="/support-team" element={<Support />} />
         <Route path="/logout" element={<Logout />} />
-        <Route
+
+        {/* <Route
           path="/set-new-password?token=:token"
           element={<SetNewPassword />}
-        />
+        /> */}
         <Route path="/emailverification/:token" element={<EmailVerify />} />
         <Route path="/try-processing" element={<TryProcessing />} />
         <Route path="/try-results" element={<TryResults />} />
-        <Route path="/forget-password" element={<ForgetPassword />} />
+        {/* <Route path="/forget-password" element={<ForgetPassword />} /> */}
+
         <Route path="/sales-team" element={<LandingPageSalesTeam />} />
         <Route
           path="/pw-reset-successful"
@@ -169,6 +180,14 @@ function App() {
         <Route path="checkout-startup" element={<StartUp />} />
         <Route path="checkout-growing" element={<Growing />} />
         <Route path="checkout-enterprise" element={<Enterprise />} />
+
+        {/* path for forgot/reset password */}
+        <Route path="/forget-password" element={<ForgetPasswordNew />} />
+        <Route path="/set-new-password" element={<NewSetNewPassword />} />
+        <Route
+          path="/pw-reset-successful"
+          element={<NewPasswordResetSuccessful />}
+        />
       </Routes>
     </>
   );
