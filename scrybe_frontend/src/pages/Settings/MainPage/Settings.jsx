@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import NewDesignSidebar from "../../../components/NewDesignSidebar";
 import ChevronRight from "../assets/icons/chevron-right.svg";
-import ProfilePic from "../assets/images/Pic.png";
+// import ProfilePic from "../assets/images/Pic.png";
 import Overlay from "../Components/SettingsPageOverlay/SettingsPageOverlay";
 import AccountSetting from "../SettingsPageSubPages/AccountSettings/AccountSettings";
 import Notification from "../SettingsPageSubPages/Notifications/NotificationSettings";
@@ -87,7 +87,7 @@ const MainPage = () => {
 
   React.useEffect(() => {
     getUser();
-  });
+  }, []);
 
   React.useEffect(() => {
     if (window.innerWidth < 768) {
@@ -132,7 +132,8 @@ const MainPage = () => {
                   </div>
                   <div className={MainPageCss.mainpage_textContent}>
                     <h2>
-                      {accountUser?.first_name + " " + accountUser?.last_name}
+                      {accountUser?.first_name &&
+                        accountUser?.first_name + " " + accountUser?.last_name}
                     </h2>
                     {accountUser?.is_admin && (
                       <p className={MainPageCss.title}>Administrator</p>
