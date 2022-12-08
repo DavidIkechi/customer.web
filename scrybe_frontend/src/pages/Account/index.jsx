@@ -18,7 +18,13 @@ function Account() {
 
   const navigate = useNavigate();
 
-  const { register, handleSubmit, watch, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   async function getUser() {
     await axios
@@ -47,7 +53,6 @@ function Account() {
 
   const baseUrl = "https://api.heed.hng.tech";
   const submitCallback = () => {
-    console.log("heed access token:", localStorage.getItem("heedAccessToken"));
     const config = {
       headers: {
         withCredentials: true,
@@ -87,6 +92,8 @@ function Account() {
   const last_name = watch("last_name");
   const location = watch("location");
 
+  const isValid = first_name && last_name && location;
+
   return (
     <NewDesignSidebar
       toggleSidebar={toggleSidebar}
@@ -107,15 +114,27 @@ function Account() {
             <p>
               Input the following information to add a new agent to your team
             </p>
-            <form>
+            <form onSubmit={handleSubmit(submitCallback)}>
               <label htmlFor="first_name">
                 <span>First name</span>
                 <input
                   type="text"
                   id="first_name"
                   name="first_name"
-                  {...register("first_name")}
+                  className={`${
+                    errors.first_name && accountStyles.errorInput
+                  } `}
+                  {...register("first_name", {
+                    required: "First name is required",
+                    pattern: {
+                      value: /^[a-z'-]+$/i,
+                      message: "Please enter a valid first name",
+                    },
+                  })}
                 />
+                <p className={accountStyles.errorMsg}>
+                  {errors.first_name?.message}
+                </p>
               </label>
               <label htmlFor="last_name">
                 <span>Last Name</span>
@@ -123,8 +142,18 @@ function Account() {
                   type="text"
                   id="last_name"
                   name="last_name"
-                  {...register("last_name")}
+                  className={`${errors.last_name && accountStyles.errorInput} `}
+                  {...register("last_name", {
+                    required: "Last name is required",
+                    pattern: {
+                      value: /^[a-z'-]+$/i,
+                      message: "Please enter a valid last name",
+                    },
+                  })}
                 />
+                <p className={accountStyles.errorMsg}>
+                  {errors.last_name?.message}
+                </p>
               </label>
               <label htmlFor="location">
                 <span>Location</span>
@@ -132,28 +161,39 @@ function Account() {
                   type="text"
                   id="location"
                   name="location"
-                  {...register("location")}
+                  className={`${errors.location && accountStyles.errorInput} `}
+                  {...register("location", {
+                    required: "Location is required",
+                    pattern: {
+                      value: /^[a-z '-]+$/i,
+                      message: "Please enter a valid location",
+                    },
+                  })}
                 />
+                <p className={accountStyles.errorMsg}>
+                  {errors.location?.message}
+                </p>
               </label>
               <div />
               <div>
-                <label htmlFor="submit-btn">
-                  <input
-                    type="button"
-                    id="submit-btn"
-                    value="Submit"
-                    name="submit-btn"
-                    onClick={handleSubmit(submitCallback)}
-                  />
+                <label htmlFor="submit">
+                  <button
+                    type="submit"
+                    id="submit"
+                    disabled={!isValid}
+                    className={`${isValid && accountStyles.submitValid}`}
+                  >
+                    Submit
+                  </button>
                 </label>
-                <label htmlFor="cancel-btn">
-                  <input
-                    type="button"
-                    id="cancel-btn"
-                    value="Cancel"
-                    name="cancel-btn"
+                <label htmlFor="reset-btn">
+                  <button
+                    type="reset"
+                    id="reset-btn"
                     onClick={toggleAccountModal}
-                  />
+                  >
+                    Cancel
+                  </button>
                 </label>
               </div>
             </form>

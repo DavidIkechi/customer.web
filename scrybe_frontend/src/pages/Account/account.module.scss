@@ -34,6 +34,23 @@
   border-radius: pix-rem(16);
   gap: pix-rem(16);
   width: clamp(pix-rem(320), calc(100vw - pix-rem(32)), pix-rem(930));
+  
+  .errorInput {
+    border: 1px solid #F44336 !important;
+  }
+  
+  .errorMsg {
+    font-size: 12px;
+    line-height: 16px;
+    color: #F44336 !important;
+    text-align: left !important;
+    margin-bottom: 0.5rem;
+  }
+  
+  .submitValid {
+    background: #006CFF !important;
+    color: #ffffff !important;
+  }
 
   h2 {
     color: $text;
@@ -76,41 +93,44 @@
     input:focus-visible {
       outline: none;
     }
-    input[type="checkbox"] {
-      appearance: none;
-      align-self: flex-start;
-      height: pix-rem(16);
-      width: pix-rem(16);
-      padding: 0;
-      border: 1px solid $grey-100;
-      border-radius: pix-rem(4.8);
-      overflow: hidden;
-      cursor: pointer;
-    }
-    input[type="checkbox"]:checked {
-      border: none;
-      height: pix-rem(17);
-      width: pix-rem(17);
-      position: relative;
-    }
-    input[type="checkbox"]:checked::before {
-      content: url("./assets/icons/checkmark.svg");
-      width: fit-content;
-      height: fit-content;
-      position: absolute;
-      margin: 0;
-    }
-    input[name="submit-btn"] {
+    // input[type="checkbox"] {
+    //   appearance: none;
+    //   align-self: flex-start;
+    //   height: pix-rem(16);
+    //   width: pix-rem(16);
+    //   padding: 0;
+    //   border: 1px solid $grey-100;
+    //   border-radius: pix-rem(4.8);
+    //   overflow: hidden;
+    //   cursor: pointer;
+    // }
+    // input[type="checkbox"]:checked {
+    //   border: none;
+    //   height: pix-rem(17);
+    //   width: pix-rem(17);
+    //   position: relative;
+    // }
+    // input[type="checkbox"]:checked::before {
+    //   content: url("./assets/icons/checkmark.svg");
+    //   width: fit-content;
+    //   height: fit-content;
+    //   position: absolute;
+    //   margin: 0;
+    // }
+    button[id="submit"] {
+      height: pix-rem(52);
       border: none;
       border-radius: pix-rem(4);
-      background-color: $blue-500;
-      color: $neutral-100;
+      padding: pix-rem(16);
+      color: #C5C5C5;
+      background-color: #ECECEC;
       font-weight: 500;
       font-size: pix-rem(14);
       line-height: pix-rem(24);
       cursor: pointer;
     }
-    input[name="cancel-btn"] {
+    button[id="reset-btn"] {
+      height: pix-rem(52);
       border: none;
       background-color: transparent;
       cursor: pointer;
