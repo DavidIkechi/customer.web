@@ -25,7 +25,7 @@ function DropDownModal({ closeModal }) {
     Cookies.remove("heedAccessToken");
     localStorage.removeItem("heedAccessToken");
     localStorage.removeItem("heedRefreshToken");
-    localStorage.removeItem("currentUser");
+    localStorage.removeItem("currentUserEmail");
     localStorage.removeItem("auth");
     localStorage.removeItem("tokenType");
   };
