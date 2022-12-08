@@ -278,6 +278,7 @@ async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...
     if not file:
         raise HTTPException(status_code = 406, detail="No File Selected")
     elif getSize > fileSize :
+        os.unlink(file.filename)
         raise HTTPException(status_code = 406, detail="File Must Not Be More Than 5MB")
     else:
         try:
@@ -287,15 +288,17 @@ async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...
             response = shorten_urls(urls)
             retrieve_url = response[0]
             new_url = retrieve_url.short_url
-        except Exception:   
-            return {"error": "There was an error uploading the file"}
-        # transcript = transcript
+        except Exception: 
+            raise HTTPException(status_code = 406, detail="There was an error uploading the file")
     transcript = transcribe_file(new_url)
     # get some essential parameters
     transcript_id = transcript['id']
+    filename = file.filename
     transcript_status = transcript['status']
+    size = audio_details(file.filename)["size"]
+    sizeMb = (str(size) + 'MB')
 
-    callback = models.FreeTrial(transcript_id = transcript_id, transcript_status=transcript_status)
+    callback = models.FreeTrial(transcript_id = transcript_id, filename = filename, transcript_status=transcript_status, size = sizeMb)
 
     db.add(callback)
     db.commit()
@@ -303,12 +306,12 @@ async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...
     # delete the file
     os.remove(file.filename)
 
-    return {"transcript_id": transcript_id, "status": transcript_status}
+    return {"transcript_id": transcript_id, "filename": filename, "filesize": sizeMb, "status": transcript_status}
 
 
 @app.get("/get_transcript/{transcript_id}", description="Retrieving transcript by audio ID")
 def view_transcript(transcript_id: Union[int, str], db: Session = Depends(_services.get_session)):
-    transcript = db.query(models.FreeTrial).filter(models.FreeTrial.transcript_id == transcript_id).first()
+    transcript = crud.get_freetrial(db, id = transcript_id)
     if not transcript:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, 
@@ -318,7 +321,9 @@ def view_transcript(transcript_id: Union[int, str], db: Session = Depends(_servi
     
     transcript_audio = get_transcript_result(transcript_audio_id)
     transcript.job_status = transcript_audio['status']
-    # db.commit()
+    transcript.transcript_status = transcript.job_status
+    db.commit()
+    db.refresh(transcript)
     
     if transcript_audio['status'] != "completed":
         return {"status":transcript_audio['status']}
@@ -610,7 +615,7 @@ def delete_audios(audios: List[int] = Query(None), db: Session = Depends(get_db)
 
 @app.get("/download/{id}")
 def download (id: Union[int, str], db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    db_audio = db.query(models.Audio).filter(models.Audio.job_id == id).first()
+    db_audio = crud.get_freeaudio(db, audio_id=id)
 
     if db_audio is None:
         raise HTTPException(status_code=404, detail="No Audio With This ID")

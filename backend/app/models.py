@@ -138,4 +138,6 @@ class FreeTrial(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     transcript_id = Column(String(255), index=True)
+    filename = Column(TEXT)
+    size = Column(TEXT)
     transcript_status = Column(TEXT)
