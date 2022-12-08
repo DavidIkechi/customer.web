@@ -127,12 +127,12 @@
       max-width: pix-rem(86);
     }
   }
-  .activeDashboard {
+  .ctas__button .activeDashboard {
     background-color: #006cff;
     color: white;
     &:hover {
-      background-color: transparent !important;
-      color: #006cff !important;
+      background-color: transparent;
+      color: #006cff;
     }
   }
   &__ctas {
