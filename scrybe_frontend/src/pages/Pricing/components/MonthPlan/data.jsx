@@ -3,7 +3,7 @@ export const monthlyPricing = [
     id: 1,
     title: "Startup",
     headDescription: "Perfect to get started",
-    pricing: "7,500",
+    pricing: "17",
     duration: "per month",
     features: [
       "Ai-Powered call transcriptions",
@@ -17,7 +17,7 @@ export const monthlyPricing = [
     id: 2,
     title: "Growing",
     headDescription: "Make individual products",
-    pricing: "13,500",
+    pricing: "30",
     duration: "per month",
     features: [
       "Everything in Startup, plus:",
@@ -31,7 +31,7 @@ export const monthlyPricing = [
     id: 3,
     title: "Enterprise",
     headDescription: "For big companies",
-    pricing: "24,000",
+    pricing: "54",
     duration: "per month",
     features: [
       "Everything in Growing, plus:",

@@ -53,7 +53,9 @@ import { UploadModal } from "./pages/UploadRecordingsModal";
 import Logout from "./pages/Logout";
 import EmailVerify from "./pages/VerificationEmail/EmailVerify";
 import CheckMail from "./pages/CheckMail";
-import Checkout from "./pages/Checkout";
+import StartUp from "./pages/Checkout/Startup";
+import Growing from "./pages/Checkout/Growing";
+import Enterprise from "./pages/Checkout/Enterprise";
 
 function App() {
   return (
@@ -161,7 +163,9 @@ function App() {
             element={<PersonalInformation />}
           />
         </Route>
-        <Route path="checkout" element={<Checkout />} />
+        <Route path="checkout-startup" element={<StartUp />} />
+        <Route path="checkout-growing" element={<Growing />} />
+        <Route path="checkout-enterprise" element={<Enterprise />} />
       </Routes>
     </>
   );

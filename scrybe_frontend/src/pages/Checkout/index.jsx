@@ -5,11 +5,13 @@ import { useState, useEffect } from "react";
 
 import styles from "./checkout.module.scss";
 import startUpIcon from "./assets/star.svg";
-import currency from "./assets/naira.svg";
+import currency from "../assets/dollar.svg";
 import tag from "./assets/sell.svg";
 import checkIcon from "./assets/check.svg";
 import visa from "./assets/VisaInc.png";
 import master from "./assets/Mastercard.png";
+import NavBarFree from "../../components/NavbarFree";
+import Footer from "../../components/Footer";
 import axios from "axios";
 
 function Checkout() {
@@ -38,6 +40,7 @@ function Checkout() {
 
   return (
     <div className={styles.checkout}>
+      <NavBarFree />
       <div className={styles.container}>
         <div className={styles.header}>
           <h1 className={styles.heroH1}>
@@ -69,18 +72,13 @@ function Checkout() {
                     </div>
                     <div className={styles.plansPricing}>
                       <div className={styles.plansPricingFigure}>
-                        <div className={styles.plansPricingCurrency}>
-                          <img src={currency} alt="currency symbol" />
-                        </div>
-                        <h4>7,500</h4>
+                        <h4>$17</h4>
                       </div>
                       <p>per month</p>
                     </div>
                     <div className={styles.plansPricingInfo}>
                       <p>
-                        Billed
-                        <span>N7,500</span>
-                        per month
+                        Billed <span>$17</span> per month
                       </p>
                     </div>
                   </div>
@@ -104,18 +102,13 @@ function Checkout() {
                     </div>
                     <div className={styles.plansPricing}>
                       <div className={styles.plansPricingFigure}>
-                        <div className={styles.plansPricingCurrency}>
-                          <img src={currency} alt="currency symbol" />
-                        </div>
-                        <h4>7,500</h4>
+                        <h4>$15</h4>
                       </div>
                       <p>per month</p>
                     </div>
                     <div className={styles.plansPricingInfo}>
                       <p>
-                        Billed
-                        <span>N7,500</span>
-                        per month
+                        Billed <span>$180</span> annually
                       </p>
                     </div>
                   </div>
@@ -125,15 +118,17 @@ function Checkout() {
 
             <div className={styles.checkoutFormSections}>
               <div className={styles.checkoutSectionHeading}>
-                <h2>2. Card holder information</h2>
-                <p>
+                <h2 className={styles.checkoutSectionHeadingH2}>
+                  2. Card holder information
+                </h2>
+                <p className={styles.checkoutSectionHeadingP}>
                   Already a Heed User?
                   <span>Login</span>
                 </p>
               </div>
               <div className={styles.checkoutFormFields}>
                 <form id="my-form">
-                  <div>
+                  <div className={styles.formName}>
                     <label htmlFor="card_name">Name on Card</label>
                     <input
                       type="text"
@@ -142,7 +137,7 @@ function Checkout() {
                       placeholder="John Doe"
                     />
                   </div>
-                  <div>
+                  <div className={styles.formEmail}>
                     <label htmlFor="card_name">Email</label>
                     <input
                       type="text"
@@ -160,7 +155,7 @@ function Checkout() {
               </div>
               <div className={styles.checkoutFormFields}>
                 <form id="my-form">
-                  <div>
+                  <div className={styles.cardNumber}>
                     <label htmlFor="card_name">Card Number</label>
                     <input
                       type="text"
@@ -189,7 +184,7 @@ function Checkout() {
                       />
                     </div>
                   </div>
-                  <div>
+                  <div className={styles.checkboxsection}>
                     <label htmlFor="checkbox" className={styles.chkContainer}>
                       I agreee to <span>Terms and Conditions</span> and{" "}
                       <span>Privacy Policy</span>
@@ -243,16 +238,23 @@ function Checkout() {
               <h2>Features of Starup plan</h2>
               <div className={styles.planDetails}>
                 <p>Heed Startup Plan (annual)</p>
-                <p>₦78,000 per year</p>
+                <p>$180 per year</p>
               </div>
               <div className={styles.totalSummary}>
                 <p>Total</p>
-                <p>₦78,000 per year</p>
+                <p>$180 per year</p>
+              </div>
+              <div className={styles.datepayment}>
+                <p>
+                  Next payment is due on{" "}
+                  <b className={styles.spandate}>7th November 2022</b>
+                </p>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

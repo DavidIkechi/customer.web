@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
 // import { Route, Routes } from "react-router-dom";
+
 import styles from "../checkout.module.scss";
 import startUpIcon from "../assets/star.svg";
 import currency from "../assets/dollar.svg";
@@ -66,7 +67,7 @@ function Checkout() {
                       <div className={styles.plansCardIcon}>
                         <img src={startUpIcon} alt="star icon" />
                       </div>
-                      <h3>Startup</h3>
+                      <h3>Growing</h3>
                       <p>Monthly</p>
                     </div>
                     <div className={styles.plansPricing}>
@@ -74,13 +75,13 @@ function Checkout() {
                         <div className={styles.plansPricingCurrency}>
                           <img src={currency} alt="currency symbol" />
                         </div>
-                        <h4>17</h4>
+                        <h4>54</h4>
                       </div>
                       <p>per month</p>
                     </div>
                     <div className={styles.plansPricingInfo}>
                       <p>
-                        Billed <span>$17</span> per month
+                        Billed <span>$54</span> monthly
                       </p>
                     </div>
                   </div>
@@ -99,21 +100,21 @@ function Checkout() {
                       <div className={styles.plansCardIcon}>
                         <img src={startUpIcon} alt="star icon" />
                       </div>
-                      <h3>Startup</h3>
-                      <p>Monthly</p>
+                      <h3>Enterprise</h3>
+                      <p>annually</p>
                     </div>
                     <div className={styles.plansPricing}>
                       <div className={styles.plansPricingFigure}>
                         <div className={styles.plansPricingCurrency}>
                           <img src={currency} alt="currency symbol" />
                         </div>
-                        <h4>15</h4>
+                        <h4>47</h4>
                       </div>
                       <p>per month</p>
                     </div>
                     <div className={styles.plansPricingInfo}>
                       <p>
-                        Billed <span>$180</span> annually
+                        Billed <span>$564</span> annually
                       </p>
                     </div>
                   </div>
@@ -204,23 +205,31 @@ function Checkout() {
           </div>
           <div className={styles.orderDetails}>
             <div className={styles.featuresSection}>
-              <h2>Features of Starup plan</h2>
+              <h2>Features of Enterprise plan</h2>
               <div className={styles.pricingFeatures}>
                 <div className={styles.pricingFeaturesItem}>
                   <img src={checkIcon} alt="check-mark icon" />
-                  <p>Ai-Powered call transcriptions</p>
+                  <p>Everything in Growing, plus:</p>
                 </div>
                 <div className={styles.pricingFeaturesItem}>
                   <img src={checkIcon} alt="check-mark icon" />
-                  <p>Call Tracking & Recording</p>
+                  <p>Agent Assist</p>
                 </div>
                 <div className={styles.pricingFeaturesItem}>
                   <img src={checkIcon} alt="check-mark icon" />
-                  <p> Business Hours</p>
+                  <p>Professional Services</p>
                 </div>
                 <div className={styles.pricingFeaturesItem}>
                   <img src={checkIcon} alt="check-mark icon" />
-                  <p>Email & Chat Support</p>
+                  <p>Personalized Onboarding Support</p>
+                </div>
+                <div className={styles.pricingFeaturesItem}>
+                  <img src={checkIcon} alt="check-mark icon" />
+                  <p>Agent Coaching & Call Scoring</p>
+                </div>
+                <div className={styles.pricingFeaturesItem}>
+                  <img src={checkIcon} alt="check-mark icon" />
+                  <p>Dedicated Technical Support</p>
                 </div>
                 <div className={styles.support}>
                   <p>

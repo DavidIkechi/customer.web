@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./yearplans.module.scss";
-import currency from "../../assets/naira.svg";
+import currency from "../../assets/dollar.svg";
 import startUpIcon from "../../assets/star.svg";
 import growingIcon from "../../assets/auto_graph.svg";
 import enterpriseIcon from "../../assets/corporate_fare.svg";
@@ -49,7 +49,7 @@ function YearPlans({ yearState }) {
                     </div>
                   ))}
                 </div>
-                <Link to="/create-account">Get Started</Link>
+                <button>Get Started</button>
               </div>
             </div>
           );

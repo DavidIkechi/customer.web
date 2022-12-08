@@ -1,15 +1,77 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./monthplans.module.scss";
-import currency from "../../assets/naira.svg";
+import currency from "../../assets/dollar.svg";
 import startUpIcon from "../../assets/star.svg";
 import growingIcon from "../../assets/auto_graph.svg";
 import enterpriseIcon from "../../assets/corporate_fare.svg";
 import checkIcon from "../../assets/check.svg";
 import data from "../../../History/assets/data";
 import { monthlyPricing } from "./data";
+import axios from "axios";
 
 function MonthPlans({ monthState }) {
+  const navigate = useNavigate();
+  const token = localStorage.getItem("heedAccessToken");
+  console.log(token);
+  const checkoutStartup = async (pricing) => {
+    console.log(token);
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    await axios
+      .post(
+        "orders",
+        {
+          billing_plan: pricing,
+        },
+        { headers }
+      )
+      .then((res) => {
+        console.log(res);
+        navigate("/checkout-startup");
+      });
+  };
+  const checkoutGrowing = async (pricing) => {
+    console.log(token);
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    await axios
+      .post(
+        "orders",
+        {
+          billing_plan: pricing,
+        },
+        { headers }
+      )
+      .then((res) => {
+        console.log(res);
+        navigate("/checkout-growing");
+      });
+  };
+  const checkoutEnterprise = async (pricing) => {
+    console.log(token);
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    await axios
+      .post(
+        "orders",
+        {
+          billing_plan: pricing,
+        },
+        { headers }
+      )
+      .then((res) => {
+        console.log(res);
+        navigate("/checkout-enterprise");
+      });
+  };
+
   return (
     <div className={`${styles.month}`}>
       <div className={`${styles.plans}`}>
@@ -50,7 +112,18 @@ function MonthPlans({ monthState }) {
                     </div>
                   ))}
                 </div>
-                <Link to="/create-account">Get Started</Link>
+                {/* <button onClick={() => checkout(pricing)}>Get Started</button> */}
+                <button
+                  onClick={() => {
+                    id === 1
+                      ? checkoutStartup(pricing)
+                      : id === 2
+                      ? checkoutGrowing(pricing)
+                      : checkoutEnterprise(pricing);
+                  }}
+                >
+                  Get Started
+                </button>
               </div>
             </div>
           );
