@@ -1,6 +1,7 @@
-import React from "react";
+import { React, useState } from "react";
 import styles from "./NewSignup.module.scss";
 import { Link } from "react-router-dom";
+import ApiService from "../../helpers/axioshelp/apis";
 
 import logo from "./assets/logo.png";
 import google from "./assets/google.png";
@@ -8,6 +9,36 @@ import visible from "./assets/visible.png";
 import hidden from "./assets/hidden.png";
 
 const NewSignup = () => {
+  const [full_name, setFulltName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleFullname = (e) => {
+    setFulltName(e.target.value);
+  };
+
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+  };
+
+  // console.log(email);
+  // console.log(full_name);
+  // console.log(password);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // const data = {
+    //     full_name: first_name,
+    //     password: password,
+    //     email: email,
+    // }
+  };
+
   return (
     <div className={styles.signinContainer}>
       <div className={styles.bgcontainer}>
@@ -39,16 +70,26 @@ const NewSignup = () => {
           <div className={styles.dash}></div>
         </div>
 
-        <form className={styles.formContainer}>
+        <form className={styles.formContainer} onSubmit={handleSubmit}>
           <div className={styles.forms}>
             <label htmlFor="text">Full name</label>
-            <input type="text" placeholder="Enter your full name" />
+            <input
+              type="text"
+              placeholder="Enter your full name"
+              onChange={handleFullname}
+              value={full_name}
+            />
             <p className={styles.err}></p>
           </div>
 
           <div className={styles.forms}>
             <label htmlFor="email">Email</label>
-            <input type="email" placeholder="Enter your company email" />
+            <input
+              type="email"
+              placeholder="Enter your company email"
+              onChange={handleEmail}
+              value={email}
+            />
             <p className={styles.err}></p>
           </div>
 
@@ -57,6 +98,8 @@ const NewSignup = () => {
             <input
               type="password"
               placeholder="Password at least 8 characters"
+              onChange={handlePassword}
+              value={password}
             />
             <img src={hidden} alt="hidden" />
             <p className={styles.err}></p>
