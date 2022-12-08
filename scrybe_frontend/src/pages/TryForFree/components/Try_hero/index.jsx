@@ -17,7 +17,7 @@ export default function tryHero() {
             Try our other features when you sign up with us.
           </p>
           <Link to="/signin" className={styles.HeroButton}>
-            Sign Up Now
+            Start Free Trial
           </Link>
         </div>
         <div className={styles.Hero2}>

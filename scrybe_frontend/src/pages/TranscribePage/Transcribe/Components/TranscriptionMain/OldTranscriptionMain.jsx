@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./TranscriptionMain.module.scss";
+// import TranscriptionsList from "./TranscriptionsList/TranscriptionsList";
 import Dummy from "./TranscriptionsList/test";
 import TranscriptionRightBar from "./TranscriptionRightBar/TranscriptionRightBar";
 import axios from "axios";
@@ -18,9 +19,6 @@ function TranscriptionMain() {
   const [audioDuration, setAudioDuration] = useState(0);
   const [recentRecordings, setRecentRecordings] = useState([]);
   const [donwloadData, setDownloadData] = useState({});
-  const [isFetching, setIsFetching] = useState(false);
-  const [apiError, setApiError] = useState(false);
-  const [stillProcessing, setStillProcessing] = useState(false);
 
   const onLoadedMetadata = () => {
     setAudioDuration(Math.round(audioElem.current?.duration));
@@ -36,9 +34,9 @@ function TranscriptionMain() {
     if (isPlaying) setCurrentTime(audioElem.current?.currentTime);
   };
   const updateTranscribedText = () => {
-    const highestTime = formattedData[formattedData.length - 1].time + 5;
     setTimeUpdateTracker(true);
-    if (formattedData && highestTime > currentTime)
+    if (timeUpdateTracker) console.log(`tracker is true`);
+    if (formattedData)
       formattedData[Math.floor(currentTime / 5)].isActive = true;
     for (
       let i = Math.floor(currentTime / 5) + 1;
@@ -62,40 +60,34 @@ function TranscriptionMain() {
   };
 
   //fetch data(transcription text and audio) from our API.
-  const fetchActualData = (accessToken, transcription_id) => {
-    setIsFetching(true);
-    const headers = {
-      Authorization: `Bearer ${accessToken}`,
-    };
-    axios
-      .get(`https://api.heed.hng.tech/transcription/${transcription_id}`, {
-        headers,
-      })
-      .then((newRes) => {
-        if (newRes.data.status) {
-          setStillProcessing(true);
-          setIsFetching(false);
-          return;
-        }
-        setApiError(false);
-        setIsFetching(false);
-        setFormattedData(
-          generateArray(newRes.data.sentiment_result.transcript)
-        );
-        setAudioSrc(newRes.data.sentiment_result.audio_url);
-        setAudioFileSize(formatBytes(newRes.data.sentiment_result.audio_size));
-        setAudioFileName(newRes.data.sentiment_result.audio_filename);
-        setDownloadData(newRes.data);
-      })
-      .catch(() => {
-        setApiError(true);
-        setIsFetching(false);
-      });
+  const fetchActualData = (transcription_id) => {
+    const data =
+      "grant_type=password&username=arcteggzz%40gmail.com&password=123456789&scope=&client_id=&client_secret=";
+    axios.post("https://api.heed.hng.tech/login", data).then((res) => {
+      const headers = {
+        Authorization: `Bearer ${res.data.access_token}`,
+      };
+      axios
+        .get(`https://api.heed.hng.tech/transcription/${transcription_id}`, {
+          headers,
+        })
+        .then((newRes) => {
+          setFormattedData(
+            generateArray(newRes.data.sentiment_result.transcript)
+          );
+          setAudioSrc(newRes.data.sentiment_result.audio_url);
+          setAudioFileSize(
+            formatBytes(newRes.data.sentiment_result.audio_size)
+          );
+          setAudioFileName(newRes.data.sentiment_result.audio_filename);
+          setDownloadData(newRes.data);
+        });
+    });
   };
   useEffect(() => {
     const accessToken = localStorage.getItem("heedAccessToken");
-    fetchActualData(accessToken, getTranscriptionId());
-    fetchRecentRecordings(accessToken);
+    fetchActualData(getTranscriptionId());
+    fetchRecentRecordings();
   }, []);
 
   // format array function
@@ -107,16 +99,6 @@ function TranscriptionMain() {
     let objectID = -1;
     let emptyString = "";
     let counter = 0;
-
-    if (wordArray.length < 20) {
-      const object = {
-        id: 0,
-        timeCount: "00:00",
-        stringText: str,
-      };
-      cleanedData.push(object);
-      return cleanedData;
-    }
 
     wordArray.map((word) => {
       if (counter < 20) {
@@ -156,20 +138,24 @@ function TranscriptionMain() {
     if (formatedTime.length === 3 && minutes > 0)
       return `0${minutes}:${seconds}0`;
   };
-  // fetch recent recordings
-  const fetchRecentRecordings = (accessToken) => {
-    const headers = {
-      Authorization: `Bearer ${accessToken}`,
-    };
-    axios
-      .get(`https://api.heed.hng.tech/recent-recordings?skip=0&limit=5`, {
-        headers,
-      })
-      .then((newRes) => {
-        setRecentRecordings(newRes.data);
-      });
+
+  const fetchRecentRecordings = () => {
+    const data =
+      "grant_type=password&username=abiolafadeyi10%40gmail.com&password=Abiola123&scope=&client_id=&client_secret=";
+    axios.post("https://api.heed.hng.tech/login", data).then((res) => {
+      const headers = {
+        Authorization: `Bearer ${res.data.access_token}`,
+      };
+      axios
+        .get(`https://api.heed.hng.tech/recent-recordings?skip=0&limit=5`, {
+          headers,
+        })
+        .then((newRes) => {
+          setRecentRecordings(newRes.data);
+        });
+    });
   };
-  //format bytes to kb, mb, gb, tb
+
   const formatBytes = (bytes, decimals = 0) => {
     if (!+bytes) return "0 bytes";
 
@@ -190,9 +176,6 @@ function TranscriptionMain() {
         audioElem={audioElem}
         currentTime={currentTime}
         timeUpdateTracker={timeUpdateTracker}
-        isFetching={isFetching}
-        apiError={apiError}
-        stillProcessing={stillProcessing}
       />
       <TranscriptionRightBar
         audioElem={audioElem}

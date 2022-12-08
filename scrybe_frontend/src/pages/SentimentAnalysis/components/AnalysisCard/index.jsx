@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import SkeletonLoader from "../SkeletonLoader";
 import styles from "./AnalysisCard.module.scss";
 
 function AnalysisCard({ sentimentData }) {
@@ -20,23 +21,7 @@ function AnalysisCard({ sentimentData }) {
           <div className={styles.content__text}>{sentimentData.transcript}</div>
         ) : (
           // loading skeleton
-          <>
-            <div
-              className={`${styles.content__text} ${styles.skeleton} ${styles.skeleton__text}`}
-            ></div>
-            <div
-              className={`${styles.content__text} ${styles.skeleton} ${styles.skeleton__text}`}
-            ></div>
-            <div
-              className={`${styles.content__text} ${styles.skeleton} ${styles.skeleton__text}`}
-            ></div>
-            <div
-              className={`${styles.content__text} ${styles.skeleton} ${styles.skeleton__text}`}
-            ></div>
-            <div
-              className={`${styles.content__text} ${styles.skeleton} ${styles.skeleton__text}`}
-            ></div>
-          </>
+          <SkeletonLoader type="text" numberOfLines={5} />
         )}
         <div className={styles.content__analysis}>
           <div className={styles.content__analysis__top}>

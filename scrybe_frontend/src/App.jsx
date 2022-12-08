@@ -83,7 +83,7 @@ function App() {
           path="/set-new-password?token=:token"
           element={<SetNewPassword />}
         />
-        <Route path="/emailverification" element={<EmailVerify />} />
+        <Route path="/emailverification/:token" element={<EmailVerify />} />
         <Route path="/try-processing" element={<TryProcessing />} />
         <Route path="/try-results" element={<TryResults />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
