@@ -101,7 +101,7 @@
   }
   &__links {
     display: flex;
-    gap: clamp(pix-rem(50), 6vw, pix-rem(100));
+    gap: clamp(pix-rem(40), 1vw, pix-rem(100));
     align-items: center;
     cursor: pointer;
     font-size: pix-rem(20);
@@ -110,6 +110,9 @@
       align-items: center;
       cursor: pointer;
     }
+    .activeTab {
+      color: #006cff;
+    }
     & > * {
       all: unset;
       color: #5e5e5e;
@@ -117,7 +120,7 @@
       transition: scale 0.2s;
       &:hover {
         color: #006cff;
-        scale: 1.1;
+        // scale: 1.1;
       }
     }
   }
@@ -127,14 +130,23 @@
       max-width: pix-rem(86);
     }
   }
-  .activeDashboard {
-  background-color: #006cff;
-  color: white;
-  &:hover {
-    background-color: transparent !important;
-    color: #006cff !important;
+  .logout {
+    background-color: red;
+    color: white;
+    font-size: 1rem;
+
+    border: 1px solid red;
+    padding: pix-rem(10, em) pix-rem(25, em);
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    &:hover {
+      background-color: transparent !important;
+      color: #5e5e5e !important;
+    }
   }
-}
   &__ctas {
     display: flex;
     gap: pix-rem(24);
@@ -199,4 +211,3 @@
     }
   }
 }
-

@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/heed_logo_with_text.svg";
@@ -18,6 +19,16 @@ function NavBar() {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const logoutUser = async () => {
+    Cookies.remove("heedAccessToken");
+    localStorage.removeItem("heedAccessToken");
+    localStorage.removeItem("heedRefreshToken");
+    localStorage.removeItem("currentUserEmail");
+    localStorage.removeItem("auth");
+    localStorage.removeItem("heedAccessTokenType");
+    setActiveUser(false);
   };
 
   useEffect(() => {
@@ -43,19 +54,39 @@ function NavBar() {
           onClick={() => setClicked(false)}
         >
           <div className={styles.nav__links}>
-            <NavLink to="/"> Home </NavLink>
-            <NavLink to="/pricing"> Pricing </NavLink>
-            <NavLink to="/about-us">About Us</NavLink>
+            <NavLink
+              to="/"
+              className={({ isActive }) => (isActive ? styles.activeTab : "")}
+            >
+              {" "}
+              Home{" "}
+            </NavLink>
+            <NavLink
+              to="/pricing"
+              className={({ isActive }) => (isActive ? styles.activeTab : "")}
+            >
+              {" "}
+              Pricing{" "}
+            </NavLink>
+            <NavLink
+              to="/about-us"
+              className={({ isActive }) => (isActive ? styles.activeTab : "")}
+            >
+              About Us
+            </NavLink>
+            {activeUser && <NavLink to="/dashboard">Dashboard</NavLink>}
           </div>
           <div className={styles.nav__ctas}>
             {activeUser ? (
-              <NavLink
-                to="/dashboard"
-                className={`${styles.ctas__button} ${styles.activeDashboard}`}
-              >
-                {" "}
-                Dashboard{" "}
-              </NavLink>
+              <>
+                <button className={`${styles.logout}`} onClick={logoutUser}>
+                  {" "}
+                  Logout{" "}
+                </button>
+                {/* <NavLink to="/try" className={styles.ctas__button}>
+                  Try for Free
+                </NavLink> */}
+              </>
             ) : (
               <>
                 <NavLink to="/signin" className={styles.ctas__button}>
