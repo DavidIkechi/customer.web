@@ -5,7 +5,7 @@ import { useAgentReport } from "../hooks";
 // recentAgentReport
 function AgentDetails({ selectData }) {
   // const agentReportData = useAgentReport(props);
-  // console.log(agentReportData);
+  console.log(selectData);
 
   return (
     <>
