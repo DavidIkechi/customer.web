@@ -50,7 +50,7 @@ const LeaderBoard = ({ LeaderboardData }) => {
               </tr>
             </thead>
             <tbody>
-              {selected &&
+              {/* {selected &&
                 selected.Top3_Agents.map((value, index) => (
                   <tr style={{ background: bgMap[index] }}>
                     <td>{value.str_agent_id}</td>
@@ -58,7 +58,7 @@ const LeaderBoard = ({ LeaderboardData }) => {
                     <td>{value.average_score}</td>
                     <td>{value.rank}</td>
                   </tr>
-                ))}
+                ))} */}
             </tbody>
           </table>
         </div>

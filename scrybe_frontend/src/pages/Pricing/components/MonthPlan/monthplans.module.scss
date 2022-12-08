@@ -26,7 +26,7 @@
   border-radius: 1.5rem;
   border: 0.89px solid #002f49;
 }
-.plansCard a {
+.plansCard button {
   display: block;
   color: #fff;
   text-align: center;
@@ -35,11 +35,12 @@
   margin-top: 2rem;
   background-color: #006cff;
   border-radius: 4px;
+  outline: none;
+  border: none;
 }
 .plansCard a:hover {
-   background-color: #549DFF;
+  background-color: #549dff;
 }
-
 
 .FtnBtn {
   height: 19rem;
