@@ -3,6 +3,13 @@
 .checkout {
   background-color: #f9fdff;
   min-height: 95vh;
+  h2 {
+    font-size: pix-rem(20);
+    line-height: pix-rem(24);
+    font-weight: 600;
+    color: #454545;
+    margin-block-end: pix-rem(10);
+  }
 }
 
 .checkout .container {
@@ -11,13 +18,15 @@
 }
 
 .checkout .header .heroH1 {
-  font-size: 3rem;
+  font-size: pix-rem(72);
   font-weight: bold;
   color: #313131;
   line-height: 1.3;
   text-align: center;
-  @include media(1220px) {
-    font-size: pix-rem(40);
+  padding-block: pix-rem(100);
+  @include media(768px) {
+    font-size: pix-rem(48);
+    padding-block: pix-rem(50);
   }
 }
 
@@ -28,6 +37,7 @@
 .checkout .checkoutDetails {
   display: flex;
   gap: 3%;
+
   @include media(1220px) {
     margin-inline: auto;
     padding-inline: pix-rem(32);
@@ -38,15 +48,33 @@
 .checkoutForm {
   flex: 66%;
   border: 0.89px solid #002f49;
+  border-radius: pix-rem(16);
   padding: pix-rem(40) pix-rem(80);
+  @include media(1220px) {
+    padding: pix-rem(40);
+  }
 }
 .orderDetails {
   flex: 30%;
-  border: 0.89px solid #002f49;
+  display: flex;
+  flex-direction: column;
+  @include media(1220px) {
+    flex-direction: column-reverse;
+    margin-top: 3rem;
+    div {
+      margin-top: 2rem;
+    }
+  }
 }
 .formCardDetails {
   border: 0.89px solid #a9a9a9;
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4%;
+  height: 180px;
 }
 
 .checkoutTitle {
@@ -60,20 +88,39 @@
 .formCardDetails.valueCard {
   background-color: #e6f0ff;
   border-radius: 0 0 pix-rem(16) pix-rem(16);
+  border: 0.89px solid #006cff;
 }
 
 .formCardDetails .plansCardTitle {
   display: flex;
+  gap: 3%;
 }
 
 .checkoutMonthly,
 .checkoutAnnually {
   flex: 48%;
+  margin-block: 1rem;
+
+  @include media(768px) {
+    width: pix-rem(300);
+  }
+}
+
+.checkoutMonthly .empty {
+  width: 100%;
+  height: pix-rem(40);
 }
 .checkoutCards {
   display: flex;
   align-items: flex-end;
   gap: 4%;
+  @include media(768px) {
+    flex-direction: column;
+    align-items: center;
+
+    justify-content: center;
+    margin-inline: auto;
+  }
 }
 
 .checkoutTitle {
@@ -97,17 +144,30 @@
   .plansCardTitle,
   .plansPricingFigure,
   .pricingFeaturesItem,
-  .plansPricing {
+  .plansPricing,
+  .plansPricingInfo {
     display: flex;
     align-items: center;
+    gap: 3%;
+  }
+}
+
+.plansPricingInfo p {
+  color: #002f49;
+  span {
+    font-weight: 600;
   }
 }
 .checkoutFormSections {
+  margin-block: 3rem;
   h2 {
-    font-style: pix-rem(20);
+    font-size: pix-rem(20);
     line-height: pix-rem(24);
     font-weight: 700;
     color: #454545;
+  }
+  @include media(768px) {
+    margin-block: unset;
   }
 }
 .plansPricingCurrency {
@@ -127,6 +187,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-block: 1rem;
+  @include media(768px) {
+    flex-direction: column;
+    text-align: left;
+    h2 {
+      width: 100%;
+    }
+    p {
+      width: 100%;
+    }
+  }
 }
 
 .checkoutFormFields {
@@ -140,6 +211,7 @@
   }
 
   input {
+    width: 100%;
     padding: pix-rem(14);
     outline: none;
     border: 1px solid #99a3b5;
@@ -159,12 +231,14 @@
       text-decoration: underline;
     }
   }
- 
 }
 
 .checkoutInputRow {
   display: flex;
   justify-content: space-between;
+  @include media(768px) {
+    flex-direction: column;
+  }
 }
 
 .chkContainer input {
@@ -185,11 +259,77 @@
   border: 1px solid #99a3b5;
   border-radius: 3px;
 }
+
+.checkboxsection {
+  padding-block: 2rem;
+}
 .formButton {
   width: 100%;
-    padding: 14px 14px;
+  padding: 14px 14px;
   color: white;
   border-radius: 8px;
-  border: 1px solid #1570EF;
-  background-color: #1570EF;
+  border: 1px solid #1570ef;
+  background-color: #1570ef;
+  margin-block: 1rem;
+}
+
+.featuresSection {
+  p {
+    font-size: pix-rem(16);
+    line-height: pix-rem(24);
+    font-weight: 300;
+    margin-block-end: pix-rem(10);
+    span {
+      color: #006cff;
+      text-decoration: underline;
+    }
+  }
+
+  .support {
+    margin-block: pix-rem(40);
+  }
+
+  @include media(1220px) {
+    margin-top: 2rem;
+  }
+}
+
+.cardTypes {
+  display: flex;
+}
+
+.orderSummary {
+  padding: pix-rem(24);
+  border: 0.89px solid #005584;
+  border-radius: pix-rem(16);
+  p {
+    font-size: pix-rem(16);
+    line-height: pix-rem(24);
+
+    margin-block-end: pix-rem(10);
+    span {
+      color: #006cff;
+      text-decoration: underline;
+    }
+  }
+
+  .totalSummary {
+    border-top: 2px solid #005584;
+    padding-top: 1rem;
+    font-weight: 600;
+    color: #003b8c;
+    .datepayment p {
+      color: #003b8c;
+    }
+  }
+}
+
+.spandate {
+  color: #003b8c;
+}
+
+.planDetails,
+.totalSummary {
+  display: flex;
+  justify-content: space-between;
 }
