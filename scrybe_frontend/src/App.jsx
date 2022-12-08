@@ -25,7 +25,7 @@ import Blogs from "./pages/BlogsPage";
 import Careers from "./pages/Careers";
 import Error from "./pages/Error/Error";
 import FAQs from "./pages/FaqsPage";
-import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
+// import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import General from "./pages/HelpAndSupport/components/General";
 import PromotedArticles from "./pages/HelpAndSupport/components/PromotedArticles";
 import HomePageRedesign from "./pages/HomePageRedesign";
