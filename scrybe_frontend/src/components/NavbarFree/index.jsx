@@ -1,10 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/heed_logo_with_text.svg";
+import ApiService from "../../helpers/axioshelp/apis";
 import styles from "./nav.module.scss";
 
 function NavBar() {
   const [clicked, setClicked] = useState(false);
+  const [activeUser, setActiveUser] = useState(false);
+
+  const fetchUser = async () => {
+    try {
+      const res = ApiService.Account();
+      console.log(res);
+      if (res.status === 200) {
+        setActiveUser(res.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   function handleClick() {
     setClicked((pre) => !pre);
