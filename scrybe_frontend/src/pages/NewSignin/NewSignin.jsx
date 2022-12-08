@@ -4,12 +4,20 @@ import styles from "./NewSignin.module.scss";
 
 import logo from "./assets/logo.png";
 import google from "./assets/google.png";
+import visible from "./assets/visible.png";
+import hidden from "./assets/hidden.png";
 
 const NewSignin = () => {
   return (
     <div className={styles.signinContainer}>
       <div className={styles.bgcontainer}>
-        <p>...Speak, we listen</p>
+        <div className={styles.text}>
+          <p>...Speak, we listen</p>
+          <p>
+            Unlock insights and extract meaningful data from your customer
+            support conversations
+          </p>
+        </div>
       </div>
 
       <div className={styles.inputsection}>
@@ -35,14 +43,17 @@ const NewSignin = () => {
           <div className={styles.forms}>
             <label htmlFor="email">Email</label>
             <input type="email" placeholder="Enter your company email" />
+            <p className={styles.err}></p>
           </div>
 
-          <div className={styles.forms}>
+          <div className={`${styles.forms} ${styles.pass}`}>
             <label htmlFor="password">Password</label>
             <input
               type="password"
               placeholder="Password at least 8 characters"
             />
+            <img src={hidden} alt="hidden" />
+            <p className={styles.err}></p>
           </div>
 
           <div className={styles.checkbox}>
