@@ -41,7 +41,7 @@ function AnalysisCard({ sentimentData }) {
     let textCount = 0;
     transcriptElements.push(
       <span className={styles.analysis__text} key={Math.random()}>
-        {sentimentData.transcript.slice(textCount, totalList[0].start)}
+        {sentimentData.transcript.slice(textCount, totalList[0]?.start)}
       </span>
     );
     totalList.forEach((item, index) => {
