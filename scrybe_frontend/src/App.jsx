@@ -64,7 +64,6 @@ import ForgetPasswordNew from "./pages/ForgotPasswordNew/Index";
 import NewSetNewPassword from "./pages/NewSetNewPassword";
 import NewPasswordResetSuccessful from "./pages/NewPasswordResetSuccessful";
 
-
 function App() {
   return (
     <>
@@ -184,7 +183,6 @@ function App() {
           path="/pw-reset-successful"
           element={<NewPasswordResetSuccessful />}
         />
-
       </Routes>
     </>
   );
