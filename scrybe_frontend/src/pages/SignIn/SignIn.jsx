@@ -86,7 +86,8 @@ function Signin() {
         localStorage.setItem("heedAccessTokenType", response.data.token_type);
         localStorage.setItem("currentUserEmail", username);
         localStorage.setItem("auth", username);
-        navigate("/dashboard");
+        // navigate("/dashboard");
+        window.location.href = "/dashboard";
       })
       .catch((err) => {
         setIsLoading(false);
