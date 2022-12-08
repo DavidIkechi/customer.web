@@ -5,6 +5,7 @@ import styles from "./AnalysisCard.module.scss";
 function AnalysisCard({ sentimentData }) {
   let totalList = [];
   const transcriptElements = [];
+  console.log(sentimentData);
   if (sentimentData.transcript) {
     let mostNegative = JSON.parse(sentimentData.most_negative_sentences);
     let mostPositive = JSON.parse(sentimentData.most_postive_sentences); //there's a typo in the data key coming from the backend
@@ -22,7 +23,7 @@ function AnalysisCard({ sentimentData }) {
     });
     let textCountNeg = 0;
     let textCountPos = 0;
-    console.log(mostNegative[textCountNeg]);
+    // console.log(mostNegative[textCountNeg]);
     while (
       textCountNeg < mostNegative.length &&
       textCountPos < mostPositive.length
@@ -39,10 +40,45 @@ function AnalysisCard({ sentimentData }) {
       .concat(mostNegative.slice(textCountNeg))
       .concat(mostPositive.slice(textCountPos));
 
-    console.log(totalList);
-    // while (textCount < sentimentData.transcript.length) {
-    //   textCount +=
-    // }
+    // console.log(totalList);
+    let textCount = 0;
+    transcriptElements.push(
+      <span className={styles.analysis__text} key={Math.random()}>
+        {sentimentData.transcript.slice(textCount, totalList[0].start)}
+      </span>
+    );
+    totalList.forEach((item, index) => {
+      transcriptElements.push(
+        <span
+          className={`${styles.analysis__text} ${
+            item.type === "neg"
+              ? styles.analysis__text__negative
+              : item.type === "pos"
+              ? styles.analysis__text__positive
+              : ""
+          }`}
+          key={index + Math.random()}
+        >
+          {sentimentData.transcript.slice(item.start, item.end)}
+        </span>
+      );
+      if (totalList[index + 1]) {
+        transcriptElements.push(
+          <span className={styles.analysis__text} key={index + Math.random()}>
+            {sentimentData.transcript.slice(
+              item.end,
+              totalList[index + 1].start
+            )}
+          </span>
+        );
+      } else {
+        transcriptElements.push(
+          <span className={styles.analysis__text} key={index + Math.random()}>
+            {sentimentData.transcript.slice(item.end)}
+          </span>
+        );
+      }
+    });
   }
   return (
     <div className={styles.card}>
@@ -59,7 +95,7 @@ function AnalysisCard({ sentimentData }) {
       </div>
       <div className={styles.content}>
         {sentimentData.transcript ? (
-          <div className={styles.content__text}>{sentimentData.transcript}</div>
+          <div className={styles.content__text}>{transcriptElements}</div>
         ) : (
           // loading skeleton
           <SkeletonLoader type="text" numberOfLines={5} />
