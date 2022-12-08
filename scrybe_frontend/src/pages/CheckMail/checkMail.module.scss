@@ -120,14 +120,11 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
     }
 
     .form__container .form__button {
-        display: block;
-        flex-basis: 100%;
-        text-align: center;
-        // width: 100%;
+        width: 100%;
         font-weight: 500;
         border: none;
         border-radius: 0.3rem;
-        padding: 1.3em 0em;
+        padding: 0.8em 0.8em;
         background-color: #006CFF;
         color: #FFFFFF;
         font-size: 0.7rem;

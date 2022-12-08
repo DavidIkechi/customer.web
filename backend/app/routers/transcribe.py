@@ -67,19 +67,24 @@ def view_transcript(job_id: Union[int, str], db: Session = Depends(_services.get
     job_audio_id = job_id
     audio_id = Job.id
     
-    
-    transcript_audio = get_transcript_result(job_audio_id)
     db_job = db.query(models.Job).filter(models.Job.audio_id == audio_id).first()
-    db_job.job_status = transcript_audio['status']
-    db.commit()
+    if db_job.job_status == "completed":
+        transcripted_word = Job.transcript
+    else:
+        transcript_audio = get_transcript_result(job_audio_id)
     
-    if transcript_audio['status'] != "completed":
-        return {
-            "status":transcript_audio['status']
-        }
+        db_job.job_status = transcript_audio['status']
+        db.commit()
+    
+        if transcript_audio['status'] != "completed":
+            return {
+                "status":transcript_audio['status']
+            }
+   
         
-    # get the text.
-    transcripted_word = transcript_audio['text']
+        # get the text.
+        transcripted_word = transcript_audio['text']
+        
     sentiment_result = sentiment.sentiment(transcripted_word)
 
     negativity_score = sentiment_result['negativity_score']
