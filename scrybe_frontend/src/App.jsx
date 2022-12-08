@@ -32,15 +32,12 @@ import General from "./pages/HelpAndSupport/components/General";
 import PromotedArticles from "./pages/HelpAndSupport/components/PromotedArticles";
 import HomePageRedesign from "./pages/HomePageRedesign";
 import LeaderboardPage from "./pages/LeaderBoard/Leaderboard";
-import Logout from "./pages/Logout";
 import LandingPageSalesTeam from "./pages/NewLandingPageSalesTeam/index";
 import PartnersPage from "./pages/PartnersPage";
-// import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
-import NewPasswordResetSuccessful from "./pages/NewPasswordResetSuccessful";
+import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Reviews from "./pages/Reviews/Reviews";
-// import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
-import NewSetNewPassword from "./pages/NewSetNewPassword";
+import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
 import SettingsIndex from "./pages/Settings/SettingsIndex";
 import AccountSettings from "./pages/Settings/SettingsPageSubPages/AccountSettings/AccountSettings";
 import NotificationSettings from "./pages/Settings/SettingsPageSubPages/Notifications/NotificationSettings";
@@ -55,11 +52,13 @@ import TryProcessing from "./pages/TryForFree/tryProcessing";
 import TryResults from "./pages/TryForFree/tryResults";
 import UploadedRecordings from "./pages/UploadRecordings";
 import { UploadModal } from "./pages/UploadRecordingsModal";
+import Logout from "./pages/Logout";
 import EmailVerify from "./pages/VerificationEmail/EmailVerify";
-// import CheckMail from "./pages/CheckMail";
 import StartUp from "./pages/Checkout/Startup";
 import Growing from "./pages/Checkout/Growing";
 import Enterprise from "./pages/Checkout/Enterprise";
+import CheckMail from "./pages/CheckMail";
+
 
 function App() {
   return (
@@ -84,21 +83,18 @@ function App() {
         <Route path="/verify-signup" element={<SignUpVerify />} />
         <Route path="/support-team" element={<Support />} />
         <Route path="/logout" element={<Logout />} />
-        <Route path="/set-new-password" element={<NewSetNewPassword />} />
+        <Route
+          path="/set-new-password?token=:token"
+          element={<SetNewPassword />}
+        />
         <Route path="/emailverification/:token" element={<EmailVerify />} />
         <Route path="/try-processing" element={<TryProcessing />} />
         <Route path="/try-results" element={<TryResults />} />
-        {/* <Route path="/forget-password" element={<ForgetPassword />} /> */}
-        <Route path="/forget-password" element={<ForgetPasswordNew />} />
+        <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/sales-team" element={<LandingPageSalesTeam />} />
-        {/* <Route
-          path="/pw-reset-successful"
-          element={<PasswordResetSuccessful />}
-        /> */}
-        <Route path="/set-new-password" element={<NewSetNewPassword />} />
         <Route
           path="/pw-reset-successful"
-          element={<NewPasswordResetSuccessful />}
+          element={<PasswordResetSuccessful />}
         />
         <Route path="*" element={<Error />} />
         <Route path="/demos" element={<DummyPage someText="demo pages" />} />

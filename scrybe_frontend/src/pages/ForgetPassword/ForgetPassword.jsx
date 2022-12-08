@@ -24,6 +24,9 @@ function ForgetPassword() {
         email: email,
       })
       .then((res) => {
+        /* TODO:
+          - When CheckEmail page is implemented, this page should redirect there instead of SetNewPassword
+        */
         navigate("/check-mail");
       });
   };
