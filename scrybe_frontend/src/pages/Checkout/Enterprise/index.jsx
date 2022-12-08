@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
 // import { Route, Routes } from "react-router-dom";
+
 import styles from "../checkout.module.scss";
 import startUpIcon from "../assets/star.svg";
 import currency from "../assets/dollar.svg";
@@ -24,20 +25,20 @@ function Checkout() {
 
   const token = localStorage.getItem("heedAccessToken");
 
-  const fetchStartupOrder = async () => {
+  const fetchGrowingOrder = async () => {
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
 
-    await axios.get("orders/1", { headers }).then((res) => {
+    await axios.get("orders/3", { headers }).then((res) => {
       setDataArray(res.data);
       setUserEmail(res.data.user_email);
     });
   };
 
   useEffect(() => {
-    fetchStartupOrder();
+    fetchGrowingOrder();
   }, []);
 
   const calculatePrice = () => {
@@ -47,7 +48,7 @@ function Checkout() {
     const userEmail = dataArray.user_email;
     const nextPaymentDate = dataArray.next_payment_due_date;
     const orderId = dataArray.id;
-    const total = (monthlyPrice - 2) * 12;
+    const total = (monthlyPrice - 7) * 12;
 
     setMonthlyPrice(monthlyPrice);
     setUserEmail(userEmail);
@@ -63,7 +64,6 @@ function Checkout() {
     setTotal(total);
     setNextPaymentDate(null);
   };
-
   return (
     <div className={styles.checkout}>
       <NavBarFree />
@@ -93,7 +93,7 @@ function Checkout() {
                       <div className={styles.plansCardIcon}>
                         <img src={startUpIcon} alt="star icon" />
                       </div>
-                      <h3>Startup</h3>
+                      <h3>Enterprise</h3>
                       <p>Monthly</p>
                     </div>
                     <div className={styles.plansPricing}>
@@ -101,13 +101,13 @@ function Checkout() {
                         <div className={styles.plansPricingCurrency}>
                           <img src={currency} alt="currency symbol" />
                         </div>
-                        <h4>17</h4>
+                        <h4>54</h4>
                       </div>
                       <p>per month</p>
                     </div>
                     <div className={styles.plansPricingInfo}>
                       <p>
-                        Billed <span>$17</span> per month
+                        Billed <span>$54</span> per month
                       </p>
                     </div>
                   </div>
@@ -129,21 +129,21 @@ function Checkout() {
                       <div className={styles.plansCardIcon}>
                         <img src={startUpIcon} alt="star icon" />
                       </div>
-                      <h3>Startup</h3>
-                      <p>annually</p>
+                      <h3>Enterprise</h3>
+                      <p>Annually</p>
                     </div>
                     <div className={styles.plansPricing}>
                       <div className={styles.plansPricingFigure}>
                         <div className={styles.plansPricingCurrency}>
                           <img src={currency} alt="currency symbol" />
                         </div>
-                        <h4>15</h4>
+                        <h4>47</h4>
                       </div>
                       <p>per month</p>
                     </div>
                     <div className={styles.plansPricingInfo}>
                       <p>
-                        Billed <span>$180</span> annually
+                        Billed <span>$564</span> annually
                       </p>
                     </div>
                   </div>
@@ -234,23 +234,28 @@ function Checkout() {
           </div>
           <div className={styles.orderDetails}>
             <div className={styles.featuresSection}>
-              <h2>Features of Starup plan</h2>
+              <h2>Features of Growing plan</h2>
               <div className={styles.pricingFeatures}>
                 <div className={styles.pricingFeaturesItem}>
                   <img src={checkIcon} alt="check-mark icon" />
-                  <p>Ai-Powered call transcriptions</p>
+                  <p>Everything in Startup, plus:</p>
                 </div>
                 <div className={styles.pricingFeaturesItem}>
                   <img src={checkIcon} alt="check-mark icon" />
-                  <p>Call Tracking & Recording</p>
+                  <p>API & Webhook Access</p>
                 </div>
                 <div className={styles.pricingFeaturesItem}>
                   <img src={checkIcon} alt="check-mark icon" />
-                  <p> Business Hours</p>
+                  <p> Custom Workflows</p>
                 </div>
                 <div className={styles.pricingFeaturesItem}>
                   <img src={checkIcon} alt="check-mark icon" />
-                  <p>Email & Chat Support</p>
+                  <p>Dedicated Account Manager</p>
+                </div>
+
+                <div className={styles.pricingFeaturesItem}>
+                  <img src={checkIcon} alt="check-mark icon" />
+                  <p>Priority Support</p>
                 </div>
                 <div className={styles.support}>
                   <p>
@@ -270,19 +275,20 @@ function Checkout() {
               </div>
             </div>
             <div className={styles.orderSummary}>
-              <h2>Features of Starup plan</h2>
+              <h2>Features of Growing plan</h2>
               <div className={styles.planDetails}>
                 <p>
-                  Heed Startup Plan {monthToggle ? "(annually)" : "(monthly)"}{" "}
+                  Heed Growing Plan{monthToggle ? "(annually)" : "(monthly)"}
                 </p>
                 <p>
-                  ${total ? total : "17"} per {monthToggle ? "year" : "month"}
+                  ${total ? total : "54"} per {monthToggle ? "year" : "month"}
                 </p>
               </div>
               <div className={styles.totalSummary}>
                 <p>Total</p>
                 <p>
-                  ${total ? total : "17"} per {monthToggle ? "year" : "month"}
+                  {" "}
+                  ${total ? total : "54"} per {monthToggle ? "year" : "month"}
                 </p>
               </div>
               <div className={styles.datepayment}>
