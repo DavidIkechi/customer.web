@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "https://api.heed.hng.tech";
+const baseURL = "https://api.heed.hng.tech/";
 
 const headers = {
   "Access-Control-Allow-Origin": "*",

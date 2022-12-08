@@ -17,7 +17,7 @@
       padding-block: pix-rem(20);
     }
   }
-  .signinDesign{
+  .signinDesign {
     cursor: pointer;
   }
   &__closed {
@@ -38,9 +38,10 @@
   &__mobile {
     display: flex;
     justify-content: space-between;
-    width: 68%;
-    @include media(1150px) {
-      width: 84%;
+    width: 70%;
+    height: auto;
+    @include media(1100px) {
+      width: 77%;
     }
     height: auto;
     @include media($mobile) {
@@ -97,9 +98,10 @@
   &__links {
     display: flex;
     padding-left: 15%;
-    gap: pix-rem(24);
+    gap: clamp(pix-rem(50), 6vw, pix-rem(100));
     align-items: center;
     cursor: pointer;
+    font-size: pix-rem(20);
     @include media($mobile) {
       flex-direction: column;
       align-items: center;
@@ -109,8 +111,10 @@
       all: unset;
       color: #5e5e5e;
       font-weight: 300;
+      transition: scale 0.2s;
       &:hover {
         color: #006cff;
+        scale: 1.1;
       }
     }
   }
@@ -131,7 +135,10 @@
       all: unset;
       padding: pix-rem(16, em) pix-rem(32, em);
       border-radius: pix-rem(4);
-
+      transition: scale 0.2s;
+      &:hover {
+        scale: 1.1;
+      }
       @include media($mobile) {
         text-align: center;
         max-width: pix-rem(178);
@@ -159,13 +166,7 @@
         background-color: #006cff;
         color: white;
         font-size: clamp(0.625rem, 0.489rem + 0.68vw, 1rem);
-        &:hover {
-          background-color: #fff;
-          border: 1px solid #006cff;
-          a {
-            color: #006cff;
-          }
-        }
+        cursor: pointer;
         & > a {
           color: #fff;
         }

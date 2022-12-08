@@ -2,6 +2,7 @@ import axios from "axios";
 import { PropTypes } from "prop-types";
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import Modal from "../Modal";
 import SearchInput from "../SearchInput";
 import DropDownModal from "./DropdownMenu";
 import dropdown_arr from "./imgs/dropdownArr.svg";
@@ -9,18 +10,16 @@ import logo from "./imgs/logo.svg";
 import toggleNavIcon from "./imgs/toggleNavIcon.svg";
 import uploadBtn_icon from "./imgs/uploadBtnIcon.svg";
 import styles from "./topbar.module.scss";
+import DummyImg from "./imgs/dummy.png";
+import { headers } from "../../helpers/axioshelp";
+
 const TopNav = ({ openSidebar, search }) => {
   const [show, setShow] = useState(false);
   const [currentUser, setCurrentUser] = React.useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const getUserAccount = async () => {
-    const config = {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
-      },
-    };
-    const res = await axios.get("account", config);
+    const res = await axios.get("account", { headers });
     setCurrentUser(res.data);
   };
 
@@ -52,7 +51,7 @@ const TopNav = ({ openSidebar, search }) => {
               src={
                 currentUser?.company_logo_url
                   ? currentUser?.company_logo_url
-                  : "img/dummy.png"
+                  : DummyImg
               }
               alt="john doe"
             />
@@ -80,12 +79,18 @@ const TopNav = ({ openSidebar, search }) => {
           </div>
         </div>
         {currentUser && (
-          <NavLink to="/upload-new-file">
-            <div className={styles.TopNav_btnwrap}>
+          <>
+            {/* <NavLink > */}
+            <div
+              className={styles.TopNav_btnwrap}
+              onClick={() => setModalOpen(true)}
+            >
               <img src={uploadBtn_icon} alt="" />
               <button className={styles.TopNav_btn}>Upload</button>
             </div>
-          </NavLink>
+            {/* </NavLink> */}
+            <Modal open={modalOpen} setOpen={setModalOpen} />
+          </>
         )}
 
         <div className={styles.TopNav_user_mobile}>

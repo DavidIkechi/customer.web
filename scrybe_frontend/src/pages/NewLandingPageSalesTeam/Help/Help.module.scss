@@ -1,147 +1,147 @@
-@use "../../../functions.scss"as *;
+@use "../../../functions.scss" as *;
 
-.HelpContainer{
+.HelpContainer {
+  display: flex;
+  justify-content: space-around;
+  gap: 3rem;
+  margin: 4rem 0;
+  padding-inline: 8rem;
+  @include media(975px) {
+    flex-direction: column;
+    padding-inline: 5rem;
+  }
+  @include media(550px) {
+    margin: 2rem;
+    padding-inline: 1rem;
+  }
+  @include media(330px) {
+    margin: 3rem 1rem;
+    padding-inline: 0.6rem;
+  }
+
+  .HelpHeadingWithBox {
+    width: 50%;
+    gap: 4rem;
     display: flex;
-    justify-content: space-around;
-    gap: 3rem;
-    margin: 4rem;
+    flex-direction: column;
     @include media(975px) {
-        flex-direction: column;
-     }
-     @include media(550px) {
-        margin: 2rem;
-     }
-     @include media(330px) {
-        margin: 1rem;
-     }
-    
-    .HelpHeadingWithBox{
-        width: 50%;
-        gap: 4rem;
-        display: flex;
-        flex-direction: column;
-        @include media(975px) {
-            gap: 2rem;
-            width: 100%;
-         }
+      gap: 2rem;
+      width: 100%;
     }
-        .HelpSectionHeading{
-            font-family: 'Kanit';
-            font-style: normal;
-            font-weight: 600;
-            font-size: 48px;
-            line-height: 60px;
-            color: #313131;
-            width: 90%;
-            margin-bottom: 2rem;
-            @include media(975px) {
-               font-size: 40px;
-            }
-            @include media(850px) {
-                text-align: center;
-             }
-             @include media(550px) {
-                font-size: 30px;
-                line-height: 32px;
-             }
-             @include media(350px) {
-               font-size: 24px;
-            }
-            
-        }
-        .HelpBox{
-            background: #EDF9F0;
-            border-radius: 32px;
-            padding: 3rem;
-            @include media(975px) {
-                padding: 2rem;
-             }
-             @include media(550px) {
-                width: 100%;
-                padding: 1rem;
-             }
-        }
-        .HelpIconWithText{
-            display: flex;
-            align-content:center;
-            align-items: center;
-            gap: 2rem;
-            margin-bottom: 1rem;
-            >h3{
-                font-family: 'Kanit';
-                font-style: normal;
-                font-weight: 500;
-                font-size: 36px;
-                line-height: 54px;
-                color: #172E73;
-                @include media(975px) {
-                    font-size: 28px;
-                 }
-                 @include media(550px) {
-                    font-size: 24px;
-                    gap: 0rem;
-                 }
-                 @include media(350px) {
-                  font-size: 20px;
-                  gap: 0rem;
-               }
-            }
-            >img{
-               @include media(550px) {
-                  width: 15%;
-               }
-            }
-        }
-        .paragraph{
-            font-family: 'Kanit';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 32px;
-            line-height: 125%;
-            color: #172E73;
-            @include media(975px) {
-                font-size: 24px;
-                width: 100%;
-             }
-             @include media(550px) {
-                font-size: 20px;
-             }
-             @include media(350px) {
-               font-size: 18px;
-            }
-        }
-        .HelpBoxesOnly{
-            width: 50%;
-            display: flex;
-            flex-direction: column;
-            gap: 10rem;
-            @include media(975px) {
-                gap: 2rem;
-                width: 100%;
-             }
-        }
-        .HelpBox1{
-            background: #E6F0FF;
-            border-radius: 32px;
-            padding: 3rem;
-            @include media(975px) {
-                padding: 2rem;
-             }
-             @include media(550px) {
-                width: 100%;
-                padding: 1rem;
-             }
-        }
-        .HelpBox2{
-            background: #FEECEB;
-            border-radius: 32px;
-            padding: 3rem; 
-            @include media(975px) {
-                padding: 2rem;
-             }
-             @include media(550px) {
-                width: 100%;
-                padding: 1rem;
-             }
-        }
+  }
+  .HelpSectionHeading {
+    font-family: "Kanit";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 60px;
+    color: #313131;
+    width: 90%;
+    margin-bottom: 2rem;
+    @include media(975px) {
+      font-size: 40px;
+    }
+    @include media(850px) {
+      text-align: center;
+    }
+    @include media(550px) {
+      font-size: 30px;
+    }
+  }
+  .HelpBox {
+    background: #edf9f0;
+    border-radius: 32px;
+    padding: 3rem;
+    @include media(975px) {
+      padding: 2rem;
+    }
+    @include media(550px) {
+      width: 100%;
+      padding: 1rem;
+    }
+  }
+  .HelpIconWithText {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 1rem;
+    > h3 {
+      font-family: "Kanit";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 30px;
+      line-height: 54px;
+      color: #172e73;
+      @include media(975px) {
+        font-size: 28px;
+      }
+      @include media(550px) {
+        font-size: 24px;
+        gap: 0rem;
+      }
+      @include media(350px) {
+        font-size: 20px;
+        gap: 0rem;
+      }
+    }
+    > img {
+      width: 13%;
+      // @include media(550px) {
+      //   width: 50%;
+      // }
+    }
+  }
+  .paragraph {
+    font-family: "Kanit";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 125%;
+    color: #172e73;
+    @include media(975px) {
+      font-size: 24px;
+      width: 100%;
+    }
+    @include media(550px) {
+      font-size: 20px;
+    }
+    @include media(350px) {
+      font-size: 18px;
+    }
+  }
+  .HelpBoxesOnly {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 10rem;
+    @include media(975px) {
+      gap: 2rem;
+      width: 100%;
+    }
+  }
+  .HelpBox1 {
+    background: #e6f0ff;
+    border-radius: 32px;
+    padding: 3rem;
+    @include media(975px) {
+      padding: 2rem;
+    }
+    @include media(550px) {
+      width: 100%;
+      padding: 1rem;
+    }
+  }
+  .HelpBox2 {
+    background: #feeceb;
+    border-radius: 32px;
+    padding: 3rem;
+    @include media(975px) {
+      padding: 2rem;
+    }
+    @include media(550px) {
+      width: 100%;
+      padding: 1rem;
+    }
+  }
 }

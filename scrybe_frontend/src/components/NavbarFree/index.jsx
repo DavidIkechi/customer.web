@@ -1,24 +1,32 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-// import axios from "axios";
 import logo from "../../assets/heed_logo_with_text.svg";
+import { headers } from "../../helpers/axioshelp";
 import styles from "./nav.module.scss";
 
 function NavBar() {
   const [clicked, setClicked] = useState(false);
+  const [activeUser, setActiveUser] = useState(false);
+
+  const fetchUser = async () => {
+    try {
+      const res = await axios.get("account", { headers });
+      if (res.status === 200) {
+        setActiveUser(res.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   function handleClick() {
     setClicked((pre) => !pre);
   }
-  // const [loggedIn, setLoggedIn] = useState([null]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get("https://heedapi.herokuapp.com/docs#/users/read_users_users_get")
-  //     .then((response) => {
-  //       setLoggedIn(response.data);
-  //     });
-  // }, []);
 
   return (
     <nav className={styles.nav}>
@@ -40,12 +48,24 @@ function NavBar() {
             <NavLink to="/about-us">About Us</NavLink>
           </div>
           <div className={styles.nav__ctas}>
-            <NavLink to="/signin">
-              <button type="button">Login</button>
-            </NavLink>
-            <NavLink to="/try">
-              <button type="button">Try for Free</button>
-            </NavLink>
+            {activeUser ? (
+              <NavLink
+                to="/dashboard"
+                className={`${styles.ctas__button} ${styles.activeDashboard}`}
+              >
+                {" "}
+                Dashboard{" "}
+              </NavLink>
+            ) : (
+              <>
+                <NavLink to="/signin" className={styles.ctas__button}>
+                  Login
+                </NavLink>
+                <NavLink to="/try" className={styles.ctas__button}>
+                  Try for Free
+                </NavLink>
+              </>
+            )}
           </div>
 
           <div className={styles.nav__ctl}>

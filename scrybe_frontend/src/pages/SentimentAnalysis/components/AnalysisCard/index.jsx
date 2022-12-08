@@ -1,7 +1,82 @@
 import PropTypes from "prop-types";
+import SkeletonLoader from "../SkeletonLoader";
 import styles from "./AnalysisCard.module.scss";
 
 function AnalysisCard({ sentimentData }) {
+  let totalList = [];
+  const transcriptElements = [];
+  if (sentimentData.transcript) {
+    let mostNegative = JSON.parse(sentimentData.most_negative_sentences);
+    let mostPositive = JSON.parse(sentimentData.most_postive_sentences); //there's a typo in the data key coming from the backend
+    mostNegative = mostNegative.map((item) => {
+      item.start = sentimentData.transcript.indexOf(item.sentence);
+      item.end = item.start + item.sentence.length;
+      item.type = "neg";
+      return item;
+    });
+    mostPositive = mostPositive.map((item) => {
+      item.start = sentimentData.transcript.indexOf(item.sentence);
+      item.end = item.start + item.sentence.length;
+      item.type = "pos";
+      return item;
+    });
+    let textCountNeg = 0;
+    let textCountPos = 0;
+    while (
+      textCountNeg < mostNegative.length &&
+      textCountPos < mostPositive.length
+    ) {
+      if (mostNegative[textCountNeg].start < mostPositive[textCountPos].start) {
+        totalList.push(mostNegative[textCountNeg]);
+        textCountNeg++;
+      } else {
+        totalList.push(mostPositive[textCountNeg]);
+        textCountPos++;
+      }
+    }
+    totalList = totalList
+      .concat(mostNegative.slice(textCountNeg))
+      .concat(mostPositive.slice(textCountPos));
+
+    let textCount = 0;
+    transcriptElements.push(
+      <span className={styles.analysis__text} key={Math.random()}>
+        {sentimentData.transcript.slice(textCount, totalList[0].start)}
+      </span>
+    );
+    totalList.forEach((item, index) => {
+      transcriptElements.push(
+        <span
+          className={`${styles.analysis__text} ${
+            item.type === "neg"
+              ? styles.analysis__text__negative
+              : item.type === "pos"
+              ? styles.analysis__text__positive
+              : ""
+          }`}
+          key={index + Math.random()}
+        >
+          {sentimentData.transcript.slice(item.start, item.end)}
+        </span>
+      );
+      if (totalList[index + 1]) {
+        transcriptElements.push(
+          <span className={styles.analysis__text} key={index + Math.random()}>
+            {sentimentData.transcript.slice(
+              item.end,
+              totalList[index + 1].start
+            )}
+          </span>
+        );
+      } else {
+        transcriptElements.push(
+          <span className={styles.analysis__text} key={index + Math.random()}>
+            {sentimentData.transcript.slice(item.end)}
+          </span>
+        );
+      }
+    });
+  }
   return (
     <div className={styles.card}>
       <div className={styles.time}>
@@ -17,26 +92,10 @@ function AnalysisCard({ sentimentData }) {
       </div>
       <div className={styles.content}>
         {sentimentData.transcript ? (
-          <div className={styles.content__text}>{sentimentData.transcript}</div>
+          <div className={styles.content__text}>{transcriptElements}</div>
         ) : (
           // loading skeleton
-          <>
-            <div
-              className={`${styles.content__text} ${styles.skeleton} ${styles.skeleton__text}`}
-            ></div>
-            <div
-              className={`${styles.content__text} ${styles.skeleton} ${styles.skeleton__text}`}
-            ></div>
-            <div
-              className={`${styles.content__text} ${styles.skeleton} ${styles.skeleton__text}`}
-            ></div>
-            <div
-              className={`${styles.content__text} ${styles.skeleton} ${styles.skeleton__text}`}
-            ></div>
-            <div
-              className={`${styles.content__text} ${styles.skeleton} ${styles.skeleton__text}`}
-            ></div>
-          </>
+          <SkeletonLoader type="text" numberOfLines={5} />
         )}
         <div className={styles.content__analysis}>
           <div className={styles.content__analysis__top}>

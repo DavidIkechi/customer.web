@@ -34,10 +34,10 @@ import HomePageRedesign from "./pages/HomePageRedesign";
 import LeaderboardPage from "./pages/LeaderBoard/Leaderboard";
 import LandingPageSalesTeam from "./pages/NewLandingPageSalesTeam/index";
 import PartnersPage from "./pages/PartnersPage";
-// import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
+import PasswordResetSuccessful from "./pages/PasswordResetSuccessful/PasswordResetSuccessful";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Reviews from "./pages/Reviews/Reviews";
-// import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
+import SetNewPassword from "./pages/SetNewPassword/SetNewPassword";
 import SettingsIndex from "./pages/Settings/SettingsIndex";
 import AccountSettings from "./pages/Settings/SettingsPageSubPages/AccountSettings/AccountSettings";
 import NotificationSettings from "./pages/Settings/SettingsPageSubPages/Notifications/NotificationSettings";
@@ -58,10 +58,12 @@ import StartUp from "./pages/Checkout/Startup";
 import Growing from "./pages/Checkout/Growing";
 import Enterprise from "./pages/Checkout/Enterprise";
 // import CheckMail from "./pages/CheckMail";
+
 // import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import ForgetPasswordNew from "./pages/ForgotPasswordNew/Index";
 import NewSetNewPassword from "./pages/NewSetNewPassword";
 import NewPasswordResetSuccessful from "./pages/NewPasswordResetSuccessful";
+
 
 function App() {
   return (
@@ -86,6 +88,7 @@ function App() {
         <Route path="/verify-signup" element={<SignUpVerify />} />
         <Route path="/support-team" element={<Support />} />
         <Route path="/logout" element={<Logout />} />
+
         {/* <Route
           path="/set-new-password?token=:token"
           element={<SetNewPassword />}
@@ -94,11 +97,12 @@ function App() {
         <Route path="/try-processing" element={<TryProcessing />} />
         <Route path="/try-results" element={<TryResults />} />
         {/* <Route path="/forget-password" element={<ForgetPassword />} /> */}
+
         <Route path="/sales-team" element={<LandingPageSalesTeam />} />
-        {/* <Route
+        <Route
           path="/pw-reset-successful"
           element={<PasswordResetSuccessful />}
-        /> */}
+        />
         <Route path="*" element={<Error />} />
         <Route path="/demos" element={<DummyPage someText="demo pages" />} />
         <Route path="/blog" element={<Blogs />} />
@@ -180,6 +184,7 @@ function App() {
           path="/pw-reset-successful"
           element={<NewPasswordResetSuccessful />}
         />
+
       </Routes>
     </>
   );
