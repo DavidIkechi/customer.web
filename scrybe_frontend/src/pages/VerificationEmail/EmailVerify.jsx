@@ -19,7 +19,7 @@ const EmailVerify = () => {
     try {
       // let token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF5ZW5wcmVAZ21haWwuY29tIn0.LSsSIjvkCHI5tfg2Hj3Q3Ov2MwFrNFdn6W9jC2UXo4Q";
       const response = await axios.get(
-        `verification?token=${token}`
+        `https://api.heed.hng.tech/verification?token=${token}`
       );
       console.log(response.data);
       setMessage(response.data);
