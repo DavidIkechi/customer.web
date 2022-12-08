@@ -75,7 +75,12 @@ const TotalAnalysis = ({ totalAnalysisData }) => {
           <div className={styles.doughnut_chart}>
             <Doughnut options={chartOptions} data={chartData} />
             <div className={styles.chart_inner}>
-              <h1>{selectedTotalAnalysis?.map((data) => data.positive)}%</h1>
+              <h1>
+                {selectedTotalAnalysis?.map(
+                  (data) => data.positive + data.neutral + data.negative
+                )}
+                %
+              </h1>
               <span>+ve</span>
             </div>
           </div>
@@ -87,11 +92,11 @@ const TotalAnalysis = ({ totalAnalysisData }) => {
             <h3>
               {" "}
               <span className={styles.neutral}>1</span>Neutral{" "}
-              {selectedTotalAnalysis?.map((data) => data.neutral)}
+              {selectedTotalAnalysis?.map((data) => data.neutral)}%
             </h3>
             <h3>
               <span className={styles.negative}>1</span> Negative{" "}
-              {selectedTotalAnalysis?.map((data) => data.negative)}
+              {selectedTotalAnalysis?.map((data) => data.negative)}%
             </h3>
           </div>
         </div>

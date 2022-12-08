@@ -22,26 +22,29 @@ function Account() {
 
   const navigate = useNavigate();
 
-  const { register, handleSubmit, watch, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   async function getUser() {
     try {
       const res = await ApiService.Account();
-      console.log("hey");
       setAccountUser(res.data);
     } catch (err) {
       console.log("err");
       if (err.response.status === 401) {
         navigate("/signin");
       }
-      // console.log(err);
       setResponse(ErrorHandler(err));
     }
   }
 
   const baseUrl = "https://api.heed.hng.tech";
   const submitCallback = () => {
-    console.log("heed access token:", localStorage.getItem("heedAccessToken"));
     const config = {
       headers: {
         withCredentials: true,
@@ -65,36 +68,23 @@ function Account() {
           if (res.status === 200) {
             toggleAccountModal();
             reset();
+            getUser();
           }
         })
         .catch((err) => {
           console.log("this is the error:", err.response);
         });
-    // axios
-    //   .post(
-    //     baseUrl + "/agent",
-    //     {
-    //       first_name: first_name,
-    //       last_name: last_name,
-    //       /*location: location,*/
-    //     },
-    //     config
-    //   )
-    //   .then((res) => {
-    //     if (res.status === 200) toggleAccountModal();
-    //   })
-    //   .catch((err) => {
-    //     console.log("this is the error:", err.response);
-    //   });
   };
 
   useEffect(() => {
     getUser();
-  });
+  }, []);
 
   const first_name = watch("first_name");
   const last_name = watch("last_name");
   const location = watch("location");
+
+  const isValid = first_name && last_name && location;
 
   return (
     <>
@@ -118,15 +108,27 @@ function Account() {
               <p>
                 Input the following information to add a new agent to your team
               </p>
-              <form>
+              <form onSubmit={handleSubmit(submitCallback)}>
                 <label htmlFor="first_name">
                   <span>First name</span>
                   <input
                     type="text"
                     id="first_name"
                     name="first_name"
-                    {...register("first_name")}
+                    className={`${
+                      errors.first_name && accountStyles.errorInput
+                    } `}
+                    {...register("first_name", {
+                      required: "First name is required",
+                      pattern: {
+                        value: /^[a-z'-]+$/i,
+                        message: "Please enter a valid first name",
+                      },
+                    })}
                   />
+                  <p className={accountStyles.errorMsg}>
+                    {errors.first_name?.message}
+                  </p>
                 </label>
                 <label htmlFor="last_name">
                   <span>Last Name</span>
@@ -134,8 +136,20 @@ function Account() {
                     type="text"
                     id="last_name"
                     name="last_name"
-                    {...register("last_name")}
+                    className={`${
+                      errors.last_name && accountStyles.errorInput
+                    } `}
+                    {...register("last_name", {
+                      required: "Last name is required",
+                      pattern: {
+                        value: /^[a-z'-]+$/i,
+                        message: "Please enter a valid last name",
+                      },
+                    })}
                   />
+                  <p className={accountStyles.errorMsg}>
+                    {errors.last_name?.message}
+                  </p>
                 </label>
                 <label htmlFor="location">
                   <span>Location</span>
@@ -143,28 +157,40 @@ function Account() {
                     type="text"
                     id="location"
                     name="location"
-                    {...register("location")}
+                    className={`${
+                      errors.location && accountStyles.errorInput
+                    } `}
+                    {...register("location", {
+                      required: "Location is required",
+                      pattern: {
+                        value: /^[a-z '-]+$/i,
+                        message: "Please enter a valid location",
+                      },
+                    })}
                   />
+                  <p className={accountStyles.errorMsg}>
+                    {errors.location?.message}
+                  </p>
                 </label>
-                <div />
                 <div>
-                  <label htmlFor="submit-btn">
-                    <input
-                      type="button"
-                      id="submit-btn"
-                      value="Submit"
-                      name="submit-btn"
-                      onClick={handleSubmit(submitCallback)}
-                    />
+                  <label htmlFor="submit">
+                    <button
+                      type="submit"
+                      id="submit"
+                      disabled={!isValid}
+                      className={`${isValid && accountStyles.submitValid}`}
+                    >
+                      Submit
+                    </button>
                   </label>
-                  <label htmlFor="cancel-btn">
-                    <input
-                      type="button"
-                      id="cancel-btn"
-                      value="Cancel"
-                      name="cancel-btn"
+                  <label htmlFor="reset-btn">
+                    <button
+                      type="reset"
+                      id="reset-btn"
                       onClick={toggleAccountModal}
-                    />
+                    >
+                      Cancel
+                    </button>
                   </label>
                 </div>
               </form>
@@ -186,7 +212,7 @@ function Account() {
               <p>You are using the limited free plan.</p>
               <p>Go unlimited with Pro version</p>
             </div>
-            {/* <h1 className={accountStyles.salutation}>Hi Heeder</h1> */}
+            <h1 className={accountStyles.salutation}>Hi Heedr</h1>
             <div className={accountStyles.main_content__div}>
               <section className={accountStyles.profile__section}>
                 <div className={accountStyles.user_profile__div}>
@@ -209,19 +235,11 @@ function Account() {
                         {accountUser?.first_name + " " + accountUser?.last_name}
                       </h1>
                     )}
-                    {accountUser?.is_admin && <p>Administrator</p>}
+                    <p>Administrator</p>
                   </div>
                 </div>
                 <div className={accountStyles.profile__settings_btn}>
                   <Link to="/settings">Edit Profile</Link>
-                </div>
-              </section>
-              <section className={accountStyles.body__section}>
-                <div className={accountStyles.personal_info__div}>
-                  <p>Personal Information</p>
-                </div>
-                <div className={accountStyles.profile__settings_btn}>
-                  <Link to="/settings">Go to Settings</Link>
                 </div>
               </section>
               <section className={accountStyles.body__section}>
@@ -263,7 +281,6 @@ function Account() {
                       <span>
                         <img src={plus} alt="plus icon" />
                       </span>
-                      &nbsp;
                     </button>
                   </span>
                   <div>
@@ -271,8 +288,8 @@ function Account() {
                       {accountUser?.agents?.map((agent, index) => {
                         return agent ? (
                           <li key={index}>
-                            <p>{agent}</p>
-                            <p>{agent.location}</p>
+                            <p>{agent.first_name + " " + agent.last_name}</p>
+                            <p>{agent.location ? agent.location : "Abuja"}</p>
                           </li>
                         ) : (
                           <p>You have no agents yet.</p>
