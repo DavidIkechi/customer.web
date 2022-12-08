@@ -6,7 +6,6 @@ import Loading from "../../components/Loading";
 import SnackBar from "../../components/SnackBar";
 import ApiService from "../../helpers/axioshelp/apis";
 import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
-import axios from "../ForgetPassword/globalConstant/Api/axios";
 import footerImg from "./assets/signup-img.svg";
 import styles from "./SignIn.module.scss";
 function Signin() {
@@ -77,21 +76,22 @@ function Signin() {
       },
     };
     setIsLoading(true);
-    try {
-      const response = await ApiService.SignIn(formData);
-      setIsLoading(false);
+    await ApiService.SignIn(formData)
+      .then((response) => {
+        setIsLoading(false);
 
-      localStorage.setItem("heedAccessToken", response.data.access_token);
-      localStorage.setItem("heedRefreshToken", response.data.refresh_token);
-      Cookies.set("heedAccessToken", response.data.access_token);
-      localStorage.setItem("heedAccessTokenType", response.data.token_type);
-      localStorage.setItem("currentUserEmail", username);
-      localStorage.setItem("auth", username);
-      navigate("/dashboard");
-    } catch (err) {
-      setIsLoading(false);
-      setResponse(ErrorHandler(err));
-    }
+        localStorage.setItem("heedAccessToken", response.data.access_token);
+        localStorage.setItem("heedRefreshToken", response.data.refresh_token);
+        Cookies.set("heedAccessToken", response.data.access_token);
+        localStorage.setItem("heedAccessTokenType", response.data.token_type);
+        localStorage.setItem("currentUserEmail", username);
+        localStorage.setItem("auth", username);
+        navigate("/dashboard");
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setResponse(ErrorHandler(err));
+      });
   };
 
   return (
