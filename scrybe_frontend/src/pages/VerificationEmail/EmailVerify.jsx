@@ -17,8 +17,8 @@ const EmailVerify = () => {
     try {
       // let token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF5ZW5wcmVAZ21haWwuY29tIn0.LSsSIjvkCHI5tfg2Hj3Q3Ov2MwFrNFdn6W9jC2UXo4Q";
       const response = await axios.get(`verification?token=${token}`);
-      console.log(response);
-      setMessage(response.data);
+      console.log(response.data.data);
+      setMessage(response.data.data.data);
     } catch (err) {
       console.log(err);
     }
