@@ -384,6 +384,10 @@
       }
     }
   }
+
+  @include easyMediaQueries("min-width:1510px") {
+    justify-content: space-evenly;
+  }
 }
   
 .personal_info__div,
