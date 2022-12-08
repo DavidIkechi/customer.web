@@ -54,6 +54,7 @@ import Logout from "./pages/Logout";
 import EmailVerify from "./pages/VerificationEmail/EmailVerify";
 import CheckMail from "./pages/CheckMail";
 import NewSignin from "./pages/NewSignin/NewSignin";
+import NewSignup from "./pages/NewSignup/NewSignup";
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
       <Routes>
         {/* access without sign in */}
         <Route path="/" element={<HomePageRedesign />} />
+        <Route path="/signup" element={<NewSignup />} />
         <Route path="/login" element={<NewSignin />} />
         <Route path="/check-mail" element={<CheckMail />} />
         <Route path="/try" element={<TryForFree />} />

@@ -1,13 +1,13 @@
 import React from "react";
+import styles from "./NewSignup.module.scss";
 import { Link } from "react-router-dom";
-import styles from "./NewSignin.module.scss";
 
 import logo from "./assets/logo.png";
 import google from "./assets/google.png";
 import visible from "./assets/visible.png";
 import hidden from "./assets/hidden.png";
 
-const NewSignin = () => {
+const NewSignup = () => {
   return (
     <div className={styles.signinContainer}>
       <div className={styles.bgcontainer}>
@@ -24,8 +24,8 @@ const NewSignin = () => {
         <img src={logo} alt="heedLogo" />
 
         <div className={styles.greeting}>
-          <h1>Welcome back Heeder</h1>
-          <p>Please enter your details</p>
+          <h1>Create an accout</h1>
+          <p>Lets get you started</p>
         </div>
 
         <a href="#" className={styles.googlego}>
@@ -40,6 +40,12 @@ const NewSignin = () => {
         </div>
 
         <form className={styles.formContainer}>
+          <div className={styles.forms}>
+            <label htmlFor="text">Full name</label>
+            <input type="text" placeholder="Enter your full name" />
+            <p className={styles.err}></p>
+          </div>
+
           <div className={styles.forms}>
             <label htmlFor="email">Email</label>
             <input type="email" placeholder="Enter your company email" />
@@ -57,24 +63,32 @@ const NewSignin = () => {
           </div>
 
           <div className={styles.checkbox}>
-            <div>
-              <input type="checkbox" />
-              <p>Remember me</p>
-            </div>
-            <p>Forgot Password</p>
+            <input type="checkbox" />
+            <p>
+              I have read and agree to
+              <Link to="/terms" className={styles.links}>
+                {" "}
+                Terms of Service{" "}
+              </Link>
+              and
+              <Link to="/privacy" className={styles.links}>
+                {" "}
+                Privacy Policy{" "}
+              </Link>
+            </p>
           </div>
 
           <button>Sign In</button>
         </form>
 
         <div className={styles.linkbottom}>
-          <p>Don't have an account yet?</p>
+          <p>Already have an account ?</p>
 
-          <Link to="/signin">Sign up</Link>
+          <Link to="/login">Sign in</Link>
         </div>
       </div>
     </div>
   );
 };
 
-export default NewSignin;
+export default NewSignup;
