@@ -30,6 +30,17 @@
     line-height: 24px;
     color: #3f3f3f;
   }
+
+  .headTextLink {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: all 150ms ease-in;
+  }
+
+  .headTextLink:hover {
+    scale: 1.3;
+  }
 }
 
 .listItem {
@@ -60,6 +71,14 @@
 
 .listItemActive {
   color: #30c5ff;
+}
+
+.error {
+  flex: 1 1 auto;
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media screen and (max-width: 960px) {
