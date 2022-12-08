@@ -12,7 +12,6 @@ import master from "../assets/Mastercard.png";
 import NavBarFree from "../../../components/NavbarFree";
 import Footer from "../../../components/Footer";
 import axios from "axios";
-import data from "../../History/assets/data";
 
 function Checkout() {
   const [dataArray, setDataArray] = useState({});
@@ -24,7 +23,6 @@ function Checkout() {
   const [total, setTotal] = useState(null);
 
   const token = localStorage.getItem("heedAccessToken");
-  // console.log(token);
 
   const fetchStartupOrder = async () => {
     const headers = {
@@ -33,19 +31,14 @@ function Checkout() {
     };
 
     await axios.get("orders/1", { headers }).then((res) => {
-      // console.log(res);
       setDataArray(res.data);
       setUserEmail(res.data.user_email);
     });
   };
 
-  // console.log(dataArray);
-
   useEffect(() => {
     fetchStartupOrder();
   }, []);
-
-  const getMonthPlan = () => {};
 
   const calculatePrice = () => {
     setMonthToggle(true);
@@ -56,14 +49,6 @@ function Checkout() {
     const orderId = dataArray.id;
     const total = (monthlyPrice - 2) * 12;
 
-    // annual_amount: null;
-    // billing_plan: "17";
-    // id: 1;
-    // monthly_amount: 7500;
-    // next_payment_due_date: "2023-01-07";
-    // order_date: "2022-12-08";
-    // total_amount: 7500;
-    // user_email: "bolaji.oyindamola@gmail.com";
     setMonthlyPrice(monthlyPrice);
     setUserEmail(userEmail);
     setNextPaymentDate(nextPaymentDate);
@@ -171,10 +156,10 @@ function Checkout() {
                 <h2 className={styles.checkoutSectionHeadingH2}>
                   2. Card holder information
                 </h2>
-                <p className={styles.checkoutSectionHeadingP}>
+                {/* <p className={styles.checkoutSectionHeadingP}>
                   Already a Heed User?
                   <span>Login</span>
-                </p>
+                </p> */}
               </div>
               <div className={styles.checkoutFormFields}>
                 <form id="my-form">
@@ -304,7 +289,7 @@ function Checkout() {
                 <p>
                   Next payment is due on{" "}
                   <b className={styles.spandate}>
-                    {nextPaymentDate ? nextPaymentDate : "17th November 2022"}
+                    {monthToggle ? "7th December 2023" : "7th January 2023"}
                   </b>
                 </p>
               </div>

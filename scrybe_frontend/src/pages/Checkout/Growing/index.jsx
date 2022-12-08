@@ -15,29 +15,55 @@ import Footer from "../../../components/Footer";
 import axios from "axios";
 
 function Checkout() {
-  const [dataArray, setDataArray] = useState([]);
+  const [dataArray, setDataArray] = useState({});
+  const [startup, setStartup] = useState([]);
+  const [monthToggle, setMonthToggle] = useState(false);
+  const [monthlyPrice, setMonthlyPrice] = useState(null);
+  const [userEmail, setUserEmail] = useState(null);
+  const [nextPaymentDate, setNextPaymentDate] = useState(null);
+  const [total, setTotal] = useState(null);
 
   const token = localStorage.getItem("heedAccessToken");
-  console.log(token);
 
-  const fetchOrders = async () => {
+  const fetchGrowingOrder = async () => {
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
 
-    await axios.get("orders", { headers }).then((res) => {
-      console.log(res);
+    await axios.get("orders/2", { headers }).then((res) => {
       setDataArray(res.data);
+      setUserEmail(res.data.user_email);
     });
   };
 
-  console.log(dataArray);
-
   useEffect(() => {
-    fetchOrders();
+    fetchGrowingOrder();
   }, []);
 
+  const calculatePrice = () => {
+    setMonthToggle(true);
+    console.log(dataArray);
+    const monthlyPrice = Number(dataArray.billing_plan);
+    const userEmail = dataArray.user_email;
+    const nextPaymentDate = dataArray.next_payment_due_date;
+    const orderId = dataArray.id;
+    const total = (monthlyPrice - 7) * 12;
+
+    setMonthlyPrice(monthlyPrice);
+    setUserEmail(userEmail);
+    setNextPaymentDate(nextPaymentDate);
+    setTotal(total);
+
+    return monthlyPrice, userEmail, nextPaymentDate, orderId, total;
+  };
+
+  const resetMonth = () => {
+    setMonthToggle(false);
+    const total = dataArray.billing_plan;
+    setTotal(total);
+    setNextPaymentDate(null);
+  };
   return (
     <div className={styles.checkout}>
       <NavBarFree />
@@ -58,7 +84,7 @@ function Checkout() {
               </div>
 
               <div className={styles.checkoutCards}>
-                <div className={styles.checkoutMonthly}>
+                <div className={styles.checkoutMonthly} onClick={resetMonth}>
                   <div className={styles.empty}></div>
                   <div
                     className={`${styles.formCardDetails} ${styles.plainCard}`}
@@ -86,7 +112,10 @@ function Checkout() {
                     </div>
                   </div>
                 </div>
-                <div className={styles.checkoutAnnually}>
+                <div
+                  className={styles.checkoutAnnually}
+                  onClick={calculatePrice}
+                >
                   <div className={styles.checkoutTitle}>
                     <div>
                       <img src={tag} alt="sale-tag icon" />
@@ -101,7 +130,7 @@ function Checkout() {
                         <img src={startUpIcon} alt="star icon" />
                       </div>
                       <h3>Growing</h3>
-                      <p>Monthly</p>
+                      <p>Annually</p>
                     </div>
                     <div className={styles.plansPricing}>
                       <div className={styles.plansPricingFigure}>
@@ -127,10 +156,10 @@ function Checkout() {
                 <h2 className={styles.checkoutSectionHeadingH2}>
                   2. Card holder information
                 </h2>
-                <p className={styles.checkoutSectionHeadingP}>
+                {/* <p className={styles.checkoutSectionHeadingP}>
                   Already a Heed User?
                   <span>Login</span>
-                </p>
+                </p> */}
               </div>
               <div className={styles.checkoutFormFields}>
                 <form id="my-form">
@@ -237,7 +266,7 @@ function Checkout() {
               </div>
             </div>
             <div>
-              <h2>Features of Starup plan</h2>
+              <h2>Features of Growing plan</h2>
               <div>
                 <div className={styles.cardTypes}>
                   <img src={visa} alt="visa icon" />
@@ -246,19 +275,28 @@ function Checkout() {
               </div>
             </div>
             <div className={styles.orderSummary}>
-              <h2>Features of Starup plan</h2>
+              <h2>Features of Growing plan</h2>
               <div className={styles.planDetails}>
-                <p>Heed Startup Plan (annual)</p>
-                <p>$276 per year</p>
+                <p>
+                  Heed Growing Plan{monthToggle ? "(annually)" : "(monthly)"}
+                </p>
+                <p>
+                  ${total ? total : "30"} per {monthToggle ? "year" : "month"}
+                </p>
               </div>
               <div className={styles.totalSummary}>
                 <p>Total</p>
-                <p>$276 per year</p>
+                <p>
+                  {" "}
+                  ${total ? total : "30"} per {monthToggle ? "year" : "month"}
+                </p>
               </div>
               <div className={styles.datepayment}>
                 <p>
                   Next payment is due on{" "}
-                  <b className={styles.spandate}>7th November 2022</b>
+                  <b className={styles.spandate}>
+                    {monthToggle ? "7th December 2023" : "7th January 2023"}
+                  </b>
                 </p>
               </div>
             </div>
