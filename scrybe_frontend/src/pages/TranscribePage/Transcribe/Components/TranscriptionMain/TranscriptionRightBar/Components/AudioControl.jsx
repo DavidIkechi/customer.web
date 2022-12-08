@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./AudioControl.module.scss";
+import recordingIcon from "../../../../../assets/recording call.png";
 
 function AudioControl({
   audioElem,
@@ -7,6 +8,8 @@ function AudioControl({
   isPlaying,
   audioDuration,
   currentTime,
+  audioFileSize,
+  audioFilename,
 }) {
   const PlayPause = () => {
     setIsPlaying(!isPlaying);
@@ -36,27 +39,10 @@ function AudioControl({
       <div>
         {/* Audio Info Details */}
         <div className={styles.AudioInfo}>
-          <svg
-            width="52"
-            height="52"
-            viewBox="0 0 52 52"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect width="52" height="52" rx="26" fill="#E6F0FF" />
-            {/* <mask id="mask0_1919_29315" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="14" y="14" width="24" height="24">
-          <rect x="14" y="14" width="24" height="24" fill="#D9D9D9"/>
-          </mask> */}
-            <g mask="url(#mask0_1919_29315)">
-              <path
-                d="M21.5 31.5V20.5H22.5V31.5H21.5ZM25.5 35.5V16.5H26.5V35.5H25.5ZM17.5 27.5V24.5H18.5V27.5H17.5ZM29.5 31.5V20.5H30.5V31.5H29.5ZM33.5 27.5V24.5H34.5V27.5H33.5Z"
-                fill="#002D6B"
-              />
-            </g>
-          </svg>
+          <img src={recordingIcon} alt="recording-icon" />
           <div className={styles.AudioName}>
-            <h2>Recording mp3</h2>
-            <p>4.0 mb</p>
+            <h2>{audioFilename ? `${audioFilename}` : `Recording 01.mp3`}</h2>
+            <p>{`${audioFileSize}`}</p>
           </div>
         </div>
 
@@ -127,10 +113,7 @@ function AudioControl({
         {/* Audio Timer */}
         <div className={styles.AudioTimer}>
           <p>{timeFormatter(currentTime)}</p>
-          <div className={styles.AudioSlider}>
-            <div className={styles.AudioFull} />
-            <div className={styles.AudioIndicator} />
-          </div>
+          <input type="range" min={0} max={audioDuration} value={currentTime} />
           <p>{timeFormatter(audioDuration)}</p>
         </div>
       </div>

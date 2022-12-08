@@ -1,8 +1,8 @@
 # models for database [SQLAlchemy]
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Enum, Float, JSON, TEXT
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Enum, Float, JSON, TEXT, Date
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from datetime import datetime
+from datetime import datetime, date
 
 from sqlalchemy_utils import URLType
 
@@ -49,6 +49,7 @@ class Agent(Base):
     id = Column(Integer, primary_key=True, index=True)
     first_name = Column(String(255), index=True)
     last_name = Column(String(255), index=True)
+    location = Column(String(255), index=True)
     company_id = Column(Integer, ForeignKey("companies.id"))
     aud_id = Column(Integer, index=True)
 
@@ -57,7 +58,6 @@ class Agent(Base):
 
 class Audio(Base):
     __tablename__ = "audios"
-    job_id = Column(String(255), index=True)
     id = Column(Integer, primary_key=True, index=True)
     audio_path = Column(TEXT)
     filename = Column(TEXT,  nullable = True)
@@ -123,7 +123,7 @@ class Analysis(Base):
 
 class UserProfile(Base):
     __tablename__ = "accounts"
-
+    
     id = Column(Integer, ForeignKey("users.id"), nullable=True)
     phone_number = Column(String(255))
     company_address = Column(TEXT)
@@ -141,3 +141,15 @@ class FreeTrial(Base):
     filename = Column(TEXT)
     size = Column(TEXT)
     transcript_status = Column(TEXT)
+
+class Order(Base):
+    __tablename__ = "orders"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_email = Column(String(255), ForeignKey("users.email"), nullable=True)
+    billing_plan = Column(String(255), index=True)
+    monthly_amount = Column(Float, index=True)
+    annual_amount = Column(Float, index=True)
+    total_amount = Column(Float, index=True)
+    order_date = Column(Date, index=True, default=date.today())
+    next_payment_due_date = Column(Date, index=True)

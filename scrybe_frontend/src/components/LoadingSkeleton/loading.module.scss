@@ -1,0 +1,183 @@
+.roe {
+  margin-top: 30px;
+  opacity: 0.5;
+  width: 100%;
+  .col {
+    width: 100%;
+  }
+  .cardtop {
+    padding: 10px;
+    .topcard {
+      display: flex;
+    }
+    .chipimg {
+      width: 45px;
+      cursor: progress;
+      height: 45px;
+      border-radius: 50%;
+      background-color: gray;
+      animation: skeleton-loading 1s linear infinite alternate;
+      display: flex;
+    }
+    .top {
+      padding-left: 10px;
+
+      .name {
+        padding: 0 5px;
+        width: 200px;
+        cursor: progress;
+        height: 15px;
+        background-color: gray;
+        border-radius: 20px;
+        animation: skeleton-loading 1s linear infinite alternate;
+      }
+      .time {
+        margin-top: 5px;
+        width: 150px;
+        cursor: progress;
+        height: 15px;
+        background-color: gray;
+        border-radius: 20px;
+        animation: skeleton-loading 1s linear infinite alternate;
+      }
+    }
+  }
+
+  .card-content {
+    .longest {
+      margin: 2rem;
+      width: 450px;
+      cursor: progress;
+      height: 20px;
+      background-color: gray;
+      border-radius: 20px;
+      animation: skeleton-loading 1s linear infinite alternate;
+    }
+    .longer {
+      margin: 2rem;
+      width: 350px;
+      cursor: progress;
+      height: 20px;
+      background-color: gray;
+      border-radius: 20px;
+      animation: skeleton-loading 1s linear infinite alternate;
+    }
+
+    .long {
+      margin: 2rem;
+      cursor: progress;
+      width: 500px;
+      height: 20px;
+      background-color: gray;
+      border-radius: 20px;
+      animation: skeleton-loading 1s linear infinite alternate;
+    }
+    .short {
+      margin: 2rem;
+      width: 250px;
+      height: 20px;
+      cursor: progress;
+
+      background-color: gray;
+      border-radius: 20px;
+      animation: skeleton-loading 1s linear infinite alternate;
+    }
+    .image {
+      margin: 2rem 1rem 0;
+      width: 500px;
+      height: 250px;
+      cursor: progress;
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgb(202, 202, 202);
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        left: -150px;
+        top: 0;
+        height: 100%;
+        width: 150px;
+        background: linear-gradient(
+          to right,
+          transparent 0%,
+          #fcf8f8 50%,
+          transparent 100%
+        );
+        animation: skeleton-image-loading 1s cubic-bezier(0.4, 0, 0.2, 1)
+          infinite alternate;
+      }
+    }
+  }
+}
+// @media screen and (max-width: 500px) {
+// 	.card-content {
+// 		.longest {
+// 			width: 360px !important;
+// 		}
+// 		.longer {
+// 			width: 320px !important;
+// 		}
+// 		.long {
+// 			width: 370px !important;
+// 		}
+// 		.image {
+// 			width: 380px !important;
+// 		}
+// 	}
+// }
+
+@media screen and (min-width: 200px) and (max-width: 560px) {
+  .card-content {
+    .longest {
+      width: 280px !important;
+    }
+    .longer {
+      width: 300px !important;
+    }
+    .long {
+      width: 290px !important;
+    }
+    .image {
+      width: 330px !important;
+    }
+  }
+}
+
+@media screen and (min-width: 560px) and (max-width: 900px) {
+  .card-content {
+    .longest {
+      width: 580px !important;
+    }
+    .longer {
+      width: 500px !important;
+    }
+    .long {
+      width: 560px !important;
+    }
+    .image {
+      width: 650px !important;
+      height: 400px !important;
+    }
+  }
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsl(200, 20%, 63%);
+  }
+
+  100% {
+    background-color: hsl(200, 20%, 93%);
+  }
+}
+
+@keyframes skeleton-image-loading {
+  from {
+    left: -150px;
+  }
+  to {
+    left: 100%;
+  }
+}

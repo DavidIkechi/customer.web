@@ -1,24 +1,24 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-const baseURL = "https://heedapi.herokuapp.com";
-const useMockAuthAndReadSentiment = (id) => {
+const baseURL = "https://api.heed.hng.tech";
+
+const useReadSentiment = (id) => {
   const [sentimentData, setSentimentData] = useState({});
   useEffect(() => {
-    const data =
-      "grant_type=&username=tochibedford.work%40gmail.com&password=12345678&scope=&client_id=&client_secret=";
-    axios.post(baseURL + "/login", data).then((res) => {
-      const headers = {
-        Authorization: `Bearer ${res.data.access_token}`,
-      };
-      axios
-        .get(baseURL + `/audios/${id}/sentiment`, { headers })
-        .then((newRes) => {
-          setSentimentData(newRes.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    });
+    const config = {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
+      },
+    };
+    axios
+      .get(baseURL + `/transcription/${id}`, config)
+      .then((newRes) => {
+        setSentimentData(newRes.data.sentiment_result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return sentimentData;
@@ -49,4 +49,4 @@ const useMockEnd = (id) => {
   return sentimentData;
 };
 
-export { useMockAuthAndReadSentiment, useMockEnd };
+export { useReadSentiment, useMockEnd };

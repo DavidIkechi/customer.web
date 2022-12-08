@@ -5,7 +5,7 @@ import styles from "./style.module.scss";
 import FaqComponent from "./FaqComponent";
 import { Hero } from "./assets";
 import Footer from "../../components/Footer";
-import NavBar from "../../components/navBar";
+import NavBar from "../../components/NavbarFree";
 function FAQs() {
   React.useEffect(() => {
     // 👇️ scroll to top on page load

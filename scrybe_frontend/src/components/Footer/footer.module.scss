@@ -3,6 +3,12 @@
         background-color: #031025;
         color: white !important;
         padding-block: pix-rem(70);
+        display: flex;
+        justify-content: center;
+        
+        .allWidth{
+          max-width: 1440px;
+        }
         h4 {
                 color: white;
                 font-size: pix-rem(20) !important ;
@@ -13,7 +19,7 @@
 
   .footerContent {
     display: flex;
-    padding: 10vh 5% 3vh;
+    padding: 10vh 0% 3vh;
   }
   .footerLeft {
     width: 30%;
@@ -94,7 +100,7 @@
     }
   }
   hr{
-        margin: 3vh 5% 2vh;
+        margin: 3vh 0% 2vh;
         opacity: 0.4;
   }
   .footer__bottom{
@@ -359,7 +365,7 @@
                     width: 25%;
               
                     img {
-                      width: 80%;
+                      width: 100%;
                       margin-right: 15%;
                     }
                   }
@@ -470,7 +476,7 @@
                     width: 35%;
               
                     img {
-                      width: 60%;
+                      width: 80%;
                       margin-right: 15%;
                     }
                   }

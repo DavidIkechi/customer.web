@@ -5,7 +5,9 @@ import models, schema
 from random import randint
 from passlib.context import CryptContext
 from fastapi import HTTPException 
-import shutil
+import cloudinary
+import cloudinary.uploader
+from datetime import datetime
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -68,40 +70,43 @@ def update_user_profile(db:Session, profile:schema.UserProfileUpdate, user_id:in
     if user_profile.id != user_id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , 
                                     detail="Not authorized to perform requested action")
+    user = db.query(models.User).filter(models.User.id == user_profile.id).first()
+    user.firstname = profile.first_name
+    user.last_name = profile.last_name
     user_profile.phone_number = profile.phone_number
     user_profile.company_address = profile.company_address
-    user_profile.company_logo_url = profile.company_logo_url
     db.commit()
     db.refresh(user_profile)
     return user_profile
 
+
 def upload_user_image(db:Session , user_id:int, image_file:UploadFile):
     user_profile = db.query(models.UserProfile).filter(models.UserProfile.id == user_id).first()
-    file_location = f"media/{image_file.filename}"
-    with open(file_location ,"wb") as profile_img:
-        shutil.copyfileobj(image_file.file, profile_img)
-    image_url = str(f"media/{image_file.filename}")
-    user_profile.company_logo_url = image_url
+    try:
+        image_response = cloudinary.uploader.upload(image_file.file)
+        image_url = image_response.get("secure_url") 
+        user_profile.company_logo_url = image_url        
+    except Exception:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="There was an error uploading the file")
     db.commit()
     db.refresh(user_profile)
     return {"image_url": image_url}
 
     
 def delete_user(db: Session, user_id: int, current_user):
-    user = db.query(models.User).filter(models.User.id == user_id).first()
-    if user is None:
+    deleted_user = db.query(models.User).filter(models.User.id == user_id).first()
+    if deleted_user is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"The user with id {user_id} does not exist")
     if user_id != current_user.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , 
                                 detail="Not authorized to perform requested action")
         
-    user_profile= db.query(models.UserProfile).filter(models.UserProfile.id == user.id).first()
-    db.delete(user)
+    user_profile= db.query(models.UserProfile).filter(models.UserProfile.id == deleted_user.id).first()
+    db.delete(deleted_user)
     db.delete(user_profile)
     db.commit()
-    return Response(status_code=status.HTTP_204_NO_CONTENT)
-
+    return {"message":f"User {deleted_user.first_name} with id:{deleted_user.id} has been deleted"}
 
 def get_audio(db: Session, audio_id: int):
     return db.query(models.Audio).filter(models.Audio.id == audio_id).first()
@@ -123,12 +128,26 @@ def get_company(db: Session, company_id: int):
 
 def create_audio(db: Session, audio: schema.Audio, agent_id: int):
     db_audio = models.Audio(audio_path=audio.audio_path, size=audio.size, duration=audio.duration, transcript=audio.transcript, timestamp=audio.timestamp, positivity_score=audio.positivity_score,
-    negativity_score=audio.negativity_score, neutrality_score=audio.neutrality_score, overall_sentiment=audio.overall_sentiment, most_positive_sentences =audio.most_positive_sentences, most_negative_sentences = audio.most_negative_sentences, agent_id=agent_id, agent_firstname = db_agent.first_name, agent_lastname = db_agent.last_name)
+    negativity_score=audio.negativity_score, neutrality_score=audio.neutrality_score, overall_sentiment=audio.overall_sentiment, most_positive_sentences =audio.most_positive_sentences, most_negative_sentences = audio.most_negative_sentences, agent_id=agent_id, agent_firstname = db_audio.agent_firstname, agent_lastname = db_audio.agent_lastname)
+
 
     db.add(db_audio)
     db.commit()
     db.refresh(db_audio)
     return db_audio
+
+def get_jobs_uploaded(db:Session, current_user, skip: int , limit: int ):
+    job_list = []
+    all_audios = db.query(models.Audio).filter(models.Audio.user_id == current_user.id).offset(skip).limit(limit).all()
+    for audio in all_audios:
+        new_data = {"transcript_id" :audio.job_id,
+                    "job_status":audio.job.job_status,
+                    "agent_name":f"{audio.agent_firstname} {audio.agent_lastname}",
+                    "audio_url" :audio.audio_path
+                    }
+        
+        job_list.append(new_data)
+    return job_list
 
 def get_job(db: Session, job_id: int):
     return db.query(models.Job).filter(models.Job.id == job_id).first()
@@ -153,7 +172,7 @@ def get_agents_by_company_id(db: Session, company_id: int):
     return db.query(models.Agent).filter(models.Agent.company_id == company_id).all()
 
 def create_agent(db: Session, agent: schema.AgentCreate, company_id: int):
-    db_agent = models.Agent(first_name=agent.first_name, last_name=agent.last_name, company_id=company_id)
+    db_agent = models.Agent(first_name=agent.first_name, last_name=agent.last_name, location=agent.location, company_id=company_id)
     db.add(db_agent)
     db.commit()
     db.refresh(db_agent)
@@ -186,7 +205,7 @@ def get_analysis(db: Session, analysis_id = int):
 def create_user_profile(db: Session, company_id: int, user_email: str):
     user = get_user_by_email(db, user_email)
     user_id = user.id
-    db_profile = models.UserProfile(id=user_id, company_id = company_id)
+    db_profile = models.UserProfile(id=user_id, company_id = company_id, email=user_email)
     db.add(db_profile)
     db.commit()
     db.refresh(db_profile)
@@ -198,7 +217,7 @@ def get_user_profile(db: Session, user_id: int):
     company = db.query(models.Company).filter(models.Company.id ==user_profile.company_id).first()
     user = db.query(models.User).filter(models.User.id == user_id).first()
     for agent in db.query(models.Agent).filter(models.Agent.company_id == user_profile.company_id).all():
-        agents.append(agent.first_name + " " + agent.last_name)
+        agents.append({"first_name": agent.first_name, "last_name": agent.last_name, "location": agent.location})
 
     return {
         "first_name": user.first_name,
@@ -207,7 +226,7 @@ def get_user_profile(db: Session, user_id: int):
         "agents": agents,
         "phone_number": user_profile.phone_number,
         "email": user.email,
-        "company_address": company.address,
+        "company_address": user_profile.company_address,
         "company_logo_url": user_profile.company_logo_url,
         "api_key": user_profile.api_key
     }
@@ -225,5 +244,84 @@ def reset_password(db: Session, password: str, user: models.User):
     db.refresh(user)
     return user
 
+def get_order_summary_by_email(db: Session, user_email: str):
+    user_email = user_email
+    order_summary = db.query(models.Order).filter(models.Order.user_email==user_email).all()
+    return order_summary
 
+def get_order_summary_by_id(db: Session, order_id: str):
+    order_id = order_id
+    order_summary = db.query(models.Order).filter(models.Order.id==order_id).first()
+    return order_summary
 
+def get_leaderboard(db: Session, user_id: int):
+        results = db.query(models.Audio).filter(models.Audio.user_id == user_id).all()
+        leaderboard = []
+        
+        agents = dict()
+        unique_ids = []
+        week = datetime.now().isocalendar().week
+        month = datetime.now().month
+
+        for i in results:
+            unique_id = i.agent_id
+            unique_ids.append(unique_id)
+
+        for i in unique_ids:
+            average_scores = []
+            per_agent = {"week": {"firstname": "", "lastname": "", "agent_id": "", "total_calls": 0, "positive_score": 0, "negative_score": 0, "neutral_score":0,
+            "average_score": 0},
+            "month": {"firstname": "", "lastname": "", "agent_id": "", "total_calls": 0, "positive_score": 0, "negative_score": 0, "neutral_score":0,
+            "average_score": 0}
+             }
+            for j in results:
+                if j.agent_id == i:
+                    if j.timestamp.isocalendar().week == week:
+                        per_agent["week"]["firstname"] = j.agent_firstname
+                        per_agent["week"]["lastname"] = j.agent_lastname
+                        per_agent["week"]["agent_id"] = j.agent_id
+                        per_agent["week"]["total_calls"] += 1
+                        if j.overall_sentiment == "Positive":
+                            per_agent["week"]["positive_score"] += 1
+                        if j.overall_sentiment == "Negative":
+                            per_agent["week"]["negative_score"] += 1
+                        if j.overall_sentiment == "Neutral":
+                            per_agent["week"]["neutral_score"] += 1
+                        average_scores.append(j.average_score)
+                        per_agent["week"]["average_score"] = round(sum(average_scores)/len(average_scores), 2)
+
+                    if j.timestamp.month == month:
+                        per_agent["month"]["firstname"] = j.agent_firstname
+                        per_agent["month"]["lastname"] = j.agent_lastname
+                        per_agent["month"]["agent_id"] = j.agent_id
+                        per_agent["month"]["total_calls"] += 1
+                        if j.overall_sentiment == "Positive":
+                            per_agent["month"]["positive_score"] += 1
+                        if j.overall_sentiment == "Negative":
+                            per_agent["month"]["negative_score"] += 1
+                        if j.overall_sentiment == "Neutral":
+                            per_agent["month"]["neutral_score"] += 1
+                        average_scores.append(j.average_score)
+                        per_agent["month"]["average_score"] = round(sum(average_scores)/len(average_scores), 2) 
+            agents[i] = per_agent
+            
+        leaderboard_week = []
+        leaderboard_month = []
+        for i in agents.values():
+            leaderboard_week.append(i["week"])
+            leaderboard_month.append(i["month"])
+        leaderboard_week = sorted(leaderboard_week, key=lambda k: k['average_score'], reverse=True)
+        leaderboard_month = sorted(leaderboard_month, key=lambda k: k['average_score'], reverse=True)
+
+        for i in leaderboard_week:
+            i['rank'] = leaderboard_week.index(i) + 1
+            i["str_agent_id"] = "AG" + str(1000000 + i['agent_id']) + "DE"
+
+        for i in leaderboard_month:
+            i['rank'] = leaderboard_month.index(i) + 1
+            i["str_agent_id"] = "AG" + str(1000000 + i['agent_id']) + "DE"
+        
+        leaderboard.append(leaderboard_week)
+        leaderboard.append(leaderboard_month)
+
+        return leaderboard

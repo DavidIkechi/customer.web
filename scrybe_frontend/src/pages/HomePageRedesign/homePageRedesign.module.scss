@@ -24,12 +24,8 @@ button {
 }
 
 .first__section {
-  background-image: url(./assets/background__mobile.png);
-  height: 130vh;
-  width: 100%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
+    background-color: #f5f8ff;
+    padding: 3.5em 0em;
 
   .hero__flex {
     display: flex;
@@ -37,8 +33,6 @@ button {
   }
 
   .hero__text {
-    padding-top: 1em;
-    margin-top: 2em;
     text-align: center;
   }
 
@@ -87,7 +81,6 @@ button {
 
   .hero__bottom .hero__buttonOne, .hero__bottom .hero__buttonTwo {
     padding: 1em 2em;
-    // padding: .6em 1.8em;
     font-size: .8rem;
     font-weight: 400;
     font-style: normal;
@@ -97,21 +90,41 @@ button {
     border: none;
     border-radius: .3rem;
     width: 100%;
+    cursor: pointer;
+  }
 
+  .hero__bottom .hero__buttonOne {
+    background-color: #006CFF;
+    color: #FFFFFF;
+  }
+
+  .hero__bottom .hero__buttonOne:hover {
+    border: 1px solid #006CFF;
+    background-color: #FFFFFF;
+    color: #006CFF;
+  }
+
+  .hero__bottom .hero__buttonTwo {
+    border: 1px solid #006CFF;
+    background-color: #FFFFFF;
+    color: #006CFF;
+  }
+
+  .hero__bottom .hero__buttonTwo:hover {
+    background-color: #006CFF;
+    color: #FFFFFF;
   }
 
   .hero__bottom .hero__image {
     margin-top: 2.5em;
   }
 
-//   border-bottom: 1px solid #B0CAD9;
-
 }
 
 
 // Styling of the second section
 .second__section {
-    margin-top: 3em;
+    margin-top: 3.5em;
 
     .second__top {
         text-align: center;
@@ -173,7 +186,7 @@ button {
 }
 
 .third__section {
-    margin-top: 5em;
+    margin-top: 3.5em;
 
     .third__top {
         text-align: center;
@@ -191,15 +204,17 @@ button {
     .third__bottom .third__row {
         display: flex;
         flex-direction: column-reverse;
-        margin-top: 2.3em;
+        margin-top: 2.5em;
     }
 
     .third__bottom .third__col {
-        margin-top: 2.3em;
+        display: flex;
+        flex-direction: column;
+        margin-top: 2.5em;
     }
 
     .third__bottom .third__text {
-        margin-top: 1em;
+        margin-top: 1.3em;
     }
 
     .third__bottom .mobile__text {
@@ -232,7 +247,7 @@ button {
 
 
 .fourth__section {
-    margin-top: 6em;
+    margin-top: 3.5em;
 
     .fourth__heading .fourth__head {
         font-size: 2.5rem;
@@ -289,14 +304,9 @@ button {
 
 
 .fifth__section {
-    background-image: url(./assets/background__mobile2.png);
-    height: 100vh;
-    width: 100%;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-    margin-top: 5em;
-    padding-top: 6em;
+    background-color: #f5f8ff;
+    margin-top: 3.5em;
+    padding: 3.5em 0em;
 
     .top__fifth .fifth__heading {
         text-align: center;
@@ -343,6 +353,13 @@ button {
         outline: none;
         border: none;
         border-radius: .25rem;
+        cursor: pointer;
+    }
+
+    .bottom__fifth .fifth__action:hover {
+        border: 1px solid #006CFF;
+        background-color: #FFFFFF;
+        color: #006CFF;
     }
 }
 
@@ -380,18 +397,7 @@ button {
 
     //Styling of the first section
 
-    // .desktop__first {
-    //     background-image: url(./assets/background__grad.png);
-    //     height: 50vh;
-    //     width: 100%;
-    //     background-repeat: no-repeat;
-    //     background-size: cover;
-    //     // position: relative;
-    // }
-
     .first__section {
-        // background-image: none;
-        height: 160vh;
 
         .hero__bottom .hero__action {
             display: flex;
@@ -428,7 +434,6 @@ button {
     .second__section {
 
         margin-top: 3em;
-        // height: 100vh;
 
         .second__top .second__head {
             font-size: 2.5rem;
@@ -481,9 +486,10 @@ button {
 
         .third__bottom .third__col {
             display: flex;
-            margin-top: 4em;
+            flex-direction: row;
             justify-content: space-between;
             align-items: center;
+            margin-top: 4em;
         }
 
         .third__bottom .third__text {
@@ -500,11 +506,11 @@ button {
         }
 
         .third__bottom .third__subtext {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
         }
 
         .third__bottom .third__lists .each__list {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
         }
     }
 
@@ -561,8 +567,17 @@ button {
     }
 }
 
-@media (min-width: 850px), (min-width: 1300px) {
-    .first__section {
-        height: 180vh;
-    }    
+
+// @media (min-width: 1526px), (min-width: 4000px) {
+//     .sect__container {
+//         width: 84%;
+//         max-width: 4000px;
+//         margin: 0 auto;
+//     }
+// }
+
+@media only screen and (min-width: 1515px) {
+    .sect__container {
+        padding: 0 2.5em;
+    }
 }

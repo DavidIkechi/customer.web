@@ -5,33 +5,61 @@ import axios from "axios";
 // import { Link } from "react-router-dom";
 import styles from "./try_state_1.module.scss";
 import RecordingLogo from "../../assets/Recording-logo.png";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+// import { object } from "prop-types";
 
 export default function TryState1() {
-  const [files, setFiles] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [transcribeId, setTranscribeId] = useState("");
+  // const [hasError, setError] = useState(true);
+  const [display, setDisplay] = useState(false);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
   const inputRef = useRef();
 
+  const handleFileSelect = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  // console.log(selectedFile);
   const handleDragOver = (event) => {
     event.preventDefault();
   };
   const handleDrop = (event) => {
     event.preventDefault();
-    console.log(event.dataTransfer.files);
-    setFiles(event.dataTransfer.files);
+    setSelectedFile(handleFileSelect);
   };
+  const navigate = useNavigate();
 
-  const uploadFiles = () => {
-    axios
-      .post("https://api.heed.hng.tech/tryForFree", files)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
+  useEffect(() => {
+    if (uploadSuccess) {
+      setUploadSuccess(false);
+      navigate(`/try-results/${transcribeId}`);
+    }
+  }, [uploadSuccess, transcribeId, navigate]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    try {
+      const response = await axios({
+        method: "post",
+        url: "https://api.heed.hng.tech/tryForFree",
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
       });
-    // console.log("the name");
+      // console.log(response.data);
+      setUploadSuccess(true);
+      setTranscribeId(response.data.transcript_id);
+    } catch (error) {
+      // setError(true);
+      console.log(error);
+      setUploadSuccess(false);
+    }
   };
 
-  if (files)
+  if (selectedFile)
     return (
       <div className={styles.recordingSection}>
         <div
@@ -44,9 +72,7 @@ export default function TryState1() {
               <img src={RecordingLogo} alt="some" />
             </div>
             <div>
-              {Array.from(files).map((file, idx) => (
-                <h4 key={idx}>{file.name}</h4>
-              ))}
+              <h4>{selectedFile.name}</h4>
             </div>
             <div className={styles.Or}>
               <div className={styles.orLeft} />
@@ -56,36 +82,50 @@ export default function TryState1() {
               <div className={styles.orRight} />
             </div>
 
-            <input
-              type="file"
-              onChange={(event) => {
-                setFiles(event.target.files);
-                console.log(event.target.files);
-              }}
-              name="file"
-              hidden
-              ref={inputRef}
-            />
+            <form onSubmit={handleSubmit}>
+              <input
+                type="file"
+                name="file"
+                hidden
+                ref={inputRef}
+                onChange={handleFileSelect}
+              />
+              <p
+                className={styles.Upload}
+                onClick={() => inputRef.current.click()}
+              >
+                Select another file from your computer
+              </p>
+              <input
+                onClick={() => {
+                  setDisplay(true);
+                  // console.log("nice");
+                }}
+                type="submit"
+                className={styles.selectButton2}
+                value="Transcribe"
+              />
+            </form>
 
-            <p
-              className={styles.Upload}
-              onClick={() => inputRef.current.click()}
+            <div
+              className={
+                display ? `${styles.div} ${styles.active}` : `${styles.div}`
+              }
             >
-              Select another file from your computer
-            </p>
-            {/* 
-              <Link to="/try-processing">
-              </Link> */}
-            <button onClick={uploadFiles}>upload</button>
-            <button
-              onClick={uploadFiles}
-              className={styles.selectButton2}
-              type="submit"
+              <p>
+                Callback URL: https://heed.hng.tech/try-results/{transcribeId}
+              </p>
+            </div>
+            {/* <div
+              className={
+                hasError ? `${styles.div} ${styles.active} ` : `${styles.div}`
+              }
             >
-              Transcribe
-            </button>
+              <p>Server is down</p>
+            </div> */}
           </div>
         </div>
+
         <div className={styles.tryNote}>
           <p>Please note;</p>
           <ul>
@@ -113,7 +153,7 @@ export default function TryState1() {
 
   return (
     <div className={styles.recordingSection}>
-      {!files && (
+      {!selectedFile && (
         <div
           className={styles.recordingDrag}
           onDragOver={handleDragOver}
@@ -133,26 +173,26 @@ export default function TryState1() {
               </div>
               <div className={styles.orRight} />
             </div>
-            <input
-              type="file"
-              onChange={(event) => {
-                setFiles(event.target.files);
-                console.log(event.target.files);
-              }}
-              hidden
-              ref={inputRef}
-            />
-
-            <p
-              className={styles.Upload}
-              onClick={() => inputRef.current.click()}
-            >
-              Browse from your computer
-            </p>
-
-            <button className={styles.selectButton1} type="button">
-              Transcribe
-            </button>
+            <form onSubmit={handleSubmit}>
+              <input
+                type="file"
+                name="file"
+                hidden
+                ref={inputRef}
+                onChange={handleFileSelect}
+              />
+              <p
+                className={styles.Upload}
+                onClick={() => inputRef.current.click()}
+              >
+                Browse from your computer
+              </p>
+              <input
+                type="submit"
+                className={styles.selectButton1}
+                value="Transcribe"
+              />
+            </form>
           </div>
         </div>
       )}

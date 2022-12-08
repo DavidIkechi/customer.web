@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Pricing.module.scss";
 import heroImage from "./assets/heroimage.svg";
-import curves from "./assets/Vector 13.webp";
+import curves from "./assets/Sectionbottom.png";
 import checkIcon from "./assets/check.svg";
 import BenefitsImage from "./assets/benefitsimage.svg";
 import YearPlans from "./components/YearPlan/yearPlans";
@@ -19,20 +19,23 @@ function Pricing() {
   const plansRef = useRef();
   const [showMonth, setshowMonth] = useState(true);
   const [showYear, setshowYear] = useState(false);
-  const handleChange = () => {
-    plansRef.current.classList.add("active");
-  };
+  const [listmonthActive, setlistmonthActive] = useState(true);
+  const [listyearActive, setlistyearActive] = useState(false);
+
   const toggleYear = () => {
     if (showMonth) {
       setshowMonth(false);
       setshowYear(true);
+      setlistmonthActive(false);
+      setlistyearActive(true);
     }
   };
   const toggleMonth = () => {
-    plansRef.current.classList.toggle("active");
     if (!showMonth) {
       setshowMonth(true);
       setshowYear(false);
+      setlistmonthActive(true);
+      setlistyearActive(false);
     } else {
       showMonth();
     }
@@ -40,8 +43,7 @@ function Pricing() {
 
   return (
     <>
-      {" "}
-      <NavBarFree />;
+      <NavBarFree />
       <div className={styles.pricing}>
         <div className={styles.hero}>
           <div className={styles.container}>
@@ -69,17 +71,24 @@ function Pricing() {
           </h2>
           <div className={styles.CTAs}>
             <button
-              className={`${styles.ctaMonth} ${styles.active}`}
+              className={`${styles.ctaMonth} ${
+                listmonthActive
+                  ? styles.listItemActive
+                  : styles.listItemInActiveh4
+              }`}
               onClick={() => {
                 toggleMonth();
-                handleChange();
               }}
             >
               Monthly
             </button>
             <button
               ref={plansRef}
-              className={styles.ctaYear}
+              className={`${styles.ctaYear} ${
+                listyearActive
+                  ? styles.listItemActive
+                  : styles.listItemInActiveh4
+              }`}
               onClick={toggleYear}
             >
               Yearly
@@ -272,7 +281,7 @@ function Pricing() {
           </div>
         </div>
       </div>
-      <Footer />;
+      <Footer />
     </>
   );
 }

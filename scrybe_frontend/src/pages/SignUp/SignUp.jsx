@@ -1,14 +1,13 @@
-import React from "react";
 import axios from "axios";
-// import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React from "react";
+import { useCallback, useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import Loading from "../../components/Loading";
+import ApiService from "../../helpers/axioshelp/apis";
 import footerImg from "./assets/signup-img.svg";
 import styles from "./SignUp.module.scss";
-import { Navigate } from "react-router-dom";
-import { useCallback } from "react";
-import { useEffect } from "react";
-import Cookies from "js-cookie";
+import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
+import SnackBar from "../../components/SnackBar";
 
 function Signup() {
   const [first_name, setFirstName] = useState("");
@@ -16,14 +15,16 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [company_name, setCompany] = useState("");
   const [password, setPassword] = useState("");
-  const [navigate, setNavigate] = useState(false);
   const [emailStateTest, setEmailStateTest] = useState(false);
   const [passStateTest, setPassStateTest] = useState(false);
   const [nameStateTest, setNameStateTest] = useState(false);
   const [lastStateTest, setLastStateTest] = useState(false);
   const [companyStateTest, setCompanyStateTest] = useState(false);
   const [btn, setBtn] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [response, setResponse] = useState({ type: "", message: "" });
 
+  const navigate = useNavigate();
   const passwordTest = new RegExp(/^["0-9a-zA-Z!@#$&()\\-`.+,/"]{8,}$/),
     firstNameTest = new RegExp(/^[a-zA-Z]{2,}$/),
     lastNameTest = new RegExp(/^[a-zA-Z]{2,}$/),
@@ -36,7 +37,6 @@ function Signup() {
     } else {
       func(false);
     }
-    console.log(nameStateTest);
   };
 
   const handleUserFirstName = (e) => {
@@ -104,21 +104,17 @@ function Signup() {
       company_name: company_name,
       password: password,
     };
-    console.group(data);
-    await axios
-      .post("create_users", data)
-      .then((response) => {
-        console.log(response);
-        setNavigate(true);
-        Cookies.set("heedAccessToken", response?.data?.access_token);
-        localStorage.setItem("auth", email);
-      })
-      .catch((error) => {});
-  };
+    setIsLoading(true);
+    try {
+      await ApiService.SignUp(data);
+      setIsLoading(false);
 
-  if (navigate) {
-    return <Navigate to="/verify-signup" />;
-  }
+      navigate("/verify-signup");
+    } catch (error) {
+      setIsLoading(false);
+      setResponse(ErrorHandler(error));
+    }
+  };
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
@@ -128,6 +124,7 @@ function Signup() {
 
   return (
     <>
+      <SnackBar response={response} setResponse={setResponse} />
       <main className={styles.signUpWrapper}>
         <div className={styles.signup}>
           <div className={styles.first}>
@@ -290,13 +287,18 @@ function Signup() {
                 )}
                 {/* <p className={styles.errorMsg}>{errors.password?.message}</p> */}
               </div>
-
-              <input
-                type="submit"
-                value="Create an account"
-                className={`${styles.submitValid}`}
-                disabled={btn}
-              />
+              {isLoading ? (
+                <Loading />
+              ) : (
+                <>
+                  <input
+                    type="submit"
+                    value="Create an account"
+                    className={`${styles.submitValid}`}
+                    disabled={btn}
+                  />
+                </>
+              )}
               <div className={`${styles.accept} ${styles.up}`}>
                 <input type="checkbox" name="" id="" />
                 <span>

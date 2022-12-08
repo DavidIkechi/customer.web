@@ -1,11 +1,6 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
-
-// export const setToken = (token) => {
-//   localStorage.setItem("von", token); // make up your own token
-// };
-
 export const fetchToken = () => {
-  return localStorage.getItem("accessToken");
+  return localStorage.getItem("heedAccessToken");
 };
 
 export function RequireToken() {

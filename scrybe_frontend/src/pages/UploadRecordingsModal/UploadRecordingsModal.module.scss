@@ -86,7 +86,7 @@
 
 .name-input input {
   font-size: .85rem;
-  color: #a9a9a9;
+  color: #313131;
   font-weight: 300;
   padding: 0.4em;
   outline: none;
@@ -137,7 +137,7 @@
   justify-content: center;
   color: #706F6F;
   align-items: center;
-  margin: 0.7em;
+  margin: 0.7em auto;
 }
 
 .left-or {
@@ -168,6 +168,12 @@
   border: none;
   margin-top: 1em;
   margin-bottom: .5em;
+}
+
+.primary-button:hover {
+  color: #006CFF;
+  background-color: #ffffFF;
+  border: 1px solid #006CFF;
 }
 
 .progress-wrapper {
@@ -283,6 +289,12 @@
   font-weight: 500;
   font-size: 16px;
   background: #FEFEFD;
+  cursor: pointer;
+}
+
+.cancel-btn:hover {
+  background-color: #006CFF;
+  color:#FEFEFD;
 }
 
 .transcribe-btn {
@@ -292,14 +304,38 @@
   color: #ffffFF;
   font-weight: 500;
   font-size: 16px;
-  background: #006CFF ;
+  background: #006CFF;
+  cursor: pointer;
+}
+
+// .transcribe-btn a {
+//   color: #FFFFFF;
+// }
+
+.transcribe-btn:hover {
+  background-color: #ffffFF;
+  color:#006CFF;
+}
+
+.link:link {
+  color:#ffffFF !important;
+  background-color: transparent !important;
+}
+
+.link:hover {
+  color:#006CFF !important;
+}
+
+.link:visited {
+  color:#ffffff !important;
 }
 
 .callback {
-    padding: .8em;
+    padding: .8em 3em .8em 1em;
     border-radius: 8px;
     border: 1px solid #C5C5C5;
     outline: none;
+    width: 100%;
 }
 
 .callback-wrapper {
@@ -312,7 +348,15 @@
 .callback-wrapper img {
   position: absolute;
   right: 1rem;
+  cursor: pointer;
 }
+
+@media screen and (max-width: 1300px) {
+  .modal-container {
+    width: 55%;
+  }
+}
+
 
 
 @media screen and (max-width: 1024px) {
@@ -332,6 +376,11 @@
 .upload-progress-status1, 
 .upload-progress-status2 {
     width: 70%;
+}
+
+.callback {
+    padding-right: 3em;
+    width: 100%;
 }
 
 }
@@ -377,6 +426,12 @@
     width: 130px;
     height: 50px;
 }
+
+.callback {
+    padding-right: 3em;
+    width: 100%;
+}
+
 }
 
 @media screen and (max-width: 768px) {
@@ -392,6 +447,25 @@
   width: 35%;
 }
 
+  .btn-wrapper {
+  display: block;
+  text-align: center;
+}
+
+.cancel-btn {
+  margin-bottom: 1em;
+  width: 100%;
+}
+
+.transcribe-btn {
+  width: 100%;
+}
+
+.callback {
+    padding-right: 3em;
+    width: 100%;
+}
+
 /* .modal-body {
     margin: -15px;
 } */
@@ -404,6 +478,27 @@
     font-size: .875rem;
     width: 130px;
     height: 50px;
+}
+}
+
+@media screen and (max-width: 650px) {
+  .btn-wrapper {
+  display: block;
+  text-align: center;
+}
+
+.cancel-btn {
+  margin-bottom: 1em;
+  width: 100%;
+}
+
+.transcribe-btn {
+  width: 100%;
+}
+
+.callback {
+    padding-right: 3em;
+    width: 100%;
 }
 }
 
@@ -473,6 +568,20 @@
     font-size: .625rem;
 }
 
+.btn-wrapper {
+  display: block;
+  text-align: center;
+}
+
+.cancel-btn {
+  margin-bottom: 1em;
+}
+
+.callback {
+    padding-right: 3em;
+    width: 100%;
+} 
+
 }
 
 @media screen and (max-width: 500px) {
@@ -480,9 +589,27 @@
     width: 70%;
   }
 
-  .name-input input {
+.name-input input {
   width: 35%;
 }
+
+.btn-wrapper {
+  display: block;
+  text-align: center;
+}
+
+.cancel-btn {
+  margin-bottom: 1em;
+}
+// .or-wrapper {
+//   width: 90%;
+// }
+
+.callback {
+    padding-right: 3em;
+    width: 100%;
+} 
+
 }
 
 @media screen and (max-width: 425px) {
@@ -499,6 +626,24 @@
   width: 70%;
 }
 
+.btn-wrapper {
+  display: block;
+  text-align: center;
+}
+
+// .or-wrapper {
+//   width: 90%;
+// }
+
+.cancel-btn {
+  margin-bottom: 1em;
+}
+
+.callback {
+    padding-right: 3em;
+    width: 100%;
+}
+
 }
 @media screen and (max-width: 320px) {
 .modal-container {
@@ -507,6 +652,23 @@
 
 .name-input {
   display: block;
+}
+
+.btn-wrapper {
+  display: block;
+  text-align: center;
+}
+
+// .or-wrapper {
+//   width: 90%;
+// }
+
+.cancel-btn {
+  margin-bottom: 1em;
+}
+
+.callback {
+    padding-right: 3em;
 }
 
 }
