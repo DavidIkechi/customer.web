@@ -20,8 +20,8 @@ const EmailVerify = () => {
       console.log(response.data.data);
       setMessage(response.data.data);
     } catch (err) {
-      console.log(err);
-      setMessage(err.data.detail);
+      console.log(err.response.data.detail);
+      setMessage(err.response.data.detail);
     }
   };
   return (
