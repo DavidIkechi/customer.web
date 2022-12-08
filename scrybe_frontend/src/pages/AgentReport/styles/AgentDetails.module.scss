@@ -1,5 +1,10 @@
 @use "../../../pages/AgentReport/styles/_mixins.scss" as mixins;
-
+.empty {
+  font-weight: 300;
+  color: #3f3f3f;
+  text-align: center;
+  
+}
 .agentDetails {
   width: 40%;
   display: flex;
