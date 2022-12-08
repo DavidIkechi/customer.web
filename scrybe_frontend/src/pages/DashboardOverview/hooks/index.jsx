@@ -22,7 +22,7 @@ const useDashBoardData = () => {
       setTotalRecording(res2.data);
 
       // Get Leaderboard
-      const res3 = await ApiService.LeaderBoard();
+      const res3 = await ApiService.Leaderboard();
       setLeaderboard(res3.data);
     };
     GetData();
