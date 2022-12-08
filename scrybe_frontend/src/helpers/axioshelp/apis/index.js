@@ -20,6 +20,10 @@ class Service {
   async RecentRecordings() {
     return this.request.get("/recent-recordings?skip=0&limit=5");
   }
+
+  async LeaderBoard() {
+    return this.request.get("/leaderboard");
+  }
 }
 
 const ApiService = new Service(api);
