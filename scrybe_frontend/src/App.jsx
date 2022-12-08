@@ -56,7 +56,7 @@ import TryResults from "./pages/TryForFree/tryResults";
 import UploadedRecordings from "./pages/UploadRecordings";
 import { UploadModal } from "./pages/UploadRecordingsModal";
 import EmailVerify from "./pages/VerificationEmail/EmailVerify";
-import CheckMail from "./pages/CheckMail";
+// import CheckMail from "./pages/CheckMail";
 import StartUp from "./pages/Checkout/Startup";
 import Growing from "./pages/Checkout/Growing";
 import Enterprise from "./pages/Checkout/Enterprise";
