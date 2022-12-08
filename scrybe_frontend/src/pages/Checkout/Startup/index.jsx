@@ -261,7 +261,7 @@ function Checkout() {
               </div>
             </div>
             <div>
-              <h2>Features of Starup plan</h2>
+              <h2>Accepted payment types</h2>
               <div>
                 <div className={styles.cardTypes}>
                   <img src={visa} alt="visa icon" />

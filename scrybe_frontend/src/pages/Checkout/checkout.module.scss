@@ -60,6 +60,10 @@
   flex-direction: column;
   @include media(1220px) {
     flex-direction: column-reverse;
+    margin-top: 3rem;
+    div {
+      margin-top: 2rem;
+    }
   }
 }
 .formCardDetails {
@@ -284,6 +288,10 @@
   .support {
     margin-block: pix-rem(40);
   }
+
+  @include media(1220px) {
+    margin-top: 2rem;
+  }
 }
 
 .cardTypes {
@@ -292,36 +300,36 @@
 
 .orderSummary {
   padding: pix-rem(24);
-  border: 0.89px solid #002f49;
+  border: 0.89px solid #005584;
   border-radius: pix-rem(16);
   p {
     font-size: pix-rem(16);
     line-height: pix-rem(24);
-    font-weight: 300;
+
     margin-block-end: pix-rem(10);
     span {
       color: #006cff;
       text-decoration: underline;
     }
   }
+
+  .totalSummary {
+    border-top: 2px solid #005584;
+    padding-top: 1rem;
+    font-weight: 600;
+    color: #003b8c;
+    .datepayment p {
+      color: #003b8c;
+    }
+  }
+}
+
+.spandate {
+  color: #003b8c;
 }
 
 .planDetails,
 .totalSummary {
   display: flex;
   justify-content: space-between;
-}
-
-.totalSummary {
-  border-top: 2px solid #003b8c;
-  padding-top: 1rem;
-  p.datepayment {
-    font-weight: 600;
-    color: #003b8c;
-    span.spandate {
-      color: #003b8c;
-      text-decoration: none;
-      font-weight: 600;
-    }
-  }
 }
