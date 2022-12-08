@@ -49,6 +49,7 @@ class Agent(Base):
     id = Column(Integer, primary_key=True, index=True)
     first_name = Column(String(255), index=True)
     last_name = Column(String(255), index=True)
+    location = Column(String(255), index=True)
     company_id = Column(Integer, ForeignKey("companies.id"))
     aud_id = Column(Integer, index=True)
 
@@ -122,7 +123,7 @@ class Analysis(Base):
 
 class UserProfile(Base):
     __tablename__ = "accounts"
-
+    
     id = Column(Integer, ForeignKey("users.id"), nullable=True)
     phone_number = Column(String(255))
     company_address = Column(TEXT)

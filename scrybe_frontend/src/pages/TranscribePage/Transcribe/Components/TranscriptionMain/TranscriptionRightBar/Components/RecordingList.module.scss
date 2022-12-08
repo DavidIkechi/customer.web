@@ -57,6 +57,7 @@
   column-gap: pix-rem(16);
   cursor: pointer;
   transition: all 200ms ease-in;
+  overflow: hidden;
 
   .AudioName {
     h2 {
@@ -64,6 +65,7 @@
       font-size: 16px;
       line-height: 24px;
       color: #313131;
+      white-space: nowrap;
     }
 
     p {
@@ -76,9 +78,7 @@
 }
 
 .AudioInfo:hover {
-  background-color: #e6f0ff;
-  border-radius: 4px;
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 
 @media screen and (max-width: 960px) {

@@ -10,7 +10,7 @@ import OverAllSentimentCard from "./components/OverallSentimentCard";
 import VerdictCard from "./components/VerdictCard";
 import PhraseTagCard from "./components/PhraseTagCard";
 // import SideBar from "../../components/SideBar";
-import { useMockAuthAndReadSentiment } from "./hooks";
+import { useReadSentiment } from "./hooks";
 import NewDesignSideBar from "../../components/NewDesignSidebar/index";
 import TopNav from "../../components/TopNav";
 
@@ -18,8 +18,7 @@ function SentimentAnalysis() {
   const [isMobileAsideOpen, setIsMobileAsideOpen] = useState(false);
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const params = useParams();
-  const sentimentData = useMockAuthAndReadSentiment(params.AudioId);
-  console.log(params.AudioId);
+  const sentimentData = useReadSentiment(params.AudioId);
   const positiveTags = [
     "brave",
     "good",
@@ -74,7 +73,7 @@ function SentimentAnalysis() {
       >
         <div className={styles.page__container}>
           <div className={styles.audio__mobile}>
-            <AudioCard />
+            <AudioCard sentimentData={sentimentData} />
           </div>
           <div className={styles.sentiment__tab__opener}>
             <div className={styles.opener__content} onClick={openSentimentTab}>
@@ -113,7 +112,7 @@ function SentimentAnalysis() {
             </div>
           </main>
           <aside className={styles.aside__container}>
-            <AudioCard />
+            <AudioCard sentimentData={sentimentData} />
             <OverAllSentimentCard sentimentData={sentimentData} />
             <VerdictCard sentimentData={sentimentData} />
             <PhraseTagCard

@@ -5,44 +5,43 @@ import Charts from "./components/ChartContainer";
 import AgentDetails from "./components/AgentDetails";
 import { useState, useEffect } from "react";
 import { useAgentReport } from "./hooks";
-import { useAgentDetails } from "./hooks";
+import { useAgentAnalysis } from "./hooks";
 
-const Content = () => {
-  const agentReport = useAgentReport();
-  const agentDetail = useAgentDetails();
+// { recentAgentReport, agentAnalysis}
+const Content = (props) => {
+  const agentReportData = useAgentReport(props);
+  const agentAnalysisData = useAgentAnalysis(props);
+
+  const [selectData, setSelectData] = useState([]);
   const [selectReport, setSelectReport] = useState([]);
 
   useEffect(() => {
-    setSelectReport(agentDetail.week);
-  }, [agentDetail]);
+    setSelectReport(agentAnalysisData.week);
+    setSelectData(agentReportData.week);
+  }, [agentAnalysisData, agentReportData]);
 
   const handleDate = (e) => {
-    setSelectReport(agentDetail[e.target.value]);
+    setSelectReport(agentAnalysisData[e.target.value]);
+    setSelectData(agentReportData[e.target.value]);
   };
+
+  // console.log(props.agent_id);
 
   return (
     <div className={styles.mainWrapper}>
       <div className={styles.header}>
         <h1>Agent Report</h1>
-        <img src={close} alt="close" />
+        <img src={close} alt="close" onClick={() => props?.modal.close()} />
       </div>
 
       <div className={styles.idcont}>
-        <>
-          {agentReport.map((detail) => {
-            return (
-              <div className={styles.agentId}>
-                <p className={styles.secondp}>
-                  Agent ID: &nbsp; &nbsp; {detail.agent_id}
-                </p>
+        <div className={styles.agentId}>
+          <p className={styles.secondp}>
+            Agent ID: &nbsp; &nbsp; {props?.show}
+          </p>
 
-                <p className={styles.secondp}>
-                  Rank: &nbsp; &nbsp; {detail.rank}
-                </p>
-              </div>
-            );
-          })}
-        </>
+          <p className={styles.secondp}>Rank: &nbsp; &nbsp; {props?.rank}</p>
+        </div>
 
         <div className={styles.select}>
           <p>View by</p>
@@ -53,8 +52,14 @@ const Content = () => {
         </div>
       </div>
       <div className={styles.topDetailsDiv}>
-        <Charts selectReport={selectReport} />
-        <AgentDetails />
+        <Charts
+          // agentAnalysis={agentAnalysis}
+          selectReport={selectReport}
+        />
+        <AgentDetails
+          selectData={selectData}
+          // recentAgentReport={recentAgentReport}
+        />
       </div>
     </div>
   );

@@ -3,6 +3,9 @@ import React, { useCallback, useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import AuthApi from "../../App";
 import Loading from "../../components/Loading";
+import SnackBar from "../../components/SnackBar";
+import ApiService from "../../helpers/axioshelp/apis";
+import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
 import axios from "../ForgetPassword/globalConstant/Api/axios";
 import footerImg from "./assets/signup-img.svg";
 import styles from "./SignIn.module.scss";
@@ -16,6 +19,7 @@ function Signin() {
   const [emailStateTest, setEmailStateTest] = useState(false);
   const [passStateTest, setPassStateTest] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [response, setResponse] = useState({ type: "", message: "" });
 
   const navigate = useNavigate();
   const tester = (e, reg, func) => {
@@ -73,9 +77,10 @@ function Signin() {
       },
     };
     setIsLoading(true);
-    const response = await axios.post("login", formData, config);
-    setIsLoading(false);
-    if (response.status === 200) {
+    try {
+      const response = await ApiService.SignIn(formData);
+      setIsLoading(false);
+
       localStorage.setItem("heedAccessToken", response.data.access_token);
       localStorage.setItem("heedRefreshToken", response.data.refresh_token);
       Cookies.set("heedAccessToken", response.data.access_token);
@@ -83,11 +88,17 @@ function Signin() {
       localStorage.setItem("currentUserEmail", username);
       localStorage.setItem("auth", username);
       navigate("/dashboard");
+    } catch (err) {
+      setIsLoading(false);
+      setResponse(ErrorHandler(err));
     }
   };
 
   return (
     <>
+      {response.message !== "" && (
+        <SnackBar response={response} setResponse={setResponse} />
+      )}
       <main className={styles.signUpWrapper}>
         <div className={styles.signup}>
           <div

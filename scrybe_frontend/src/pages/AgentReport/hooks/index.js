@@ -1,77 +1,83 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { agentData } from "../components/Data";
+// import ApiService from "../../../helpers/axioshelp/apis";
 
-const useAgentReport = () => {
-  // const [recentReport, setRecentReports] = useState({});
+// pass id as paraameteer
 
-  // testing
-  const [recentReport, setRecentReports] = useState([]);
+// const useAgentPerformanceData = async () => {
+//   const [recentAgentReport, setAgentRecentReports] = useState([]);
+//   const [agentAnalysis, setAnalysis] = useState({});
 
-  const getDetails = async () => {
-    try {
-      await axios
-        .get("https://638b959081df38ab346c7d6e.mockapi.io/details")
-        .then((res) => {
-          setRecentReports(res.data);
-        });
-    } catch (error) {}
-  };
+//   useEffect(() => {
+//     const getData = async () => {
+//       // get agent report
+//       const agentReportResponse = await ApiService.getAgentReport()
+//       setAgentRecentReports(agentReportResponse.data.Agent_Performance_Report);
+
+//       // get agent aaalysis
+//       const agentAnalysisResponse = await ApiService.getAgentAnalysis()
+//       setAnalysis(agentAnalysisResponse.data);
+//     }
+//     getData()
+//   }, [])
+
+//   return { recentAgentReport, agentAnalysis }
+// }
+
+// export { useAgentPerformanceData }
+
+const useAgentReport = (props) => {
+  const [recentAgentReport, setAgentRecentReports] = useState([]);
 
   useEffect(() => {
-    getDetails();
-  }, []);
+    const token = localStorage.getItem("heedAccessToken");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "content-type": "Application/json",
+      },
+    };
+    console.log(props);
+    if (props?.controll) {
+      axios
+        .get(
+          `https://api.heed.hng.tech/AgentDetails?agent_id=${props?.agent_id}`,
+          config
+        )
+        .then((res) => {
+          setAgentRecentReports(res.data.Agent_Performance_Report);
+        });
+      console.log(props.controll);
+    }
+  }, [props]);
 
-  // testing
-
-  // useEffect(() => {
-  //   const data =
-  //     "grant_type=&username=rambeybello%40gmail.com&password=aaaaaaaa&scope=&client_id=&client_secret=";
-  //   axios.post("https://api.heed.hng.tech/login", data)
-  //   .then((res) => {
-  //     const headers = {
-  //       Authorization: `Bearer ${res.data.access_token}`,
-  //     };
-  //     axios
-  //       .get("api url", {
-  //         headers,
-  //       })
-  //       .then((newRes) => {
-  //         // console.log(newRes);
-  //         setRecentReports(newRes.data);
-  //       });
-  //   });
-  // }, []);
-
-  return recentReport;
+  return recentAgentReport;
 };
 export { useAgentReport };
 
-const useAgentDetails = () => {
-  const [agentDets, setAgentDets] = useState({});
-  const [data_id, setData_id] = useState("17");
+const useAgentAnalysis = (props) => {
+  const [agentAnalysis, setAnalysis] = useState({});
 
   useEffect(() => {
-    const data =
-      "grant_type=&username=rambeybello%40gmail.com&password=12345678&scope=&client_id=&client_secret=";
-    // `grant_type=&username=abiolafadeyi10%40gmail.com&password=Abiola123&scope=&client_id=&client_secret=`
-    axios.post("https://api.heed.hng.tech/login", data).then((res) => {
-      const headers = {
-        Authorization: `Bearer ${res.data.access_token}`,
-      };
+    const token = localStorage.getItem("heedAccessToken");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "content-type": "Application/json",
+      },
+    };
+    if (props?.controll) {
       axios
         .get(
-          `https://api.heed.hng.tech/total-agent-analysis?agent_id=${data_id}`,
-          {
-            headers,
-          }
+          `https://api.heed.hng.tech/total-agent-analysis?agent_id=${props?.agent_id}`,
+          config
         )
         .then((res) => {
-          setAgentDets(res.data);
+          setAnalysis(res.data);
         });
-    });
-  }, []);
-  return agentDets;
+    }
+  }, [props]);
+  return agentAnalysis;
 };
 
-export { useAgentDetails };
+export { useAgentAnalysis };

@@ -6,6 +6,10 @@ class Service {
   }
 
   async SignUp(data) {
+    return this.request.post(`/create_users`, data);
+  }
+
+  async SignIn(data) {
     return this.request.post(`/login`, data);
   }
 
@@ -23,6 +27,14 @@ class Service {
 
   async LeaderBoard() {
     return this.request.get("/leaderboard");
+
+  async getAgentReport(id) {
+    return this.request.get(`/AgentDetails?agent_id=${id}`);
+  }
+
+  async getAgentAnalysis(id) {
+    return this.request.get(`/total-agent-analysis?agent_id=${id}`);
+
   }
 }
 
