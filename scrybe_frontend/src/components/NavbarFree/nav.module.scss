@@ -128,13 +128,13 @@
     }
   }
   .activeDashboard {
-  background-color: #006cff;
-  color: white;
-  &:hover {
-    background-color: transparent !important;
-    color: #006cff !important;
+    background-color: #006cff;
+    color: white;
+    &:hover {
+      background-color: transparent !important;
+      color: #006cff !important;
+    }
   }
-}
   &__ctas {
     display: flex;
     gap: pix-rem(24);
@@ -149,12 +149,9 @@
       -moz-transition: all 0.3s;
       -ms-transition: all 0.3s;
       -o-transition: all 0.3s;
-      &:hover {
-        // scale: 1.05;
-      }
 
       &:nth-child(1) {
-        // color: #006cff;
+        color: #006cff;
         .ctas__button {
           color: #006cff;
         }
@@ -170,14 +167,7 @@
         background-color: #006cff;
         color: white;
         .ctas__button {
-          color: white !important;
-        }
-        &:hover {
-          background-color: transparent;
-          color: #006cff;
-          .ctas__button {
-            color: #006cff !important;
-          }
+          color: white;
         }
       }
     }
@@ -199,4 +189,3 @@
     }
   }
 }
-
