@@ -14,6 +14,7 @@ import ApiService from "../../../../helpers/axioshelp/apis";
 const PersonalInformation = () => {
   const [accountUser, setAccountUser] = useState();
   const [response, setResponse] = useState({ type: "", message: "" });
+  const [previewImg, setPreviewImg] = useState(accountUser?.company_logo_url);
 
   const navigate = useNavigate();
 
@@ -64,16 +65,17 @@ const PersonalInformation = () => {
       })
       .catch((err) => {
         console.log(err.response);
+        setResponse(ErrorHandler(err.response));
       });
   };
 
   async function getUser() {
     try {
       const res = await ApiService.Account();
+      setPreviewImg(res.data.company_logo_url);
       setAccountUser(res.data);
     } catch (err) {
-      console.log("err");
-      if (err.response.status === 401) {
+      if (err.status === 401) {
         navigate("/signin");
       }
       setResponse(ErrorHandler(err));
@@ -97,7 +99,14 @@ const PersonalInformation = () => {
     phone_number ||
     company_name ||
     company_address ||
-    company_image instanceof File;
+    (company_image && company_image.length > 0);
+
+  useEffect(() => {
+    if (company_image && company_image.length > 0) {
+      const newImg = URL.createObjectURL(company_image[0]);
+      setPreviewImg(newImg);
+    }
+  }, [company_image]);
 
   return (
     <>
@@ -110,7 +119,7 @@ const PersonalInformation = () => {
               <div className={`${PersonalInfo.PersonalInfo_header}`}>
                 <img
                   className={PersonalInfo.profilePic}
-                  src={accountUser?.company_logo_url}
+                  src={previewImg}
                   alt="profile pic"
                 />
                 <div className={PersonalInfo.changeImg}>
@@ -126,7 +135,6 @@ const PersonalInformation = () => {
                   type="file"
                   name="company_image"
                   id="company_image"
-                  value={accountUser?.company_image_url}
                   hidden
                   {...register("company_image")}
                 />
