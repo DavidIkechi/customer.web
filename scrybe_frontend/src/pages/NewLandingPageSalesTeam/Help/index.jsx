@@ -13,7 +13,6 @@ const Help = () => {
         <div className={styles.HelpBox}>
           <div className={styles.HelpIconWithText}>
             <img src={UsefulInsights} alt="useful insights" />
-
             <h3>Useful Insights</h3>
           </div>
           <p className={styles.paragraph}>Understand customer's pain point</p>
