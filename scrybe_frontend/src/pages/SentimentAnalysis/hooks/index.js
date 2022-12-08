@@ -14,7 +14,6 @@ const useReadSentiment = (id) => {
     axios
       .get(baseURL + `/transcription/${id}`, config)
       .then((newRes) => {
-        console.log(newRes.data.sentiment_result);
         setSentimentData(newRes.data.sentiment_result);
       })
       .catch((err) => {

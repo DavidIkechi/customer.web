@@ -5,7 +5,6 @@ import styles from "./AnalysisCard.module.scss";
 function AnalysisCard({ sentimentData }) {
   let totalList = [];
   const transcriptElements = [];
-  console.log(sentimentData);
   if (sentimentData.transcript) {
     let mostNegative = JSON.parse(sentimentData.most_negative_sentences);
     let mostPositive = JSON.parse(sentimentData.most_postive_sentences); //there's a typo in the data key coming from the backend
@@ -23,7 +22,6 @@ function AnalysisCard({ sentimentData }) {
     });
     let textCountNeg = 0;
     let textCountPos = 0;
-    // console.log(mostNegative[textCountNeg]);
     while (
       textCountNeg < mostNegative.length &&
       textCountPos < mostPositive.length
@@ -40,7 +38,6 @@ function AnalysisCard({ sentimentData }) {
       .concat(mostNegative.slice(textCountNeg))
       .concat(mostPositive.slice(textCountPos));
 
-    // console.log(totalList);
     let textCount = 0;
     transcriptElements.push(
       <span className={styles.analysis__text} key={Math.random()}>
