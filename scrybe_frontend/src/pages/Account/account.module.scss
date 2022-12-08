@@ -69,6 +69,7 @@
     gap: pix-rem(16);
     color: $grey-400;
     width: 100%;
+    height: fit-content;
 
     label {
       display: flex;
@@ -140,9 +141,6 @@
       font-size: pix-rem(12);
       line-height: pix-rem(16);
     }
-    div:first-of-type {
-      height: pix-rem(8);
-    }
     div:last-of-type {
       width: clamp(pix-rem(250), 100%, pix-rem(450));
       align-self: center;
@@ -152,9 +150,6 @@
     }
 
     @include easyMediaQueries("min-width:1024px") {
-      div:first-of-type {
-        height: pix-rem(16);
-      }
       div:last-of-type {
         flex-direction: row;
         width: min-content;

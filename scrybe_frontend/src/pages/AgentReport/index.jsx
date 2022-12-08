@@ -4,7 +4,7 @@ import Content from "./Content";
 // import { useAgentPerformanceData } from './hooks/index'
 
 // onClick={() => modal.showModal()}
-function AgentReport({ modal, agent_id, controll, rank, show }) {
+function AgentReport({ setModal, agent_id, controll, rank, show }) {
   // const { recentAgentReport, agentAnalysis } = useAgentPerformanceData()
   // console.log(recentAgentReport);
   // console.log(agentAnalysis);
@@ -12,7 +12,7 @@ function AgentReport({ modal, agent_id, controll, rank, show }) {
     <>
       <div className={styles.container}>
         <Content
-          modal={modal}
+          setModal={setModal}
           controll={controll}
           agent_id={agent_id}
           show={show}
