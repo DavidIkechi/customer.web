@@ -195,130 +195,120 @@ function Account() {
                 </div>
               </form>
             </div>
-            <TopNav
-              openSidebar={() => {
-                setToggleSidebar(!toggleSidebar);
-              }}
-            />
-            <div className={accountStyles.account__div}>
-              <section className={accountStyles.mobile_head__section}>
-                <button type="button" onClick={() => navigate(-1)}>
-                  <img src={chevronLeft} alt="left arrow" />
-                </button>
-                <h1>Profile</h1>
+          </div>
+          <TopNav
+            openSidebar={() => {
+              setToggleSidebar(!toggleSidebar);
+            }}
+          />
+          <div className={accountStyles.account__div}>
+            <section className={accountStyles.mobile_head__section}>
+              <button type="button" onClick={() => navigate(-1)}>
+                <img src={chevronLeft} alt="left arrow" />
+              </button>
+              <h1>Profile</h1>
+            </section>
+            <div className={accountStyles.plan_info__div}>
+              <p>You are using the limited free plan.</p>
+              <p>Go unlimited with Pro version</p>
+            </div>
+            <h1 className={accountStyles.salutation}>Hi Heedr</h1>
+            <div className={accountStyles.main_content__div}>
+              <section className={accountStyles.profile__section}>
+                <div className={accountStyles.user_profile__div}>
+                  <div className={accountStyles.user_profile__img}>
+                    {accountUser &&
+                      (accountUser.company_logo_url ? (
+                        <img
+                          src={accountUser.company_logo_url}
+                          alt="User's profile"
+                        />
+                      ) : (
+                        accountUser.first_name[0] +
+                        "" +
+                        accountUser.last_name[0]
+                      ))}
+                  </div>
+                  <div>
+                    {accountUser && (
+                      <h1>
+                        {accountUser?.first_name + " " + accountUser?.last_name}
+                      </h1>
+                    )}
+                    <p>Administrator</p>
+                  </div>
+                </div>
+                <div className={accountStyles.profile__settings_btn}>
+                  <Link to="/settings">Edit Profile</Link>
+                </div>
               </section>
-              <div className={accountStyles.plan_info__div}>
-                <p>You are using the limited free plan.</p>
-                <p>Go unlimited with Pro version</p>
-              </div>
-              <h1 className={accountStyles.salutation}>Hi Heedr</h1>
-              <div className={accountStyles.main_content__div}>
-                <section className={accountStyles.profile__section}>
-                  <div className={accountStyles.user_profile__div}>
-                    <div className={accountStyles.user_profile__img}>
-                      {accountUser &&
-                        (accountUser.company_logo_url ? (
-                          <img
-                            src={accountUser.company_logo_url}
-                            alt="User's profile"
-                          />
+              <section className={accountStyles.body__section}>
+                <div className={accountStyles.personal_info__div}>
+                  <p>Personal Information</p>
+                  <div>
+                    <div>
+                      <p>Email address</p>
+                      <p>{accountUser?.email}</p>
+                    </div>
+                    {accountUser?.phone_number && (
+                      <div>
+                        <p>Phone Number</p>
+                        <p>{accountUser?.phone_number}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className={accountStyles.company_info__div}>
+                  <p>Company Information</p>
+                  <div>
+                    <div>
+                      <p>Company name</p>
+                      <p>{accountUser?.company_name}</p>
+                    </div>
+                    {accountUser?.company_address && (
+                      <div>
+                        <p>Address</p>
+                        <p>{accountUser?.company_address}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className={accountStyles.agents__div}>
+                  <span>
+                    <p>Agents</p>
+                    <button type="button" onClick={toggleAccountModal}>
+                      <span>Add new</span>
+                      <span>
+                        <img src={plus} alt="plus icon" />
+                      </span>
+                    </button>
+                  </span>
+                  <div>
+                    <ul>
+                      {accountUser?.agents?.map((agent, index) => {
+                        return agent ? (
+                          <li key={index}>
+                            <p>{agent.first_name + " " + agent.last_name}</p>
+                            <p>{agent.location ? agent.location : "Abuja"}</p>
+                          </li>
                         ) : (
-                          accountUser.first_name[0] +
-                          "" +
-                          accountUser.last_name[0]
-                        ))}
-                    </div>
+                          <p>You have no agents yet.</p>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                </div>
+                <div className={accountStyles.developer_tools__div}>
+                  <p>Developer tools</p>
+                  <div>
+                    <p>API Key</p>
                     <div>
-                      {accountUser && (
-                        <h1>
-                          {accountUser?.first_name +
-                            " " +
-                            accountUser?.last_name}
-                        </h1>
-                      )}
-                      <p>Administrator</p>
+                      <p>{accountUser?.api_key}</p>
+                      <button type="button">Refresh</button>
                     </div>
                   </div>
-                  <div className={accountStyles.profile__settings_btn}>
-                    <Link to="/settings">Edit Profile</Link>
-                  </div>
-                </section>
-                <section className={accountStyles.body__section}>
-                  <div className={accountStyles.personal_info__div}>
-                    <p>Personal Information</p>
-                  </div>
-                  <div className={accountStyles.profile__settings_btn}>
-                    <Link to="/settings">Go to Settings</Link>
-                  </div>
-                </section>
-                <section className={accountStyles.body__section}>
-                  <div className={accountStyles.personal_info__div}>
-                    <p>Personal Information</p>
-                    <div>
-                      <div>
-                        <p>Email address</p>
-                        <p>{accountUser?.email}</p>
-                      </div>
-                      {accountUser?.phone_number && (
-                        <div>
-                          <p>Phone Number</p>
-                          <p>{accountUser?.phone_number}</p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className={accountStyles.company_info__div}>
-                    <p>Company Information</p>
-                    <div>
-                      <div>
-                        <p>Company name</p>
-                        <p>{accountUser?.company_name}</p>
-                      </div>
-                      {accountUser?.company_address && (
-                        <div>
-                          <p>Address</p>
-                          <p>{accountUser?.company_address}</p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className={accountStyles.agents__div}>
-                    <span>
-                      <p>Agents</p>
-                      <button type="button" onClick={toggleAccountModal}>
-                        <span>Add new</span>
-                        <span>
-                          <img src={plus} alt="plus icon" />
-                        </span>
-                      </button>
-                    </span>
-                    <div>
-                      <ul>
-                        {accountUser?.agents?.map((agent, index) => {
-                          return agent ? (
-                            <li key={index}>
-                              <p>{agent.first_name + " " + agent.last_name}</p>
-                              <p>{agent.location ? agent.location : "Abuja"}</p>
-                            </li>
-                          ) : (
-                            <p>You have no agents yet.</p>
-                          );
-                        })}
-                      </ul>
-                    </div>
-                  </div>
-                  <div className={accountStyles.developer_tools__div}>
-                    <p>Developer tools</p>
-                    <div>
-                      <p>API Key</p>
-                      <div>
-                        <p>{accountUser?.api_key}</p>
-                        <button type="button">Refresh</button>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-              </div>
+                </div>
+              </section>
             </div>
           </div>
         </div>
