@@ -10,6 +10,7 @@ const SkeletonLoader = (props) => {
       lineElements.push(
         <div
           className={`${styles.skeleton} ${styles.skeleton__text} ${className}`}
+          key={i + Math.random()}
           {...customProps}
         ></div>
       );
