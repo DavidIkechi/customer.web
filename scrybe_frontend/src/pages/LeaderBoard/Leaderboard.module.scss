@@ -520,9 +520,10 @@ hr {
     }
 }
 
-@media (max-width: 717px) {
+@media (max-width: 900px) {
   .agentStyle {
-    width: 90%;
+    .agent{
+      width: 90%;
+    }
   }
-  
 }

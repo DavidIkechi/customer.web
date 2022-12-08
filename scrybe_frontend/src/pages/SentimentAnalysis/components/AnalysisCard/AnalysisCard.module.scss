@@ -28,6 +28,32 @@
       color: #3f3f3f;
     }
 
+    .analysis__text__negative {
+      color: #ff7589;
+      transition: padding 0.5s, font-size 0.3s, background-color 2s;
+      cursor: pointer;
+
+      &:hover {
+        font-size: 1.05em;
+        border-radius: 1em;
+        background-color: #ff39561a;
+        padding: 0 0.5em;
+      }
+    }
+
+    .analysis__text__positive {
+      color: #76c86f;
+      transition: padding 0.5s, scale 0.3s, background-color 0.2s;
+      cursor: pointer;
+
+      &:hover {
+        font-size: 1.05em;
+        background-color: #8abc191a;
+        border-radius: 1em;
+        padding: 0 0.5em;
+      }
+    }
+
     .content__analysis {
       .content__analysis__top {
         display: flex;
