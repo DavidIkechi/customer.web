@@ -27,7 +27,7 @@ function DropDownModal({ closeModal }) {
     localStorage.removeItem("heedRefreshToken");
     localStorage.removeItem("currentUserEmail");
     localStorage.removeItem("auth");
-    localStorage.removeItem("tokenType");
+    localStorage.removeItem("heedAccessTokenType");
   };
   return (
     <div className={styles.dropdown}>
