@@ -39,7 +39,6 @@ class Service {
 
   async Account() {
     return this.request.get(`account`);
-
   }
 }
 

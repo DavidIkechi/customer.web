@@ -71,7 +71,7 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
 
     .second__top .second__head {
         font-size: 1.5rem;
-        color: #3F3F3F;
+        color: #454545;
         font-weight: 600;
         font-style: bold;
         fill: solid;
@@ -84,35 +84,11 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
     
     .second__top .second__subhead {
         font-size: 1rem;
-        color: #3F3F3F;
+        color: #A9A9A9;
         font-weight: 400;
         font-style: normal;
         fill: solid;
         line-height: 1.5rem;
-    }
-
-    .form__container .label__name {
-        display: flex;
-        flex-direction: column;
-        font-size: 0.7rem;
-        color: #6A6A6A;
-        font-weight: 400;
-        font-style: normal;
-        fill: solid;
-        line-height: 1rem;
-        margin-bottom: 1.5em;
-    }
-
-    .form__container .email {
-        font-weight: 300;
-        border: 1px solid #C5C5C5;
-        background-color: #ffffff;
-        border-radius: 0.3rem;
-        padding: 0.8em 0.8em;
-        color: #A9A9A9;
-        font-size: 0.8rem;
-        outline: none;
-        width: 100%;
     }
 
     .form__container .form__action {
@@ -120,33 +96,16 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
     }
 
     .form__container .form__button {
-        display: block;
-        flex-basis: 100%;
-        text-align: center;
-        // width: 100%;
+        width: 100%;
         font-weight: 500;
         border: none;
         border-radius: 0.3rem;
-        padding: 1.3em 0em;
+        padding: 0.8em 0.8em;
         background-color: #006CFF;
         color: #FFFFFF;
         font-size: 0.7rem;
         line-height: 1.5rem;
         outline: none;
-    }
-
-    .link__container .link__text {
-        font-size: .68rem;
-        color: #1F1F1F;
-        font-weight: 400;
-        font-style: normal;
-        fill: solid;
-        line-height: 1.5rem;
-    }
-
-    .link__container .option__link {
-        color: #006CFF;
-        margin-left: .3em;
     }
   }
  
