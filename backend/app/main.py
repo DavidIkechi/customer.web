@@ -904,6 +904,6 @@ def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: mo
         return {"message": "agent does not exist"}
 
 @app.get("/refresh-api-key")
-async def refresh_api_key (db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+async def refresh_api_key(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     user_id = user.id
     return crud.refresh_api_key(db, user_id)
