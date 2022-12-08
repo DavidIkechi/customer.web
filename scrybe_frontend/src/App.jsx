@@ -98,10 +98,10 @@ function App() {
         {/* <Route path="/forget-password" element={<ForgetPassword />} /> */}
 
         <Route path="/sales-team" element={<LandingPageSalesTeam />} />
-        <Route
+        {/* <Route
           path="/pw-reset-successful"
           element={<PasswordResetSuccessful />}
-        />
+        /> */}
         <Route path="*" element={<Error />} />
         <Route path="/demos" element={<DummyPage someText="demo pages" />} />
         <Route path="/blog" element={<Blogs />} />
