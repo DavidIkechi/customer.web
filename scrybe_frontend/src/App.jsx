@@ -25,7 +25,7 @@ import Blogs from "./pages/BlogsPage";
 import Careers from "./pages/Careers";
 import Error from "./pages/Error/Error";
 import FAQs from "./pages/FaqsPage";
-import ForgetPasswordNew from "./pages/ForgotPasswordNew/Index";
+// import ForgetPasswordNew from "./pages/ForgotPasswordNew/Index";
 // import CheckMail from "./pages/CheckMail";
 import CheckMail from "./pages/CheckMail/index";
 import General from "./pages/HelpAndSupport/components/General";
@@ -57,8 +57,8 @@ import EmailVerify from "./pages/VerificationEmail/EmailVerify";
 import StartUp from "./pages/Checkout/Startup";
 import Growing from "./pages/Checkout/Growing";
 import Enterprise from "./pages/Checkout/Enterprise";
-import CheckMail from "./pages/CheckMail";
-
+// import CheckMail from "./pages/CheckMail";
+import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 
 function App() {
   return (
