@@ -71,6 +71,7 @@ function Account() {
           if (res.status === 200) {
             toggleAccountModal();
             reset();
+            getUser();
           }
         })
         .catch((err) => {
@@ -80,7 +81,7 @@ function Account() {
 
   useEffect(() => {
     getUser();
-  });
+  }, []);
 
   const first_name = watch("first_name");
   const last_name = watch("last_name");
