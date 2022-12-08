@@ -12,30 +12,72 @@ import master from "../assets/Mastercard.png";
 import NavBarFree from "../../../components/NavbarFree";
 import Footer from "../../../components/Footer";
 import axios from "axios";
+import data from "../../History/assets/data";
 
 function Checkout() {
-  const [dataArray, setDataArray] = useState([]);
+  const [dataArray, setDataArray] = useState({});
+  const [startup, setStartup] = useState([]);
+  const [monthToggle, setMonthToggle] = useState(false);
+  const [monthlyPrice, setMonthlyPrice] = useState(null);
+  const [userEmail, setUserEmail] = useState(null);
+  const [nextPaymentDate, setNextPaymentDate] = useState(null);
+  const [total, setTotal] = useState(null);
 
   const token = localStorage.getItem("heedAccessToken");
-  console.log(token);
+  // console.log(token);
 
-  const fetchOrders = async () => {
+  const fetchStartupOrder = async () => {
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
 
-    await axios.get("orders", { headers }).then((res) => {
-      console.log(res);
+    await axios.get("orders/1", { headers }).then((res) => {
+      // console.log(res);
       setDataArray(res.data);
+      setUserEmail(res.data.user_email);
     });
   };
 
-  console.log(dataArray);
+  // console.log(dataArray);
 
   useEffect(() => {
-    fetchOrders();
+    fetchStartupOrder();
   }, []);
+
+  const getMonthPlan = () => {};
+
+  const calculatePrice = () => {
+    setMonthToggle(true);
+    console.log(dataArray);
+    const monthlyPrice = Number(dataArray.billing_plan);
+    const userEmail = dataArray.user_email;
+    const nextPaymentDate = dataArray.next_payment_due_date;
+    const orderId = dataArray.id;
+    const total = (monthlyPrice - 2) * 12;
+
+    // annual_amount: null;
+    // billing_plan: "17";
+    // id: 1;
+    // monthly_amount: 7500;
+    // next_payment_due_date: "2023-01-07";
+    // order_date: "2022-12-08";
+    // total_amount: 7500;
+    // user_email: "bolaji.oyindamola@gmail.com";
+    setMonthlyPrice(monthlyPrice);
+    setUserEmail(userEmail);
+    setNextPaymentDate(nextPaymentDate);
+    setTotal(total);
+
+    return monthlyPrice, userEmail, nextPaymentDate, orderId, total;
+  };
+
+  const resetMonth = () => {
+    setMonthToggle(false);
+    const total = dataArray.billing_plan;
+    setTotal(total);
+    setNextPaymentDate(null);
+  };
 
   return (
     <div className={styles.checkout}>
@@ -57,7 +99,7 @@ function Checkout() {
               </div>
 
               <div className={styles.checkoutCards}>
-                <div className={styles.checkoutMonthly}>
+                <div className={styles.checkoutMonthly} onClick={resetMonth}>
                   <div className={styles.empty}></div>
                   <div
                     className={`${styles.formCardDetails} ${styles.plainCard}`}
@@ -85,7 +127,10 @@ function Checkout() {
                     </div>
                   </div>
                 </div>
-                <div className={styles.checkoutAnnually}>
+                <div
+                  className={styles.checkoutAnnually}
+                  onClick={calculatePrice}
+                >
                   <div className={styles.checkoutTitle}>
                     <div>
                       <img src={tag} alt="sale-tag icon" />
@@ -100,7 +145,7 @@ function Checkout() {
                         <img src={startUpIcon} alt="star icon" />
                       </div>
                       <h3>Startup</h3>
-                      <p>Monthly</p>
+                      <p>annually</p>
                     </div>
                     <div className={styles.plansPricing}>
                       <div className={styles.plansPricingFigure}>
@@ -242,17 +287,25 @@ function Checkout() {
             <div className={styles.orderSummary}>
               <h2>Features of Starup plan</h2>
               <div className={styles.planDetails}>
-                <p>Heed Startup Plan (annual)</p>
-                <p>$180 per year</p>
+                <p>
+                  Heed Startup Plan {monthToggle ? "(annually)" : "(monthly)"}{" "}
+                </p>
+                <p>
+                  ${total ? total : "17"} per {monthToggle ? "year" : "month"}
+                </p>
               </div>
               <div className={styles.totalSummary}>
                 <p>Total</p>
-                <p>$180 per year</p>
+                <p>
+                  ${total ? total : "17"} per {monthToggle ? "year" : "month"}
+                </p>
               </div>
               <div className={styles.datepayment}>
                 <p>
                   Next payment is due on{" "}
-                  <b className={styles.spandate}>7th November 2022</b>
+                  <b className={styles.spandate}>
+                    {nextPaymentDate ? nextPaymentDate : "17th November 2022"}
+                  </b>
                 </p>
               </div>
             </div>
