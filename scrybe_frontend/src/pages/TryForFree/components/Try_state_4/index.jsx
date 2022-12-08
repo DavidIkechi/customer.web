@@ -6,7 +6,7 @@ import ProgressBar from "../ProgressBar/index";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import styles from "./try_state_4.module.scss";
-import RecordingName from "../../assets/recording-name-1.png";
+// import RecordingName from "../../assets/recording-name-1.png";
 import { useEffect, useState } from "react";
 // import { useState } from "react";
 
