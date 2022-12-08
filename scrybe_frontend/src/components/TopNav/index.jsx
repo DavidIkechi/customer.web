@@ -9,6 +9,8 @@ import logo from "./imgs/logo.svg";
 import toggleNavIcon from "./imgs/toggleNavIcon.svg";
 import uploadBtn_icon from "./imgs/uploadBtnIcon.svg";
 import styles from "./topbar.module.scss";
+import DummyImg from "./imgs/dummy.png";
+
 const TopNav = ({ openSidebar, search }) => {
   const [show, setShow] = useState(false);
   const [currentUser, setCurrentUser] = React.useState(null);
@@ -52,7 +54,7 @@ const TopNav = ({ openSidebar, search }) => {
               src={
                 currentUser?.company_logo_url
                   ? currentUser?.company_logo_url
-                  : "img/dummy.png"
+                  : DummyImg
               }
               alt="john doe"
             />
