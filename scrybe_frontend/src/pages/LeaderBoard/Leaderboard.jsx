@@ -1,8 +1,7 @@
 import styles from "./Leaderboard.module.scss";
 import NewDesignSideBar from "../../components/NewDesignSidebar";
 import TopNav from "../../components/TopNav";
-import React from "react";
-import axios from "axios";
+import ApiService from "../../helpers/axioshelp/apis/index";
 import { useState, useEffect, useRef } from "react";
 import SearchIcon from "./images/search-icon.png";
 import ProfileName from "./images/profile-circle.png";
@@ -17,7 +16,7 @@ const bgMap = {
 };
 
 function Leaderboard() {
-  const [toggleSidebar, setToggleSidebar] = React.useState(false);
+  const [toggleSidebar, setToggleSidebar] = useState(false);
 
   const [leaderboard, setLeaderboard] = useState([]);
   const [data, setData] = useState(null);
@@ -25,18 +24,7 @@ function Leaderboard() {
   const [range, setRange] = useState("week");
 
   async function accessData() {
-    const token = localStorage.getItem("heedAccessToken");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "content-type": "Application/json",
-      },
-    };
-    const response = await axios
-      .get("https://api.heed.hng.tech/leaderboard", config)
-      .catch((error) => {
-        console.error(error);
-      });
+    const response = await ApiService.Leaderboard();
     const arr = response.data.week.Top3_Agents;
     setData(response.data);
     setLeaderboard(arr);
@@ -159,17 +147,21 @@ function Leaderboard() {
             </div>
 
             <div className={styles.Profile_container}>
-              {leaderboard.map((profile, index) => (
-                <LeaderBoardDisplay
-                  key={profile.agent_id}
-                  person={profile}
-                  index={index}
-                  handleAgent={handleAgent}
-                  agent_id={profile.agent_id}
-                  rank={profile.rank}
-                  show={profile.str_agent_id}
-                />
-              ))}
+              {leaderboard.length > 0 && (
+                <>
+                  {leaderboard.map((profile, index) => (
+                    <LeaderBoardDisplay
+                      key={profile.agent_id}
+                      person={profile}
+                      index={index}
+                      handleAgent={handleAgent}
+                      agent_id={profile.agent_id}
+                      rank={profile.rank}
+                      show={profile.str_agent_id}
+                    />
+                  ))}
+                </>
+              )}
             </div>
           </div>
         </section>

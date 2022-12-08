@@ -2,6 +2,7 @@ import axios from "axios";
 import { PropTypes } from "prop-types";
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import Modal from "../Modal";
 import SearchInput from "../SearchInput";
 import DropDownModal from "./DropdownMenu";
 import dropdown_arr from "./imgs/dropdownArr.svg";
@@ -14,6 +15,7 @@ import DummyImg from "./imgs/dummy.png";
 const TopNav = ({ openSidebar, search }) => {
   const [show, setShow] = useState(false);
   const [currentUser, setCurrentUser] = React.useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const getUserAccount = async () => {
     const config = {
@@ -82,12 +84,18 @@ const TopNav = ({ openSidebar, search }) => {
           </div>
         </div>
         {currentUser && (
-          <NavLink to="/upload-new-file">
-            <div className={styles.TopNav_btnwrap}>
+          <>
+            {/* <NavLink > */}
+            <div
+              className={styles.TopNav_btnwrap}
+              onClick={() => setModalOpen(true)}
+            >
               <img src={uploadBtn_icon} alt="" />
               <button className={styles.TopNav_btn}>Upload</button>
             </div>
-          </NavLink>
+            {/* </NavLink> */}
+            <Modal open={modalOpen} setOpen={setModalOpen} />
+          </>
         )}
 
         <div className={styles.TopNav_user_mobile}>
