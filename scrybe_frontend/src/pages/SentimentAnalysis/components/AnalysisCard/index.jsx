@@ -26,7 +26,9 @@ function AnalysisCard({ sentimentData }) {
       textCountNeg < mostNegative.length &&
       textCountPos < mostPositive.length
     ) {
-      if (mostNegative[textCountNeg].start < mostPositive[textCountPos].start) {
+      if (
+        mostNegative[textCountNeg]?.start < mostPositive[textCountPos]?.start
+      ) {
         totalList.push(mostNegative[textCountNeg]);
         textCountNeg++;
       } else {
@@ -64,7 +66,7 @@ function AnalysisCard({ sentimentData }) {
           <span className={styles.analysis__text} key={index + Math.random()}>
             {sentimentData.transcript.slice(
               item.end,
-              totalList[index + 1].start
+              totalList[index + 1]?.start
             )}
           </span>
         );
