@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-// import axios from "axios";
 import logo from "../../assets/heed_logo_with_text.svg";
 import styles from "./nav.module.scss";
 
@@ -10,15 +9,6 @@ function NavBar() {
   function handleClick() {
     setClicked((pre) => !pre);
   }
-  // const [loggedIn, setLoggedIn] = useState([null]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get("https://heedapi.herokuapp.com/docs#/users/read_users_users_get")
-  //     .then((response) => {
-  //       setLoggedIn(response.data);
-  //     });
-  // }, []);
 
   return (
     <nav className={styles.nav}>

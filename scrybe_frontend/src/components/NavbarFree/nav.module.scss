@@ -38,11 +38,11 @@
   &__mobile {
     display: flex;
     justify-content: space-between;
-    width: 68%;
-    @include media(1150px) {
-      width: 84%;
-    }
+    width: 70%;
     height: auto;
+    @include media(1100px) {
+      width: 77%;
+    }
     @include media($mobile) {
       position: fixed;
       flex-direction: column;
@@ -101,10 +101,10 @@
   }
   &__links {
     display: flex;
-    padding-left: 15%;
-    gap: pix-rem(24);
+    gap: clamp(pix-rem(50), 6vw, pix-rem(100));
     align-items: center;
     cursor: pointer;
+    font-size: pix-rem(20);
     @include media($mobile) {
       flex-direction: column;
       align-items: center;
@@ -114,8 +114,10 @@
       all: unset;
       color: #5e5e5e;
       font-weight: 300;
+      transition: scale 0.2s;
       &:hover {
         color: #006cff;
+        scale: 1.1;
       }
     }
   }
