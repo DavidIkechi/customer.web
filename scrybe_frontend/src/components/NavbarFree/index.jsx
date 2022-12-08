@@ -1,7 +1,8 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/heed_logo_with_text.svg";
-import ApiService from "../../helpers/axioshelp/apis";
+// import { headers } from "../../helpers/axioshelp";
 import styles from "./nav.module.scss";
 
 function NavBar() {
@@ -9,8 +10,13 @@ function NavBar() {
   const [activeUser, setActiveUser] = useState(false);
 
   const fetchUser = async () => {
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
+    };
+    console.log(headers);
     try {
-      const res = ApiService.Account();
+      const res = await axios.get("account", headers);
       console.log(res);
       if (res.status === 200) {
         setActiveUser(res.data);
@@ -48,12 +54,21 @@ function NavBar() {
             <NavLink to="/about-us">About Us</NavLink>
           </div>
           <div className={styles.nav__ctas}>
-            <NavLink to="/signin" className={styles.ctas__button}>
-              Login
-            </NavLink>
-            <NavLink to="/try" className={styles.ctas__button}>
-              Try for Free
-            </NavLink>
+            {activeUser ? (
+              <NavLink to="/dashboard" className={styles.ctas__button}>
+                {" "}
+                Dashboard{" "}
+              </NavLink>
+            ) : (
+              <>
+                <NavLink to="/signin" className={styles.ctas__button}>
+                  Login
+                </NavLink>
+                <NavLink to="/try" className={styles.ctas__button}>
+                  Try for Free
+                </NavLink>
+              </>
+            )}
           </div>
 
           <div className={styles.nav__ctl}>
