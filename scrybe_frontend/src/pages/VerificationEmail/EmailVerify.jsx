@@ -21,7 +21,7 @@ const EmailVerify = () => {
       setMessage(response.data.data);
     } catch (err) {
       console.log(err);
-      setMessage(err.data.detail);
+      setMessage(response.data.detail);
     }
   };
   return (
