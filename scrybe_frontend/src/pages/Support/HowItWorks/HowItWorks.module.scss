@@ -8,8 +8,8 @@
   display: flex;
   justify-content: space-around;
   @include media(1500px) {
-    padding-left: 15rem;
-    padding-right: 15rem;
+    padding-left: 9rem;
+    padding-right: 9rem;
   }
   @include media(1200px) {
     padding-left: 10rem;
