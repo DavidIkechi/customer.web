@@ -30,6 +30,7 @@ function Footer() {
             </div>
 
             <div className={styles.joinContainer}>
+              <p className={styles.provide}>Join our community:</p>
               <div className={styles.socials}>
                 <a href="https://heed.hng.tech">
                   <BsInstagram />
@@ -52,11 +53,11 @@ function Footer() {
                   Home
                 </NavLink>
               </li>
-              <li>
+              {/* <li>
                 <NavLink to="/press-article" className={styles.links}>
                   Why Heed
                 </NavLink>
-              </li>
+              </li> */}
               <li>
                 <NavLink to="/about-us" className={styles.links}>
                   About Us
@@ -76,21 +77,21 @@ function Footer() {
 
             <ul>
               <h4>Quick links</h4>
-              <li>
+              {/* <li>
                 <NavLink to="/signin" className={styles.links}>
                   Authentication
                 </NavLink>
-              </li>
+              </li> */}
               <li>
                 <NavLink to="/pricing" className={styles.links}>
                   Billing and pricing
                 </NavLink>
               </li>
-              <li>
+              {/* <li>
                 <NavLink to="/account" className={styles.links}>
                   Accounts
                 </NavLink>
-              </li>
+              </li> */}
               <li>
                 <NavLink to="/faq" className={styles.links}>
                   FAQ
