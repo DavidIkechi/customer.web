@@ -152,9 +152,9 @@
 
     .chart_inner {
       position: absolute;
-      top: 20%;
-      left: 25%;
-      transform: translate(25%, 20%);
+      top: 26%;
+      left: 36%;
+      // transform: translate(25%, 20%);
 
       h1 {
         margin: 0;
@@ -166,8 +166,11 @@
       span {
         margin: 0;
         font-weight: 400;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         color: #6a6a6a;
+        display: flex;
+        align-items: center;
+        gap: 0.2rem;
       }
     }
     .scale {
