@@ -37,13 +37,7 @@ function SentimentAnalysis({ donwloadData }) {
               fill="white"
             />
           </svg>
-          <a
-            href={`/sentiment-analysis/${audioId}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            View analysis
-          </a>
+          <a href={`/sentiment-analysis/${audioId}`}>View analysis</a>
         </button>
         <div className={styles.downloadButton} onClick={exportData}>
           <img src={downloadIcon} alt="download-icon" />
