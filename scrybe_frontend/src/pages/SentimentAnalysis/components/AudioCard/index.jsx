@@ -29,8 +29,7 @@ function AudioCard({ sentimentData }) {
       <div className={styles.audio__text}>
         {sentimentData.audio_filename ? (
           <div className={styles.audio__name}>
-            {/* {fileNameEllipsis(sentimentData.audio_filename)} */}
-            {fileNameEllipsis("abcdefghijklmn.mp3")}
+            {fileNameEllipsis(sentimentData.audio_filename)}
           </div>
         ) : (
           <SkeletonLoader type="text" numberOfLines={1} />

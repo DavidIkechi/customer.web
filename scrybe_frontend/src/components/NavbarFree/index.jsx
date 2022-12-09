@@ -1,24 +1,44 @@
-import React, { useState } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-// import axios from "axios";
 import logo from "../../assets/heed_logo_with_text.svg";
+import { headers } from "../../helpers/axioshelp";
 import styles from "./nav.module.scss";
 
 function NavBar() {
   const [clicked, setClicked] = useState(false);
+  const [activeUser, setActiveUser] = useState(null);
+
+  const fetchUser = async () => {
+    try {
+      const res = await axios.get("account", { headers });
+      if (res.status === 200) {
+        setActiveUser(res.data);
+      }
+    } catch (error) {
+      // console.log(error)
+      setActiveUser(null);
+    }
+  };
+
+  const logoutUser = async () => {
+    Cookies.remove("heedAccessToken");
+    localStorage.removeItem("heedAccessToken");
+    localStorage.removeItem("heedRefreshToken");
+    localStorage.removeItem("currentUserEmail");
+    localStorage.removeItem("auth");
+    localStorage.removeItem("heedAccessTokenType");
+    setActiveUser(null);
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   function handleClick() {
     setClicked((pre) => !pre);
   }
-  // const [loggedIn, setLoggedIn] = useState([null]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get("https://heedapi.herokuapp.com/docs#/users/read_users_users_get")
-  //     .then((response) => {
-  //       setLoggedIn(response.data);
-  //     });
-  // }, []);
 
   return (
     <nav className={styles.nav}>
@@ -35,17 +55,49 @@ function NavBar() {
           onClick={() => setClicked(false)}
         >
           <div className={styles.nav__links}>
-            <NavLink to="/"> Home </NavLink>
-            <NavLink to="/pricing"> Pricing </NavLink>
-            <NavLink to="/about-us">About Us</NavLink>
+            <NavLink
+              to="/"
+              className={({ isActive }) => (isActive ? styles.activeTab : "")}
+            >
+              {" "}
+              Home{" "}
+            </NavLink>
+            <NavLink
+              to="/pricing"
+              className={({ isActive }) => (isActive ? styles.activeTab : "")}
+            >
+              {" "}
+              Pricing{" "}
+            </NavLink>
+            <NavLink
+              to="/about-us"
+              className={({ isActive }) => (isActive ? styles.activeTab : "")}
+            >
+              About Us
+            </NavLink>
+            {activeUser && <NavLink to="/dashboard">Dashboard</NavLink>}
           </div>
           <div className={styles.nav__ctas}>
-            <NavLink to="/signin">
-              <button type="button">Login</button>
-            </NavLink>
-            <NavLink to="/try">
-              <button type="button">Try for Free</button>
-            </NavLink>
+            {activeUser ? (
+              <>
+                <button className={`${styles.logout}`} onClick={logoutUser}>
+                  {" "}
+                  Logout{" "}
+                </button>
+                {/* <NavLink to="/try" className={styles.ctas__button}>
+                  Try for Free
+                </NavLink> */}
+              </>
+            ) : (
+              <>
+                <NavLink to="/signin" className={styles.ctas__button}>
+                  Login
+                </NavLink>
+                <NavLink to="/try" className={styles.ctas__button}>
+                  Try for Free
+                </NavLink>
+              </>
+            )}
           </div>
 
           <div className={styles.nav__ctl}>
