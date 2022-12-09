@@ -40,9 +40,10 @@ def check_and_update_jobs():
     # get the Job id which matches with the audio id.
     for job in jobs:
         get_job_id = job.audio_id
+        print(get_job_id)
+
         # get the Job id which matches with the audio id.
         get_audios = crud.get_audio(db, get_job_id)
-        print(get_audios)
         if get_audios is not None:
             
             transcript_id = get_audios.job_id
