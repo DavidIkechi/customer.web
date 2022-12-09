@@ -255,26 +255,28 @@ def get_order_summary_by_id(db: Session, order_id: str):
     return order_summary
 
 def get_leaderboard(db: Session, user_id: int):
-        results = db.query(models.Audio).filter(models.Audio.user_id == user_id).all()
-        leaderboard = []
-        
-        agents = dict()
-        unique_ids = []
-        week = datetime.now().isocalendar().week
-        month = datetime.now().month
+    results = db.query(models.Audio).filter(models.Audio.user_id == user_id).all()
+    leaderboard = []
+    
+    agents = dict()
+    unique_ids = []
+    week = datetime.now().isocalendar().week
+    month = datetime.now().month
 
-        for i in results:
+    for i in results:
+        if i.job.job_status == "completed":
             unique_id = i.agent_id
             unique_ids.append(unique_id)
 
-        for i in unique_ids:
-            average_scores = []
-            per_agent = {"week": {"firstname": "", "lastname": "", "agent_id": "", "total_calls": 0, "positive_score": 0, "negative_score": 0, "neutral_score":0,
-            "average_score": 0},
-            "month": {"firstname": "", "lastname": "", "agent_id": "", "total_calls": 0, "positive_score": 0, "negative_score": 0, "neutral_score":0,
-            "average_score": 0}
-             }
-            for j in results:
+    for i in unique_ids:
+        average_scores = []
+        per_agent = {"week": {"firstname": "", "lastname": "", "agent_id": "", "total_calls": 0, "positive_score": 0, "negative_score": 0, "neutral_score":0,
+        "average_score": 0, "str_agent_id": ""},
+        "month": {"firstname": "", "lastname": "", "agent_id": "", "total_calls": 0, "positive_score": 0, "negative_score": 0, "neutral_score":0,
+        "average_score": 0, "str_agent_id": ""}
+        }
+        for j in results:
+            if j.job.job_status == "completed":
                 if j.agent_id == i:
                     if j.timestamp.isocalendar().week == week:
                         per_agent["week"]["firstname"] = j.agent_firstname
@@ -289,6 +291,7 @@ def get_leaderboard(db: Session, user_id: int):
                             per_agent["week"]["neutral_score"] += 1
                         average_scores.append(j.average_score)
                         per_agent["week"]["average_score"] = round(sum(average_scores)/len(average_scores), 2)
+                        per_agent["week"]["str_agent_id"] = "AG" + str(1000000 + per_agent["week"]['agent_id']) + "DE"
 
                     if j.timestamp.month == month:
                         per_agent["month"]["firstname"] = j.agent_firstname
@@ -303,25 +306,27 @@ def get_leaderboard(db: Session, user_id: int):
                             per_agent["month"]["neutral_score"] += 1
                         average_scores.append(j.average_score)
                         per_agent["month"]["average_score"] = round(sum(average_scores)/len(average_scores), 2) 
-            agents[i] = per_agent
-            
-        leaderboard_week = []
-        leaderboard_month = []
-        for i in agents.values():
-            leaderboard_week.append(i["week"])
-            leaderboard_month.append(i["month"])
-        leaderboard_week = sorted(leaderboard_week, key=lambda k: k['average_score'], reverse=True)
-        leaderboard_month = sorted(leaderboard_month, key=lambda k: k['average_score'], reverse=True)
-
-        for i in leaderboard_week:
-            i['rank'] = leaderboard_week.index(i) + 1
-            i["str_agent_id"] = "AG" + str(1000000 + i['agent_id']) + "DE"
-
-        for i in leaderboard_month:
-            i['rank'] = leaderboard_month.index(i) + 1
-            i["str_agent_id"] = "AG" + str(1000000 + i['agent_id']) + "DE"
+                        per_agent["month"]["str_agent_id"] = "AG" + str(1000000 + per_agent["month"]['agent_id']) + "DE"
+        agents[i] = per_agent
         
-        leaderboard.append(leaderboard_week)
-        leaderboard.append(leaderboard_month)
+    leaderboard_week = []
+    leaderboard_month = []
+    for i in agents.values():
+        leaderboard_week.append(i["week"])
+        leaderboard_month.append(i["month"])
+        
+    leaderboard_week = sorted(leaderboard_week, key=lambda k: k['average_score'], reverse=True)
+    leaderboard_month = sorted(leaderboard_month, key=lambda k: k['average_score'], reverse=True)
 
-        return leaderboard
+    for i in leaderboard_week:
+        i['rank'] = leaderboard_week.index(i) + 1
+        # i["str_agent_id"] = "AG" + str(1000000 + i['agent_id']) + "DE"
+
+    for i in leaderboard_month:
+        i['rank'] = leaderboard_month.index(i) + 1
+        # i["str_agent_id"] = "AG" + str(1000000 + i['agent_id']) + "DE"
+    
+    leaderboard.append(leaderboard_week)
+    leaderboard.append(leaderboard_month)
+
+    return leaderboard
