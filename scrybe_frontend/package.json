@@ -27,7 +27,8 @@
     "react-icons": "^4.7.1",
     "react-router": "^6.4.3",
     "react-router-dom": "^6.4.3",
-    "sass": "^1.56.1"
+    "sass": "^1.56.1",
+    "atatus-js": "4.5.0"
   },
   "devDependencies": {
     "@rollup/plugin-eslint": "^9.0.1",

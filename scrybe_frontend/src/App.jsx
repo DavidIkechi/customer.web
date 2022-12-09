@@ -67,6 +67,10 @@ import ForgetPasswordNew from "./pages/ForgotPasswordNew/Index";
 import NewSetNewPassword from "./pages/NewSetNewPassword";
 import NewPasswordResetSuccessful from "./pages/NewPasswordResetSuccessful";
 
+import * as atatus from "atatus-js";
+
+atatus.config("e7b42895d6f546a2b1f86414988a8afa").install();
+
 function App() {
   return (
     <>
