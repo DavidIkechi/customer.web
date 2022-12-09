@@ -345,6 +345,7 @@ def analyse_and_store_audio(db:Session, job_id, user_id):
                             detail=f"Job with id: {job_id} was not found")
     job_audio_id = job_id
     audio_id = Job.id
+    print(job_audio_id, audio_id)
 
     db_job = db.query(models.Job).filter(models.Job.audio_id == audio_id).first()
     if db_job.job_status == "completed":
