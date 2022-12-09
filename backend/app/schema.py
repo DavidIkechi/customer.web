@@ -14,6 +14,7 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     company_name: str
+    company_address: str
     password: str
 
 class User(UserBase):
