@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import { useEffect } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import styles from "../DashboardOverview.module.scss";
 import toneWave from "../assets/tone_wave.svg";
 import upload from "../assets/upload.svg";
@@ -31,8 +31,8 @@ const RecentRecording = ({ recentRecording }) => {
             </tr>
           </thead>
           <tbody>
-            {recentRecording.map((data) => (
-              <tr>
+            {recentRecording.map((data, index) => (
+              <tr key={index + 2}>
                 <td>
                   <img src={toneWave} alt="tone wave" />
                 </td>
