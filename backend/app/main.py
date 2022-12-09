@@ -14,7 +14,9 @@ from routers.transcribe import transcript_router
 from routers.score import score_count
 import models, json
 from auth import get_active_user, get_current_user, get_admin
-from jwt import main_login, get_access_token, refresh
+
+from jwt import main_login, get_access_token, verify_password, refresh
+
 
 
 from authlib.integrations.starlette_client import OAuth
@@ -753,19 +755,40 @@ async def reset_password(token: str, new_password: schema.UpdatePassword, db: Se
     
     reset_done = crud.reset_password(db, new_password.password, user)
 
-    if not reset_done:
-        raise HTTPException(status_code=500)
+    if reset_done is None:
+        raise HTTPException(status_code=500, detail="Failed to update password")
     
     return reset_done
 
 
 
+@app.patch('/change-password', summary = "change password", tags=['users'])
+async def change_password(password_schema: schema.ChangePassword, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    its_match = password_schema.old_password == password_schema.new_password
+    its_le_eight = len(password_schema.new_password) < 8
 
+    if its_match:
+        raise HTTPException(status_code=500, detail="New password cannot be the same as old password")
+    elif its_le_eight:
+        raise HTTPException(status_code=500, detail="Password must have at least 8 characters")
 
-# @app.route('/logout/google')
-# async def logout(request: Request):
-#     request.session.pop('user', None)
-#     return RedirectResponse(url='/')
+    user_db = crud.get_user_by_email(db, user.email)
+
+    if user_db is None:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    password_match =  verify_password(password_schema.old_password, user_db.password)
+
+    if not password_match:
+        raise HTTPException(status_code=500, detail="Password does not match")
+    
+    reset_done = crud.reset_password(db, password_schema.new_password, user_db)
+
+    if reset_done is None:
+        raise HTTPException(status_code=500, detail="Failed to update password")
+    
+    return reset_done
+
 
 
 @app.get('/login/google')
