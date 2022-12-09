@@ -12,10 +12,13 @@ const bgMap = {
 
 const LeaderBoard = ({ LeaderboardData }) => {
   const [selected, setSelected] = useState({});
+
   useEffect(() => {
     setSelected(LeaderboardData.week);
   }, [LeaderboardData.week]);
-  console.log("leader", LeaderboardData);
+  // console.log("leader", LeaderboardData);
+  // console.log("select", selected);
+  // console.log("select", selected);
 
   function selectFunc(e) {
     setSelected(LeaderboardData[e.target.value]);
@@ -50,15 +53,15 @@ const LeaderBoard = ({ LeaderboardData }) => {
               </tr>
             </thead>
             <tbody>
-              {/* {selected &&
-                selected.Top3_Agents.map((value, index) => (
-                  <tr style={{ background: bgMap[index] }}>
+              {selected &&
+                selected.Top3_Agents?.map((value, index) => (
+                  <tr style={{ background: bgMap[index] }} key={index + 1}>
                     <td>{value.str_agent_id}</td>
                     <td>{value.total_calls}</td>
                     <td>{value.average_score}</td>
                     <td>{value.rank}</td>
                   </tr>
-                ))} */}
+                ))}
             </tbody>
           </table>
         </div>
