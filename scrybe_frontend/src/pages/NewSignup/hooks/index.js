@@ -75,7 +75,7 @@ const createAccount = () => {
       email: email,
     };
 
-    console.log(data);
+    // console.log(data);
   };
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -135,3 +135,54 @@ const createAccount = () => {
 };
 
 export { createAccount };
+
+const completeRegistration = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [company_name, setCompany] = useState("");
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [company_address, setAddress] = useState("");
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [addStateTest, setAddStateTest] = useState("false");
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [companyStateTest, setCompanyStateTest] = useState(false);
+
+  const companyNameTest = new RegExp(/^[a-zA-Z]{2,}$/);
+  const addressTest = new RegExp(
+    /^(\d{1,}) [a-zA-Z0-9\s]+(\.)? [a-zA-Z]+(\,)? [A-Z]{2} [0-9]{5,6}/g
+  );
+
+  const tester = (e, reg, func) => {
+    if (reg.test(e.target.value)) {
+      func(true);
+    } else {
+      func(false);
+    }
+  };
+
+  const handleCompanyName = (e) => {
+    setCompany(e.target.value);
+    tester(e, companyNameTest, setCompanyStateTest);
+  };
+
+  const handleAddress = (e) => {
+    setAddress(e.target.value);
+    tester(e, addressTest, setAddStateTest);
+  };
+
+  const handleTotalSubmit = (e) => {
+    e.preventDefault();
+    console.log("yay!");
+  };
+
+  return {
+    handleCompanyName,
+    handleAddress,
+    company_name,
+    company_address,
+    addStateTest,
+    companyStateTest,
+    handleTotalSubmit,
+  };
+};
+
+export { completeRegistration };

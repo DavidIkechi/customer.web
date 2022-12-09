@@ -55,7 +55,6 @@ const NewSignup = () => {
               placeholder="Enter your first name"
               onChange={createAccountHook.handleFirstname}
               value={createAccountHook.first_name}
-              // required
             />
             {!createAccountHook.nameStateTest ? (
               <p className={styles.err}>first name must be 2-16 characters</p>
@@ -75,7 +74,6 @@ const NewSignup = () => {
               placeholder="Enter your full name"
               onChange={createAccountHook.handleLastname}
               value={createAccountHook.last_name}
-              // required
             />
             {!createAccountHook.lastStateTest ? (
               <p className={styles.err}>last name must be 2-16 characters</p>
@@ -96,7 +94,6 @@ const NewSignup = () => {
               placeholder="Enter your company email"
               onChange={createAccountHook.handleEmail}
               value={createAccountHook.email}
-              // required
             />
             {!createAccountHook.emailStateTest ? (
               <p className={styles.err}>Please enter a valid email address</p>
@@ -117,7 +114,6 @@ const NewSignup = () => {
               placeholder="Password at least 8 characters"
               onChange={createAccountHook.handlePassword}
               value={createAccountHook.password}
-              // required
             />
             <img
               src={createAccountHook.visibility ? visible : hidden}
@@ -157,7 +153,7 @@ const NewSignup = () => {
                 : `${styles.buttonVld}`
             }
           >
-            Sign In
+            Create account
           </button>
         </form>
 
