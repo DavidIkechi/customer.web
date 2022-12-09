@@ -76,7 +76,7 @@ class AgentBase(BaseModel):
     last_name: str
 
 class AgentCreate(AgentBase):
-    pass
+    location: str
 
 class Agent(AgentBase):
     id: int
@@ -156,8 +156,6 @@ class UserProfile(BaseModel):
 
     
 class UserProfileUpdate(BaseModel):
-    first_name: str
-    last_name: str
     phone_number: Optional[str]
     company_address: Optional[str]
 
@@ -185,3 +183,11 @@ class Order(OrderBase):
     annual_amount: float
     order_date: datetime
     next_payment_due_date: datetime
+
+
+class ChangePassword(BaseModel):
+    old_password: str
+    new_password: str
+
+class RefreshToken(BaseModel):
+    refresh_token:str

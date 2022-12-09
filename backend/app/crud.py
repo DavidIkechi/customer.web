@@ -7,6 +7,7 @@ from passlib.context import CryptContext
 from fastapi import HTTPException 
 import cloudinary
 import cloudinary.uploader
+from datetime import datetime
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -110,6 +111,12 @@ def delete_user(db: Session, user_id: int, current_user):
 def get_audio(db: Session, audio_id: int):
     return db.query(models.Audio).filter(models.Audio.id == audio_id).first()
 
+def get_freeaudio(db: Session, audio_id: int):
+    return db.query(models.Audio).filter(models.Audio.job_id == id).first()
+
+def get_freetrial(db: Session, id: int):
+    return db.query(models.FreeTrial).filter(models.FreeTrial.transcript_id == id).first()
+
 def get_audios(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Audio).offset(skip).limit(limit).all()
 
@@ -165,7 +172,7 @@ def get_agents_by_company_id(db: Session, company_id: int):
     return db.query(models.Agent).filter(models.Agent.company_id == company_id).all()
 
 def create_agent(db: Session, agent: schema.AgentCreate, company_id: int):
-    db_agent = models.Agent(first_name=agent.first_name, last_name=agent.last_name, company_id=company_id)
+    db_agent = models.Agent(first_name=agent.first_name, last_name=agent.last_name, location=agent.location, company_id=company_id)
     db.add(db_agent)
     db.commit()
     db.refresh(db_agent)
@@ -210,7 +217,7 @@ def get_user_profile(db: Session, user_id: int):
     company = db.query(models.Company).filter(models.Company.id ==user_profile.company_id).first()
     user = db.query(models.User).filter(models.User.id == user_id).first()
     for agent in db.query(models.Agent).filter(models.Agent.company_id == user_profile.company_id).all():
-        agents.append(agent.first_name + " " + agent.last_name)
+        agents.append({"first_name": agent.first_name, "last_name": agent.last_name, "location": agent.location})
 
     return {
         "first_name": user.first_name,
@@ -248,43 +255,78 @@ def get_order_summary_by_id(db: Session, order_id: str):
     return order_summary
 
 def get_leaderboard(db: Session, user_id: int):
-        results = db.query(models.Audio).filter(models.Audio.user_id == user_id).all()
-        leaderboard = []
-        
-        agents = dict()
-        full_names = []
+    results = db.query(models.Audio).filter(models.Audio.user_id == user_id).all()
+    leaderboard = []
+    
+    agents = dict()
+    unique_ids = []
+    week = datetime.now().isocalendar().week
+    month = datetime.now().month
 
-        for i in results:
-            full_name = i.agent_firstname + " " + i.agent_lastname
-            full_names.append(full_name)
+    for i in results:
+        if i.job.job_status == "completed":
+            unique_id = i.agent_id
+            unique_ids.append(unique_id)
 
-        for i in full_names:
-            average_scores = []
-            per_agent = {
-            "firstname": "", "lastname": "", "agent_id": "", "total_calls": 0, "positive_score": 0, "negative_score": 0, "neutral_score":0,
-            "average_score": 0
+    for i in unique_ids:
+        average_scores = []
+        per_agent = {"week": {"firstname": "", "lastname": "", "agent_id": "", "total_calls": 0, "positive_score": 0, "negative_score": 0, "neutral_score":0,
+        "average_score": 0, "str_agent_id": ""},
+        "month": {"firstname": "", "lastname": "", "agent_id": "", "total_calls": 0, "positive_score": 0, "negative_score": 0, "neutral_score":0,
+        "average_score": 0, "str_agent_id": ""}
         }
-            for j in results:
-                if j.agent_firstname + " " + j.agent_lastname == i:
-                    per_agent["firstname"] = j.agent_firstname
-                    per_agent["lastname"] = j.agent_lastname
-                    per_agent["agent_id"] = j.agent_id
-                    per_agent["total_calls"] += 1
-                    if j.overall_sentiment == "Positive":
-                        per_agent["positive_score"] += 1
-                    if j.overall_sentiment == "Negative":
-                        per_agent["negative_score"] += 1
-                    if j.overall_sentiment == "Neutral":
-                        per_agent["neutral_score"] += 1
-                    average_scores.append(j.average_score)
-                    per_agent["average_score"] = round(sum(average_scores)/len(average_scores), 2) 
-            agents[i] = per_agent
-            
-        for i in agents.values():
-            leaderboard.append(i)
-        leaderboard = sorted(leaderboard, key=lambda k: k['average_score'], reverse=True)
-        for i in leaderboard:
-            i['rank'] = leaderboard.index(i) + 1
-            i["str_agent_id"] = "AG" + str(1000000 + i['agent_id']) + "DE"
+        for j in results:
+            if j.job.job_status == "completed":
+                if j.agent_id == i:
+                    if j.timestamp.isocalendar().week == week:
+                        per_agent["week"]["firstname"] = j.agent_firstname
+                        per_agent["week"]["lastname"] = j.agent_lastname
+                        per_agent["week"]["agent_id"] = j.agent_id
+                        per_agent["week"]["total_calls"] += 1
+                        if j.overall_sentiment == "Positive":
+                            per_agent["week"]["positive_score"] += 1
+                        if j.overall_sentiment == "Negative":
+                            per_agent["week"]["negative_score"] += 1
+                        if j.overall_sentiment == "Neutral":
+                            per_agent["week"]["neutral_score"] += 1
+                        average_scores.append(j.average_score)
+                        per_agent["week"]["average_score"] = round(sum(average_scores)/len(average_scores), 2)
+                        per_agent["week"]["str_agent_id"] = "AG" + str(1000000 + per_agent["week"]['agent_id']) + "DE"
 
-        return leaderboard
+                    if j.timestamp.month == month:
+                        per_agent["month"]["firstname"] = j.agent_firstname
+                        per_agent["month"]["lastname"] = j.agent_lastname
+                        per_agent["month"]["agent_id"] = j.agent_id
+                        per_agent["month"]["total_calls"] += 1
+                        if j.overall_sentiment == "Positive":
+                            per_agent["month"]["positive_score"] += 1
+                        if j.overall_sentiment == "Negative":
+                            per_agent["month"]["negative_score"] += 1
+                        if j.overall_sentiment == "Neutral":
+                            per_agent["month"]["neutral_score"] += 1
+                        average_scores.append(j.average_score)
+                        per_agent["month"]["average_score"] = round(sum(average_scores)/len(average_scores), 2) 
+                        per_agent["month"]["str_agent_id"] = "AG" + str(1000000 + per_agent["month"]['agent_id']) + "DE"
+        agents[i] = per_agent
+        
+    leaderboard_week = []
+    leaderboard_month = []
+    for i in agents.values():
+        leaderboard_week.append(i["week"])
+        leaderboard_month.append(i["month"])
+        
+    leaderboard_week = sorted(leaderboard_week, key=lambda k: k['average_score'], reverse=True)
+    leaderboard_month = sorted(leaderboard_month, key=lambda k: k['average_score'], reverse=True)
+
+    for i in leaderboard_week:
+        i['rank'] = leaderboard_week.index(i) + 1
+        # i["str_agent_id"] = "AG" + str(1000000 + i['agent_id']) + "DE"
+
+    for i in leaderboard_month:
+        i['rank'] = leaderboard_month.index(i) + 1
+        # i["str_agent_id"] = "AG" + str(1000000 + i['agent_id']) + "DE"
+    
+    leaderboard.append(leaderboard_week)
+    leaderboard.append(leaderboard_month)
+
+    return leaderboard

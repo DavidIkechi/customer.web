@@ -1,15 +1,46 @@
 import React from "react";
-// import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
 // import { Route, Routes } from "react-router-dom";
+
 import styles from "./checkout.module.scss";
 import startUpIcon from "./assets/star.svg";
-import currency from "./assets/naira.svg";
+import currency from "../assets/dollar.svg";
 import tag from "./assets/sell.svg";
+import checkIcon from "./assets/check.svg";
+import visa from "./assets/VisaInc.png";
+import master from "./assets/Mastercard.png";
+import NavBarFree from "../../components/NavbarFree";
+import Footer from "../../components/Footer";
+import axios from "axios";
 
 function Checkout() {
+  const [dataArray, setDataArray] = useState([]);
+
+  const token = localStorage.getItem("heedAccessToken");
+  console.log(token);
+
+  const fetchOrders = async () => {
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+
+    await axios.get("orders", { headers }).then((res) => {
+      console.log(res);
+      setDataArray(res.data);
+    });
+  };
+
+  console.log(dataArray);
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
   return (
     <div className={styles.checkout}>
+      <NavBarFree />
       <div className={styles.container}>
         <div className={styles.header}>
           <h1 className={styles.heroH1}>
@@ -41,18 +72,13 @@ function Checkout() {
                     </div>
                     <div className={styles.plansPricing}>
                       <div className={styles.plansPricingFigure}>
-                        <div className={styles.plansPricingCurrency}>
-                          <img src={currency} alt="currency symbol" />
-                        </div>
-                        <h4>7,500</h4>
+                        <h4>$17</h4>
                       </div>
                       <p>per month</p>
                     </div>
                     <div className={styles.plansPricingInfo}>
                       <p>
-                        Billed
-                        <span>N7,500</span>
-                        per month
+                        Billed <span>$17</span> per month
                       </p>
                     </div>
                   </div>
@@ -76,18 +102,13 @@ function Checkout() {
                     </div>
                     <div className={styles.plansPricing}>
                       <div className={styles.plansPricingFigure}>
-                        <div className={styles.plansPricingCurrency}>
-                          <img src={currency} alt="currency symbol" />
-                        </div>
-                        <h4>7,500</h4>
+                        <h4>$15</h4>
                       </div>
                       <p>per month</p>
                     </div>
                     <div className={styles.plansPricingInfo}>
                       <p>
-                        Billed
-                        <span>N7,500</span>
-                        per month
+                        Billed <span>$180</span> annually
                       </p>
                     </div>
                   </div>
@@ -97,15 +118,17 @@ function Checkout() {
 
             <div className={styles.checkoutFormSections}>
               <div className={styles.checkoutSectionHeading}>
-                <h2>2. Card holder information</h2>
-                <p>
+                <h2 className={styles.checkoutSectionHeadingH2}>
+                  2. Card holder information
+                </h2>
+                <p className={styles.checkoutSectionHeadingP}>
                   Already a Heed User?
                   <span>Login</span>
                 </p>
               </div>
               <div className={styles.checkoutFormFields}>
                 <form id="my-form">
-                  <div>
+                  <div className={styles.formName}>
                     <label htmlFor="card_name">Name on Card</label>
                     <input
                       type="text"
@@ -114,7 +137,7 @@ function Checkout() {
                       placeholder="John Doe"
                     />
                   </div>
-                  <div>
+                  <div className={styles.formEmail}>
                     <label htmlFor="card_name">Email</label>
                     <input
                       type="text"
@@ -128,11 +151,11 @@ function Checkout() {
             </div>
             <div className={styles.checkoutFormSections}>
               <div className={styles.checkoutSectionHeading}>
-                <h2>3.Card detials </h2>
+                <h2>3. Card details </h2>
               </div>
               <div className={styles.checkoutFormFields}>
                 <form id="my-form">
-                  <div>
+                  <div className={styles.cardNumber}>
                     <label htmlFor="card_name">Card Number</label>
                     <input
                       type="text"
@@ -161,7 +184,7 @@ function Checkout() {
                       />
                     </div>
                   </div>
-                  <div>
+                  <div className={styles.checkboxsection}>
                     <label htmlFor="checkbox" className={styles.chkContainer}>
                       I agreee to <span>Terms and Conditions</span> and{" "}
                       <span>Privacy Policy</span>
@@ -174,9 +197,64 @@ function Checkout() {
               <button className={styles.formButton}>Proceed</button>
             </div>
           </div>
-          <div className={styles.orderDetails}></div>
+          <div className={styles.orderDetails}>
+            <div className={styles.featuresSection}>
+              <h2>Features of Starup plan</h2>
+              <div className={styles.pricingFeatures}>
+                <div className={styles.pricingFeaturesItem}>
+                  <img src={checkIcon} alt="check-mark icon" />
+                  <p>Ai-Powered call transcriptions</p>
+                </div>
+                <div className={styles.pricingFeaturesItem}>
+                  <img src={checkIcon} alt="check-mark icon" />
+                  <p>Call Tracking & Recording</p>
+                </div>
+                <div className={styles.pricingFeaturesItem}>
+                  <img src={checkIcon} alt="check-mark icon" />
+                  <p> Business Hours</p>
+                </div>
+                <div className={styles.pricingFeaturesItem}>
+                  <img src={checkIcon} alt="check-mark icon" />
+                  <p>Email & Chat Support</p>
+                </div>
+                <div className={styles.support}>
+                  <p>
+                    If you have any questions or need more information, please
+                    contact us through <span>support</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h2>Features of Starup plan</h2>
+              <div>
+                <div className={styles.cardTypes}>
+                  <img src={visa} alt="visa icon" />
+                  <img src={master} alt="visa icon" />
+                </div>
+              </div>
+            </div>
+            <div className={styles.orderSummary}>
+              <h2>Features of Starup plan</h2>
+              <div className={styles.planDetails}>
+                <p>Heed Startup Plan (annual)</p>
+                <p>$180 per year</p>
+              </div>
+              <div className={styles.totalSummary}>
+                <p>Total</p>
+                <p>$180 per year</p>
+              </div>
+              <div className={styles.datepayment}>
+                <p>
+                  Next payment is due on{" "}
+                  <b className={styles.spandate}>7th November 2022</b>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

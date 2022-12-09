@@ -1,5 +1,10 @@
 @use "../../../pages/AgentReport/styles/_mixins.scss" as mixins;
-
+.empty {
+  font-weight: 300;
+  color: #3f3f3f;
+  text-align: center;
+  
+}
 .agentDetails {
   width: 40%;
   display: flex;
@@ -20,7 +25,6 @@
     }
   }
   .details {
-    // height: 80%;
     margin-top: 1rem;
     display: flex;
     flex-direction: column;
@@ -90,53 +94,14 @@
     .number {
       font-weight: bold;
       width: 20%;
-      // @include mixins.sm {
-      //   font-size: 0.8rem;
-      //   width: 28%;
-      // }
-      // @include mixins.md {
-      //   font-size: 1rem;
-      // }
+    
     }
   }
 }
 
-@media screen and (max-width: 944px) {
+@media screen and (max-width: 955px) {
   .agentDetails {
     width: 90%;
     margin: auto;
   }
 }
-
-// .agentDetails {
-//   max-height: 100%;
-//   padding: 30px 5px;
-//   width: 100%;
-//   background-color: white;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: space-evenly;
-//   border-radius: 10px;
-//   .firstp {
-//     font-size: 14px;
-//   }
-//   .secondp {
-//     font-size: 20px;
-//   }
-//   .callDetails {
-//     justify-content: space-between;
-//     display: flex;
-//     margin: 10px 0px 10px 0px;
-//     padding: 8px;
-//     border-radius: 8px;
-//     background-color: #ececec;
-//     gap: 8px;
-//     .title {
-//       width: 45%;
-//     }
-//     .number {
-//       font-weight: bold;
-//       width: 30%;
-//     }
-//   }
-// }
