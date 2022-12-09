@@ -24,7 +24,7 @@ const LeaderBoard = ({ LeaderboardData }) => {
     setSelected(LeaderboardData[e.target.value]);
     console.log("clicked", LeaderboardData[e.target.value]);
   }
-
+  // console.log(selected.week.Top3_Agents);
   return (
     <div className={styles.leaderboard}>
       <div className={styles.leaderboard__heading}>
@@ -38,33 +38,39 @@ const LeaderBoard = ({ LeaderboardData }) => {
         </select>
       </div>
       <div className={styles.subcontent_con}>
-        <div className={styles.agents}>
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>
-                  <img src={telephone} alt="telephone" />
-                </th>
-                <th>Score /10</th>
-                <th>
-                  <img src={leaderboardIcon} alt="leaderboard icon" />
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {selected &&
-                selected.Top3_Agents?.map((value, index) => (
-                  <tr style={{ background: bgMap[index] }} key={index + 1}>
-                    <td>{value.str_agent_id}</td>
-                    <td>{value.total_calls}</td>
-                    <td>{value.average_score}</td>
-                    <td>{value.rank}</td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
+        {selected && selected.Top3_Agents?.length > 0 ? (
+          <div className={styles.agents}>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>
+                    <img src={telephone} alt="telephone" />
+                  </th>
+                  <th>Score /10</th>
+                  <th>
+                    <img src={leaderboardIcon} alt="leaderboard icon" />
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {selected &&
+                  selected.Top3_Agents?.map((value, index) => (
+                    <tr style={{ background: bgMap[index] }} key={index + 1}>
+                      <td>{value.str_agent_id}</td>
+                      <td>{value.total_calls}</td>
+                      <td>{value.average_score}</td>
+                      <td>{value.rank}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className={styles.empty_state}>
+            <p>Start uploading to get an overview of your team performance. </p>
+          </div>
+        )}
       </div>
     </div>
   );

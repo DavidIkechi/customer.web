@@ -18,11 +18,11 @@ class Service {
   }
 
   async TotalAnalysis() {
-    return this.request.get("total-analysis");
+    return this.request.get(`total-analysis`);
   }
 
   async RecentRecordings() {
-    return this.request.get("recent-recordings?skip=0&limit=5");
+    return this.request.get(`recent-recordings?skip=0&limit=5`);
   }
 
   async getAgentReport(id) {
