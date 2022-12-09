@@ -48,7 +48,7 @@ import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
 // import Successful from "./pages/Successful/Successful";
 import Support from "./pages/Support/support";
 import TermsOfService from "./pages/TermsOfService";
-import TryProcessing from "./pages/TryForFree/tryProcessing";
+// import TryProcessing from "./pages/TryForFree/tryProcessing";
 import TryResults from "./pages/TryForFree/tryResults";
 import UploadedRecordings from "./pages/UploadRecordings";
 import { UploadModal } from "./pages/UploadRecordingsModal";
@@ -102,7 +102,7 @@ function App() {
           element={<SetNewPassword />}
         /> */}
         <Route path="/emailverification/:token" element={<EmailVerify />} />
-        <Route path="/try-processing" element={<TryProcessing />} />
+        {/* <Route path="/try-processing" element={<TryProcessing />} /> */}
         <Route path="/try-results" element={<TryResults />} />
         {/* <Route path="/forget-password" element={<ForgetPassword />} /> */}
 
@@ -126,7 +126,7 @@ function App() {
         <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
         <Route path="/agent-report/:agentId" element={<AgentReport />} />
         <Route path="/reviews" element={<Reviews />} />
-        <Route path="/try-processing" element={<TryProcessing />} />
+        {/* <Route path="/try-processing" element={<TryProcessing />} /> */}
         <Route path="/try-results/:transcribeId" element={<TryResults />} />
         <Route
           path="settings/personal-information"
