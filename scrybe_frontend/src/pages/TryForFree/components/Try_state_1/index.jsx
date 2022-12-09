@@ -7,13 +7,15 @@ import styles from "./try_state_1.module.scss";
 // import RecordingLogo from "../../assets/Recording-logo.png";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Processing from "../Try_state_3/index";
 // import { object } from "prop-types";
 
 export default function TryState1() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [transcribeId, setTranscribeId] = useState("");
   // const [hasError, setError] = useState(true);
-  const [display, setDisplay] = useState(false);
+  // const [display, setDisplay] = useState(false);
+  const [processing, setProcessing] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const inputRef = useRef();
 
@@ -21,7 +23,6 @@ export default function TryState1() {
     setSelectedFile(event.target.files[0]);
   };
 
-  // console.log(selectedFile);
   const handleDragOver = (event) => {
     event.preventDefault();
   };
@@ -30,6 +31,12 @@ export default function TryState1() {
     setSelectedFile(handleFileSelect);
   };
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (processing) {
+  //     navigate("/try-processing");
+  //   }
+  // }, [processing, navigate]);
 
   useEffect(() => {
     if (uploadSuccess) {
@@ -40,6 +47,7 @@ export default function TryState1() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setProcessing(true);
     const formData = new FormData();
     formData.append("file", selectedFile);
     try {
@@ -49,15 +57,14 @@ export default function TryState1() {
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
       });
-      // console.log(response.data);
       setUploadSuccess(true);
       setTranscribeId(response.data.transcript_id);
     } catch (error) {
-      // setError(true);
       console.log(error);
       setUploadSuccess(false);
     }
   };
+  if (processing) return <Processing />;
 
   if (selectedFile)
     return (
@@ -82,73 +89,56 @@ export default function TryState1() {
               <div className={styles.pDiv}>
                 <p>OR</p>
               </div>
-
-              <form onSubmit={handleSubmit}>
-                <input
-                  type="file"
-                  name="file"
-                  hidden
-                  ref={inputRef}
-                  onChange={handleFileSelect}
-                />
-                <p
-                  className={styles.Upload}
-                  onClick={() => inputRef.current.click()}
-                >
-                  Select another file from your computer
-                </p>
-                <input
-                  onClick={() => {
-                    setDisplay(true);
-                    // console.log("nice");
-                  }}
-                  type="submit"
-                  className={styles.selectButton2}
-                  value="Transcribe"
-                />
-              </form>
-
-              <div
-                className={
-                  display ? `${styles.div} ${styles.active}` : `${styles.div}`
-                }
-              >
-                <p>
-                  Callback URL: https://heed.hng.tech/try-results/{transcribeId}
-                </p>
-              </div>
-              {/* <div
-              className={
-                hasError ? `${styles.div} ${styles.active} ` : `${styles.div}`
-              }
-            >
-              <p>Server is down</p>
-            </div> */}
             </div>
-          </div>
 
-          <div className={styles.tryNote}>
-            <p>Please note;</p>
-            <ul>
-              <li>
-                You may upload, transcribe and analyse only one recording at a
-                time.
-              </li>
-              <li>File must not be larger than 5mb.</li>
-              <li>
-                Transcription may take up to 3 minutes, kindly wait or sign up
-                to use the job ID feature.
-              </li>
-              <li>
-                Downloading sentiment anlysis is currently only available on the
-                webapp.
-              </li>
-              <li>
-                Tracking sentiment anlysis records is currently only available
-                on the webapp.
-              </li>
-            </ul>
+            <form onSubmit={handleSubmit}>
+              <input
+                type="file"
+                name="file"
+                hidden
+                ref={inputRef}
+                onChange={handleFileSelect}
+              />
+              <p
+                className={styles.Upload}
+                onClick={() => inputRef.current.click()}
+              >
+                Select another file from your computer
+              </p>
+              <input
+                onClick={() => {
+                  // setProcessing(true);
+                  // console.log("nice");
+                }}
+                type="submit"
+                className={styles.selectButton2}
+                value="Transcribe"
+              />
+            </form>
           </div>
+        </div>
+
+        <div className={styles.tryNote}>
+          <p>Please note;</p>
+          <ul>
+            <li>
+              You may upload, transcribe and analyse only one recording at a
+              time.
+            </li>
+            <li>File must not be larger than 5mb.</li>
+            <li>
+              Transcription may take up to 3 minutes, kindly wait or sign up to
+              use the job ID feature.
+            </li>
+            <li>
+              Downloading sentiment anlysis is currently only available on the
+              webapp.
+            </li>
+            <li>
+              Tracking sentiment anlysis records is currently only available on
+              the webapp.
+            </li>
+          </ul>
         </div>
       </div>
     );
@@ -165,7 +155,7 @@ export default function TryState1() {
             <div className={styles.recordingImageContainer}>
               <img
                 src="https://res.cloudinary.com/duzj8zjj5/image/upload/v1670418381/Recording-logo_f8dz9t.webp"
-                alt="some"
+                alt="recording_image"
               />
             </div>
 

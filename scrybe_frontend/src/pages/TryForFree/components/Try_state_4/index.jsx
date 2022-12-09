@@ -2,7 +2,7 @@
 // TODO disable eslint warning for this todo ;)
 import React from "react";
 import axios from "axios";
-import ProgressBar from "../ProgressBar/index";
+// import ProgressBar from "../ProgressBar/index";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import styles from "./try_state_4.module.scss";
@@ -58,13 +58,13 @@ export default function TryFourth() {
             />
           </div>
           <div className={styles.recordingText}>
-            <p>Recording 1 name. mp3</p>
-            <small>10 mb</small>
+            <p>{display.filename}</p>
+            <small>{display.filesize}</small>
           </div>
         </div>
 
         <div className={styles.allWords}>
-          <p>"{display.transcription}"</p>
+          <p>{display.transcription}</p>
         </div>
 
         <hr />
@@ -73,7 +73,7 @@ export default function TryFourth() {
           <h3 className={styles.h3}>Overall Sentiment</h3>
 
           <div className={styles.overallProgress}>
-            <div className={styles.progress}>
+            {/* <div className={styles.progress}>
               <p>Agent Friendliness</p>
               <ProgressBar bgcolor="#B0CAD9" progress="90" height={25} />
             </div>
@@ -86,7 +86,7 @@ export default function TryFourth() {
             <div className={styles.progress}>
               <p>Detected Harsh Words</p>
               <ProgressBar bgcolor="#B0CAD9" progress="5" height={25} />
-            </div>
+            </div> */}
 
             <div className={styles.verdict}>
               <p>Verdict:</p>
@@ -107,10 +107,10 @@ export default function TryFourth() {
         </p>
       </div>
       <div className={styles.priceSignup}>
-        <Link to="/" className={styles.button1}>
+        <Link to="/pricing" className={styles.button1}>
           View Pricing Plan
         </Link>
-        <Link to="/signin" className={styles.button2}>
+        <Link to="/create-account" className={styles.button2}>
           Sign Up
         </Link>
       </div>

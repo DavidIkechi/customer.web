@@ -1,13 +1,16 @@
 import React from "react";
 import styles from "./HowItWorks.module.scss";
-import mockup from "../Assets/mockup.png";
+// import mockup from "../Assets/mockup.png";
 
 const HowItWorks = () => {
   return (
     <div className={styles.HowItWorks}>
       <div className={styles.HowItWorksImage}>
         <h3>How it works</h3>
-        <img src={mockup} alt="mockup" />
+        <img
+          src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584268/mockup_gkq295.webp"
+          alt="mockup"
+        />
       </div>
       <div className={styles.HowItWorksText}>
         <div className={styles.bullets}>
