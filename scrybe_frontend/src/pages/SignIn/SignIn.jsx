@@ -112,14 +112,14 @@ function Signin() {
             <h1>Welcome back</h1>
             <h3>Please enter your details</h3>
             <form onSubmit={handleSubmit}>
-              <label className="googleSignup-wrapper" htmlFor="googleSignup">
+              {/* <label className="googleSignup-wrapper" htmlFor="googleSignup">
                 <input
                   className=""
                   type="text"
                   placeholder="Sign up with google"
                 />
                 <img src={googleLogo} alt="google-logo" />
-              </label>
+              </label> */}
 
               <div
                 className={styles.fieldss}

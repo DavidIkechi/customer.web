@@ -52,12 +52,12 @@ export function UploadModal() {
         headers,
         onUploadProgress: (p) => {
           setFile({ file, progress: (p.loaded / p.total) * 100 });
-          console.log(
-            "progress",
-            (p.loaded / p.total) * 100,
-            p.loaded,
-            p.total
-          );
+          // console.log(
+          //   "progress",
+          //   (p.loaded / p.total) * 100,
+          //   p.loaded,
+          //   p.total
+          // );
         },
       })
       .then((response) => {
