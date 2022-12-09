@@ -3,12 +3,12 @@ import { Link, NavLink } from "react-router-dom";
 import closeIcon from "./icons/closeIcon.svg";
 import logoSVG from "./icons/logo.svg";
 // import insight from "./assets/icons/insight.svg";
-import leaderboard from "./icons/leaderboard.svg";
+// import leaderboard from "./icons/leaderboard.svg";
 // import monthlyAnalysis from "./assets/icons/monthly-analysis.svg";
-import analysis from "./icons/analysis.svg";
+// import analysis from "./icons/analysis.svg";
 import dropdown_arr from "./icons/dropdownArr.svg";
-import myScrybe from "./icons/my-scrybe.svg";
-import settings from "./icons/settings.svg";
+// import myScrybe from "./icons/my-scrybe.svg";
+// import settings from "./icons/settings.svg";
 
 import axios from "axios";
 import SearchInput from "../SearchInput";
@@ -88,7 +88,10 @@ function NewDesignSideBar({
                   : `${styles.inactive} ${styles.navLink}`
               }
             >
-              <img src={myScrybe} alt="myScrybe icon" />
+              <img
+                src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670577828/my-scrybe_zxxyrj.webp"
+                alt="myScrybe icon"
+              />
               <p>Overview</p>
             </NavLink>
             <NavLink
@@ -99,7 +102,10 @@ function NewDesignSideBar({
                   : `${styles.inactive} ${styles.navLink}`
               }
             >
-              <img src={analysis} alt="analysis icon" />
+              <img
+                src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670577829/analysis_gisqdf.webp"
+                alt="analysis icon"
+              />
               <p>Analysis</p>
             </NavLink>
 
@@ -111,7 +117,10 @@ function NewDesignSideBar({
                   : `${styles.inactive} ${styles.navLink}`
               }
             >
-              <img src={leaderboard} alt="leaderboard icon" />
+              <img
+                src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670577828/leaderboard_kqe7de.webp"
+                alt="leaderboard icon"
+              />
               <p>Leaderboard</p>
             </NavLink>
             <NavLink
@@ -122,7 +131,10 @@ function NewDesignSideBar({
                   : `${styles.inactive} ${styles.navLink}`
               }
             >
-              <img src={settings} alt="settings icon" />
+              <img
+                src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670577828/settings_wzhu1l.webp"
+                alt="settings icon"
+              />
               <p>Settings</p>
             </NavLink>
           </div>

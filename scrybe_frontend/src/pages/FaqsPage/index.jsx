@@ -47,18 +47,6 @@ function FAQs() {
         "Audio materials uploaded by the subscriber or recorded with a microphone in the Alrite application, as well as related text files, can only be accessed by the subscriber and (in case of business use) by users associated with the subscriber! The subscriber has the exclusive right to view, download and use the audio and text files for any other purpose. The data may only be accessed for service purposes by specialists authorized by our company, in compliance with strict security regulations. Our company does not use this data to improve the deep learning-based speech recognition and word processing algorithms of the Alrite system, or to develop Alrite for functional purposes - other procedures and publicly available, processable data files are available to for this purpose.Data from our business subscribers using the system's on-premise infrastructure is stored in their internal server environment, ensuring maximum protection of business data.",
       open: false,
     },
-    {
-      question: "Can I see my files while they are being transcribed?",
-      answer:
-        "Yes. With complex terminology, Scrybe's advanced technology integrates linguistic, auditory.",
-      open: false,
-    },
-    {
-      question: "Is there a minimum duration for files?",
-      answer:
-        "events to identify the topic of the file and use a database of the most-used words in a manner that results in higher accuracy.",
-      open: false,
-    },
   ]);
 
   const toggleFAQ = (index) => {
@@ -78,22 +66,27 @@ function FAQs() {
   return (
     <div className={styles.faq__wrapper}>
       <NavBar />
+
       <div className={styles.faq__hero}>
-        <div className={styles.faqHero__content}>
-          <div className={styles.faqHero__text}>
-            <h1>
-              Get the answers you're looking for on <span>HEED</span>
-            </h1>
-            <img src={Hero} alt="" />
+        <div className={styles.faqFlex}>
+          <div className={styles.FAQs}>
+            <div className={styles.faqHero__content}>
+              <div className={styles.h1}>
+                <h1>
+                  Get the answers you're looking for on <span>Heed</span>
+                </h1>
+              </div>
+              <div className="styles.faqImg">
+                <img src={Hero} alt="" />
+              </div>
+            </div>
           </div>
-          {/* <div>
-          </div> */}
         </div>
       </div>
 
       <div className={styles.faq__section}>
         <div className={styles.faq__title}>
-          <h2>Frequently Asked Questions</h2>
+          <h4>Frequently Asked Questions</h4>
           <p>Need Some Answers?</p>
         </div>
         <div className={styles.faq__accordion}>

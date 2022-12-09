@@ -43,6 +43,7 @@ from BitlyAPI import shorten_urls
 import services as _services
 
 from datetime import datetime, timedelta, date
+from fastapi_utils.tasks import repeat_every
 
 
 import shutil
@@ -57,6 +58,7 @@ import boto3, io
 import uuid
 import random, string 
 from elasticapm.contrib.starlette import make_apm_client, ElasticAPM
+import cron_status
 
 apm_config = {
     'SERVICE_NAME': 'Heed_api',
@@ -168,6 +170,12 @@ def main() -> None:
 AWS_KEY_ID = os.getenv("AWS_KEY_ID")
 AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
 
+@app.on_event('startup')
+@repeat_every(seconds = 10, wait_first = True)
+def periodic():
+    cron_status.check_and_update_jobs()
+    
+
 @app.get("/")
 async def ping():
     return {"message": "Scrybe Up"}
@@ -204,7 +212,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     except Exception:
         return {"error": "There was an error uploading the file"}
     #finally:
-        f#ile.file.close()
+        #file.file.close()
 
     try:
         result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
