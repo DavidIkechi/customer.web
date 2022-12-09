@@ -145,8 +145,7 @@ async def main_login(form_data, db):
             "token_type": "bearer"}
 
 
-
-async def refresh(refresh_token, db):
+def refresh(refresh_token, db):
     """
     refresh token is a parameter in your endpoint and should have a pydantic model RefreshToken, i.e:
     class RefreshToken(BaseModel):
@@ -165,6 +164,17 @@ async def refresh(refresh_token, db):
     user = get_user_by_email(db, email=token_data.email)
     if user is None:
         raise user_not_found_exception
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    refresh_token_expires = timedelta(minutes=REFRESH_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": user.email}, expires_delta=access_token_expires
+    )
+    refresh_token = create_refresh_token(
+        data={"sub": user.email}, expires_delta=refresh_token_expires
+    )
+    return {"access_token": access_token,
+            "refresh_token": refresh_token,
+            "token_type": "bearer"}
 
 
 

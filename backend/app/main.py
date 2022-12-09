@@ -14,7 +14,7 @@ from routers.transcribe import transcript_router
 from routers.score import score_count
 import models, json
 from auth import get_active_user, get_current_user, get_admin
-from jwt import main_login, get_access_token
+from jwt import main_login, get_access_token, refresh
 
 
 from authlib.integrations.starlette_client import OAuth
@@ -282,6 +282,12 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
 async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     # return token once the user has been successfully authenticated, or it returns an error.
     return await main_login(form_data, db)
+
+@app.post('/refresh-token', summary = "refresh expired access token of logged in user", tags=['users'])
+async def refresh_token(refresh_token: schema.RefreshToken, db: Session = Depends(get_db)):
+    # return new access token for logged in user once it has verified the refresh token sent from the frontend.
+    return refresh(refresh_token, db) 
+
 
 
 @app.post("/create_users", summary = "create/register a user", response_model=schema.User, tags=['users'])
