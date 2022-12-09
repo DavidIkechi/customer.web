@@ -15,6 +15,12 @@ const bgMap = {
   2: "#FFFDEB",
 };
 
+const colorMap = {
+  0: "#006CFF",
+  1: " #4EC264",
+  2: "#FFEB3B",
+};
+
 function Leaderboard() {
   const [toggleSidebar, setToggleSidebar] = useState(false);
 
@@ -161,11 +167,12 @@ function Leaderboard() {
               <div className={styles.Profile_container}>
                 {leaderboard.length > 0 && (
                   <>
-                    {leaderboard.map((profile, index) => (
+                    {leaderboard.map((profile, index, index2) => (
                       <LeaderBoardDisplay
                         key={profile.agent_id}
                         person={profile}
                         index={index}
+                        index2={index2}
                         handleAgent={handleAgent}
                         agent_id={profile.agent_id}
                         rank={profile.rank}
@@ -197,20 +204,28 @@ function Leaderboard() {
                 </span>
               </div>
               <hr></hr>
-              {otherAgent.map((profile) => (
-                <OtherAgentDisplay
-                  key={profile.agent_id}
-                  person={profile}
-                  handleAgent={handleAgent}
-                  agent_id={profile.agent_id}
-                  rank={profile.rank}
-                  show={profile.str_agent_id}
-                />
-              ))}
+              {leaderboard.length > 0 ? (
+                <>
+                  {otherAgent.map((profile) => (
+                    <OtherAgentDisplay
+                      key={profile.agent_id}
+                      person={profile}
+                      handleAgent={handleAgent}
+                      agent_id={profile.agent_id}
+                      rank={profile.rank}
+                      show={profile.str_agent_id}
+                    />
+                  ))}
+                </>
+              ) : (
+                <div className={styles.empty_state}>
+                  <h3>An overview of your agents performance shows here.</h3>
+                </div>
+              )}
               {/* <div className={styles.Header_content}>
               <div className={styles.Header_profile_container}>
                 <img src={ProfileName} className="" alt="profile1" />
-                <p>AG685500DE</p>
+                <p className={styles.Agent_ID}>AG685500DE</p>
               </div>
               <p>24</p>
               <p>5/10</p>
@@ -219,7 +234,7 @@ function Leaderboard() {
             <div className={styles.Header_content}>
               <div className={styles.Header_profile_container}>
                 <img src={ProfileName} className="" alt="profile1" />
-                <p>AG685500DE</p>
+                <p className={styles.Agent_ID}>AG685500DE</p>
               </div>
               <p>24</p>
               <p>5/10</p>
@@ -228,7 +243,7 @@ function Leaderboard() {
             <div className={styles.Header_content}>
               <div className={styles.Header_profile_container}>
                 <img src={ProfileName} className="" alt="profile1" />
-                <p>AG685500DE</p>
+                <p className={styles.Agent_ID}>AG685500DE</p>
               </div>
               <p>24</p>
               <p>5/10</p>
@@ -237,7 +252,7 @@ function Leaderboard() {
             <div className={styles.Header_content}>
               <div className={styles.Header_profile_container}>
                 <img src={ProfileName} className="" alt="profile1" />
-                <p>AG685500DE</p>
+                <p className={styles.Agent_ID}>AG685500DE</p>
               </div>
               <p>24</p>
               <p>5/10</p>
@@ -271,8 +286,10 @@ function LeaderBoardDisplay({
           <img src={ProfileName} className="" alt="profile1" />
         </div>
         <h2>{person.str_agent_id}</h2>
-        <p>No. of calls taken this week: {person.total_calls}</p>
-        <h1>
+        <p>
+          No. of calls taken this {person.week}: {person.total_calls}
+        </p>
+        <h1 style={{ color: colorMap[index] }}>
           {person.average_score} <span className={styles.small_text}>/10</span>
         </h1>
         <p className={styles.Agent_position}> {person.rank}th</p>
@@ -286,7 +303,10 @@ function OtherAgentDisplay({ person, handleAgent, agent_id, rank, show }) {
     <div className={styles.Header_content}>
       <div className={styles.Header_profile_container}>
         <img src={ProfileName} className="" alt="profile1" />
-        <p onClick={() => handleAgent(agent_id, rank, show)}>
+        <p
+          className={styles.Agent_ID}
+          onClick={() => handleAgent(agent_id, rank, show)}
+        >
           {person.str_agent_id}
         </p>
       </div>
