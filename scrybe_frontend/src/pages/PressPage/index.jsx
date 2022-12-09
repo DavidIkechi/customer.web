@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Footer from "../../components/Footer";
-import NavBar from "../../components/navBar";
+import NavBar from "../../components/NavbarFree";
 import arrowLeft from "./assets/arrow__left.png";
 import bannerImage from "./assets/bannerImage.png";
 import cardlogo from "./assets/cardlogo.png";
