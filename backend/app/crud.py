@@ -403,4 +403,5 @@ def analyse_and_store_audio(db:Session, job_id, user_id):
         "audio_filename": db_audio_filename
     }
     dic2 = dict(sentiment_result, **other_details)
+    print(dic2)
     return {"sentiment_result": dic2}
