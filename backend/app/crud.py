@@ -111,6 +111,12 @@ def delete_user(db: Session, user_id: int, current_user):
 def get_audio(db: Session, audio_id: int):
     return db.query(models.Audio).filter(models.Audio.id == audio_id).first()
 
+def get_freeaudio(db: Session, audio_id: int):
+    return db.query(models.Audio).filter(models.Audio.job_id == id).first()
+
+def get_freetrial(db: Session, id: int):
+    return db.query(models.FreeTrial).filter(models.FreeTrial.transcript_id == id).first()
+
 def get_audios(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Audio).offset(skip).limit(limit).all()
 
