@@ -214,6 +214,10 @@
   background-color: #ffffFF;
   border: 1px solid #006CFF;
 }
+.primary-button:disabled{
+  background-color: #0062E8;
+  opacity: 0.5;
+}
 
 .progress-wrapper {
   background-color: #cecece;
