@@ -423,16 +423,18 @@ async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...
     transcript_status = transcript['status']
     size = audio_details(file.filename)["size"]
     sizeMb = (str(size) + 'MB')
+    audio_list = ",".join([transcript_status, filename, sizeMb])
 
-    callback = models.FreeTrial(transcript_id = transcript_id, filename = filename, transcript_status=transcript_status, size = sizeMb)
+
+    callback = models.FreeTrial(transcript_id = transcript_id, transcript_status=audio_list)
 
     db.add(callback)
     db.commit()
     db.refresh(callback)
     # delete the file
     os.remove(file.filename)
-
-    return {"transcript_id": transcript_id, "filename": filename, "filesize": sizeMb, "status": transcript_status}
+    status_break = audio_list.split(",")
+    return {"transcript_id": transcript_id, "status": status_break[0], "filaname": status_break[1], "file_size": status_break[2]}
 
 
 @app.get("/get_transcript/{transcript_id}", description="Retrieving transcript by audio ID")
@@ -444,10 +446,12 @@ def view_transcript(transcript_id: Union[int, str], db: Session = Depends(_servi
             detail=f"Transcription with id: {transcript_id} was not found")
     transcript_audio_id = transcript_id
     
-    
+    current_status = transcript.transcript_status.split(",")
+    current_status_filename = current_status[1]
+    current_status_size = current_status[2]
     transcript_audio = get_transcript_result(transcript_audio_id)
     transcript.job_status = transcript_audio['status']
-    transcript.transcript_status = transcript.job_status
+    transcript.transcript_status = ",".join([transcript.job_status, current_status_filename, current_status_size])
     db.commit()
     db.refresh(transcript)
     
@@ -460,7 +464,8 @@ def view_transcript(transcript_id: Union[int, str], db: Session = Depends(_servi
 
         overall_sentiment = sentiment_result['overall_sentiment']
 
-        return {"transcription": transcripted_word, "overall_sentiment_result": overall_sentiment}
+        return {"transcription": transcripted_word, "overall_sentiment_result": overall_sentiment,
+                    "filename":current_status_filename, "filesize":current_status_size, "status": transcript_audio['status']}
 
 
 @app.get('/history', summary = "get user history", response_model=Page[schema.History])
