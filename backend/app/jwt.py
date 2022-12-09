@@ -164,6 +164,8 @@ def refresh(refresh_token, db):
     user = get_user_by_email(db, email=token_data.email)
     if user is None:
         raise user_not_found_exception
+
+    #generate fresh access and refresh tokens if user can be verified.
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     refresh_token_expires = timedelta(minutes=REFRESH_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
