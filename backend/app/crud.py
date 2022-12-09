@@ -336,7 +336,7 @@ def get_leaderboard(db: Session, user_id: int):
     return leaderboard
     
 def get_queued_jobs(db: Session):
-    return db.query(models.Job).filter(models.Job.job_status != "completed").all()
+    return db.query(models.Job).filter(models.Job.job_status != "completed").order_by(models.Job.audio_id.desc()).all()
 
 def analyse_and_store_audio(db:Session, job_id, user_id):
     print(db)
