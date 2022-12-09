@@ -30,6 +30,7 @@ function Footer() {
             </div>
 
             <div className={styles.joinContainer}>
+              <p className={styles.provide}>Join our community:</p>
               <div className={styles.socials}>
                 <a href="https://heed.hng.tech">
                   <BsInstagram />
@@ -133,5 +134,6 @@ function Footer() {
     </div>
   );
 }
+
 
 export default Footer;
