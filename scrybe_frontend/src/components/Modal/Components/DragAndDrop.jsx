@@ -8,6 +8,7 @@ const DragAndDrop = ({
   setFirstName,
   setLastName,
   handleUpload,
+  btnDisabled,
   // isNamesValid,
 }) => {
   const showUploadProgress = () => {
@@ -20,6 +21,9 @@ const DragAndDrop = ({
 
   const handleDrop = (event) => {
     event.preventDefault();
+    if (btnDisabled) {
+      return;
+    }
     const file = Array.from(event.dataTransfer.files)[0];
     handleOnSelectFile(file);
   };
@@ -31,6 +35,7 @@ const DragAndDrop = ({
     //upload code
     showUploadProgress();
   };
+
   return (
     <section
       className={style["drag-and-drop"]}
@@ -67,20 +72,35 @@ const DragAndDrop = ({
       <p className={style["small-text"]}>
         Audio files must be smaller than 10mb
       </p>
-      <button className={style["primary-button"]}>
+      <button disabled={btnDisabled} className={style["primary-button"]}>
         <label htmlFor="file">Browse Files</label>
       </button>
-      <input
-        type="file"
-        id="file"
-        name="file"
-        hidden
-        multiple
-        accept="audio/*"
-        onChange={(event) =>
-          handleOnSelectFile(Array.from(event.target.files)[0])
-        }
-      />
+      {btnDisabled ? (
+        <input
+          type="file"
+          id="file"
+          name="file"
+          hidden
+          multiple
+          disabled={true}
+          accept="audio/*"
+          onChange={(event) =>
+            handleOnSelectFile(Array.from(event.target.files)[0])
+          }
+        />
+      ) : (
+        <input
+          type="file"
+          id="file"
+          name="file"
+          hidden
+          multiple
+          accept="audio/*"
+          onChange={(event) =>
+            handleOnSelectFile(Array.from(event.target.files)[0])
+          }
+        />
+      )}
     </section>
   );
 };

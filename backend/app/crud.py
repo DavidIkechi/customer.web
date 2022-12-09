@@ -292,6 +292,7 @@ def get_leaderboard(db: Session, user_id: int):
                         average_scores.append(j.average_score)
                         per_agent["week"]["average_score"] = round(sum(average_scores)/len(average_scores), 2)
                         per_agent["week"]["str_agent_id"] = "AG" + str(1000000 + per_agent["week"]['agent_id']) + "DE"
+                        per_agent["week"]["weekly"] = "Weekly"
 
                     if j.timestamp.month == month:
                         per_agent["month"]["firstname"] = j.agent_firstname
@@ -307,6 +308,7 @@ def get_leaderboard(db: Session, user_id: int):
                         average_scores.append(j.average_score)
                         per_agent["month"]["average_score"] = round(sum(average_scores)/len(average_scores), 2) 
                         per_agent["month"]["str_agent_id"] = "AG" + str(1000000 + per_agent["month"]['agent_id']) + "DE"
+                        per_agent["month"]["monthly"] = "Monthly"
         agents[i] = per_agent
         
     leaderboard_week = []

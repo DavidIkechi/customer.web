@@ -13,11 +13,19 @@ const Modal = ({ open, setOpen }) => {
   const [showProgressList, setShowProgressList] = useState(false);
   const [isUploadComplete, setIsUploadComplete] = useState(false);
   const [showDropDownIcon, setShowDropDownIcon] = useState(true);
-  const [closeModal, setCloseModal] = useState(true);
   const [file, setFile] = useState({ file: { name: "", progress: 0 } });
   const [firstName, setFirstName] = useState("");
+  const [btnDisabled, setBtnDisabled] = useState(true);
   const [lastName, setLastName] = useState("");
   const [link, setLink] = useState("");
+
+  useEffect(() => {
+    if (firstName === "") {
+      setBtnDisabled(true);
+    } else {
+      setBtnDisabled(false);
+    }
+  }, [firstName]);
 
   const handleUpload = (file) => {
     // handle upload
@@ -26,7 +34,6 @@ const Modal = ({ open, setOpen }) => {
     myData.append("first_name", firstName);
     myData.append("last_name", lastName);
     myData.append("file", file);
-    console.log("file", file);
     setFile({ file, progress: 0 });
 
     const destinationUrl = "https://api.heed.hng.tech/upload_audios";
@@ -41,12 +48,6 @@ const Modal = ({ open, setOpen }) => {
         headers,
         onUploadProgress: (p) => {
           setFile({ file, progress: (p.loaded / p.total) * 100 });
-          console.log(
-            "progress",
-            (p.loaded / p.total) * 100,
-            p.loaded,
-            p.total
-          );
         },
       })
       .then((response) => {
@@ -86,6 +87,7 @@ const Modal = ({ open, setOpen }) => {
                   setFirstName={setFirstName}
                   setLastName={setLastName}
                   handleUpload={handleUpload}
+                  btnDisabled={btnDisabled}
                   // isNamesValid={isNamesValid}
                 />
               )}
