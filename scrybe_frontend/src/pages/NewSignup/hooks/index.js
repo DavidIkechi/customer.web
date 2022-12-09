@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router";
+import ApiService from "../../../helpers/axioshelp/apis";
 
 const createAccount = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -63,7 +64,7 @@ const createAccount = () => {
     setVisibility(!visibility);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     navigate("/complete-signup");
@@ -75,8 +76,9 @@ const createAccount = () => {
       email: email,
     };
 
-    // console.log(data);
+    localStorage.setItem("data", JSON.stringify(data));
   };
+  // console.log(value.data);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const validate = useCallback(
@@ -142,9 +144,14 @@ const completeRegistration = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [company_address, setAddress] = useState("");
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [addStateTest, setAddStateTest] = useState("false");
+  const [addStateTest, setAddStateTest] = useState(false);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [companyStateTest, setCompanyStateTest] = useState(false);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [value, setValue] = useState({});
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const navigate = useNavigate();
 
   const companyNameTest = new RegExp(/^[a-zA-Z]{2,}$/);
   const addressTest = new RegExp(
@@ -159,6 +166,13 @@ const completeRegistration = () => {
     }
   };
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    setValue(JSON.parse(localStorage.getItem("data")));
+  }, []);
+
+  // console.log(value);
+
   const handleCompanyName = (e) => {
     setCompany(e.target.value);
     tester(e, companyNameTest, setCompanyStateTest);
@@ -169,9 +183,27 @@ const completeRegistration = () => {
     tester(e, addressTest, setAddStateTest);
   };
 
-  const handleTotalSubmit = (e) => {
+  const handleTotalSubmit = async (e) => {
     e.preventDefault();
-    console.log("yay!");
+    const data = {
+      first_name: value.first_name,
+      last_name: value.last_name,
+      password: value.password,
+      email: value.email,
+      company_name: company_name,
+      company_address: company_address,
+    };
+    console.log(data.first_name);
+
+    try {
+      await ApiService.SignUp(data);
+
+      localStorage.clear();
+
+      navigate("/verify-signup");
+    } catch (error) {
+      // console.log(error);
+    }
   };
 
   return {
@@ -182,6 +214,7 @@ const completeRegistration = () => {
     addStateTest,
     companyStateTest,
     handleTotalSubmit,
+    value,
   };
 };
 

@@ -19,7 +19,7 @@ const CompleteSignup = () => {
         <img src={logo} alt="heedLogo" />
 
         <div className={styles.greeting}>
-          <h1>Welcome.</h1>
+          <h1>Welcome {completeSignup.value.first_name}.</h1>
           <p>We’re almost there. Please enter the required information</p>
         </div>
 
