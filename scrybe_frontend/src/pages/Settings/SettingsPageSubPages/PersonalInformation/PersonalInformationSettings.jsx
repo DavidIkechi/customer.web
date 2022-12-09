@@ -59,6 +59,10 @@ const PersonalInformation = () => {
       .then((res) => {
         if (res.status) {
           window.scrollTo(0, 0);
+          setResponse({
+            type: "Success",
+            message: "Profile Updated Successfully",
+          });
           reset();
           getUser();
         }
