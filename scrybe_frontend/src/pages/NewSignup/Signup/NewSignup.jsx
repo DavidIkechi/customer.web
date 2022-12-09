@@ -1,6 +1,7 @@
-import { React, useState, useCallback, useEffect } from "react";
+import { React } from "react";
 import styles from "./NewSignup.module.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { createAccount } from "../hooks";
 
 import logo from "../assets/logo.png";
 import google from "../assets/google.png";
@@ -8,100 +9,7 @@ import visible from "../assets/visible.png";
 import hidden from "../assets/hidden.png";
 
 const NewSignup = () => {
-  const [first_name, setFirstName] = useState("");
-  const [last_name, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailStateTest, setEmailStateTest] = useState(false);
-  const [passStateTest, setPassStateTest] = useState(false);
-  const [nameStateTest, setNameStateTest] = useState(false);
-  const [lastStateTest, setLastStateTest] = useState(false);
-  const [visibility, setVisibility] = useState(false);
-  const [btn, setBtn] = useState(true);
-
-  const navigate = useNavigate();
-  const passwordTest = new RegExp(/^["0-9a-zA-Z!@#$&()\\-`.+,/"]{8,}$/),
-    firstNameTest = new RegExp(/^[a-zA-Z]{2,}$/),
-    lastNameTest = new RegExp(/^[a-zA-Z]{2,}$/),
-    emailTest = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
-
-  const tester = (e, reg, func) => {
-    if (reg.test(e.target.value)) {
-      func(true);
-    } else {
-      func(false);
-    }
-  };
-
-  const handleFirstname = (e) => {
-    setFirstName(e.target.value);
-    tester(e, firstNameTest, setNameStateTest);
-  };
-
-  const handleLastname = (e) => {
-    setLastName(e.target.value);
-    tester(e, lastNameTest, setLastStateTest);
-  };
-
-  const handleEmail = (e) => {
-    setEmail(e.target.value);
-    tester(e, emailTest, setEmailStateTest);
-  };
-
-  const handlePassword = (e) => {
-    setPassword(e.target.value);
-    tester(e, passwordTest, setPassStateTest);
-  };
-
-  const handleToggle = () => {
-    setVisibility(!visibility);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    navigate("/complete-signup");
-
-    // const data = {
-    //     full_name: first_name,
-    //     password: password,
-    //     email: email,
-    // }
-  };
-
-  const validate = useCallback(
-    (e) => {
-      if (
-        first_name.length > 1 &&
-        last_name.length > 1 &&
-        password.length > 1 &&
-        email.length > 1 &&
-        emailStateTest &&
-        passStateTest &&
-        nameStateTest &&
-        lastStateTest
-      ) {
-        return false;
-      } else {
-        return true;
-      }
-    },
-    [
-      email.length,
-      emailStateTest,
-      first_name.length,
-      lastStateTest,
-      last_name.length,
-      nameStateTest,
-      passStateTest,
-      password.length,
-    ]
-  );
-
-  useEffect(() => {
-    const isValid = validate();
-    setBtn(isValid);
-  }, [validate]);
+  const createAccountHook = createAccount();
 
   return (
     <div className={styles.signinContainer}>
@@ -131,22 +39,25 @@ const NewSignup = () => {
           <div className={styles.dash}></div>
         </div>
 
-        <form className={styles.formContainer} onSubmit={handleSubmit}>
+        <form
+          className={styles.formContainer}
+          onSubmit={createAccountHook.handleSubmit}
+        >
           <div className={styles.forms}>
             <label htmlFor="text">First name</label>
             <input
               className={
-                !nameStateTest
+                !createAccountHook.nameStateTest
                   ? `${styles.field}  ${styles.errfield}`
                   : ` ${styles.field} `
               }
               type="text"
-              placeholder="Enter your full name"
-              onChange={handleFirstname}
-              value={first_name}
+              placeholder="Enter your first name"
+              onChange={createAccountHook.handleFirstname}
+              value={createAccountHook.first_name}
               // required
             />
-            {!nameStateTest ? (
+            {!createAccountHook.nameStateTest ? (
               <p className={styles.err}>first name must be 2-16 characters</p>
             ) : (
               ""
@@ -156,17 +67,17 @@ const NewSignup = () => {
             <label htmlFor="text">Last name</label>
             <input
               className={
-                !lastStateTest
+                !createAccountHook.lastStateTest
                   ? `${styles.field} ${styles.errfield}`
                   : `${styles.field}`
               }
               type="text"
               placeholder="Enter your full name"
-              onChange={handleLastname}
-              value={last_name}
+              onChange={createAccountHook.handleLastname}
+              value={createAccountHook.last_name}
               // required
             />
-            {!lastStateTest ? (
+            {!createAccountHook.lastStateTest ? (
               <p className={styles.err}>last name must be 2-16 characters</p>
             ) : (
               ""
@@ -177,17 +88,17 @@ const NewSignup = () => {
             <label htmlFor="email">Email</label>
             <input
               className={
-                !emailStateTest
+                !createAccountHook.emailStateTest
                   ? `${styles.field} ${styles.errfield}`
                   : `${styles.field}`
               }
               type="email"
               placeholder="Enter your company email"
-              onChange={handleEmail}
-              value={email}
+              onChange={createAccountHook.handleEmail}
+              value={createAccountHook.email}
               // required
             />
-            {!emailStateTest ? (
+            {!createAccountHook.emailStateTest ? (
               <p className={styles.err}>Please enter a valid email address</p>
             ) : (
               ""
@@ -198,22 +109,22 @@ const NewSignup = () => {
             <label htmlFor="password">Password</label>
             <input
               className={
-                !passStateTest
+                !createAccountHook.passStateTest
                   ? `${styles.field} ${styles.errfield}`
                   : `${styles.field}`
               }
-              type={visibility ? "text" : "password"}
+              type={createAccountHook.visibility ? "text" : "password"}
               placeholder="Password at least 8 characters"
-              onChange={handlePassword}
-              value={password}
+              onChange={createAccountHook.handlePassword}
+              value={createAccountHook.password}
               // required
             />
             <img
-              src={visibility ? visible : hidden}
-              onClick={handleToggle}
+              src={createAccountHook.visibility ? visible : hidden}
+              onClick={createAccountHook.handleToggle}
               alt="hidden"
             />
-            {!passStateTest ? (
+            {!createAccountHook.passStateTest ? (
               <p className={styles.err}>
                 Password must be atleast 8 characters
               </p>
@@ -239,8 +150,12 @@ const NewSignup = () => {
           </div>
 
           <button
-            disabled={btn}
-            className={btn ? `${styles.buttondis}` : `${styles.buttonVld}`}
+            disabled={createAccountHook.btn}
+            className={
+              createAccountHook.btn
+                ? `${styles.buttondis}`
+                : `${styles.buttonVld}`
+            }
           >
             Sign In
           </button>
