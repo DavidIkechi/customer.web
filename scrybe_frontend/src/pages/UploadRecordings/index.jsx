@@ -6,7 +6,7 @@ import styles from "./uploadedRecordings.module.scss";
 
 function UploadedRecordings() {
   const [toggleSidebar, setToggleSidebar] = React.useState(false);
-  const [setIsSearching] = React.useState("");
+  const [isSearching, setIsSearching] = React.useState("");
   const setterFn = (e) => {
     setIsSearching(e.target.value);
   };
