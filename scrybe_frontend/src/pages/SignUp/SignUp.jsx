@@ -109,7 +109,8 @@ function Signup() {
       await ApiService.SignUp(data);
       setIsLoading(false);
 
-      navigate("/verify-signup");
+      // navigate("/verify-signup");
+      window.location.href = "/verify-signup";
     } catch (error) {
       setIsLoading(false);
       setResponse(ErrorHandler(error));

@@ -22,6 +22,15 @@
     display: flex;
     align-items: flex-end;
 
+    .profilePicBlank {
+      display: none;
+      border: 1px solid #002d6b;
+      background-color: white;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+    }
+
     .profilePic {
       width: 80px;
       object-fit: cover;
@@ -51,6 +60,16 @@
         width: 100%;
         font-size: 0.75rem !important;
       }
+    }
+  }
+
+  .PersonalInfo_header__noDisplay {
+    .profilePicBlank {
+      display: block;
+    }
+
+    .profilePic {
+      display: none;
     }
   }
 
@@ -96,6 +115,31 @@
       font-size: 0.7rem !important;
     }
   }
+  
+  .errorInput {
+    border: 1px solid #F44336 !important;
+  }
+  
+  .errorMsg {
+    font-size: 12px;
+    line-height: 16px;
+    color: #F44336 !important;
+    text-align: left !important;
+    margin-bottom: 0.5rem;
+  }
+  
+  .submitValid {
+    background: #006CFF !important;
+    color: #ffffff !important;
+
+    &:hover {
+      background-color: #549dff;
+    }
+
+    &:active {
+      background-color: #004db5;
+    }
+  }
 
   .formSubmit {
     display: flex;
@@ -103,23 +147,15 @@
     gap: 1rem;
 
     button {
-      background-color: #006cff;
+      color: #C5C5C5;
+      background-color: #ECECEC;
       padding: 0.8rem 2rem;
-      color: white;
       border: none;
       font-size: 0.875rem !important;
       font-weight: 500 !important;
       border-radius: 4px;
       font-family: "Kanit", sans-serif;
       cursor: pointer;
-
-      &:hover {
-        background-color: #549dff;
-      }
-
-      &:active {
-        background-color: #004db5;
-      }
     }
 
     a {

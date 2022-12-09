@@ -5,6 +5,7 @@ const useDashBoardData = () => {
   const [recentRecording, setRecentRecordings] = useState({});
   const [totalAnalysis, setTotalAnalysis] = useState(null);
   const [totalRecording, setTotalRecording] = useState(null);
+  const [leaderboard, setLeaderboard] = useState({});
 
   useEffect(() => {
     const GetData = async () => {
@@ -19,10 +20,14 @@ const useDashBoardData = () => {
       //Get TotalUserRecordings
       const res2 = await ApiService.GetTotalUserRecordings();
       setTotalRecording(res2.data);
+
+      // Get Leaderboard
+      const res3 = await ApiService.Leaderboard();
+      setLeaderboard(res3.data);
     };
     GetData();
   }, []);
 
-  return { recentRecording, totalAnalysis, totalRecording };
+  return { recentRecording, totalAnalysis, totalRecording, leaderboard };
 };
 export { useDashBoardData };

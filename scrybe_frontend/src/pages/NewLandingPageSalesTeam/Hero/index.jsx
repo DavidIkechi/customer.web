@@ -20,9 +20,6 @@ const Hero = () => {
       </div>
 
       <div className={styles.CTAs}>
-        <NavLink to="/demos" className={styles.ctaDemo}>
-          Request a Demo
-        </NavLink>
         <NavLink to="/create-account" className={styles.ctaStarter}>
           Get Started
         </NavLink>

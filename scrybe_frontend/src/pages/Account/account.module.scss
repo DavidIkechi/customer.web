@@ -34,6 +34,23 @@
   border-radius: pix-rem(16);
   gap: pix-rem(16);
   width: clamp(pix-rem(320), calc(100vw - pix-rem(32)), pix-rem(930));
+  
+  .errorInput {
+    border: 1px solid #F44336 !important;
+  }
+  
+  .errorMsg {
+    font-size: 12px;
+    line-height: 16px;
+    color: #F44336 !important;
+    text-align: left !important;
+    margin-bottom: 0.5rem;
+  }
+  
+  .submitValid {
+    background: #006CFF !important;
+    color: #ffffff !important;
+  }
 
   h2 {
     color: $text;
@@ -52,6 +69,7 @@
     gap: pix-rem(16);
     color: $grey-400;
     width: 100%;
+    height: fit-content;
 
     label {
       display: flex;
@@ -76,41 +94,44 @@
     input:focus-visible {
       outline: none;
     }
-    input[type="checkbox"] {
-      appearance: none;
-      align-self: flex-start;
-      height: pix-rem(16);
-      width: pix-rem(16);
-      padding: 0;
-      border: 1px solid $grey-100;
-      border-radius: pix-rem(4.8);
-      overflow: hidden;
-      cursor: pointer;
-    }
-    input[type="checkbox"]:checked {
-      border: none;
-      height: pix-rem(17);
-      width: pix-rem(17);
-      position: relative;
-    }
-    input[type="checkbox"]:checked::before {
-      content: url("./assets/icons/checkmark.svg");
-      width: fit-content;
-      height: fit-content;
-      position: absolute;
-      margin: 0;
-    }
-    input[name="submit-btn"] {
+    // input[type="checkbox"] {
+    //   appearance: none;
+    //   align-self: flex-start;
+    //   height: pix-rem(16);
+    //   width: pix-rem(16);
+    //   padding: 0;
+    //   border: 1px solid $grey-100;
+    //   border-radius: pix-rem(4.8);
+    //   overflow: hidden;
+    //   cursor: pointer;
+    // }
+    // input[type="checkbox"]:checked {
+    //   border: none;
+    //   height: pix-rem(17);
+    //   width: pix-rem(17);
+    //   position: relative;
+    // }
+    // input[type="checkbox"]:checked::before {
+    //   content: url("./assets/icons/checkmark.svg");
+    //   width: fit-content;
+    //   height: fit-content;
+    //   position: absolute;
+    //   margin: 0;
+    // }
+    button[id="submit"] {
+      height: pix-rem(52);
       border: none;
       border-radius: pix-rem(4);
-      background-color: $blue-500;
-      color: $neutral-100;
+      padding: pix-rem(16);
+      color: #C5C5C5;
+      background-color: #ECECEC;
       font-weight: 500;
       font-size: pix-rem(14);
       line-height: pix-rem(24);
       cursor: pointer;
     }
-    input[name="cancel-btn"] {
+    button[id="reset-btn"] {
+      height: pix-rem(52);
       border: none;
       background-color: transparent;
       cursor: pointer;
@@ -119,9 +140,6 @@
       font-weight: 400;
       font-size: pix-rem(12);
       line-height: pix-rem(16);
-    }
-    div:first-of-type {
-      height: pix-rem(8);
     }
     div:last-of-type {
       width: clamp(pix-rem(250), 100%, pix-rem(450));
@@ -132,9 +150,6 @@
     }
 
     @include easyMediaQueries("min-width:1024px") {
-      div:first-of-type {
-        height: pix-rem(16);
-      }
       div:last-of-type {
         flex-direction: row;
         width: min-content;
@@ -251,6 +266,8 @@
 }
 
 .user_profile__img {
+  color: white;
+  
   img {
     width: pix-rem(100);
     object-fit: cover;
@@ -269,10 +286,22 @@
     font-size: pix-rem(32);
     line-height: pix-rem(40);
   }
+
+  div:last-of-type {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
   
 
   @include easyMediaQueries("min-width:1024px") {
     flex-direction: row;
+
+    div:last-of-type {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 }
 
@@ -287,6 +316,11 @@
     font-size: pix-rem(14);
     line-height: pix-rem(24);
     cursor: pointer;
+  }
+
+  a:hover {
+    background-color: $blue-600;
+    color: $grey-10;
   }
 }
 
@@ -344,6 +378,10 @@
         }
       }
     }
+  }
+
+  @include easyMediaQueries("min-width:1510px") {
+    justify-content: space-evenly;
   }
 }
   
@@ -416,11 +454,23 @@
           display: flex;
           gap: pix-rem(14);
           align-items: center;
+          padding: 0 pix-rem(12);
+          justify-content: center;
+
+          span:last-of-type {
+            display: flex;
+            align-items: center;
+          }
 
           img {
             display: inline;
             width: pix-rem(16);
           }
+        }
+        
+        button:hover {
+          border-radius: pix-rem(5);
+          background-color: rgba(0, 0, 0, 0.062);
         }
       }
     }

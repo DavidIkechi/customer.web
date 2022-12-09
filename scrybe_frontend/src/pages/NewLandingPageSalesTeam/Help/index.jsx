@@ -16,7 +16,6 @@ const Help = () => {
               src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584268/UsefulInsights_k5syju.webp"
               alt="useful insights"
             />
-
             <h3>Useful Insights</h3>
           </div>
           <p className={styles.paragraph}>Understand customer's pain point</p>

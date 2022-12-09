@@ -1,14 +1,12 @@
 import React from "react";
+import { BsInstagram, BsTwitter } from "react-icons/bs";
+import { GrFacebookOption } from "react-icons/gr";
 import { Link, NavLink } from "react-router-dom";
-import fb from "./assets/fb.png";
-import ig from "./assets/ig.png";
 import locate from "./assets/location-marker.png";
 import logo from "./assets/logo.png";
 import email from "./assets/mail.png";
 import call from "./assets/phone.png";
-import twitter from "./assets/twit.png";
 import styles from "./footer.module.scss";
-
 function Footer() {
   React.useEffect(() => {
     // 👇️ scroll to top on page load
@@ -36,16 +34,16 @@ function Footer() {
             </div>
 
             <div className={styles.joinContainer}>
-              <p style={{ marginTop: "0rem" }}>Join Our Community</p>
+              <p className={styles.provide}>Join our community:</p>
               <div className={styles.socials}>
                 <a href="https://heed.hng.tech">
-                  <img src={ig} alt="" />
+                  <BsInstagram />
                 </a>
                 <a href="https://heed.hng.tech">
-                  <img src={fb} alt="" />
+                  <GrFacebookOption />
                 </a>
                 <a href="https://heed.hng.tech">
-                  <img src={twitter} alt="" />
+                  <BsTwitter />
                 </a>
               </div>
             </div>
@@ -125,5 +123,6 @@ function Footer() {
     </div>
   );
 }
+
 
 export default Footer;
