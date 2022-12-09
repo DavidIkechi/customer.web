@@ -339,8 +339,10 @@ def get_queued_jobs(db: Session):
     return db.query(models.Job).filter(models.Job.job_status != "completed").all()
 
 def analyse_and_store_audio(db:Session, job_id, user_id):
+    print("in")
     Job = db.query(models.Audio).filter(models.Audio.job_id == job_id).first()
     if not Job:
+        print("oops")
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Job with id: {job_id} was not found")
     job_audio_id = job_id
