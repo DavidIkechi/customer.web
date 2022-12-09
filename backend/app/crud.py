@@ -3,6 +3,8 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, UploadFile, File, Depends, Response
 import models, schema
 from random import randint
+from routers.sentiment import sentiment
+from routers import transcribe
 from passlib.context import CryptContext
 from fastapi import HTTPException 
 import cloudinary
@@ -21,8 +23,8 @@ def get_user_by_email(db: Session, email: str):
 def get_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.User).offset(skip).limit(limit).all()
 
-def create_company(db: Session, company_name: str, id: int):
-    db_company = models.Company(id= id, name=company_name)
+def create_company(db: Session, company_name: str, company_address: str, id: int):
+    db_company = models.Company(id= id, name=company_name, address = company_address)
     db.add(db_company)
     db.commit()
     db.refresh(db_company)
@@ -35,7 +37,7 @@ def create_user(db: Session, user: schema.User):
         company_id = randint(0, 1000000)
 
     # create the company.
-    create_company(db, user.company_name, company_id)
+    create_company(db, user.company_name, user.company_address, company_id)
     # create the user.
     db_user = models.User(first_name=user.first_name, last_name=user.last_name, email=user.email, password=pwd_context.hash(user.password), company_id = company_id)
     db.add(db_user)
@@ -332,3 +334,73 @@ def get_leaderboard(db: Session, user_id: int):
     leaderboard.append(leaderboard_month)
 
     return leaderboard
+    
+def get_queued_jobs(db: Session):
+    return db.query(models.Job).filter(models.Job.job_status != "completed").all()
+
+def analyse_and_store_audio(db:Session, job_id, user_id):
+    Job = db.query(models.Audio).filter(models.Audio.job_id == job_id).first()
+    if not Job:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Job with id: {job_id} was not found")
+    job_audio_id = job_id
+    audio_id = Job.id
+
+    db_job = db.query(models.Job).filter(models.Job.audio_id == audio_id).first()
+    if db_job.job_status == "completed":
+        transcripted_word = Job.transcript
+    else:
+        transcript_audio = transcribe.get_transcript_result(job_audio_id)
+
+        db_job.job_status = transcript_audio['status']
+        db.commit()
+
+        if transcript_audio['status'] != "completed":
+            return {
+                "status":transcript_audio['status']
+            }
+
+        # get the text.
+        transcripted_word = transcript_audio['text']
+        
+    sentiment_result = sentiment(transcripted_word)
+
+    negativity_score = sentiment_result['negativity_score']
+    positivity_score = sentiment_result['positivity_score']
+    neutrality_score = sentiment_result['neutrality_score']
+    overall_sentiment = sentiment_result['overall_sentiment']
+    most_negative_sentences = sentiment_result['most_negative_sentences']
+    most_positive_sentences = sentiment_result ['most_postive_sentences']
+    total_score = positivity_score + neutrality_score + negativity_score
+    average_score = round((positivity_score/ total_score) * 10, 1)
+
+    db_audio = db.query(models.Audio).filter(models.Audio.job_id == job_id).first()
+    db_audio_id = db_audio.id
+    db_audio_url = db_audio.audio_path
+    db_audio_filename = db_audio.filename
+    db_audio_size = db_audio.size
+    db_audio_duration = db_audio.duration
+
+    db_audio.transcript, db_audio.positivity_score = transcripted_word, positivity_score
+    db_audio.negativity_score, db_audio.neutrality_score=negativity_score, neutrality_score
+    db_audio.overall_sentiment, db_audio.most_negative_sentences=overall_sentiment, most_negative_sentences 
+    db_audio.most_positive_sentences = most_positive_sentences
+    db_audio.average_score = average_score
+    db.commit()
+
+    db_agent = db.query(models.Agent).filter(models.Agent.aud_id == db_audio_id).first()
+    agent_name = db_agent.first_name + " "+ db_agent.last_name
+    history_create: schema.HistoryCreate = {"user_id":user_id,
+                                            "sentiment_result":overall_sentiment,
+                                            "agent_name": agent_name,
+                                            "audio_name": db_audio_filename}
+
+    create_history(db, history_create)
+    other_details = {
+        "audio_url": db_audio_url,
+        "audio_size": db_audio_size,
+        "audio_duration": db_audio_duration,
+        "audio_filename": db_audio_filename
+    }
+    dic2 = dict(sentiment_result, **other_details)
+    return {"sentiment_result": dic2}
