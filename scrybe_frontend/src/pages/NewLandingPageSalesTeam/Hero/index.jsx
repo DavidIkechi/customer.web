@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Hero.module.scss";
 import { NavLink } from "react-router-dom";
-import HeroImage from "../Assets/heroImage.png";
+// import HeroImage from "../Assets/heroImage.png";
 
 const Hero = () => {
   return (
@@ -26,7 +26,10 @@ const Hero = () => {
       </div>
 
       <div className={styles.HeroImageContainer}>
-        <img src={HeroImage} alt="hero" />
+        <img
+          src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584269/heroImage_dvxi3m.webp"
+          alt="hero"
+        />
       </div>
     </div>
   );
