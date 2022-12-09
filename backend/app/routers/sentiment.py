@@ -26,7 +26,7 @@ def sentiment(transcript):
             negative_sentences.append({"sentence": sentence, "negativity_score": individual_sentiment})
         elif individual_sentiment >= 0.05:
             postive_sentences.append({"sentence": sentence, "positivity_score": individual_sentiment})
-    most_negative_sentences =json.dumps(negative_sentences))
+    most_negative_sentences =json.dumps(negative_sentences)
     most_postive_sentences = json.dumps(postive_sentences)
     result = {
         "Negative": sentiment['neg'],
