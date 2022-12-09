@@ -339,7 +339,7 @@ def get_queued_jobs(db: Session):
     return db.query(models.Job).filter(models.Job.job_status != "completed").all()
 
 def analyse_and_store_audio(db:Session, job_id, user_id):
-    print("in")
+    print(db)
     Job = db.query(models.Audio).filter(models.Audio.job_id == job_id).first()
     if not Job:
         print("oops")
