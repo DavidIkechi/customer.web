@@ -1,17 +1,17 @@
 import axios from "axios";
 import { PropTypes } from "prop-types";
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { headers } from "../../helpers/axioshelp";
 import Modal from "../Modal";
 import SearchInput from "../SearchInput";
 import DropDownModal from "./DropdownMenu";
 import dropdown_arr from "./imgs/dropdownArr.svg";
+import DummyImg from "./imgs/dummy.png";
 import logo from "./imgs/logo.svg";
 import toggleNavIcon from "./imgs/toggleNavIcon.svg";
 import uploadBtn_icon from "./imgs/uploadBtnIcon.svg";
 import styles from "./topbar.module.scss";
-import DummyImg from "./imgs/dummy.png";
-import { headers } from "../../helpers/axioshelp";
 
 const TopNav = ({ openSidebar, search }) => {
   const [show, setShow] = useState(false);
@@ -35,10 +35,10 @@ const TopNav = ({ openSidebar, search }) => {
       <div className={styles.TopNav_toggle}>
         <img src={toggleNavIcon} alt="" onClick={openSidebar} />
         {/* <img src={logo} alt="" /> */}
-        <div className={`${styles.logoLink}`}>
+        <Link to="/" className={`${styles.logoLink}`}>
           <img src={logo} alt="heed logo" />
           <p>Heed</p>
-        </div>
+        </Link>
       </div>
       <div className={styles.TopNav_search}>
         <SearchInput inputValue={search} />

@@ -37,7 +37,6 @@ const useAgentReport = (props) => {
         "content-type": "Application/json",
       },
     };
-    console.log(props);
     if (props?.controll) {
       axios
         .get(

@@ -54,6 +54,9 @@ import UploadedRecordings from "./pages/UploadRecordings";
 import { UploadModal } from "./pages/UploadRecordingsModal";
 import Logout from "./pages/Logout";
 import EmailVerify from "./pages/VerificationEmail/EmailVerify";
+// import CheckMail from "./pages/CheckMail";
+import NewSignin from "./pages/NewSignin/NewSignin";
+import NewSignup from "./pages/NewSignup/NewSignup";
 import StartUp from "./pages/Checkout/Startup";
 import Growing from "./pages/Checkout/Growing";
 import Enterprise from "./pages/Checkout/Enterprise";
@@ -70,6 +73,8 @@ function App() {
       <Routes>
         {/* access without sign in */}
         <Route path="/" element={<HomePageRedesign />} />
+        <Route path="/signup" element={<NewSignup />} />
+        <Route path="/login" element={<NewSignin />} />
         <Route path="/check-mail" element={<CheckMail />} />
         <Route path="/try" element={<TryForFree />} />
         <Route path="/careers" element={<Careers />} />

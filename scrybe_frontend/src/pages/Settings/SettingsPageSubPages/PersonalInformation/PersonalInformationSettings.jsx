@@ -116,7 +116,14 @@ const PersonalInformation = () => {
         <div className={PersonalInfo.PersonalInfo_wrapper}>
           <div className={PersonalInfo.PersonalInfo_form}>
             <form onSubmit={handleSubmit(submitCallback)}>
-              <div className={`${PersonalInfo.PersonalInfo_header}`}>
+              <div
+                className={
+                  !accountUser
+                    ? `${PersonalInfo.PersonalInfo_header__noDisplay} ${PersonalInfo.PersonalInfo_header}`
+                    : PersonalInfo.PersonalInfo_header
+                }
+              >
+                <div className={PersonalInfo.profilePicBlank}></div>
                 <img
                   className={PersonalInfo.profilePic}
                   src={previewImg}
