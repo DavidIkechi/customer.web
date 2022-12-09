@@ -47,6 +47,7 @@ def check_and_update_jobs():
             transcript_id = get_audios.job_id
             user = get_audios.user_id
             result = crud.analyse_and_store_audio(db, transcript_id, user)
+            print(result)
     
             
         
