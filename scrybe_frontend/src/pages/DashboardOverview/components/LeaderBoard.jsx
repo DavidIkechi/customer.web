@@ -16,15 +16,9 @@ const LeaderBoard = ({ LeaderboardData }) => {
   useEffect(() => {
     setSelected(LeaderboardData.week);
   }, [LeaderboardData.week]);
-  // console.log("leader", LeaderboardData);
-  // console.log("select", selected);
-  // console.log("select", selected);
-
   function selectFunc(e) {
     setSelected(LeaderboardData[e.target.value]);
-    console.log("clicked", LeaderboardData[e.target.value]);
   }
-  // console.log(selected.week.Top3_Agents);
   return (
     <div className={styles.leaderboard}>
       <div className={styles.leaderboard__heading}>
