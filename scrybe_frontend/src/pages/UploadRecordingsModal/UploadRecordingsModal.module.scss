@@ -86,7 +86,7 @@
 
 .name-input input {
   font-size: .85rem;
-  color: #a9a9a9;
+  color: #313131;
   font-weight: 300;
   padding: 0.4em;
   outline: none;
@@ -168,6 +168,12 @@
   border: none;
   margin-top: 1em;
   margin-bottom: .5em;
+}
+
+.primary-button:hover {
+  color: #006CFF;
+  background-color: #ffffFF;
+  border: 1px solid #006CFF;
 }
 
 .progress-wrapper {
@@ -283,6 +289,12 @@
   font-weight: 500;
   font-size: 16px;
   background: #FEFEFD;
+  cursor: pointer;
+}
+
+.cancel-btn:hover {
+  background-color: #006CFF;
+  color:#FEFEFD;
 }
 
 .transcribe-btn {
@@ -292,7 +304,30 @@
   color: #ffffFF;
   font-weight: 500;
   font-size: 16px;
-  background: #006CFF ;
+  background: #006CFF;
+  cursor: pointer;
+}
+
+// .transcribe-btn a {
+//   color: #FFFFFF;
+// }
+
+.transcribe-btn:hover {
+  background-color: #ffffFF;
+  color:#006CFF;
+}
+
+.link:link {
+  color:#ffffFF !important;
+  background-color: transparent !important;
+}
+
+.link:hover {
+  color:#006CFF !important;
+}
+
+.link:visited {
+  color:#ffffff !important;
 }
 
 .callback {
@@ -313,6 +348,7 @@
 .callback-wrapper img {
   position: absolute;
   right: 1rem;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 1300px) {

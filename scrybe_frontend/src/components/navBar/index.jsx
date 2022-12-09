@@ -40,7 +40,7 @@ function NavBar() {
 
             <div className={styles.nav__ctl}>
               <div className={styles.nav__img}>
-                <img src={logo} alt="" srcset="" />
+                <img src={logo} alt="" />
               </div>
               <svg
                 className={styles.nav__closed}

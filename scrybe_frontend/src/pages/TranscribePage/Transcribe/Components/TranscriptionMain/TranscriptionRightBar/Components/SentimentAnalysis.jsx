@@ -1,13 +1,24 @@
 import React from "react";
 import styles from "./SentimentAnalysis.module.scss";
 import { Link } from "react-router-dom";
+import downloadIcon from "../../../../../assets/Frame 1000002110.png";
 
-function SentimentAnalysis() {
+function SentimentAnalysis({ donwloadData }) {
   const getTranscriptionID = () => {
     let location = window.location.pathname;
     return location.substring(16, location.length);
   };
   const audioId = getTranscriptionID();
+  const exportData = () => {
+    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
+      JSON.stringify(donwloadData)
+    )}`;
+    const link = document.createElement("a");
+    link.href = jsonString;
+    link.download = "data.json";
+
+    link.click();
+  };
   return (
     <div className={styles.SentimentAnalysis}>
       <h2>Sentiment analysis</h2>
@@ -34,32 +45,8 @@ function SentimentAnalysis() {
             View analysis
           </a>
         </button>
-        <div className={styles.downloadButton}>
-          <svg
-            width="48"
-            height="48"
-            viewBox="0 0 48 48"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            {/* <mask id="mask0_1826_28324" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="12" y="12" width="24" height="24">
-                    <rect x="12" y="12" width="24" height="24" fill="#D9D9D9"/>
-                    </mask> */}
-            <g mask="url(#mask0_1826_28324)">
-              <path
-                d="M18.625 30.9999C18.1583 30.9999 17.771 30.8459 17.463 30.5379C17.1543 30.2292 17 29.8416 17 29.3749V26.9999H18V29.3749C18 29.5416 18.0627 29.6872 18.188 29.8119C18.3127 29.9372 18.4583 29.9999 18.625 29.9999H29.375C29.5417 29.9999 29.6873 29.9372 29.812 29.8119C29.9373 29.6872 30 29.5416 30 29.3749V26.9999H31V29.3749C31 29.8416 30.846 30.2292 30.538 30.5379C30.2293 30.8459 29.8417 30.9999 29.375 30.9999H18.625ZM24 27.2249L20.45 23.6999L21.175 22.9749L23.5 25.2999V16.6499H24.5V25.2999L26.825 22.9749L27.55 23.6999L24 27.2249Z"
-                fill="#006CFF"
-              />
-            </g>
-            <rect
-              x="0.5"
-              y="0.5"
-              width="47"
-              height="47"
-              rx="3.5"
-              stroke="#006CFF"
-            />
-          </svg>
+        <div className={styles.downloadButton} onClick={exportData}>
+          <img src={downloadIcon} alt="download-icon" />
         </div>
       </div>
       <div className={styles.mobileSentimentAnalysis}>

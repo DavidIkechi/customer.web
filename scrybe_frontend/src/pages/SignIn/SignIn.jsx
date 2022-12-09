@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
-// import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
-import { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import AuthApi from "../../App";
-import axios from "../ForgetPassword/globalConstant/Api/axios";
+import Loading from "../../components/Loading";
+import SnackBar from "../../components/SnackBar";
+import ApiService from "../../helpers/axioshelp/apis";
+import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
 import footerImg from "./assets/signup-img.svg";
 import styles from "./SignIn.module.scss";
 function Signin() {
@@ -13,10 +14,11 @@ function Signin() {
   const Auth = React.useContext(AuthApi);
   const [username, setName] = useState("");
   const [password, setPassword] = useState("");
-  // const [navigate, setNavigate] = useState(false);
   const [isValid, setIsValid] = useState(true);
   const [emailStateTest, setEmailStateTest] = useState(false);
   const [passStateTest, setPassStateTest] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [response, setResponse] = useState({ type: "", message: "" });
 
   const navigate = useNavigate();
   const tester = (e, reg, func) => {
@@ -25,7 +27,6 @@ function Signin() {
     } else {
       func(false);
     }
-    console.log(emailStateTest);
   };
   const testerB = (e, reg, func) => {
     if (reg.test(e.target.value)) {
@@ -33,7 +34,6 @@ function Signin() {
     } else {
       func(false);
     }
-    console.log(passStateTest);
   };
 
   const validate = useCallback(() => {
@@ -60,14 +60,13 @@ function Signin() {
     const isValid = validate();
     setIsValid(isValid);
   }, [validate, username, password]);
+
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    console.group("Submit");
 
     let formData = new FormData();
 
     formData.append("username", username);
-    console.log(username);
     formData.append("password", password);
 
     const config = {
@@ -76,56 +75,37 @@ function Signin() {
         "content-type": "Application/json",
       },
     };
+    setIsLoading(true);
+    await ApiService.SignIn(formData)
+      .then((response) => {
+        setIsLoading(false);
 
-    const response = await axios.post("login", formData, config);
-    console.log(response);
-    if (response.status === 200) {
-      localStorage.setItem("heedAccessToken", response.data.access_token);
-      localStorage.setItem("heedRefreshToken", response.data.refresh_token);
-      Cookies.set("heedAccessToken", response.data.access_token);
-      localStorage.setItem("heedAccessTokenType", response.data.token_type);
-      localStorage.setItem("currentUserEmail", username);
-      localStorage.setItem("auth", username);
-
-      // Auth.setAuth(true);
-      navigate("/dashboard");
-    }
-
-    // const response = await axios
-    //   .post("login", formData, config)
-
-    //   .then((response) => {
-    //     console.log(response);
-
-    //     // const acessToken = response.data.access_token;
-    //     // Cookies.set("heedAccessToken", response?.data?.access_token);
-    //     // localStorage.setItem("auth", email);
-    //     // localStorage.setItem("accessToken", acessToken);
-
-    //     // console.log(response.data.access_token);
-
-    //     axios.defaults.headers.common[
-    //       "Authorization"
-    //     ] = `Bearer ${response.data["access_token"]}`;
-
-    //     // setNavigate(true);
-    //   })
-
-    //   .catch((error) => {});
-
-    // if (navigate) {
-    //   return <Navigate to="/" />;
-    // }
+        localStorage.setItem("heedAccessToken", response.data.access_token);
+        localStorage.setItem("heedRefreshToken", response.data.refresh_token);
+        Cookies.set("heedAccessToken", response.data.access_token);
+        localStorage.setItem("heedAccessTokenType", response.data.token_type);
+        localStorage.setItem("currentUserEmail", username);
+        localStorage.setItem("auth", username);
+        // navigate("/dashboard");
+        window.location.href = "/dashboard";
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setResponse(ErrorHandler(err));
+      });
   };
 
   return (
     <>
+      {response.message !== "" && (
+        <SnackBar response={response} setResponse={setResponse} />
+      )}
       <main className={styles.signUpWrapper}>
         <div className={styles.signup}>
           <div
             className={`${styles.first} ${styles.signin} ${styles.otherThanSignup}`}
           >
-            <h1>Welcome back, Scryber!</h1>
+            <h1>Welcome back, Heed!</h1>
             <h3>Please enter your details</h3>
             <form onSubmit={handleSubmit}>
               <div
@@ -211,12 +191,18 @@ function Signin() {
                   Forgot password?
                 </NavLink>
               </div>
-              <input
-                type="submit"
-                value="Sign in"
-                className={`${styles.submitValid}`}
-                disabled={!isValid}
-              />
+              {isLoading ? (
+                <Loading />
+              ) : (
+                <>
+                  <input
+                    type="submit"
+                    value="Sign in"
+                    className={`${styles.submitValid}`}
+                    disabled={!isValid}
+                  />
+                </>
+              )}
               <p>
                 Don’t have an account?
                 <NavLink to={"/create-account"}>Sign up</NavLink>

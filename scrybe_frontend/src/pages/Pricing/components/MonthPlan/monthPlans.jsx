@@ -1,158 +1,133 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./monthplans.module.scss";
-import currency from "../../assets/naira.svg";
+import currency from "../../assets/dollar.svg";
 import startUpIcon from "../../assets/star.svg";
 import growingIcon from "../../assets/auto_graph.svg";
 import enterpriseIcon from "../../assets/corporate_fare.svg";
 import checkIcon from "../../assets/check.svg";
+import data from "../../../History/assets/data";
+import { monthlyPricing } from "./data";
+import axios from "axios";
 
 function MonthPlans({ monthState }) {
+  const navigate = useNavigate();
+  const token = localStorage.getItem("heedAccessToken");
+  console.log(token);
+  const checkoutStartup = async (pricing) => {
+    console.log(token);
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    await axios
+      .post(
+        "orders",
+        {
+          billing_plan: pricing,
+        },
+        { headers }
+      )
+      .then((res) => {
+        console.log(res);
+        navigate("/checkout-startup");
+      });
+  };
+  const checkoutGrowing = async (pricing) => {
+    console.log(token);
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    await axios
+      .post(
+        "orders",
+        {
+          billing_plan: pricing,
+        },
+        { headers }
+      )
+      .then((res) => {
+        console.log(res);
+        navigate("/checkout-growing");
+      });
+  };
+  const checkoutEnterprise = async (pricing) => {
+    console.log(token);
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    await axios
+      .post(
+        "orders",
+        {
+          billing_plan: pricing,
+        },
+        { headers }
+      )
+      .then((res) => {
+        console.log(res);
+        navigate("/checkout-enterprise");
+      });
+  };
+
   return (
     <div className={`${styles.month}`}>
       <div className={`${styles.plans}`}>
-        {/* --------------Startup --------- */}
-        <div className={`${styles.plansCard} ${styles.startUp}`}>
-          <div className={styles.plansCardHeading}>
-            <div className={styles.plansCardTitle}>
-              <div className={styles.plansCardIcon}>
-                <img src={startUpIcon} alt="star icon" />
+        {monthlyPricing.map((data) => {
+          const { id, title, pricing, headDescription, duration, features } =
+            data;
+
+          return (
+            <div
+              className={`${styles.plansCard} ${styles.startUp} ${
+                id === 3 ? styles.enterprise : ""
+              }`}
+            >
+              <div className={styles.plansCardHeading}>
+                <div className={styles.plansCardTitle}>
+                  <div className={styles.plansCardIcon}>
+                    <img src={startUpIcon} alt="star icon" />
+                  </div>
+                  <h3>{title}</h3>
+                </div>
+                <p>{headDescription}</p>
               </div>
-              <h3>Startup</h3>
-            </div>
-            <p>Perfect to get started</p>
-          </div>
-          <div className={styles.plansPricing}>
-            <div className={styles.plansPricingFigure}>
-              <div className={styles.plansPricingCurrency}>
-                <img src={currency} alt="currency symbol" />
+              <div className={styles.plansPricing}>
+                <div className={styles.plansPricingFigure}>
+                  <div className={styles.plansPricingCurrency}>
+                    <img src={currency} alt="currency symbol" />
+                  </div>
+                  <h4>{pricing}</h4>
+                </div>
+                <p>per month</p>
               </div>
-              <h4>7,500</h4>
-            </div>
-            <p>per month</p>
-          </div>
-          <div className={styles.FtnBtn}>
-            <div className={styles.pricingFeatures}>
-              <div className={styles.pricingFeaturesItem}>
-                <img src={checkIcon} alt="check-mark icon" />
-                <p>Ai-Powered call transcriptions</p>
-              </div>
-              <div className={styles.pricingFeaturesItem}>
-                <img src={checkIcon} alt="check-mark icon" />
-                <p>Call Tracking & Recording</p>
-              </div>
-              <div className={styles.pricingFeaturesItem}>
-                <img src={checkIcon} alt="check-mark icon" />
-                <p> Business Hours</p>
-              </div>
-              <div className={styles.pricingFeaturesItem}>
-                <img src={checkIcon} alt="check-mark icon" />
-                <p>Email & Chat Support</p>
-              </div>
-            </div>
-            <Link to="/create-account">Get Started</Link>
-          </div>
-        </div>
-        {/* --------------Grouwing --------- */}
-        <div className={`${styles.plansCard} ${styles.growing}`}>
-          <div className={styles.plansCardHeading}>
-            <div className={styles.plansCardTitle}>
-              <div className={styles.plansCardIcon}>
-                <img src={growingIcon} alt="star icon" />
-              </div>
-              <h3>Growing</h3>
-            </div>
-            <p>Make individual products</p>
-          </div>
-          <div className={styles.plansPricing}>
-            <div className={styles.plansPricingFigure}>
-              <div className={styles.plansPricingCurrency}>
-                <img src={currency} alt="currency symbol" />
-              </div>
-              <h4>13,500</h4>
-            </div>
-            <p>per month</p>
-          </div>
-          <div className={styles.FtnBtn}>
-            <div className={styles.pricingFeatures}>
-              <div className={styles.pricingFeaturesItem}>
-                <img src={checkIcon} alt="check-mark icon" />
-                <p>Everything in Startup, plus:</p>
-              </div>
-              <div className={styles.pricingFeaturesItem}>
-                <img src={checkIcon} alt="check-mark icon" />
-                <p>API & Webhook Access</p>
-              </div>
-              <div className={styles.pricingFeaturesItem}>
-                <img src={checkIcon} alt="check-mark icon" />
-                <p>Custom Workflows</p>
-              </div>
-              <div className={styles.pricingFeaturesItem}>
-                <img src={checkIcon} alt="check-mark icon" />
-                <p>Dedicated Account Manager</p>
-              </div>
-              <div className={styles.pricingFeaturesItem}>
-                <img src={checkIcon} alt="check-mark icon" />
-                <p>Priority Support</p>
+              <div className={styles.FtnBtn}>
+                <div className={styles.pricingFeatures}>
+                  {features.map((feature) => (
+                    <div className={styles.pricingFeaturesItem}>
+                      <img src={checkIcon} alt="check-mark icon" />
+                      <p>{feature}</p>
+                    </div>
+                  ))}
+                </div>
+                {/* <button onClick={() => checkout(pricing)}>Get Started</button> */}
+                <button
+                  onClick={() => {
+                    id === 1
+                      ? checkoutStartup(pricing)
+                      : id === 2
+                      ? checkoutGrowing(pricing)
+                      : checkoutEnterprise(pricing);
+                  }}
+                >
+                  Get Started
+                </button>
               </div>
             </div>
-            <Link to="/create-account">Get Started</Link>
-          </div>
-        </div>
-        {/* --------------Enterprise --------- */}
-        <div className={`${styles.plansCard} ${styles.enterprise}`}>
-          <div className={styles.plansCardHeading}>
-            <div className={styles.plansCardTitle}>
-              <div className={styles.plansCardIcon}>
-                <img src={enterpriseIcon} alt="star icon" />
-              </div>
-              <h3>Enterprise</h3>
-            </div>
-            <p>For big companies</p>
-          </div>
-          <div className={styles.plansPricing}>
-            <div className={styles.plansPricingFigure}>
-              <div className={styles.plansPricingCurrency}>
-                <img src={currency} alt="currency symbol" />
-              </div>
-              <h4>24,000</h4>
-            </div>
-            <p>per month</p>
-          </div>
-          <div className={styles.FtnBtn}>
-            <div className={styles.pricingFeatures}>
-              <div className={styles.pricingFeaturesItem}>
-                <img src={checkIcon} alt="check-mark icon" />
-                <p>Everything in Growing, plus:</p>
-              </div>
-              <div className={styles.pricingFeaturesItem}>
-                <img src={checkIcon} alt="check-mark icon" />
-                <p>Agent Assist</p>
-              </div>
-              <div className={styles.pricingFeaturesItem}>
-                <img src={checkIcon} alt="check-mark icon" />
-                <p>Professional Services</p>
-              </div>
-              <div className={styles.pricingFeaturesItem}>
-                <img src={checkIcon} alt="check-mark icon" />
-                <p>Custom Analytics & Reports</p>
-              </div>
-              <div className={styles.pricingFeaturesItem}>
-                <img src={checkIcon} alt="check-mark icon" />
-                <p>Personalized Onboarding Support</p>
-              </div>
-              <div className={styles.pricingFeaturesItem}>
-                <img src={checkIcon} alt="check-mark icon" />
-                <p>Agent Coaching & Call Scoring</p>
-              </div>
-              <div className={styles.pricingFeaturesItem}>
-                <img src={checkIcon} alt="check-mark icon" />
-                <p> Dedicated Technical Support</p>
-              </div>
-            </div>
-            <Link to="/create-account">Get Started</Link>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </div>
   );

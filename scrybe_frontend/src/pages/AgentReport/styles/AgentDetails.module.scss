@@ -1,44 +1,47 @@
 @use "../../../pages/AgentReport/styles/_mixins.scss" as mixins;
-
+.empty {
+  font-weight: 300;
+  color: #3f3f3f;
+  text-align: center;
+  
+}
 .agentDetails {
-  padding: 2rem 1rem;
-  width: 100%;
-  background-color: white;
+  width: 40%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  border-radius: 10px;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  @include mixins.sm {
-    text-overflow: inherit;
-    padding: 1rem 1rem;
-    width: 39%;
-    height: 444px;
-    background-color: white;
+  
+
+  .agentId {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: space-between;
-    border-radius: 10px;
-  }
-  @include mixins.md {
-    height: 444px;
-    padding: 1rem;
-    width: 38%;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border-radius: 10px;
-    margin-top: 0px;
-    margin-bottom: 0px;
+    margin-bottom: 20px;
+
+    p {
+      color: #3F3F3F;
+      font-size: 16px;
+      font-weight: 300;
+    }
   }
   .details {
-    height: 80%;
     margin-top: 1rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    gap: 1rem;
+
+    .fail {
+      color: #F44336;
+    }
+
+    .neutral {
+      color: #006CFF;
+    }
+
+    .success {
+      color: #4EC264;
+    }
   }
   .firstp {
     font-size: 0.8rem;
@@ -65,68 +68,40 @@
   .callDetails {
     justify-content: space-between;
     display: flex;
-    margin: 0.5em 0px 0.8rem 0px;
-    padding: 0.5rem 0.6rem;
-    border-radius: 8px;
-    background-color: #ececec;
+    // margin: 20px 0;
+    padding: 17px 10px;
+    border-radius: 4px;
+    background-color: #F2F2F2;
     @include mixins.sm {
       margin: 0px;
     }
 
     .title {
-      width: 48%;
-      color: #313131;
-      @include mixins.sm {
-        width: 50%;
-        font-size: 0.9rem;
-      }
-      @include mixins.md {
-
-      }
+      width: 50%;
+      font-size: 15px;
+      font-weight: 300;
+      color: #6A6A6A;
+    }
+    .dash {
+      font-weight: 300;
+      color: #6A6A6A;
+    }
+    .total {
+      color: #6A6A6A;
+      font-weight: bold;
+      width: 20%;
     }
     .number {
       font-weight: bold;
-      width: 30%;
-      @include mixins.sm {
-        font-size: 0.8rem;
-        width: 28%;
-      }
-      @include mixins.md {
-        font-size: 1rem;
-      }
+      width: 20%;
+    
     }
   }
 }
 
-// .agentDetails {
-//   max-height: 100%;
-//   padding: 30px 5px;
-//   width: 100%;
-//   background-color: white;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: space-evenly;
-//   border-radius: 10px;
-//   .firstp {
-//     font-size: 14px;
-//   }
-//   .secondp {
-//     font-size: 20px;
-//   }
-//   .callDetails {
-//     justify-content: space-between;
-//     display: flex;
-//     margin: 10px 0px 10px 0px;
-//     padding: 8px;
-//     border-radius: 8px;
-//     background-color: #ececec;
-//     gap: 8px;
-//     .title {
-//       width: 45%;
-//     }
-//     .number {
-//       font-weight: bold;
-//       width: 30%;
-//     }
-//   }
-// }
+@media screen and (max-width: 955px) {
+  .agentDetails {
+    width: 90%;
+    margin: auto;
+  }
+}

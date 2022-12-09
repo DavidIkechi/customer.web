@@ -39,7 +39,7 @@ const HowItWorks = () => {
         <div className={styles.bullets}>
           <h5 className={styles.bulletsHeading}>03</h5>
           <h5 className={styles.bulletsHeading}>
-            Anaysis insights and take action
+            Analysis insights and take action
           </h5>
         </div>
 

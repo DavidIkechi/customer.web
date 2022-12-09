@@ -17,7 +17,7 @@
       padding-block: pix-rem(20);
     }
   }
-  .signinDesign{
+  .signinDesign {
     cursor: pointer;
   }
   &__closed {
@@ -38,11 +38,11 @@
   &__mobile {
     display: flex;
     justify-content: space-between;
-    width: 68%;
-    @include media(1150px) {
-      width: 84%;
-    }
+    width: 70%;
     height: auto;
+    @include media(1100px) {
+      width: 77%;
+    }
     @include media($mobile) {
       position: fixed;
       flex-direction: column;
@@ -87,30 +87,40 @@
     padding-inline: pix-rem(16);
     position: relative;
 
-    button {
-      a {
+    a {
+      text-decoration: none !important;
+      button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        cursor: pointer;
+
         // color: white;
-        text-decoration: none;
       }
     }
   }
   &__links {
     display: flex;
-    padding-left: 15%;
-    gap: pix-rem(24);
+    gap: clamp(pix-rem(40), 1vw, pix-rem(100));
     align-items: center;
     cursor: pointer;
+    font-size: pix-rem(20);
     @include media($mobile) {
       flex-direction: column;
       align-items: center;
       cursor: pointer;
     }
+    .activeTab {
+      color: #006cff;
+    }
     & > * {
       all: unset;
       color: #5e5e5e;
       font-weight: 300;
+      transition: scale 0.2s;
       &:hover {
         color: #006cff;
+        // scale: 1.1;
       }
     }
   }
@@ -120,9 +130,60 @@
       max-width: pix-rem(86);
     }
   }
+  .logout {
+    background-color: red;
+    color: white;
+    font-size: 1rem;
+
+    border: 1px solid red;
+    padding: pix-rem(10, em) pix-rem(25, em);
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    &:hover {
+      background-color: transparent !important;
+      color: #5e5e5e !important;
+    }
+  }
   &__ctas {
     display: flex;
     gap: pix-rem(24);
+    cursor: pointer;
+
+    a {
+      font-size: clamp(0.625rem, 0.489rem + 0.68vw, 1rem);
+      cursor: pointer;
+      border: 1px solid #006cff;
+      transition: all 0.3s ease-in-out;
+      -webkit-transition: all 0.3s;
+      -moz-transition: all 0.3s;
+      -ms-transition: all 0.3s;
+      -o-transition: all 0.3s;
+
+      &:nth-child(1) {
+        color: #006cff;
+        .ctas__button {
+          color: #006cff;
+        }
+        &:hover {
+          background-color: #006cff;
+          color: white;
+          .ctas__button {
+            color: white;
+          }
+        }
+      }
+      &:nth-child(2) {
+        background-color: #006cff;
+        color: white;
+        .ctas__button {
+          color: white;
+        }
+      }
+    }
+
     @include media($mobile) {
       padding-top: pix-rem(40);
       flex-direction: column;
@@ -136,39 +197,6 @@
         text-align: center;
         max-width: pix-rem(178);
         flex: 1;
-      }
-      &:nth-child(1) {
-        background-color: transparent;
-        a {
-          color: #006cff;
-        }
-        border: 1px solid #006cff;
-        font-size: clamp(0.625rem, 0.489rem + 0.68vw, 1rem);
-        cursor: pointer;
-        &:hover {
-          background-color: #006cff;
-          & > a {
-            color: #fff;
-          }
-        }
-        & > a {
-          color: #006cff;
-        }
-      }
-      &:nth-child(2) {
-        background-color: #006cff;
-        color: white;
-        font-size: clamp(0.625rem, 0.489rem + 0.68vw, 1rem);
-        &:hover {
-          background-color: #fff;
-          border: 1px solid #006cff;
-          a {
-            color: #006cff;
-          }
-        }
-        & > a {
-          color: #fff;
-        }
       }
     }
   }

@@ -1,102 +1,51 @@
-import React from "react";
-import { useEffect } from "react";
+import React, { useState } from "react";
+// import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useMockAuthAndGetRecording } from "../hooks";
 import styles from "../DashboardOverview.module.scss";
 import toneWave from "../assets/tone_wave.svg";
 import upload from "../assets/upload.svg";
 import empty_state from "../assets/empty_state.png";
+import Modal from "../../../components/Modal";
 
-const RecentRecording = () => {
-  const recentRecording = useMockAuthAndGetRecording();
-  // console.log(recentRecording);
-  useEffect(() => {}, [recentRecording]);
+const RecentRecording = ({ recentRecording }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+  // console.log(recentRecording[0]);
+  // const date = recentRecording.map((data) => data.timestamp);
+  // console.log(date);
   return (
     <>
-      {recentRecording?.length < 0 ? (
+      {recentRecording?.length > 0 ? (
         <table className={styles.recent_recordings}>
           <caption>Recent recordings </caption>
           <thead>
             <tr>
-              <th scope="col">Name</th>
-              <th scope="col" className={styles.notvisible}>
-                Recording
+              <th scope="col" style={{ textAlign: "left" }}>
+                Name
               </th>
+              <th scope="col"></th>
               <th scope="col">Length</th>
               <th scope="col">Size</th>
-              <th scope="col">Uploaded</th>
+              <th scope="col" style={{ textAlign: "right" }}>
+                Uploaded
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                <img src={toneWave} alt="tone wave" />
-              </td>
-              <td>
-                {recentRecording.audio_path}
-                {/* <span>{recentRecording.audio_path}</span> */}
-                {/* <span className={styles.bold_td}> Inactive recharge card</span> */}
-              </td>
-              <td>{recentRecording.duration}</td>
-              <td>{recentRecording.size}</td>
-              <td>{recentRecording.timestamp}</td>
-            </tr>
-            {/* <tr>
-            <td>
-              <img src={toneWave} alt="tone wave" />
-            </td>
-            <td>
-              <span>Recording mp3</span>
-              <span className={styles.bold_td}>
-                Inactive recharge card
-              </span>{" "}
-            </td>
-            <td>4 mins</td>
-            <td>50mb</td>
-            <td>14/11/22</td>
-          </tr>
-          <tr>
-            <td>
-              <img src={toneWave} alt="tone wave" />
-            </td>
-            <td>
-              <span>Recording mp3</span>
-              <span className={styles.bold_td}>
-                Inactive recharge card
-              </span>{" "}
-            </td>
-            <td>4 mins</td>
-            <td>50mb</td>
-            <td>14/11/22</td>
-          </tr>
-          <tr>
-            <td>
-              <img src={toneWave} alt="tone wave" />
-            </td>
-            <td>
-              <span>Recording mp3</span>
-              <span className={styles.bold_td}>
-                Inactive recharge card
-              </span>{" "}
-            </td>
-            <td>4 mins</td>
-            <td>50mb</td>
-            <td>14/11/22</td>
-          </tr>
-          <tr>
-            <td>
-              <img src={toneWave} alt="tone wave" />
-            </td>
-            <td>
-              <span>Recording mp3</span>
-              <span className={styles.bold_td}>
-                Inactive recharge card
-              </span>{" "}
-            </td>
-            <td>4 mins</td>
-            <td>50mb</td>
-            <td>14/11/22</td>
-          </tr> */}
+            {recentRecording.map((data) => (
+              <tr>
+                <td>
+                  <img src={toneWave} alt="tone wave" />
+                </td>
+                <td style={{ textAlign: "left" }}>{data.filename}</td>
+                <td>{data.duration} mins</td>
+                <td>{data.size} mb</td>
+                <td>
+                  {data.timestamp.charAt(11) === "0"
+                    ? data.timestamp.replace("T0", " ")
+                    : data.timestamp.replace("T", " ")}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       ) : (
@@ -108,9 +57,13 @@ const RecentRecording = () => {
               Start uploading agent recordings to get an overview of your team’s
               performance.
             </p>
-            <Link to="/upload-new-file" className={styles.empty_state_btn}>
+            <div
+              className={styles.empty_state_btn}
+              onClick={() => setModalOpen(true)}
+            >
               <img src={upload} alt="upload" /> Upload
-            </Link>
+            </div>
+            <Modal open={modalOpen} setOpen={setModalOpen} />
           </div>
           <div className={styles.empty_state_desktop}>
             <img src={empty_state} alt="No activity found" />
@@ -120,9 +73,13 @@ const RecentRecording = () => {
               below to upload a recording and begin your transcription and
               sentiment analysis.
             </p>
-            <Link to="/upload-new-file" className={styles.empty_state_btn}>
+            <div
+              className={styles.empty_state_btn}
+              onClick={() => setModalOpen(true)}
+            >
               <img src={upload} alt="upload" /> Upload
-            </Link>
+            </div>
+            <Modal open={modalOpen} setOpen={setModalOpen} />
           </div>
         </div>
       )}
