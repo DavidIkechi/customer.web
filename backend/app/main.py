@@ -14,7 +14,9 @@ from routers.transcribe import transcript_router
 from routers.score import score_count
 import models, json
 from auth import get_active_user, get_current_user, get_admin
-from jwt import main_login, get_access_token, verify_password
+
+from jwt import main_login, get_access_token, verify_password, refresh
+
 
 
 from authlib.integrations.starlette_client import OAuth
@@ -283,6 +285,12 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
     # return token once the user has been successfully authenticated, or it returns an error.
     return await main_login(form_data, db)
 
+@app.post('/refresh-token', summary = "refresh expired access token of logged in user", tags=['users'])
+async def refresh_token(refresh_token: schema.RefreshToken, db: Session = Depends(get_db)):
+    # return new access token for logged in user once it has verified the refresh token sent from the frontend.
+    return refresh(refresh_token, db) 
+
+
 
 @app.post("/create_users", summary = "create/register a user", response_model=schema.User, tags=['users'])
 async def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):
@@ -403,6 +411,7 @@ async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...
     if not file:
         raise HTTPException(status_code = 406, detail="No File Selected")
     elif getSize > fileSize :
+        os.unlink(file.filename)
         raise HTTPException(status_code = 406, detail="File Must Not Be More Than 5MB")
     else:
         try:
@@ -413,38 +422,46 @@ async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...
             response = shorten_urls(urls)
             retrieve_url = response[0]
             new_url = retrieve_url.short_url
-        except Exception:   
-            return {"error": "There was an error uploading the file"}
-        # transcript = transcript
+        except Exception: 
+            raise HTTPException(status_code = 406, detail="There was an error uploading the file")
     transcript = transcribe_file(new_url)
     # get some essential parameters
     transcript_id = transcript['id']
+    filename = file.filename
     transcript_status = transcript['status']
+    size = audio_details(file.filename)["size"]
+    sizeMb = (str(size) + 'MB')
+    audio_list = ",".join([transcript_status, filename, sizeMb])
 
-    callback = models.FreeTrial(transcript_id = transcript_id, transcript_status=transcript_status)
+
+    callback = models.FreeTrial(transcript_id = transcript_id, transcript_status=audio_list)
 
     db.add(callback)
     db.commit()
     db.refresh(callback)
     # delete the file
     os.remove(file.filename)
-
-    return {"transcript_id": transcript_id, "status": transcript_status}
+    status_break = audio_list.split(",")
+    return {"transcript_id": transcript_id, "status": status_break[0], "filaname": status_break[1], "file_size": status_break[2]}
 
 
 @app.get("/get_transcript/{transcript_id}", description="Retrieving transcript by audio ID")
 def view_transcript(transcript_id: Union[int, str], db: Session = Depends(_services.get_session)):
-    transcript = db.query(models.FreeTrial).filter(models.FreeTrial.transcript_id == transcript_id).first()
+    transcript = crud.get_freetrial(db, id = transcript_id)
     if not transcript:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, 
             detail=f"Transcription with id: {transcript_id} was not found")
     transcript_audio_id = transcript_id
     
-    
+    current_status = transcript.transcript_status.split(",")
+    current_status_filename = current_status[1]
+    current_status_size = current_status[2]
     transcript_audio = get_transcript_result(transcript_audio_id)
     transcript.job_status = transcript_audio['status']
-    # db.commit()
+    transcript.transcript_status = ",".join([transcript.job_status, current_status_filename, current_status_size])
+    db.commit()
+    db.refresh(transcript)
     
     if transcript_audio['status'] != "completed":
         return {"status":transcript_audio['status']}
@@ -455,7 +472,8 @@ def view_transcript(transcript_id: Union[int, str], db: Session = Depends(_servi
 
         overall_sentiment = sentiment_result['overall_sentiment']
 
-        return {"transcription": transcripted_word, "overall_sentiment_result": overall_sentiment}
+        return {"transcription": transcripted_word, "overall_sentiment_result": overall_sentiment,
+                    "filename":current_status_filename, "filesize":current_status_size, "status": transcript_audio['status']}
 
 
 @app.get('/history', summary = "get user history", response_model=Page[schema.History])
@@ -824,7 +842,7 @@ def delete_audios(audios: List[int] = Query(None), db: Session = Depends(get_db)
 
 @app.get("/download/{id}")
 def download (id: Union[int, str], db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    db_audio = db.query(models.Audio).filter(models.Audio.job_id == id).first()
+    db_audio = crud.get_freeaudio(db, audio_id=id)
 
     if db_audio is None:
         raise HTTPException(status_code=404, detail="No Audio With This ID")
@@ -922,5 +940,5 @@ def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: mo
                 break
         return {"Agent_Performance_Report": {"week": result["week"], "month": result["month"]}}
     except:
-        return {"message": "agent does not exist"}
+        return {"message": "agent details does not exist"}
 
