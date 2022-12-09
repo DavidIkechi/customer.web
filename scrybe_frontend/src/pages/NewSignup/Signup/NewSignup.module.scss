@@ -3,11 +3,11 @@
     align-items: center;
     flex-direction: row-reverse;
     justify-content: space-between;
-    padding: 10px;
     height: 100vh;
+    padding: 10px;
     
     .bgcontainer {
-        background: url(./assets/right-frame.png);
+        background: url(../assets/right-frame.png);
         background-size: cover;
         background-repeat: no-repeat;
         height: 100%;
@@ -43,7 +43,7 @@
     }
 
     .inputsection {
-        padding: 25px 0 0 0;
+        // padding: 20px 0 0 0;
         width: 30%;
         margin: auto;
     
@@ -52,7 +52,7 @@
         }
 
         .greeting {
-            padding: 25px 0;
+            padding: 20px 0;
             display: block;
             margin: 0;
             h1 {
@@ -69,7 +69,8 @@
         }
 
         .googlego {
-            display: flex;
+            // display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             gap: .8rem;
@@ -92,7 +93,8 @@
         }
 
         .line {
-            display: flex;
+            // display: flex;
+            display: none;
             align-items: center;
             justify-content: space-between;
             gap: 1rem;
@@ -111,6 +113,9 @@
         }
 
         .formContainer {
+            div:nth-child(1) {
+                margin: 0 ;
+            }
             .forms {
                 margin: 20px 0;
                 box-sizing: border-box;
@@ -121,7 +126,18 @@
                     font-weight: 300;
                 }
 
-                input {
+                .err {
+                    position: absolute;
+                    color: #F44336;
+                    font-size: 12px;
+                    display: none;
+                }
+
+                &:focus-within > .err {
+                    display: block;
+                }
+
+                .field {
                     width: 100%;
                     color: #454545;
                     font-weight: 300;
@@ -130,11 +146,19 @@
                     border: 1px solid #C5C5C5 !important;
                     margin-top: 5px !important;
                     transition: all 1s ease;
+                    position: relative;
 
                     &:focus {
                         border-color: #006CFF !important;
                     }
+
                 }
+                .errfield {
+                    &:focus {
+                        border-color: #F44336 !important;
+                    }
+                }
+
 
                 
 
@@ -147,6 +171,7 @@
 
             .pass {
                 position: relative;
+                margin: 0;
 
                 img {
                     position: absolute;
@@ -162,7 +187,7 @@
             .checkbox {
                 display: flex;
                 align-items: center;
-                justify-content: center;
+                justify-content: space-around;
                 gap: 1rem;
                 margin: 20px 0;
 
@@ -185,17 +210,33 @@
                 }
             }
 
-            button {
+            .buttondis {
                 width: 100%;
                 padding: 12px;
                 border: 1px solid transparent;
-                background-color: #006CFF;
-                color: #fff;
+                // background-color: #006CFF;
+                background: #F2F2F2;
+                color: #C5C5C5;
+                // color: #fff;
                 font-weight: 300;
                 margin-top: 1rem;
                 cursor: pointer;
                 transition: all .9s ease ;
 
+               
+            }
+
+            .buttonVld {
+                background-color: #006CFF;
+                color: #fff;
+                width: 100%;
+                padding: 12px;
+                border: 1px solid transparent;
+                font-weight: 300;
+                margin-top: 1rem;
+                cursor: pointer;
+                transition: all .9s ease ;
+                
                 &:hover {
                     background: transparent;
                     border-color: #006CFF;
