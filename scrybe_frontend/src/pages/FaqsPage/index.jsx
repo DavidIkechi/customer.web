@@ -66,22 +66,27 @@ function FAQs() {
   return (
     <div className={styles.faq__wrapper}>
       <NavBar />
+
       <div className={styles.faq__hero}>
-        <div className={styles.faqHero__content}>
-          <div className={styles.faqHero__text}>
-            <h1>
-              Get the answers you're looking for on <span>Heed</span>
-            </h1>
-            <img src={Hero} alt="" />
+        <div className={styles.faqFlex}>
+          <div className={styles.FAQs}>
+            <div className={styles.faqHero__content}>
+              <div className={styles.h1}>
+                <h1>
+                  Get the answers you're looking for on <span>Heed</span>
+                </h1>
+              </div>
+              <div className="styles.faqImg">
+                <img src={Hero} alt="" />
+              </div>
+            </div>
           </div>
-          {/* <div>
-          </div> */}
         </div>
       </div>
 
       <div className={styles.faq__section}>
         <div className={styles.faq__title}>
-          <h2>Frequently Asked Questions</h2>
+          <h4>Frequently Asked Questions</h4>
           <p>Need Some Answers?</p>
         </div>
         <div className={styles.faq__accordion}>

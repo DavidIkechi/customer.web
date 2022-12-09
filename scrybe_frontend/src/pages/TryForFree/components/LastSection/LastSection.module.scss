@@ -1,12 +1,15 @@
 .downHero {
     display: flex;
     gap: 2%;
-    margin: 64px 0vh 15vh;
+    margin: 5vh 0vh 5vh;
     padding: 0 8%;
+    @media screen and (max-width: 1440px) {
+      margin: 10vh 0vh 10vh;
+    }
   
     hr {
       border: 2px solid #006cff;
-      margin: 1.5vh 0;
+      margin: 0.4vh 0;
     }
     p {
       color: #6a6a6a;

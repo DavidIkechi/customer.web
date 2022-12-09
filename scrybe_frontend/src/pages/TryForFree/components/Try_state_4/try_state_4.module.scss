@@ -1,3 +1,8 @@
+.transcribeAnalysis{
+    display: flex;
+    justify-content: center;
+    margin-top: 3vh;
+}
 .callback{
     padding: 3vh 8% 6vh;
     
@@ -19,6 +24,7 @@
     background: rgba(205, 225, 237, 0.08);
     border-radius: 4px;
     padding: 2vh 3%;
+    max-width: 1440px;
 
     .recordingName{
         display: flex;
@@ -94,7 +100,7 @@
         text-align: center;
     }
     .overallProgress{
-        padding: 2vh 2%;
+        padding: 0vh 2% 2vh;
         margin: 3vh 6%;
         background: #FFFFFF;
         border: 0.5px solid rgba(18, 18, 18, 0.15);
@@ -157,10 +163,11 @@
     display: flex;
     gap: 1.5%;
     margin: 10vh 8% 4vh;
+    max-width: 1440px;
 
     hr{
         border: 2px solid #006CFF;
-        margin: 1.2vh 0 1.5vh;
+        margin: 0.2vh 0 ;
     }
     p{
         font-weight: 400;
@@ -173,6 +180,7 @@
     display: flex;
     justify-content: flex-end;
     margin: 0 8% 5vh;
+    max-width: 1440px;
     gap: 2%;
 
     .button1{
@@ -419,6 +427,22 @@
 
 // third media query
 @media screen and (max-width: 600px) {
+    .callback{
+        padding: 3vh 8% 6vh;
+        
+    }
+    .callback h3{
+        font-weight: 600;
+        font-size: 0.9em;
+        line-height: 46px;
+        text-align: center;
+    }
+    .callback p{
+        font-weight: 400;
+        font-size: 0.6em;
+        line-height: 26px;
+        text-align: center;
+    }
     .Analysis{
         margin:  3vh 8%;
         background: rgba(205, 225, 237, 0.08);
@@ -472,7 +496,7 @@
     
             p{
                 font-weight: 400;
-                font-size: 1em;
+                font-size: 0.9em;
                 line-height: 20px;
                 margin-left: 5%;
             }
@@ -666,6 +690,14 @@
             background: #FFFFFF;
             border-radius: 8px;
             padding: 2vh 5%;
+            
+            p{
+                font-weight: 400;
+                font-size: 0.7em;
+                line-height: 20px;
+                margin-top: 0.7vh;
+                margin-left: 5%;
+            }
         }
     
         .callWords{
@@ -675,7 +707,7 @@
     
             p{
                 font-weight: 400;
-                font-size: 0.7em;
+                font-size: 0.5em;
                 line-height: 20px;
                 margin-top: 0.7vh;
                 margin-left: 5%;
@@ -701,7 +733,7 @@
     
         h3{
             font-weight: 600;
-            font-size: 1.1em;
+            font-size: 0.9em;
             line-height: 32px;
             color: #262626;
             text-align: center;
@@ -750,7 +782,7 @@
             border: 0;
         }
         .verdict{
-            margin-top: 2vh;
+            margin-top: 0vh;
             p{
                 color: #535353;
                 font-weight: 400;
@@ -760,7 +792,7 @@
             }
             h5{
                 font-weight: 500;
-                font-size: 0.9em;
+                font-size: 0.8em;
                 line-height: 24px;
                 color: #1D1D1D;
             }

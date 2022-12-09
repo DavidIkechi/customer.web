@@ -8,6 +8,7 @@ import styles from "./try_state_1.module.scss";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Processing from "../Try_state_3/index";
+import LastSection from "../LastSection/index";
 // import { object } from "prop-types";
 
 export default function TryState1() {
@@ -69,54 +70,132 @@ export default function TryState1() {
   if (selectedFile)
     return (
       <div className={styles.recordingSection}>
-        <div
-          className={styles.recordingDrag}
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-        >
-          <div className={styles.recordingContent}>
-            <div className={styles.recordingImageContainer}>
-              <img
-                src="https://res.cloudinary.com/djufngoed/image/upload/v1670423929/Recording-logo_hgu6yo.webp"
-                alt="some"
-              />
-            </div>
-            <div>
-              <h4>{selectedFile.name}</h4>
-            </div>
-            <div className={styles.Or}>
-              <div className={styles.orLeft} />
-              <div className={styles.pDiv}>
-                <p>OR</p>
+        <div className={styles.rec}>
+          <div
+            className={styles.recordingDrag}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+          >
+            <div className={styles.recordingContent}>
+              <div className={styles.recordingImageContainer}>
+                <img
+                  src="https://res.cloudinary.com/djufngoed/image/upload/v1670423929/Recording-logo_hgu6yo.webp"
+                  alt="some"
+                />
               </div>
-            </div>
+              <div>
+                <h4>{selectedFile.name}</h4>
+              </div>
+              <div className={styles.Or}>
+                <div className={styles.orLeft} />
+                <div className={styles.pDiv}>
+                  <p>OR</p>
+                </div>
+              </div>
 
-            <form onSubmit={handleSubmit}>
-              <input
-                type="file"
-                name="file"
-                hidden
-                ref={inputRef}
-                onChange={handleFileSelect}
-              />
-              <p
-                className={styles.Upload}
-                onClick={() => inputRef.current.click()}
-              >
-                Select another file from your computer
-              </p>
-              <input
-                onClick={() => {
-                  // setProcessing(true);
-                  // console.log("nice");
-                }}
-                type="submit"
-                className={styles.selectButton2}
-                value="Transcribe"
-              />
-            </form>
+              <form onSubmit={handleSubmit}>
+                <input
+                  type="file"
+                  name="file"
+                  hidden
+                  ref={inputRef}
+                  onChange={handleFileSelect}
+                />
+                <p
+                  className={styles.Upload}
+                  onClick={() => inputRef.current.click()}
+                >
+                  Select another file from your computer
+                </p>
+                <input
+                  onClick={() => {
+                    // setProcessing(true);
+                    // console.log("nice");
+                  }}
+                  type="submit"
+                  className={styles.selectButton2}
+                  value="Transcribe"
+                />
+              </form>
+            </div>
           </div>
+
+          <div className={styles.tryNote}>
+            <p>Please note;</p>
+            <ul>
+              <li>
+                You may upload, transcribe and analyse only one recording at a
+                time.
+              </li>
+              <li>File must not be larger than 5mb.</li>
+              <li>
+                Transcription may take up to 3 minutes, kindly wait or sign up
+                to use the job ID feature.
+              </li>
+              <li>
+                Downloading sentiment anlysis is currently only available on the
+                webapp.
+              </li>
+              <li>
+                Tracking sentiment anlysis records is currently only available
+                on the webapp.
+              </li>
+            </ul>
+          </div>
+          <LastSection />
         </div>
+      </div>
+    );
+
+  return (
+    <div className={styles.recordingSection}>
+      <div className={styles.rec}>
+        {!selectedFile && (
+          <div
+            className={styles.recordingDrag}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+          >
+            <div className={styles.recordingContent}>
+              <div className={styles.recordingImageContainer}>
+                <img
+                  src="https://res.cloudinary.com/duzj8zjj5/image/upload/v1670418381/Recording-logo_f8dz9t.webp"
+                  alt="recording_image"
+                />
+              </div>
+
+              <h4>Drag and drop agent audio call recordings</h4>
+
+              <div className={styles.Or}>
+                <div className={styles.orLeft} />
+                <div className={styles.pDiv}>
+                  <p>OR</p>
+                </div>
+                <div className={styles.orRight} />
+              </div>
+              <form onSubmit={handleSubmit}>
+                <input
+                  type="file"
+                  name="file"
+                  hidden
+                  ref={inputRef}
+                  onChange={handleFileSelect}
+                />
+                <p
+                  className={styles.Upload}
+                  onClick={() => inputRef.current.click()}
+                >
+                  Browse from your computer
+                </p>
+                <input
+                  type="submit"
+                  className={styles.selectButton1}
+                  value="Transcribe"
+                />
+              </form>
+            </div>
+          </div>
+        )}
 
         <div className={styles.tryNote}>
           <p>Please note;</p>
@@ -140,78 +219,7 @@ export default function TryState1() {
             </li>
           </ul>
         </div>
-      </div>
-    );
-
-  return (
-    <div className={styles.recordingSection}>
-      {!selectedFile && (
-        <div
-          className={styles.recordingDrag}
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-        >
-          <div className={styles.recordingContent}>
-            <div className={styles.recordingImageContainer}>
-              <img
-                src="https://res.cloudinary.com/duzj8zjj5/image/upload/v1670418381/Recording-logo_f8dz9t.webp"
-                alt="recording_image"
-              />
-            </div>
-
-            <h4>Drag and drop agent audio call recordings</h4>
-
-            <div className={styles.Or}>
-              <div className={styles.orLeft} />
-              <div className={styles.pDiv}>
-                <p>OR</p>
-              </div>
-              <div className={styles.orRight} />
-            </div>
-            <form onSubmit={handleSubmit}>
-              <input
-                type="file"
-                name="file"
-                hidden
-                ref={inputRef}
-                onChange={handleFileSelect}
-              />
-              <p
-                className={styles.Upload}
-                onClick={() => inputRef.current.click()}
-              >
-                Browse from your computer
-              </p>
-              <input
-                type="submit"
-                className={styles.selectButton1}
-                value="Transcribe"
-              />
-            </form>
-          </div>
-        </div>
-      )}
-
-      <div className={styles.tryNote}>
-        <p>Please note;</p>
-        <ul>
-          <li>
-            You may upload, transcribe and analyse only one recording at a time.
-          </li>
-          <li>File must not be larger than 5mb.</li>
-          <li>
-            Transcription may take up to 3 minutes, kindly wait or sign up to
-            use the job ID feature.
-          </li>
-          <li>
-            Downloading sentiment anlysis is currently only available on the
-            webapp.
-          </li>
-          <li>
-            Tracking sentiment anlysis records is currently only available on
-            the webapp.
-          </li>
-        </ul>
+        <LastSection />
       </div>
     </div>
   );

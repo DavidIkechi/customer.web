@@ -2,11 +2,14 @@
 .trySection {
   width: 100%;
   margin-bottom: 5vh;
+  display: flex;
+  justify-content: center;
 }
 .HeroSection {
   display: flex;
   justify-content: space-between;
   padding: 10vh 8% 18vh;
+  max-width: 1440px;
 
   .backgroundImage {
     position: absolute;
@@ -16,7 +19,12 @@
     bottom: 0;
     z-index: -1;
     width: 100%;
-    height: 95vh;
+    height: 70vh;
+
+    @media screen and (max-width: 1440px) {
+      height: 95vh;
+    }
+ 
   }
 
   .Hero1 {
@@ -65,8 +73,12 @@
 .downHero {
   display: flex;
   gap: 2%;
-  margin-top: 20vh;
+  margin-top: 13vh;
+  max-width: 1440px;
   padding: 0 8%;
+  @media screen and (max-width: 1440px) {
+    margin-top: 20vh;
+  }
 
   hr {
     border: 2px solid #006cff;
@@ -494,7 +506,7 @@
       bottom: 0;
       z-index: -1;
       width: 100%;
-      height: 113vh;
+      height: 120vh;
     }
 
     .Hero1 {
@@ -581,7 +593,7 @@
       bottom: 0;
       z-index: -1;
       width: 100%;
-      height: 120vh;
+      height: 110vh;
     }
 
     .Hero1 {
