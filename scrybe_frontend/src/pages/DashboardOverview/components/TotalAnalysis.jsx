@@ -59,6 +59,35 @@ const TotalAnalysis = ({ totalAnalysisData }) => {
   function analysisTimeStampFunc(e) {
     setSelectedTotalAnalysis(totalAnalysisData[e.target.value]);
   }
+  // console.log("d", selectedTotalAnalysis);
+  // console.log("ff", Object.keys(selectedTotalAnalysis));
+
+  const totalAnalysis = selectedTotalAnalysis?.map(
+    (data) => data.positive + data.neutral + data.negative
+  );
+  const Positive = selectedTotalAnalysis.map((data) => data.positive);
+  const Neutral = selectedTotalAnalysis.map((data) => data.neutral);
+  const Negative = selectedTotalAnalysis.map((data) => data.negative);
+  const Total = [Positive, Neutral, Negative];
+  const Max = Math.max(...Total);
+  const MaxAnalysis = (Max / totalAnalysis) * 100;
+
+  // console.log(
+  //   "selectedTotalAnalysis",
+  //   selectedTotalAnalysis.map((data) => Object.keys(data)[2])
+  // );
+  // console.log("Total", Total[Max]);
+  // // console.log("Positive", Total);
+  // console.log("T", Total);
+  // function getKeyByValue(object, value) {
+  //   return Object.keys(object).find((key) => object[key] === value);
+  // }
+  // const letterIndices = Total.reduce(
+  //   (acc, letter, index) => Object.assign(acc, { [letter]: index }),
+  //   {}
+  // );
+  // console.log("Total", letterIndices[Max]);
+
   return (
     <div className={styles.analysis}>
       <div className={styles.analysis__heading}>
@@ -75,28 +104,33 @@ const TotalAnalysis = ({ totalAnalysisData }) => {
           <div className={styles.doughnut_chart}>
             <Doughnut options={chartOptions} data={chartData} />
             <div className={styles.chart_inner}>
-              <h1>
-                {selectedTotalAnalysis?.map(
-                  (data) => data.positive + data.neutral + data.negative
-                )}
-                %
-              </h1>
-              <span>+ve</span>
+              <h1>{`${MaxAnalysis}%`}</h1>
+              <span>{Object.keys(MaxAnalysis)}</span>
+              {/* <span>+ve</span> */}
             </div>
           </div>
           <div className={styles.scale}>
             <h3>
               <span className={styles.positive}>1</span> Positive{" "}
-              {selectedTotalAnalysis?.map((data) => data.positive)}%
+              {selectedTotalAnalysis?.map(
+                (data) => (data.positive / totalAnalysis) * 100
+              )}
+              %
             </h3>
             <h3>
               {" "}
               <span className={styles.neutral}>1</span>Neutral{" "}
-              {selectedTotalAnalysis?.map((data) => data.neutral)}%
+              {selectedTotalAnalysis?.map(
+                (data) => (data.neutral / totalAnalysis) * 100
+              )}
+              %
             </h3>
             <h3>
               <span className={styles.negative}>1</span> Negative{" "}
-              {selectedTotalAnalysis?.map((data) => data.negative)}%
+              {selectedTotalAnalysis?.map(
+                (data) => (data.negative / totalAnalysis) * 100
+              )}
+              %
             </h3>
           </div>
         </div>
