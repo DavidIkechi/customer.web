@@ -56,7 +56,7 @@ import Logout from "./pages/Logout";
 import EmailVerify from "./pages/VerificationEmail/EmailVerify";
 // import CheckMail from "./pages/CheckMail";
 import NewSignin from "./pages/NewSignin/NewSignin";
-import NewSignup from "./pages/NewSignup/NewSignup";
+import CreateAccount from "./pages/NewSignup/CreateAccount";
 import StartUp from "./pages/Checkout/Startup";
 import Growing from "./pages/Checkout/Growing";
 import Enterprise from "./pages/Checkout/Enterprise";
@@ -66,6 +66,7 @@ import Enterprise from "./pages/Checkout/Enterprise";
 import ForgetPasswordNew from "./pages/ForgotPasswordNew/Index";
 import NewSetNewPassword from "./pages/NewSetNewPassword";
 import NewPasswordResetSuccessful from "./pages/NewPasswordResetSuccessful";
+import CompleteSignup from "./pages/NewSignup/CompleteSignup/CompleteSignup";
 
 import * as atatus from "atatus-js";
 
@@ -77,7 +78,8 @@ function App() {
       <Routes>
         {/* access without sign in */}
         <Route path="/" element={<HomePageRedesign />} />
-        <Route path="/signup" element={<NewSignup />} />
+        <Route path="/signup" element={<CreateAccount />} />
+        <Route path="/complete-signup" element={<CompleteSignup />} />
         <Route path="/login" element={<NewSignin />} />
         <Route path="/check-mail" element={<CheckMail />} />
         <Route path="/try" element={<TryForFree />} />
