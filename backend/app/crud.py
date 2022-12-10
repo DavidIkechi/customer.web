@@ -281,8 +281,8 @@ def get_leaderboard(db: Session, user_id: int):
             if j.job.job_status == "completed":
                 if j.agent_id == i:
                     if j.timestamp.isocalendar().week == week:
-                        per_agent["week"]["firstname"] = j.agent_firstname
-                        per_agent["week"]["lastname"] = j.agent_lastname
+                        per_agent["week"]["firstname"] = j.agent_firstname.capitalize()
+                        per_agent["week"]["lastname"] = j.agent_lastname.capitalize()
                         per_agent["week"]["agent_id"] = j.agent_id
                         per_agent["week"]["total_calls"] += 1
                         if j.overall_sentiment == "Positive":
@@ -297,8 +297,8 @@ def get_leaderboard(db: Session, user_id: int):
                         per_agent["week"]["weekly"] = "week"
 
                     if j.timestamp.month == month:
-                        per_agent["month"]["firstname"] = j.agent_firstname
-                        per_agent["month"]["lastname"] = j.agent_lastname
+                        per_agent["month"]["firstname"] = j.agent_firstname.capitalize()
+                        per_agent["month"]["lastname"] = j.agent_lastname.capitalize()
                         per_agent["month"]["agent_id"] = j.agent_id
                         per_agent["month"]["total_calls"] += 1
                         if j.overall_sentiment == "Positive":
