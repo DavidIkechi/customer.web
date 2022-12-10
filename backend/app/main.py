@@ -226,19 +226,19 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     except Exception:
         return {"error": "There was an error uploaading the file"}
 
-    s3 = boto3.client('s3', aws_access_key_id= AWS_KEY_ID,
-        aws_secret_access_key= AWS_SECRET_KEY
-        )
-    audio_file = file.file.read()
-    bucket = "hng-heed"
+    # s3 = boto3.client('s3', aws_access_key_id= AWS_KEY_ID,
+    #     aws_secret_access_key= AWS_SECRET_KEY
+    #     )
+    # audio_file = file.file.read()
+    # bucket = "hng-heed"
 
-    s3.upload_fileobj(
-        io.BytesIO(audio_file),
-        bucket,
-        file.filename,
-        ExtraArgs = {"ACL": "public-read"}
-    )
-    audio_s3_url = f"https://{bucket}.s3.amazonaws.com/{file.filename}"
+    # s3.upload_fileobj(
+    #     io.BytesIO(audio_file),
+    #     bucket,
+    #     file.filename,
+    #     ExtraArgs = {"ACL": "public-read"}
+    # )
+    # audio_s3_url = f"https://{bucket}.s3.amazonaws.com/{file.filename}"
 
 
     # transcript = transcript
@@ -284,7 +284,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     return {
         "id":audio_id,
         "transcript_id": transcript_id,
-        "s3 bucket url": audio_s3_url
+        # "s3 bucket url": audio_s3_url
     }
 
 # create the endpoint
@@ -577,20 +577,19 @@ def get_total_analysis(db: Session = Depends(get_db), user: models.User = Depend
             list_month.append(i.overall_sentiment)
         if i.timestamp.isocalendar().week == week:
             list_week.append(i.overall_sentiment)
-
-
-    week_item['id'] = 1
-    week_item['positive'] = list_week.count("Positive")
-    week_item['neutral'] = list_week.count("Neutral")
-    week_item['negative'] = list_week.count("Negative")
-
-    month_item['id'] = 1
-    month_item['positive'] = list_month.count("Positive")
-    month_item['neutral'] = list_month.count("Neutral")
-    month_item['negative'] = list_month.count("Negative")
-
-    result['week'] = [week_item]
-    result['month'] = [month_item]
+    if len(list_week) > 0:
+        week_item['id'] = 1
+        week_item['positive'] = list_week.count("Positive")
+        week_item['neutral'] = list_week.count("Neutral")
+        week_item['negative'] = list_week.count("Negative")
+        result['week'] = [week_item]
+    
+    if len(list_month) > 0:
+        month_item['id'] = 1
+        month_item['positive'] = list_month.count("Positive")
+        month_item['neutral'] = list_month.count("Neutral")
+        month_item['negative'] = list_month.count("Negative")
+        result['month'] = [month_item]
 
     return result
 
@@ -600,7 +599,9 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
     total_recordings = db.query(models.Audio).filter(models.Audio.user_id == user.id)
     week = datetime.now().isocalendar().week
     month = datetime.now().month
-    results = {
+    
+    if total_recordings.count() > 0:
+        results = {
         "week": [
             {"total_recording": 0},
             {"id": 1, "time": "M", "totalRecordings": 0},
@@ -619,34 +620,39 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
             {"id": 4, "time": "wk4", "totalRecordings": 0}
         ]
     }
-    for i in total_recordings:
-        if i.timestamp.isocalendar().week == week:
-            results["week"][0]["total_recording"] += 1
-            if i.timestamp.weekday() == 0:
-                results["week"][1]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 1:
-                results["week"][2]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 2:
-                results["week"][3]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 3:
-                results["week"][4]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 4:
-                results["week"][5]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 5:
-                results["week"][6]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 6:
-                results["week"][7]["totalRecordings"] += 1
+        for i in total_recordings:
+            if i.timestamp.isocalendar().week == week:
+                results["week"][0]["total_recording"] += 1
+                if i.timestamp.weekday() == 0:
+                    results["week"][1]["totalRecordings"] += 1
+                elif i.timestamp.weekday() == 1:
+                    results["week"][2]["totalRecordings"] += 1
+                elif i.timestamp.weekday() == 2:
+                    results["week"][3]["totalRecordings"] += 1
+                elif i.timestamp.weekday() == 3:
+                    results["week"][4]["totalRecordings"] += 1
+                elif i.timestamp.weekday() == 4:
+                    results["week"][5]["totalRecordings"] += 1
+                elif i.timestamp.weekday() == 5:
+                    results["week"][6]["totalRecordings"] += 1
+                elif i.timestamp.weekday() == 6:
+                    results["week"][7]["totalRecordings"] += 1
 
-        if i.timestamp.month == month:
-            results["month"][0]["total_recording"] += 1
-            if i.timestamp.day <= 7:
-                results["month"][1]["totalRecordings"] += 1
-            elif 8 <= i.timestamp.day <= 14:
-                results["month"][2]["totalRecordings"] += 1
-            elif 15 <= i.timestamp.day <= 21:
-                results["month"][3]["totalRecordings"] += 1
-            elif 22 <= i.timestamp.day <= 31:
-                results["month"][4]["totalRecordings"] += 1
+            if i.timestamp.month == month:
+                results["month"][0]["total_recording"] += 1
+                if i.timestamp.day <= 7:
+                    results["month"][1]["totalRecordings"] += 1
+                elif 8 <= i.timestamp.day <= 14:
+                    results["month"][2]["totalRecordings"] += 1
+                elif 15 <= i.timestamp.day <= 21:
+                    results["month"][3]["totalRecordings"] += 1
+                elif 22 <= i.timestamp.day <= 31:
+                    results["month"][4]["totalRecordings"] += 1
+    else:
+        results = {
+            "week": [],
+            "month": []
+        }
 
     return results
 
