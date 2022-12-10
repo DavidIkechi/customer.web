@@ -138,3 +138,38 @@ def password_verif_token(token):
         raise credentials_exception
     
     return email
+
+
+async def transcription_result_email(email: List, instance: User, job_id: str, filename: str):
+    first_name = instance.first_name
+
+    template = f"""
+        <div>
+            <h3>Transcription Result</h3>
+            <br>
+            <p><b>Dear {first_name},</b></p>
+            <p>
+                The results for {filename} are ready! 
+                <a href="https://heed.hng.tech/transcriptions/{job_id}">
+                    Click here to view
+                </a>
+            </p>
+
+            <p>Alternatively, you can paste the following link in your browser's address bar:</p>
+            <p>"https://heed.hng.tech/transcriptions/{job_id}"</p>
+
+            <p>Sincerely,</p>
+            <p>Heed Team</p>
+
+        </div>
+    """
+
+    message = MessageSchema(
+        subject = "Transcription Result",
+        recipients = email,
+        body = template,
+        subtype = "html"
+    )
+
+    fm =FastMail(conf)
+    await fm.send_message(message=message)
