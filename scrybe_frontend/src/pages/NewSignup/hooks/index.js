@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import ErrorHandler from "../../../helpers/axioshelp/Utils/ErrorHandler";
 import ApiService from "../../../helpers/axioshelp/apis";
 
