@@ -761,11 +761,21 @@ async def forgot_password(email: schema.ForgetPassword, db: Session = Depends(ge
 
 @app.patch('/reset-password', summary = "reset password", tags=['users'])
 async def reset_password(token: str, new_password: schema.UpdatePassword, db: Session = Depends(get_db)):
+
     email = password_verif_token(token)
     user: models.User = crud.get_user_by_email(db, email)
         
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
+
+    its_match = verify_password(new_password.password, user.password)
+    its_le_eight = len(new_password.password) < 8
+
+    if its_match:
+        raise HTTPException(status_code=500, detail="New password cannot be the same as old password")
+    elif its_le_eight:
+        raise HTTPException(status_code=500, detail="Password must have at least 8 characters")
+
     
     reset_done = crud.reset_password(db, new_password.password, user)
 
