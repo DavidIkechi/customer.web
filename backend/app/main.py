@@ -226,19 +226,19 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     except Exception:
         return {"error": "There was an error uploaading the file"}
 
-    # s3 = boto3.client('s3', aws_access_key_id= AWS_KEY_ID,
-    #     aws_secret_access_key= AWS_SECRET_KEY
-    #     )
-    # audio_file = file.file.read()
-    # bucket = "hng-heed"
+    s3 = boto3.client('s3', aws_access_key_id= AWS_KEY_ID,
+        aws_secret_access_key= AWS_SECRET_KEY
+        )
+    audio_file = file.file.read()
+    bucket = "hng-heed"
 
-    # s3.upload_fileobj(
-    #     io.BytesIO(audio_file),
-    #     bucket,
-    #     file.filename,
-    #     ExtraArgs = {"ACL": "public-read"}
-    # )
-    # audio_s3_url = f"https://{bucket}.s3.amazonaws.com/{file.filename}"
+    s3.upload_fileobj(
+        io.BytesIO(audio_file),
+        bucket,
+        file.filename,
+        ExtraArgs = {"ACL": "public-read"}
+    )
+    audio_s3_url = f"https://{bucket}.s3.amazonaws.com/{file.filename}"
 
 
     # transcript = transcript
@@ -284,7 +284,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     return {
         "id":audio_id,
         "transcript_id": transcript_id,
-        # "s3 bucket url": audio_s3_url
+        "s3 bucket url": audio_s3_url
     }
 
 # create the endpoint
