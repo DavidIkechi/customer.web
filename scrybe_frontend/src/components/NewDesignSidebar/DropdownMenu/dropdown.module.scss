@@ -1,17 +1,17 @@
 .dropdown {
-  box-sizing: border-box;
+  // box-sizing: border-box;
   position: absolute;
   width: 160px;
   height: max-content;
   box-shadow: 2px 2px 8px rgba(64, 64, 64, 0.2);
   background-color: white;
-  top: -50;
-  right: 0;
+  bottom: 120%;
+  left: 0;
   padding: 12px 40px 12px 10px;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  margin-top: 70px;
+  // margin-top: 70px;
   z-index: 1;
   .list {
     display: flex;

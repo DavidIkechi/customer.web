@@ -22,6 +22,15 @@
     display: flex;
     align-items: flex-end;
 
+    .profilePicBlank {
+      display: none;
+      border: 1px solid #002d6b;
+      background-color: white;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+    }
+
     .profilePic {
       width: 80px;
       object-fit: cover;
@@ -51,6 +60,16 @@
         width: 100%;
         font-size: 0.75rem !important;
       }
+    }
+  }
+
+  .PersonalInfo_header__noDisplay {
+    .profilePicBlank {
+      display: block;
+    }
+
+    .profilePic {
+      display: none;
     }
   }
 

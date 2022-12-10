@@ -43,8 +43,6 @@ export function UploadModal() {
 
     const destinationUrl = "https://api.heed.hng.tech/upload_audios";
     const token = localStorage.getItem("heedAccessToken");
-    // const token =
-    //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0b3Npbl9veWVsYW1pQHlhaG9vLmNvbSIsImV4cCI6MTY3MDE4NDM4NH0.owGrGZrgZ8fBy-B28uXuJQS7H0DKiP6X18S4HMgW4pw";
     const headers = { Authorization: `Bearer ${token}` };
     axios
       .request({
@@ -54,12 +52,12 @@ export function UploadModal() {
         headers,
         onUploadProgress: (p) => {
           setFile({ file, progress: (p.loaded / p.total) * 100 });
-          console.log(
-            "progress",
-            (p.loaded / p.total) * 100,
-            p.loaded,
-            p.total
-          );
+          // console.log(
+          //   "progress",
+          //   (p.loaded / p.total) * 100,
+          //   p.loaded,
+          //   p.total
+          // );
         },
       })
       .then((response) => {

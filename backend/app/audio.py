@@ -9,21 +9,20 @@ from mutagen.mp4 import MP4
 def audio_details(filename):
     audio = {}
     file = Path(filename)
-    if filename[-3:] == "mp3":
+    if filename[-3:].lower() == "mp3":
         audio_file = MP3(filename)
-    elif filename[-3:] == "wav":
+    elif filename[-3:].lower() == "wav":
         audio_file = WAVE(filename)
-    elif filename[-3:] == "flac":
+    elif filename[-3:].lower() == "flac":
         audio_file = FLAC(filename)
-    elif filename[-3:] == "aac":
+    elif filename[-3:].lower() == "aac":
         audio_file = AAC(filename)
-    elif filename[-3:] == "mp4":
+    elif filename[-3:].lower() == "mp4":
         audio_file = MP4(filename)
-    elif filename[-3:] == "m4a":
+    elif filename[-3:].lower() == "m4a":
         audio_file = MP4(filename)
     else:
         raise Exception ("File format not supported")
-
 
     audio_info = audio_file.info
     length = int(audio_info.length)

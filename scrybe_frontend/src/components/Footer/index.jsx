@@ -3,7 +3,6 @@ import { BsInstagram, BsTwitter } from "react-icons/bs";
 import { GrFacebookOption } from "react-icons/gr";
 import { Link, NavLink } from "react-router-dom";
 import locate from "./assets/location-marker.png";
-import logo from "./assets/logo.png";
 import email from "./assets/mail.png";
 import call from "./assets/phone.png";
 import styles from "./footer.module.scss";
@@ -19,7 +18,11 @@ function Footer() {
           <div className={styles.footerLeft}>
             <div>
               <Link to="/">
-                <img src={logo} alt="" className={styles.logo} />
+                <img
+                  src="https://res.cloudinary.com/djufngoed/image/upload/v1670429102/logo_fdsclm.webp"
+                  alt=""
+                  className={styles.logo}
+                />
               </Link>
               <div>
                 <p className={styles.provide}>
@@ -53,11 +56,6 @@ function Footer() {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/press-article" className={styles.links}>
-                  Why Heed
-                </NavLink>
-              </li>
-              <li>
                 <NavLink to="/about-us" className={styles.links}>
                   About Us
                 </NavLink>
@@ -77,18 +75,8 @@ function Footer() {
             <ul>
               <h4>Quick links</h4>
               <li>
-                <NavLink to="/signin" className={styles.links}>
-                  Authentication
-                </NavLink>
-              </li>
-              <li>
                 <NavLink to="/pricing" className={styles.links}>
                   Billing and pricing
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/account" className={styles.links}>
-                  Accounts
                 </NavLink>
               </li>
               <li>

@@ -13,12 +13,17 @@ function DashboardOverview() {
   const { recentRecording, totalAnalysis, totalRecording, leaderboard } =
     useDashBoardData();
   const [toggleSidebar, setToggleSidebar] = React.useState(false);
+  const [setIsSearching] = React.useState("");
 
+  const setterFn = (e) => {
+    setIsSearching(e.target.value);
+  };
   return (
     <div className={`${styles.dashboard_overviewParent} `}>
       <NewDesignSideBar
         toggleSidebar={toggleSidebar}
         needSearchMobile="needSearchMobile"
+        getValue={(e) => setterFn(e)}
         closeSidebar={() => setToggleSidebar(!toggleSidebar)}
       >
         <div className={styles.dashboard_overviewCol}>
@@ -27,6 +32,7 @@ function DashboardOverview() {
               openSidebar={() => {
                 setToggleSidebar(!toggleSidebar);
               }}
+              search={(e) => setterFn(e)}
             />
           </div>
           <section className={styles.dashboard_overview}>

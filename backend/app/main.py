@@ -14,7 +14,9 @@ from routers.transcribe import transcript_router
 from routers.score import score_count
 import models, json
 from auth import get_active_user, get_current_user, get_admin
-from jwt import main_login, get_access_token
+
+from jwt import main_login, get_access_token, verify_password, refresh
+
 
 
 from authlib.integrations.starlette_client import OAuth
@@ -41,6 +43,7 @@ from BitlyAPI import shorten_urls
 import services as _services
 
 from datetime import datetime, timedelta, date
+from fastapi_utils.tasks import repeat_every
 
 
 import shutil
@@ -55,6 +58,7 @@ import boto3, io
 import uuid
 import random, string 
 from elasticapm.contrib.starlette import make_apm_client, ElasticAPM
+import cron_status
 
 apm_config = {
     'SERVICE_NAME': 'Heed_api',
@@ -115,8 +119,8 @@ origins = [
     "http://localhost:5173",
     "http://localhost:1111",
     "http://localhost:8000",
-    "https://heed.hng.tech",
     "http://heed.hng.tech",
+    "https://heed.hng.tech",
     "https://heed.hng.tech:80",
     "https://heed.hng.tech:3000",
     "https://heed.hng.tech:5173",
@@ -166,6 +170,12 @@ def main() -> None:
 AWS_KEY_ID = os.getenv("AWS_KEY_ID")
 AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
 
+@app.on_event('startup')
+@repeat_every(seconds = 10, wait_first = True)
+def periodic():
+    cron_status.check_and_update_jobs()
+    
+
 @app.get("/")
 async def ping():
     return {"message": "Scrybe Up"}
@@ -202,7 +212,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     except Exception:
         return {"error": "There was an error uploading the file"}
     #finally:
-        f#ile.file.close()
+        #file.file.close()
 
     try:
         result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
@@ -282,6 +292,12 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
 async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     # return token once the user has been successfully authenticated, or it returns an error.
     return await main_login(form_data, db)
+
+@app.post('/refresh-token', summary = "refresh expired access token of logged in user", tags=['users'])
+async def refresh_token(refresh_token: schema.RefreshToken, db: Session = Depends(get_db)):
+    # return new access token for logged in user once it has verified the refresh token sent from the frontend.
+    return refresh(refresh_token, db) 
+
 
 
 @app.post("/create_users", summary = "create/register a user", response_model=schema.User, tags=['users'])
@@ -403,6 +419,7 @@ async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...
     if not file:
         raise HTTPException(status_code = 406, detail="No File Selected")
     elif getSize > fileSize :
+        os.unlink(file.filename)
         raise HTTPException(status_code = 406, detail="File Must Not Be More Than 5MB")
     else:
         try:
@@ -413,38 +430,46 @@ async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...
             response = shorten_urls(urls)
             retrieve_url = response[0]
             new_url = retrieve_url.short_url
-        except Exception:   
-            return {"error": "There was an error uploading the file"}
-        # transcript = transcript
+        except Exception: 
+            raise HTTPException(status_code = 406, detail="There was an error uploading the file")
     transcript = transcribe_file(new_url)
     # get some essential parameters
     transcript_id = transcript['id']
+    filename = file.filename
     transcript_status = transcript['status']
+    size = audio_details(file.filename)["size"]
+    sizeMb = (str(size) + 'MB')
+    audio_list = ",".join([transcript_status, filename, sizeMb])
 
-    callback = models.FreeTrial(transcript_id = transcript_id, transcript_status=transcript_status)
+
+    callback = models.FreeTrial(transcript_id = transcript_id, transcript_status=audio_list)
 
     db.add(callback)
     db.commit()
     db.refresh(callback)
     # delete the file
     os.remove(file.filename)
-
-    return {"transcript_id": transcript_id, "status": transcript_status}
+    status_break = audio_list.split(",")
+    return {"transcript_id": transcript_id, "status": status_break[0], "filaname": status_break[1], "file_size": status_break[2]}
 
 
 @app.get("/get_transcript/{transcript_id}", description="Retrieving transcript by audio ID")
 def view_transcript(transcript_id: Union[int, str], db: Session = Depends(_services.get_session)):
-    transcript = db.query(models.FreeTrial).filter(models.FreeTrial.transcript_id == transcript_id).first()
+    transcript = crud.get_freetrial(db, id = transcript_id)
     if not transcript:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, 
             detail=f"Transcription with id: {transcript_id} was not found")
     transcript_audio_id = transcript_id
     
-    
+    current_status = transcript.transcript_status.split(",")
+    current_status_filename = current_status[1]
+    current_status_size = current_status[2]
     transcript_audio = get_transcript_result(transcript_audio_id)
     transcript.job_status = transcript_audio['status']
-    # db.commit()
+    transcript.transcript_status = ",".join([transcript.job_status, current_status_filename, current_status_size])
+    db.commit()
+    db.refresh(transcript)
     
     if transcript_audio['status'] != "completed":
         return {"status":transcript_audio['status']}
@@ -455,7 +480,8 @@ def view_transcript(transcript_id: Union[int, str], db: Session = Depends(_servi
 
         overall_sentiment = sentiment_result['overall_sentiment']
 
-        return {"transcription": transcripted_word, "overall_sentiment_result": overall_sentiment}
+        return {"transcription": transcripted_word, "overall_sentiment_result": overall_sentiment,
+                    "filename":current_status_filename, "filesize":current_status_size, "status": transcript_audio['status']}
 
 
 @app.get('/history', summary = "get user history", response_model=Page[schema.History])
@@ -551,20 +577,19 @@ def get_total_analysis(db: Session = Depends(get_db), user: models.User = Depend
             list_month.append(i.overall_sentiment)
         if i.timestamp.isocalendar().week == week:
             list_week.append(i.overall_sentiment)
-
-
-    week_item['id'] = 1
-    week_item['positive'] = list_week.count("Positive")
-    week_item['neutral'] = list_week.count("Neutral")
-    week_item['negative'] = list_week.count("Negative")
-
-    month_item['id'] = 1
-    month_item['positive'] = list_month.count("Positive")
-    month_item['neutral'] = list_month.count("Neutral")
-    month_item['negative'] = list_month.count("Negative")
-
-    result['week'] = [week_item]
-    result['month'] = [month_item]
+    if len(list_week) > 0:
+        week_item['id'] = 1
+        week_item['positive'] = list_week.count("Positive")
+        week_item['neutral'] = list_week.count("Neutral")
+        week_item['negative'] = list_week.count("Negative")
+        result['week'] = [week_item]
+    
+    if len(list_month) > 0:
+        month_item['id'] = 1
+        month_item['positive'] = list_month.count("Positive")
+        month_item['neutral'] = list_month.count("Neutral")
+        month_item['negative'] = list_month.count("Negative")
+        result['month'] = [month_item]
 
     return result
 
@@ -574,7 +599,9 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
     total_recordings = db.query(models.Audio).filter(models.Audio.user_id == user.id)
     week = datetime.now().isocalendar().week
     month = datetime.now().month
-    results = {
+    
+    if total_recordings.count() > 0:
+        results = {
         "week": [
             {"total_recording": 0},
             {"id": 1, "time": "M", "totalRecordings": 0},
@@ -593,34 +620,39 @@ def total_recordings_user(db: Session = Depends(get_db), user: models.User = Dep
             {"id": 4, "time": "wk4", "totalRecordings": 0}
         ]
     }
-    for i in total_recordings:
-        if i.timestamp.isocalendar().week == week:
-            results["week"][0]["total_recording"] += 1
-            if i.timestamp.weekday() == 0:
-                results["week"][1]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 1:
-                results["week"][2]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 2:
-                results["week"][3]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 3:
-                results["week"][4]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 4:
-                results["week"][5]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 5:
-                results["week"][6]["totalRecordings"] += 1
-            elif i.timestamp.weekday() == 6:
-                results["week"][7]["totalRecordings"] += 1
+        for i in total_recordings:
+            if i.timestamp.isocalendar().week == week:
+                results["week"][0]["total_recording"] += 1
+                if i.timestamp.weekday() == 0:
+                    results["week"][1]["totalRecordings"] += 1
+                elif i.timestamp.weekday() == 1:
+                    results["week"][2]["totalRecordings"] += 1
+                elif i.timestamp.weekday() == 2:
+                    results["week"][3]["totalRecordings"] += 1
+                elif i.timestamp.weekday() == 3:
+                    results["week"][4]["totalRecordings"] += 1
+                elif i.timestamp.weekday() == 4:
+                    results["week"][5]["totalRecordings"] += 1
+                elif i.timestamp.weekday() == 5:
+                    results["week"][6]["totalRecordings"] += 1
+                elif i.timestamp.weekday() == 6:
+                    results["week"][7]["totalRecordings"] += 1
 
-        if i.timestamp.month == month:
-            results["month"][0]["total_recording"] += 1
-            if i.timestamp.day <= 7:
-                results["month"][1]["totalRecordings"] += 1
-            elif 8 <= i.timestamp.day <= 14:
-                results["month"][2]["totalRecordings"] += 1
-            elif 15 <= i.timestamp.day <= 21:
-                results["month"][3]["totalRecordings"] += 1
-            elif 22 <= i.timestamp.day <= 31:
-                results["month"][4]["totalRecordings"] += 1
+            if i.timestamp.month == month:
+                results["month"][0]["total_recording"] += 1
+                if i.timestamp.day <= 7:
+                    results["month"][1]["totalRecordings"] += 1
+                elif 8 <= i.timestamp.day <= 14:
+                    results["month"][2]["totalRecordings"] += 1
+                elif 15 <= i.timestamp.day <= 21:
+                    results["month"][3]["totalRecordings"] += 1
+                elif 22 <= i.timestamp.day <= 31:
+                    results["month"][4]["totalRecordings"] += 1
+    else:
+        results = {
+            "week": [],
+            "month": []
+        }
 
     return results
 
@@ -737,19 +769,40 @@ async def reset_password(token: str, new_password: schema.UpdatePassword, db: Se
     
     reset_done = crud.reset_password(db, new_password.password, user)
 
-    if not reset_done:
-        raise HTTPException(status_code=500)
+    if reset_done is None:
+        raise HTTPException(status_code=500, detail="Failed to update password")
     
     return reset_done
 
 
 
+@app.patch('/change-password', summary = "change password", tags=['users'])
+async def change_password(password_schema: schema.ChangePassword, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    its_match = password_schema.old_password == password_schema.new_password
+    its_le_eight = len(password_schema.new_password) < 8
 
+    if its_match:
+        raise HTTPException(status_code=500, detail="New password cannot be the same as old password")
+    elif its_le_eight:
+        raise HTTPException(status_code=500, detail="Password must have at least 8 characters")
 
-# @app.route('/logout/google')
-# async def logout(request: Request):
-#     request.session.pop('user', None)
-#     return RedirectResponse(url='/')
+    user_db = crud.get_user_by_email(db, user.email)
+
+    if user_db is None:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    password_match =  verify_password(password_schema.old_password, user_db.password)
+
+    if not password_match:
+        raise HTTPException(status_code=500, detail="Password does not match")
+    
+    reset_done = crud.reset_password(db, password_schema.new_password, user_db)
+
+    if reset_done is None:
+        raise HTTPException(status_code=500, detail="Failed to update password")
+    
+    return reset_done
+
 
 
 @app.get('/login/google')
@@ -803,7 +856,7 @@ def delete_audios(audios: List[int] = Query(None), db: Session = Depends(get_db)
 
 @app.get("/download/{id}")
 def download (id: Union[int, str], db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    db_audio = db.query(models.Audio).filter(models.Audio.job_id == id).first()
+    db_audio = crud.get_freeaudio(db, audio_id=id)
 
     if db_audio is None:
         raise HTTPException(status_code=404, detail="No Audio With This ID")
@@ -901,5 +954,5 @@ def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: mo
                 break
         return {"Agent_Performance_Report": {"week": result["week"], "month": result["month"]}}
     except:
-        return {"message": "agent does not exist"}
+        return {"message": "agent details does not exist"}
 
