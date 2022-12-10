@@ -171,7 +171,7 @@ AWS_KEY_ID = os.getenv("AWS_KEY_ID")
 AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
 
 @app.on_event('startup')
-@repeat_every(seconds = 10, wait_first = True)
+@repeat_every(seconds = 3, wait_first = True)
 def periodic():
     cron_status.check_and_update_jobs()
     
@@ -232,6 +232,8 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     audio_file = file.file.read()
     bucket = "hng-heed"
 
+    
+    
     s3.upload_fileobj(
         io.BytesIO(audio_file),
         bucket,
@@ -241,7 +243,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     audio_s3_url = f"https://{bucket}.s3.amazonaws.com/{file.filename}"
 
 
-    # transcript = transcript
+     # transcript = transcript
     
     size = Path(file.filename).stat().st_size / 1048576
     duration = audio_details(file.filename)["mins"]
@@ -284,7 +286,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     return {
         "id":audio_id,
         "transcript_id": transcript_id,
-        "s3 bucket url": audio_s3_url
+ #       "s3 bucket url": audio_s3_url
     }
 
 # create the endpoint
@@ -512,7 +514,7 @@ def get_sentiment_result(id: int, db: Session = Depends(get_db)):
 @app.get("/list-audios-by-user", summary = "list all user audios with their status")
 def list_audios_by_user(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     result = crud.get_audios_by_user(db, user_id=user.id)
-    audios = []
+    audio_list = []
     for i in result:
         audio = {
             "id": i.id,
@@ -524,7 +526,8 @@ def list_audios_by_user(db: Session = Depends(get_db), user: models.User = Depen
             "job_details": i.job
 
         }
-        audios.append(audio)
+        audio_list.append(audio)
+    audios = sorted(audio_list, key=lambda x: x['id'], reverse=True)   
     return audios
     
 @app.get("/get_uploaded_jobs", summary="List all uploaded jobs with job details", status_code=status.HTTP_200_OK, tags=['jobs'])
@@ -761,11 +764,21 @@ async def forgot_password(email: schema.ForgetPassword, db: Session = Depends(ge
 
 @app.patch('/reset-password', summary = "reset password", tags=['users'])
 async def reset_password(token: str, new_password: schema.UpdatePassword, db: Session = Depends(get_db)):
+
     email = password_verif_token(token)
     user: models.User = crud.get_user_by_email(db, email)
         
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
+
+    its_match = verify_password(new_password.password, user.password)
+    its_le_eight = len(new_password.password) < 8
+
+    if its_match:
+        raise HTTPException(status_code=500, detail="New password cannot be the same as old password")
+    elif its_le_eight:
+        raise HTTPException(status_code=500, detail="Password must have at least 8 characters")
+
     
     reset_done = crud.reset_password(db, new_password.password, user)
 
@@ -807,7 +820,8 @@ async def change_password(password_schema: schema.ChangePassword, db: Session = 
 
 @app.get('/login/google')
 async def login(request: Request):
-    redirect_uri = request.url_for('auth')  # This creates the url for our /auth endpoint
+    redirect_uri = "https://api.heed.hng.tech/auth/google"
+    # request.url_for('auth')   This creates the url for our /auth endpoint
     return await oauth.google.authorize_redirect(request, redirect_uri)
 
 
@@ -956,3 +970,7 @@ def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: mo
     except:
         return {"message": "agent details does not exist"}
 
+@app.get("/refresh-api-key")
+async def refresh_api_key(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
+    user_id = user.id
+    return crud.refresh_api_key(db, user_id)

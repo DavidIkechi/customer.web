@@ -93,7 +93,7 @@ function NavBar() {
               </>
             ) : (
               <>
-                <NavLink to="/signin" className={styles.ctas__button}>
+                <NavLink to="/login" className={styles.ctas__button}>
                   Login
                 </NavLink>
                 <NavLink to="/try" className={styles.ctas__button}>

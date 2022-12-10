@@ -1,9 +1,9 @@
 import { React, useState, useCallback, useEffect } from "react";
 import SnackBar from "../../components/SnackBar";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import Loading from "../../components/Loading";
 import Cookies from "js-cookie";
-import styles from "./NewSignin.module.scss";
+import styles from "./Login.module.scss";
 import ApiService from "../../helpers/axioshelp/apis";
 import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
 
@@ -12,7 +12,7 @@ import google from "./assets/google.png";
 import visible from "./assets/visible.png";
 import hidden from "./assets/hidden.png";
 
-const NewSignin = () => {
+const Login = () => {
   const emailTest = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
   const passwordTest = new RegExp(/^["0-9a-zA-Z!@#$&()\\-`.+,/"]{8,}$/);
 
@@ -117,24 +117,19 @@ const NewSignin = () => {
         <div className={styles.bgcontainer}>
           <div className={styles.text}>
             <p>...Speak, we listen</p>
-            <p>
-              Unlock insights and extract meaningful data from your customer
-              support conversations
-            </p>
+            <p>Unlock insight and meaningful data from team call records.</p>
           </div>
         </div>
 
         <div className={styles.inputsection}>
-          <NavLink to="/">
-            <img src={logo} alt="heedLogo" />
-          </NavLink>
+          <img src={logo} alt="heedLogo" />
 
           <div className={styles.greeting}>
             <h1>Welcome back Heeder</h1>
             <p>Please enter your details</p>
           </div>
 
-          <a href="#" className={styles.googlego}>
+          <a href="/coming-soon" className={styles.googlego}>
             <img src={google} alt="google" />
             Sign in With google
           </a>
@@ -206,8 +201,9 @@ const NewSignin = () => {
 
           <div className={styles.linkbottom}>
             <p>Don't have an account yet?</p>
-
-            <Link to="/signup">Sign up</Link>
+            <span>
+              <Link to="/signup">Sign up</Link>
+            </span>
           </div>
         </div>
       </div>
@@ -215,4 +211,4 @@ const NewSignin = () => {
   );
 };
 
-export default NewSignin;
+export default Login;
