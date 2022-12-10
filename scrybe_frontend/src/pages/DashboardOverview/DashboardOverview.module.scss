@@ -152,9 +152,9 @@
 
     .chart_inner {
       position: absolute;
-      top: 20%;
-      left: 25%;
-      transform: translate(25%, 20%);
+      top: 26%;
+      left: 36%;
+      // transform: translate(25%, 20%);
 
       h1 {
         margin: 0;
@@ -166,8 +166,11 @@
       span {
         margin: 0;
         font-weight: 400;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         color: #6a6a6a;
+        display: flex;
+        align-items: center;
+        gap: 0.2rem;
       }
     }
     .scale {
@@ -255,6 +258,16 @@
           }
         }
       }
+    }
+  }
+  .empty_state {
+    padding: 6rem 0;
+    p {
+      font-weight: 300;
+      font-size: 1rem;
+      line-height: 24px;
+      text-align: center;
+      color: #454545;
     }
   }
 }
@@ -364,7 +377,7 @@
   .recent_recordings {
     padding: 2rem;
     caption {
-      padding: 2rem 2.3rem;
+      padding: 2rem 2.3rem 0;
     }
     thead th {
       font-size: 0.9rem !important;
