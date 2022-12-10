@@ -69,12 +69,12 @@ const DragAndDrop = ({
         </div>
         <div className={style["right-or"]}></div>
       </div>
-      <p className={style["small-text"]}>
-        Audio files must be smaller than 10mb
-      </p>
       <button disabled={btnDisabled} className={style["primary-button"]}>
         <label htmlFor="file">Browse Files</label>
       </button>
+      <p className={style["small-text"]}>
+        Audio files must be smaller than 10mb
+      </p>
       {btnDisabled ? (
         <input
           type="file"
