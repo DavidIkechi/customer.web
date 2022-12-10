@@ -18,7 +18,7 @@ import Solutions from "./pages/Solutions/Solutions";
 import TermsAndCondition from "./pages/TermsAndCondition";
 import TranscribePage from "./pages/TranscribePage";
 import TryForFree from "./pages/TryForFree";
-// import WithAuth from "./HOCs";
+import WithAuth from "./HOCs";
 import Account from "./pages/Account";
 import BlogPostPage from "./pages/BlogPostPage";
 import Blogs from "./pages/BlogsPage";
@@ -60,7 +60,9 @@ import CreateAccount from "./pages/NewSignup/CreateAccount";
 import StartUp from "./pages/Checkout/Startup";
 import Growing from "./pages/Checkout/Growing";
 import Enterprise from "./pages/Checkout/Enterprise";
+import FinalSignIn from "./pages/FinalLoginPage/Login";
 // import CheckMail from "./pages/CheckMail";
+import ComingSoon from "./pages/ComingSoonPage/index";
 
 // import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import ForgetPasswordNew from "./pages/ForgotPasswordNew/Index";
@@ -80,7 +82,7 @@ function App() {
         <Route path="/" element={<HomePageRedesign />} />
         <Route path="/signup" element={<CreateAccount />} />
         <Route path="/complete-signup" element={<CompleteSignup />} />
-        <Route path="/login" element={<NewSignin />} />
+        <Route path="/login" element={<FinalSignIn />} />
         <Route path="/check-mail" element={<CheckMail />} />
         <Route path="/try" element={<TryForFree />} />
         <Route path="/careers" element={<Careers />} />
@@ -98,6 +100,7 @@ function App() {
         <Route path="/verify-signup" element={<SignUpVerify />} />
         <Route path="/support-team" element={<Support />} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/coming-soon" element={<ComingSoon />} />
 
         {/* <Route
           path="/set-new-password?token=:token"
@@ -147,14 +150,14 @@ function App() {
         {/* cant access without signin */}
 
         <Route element={<RequireToken />}>
-          {/* <Route
+          <Route
             path="/account"
             element={
               <WithAuth>
                 <Account />
               </WithAuth>
             }
-          /> */}
+          />
           <Route path="/account" element={<Account />} />
           <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
           <Route path="/agent-report/:Agent_id" element={<AgentReport />} />
