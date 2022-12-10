@@ -2,30 +2,30 @@ import React from "react";
 import styles from "./homePageRedesign.module.scss";
 import Footer from "../../components/Footer";
 import NavBar from "../../components/NavbarFree";
-import heroCenter from "./assets/hero__center.png";
-import saveTime from "./assets/save__time.png";
-import easeUse from "./assets/ease__icon.png";
-import powerIcon from "./assets/power__icon.png";
+// import heroCenter from "./assets/hero__center.png";
+// import saveTime from "./assets/save__time.png";
+// import easeUse from "./assets/ease__icon.png";
+// import powerIcon from "./assets/power__icon.png";
 import uploadScreen from "./assets/upload__icon.png";
-import transScreen from "./assets/trans__screen.png";
-import analyzeScreen from "./assets/analyze__screen.png";
-import clientOne from "./assets/client__one.png";
-import clientTwo from "./assets/client__two.png";
-import { useState } from "react";
+// import transScreen from "./assets/trans__screen.png";
+// import analyzeScreen from "./assets/analyze__screen.png";
+// import clientOne from "./assets/client__one.png";
+// import clientTwo from "./assets/client__two.png";
+// import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Index = () => {
-  const [supportColor, setSupportColor] = useState(true);
-  const [saleColor, setSaleColor] = useState(false);
-  const [supportText, setSupportText] = useState(true);
-  const [saleText, setSaleText] = useState(false);
+  // const [supportColor, setSupportColor] = useState(true);
+  // const [saleColor, setSaleColor] = useState(false);
+  // const [supportText, setSupportText] = useState(true);
+  // const [saleText, setSaleText] = useState(false);
 
-  function toggleColor() {
-    setSupportColor((preval) => !preval);
-    setSaleColor((preval) => !preval);
-    setSupportText((preval) => !preval);
-    setSaleText((preval) => !preval);
-  }
+  // function toggleColor() {
+  //   setSupportColor((preval) => !preval);
+  //   setSaleColor((preval) => !preval);
+  //   setSupportText((preval) => !preval);
+  //   setSaleText((preval) => !preval);
+  // }
 
   return (
     <div>
@@ -57,11 +57,11 @@ const Index = () => {
                   <Link to="/support-team" style={{ width: "48%" }}>
                     <button
                       className={styles.hero__buttonOne}
-                      style={{
-                        backgroundColor: supportColor ? "#006CFF" : "#FFFFFF",
-                        color: supportText ? "#FFFFFF" : "#006CFF",
-                      }}
-                      onClick={toggleColor}
+                      // style={{
+                      //   backgroundColor: supportColor ? "#006CFF" : "#FFFFFF",
+                      //   color: supportText ? "#FFFFFF" : "#006CFF",
+                      // }}
+                      // onClick={toggleColor}
                     >
                       For Support
                     </button>
@@ -69,11 +69,11 @@ const Index = () => {
                   <Link to="/sales-team" style={{ width: "48%" }}>
                     <button
                       className={styles.hero__buttonTwo}
-                      style={{
-                        backgroundColor: saleColor ? "#006CFF" : "#FFFFFF",
-                        color: saleText ? "#FFFFFF" : "#006CFF",
-                      }}
-                      onClick={toggleColor}
+                      // style={{
+                      //   backgroundColor: saleColor ? "#006CFF" : "#FFFFFF",
+                      //   color: saleText ? "#FFFFFF" : "#006CFF",
+                      // }}
+                      // onClick={toggleColor}
                     >
                       For Sales
                     </button>
@@ -82,7 +82,7 @@ const Index = () => {
               </div>
               <div className={styles.hero__image}>
                 <img
-                  src={heroCenter}
+                  src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670583612/hero__center_jlzll0.webp"
                   alt="hero center icon"
                   className={styles.hero__icon}
                 />
@@ -101,7 +101,7 @@ const Index = () => {
               <div className={styles.top__layout}>
                 <div className={styles.second__icons}>
                   <img
-                    src={saveTime}
+                    src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670583610/save__time_rfxfkb.webp"
                     alt="what we do icon"
                     className={styles.save__time}
                   />
@@ -125,7 +125,7 @@ const Index = () => {
               <div className={styles.top__layout}>
                 <div className={styles.second__icons}>
                   <img
-                    src={easeUse}
+                    src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670583610/ease__icon_st5diu.webp"
                     alt="what we do icon"
                     className={styles.ease__icon}
                   />
@@ -148,7 +148,7 @@ const Index = () => {
               <div className={styles.top__layout}>
                 <div className={styles.second__icons}>
                   <img
-                    src={powerIcon}
+                    src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670583610/power__icon_x9c6je.webp"
                     alt="what we do icon"
                     className={styles.power__icon}
                   />
@@ -188,7 +188,7 @@ const Index = () => {
                 </div>
                 <div className={styles.third__image}>
                   <img
-                    src={uploadScreen}
+                    src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670583611/upload__icon_fo6s2r.webp"
                     alt="How it works icon"
                     className={styles.upload__icon}
                   />
@@ -197,7 +197,7 @@ const Index = () => {
               <div className={styles.third__col}>
                 <div className={styles.third__image}>
                   <img
-                    src={transScreen}
+                    src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670583612/trans__screen_zs1x7o.webp"
                     alt="what we do icon"
                     className={styles.trans__screen}
                   />
@@ -239,7 +239,7 @@ const Index = () => {
                 </div>
                 <div className={styles.third__image}>
                   <img
-                    src={analyzeScreen}
+                    src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670583613/analyze__screen_i6era8.webp"
                     alt="How it works icon"
                     className={styles.analyze__screen}
                   />
@@ -261,7 +261,7 @@ const Index = () => {
             <div className={styles.client__test}>
               <div className={styles.profile__pic}>
                 <img
-                  src={clientOne}
+                  src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670583612/client__one_fphsdz.webp"
                   alt="Client testimonial profile"
                   className={styles.client__one}
                 />
@@ -282,7 +282,7 @@ const Index = () => {
             <div className={styles.client__test}>
               <div className={styles.profile__pic}>
                 <img
-                  src={clientTwo}
+                  src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670583612/client__two_w1dawq.webp"
                   alt="Client testimonial profile"
                   className={styles.client__two}
                 />
@@ -324,8 +324,11 @@ const Index = () => {
           </div>
         </div>
       </section>
+      <div>
+        <Footer />
+      </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

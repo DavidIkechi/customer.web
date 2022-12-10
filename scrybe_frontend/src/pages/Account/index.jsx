@@ -1,59 +1,105 @@
 import React, { useState, useEffect } from "react";
-// import { useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
 import axios from "axios";
-import dummyData from "./DummyData";
 import accountStyles from "./account.module.scss";
-import profileImage from "./assets/images/profile-image.png";
 import chevronLeft from "./assets/icons/chevron-left.svg";
 import plus from "./assets/icons/plus.svg";
-import SideBar from "../../components/SideBar";
-import Cookies from "js-cookie";
+import NewDesignSidebar from "../../components/NewDesignSidebar";
+import TopNav from "../../components/TopNav";
+import { Link, useNavigate } from "react-router-dom";
+import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
+import SnackBar from "../../components/SnackBar/index";
+import ApiService from "../../helpers/axioshelp/apis";
 
 function Account() {
   const [accountModalIsActive, setAccountModalIsActive] = useState(false);
+  const [accountUser, setAccountUser] = useState();
+  const [response, setResponse] = useState({ type: "", message: "" });
+  const [toggleSidebar, setToggleSidebar] = useState(false);
   const toggleAccountModal = () => {
     setAccountModalIsActive((current) => !current);
   };
 
-  const [accountUser, setAccountUser] = useState();
+  const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   async function getUser() {
-    await axios
-      // Get user details from backend
-      .get("https://api.heed.hng.tech/account", {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${Cookies.get("heedAccessToken")}`,
-        },
-      })
-      .then((res) => {
-        setAccountUser(res.data);
-      })
-      .catch((err) => {
-        // In case of Error, display paceholder data (temp measure)
-        /* TODO:
-          - Create modal to be displyed to user if server does not respond
-        */
-        setAccountUser(dummyData);
-        console.log("Server returned the following error:");
-        console.log(err);
-      });
+    try {
+      const res = await ApiService.Account();
+      setAccountUser(res.data);
+    } catch (err) {
+      console.log("err");
+      if (err.response.status === 401) {
+        navigate("/signin");
+      }
+      setResponse(ErrorHandler(err));
+    }
   }
+
+  const baseUrl = "https://api.heed.hng.tech";
+  const submitCallback = () => {
+    const config = {
+      headers: {
+        withCredentials: true,
+        Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
+      },
+    };
+    first_name &&
+      last_name &&
+      location &&
+      axios
+        .post(
+          baseUrl + "/agent",
+          {
+            first_name: first_name,
+            last_name: last_name,
+            location: location,
+          },
+          config
+        )
+        .then((res) => {
+          if (res.status === 200) {
+            toggleAccountModal();
+            reset();
+            getUser();
+          }
+        })
+        .catch((err) => {
+          console.log("this is the error:", err.response);
+        });
+  };
 
   useEffect(() => {
     getUser();
-  });
+  }, []);
+
+  const first_name = watch("first_name");
+  const last_name = watch("last_name");
+  const location = watch("location");
+
+  const isValid = first_name && last_name && location;
 
   return (
-    // Only render page if the axios request is sent
-    accountUser && (
-      <SideBar>
+    <>
+      <SnackBar response={response} setResponse={setResponse} />
+      <NewDesignSidebar
+        toggleSidebar={toggleSidebar}
+        needSearchMobile="needSearchMobile"
+        closeSidebar={() => setToggleSidebar(!toggleSidebar)}
+      >
         <div className={accountStyles.account__container}>
           <div
             className={
               accountModalIsActive
                 ? `${accountStyles.active}
-                ${accountStyles.add_agent__div}`
+              ${accountStyles.add_agent__div}`
                 : accountStyles.add_agent__div
             }
           >
@@ -62,69 +108,138 @@ function Account() {
               <p>
                 Input the following information to add a new agent to your team
               </p>
-              <form>
-                <label htmlFor="full-name">
-                  <span>Full name</span>
-                  <input type="text" id="full-name" name="full-name" />
+              <form onSubmit={handleSubmit(submitCallback)}>
+                <label htmlFor="first_name">
+                  <span>First name</span>
+                  <input
+                    type="text"
+                    id="first_name"
+                    name="first_name"
+                    className={`${
+                      errors.first_name && accountStyles.errorInput
+                    } `}
+                    {...register("first_name", {
+                      required: "First name is required",
+                      pattern: {
+                        value: /^[a-z'-]+$/i,
+                        message: "Please enter a valid first name",
+                      },
+                    })}
+                  />
+                  <p className={accountStyles.errorMsg}>
+                    {errors.first_name?.message}
+                  </p>
                 </label>
-                <label htmlFor="email">
-                  <span>Email address</span>
-                  <input type="email" id="email" name="email" />
+                <label htmlFor="last_name">
+                  <span>Last Name</span>
+                  <input
+                    type="text"
+                    id="last_name"
+                    name="last_name"
+                    className={`${
+                      errors.last_name && accountStyles.errorInput
+                    } `}
+                    {...register("last_name", {
+                      required: "Last name is required",
+                      pattern: {
+                        value: /^[a-z'-]+$/i,
+                        message: "Please enter a valid last name",
+                      },
+                    })}
+                  />
+                  <p className={accountStyles.errorMsg}>
+                    {errors.last_name?.message}
+                  </p>
                 </label>
                 <label htmlFor="location">
                   <span>Location</span>
-                  <input type="text" id="location" name="location" />
-                </label>
-                <label htmlFor="consent-to-email">
                   <input
-                    type="checkbox"
-                    id="consent-to-email"
-                    name="consent-to-email"
-                    value="true"
+                    type="text"
+                    id="location"
+                    name="location"
+                    className={`${
+                      errors.location && accountStyles.errorInput
+                    } `}
+                    {...register("location", {
+                      required: "Location is required",
+                      pattern: {
+                        value: /^[a-z '-]+$/i,
+                        message: "Please enter a valid location",
+                      },
+                    })}
                   />
-                  <span>Send a welcome email</span>
+                  <p className={accountStyles.errorMsg}>
+                    {errors.location?.message}
+                  </p>
                 </label>
-                <div />
                 <div>
-                  <label htmlFor="submit-btn">
-                    <input
-                      type="button"
-                      id="submit-btn"
-                      value="Submit"
-                      name="submit-btn"
-                      onClick={toggleAccountModal}
-                    />
+                  <label htmlFor="submit">
+                    <button
+                      type="submit"
+                      id="submit"
+                      disabled={!isValid}
+                      className={`${isValid && accountStyles.submitValid}`}
+                    >
+                      Submit
+                    </button>
                   </label>
-                  <label htmlFor="submit-btn">
-                    <input
-                      type="button"
-                      id="cancel-btn"
-                      value="Cancel"
-                      name="cancel-btn"
+                  <label htmlFor="reset-btn">
+                    <button
+                      type="reset"
+                      id="reset-btn"
                       onClick={toggleAccountModal}
-                    />
+                    >
+                      Cancel
+                    </button>
                   </label>
                 </div>
               </form>
             </div>
           </div>
+          <TopNav
+            openSidebar={() => {
+              setToggleSidebar(!toggleSidebar);
+            }}
+          />
           <div className={accountStyles.account__div}>
             <section className={accountStyles.mobile_head__section}>
-              <span>
+              <button type="button" onClick={() => navigate(-1)}>
                 <img src={chevronLeft} alt="left arrow" />
-              </span>
+              </button>
               <h1>Profile</h1>
             </section>
-            <h1 className={accountStyles.salutation}>Hi Scryber</h1>
+            <div className={accountStyles.plan_info__div}>
+              <p>You are using the limited free plan.</p>
+              <p>Go unlimited with Pro version</p>
+            </div>
+            <h1 className={accountStyles.salutation}>Hi Heedr</h1>
             <div className={accountStyles.main_content__div}>
               <section className={accountStyles.profile__section}>
-                <img
-                  src={accountUser.company_logo_url || profileImage}
-                  alt="User's profile"
-                />
-                <div>
-                  <p>{accountUser.first_name + " " + accountUser.last_name}</p>
-                  {accountUser.is_admin && <p>Administrator</p>}
+                <div className={accountStyles.user_profile__div}>
+                  <div className={accountStyles.user_profile__img}>
+                    {accountUser &&
+                      (accountUser.company_logo_url ? (
+                        <img
+                          src={accountUser.company_logo_url}
+                          alt="User's profile"
+                        />
+                      ) : (
+                        accountUser.first_name[0] +
+                        "" +
+                        accountUser.last_name[0]
+                      ))}
+                  </div>
+                  <div>
+                    {accountUser && (
+                      <h1>
+                        {accountUser?.first_name + " " + accountUser?.last_name}
+                      </h1>
+                    )}
+                    <p>Administrator</p>
+                  </div>
+                </div>
+                <div className={accountStyles.profile__settings_btn}>
+                  <Link to="/settings">Edit Profile</Link>
                 </div>
               </section>
               <section className={accountStyles.body__section}>
@@ -133,12 +248,12 @@ function Account() {
                   <div>
                     <div>
                       <p>Email address</p>
-                      <p>{accountUser.email}</p>
+                      <p>{accountUser?.email}</p>
                     </div>
-                    {accountUser.phone_number && (
+                    {accountUser?.phone_number && (
                       <div>
                         <p>Phone Number</p>
-                        <p>{accountUser.phone_number}</p>
+                        <p>{accountUser?.phone_number}</p>
                       </div>
                     )}
                   </div>
@@ -148,12 +263,12 @@ function Account() {
                   <div>
                     <div>
                       <p>Company name</p>
-                      <p>{accountUser.company_name}</p>
+                      <p>{accountUser?.company_name}</p>
                     </div>
-                    {accountUser.company_address && (
+                    {accountUser?.company_address && (
                       <div>
                         <p>Address</p>
-                        <p>{accountUser.company_address}</p>
+                        <p>{accountUser?.company_address}</p>
                       </div>
                     )}
                   </div>
@@ -166,16 +281,15 @@ function Account() {
                       <span>
                         <img src={plus} alt="plus icon" />
                       </span>
-                      &nbsp;
                     </button>
                   </span>
                   <div>
                     <ul>
-                      {accountUser.agents.map((agent, index) => {
+                      {accountUser?.agents?.map((agent, index) => {
                         return agent ? (
                           <li key={index}>
-                            <p>{agent}</p>
-                            <p>{agent.location}</p>
+                            <p>{agent.first_name + " " + agent.last_name}</p>
+                            <p>{agent.location ? agent.location : "Abuja"}</p>
                           </li>
                         ) : (
                           <p>You have no agents yet.</p>
@@ -189,21 +303,17 @@ function Account() {
                   <div>
                     <p>API Key</p>
                     <div>
-                      <p>{accountUser.api_key}</p>
+                      <p>{accountUser?.api_key}</p>
                       <button type="button">Refresh</button>
                     </div>
                   </div>
                 </div>
               </section>
             </div>
-            <div className={accountStyles.plan_info__div}>
-              <p>You are using the limited free plan.</p>
-              <p>Go unlimited with Pro version</p>
-            </div>
           </div>
         </div>
-      </SideBar>
-    )
+      </NewDesignSidebar>
+    </>
   );
 }
 

@@ -1,87 +1,100 @@
-@use "../../../functions.scss"as *;
+@use "../../../functions.scss" as *;
 
-.HowItWorks{
-    background: #E6F0FF;
-    padding: 4rem;
-    display: flex;
-    justify-content: space-around;
+.HowItWorks {
+  background: #e6f0ff;
+  padding: 4rem;
+  padding-left: 22rem;
+  padding-right: 22rem;
+  display: flex;
+  justify-content: space-around;
+  @include media(1500px) {
+    padding-left: 9rem;
+    padding-right: 9rem;
+  }
+  @include media(1200px) {
+    padding-left: 10rem;
+    padding-right: 10rem;
+  }
+  @include media(800px) {
+    flex-direction: column;
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+  @include media(550px) {
+    padding: 2rem;
+  }
+  .HowItWorksImage {
+    width: 50%;
     @include media(800px) {
-        flex-direction: column;
+      width: 100%;
+      text-align: center;
     }
-    @include media(550px) {
-        padding: 2rem;
+    > h3 {
+      font-family: "Kanit";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 48px;
+      line-height: 56px;
+      color: #313131;
+      @include media(550px) {
+        text-align: center;
+      }
+      @include media(408px) {
+        font-size: 36px;
+      }
+      @include media(350px) {
+        font-size: 26px;
+        gap: 0rem;
+      }
     }
-    .HowItWorksImage{
-        width: 50%;
-        @include media(800px) {
-            width: 100%;
-        }
-        >h3{
-            font-family: 'Kanit';
-            font-style: normal;
-            font-weight: 600;
-            font-size: 48px;
-            line-height: 56px;
-            color: #313131;
-            @include media(550px) {
-                text-align: center;
-             }
-             @include media(408px) {
-                font-size: 36px;
-             }
-            @include media(350px) {
-                font-size: 26px;
-                gap: 0rem;
-             }
-        }
+  }
+  .HowItWorksText {
+    width: 50%;
+    @include media(800px) {
+      width: 100%;
     }
-    .HowItWorksText{
-        width: 50%;
-        @include media(800px) {
-            width: 100%;
-        }
-        .bullets{
-            display: flex;
-            gap: 3rem;
-            font-family: 'Kanit';
-            font-style: normal;
-            font-weight: 700;
-            font-size: 24px;
-            line-height: 32px;
-            color: #313131;
-            margin: 4rem 0rem 1rem;
-            @include media(550px) {
-                gap: 1rem;
-              }
-        }
-        .bulletsBody{
-            display: flex;
-            gap: 5rem;
-            @include media(550px) {
-                gap:3rem;
-            }
-            .bulletsContentLine{
-                border-right: 3px solid #A9A9A9;
-                height: 100px;
-                margin-left: 0.5rem;
-            }
-            .bulletsContentLine1{
-                border-right: 3px solid #A9A9A9;
-                height: 200px;
-                margin-left: 0.5rem;
-            }
-            .bulletscontent{
-                font-family: 'Kanit';
-                font-style: normal;
-                font-weight: 300;
-                font-size: 18px;
-                line-height: 30px;
-                color: #3F3F3F;
-                width: 65%;
-            }
-            @include media(550px) {
-               width: 100%;
-            }
-        }
+    .bullets {
+      display: flex;
+      gap: 3rem;
+      font-family: "Kanit";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 32px;
+      color: #313131;
+      margin: 1rem 0rem 1rem;
+      @include media(550px) {
+        gap: 1rem;
+      }
     }
+    .bulletsBody {
+      display: flex;
+      gap: 4rem;
+      @include media(550px) {
+        gap: 3rem;
+      }
+      .bulletsContentLine {
+        border-right: 3px solid #a9a9a9;
+        height: 100px;
+        margin-left: 0.5rem;
+      }
+      .bulletsContentLine1 {
+        border-right: 3px solid #a9a9a9;
+        height: 200px;
+        margin-left: 0.5rem;
+      }
+      .bulletscontent {
+        font-family: "Kanit";
+        font-style: normal;
+        font-weight: 300;
+        font-size: 18px;
+        line-height: 30px;
+        color: #3f3f3f;
+        width: 65%;
+      }
+      @include media(550px) {
+        width: 100%;
+      }
+    }
+  }
 }

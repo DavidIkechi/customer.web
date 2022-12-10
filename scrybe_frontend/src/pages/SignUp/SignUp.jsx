@@ -1,10 +1,13 @@
 import axios from "axios";
 import React from "react";
-// import { useForm } from "react-hook-form";
 import { useCallback, useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import Loading from "../../components/Loading";
+import ApiService from "../../helpers/axioshelp/apis";
 import footerImg from "./assets/signup-img.svg";
 import styles from "./SignUp.module.scss";
+import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
+import SnackBar from "../../components/SnackBar";
 
 function Signup() {
   const [first_name, setFirstName] = useState("");
@@ -18,6 +21,8 @@ function Signup() {
   const [lastStateTest, setLastStateTest] = useState(false);
   const [companyStateTest, setCompanyStateTest] = useState(false);
   const [btn, setBtn] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [response, setResponse] = useState({ type: "", message: "" });
 
   const navigate = useNavigate();
   const passwordTest = new RegExp(/^["0-9a-zA-Z!@#$&()\\-`.+,/"]{8,}$/),
@@ -32,7 +37,6 @@ function Signup() {
     } else {
       func(false);
     }
-    console.log(nameStateTest);
   };
 
   const handleUserFirstName = (e) => {
@@ -100,13 +104,16 @@ function Signup() {
       company_name: company_name,
       password: password,
     };
-    console.log(data);
-    const res = await axios.post("create_users", data);
-    console.log(res);
-    if (res.status === 200) {
-      navigate("/verify-signup");
-    } else {
-      console.log(res);
+    setIsLoading(true);
+    try {
+      await ApiService.SignUp(data);
+      setIsLoading(false);
+
+      // navigate("/verify-signup");
+      window.location.href = "/verify-signup";
+    } catch (error) {
+      setIsLoading(false);
+      setResponse(ErrorHandler(error));
     }
   };
 
@@ -118,6 +125,7 @@ function Signup() {
 
   return (
     <>
+      <SnackBar response={response} setResponse={setResponse} />
       <main className={styles.signUpWrapper}>
         <div className={styles.signup}>
           <div className={styles.first}>
@@ -280,13 +288,18 @@ function Signup() {
                 )}
                 {/* <p className={styles.errorMsg}>{errors.password?.message}</p> */}
               </div>
-
-              <input
-                type="submit"
-                value="Create an account"
-                className={`${styles.submitValid}`}
-                disabled={btn}
-              />
+              {isLoading ? (
+                <Loading />
+              ) : (
+                <>
+                  <input
+                    type="submit"
+                    value="Create an account"
+                    className={`${styles.submitValid}`}
+                    disabled={btn}
+                  />
+                </>
+              )}
               <div className={`${styles.accept} ${styles.up}`}>
                 <input type="checkbox" name="" id="" />
                 <span>

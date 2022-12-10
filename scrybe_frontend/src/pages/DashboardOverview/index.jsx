@@ -5,17 +5,25 @@ import RecentRecording from "./components/RecentRecording";
 import TotalAnalysis from "./components/TotalAnalysis";
 import TotalRecording from "./components/TotalRecording";
 import styles from "./DashboardOverview.module.scss";
-import { LeaderboardData } from "./Data";
+// import { LeaderboardData } from "./Data";
 import TopNav from "../../components/TopNav";
+import { useDashBoardData } from "./hooks/index";
 
 function DashboardOverview() {
+  const { recentRecording, totalAnalysis, totalRecording, leaderboard } =
+    useDashBoardData();
   const [toggleSidebar, setToggleSidebar] = React.useState(false);
+  const [setIsSearching] = React.useState("");
 
+  const setterFn = (e) => {
+    setIsSearching(e.target.value);
+  };
   return (
     <div className={`${styles.dashboard_overviewParent} `}>
       <NewDesignSideBar
         toggleSidebar={toggleSidebar}
         needSearchMobile="needSearchMobile"
+        getValue={(e) => setterFn(e)}
         closeSidebar={() => setToggleSidebar(!toggleSidebar)}
       >
         <div className={styles.dashboard_overviewCol}>
@@ -24,16 +32,17 @@ function DashboardOverview() {
               openSidebar={() => {
                 setToggleSidebar(!toggleSidebar);
               }}
+              search={(e) => setterFn(e)}
             />
           </div>
           <section className={styles.dashboard_overview}>
             <div className={styles.container}>
-              <TotalRecording />
-              <TotalAnalysis />
-              <LeaderBoard LeaderboardData={LeaderboardData} />
+              <TotalRecording totalRecordingData={totalRecording} />
+              <TotalAnalysis totalAnalysisData={totalAnalysis} />
+              <LeaderBoard LeaderboardData={leaderboard} />
             </div>
-            <RecentRecording />
-          </section>{" "}
+            <RecentRecording recentRecording={recentRecording} />
+          </section>
         </div>
       </NewDesignSideBar>
     </div>

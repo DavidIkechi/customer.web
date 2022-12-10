@@ -31,7 +31,7 @@ function NavBar() {
             </div>
             <div className={styles.nav__ctas}>
               <button type="button" className="firstBtn">
-                <NavLink to="/signin">Login</NavLink>
+                <NavLink to="/login">Login</NavLink>
               </button>
               <button type="button" className="secondBtn">
                 <NavLink to="/terms">Upgrade Plan</NavLink>
@@ -40,7 +40,7 @@ function NavBar() {
 
             <div className={styles.nav__ctl}>
               <div className={styles.nav__img}>
-                <img src={logo} alt="" srcset="" />
+                <img src={logo} alt="" />
               </div>
               <svg
                 className={styles.nav__closed}

@@ -1,37 +1,78 @@
-import PropTypes from "prop-types";
-import React from "react";
+import { React } from "react";
 import styles from "../styles/AgentDetails.module.scss";
+import { useAgentReport } from "../hooks";
 
-function AgentDetails() {
+// recentAgentReport
+function AgentDetails({ selectData }) {
+  // const agentReportData = useAgentReport(props);
+
   return (
-    <div className={styles.agentDetails}>
-      <p className={styles.firstp}>Agent Performance Report</p>
-      <p className={styles.secondp}>Name: Delphine Ogbonna</p>
-      <p className={styles.secondp}>Email: chinyeredelphine@yahoo.com</p>
-      <div className={styles.details}>
-        <DetailsRow title="Total calls" number="50" />
-        <DetailsRow title="Positive" number="30 (60%)" />
-        <DetailsRow title="Neutral" number="13 (30%)" />
-        <DetailsRow title="Negative" number="5 (10%)" />
-        <DetailsRow title="Average Score - 10" number="8" />
-      </div>
-    </div>
+    <>
+      {selectData?.length === 0 ? (
+        <p className={styles.empty}>
+          You will see an overview of your detail here.
+        </p>
+      ) : (
+        <div className={styles.agentDetails} key={selectData?.str_agent_id}>
+          <div className={styles.details}>
+            <div className={styles.callDetails}>
+              <p className={styles.title}>Total Calls</p>
+              <p className={styles.dash}>-</p>
+              <p className={styles.total}>{selectData?.total_calls}</p>
+            </div>
+
+            <div className={styles.callDetails}>
+              <p className={styles.title}>Positive</p>
+              <p className={styles.dash}>-</p>
+              {selectData?.positive_score >= 5 ? (
+                <p className={`${styles.number} ${styles.success}`}>
+                  {selectData?.positive_score}%
+                </p>
+              ) : (
+                <p className={`${styles.number} ${styles.fail}`}>
+                  {selectData?.positive_score}%
+                </p>
+              )}
+            </div>
+
+            <div className={styles.callDetails}>
+              <p className={styles.title}>Neutral</p>
+              <p className={styles.dash}>-</p>
+              {selectData?.neutral_score >= 5 ? (
+                <p className={`${styles.number} ${styles.neutral}`}>
+                  {selectData?.neutral_score}%
+                </p>
+              ) : (
+                <p className={`${styles.number} ${styles.fail}`}>
+                  {selectData?.neutral_score}%
+                </p>
+              )}
+            </div>
+
+            <div className={styles.callDetails}>
+              <p className={styles.title}>Negative</p>
+              <p className={styles.dash}>-</p>
+              {selectData?.negative_score >= 5 ? (
+                <p className={`${styles.number} ${styles.fail}`}>
+                  {selectData?.negative_score}%
+                </p>
+              ) : (
+                <p className={`${styles.number} ${styles.success}`}>
+                  {selectData?.negative_score}%
+                </p>
+              )}
+            </div>
+
+            <div className={styles.callDetails}>
+              <p className={styles.title}>Average Score/ 10</p>
+              <p className={styles.dash}>-</p>
+              <p className={styles.total}>{selectData?.average_score}</p>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
-
-function DetailsRow({ title, number }) {
-  return (
-    <div className={styles.callDetails}>
-      <p className={styles.title}>{title}</p>
-      <p>--</p>
-      <p className={styles.number}>{number}</p>
-    </div>
-  );
-}
-
-DetailsRow.propTypes = {
-  title: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
-};
 
 export default AgentDetails;

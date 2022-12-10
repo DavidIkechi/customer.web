@@ -10,15 +10,15 @@ import partner1 from "./assets/partner1.svg";
 import partner2 from "./assets/partner2.svg";
 import partner3 from "./assets/partner3.svg";
 import partner4 from "./assets/partner4.svg";
-import team1 from "./assets/team1.png";
-import team2 from "./assets/team2.png";
-import team3 from "./assets/team3.png";
-import team4 from "./assets/team4.png";
-import team5 from "./assets/team5.png";
-import team6 from "./assets/team6.png";
-import team7 from "./assets/team7.png";
-import team8 from "./assets/team8.png";
-import HeroIcon from "./assets/hero__icon.png";
+// import team1 from "./assets/team1.png";
+// import team2 from "./assets/team2.png";
+// import team3 from "./assets/team3.png";
+// import team4 from "./assets/team4.png";
+// import team5 from "./assets/team5.png";
+// import team6 from "./assets/team6.png";
+// import team7 from "./assets/team7.png";
+// import team8 from "./assets/team8.png";
+// import HeroIcon from "./assets/hero__icon.png";
 
 function About() {
   React.useEffect(() => {
@@ -62,7 +62,11 @@ function About() {
               </p>
             </div>
             <div className={styles.hero__image}>
-              <img src={HeroIcon} alt="hero figure" />
+              <img
+                src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579336/hero__icon_p0nom4.webp"
+                alt="hero figure"
+                className={styles.hero__figure}
+              />
             </div>
           </div>
         </div>
@@ -206,7 +210,10 @@ function About() {
             <div className={styles.flex__profile}>
               <div className={styles.profile__box}>
                 <div className={styles.profile__icon}>
-                  <img src={team1} alt="team members" />
+                  <img
+                    src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579336/team1_oqsdqn.webp"
+                    alt="team members"
+                  />
                 </div>
                 <div className={styles.profile__text}>
                   <h5 className={styles.profile__name}>Mark Essien</h5>
@@ -215,7 +222,10 @@ function About() {
               </div>
               <div className={styles.profile__box}>
                 <div className={styles.profile__icon}>
-                  <img src={team2} alt="team members" />
+                  <img
+                    src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579336/team2_acaqn4.webp"
+                    alt="team members"
+                  />
                 </div>
                 <div className={styles.profile__text}>
                   <h5 className={styles.profile__name}>Aigbe Marvelous</h5>
@@ -224,7 +234,10 @@ function About() {
               </div>
               <div className={styles.profile__box}>
                 <div className={styles.profile__icon}>
-                  <img src={team3} alt="team members" />
+                  <img
+                    src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579335/team3_tdoajn.webp"
+                    alt="team members"
+                  />
                 </div>
                 <div className={styles.profile__text}>
                   <h5 className={styles.profile__name}>Collins Akpaka</h5>
@@ -233,7 +246,10 @@ function About() {
               </div>
               <div className={styles.profile__box}>
                 <div className={styles.profile__icon}>
-                  <img src={team4} alt="team members" />
+                  <img
+                    src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579335/team4_p7ykpa.webp"
+                    alt="team members"
+                  />
                 </div>
                 <div className={styles.profile__text}>
                   <h5 className={styles.profile__name}>Delphine Ogbonna</h5>
@@ -243,7 +259,10 @@ function About() {
 
               <div className={styles.profile__box}>
                 <div className={styles.profile__icon}>
-                  <img src={team5} alt="team members" />
+                  <img
+                    src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579335/team5_hv34zf.webp"
+                    alt="team members"
+                  />
                 </div>
                 <div className={styles.profile__text}>
                   <h5 className={styles.profile__name}>Ugochukwu Odumegwu</h5>
@@ -252,7 +271,10 @@ function About() {
               </div>
               <div className={styles.profile__box}>
                 <div className={styles.profile__icon}>
-                  <img src={team6} alt="team members" />
+                  <img
+                    src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579335/team6_ezoxjg.webp"
+                    alt="team members"
+                  />
                 </div>
                 <div className={styles.profile__text}>
                   <h5 className={styles.profile__name}>Tochukwu Bedford</h5>
@@ -261,7 +283,10 @@ function About() {
               </div>
               <div className={styles.profile__box}>
                 <div className={styles.profile__icon}>
-                  <img src={team7} alt="team members" />
+                  <img
+                    src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579335/team7_k7qkwy.webp"
+                    alt="team members"
+                  />
                 </div>
                 <div className={styles.profile__text}>
                   <h5 className={styles.profile__name}>Alice Awobite</h5>
@@ -270,7 +295,10 @@ function About() {
               </div>
               <div className={styles.profile__box}>
                 <div className={styles.profile__icon}>
-                  <img src={team8} alt="team members" />
+                  <img
+                    src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579335/team8_hl45ya.webp"
+                    alt="team members"
+                  />
                 </div>
                 <div className={styles.profile__text}>
                   <h5 className={styles.profile__name}>Favour Mustapha</h5>

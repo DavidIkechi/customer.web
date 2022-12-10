@@ -1,10 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
-import { useMockAuthAndTotalAnalysis } from "../hooks";
-// import { totalAnalysisData } from "../Data";
 import styles from "../DashboardOverview.module.scss";
 import analysis from "../assets/analytics.svg";
+import { BsEmojiNeutral } from "react-icons/bs";
+import { RiEmotionHappyLine, RiEmotionUnhappyLine } from "react-icons/ri";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,9 +14,7 @@ import {
 } from "chart.js";
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement);
 
-const TotalAnalysis = () => {
-  const totalAnalysisData = useMockAuthAndTotalAnalysis();
-
+const TotalAnalysis = ({ totalAnalysisData }) => {
   const [selectedTotalAnalysis, setSelectedTotalAnalysis] = useState([]);
   const [chartData, setChartData] = useState({
     datasets: [],
@@ -29,7 +27,11 @@ const TotalAnalysis = () => {
       datasets: [
         {
           label: selectedTotalAnalysis.map((data) => data.positive),
-          data: [20, 12, 3],
+          data: [
+            selectedTotalAnalysis.map((data) => data.positive),
+            selectedTotalAnalysis.map((data) => data.neutral),
+            selectedTotalAnalysis.map((data) => data.negative),
+          ],
           backgroundColor: ["#76C86F", "#FFCE54", "#FF7589"],
           borderWidth: 0,
         },
@@ -42,7 +44,7 @@ const TotalAnalysis = () => {
       plugins: {
         legend: { display: false, position: "bottom" },
         tooltip: {
-          enabled: false,
+          enabled: true,
         },
       },
     });
@@ -54,11 +56,44 @@ const TotalAnalysis = () => {
     } else {
       setSelectedTotalAnalysis([]);
     }
-  }, []);
+  }, [totalAnalysisData]);
 
   function analysisTimeStampFunc(e) {
     setSelectedTotalAnalysis(totalAnalysisData[e.target.value]);
   }
+  // console.log("d", selectedTotalAnalysis);
+  // console.log("ff", Object.keys(selectedTotalAnalysis));
+
+  const totalAnalysis = selectedTotalAnalysis?.map(
+    (data) => data.positive + data.neutral + data.negative
+  );
+  const Positive = selectedTotalAnalysis.map((data) => data.positive);
+  const Neutral = selectedTotalAnalysis.map((data) => data.neutral);
+  const Negative = selectedTotalAnalysis.map((data) => data.negative);
+  const Total = [Positive, Neutral, Negative];
+  const Max = Math.max(...Total);
+  const MaxAnalysis = Math.round((Max / totalAnalysis) * 100);
+
+  const indexOfMax = Total.reduce(
+    (acc, letter, index) => Object.assign(acc, { [letter]: index }),
+    {}
+  );
+
+  let sentiment, sign;
+  switch (indexOfMax[Max]) {
+    case 0:
+      sentiment = <RiEmotionHappyLine />;
+      sign = "+ve";
+      break;
+    case 1:
+      sentiment = <BsEmojiNeutral />;
+      sign = " ~Ne";
+      break;
+    default:
+      sentiment = <RiEmotionUnhappyLine />;
+      sign = " -Ve";
+  }
+
   return (
     <div className={styles.analysis}>
       <div className={styles.analysis__heading}>
@@ -75,23 +110,34 @@ const TotalAnalysis = () => {
           <div className={styles.doughnut_chart}>
             <Doughnut options={chartOptions} data={chartData} />
             <div className={styles.chart_inner}>
-              <h1>{selectedTotalAnalysis?.map((data) => data.positive)}%</h1>
-              <span>+ve</span>
+              <h1>{`${MaxAnalysis}%`}</h1>
+              <span>
+                {sentiment} {sign}
+              </span>
             </div>
           </div>
           <div className={styles.scale}>
             <h3>
               <span className={styles.positive}>1</span> Positive{" "}
-              {selectedTotalAnalysis?.map((data) => data.positive)}%
+              {selectedTotalAnalysis?.map((data) =>
+                Math.round((data.positive / totalAnalysis) * 100)
+              )}
+              %
             </h3>
             <h3>
               {" "}
               <span className={styles.neutral}>1</span>Neutral{" "}
-              {selectedTotalAnalysis?.map((data) => data.neutral)}
+              {selectedTotalAnalysis?.map((data) =>
+                Math.round((data.neutral / totalAnalysis) * 100)
+              )}
+              %
             </h3>
             <h3>
               <span className={styles.negative}>1</span> Negative{" "}
-              {selectedTotalAnalysis?.map((data) => data.negative)}
+              {selectedTotalAnalysis?.map((data) =>
+                Math.round((data.negative / totalAnalysis) * 100)
+              )}
+              %
             </h3>
           </div>
         </div>

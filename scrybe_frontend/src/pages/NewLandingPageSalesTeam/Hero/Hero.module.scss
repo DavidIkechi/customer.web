@@ -1,7 +1,11 @@
 @use "../../../functions.scss"as *;
 
+#Img_container {
+    background-image: url("../Assets/Hero-Background-Img.svg");
+  }
 .HeroContainer {
     .HeroTexts {
+        margin-top: 3rem;
         text-align: center;
         display: flex;
         flex-direction: column;
