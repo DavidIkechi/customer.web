@@ -337,7 +337,7 @@ def get_leaderboard(db: Session, user_id: int):
     leaderboard.append(leaderboard_week)
     leaderboard.append(leaderboard_month)
 
-        return leaderboard
+    return leaderboard
         
 def refresh_api_key(db:Session, user_id: int):
     key = generate_uuid()
