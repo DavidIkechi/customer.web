@@ -14,6 +14,7 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     company_name: str
+    company_address: str
     password: str
 
 class User(UserBase):
@@ -188,3 +189,6 @@ class Order(OrderBase):
 class ChangePassword(BaseModel):
     old_password: str
     new_password: str
+
+class RefreshToken(BaseModel):
+    refresh_token:str

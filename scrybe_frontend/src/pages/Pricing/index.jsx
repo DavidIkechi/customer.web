@@ -2,10 +2,10 @@ import React from "react";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Pricing.module.scss";
-import heroImage from "./assets/heroimage.svg";
-import curves from "./assets/Sectionbottom.png";
-import checkIcon from "./assets/check.svg";
-import BenefitsImage from "./assets/benefitsimage.svg";
+// import heroImage from "./assets/heroimage.svg";
+// import curves from "./assets/Sectionbottom.png";
+// import checkIcon from "./assets/check.svg";
+// import BenefitsImage from "./assets/benefitsimage.svg";
 import YearPlans from "./components/YearPlan/yearPlans";
 import MonthPlans from "./components/MonthPlan/monthPlans";
 import NavBarFree from "../../components/NavbarFree";
@@ -60,10 +60,19 @@ function Pricing() {
               </p>
             </div>
             <div className={styles.heroImage}>
-              <img src={heroImage} alt="" srcSet="" />
+              <img
+                src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/heroimage_1_znov39.webp"
+                alt=""
+                srcSet=""
+              />
             </div>
           </div>
-          <img src={curves} alt="" srcset="" className={styles.curves} />
+          <img
+            src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584782/Sectionbottom_aunogb.webp"
+            alt=""
+            srcset=""
+            className={styles.curves}
+          />
         </div>
         <div className={styles.CTA}>
           <h2 className={styles.CTAtitle}>
@@ -116,89 +125,149 @@ function Pricing() {
                 <tr>
                   <td>Ai-Powered call transcriptions</td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td>Call Tracking & Recording</td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td> Business Hours</td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td>Email & Chat Support</td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td>API & Webhook Access</td>
                   <td></td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td>Custom Workflows</td>
                   <td></td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td>Dedicated Account Manager</td>
                   <td></td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td>Priority Support</td>
                   <td></td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                 </tr>
                 <tr>
@@ -206,7 +275,10 @@ function Pricing() {
                   <td></td>
                   <td></td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                 </tr>
                 <tr>
@@ -214,7 +286,10 @@ function Pricing() {
                   <td></td>
                   <td></td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                 </tr>
                 <tr>
@@ -222,7 +297,10 @@ function Pricing() {
                   <td></td>
                   <td></td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                 </tr>
                 <tr>
@@ -230,7 +308,10 @@ function Pricing() {
                   <td></td>
                   <td></td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                 </tr>
                 <tr>
@@ -238,7 +319,10 @@ function Pricing() {
                   <td></td>
                   <td></td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                 </tr>
                 <tr>
@@ -246,7 +330,10 @@ function Pricing() {
                   <td></td>
                   <td></td>
                   <td>
-                    <img src={checkIcon} alt="check-mark icon" />
+                    <img
+                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
+                      alt="check-mark icon"
+                    />
                   </td>
                 </tr>
               </tbody>
@@ -277,7 +364,10 @@ function Pricing() {
             </div>
           </div>
           <div className={styles.BenefitsImage}>
-            <img src={BenefitsImage} alt="" />
+            <img
+              src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584784/benefitsimage_qhrsvb.webp"
+              alt=""
+            />
           </div>
         </div>
       </div>

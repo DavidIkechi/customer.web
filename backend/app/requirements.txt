@@ -52,3 +52,5 @@ itsdangerous==2.1.2
 Authlib==1.1.0
 httpx==0.23.1
 elastic-apm==6.13.2
+textblob==0.17.1
+fastapi-utils==0.2.1

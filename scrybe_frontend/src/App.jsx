@@ -48,7 +48,7 @@ import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
 // import Successful from "./pages/Successful/Successful";
 import Support from "./pages/Support/support";
 import TermsOfService from "./pages/TermsOfService";
-import TryProcessing from "./pages/TryForFree/tryProcessing";
+// import TryProcessing from "./pages/TryForFree/tryProcessing";
 import TryResults from "./pages/TryForFree/tryResults";
 import UploadedRecordings from "./pages/UploadRecordings";
 import { UploadModal } from "./pages/UploadRecordingsModal";
@@ -66,6 +66,10 @@ import Enterprise from "./pages/Checkout/Enterprise";
 import ForgetPasswordNew from "./pages/ForgotPasswordNew/Index";
 import NewSetNewPassword from "./pages/NewSetNewPassword";
 import NewPasswordResetSuccessful from "./pages/NewPasswordResetSuccessful";
+
+import * as atatus from "atatus-js";
+
+atatus.config("e7b42895d6f546a2b1f86414988a8afa").install();
 
 function App() {
   return (
@@ -98,15 +102,15 @@ function App() {
           element={<SetNewPassword />}
         /> */}
         <Route path="/emailverification/:token" element={<EmailVerify />} />
-        <Route path="/try-processing" element={<TryProcessing />} />
+        {/* <Route path="/try-processing" element={<TryProcessing />} /> */}
         <Route path="/try-results" element={<TryResults />} />
         {/* <Route path="/forget-password" element={<ForgetPassword />} /> */}
 
         <Route path="/sales-team" element={<LandingPageSalesTeam />} />
-        <Route
+        {/* <Route
           path="/pw-reset-successful"
           element={<PasswordResetSuccessful />}
-        />
+        /> */}
         <Route path="*" element={<Error />} />
         <Route path="/demos" element={<DummyPage someText="demo pages" />} />
         <Route path="/blog" element={<Blogs />} />
@@ -122,7 +126,7 @@ function App() {
         <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
         <Route path="/agent-report/:agentId" element={<AgentReport />} />
         <Route path="/reviews" element={<Reviews />} />
-        <Route path="/try-processing" element={<TryProcessing />} />
+        {/* <Route path="/try-processing" element={<TryProcessing />} /> */}
         <Route path="/try-results/:transcribeId" element={<TryResults />} />
         <Route
           path="settings/personal-information"
