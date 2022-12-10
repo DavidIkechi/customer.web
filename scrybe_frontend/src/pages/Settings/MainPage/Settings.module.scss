@@ -20,8 +20,6 @@ $error: #de3d31;
   width: 100% !important;
 }
 
-
-
 .mainpage__container {
   display: flex;
   flex-direction: column;
@@ -31,10 +29,9 @@ $error: #de3d31;
 .mainpage_wrapper {
   padding: 0 1rem;
 
-  
-a {
-  color: #3f3f3f !important;
-}
+  a {
+    color: #3f3f3f !important;
+  }
 
   h1 {
     margin: 1.875rem 0 0.97rem 1.7rem !important;
@@ -225,17 +222,16 @@ a {
   }
   .mainpage__container {
     align-items: flex-end;
-  
   }
   .mainpage_wrapper {
     width: 40%;
 
-    h1{
+    h1 {
       margin-left: 0 !important;
     }
   }
   .mainpage_container {
-  padding: 0 2rem;
+    padding: 0 2rem;
     display: flex;
     justify-content: space-between;
     gap: 1.5rem;
