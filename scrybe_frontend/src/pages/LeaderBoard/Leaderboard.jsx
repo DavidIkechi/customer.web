@@ -202,7 +202,7 @@ function Leaderboard() {
           <section className={styles.Tabular_Container}>
             <div className={styles.Tabular_Content_Container}>
               <div className={styles.Header_title}>
-                <p className={styles.Hide_for_mobile}>ID NUMBER</p>
+                <p className={styles.Hide_for_mobile}>AGENT NAME</p>
                 <span className={styles.Hide_for_desktop}>ID</span>
                 <p className={styles.Hide_for_mobile}>No. of calls/week</p>
                 <span className={styles.Hide_for_desktop}>
@@ -310,7 +310,7 @@ function LeaderBoardDisplay({
         <div className={styles.Profile_img}>
           <img src={ProfileName} className="" alt="profile1" />
         </div>
-        <p>{person.str_agent_id}</p>
+        <p>ID: {person.str_agent_id}</p>
         <h2 className={styles.UppercaseName}>
           {person.firstname.toUpperCase()} {person.lastname.toUpperCase()}
         </h2>
