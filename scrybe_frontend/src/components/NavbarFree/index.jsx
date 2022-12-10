@@ -46,7 +46,10 @@ function NavBar() {
         <div className={styles.nav__img}>
           <Link to="/">
             {" "}
-            <img src={logo} alt="Company Logo" />
+            <img
+              src="https://res.cloudinary.com/djufngoed/image/upload/v1670428828/heed_logo_with_text_pbkrkv.webp"
+              alt="Company Logo"
+            />
           </Link>
         </div>
 
@@ -102,7 +105,10 @@ function NavBar() {
 
           <div className={styles.nav__ctl}>
             <div className={styles.nav__img}>
-              <img src={logo} alt="" />
+              <img
+                src="https://res.cloudinary.com/djufngoed/image/upload/v1670428828/heed_logo_with_text_pbkrkv.webp"
+                alt=""
+              />
             </div>
             <svg
               className={styles.nav__closed}

@@ -4,8 +4,11 @@ import uploadIcon from "../assets/folderIcon.png";
 import checkMarkIcon from "../assets/checkMarkIcon.png";
 import copyIcon from "../assets/copyIcon.svg";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const UploadComplete = ({ link, transcript_id }) => {
+  const [copySuccess, setCopySuccess] = useState(false);
+
   return (
     <>
       <div className={style["upload-complete-wrapper"]}>
@@ -37,9 +40,11 @@ const UploadComplete = ({ link, transcript_id }) => {
           alt="copy-icon"
           onClick={() => {
             navigator.clipboard.writeText(link);
+            setCopySuccess(true);
           }}
         />
       </label>
+      {setCopySuccess ? <p>Copied to clipboard!</p> : ""}
     </>
   );
 };
