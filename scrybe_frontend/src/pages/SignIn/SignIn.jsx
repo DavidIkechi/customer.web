@@ -85,7 +85,9 @@ function Signin() {
 
         localStorage.setItem("heedAccessToken", response.data.access_token);
         localStorage.setItem("heedRefreshToken", response.data.refresh_token);
+        localStorage.setItem("accessTokenActivationTime", new Date().getTime());
         Cookies.set("heedAccessToken", response.data.access_token);
+        Cookies.set("accessTokenActivationTime", new Date().getTime());
         localStorage.setItem("heedAccessTokenType", response.data.token_type);
         localStorage.setItem("currentUserEmail", username);
         localStorage.setItem("auth", username);

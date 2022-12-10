@@ -126,12 +126,12 @@ function App() {
         <Route path="press-article" element={<PressArticle />} />
         <Route path="pricing" element={<Pricing />} />
         <Route path="/events" element={<Events />} />
-        <Route path="/dashboard" element={<DashboardOverview />} />
-        <Route path="/leaderboard" element={<LeaderboardPage />} />
-        <Route path="/homeB" element={<HomePageB />} />
-        <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
-        <Route path="/agent-report/:agentId" element={<AgentReport />} />
-        <Route path="/reviews" element={<Reviews />} />
+        {/* <Route path="/dashboard" element={<DashboardOverview />} />
+        <Route path="/leaderboard" element={<LeaderboardPage />} /> */}
+        {/* <Route path="/homeB" element={<HomePageB />} /> */}
+        {/* <Route path="/uploaded-recordings" element={<UploadedRecordings />} /> */}
+        {/* <Route path="/agent-report/:agentId" element={<AgentReport />} /> */}
+        {/* <Route path="/reviews" element={<Reviews />} /> */}
         {/* <Route path="/try-processing" element={<TryProcessing />} /> */}
         <Route path="/try-results/:transcribeId" element={<TryResults />} />
         <Route
@@ -151,14 +151,6 @@ function App() {
         {/* cant access without signin */}
 
         <Route element={<RequireToken />}>
-          <Route
-            path="/account"
-            element={
-              <WithAuth>
-                <Account />
-              </WithAuth>
-            }
-          />
           <Route path="/account" element={<Account />} />
           <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
           <Route path="/agent-report/:Agent_id" element={<AgentReport />} />
