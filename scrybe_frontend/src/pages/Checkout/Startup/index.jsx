@@ -170,6 +170,7 @@ function Checkout() {
                       name="cardName"
                       id="card_name"
                       placeholder="John Doe"
+                      required
                     />
                   </div>
                   <div className={styles.formEmail}>
@@ -179,6 +180,7 @@ function Checkout() {
                       name="cardName"
                       id="card_name"
                       placeholder="name@company.com"
+                      required
                     />
                   </div>
                 </form>
@@ -197,6 +199,7 @@ function Checkout() {
                       name="cardName"
                       id="card_name"
                       placeholder="1234 1234 1234 1234"
+                      required
                     />
                   </div>
                   <div className={styles.checkoutInputRow}>
@@ -216,8 +219,10 @@ function Checkout() {
                         name="cardName"
                         id="card_name"
                         placeholder="CVC"
+                        required
                       />
                     </div>
+                    <small></small>
                   </div>
                   <div className={styles.checkboxsection}>
                     <label htmlFor="checkbox" className={styles.chkContainer}>
@@ -260,7 +265,7 @@ function Checkout() {
                 </div>
               </div>
             </div>
-            <div>
+            <div className={styles.paymentTypes}>
               <h2>Accepted payment types</h2>
               <div>
                 <div className={styles.cardTypes}>

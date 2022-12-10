@@ -265,7 +265,7 @@ function Checkout() {
                 </div>
               </div>
             </div>
-            <div>
+            <div className={styles.paymentTypes}>
               <h2>Accepted payment types</h2>
               <div>
                 <div className={styles.cardTypes}>
