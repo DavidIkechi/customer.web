@@ -187,7 +187,7 @@
   .uploaded_table_body {
     .fileRow {
       border-radius: 3em;
-      cursor: pointer;
+      cursor: default;
       transition: scale 0.3s;
       &:hover {
         background-color: #006cff11;
@@ -209,6 +209,7 @@
   width: 100%;
   background: #ffffff;
   position: relative;
+  overflow: hidden;
 }
 .not_found_wrap {
   margin: 3rem 0;

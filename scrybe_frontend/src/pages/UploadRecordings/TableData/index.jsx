@@ -138,10 +138,6 @@ const TableData = ({ searchKeyword }) => {
     });
   };
 
-  const handleFileClick = (e) => {
-    // TODO implement file click operation so it opens audio player modal
-  };
-
   useEffect(() => {
     allRecordingsProcessed();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -229,7 +225,7 @@ const TableData = ({ searchKeyword }) => {
                             <tr
                               key={recording?.id}
                               className={styles.fileRow}
-                              onClick={handleFileClick}
+                              data-job-id={recording?.job_id}
                             >
                               <td
                                 className={
