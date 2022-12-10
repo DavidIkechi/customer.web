@@ -81,7 +81,7 @@ function NewDesignSideBar({
           </div>
           <div className={styles.navLinks}>
             <NavLink
-              to="/dashboard"
+              to="/dashboard/"
               className={({ isActive }) =>
                 isActive
                   ? `${styles.active} ${styles.navLink}`
@@ -95,7 +95,7 @@ function NewDesignSideBar({
               <p>Overview</p>
             </NavLink>
             <NavLink
-              to="/uploaded-recordings"
+              to="/dashboard/uploaded-recordings"
               className={({ isActive }) =>
                 isActive
                   ? `${styles.active} ${styles.navLink}`
@@ -110,7 +110,7 @@ function NewDesignSideBar({
             </NavLink>
 
             <NavLink
-              to="/leaderboard"
+              to="/dashboard/leaderboard"
               className={({ isActive }) =>
                 isActive
                   ? `${styles.active} ${styles.navLink} `
@@ -124,7 +124,7 @@ function NewDesignSideBar({
               <p>Leaderboard</p>
             </NavLink>
             <NavLink
-              to="/settings"
+              to="/dashboard/settings"
               className={({ isActive }) =>
                 isActive
                   ? `${styles.active} ${styles.navLink}`
@@ -152,7 +152,7 @@ function NewDesignSideBar({
             />
             <div className={styles.generalSidebar_user_desktop_nameDetails}>
               <div className={styles.generalSidebar_user_desktop_name_arr}>
-                <Link to="/account" className={styles.name}>
+                <Link to="/dashboard/account" className={styles.name}>
                   {currentUser?.first_name
                     ? `${currentUser?.first_name} ${currentUser?.last_name}`
                     : "John Doe"}

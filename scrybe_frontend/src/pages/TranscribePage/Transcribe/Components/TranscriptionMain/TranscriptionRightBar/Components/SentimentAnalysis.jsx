@@ -6,7 +6,7 @@ import downloadIcon from "../../../../../assets/Frame 1000002110.png";
 function SentimentAnalysis({ donwloadData }) {
   const getTranscriptionID = () => {
     let location = window.location.pathname;
-    return location.substring(16, location.length);
+    return location.split("/")[3];
   };
   const audioId = getTranscriptionID();
   const exportData = () => {
@@ -19,6 +19,8 @@ function SentimentAnalysis({ donwloadData }) {
 
     link.click();
   };
+
+  console.log(audioId);
   return (
     <div className={styles.SentimentAnalysis}>
       <h2>Sentiment analysis</h2>
@@ -37,14 +39,16 @@ function SentimentAnalysis({ donwloadData }) {
               fill="white"
             />
           </svg>
-          <a href={`/sentiment-analysis/${audioId}`}>View analysis</a>
+          <Link to={`/dashboard/sentiment-analysis/${audioId}`}>
+            View analysis
+          </Link>
         </button>
         <div className={styles.downloadButton} onClick={exportData}>
           <img src={downloadIcon} alt="download-icon" />
         </div>
       </div>
       <div className={styles.mobileSentimentAnalysis}>
-        <Link to="/sentiment-analysis/:userId">
+        <Link to="/dashboard/sentiment-analysis/:userId">
           <div className={styles.mobileContainer}>
             <h5>sentiment analysis</h5>
             <svg
