@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ChevronRight from "../assets/icons/chevron-right.svg";
 // import ProfilePic from "../assets/images/Pic.png";

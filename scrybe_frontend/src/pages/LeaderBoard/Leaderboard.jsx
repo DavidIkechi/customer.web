@@ -126,18 +126,6 @@ function Leaderboard() {
             </p>
             <h6>To view agent report, please click on any on the agent IDs </h6>
 
-              <div className={styles.right_content2_container}>
-                <div className={styles.InputWithIcon}>
-                  <img src={SearchIcon} className="" alt="hero img" />
-                  <input
-                    type="text"
-                    name=""
-                    id="search-bar"
-                    placeholder="   Input Agent ID/Name"
-                    required
-                    onChange={(e) => setSearch(e.target.value)}
-                  />
-                </div>
             <div className={styles.right_content2_container}>
               <div className={styles.InputWithIcon}>
                 <img src={SearchIcon} className="" alt="hero img" />
@@ -145,25 +133,37 @@ function Leaderboard() {
                   type="text"
                   name=""
                   id="search-bar"
-                  placeholder="  &nbsp; &nbsp; &nbsp; Input Agent ID"
+                  placeholder="   Input Agent ID/Name"
                   required
+                  onChange={(e) => setSearch(e.target.value)}
                 />
               </div>
-
-              <div className={styles.calender_content}>
-                <div>
-                  <p id={styles.sort_by}>Sort by </p>
+              <div className={styles.right_content2_container}>
+                <div className={styles.InputWithIcon}>
+                  <img src={SearchIcon} className="" alt="hero img" />
+                  <input
+                    type="text"
+                    name=""
+                    id="search-bar"
+                    placeholder="  &nbsp; &nbsp; &nbsp; Input Agent ID"
+                    required
+                  />
                 </div>
-                <select
-                  id="calender-value"
-                  name="calender"
-                  onChange={(e) => setRange(e.target.value)}
-                >
-                  <option value="week">This week</option>
-                  <option value="month">This month</option>
-                </select>
+
+                <div className={styles.calender_content}>
+                  <div>
+                    <p id={styles.sort_by}>Sort by </p>
+                  </div>
+                  <select
+                    id="calender-value"
+                    name="calender"
+                    onChange={(e) => setRange(e.target.value)}
+                  >
+                    <option value="week">This week</option>
+                    <option value="month">This month</option>
+                  </select>
+                </div>
               </div>
-            </div>
 
               <div className={styles.Profile_container}>
                 {leaderboard.length > 0 && (
@@ -194,113 +194,67 @@ function Leaderboard() {
                 )}
               </div>
             </div>
-          </section>
-            <div className={styles.Profile_container}>
-              {leaderboard.length > 0 && (
-                <>
-                  {leaderboard.map((profile, index, index2) => (
-                    <LeaderBoardDisplay
-                      key={profile.agent_id}
-                      person={profile}
-                      index={index}
-                      index2={index2}
-                      handleAgent={handleAgent}
-                      agent_id={profile.agent_id}
-                      rank={profile.rank}
-                      show={profile.str_agent_id}
-                    />
-                  ))}
-                </>
-              )}
-            </div>
           </div>
         </section>
-
-          <section className={styles.Tabular_Container}>
-            <div className={styles.Tabular_Content_Container}>
-              <div className={styles.Header_title}>
-                <p className={styles.Hide_for_mobile}>AGENT NAME</p>
-                <span className={styles.Hide_for_desktop}>ID</span>
-                <p className={styles.Hide_for_mobile}>No. of calls/week</p>
-                <span className={styles.Hide_for_desktop}>
-                  <img src={CallIcon} className="" alt="profile1" />
-                </span>
-        <section className={styles.Tabular_Container}>
-          <div className={styles.Tabular_Content_Container}>
-            <div className={styles.Header_title}>
-              <p className={styles.Hide_for_mobile}>ID NUMBER</p>
-              <span className={styles.Hide_for_desktop}>ID</span>
-              <p className={styles.Hide_for_mobile}>No. of calls/week</p>
-              <span className={styles.Hide_for_desktop}>
-                <img src={CallIcon} className="" alt="profile1" />
-              </span>
-
-              <p className={styles.Hide_for_mobile}>Total score </p>
-              <span className={styles.Hide_for_desktop}>Score/10</span>
-
-              <p className={styles.Hide_for_mobile}>Rank </p>
-              <span className={styles.Hide_for_desktop}>
-                <img src={LeaderBoardIcon} className="" alt="profile1" />
-              </span>
-            </div>
-            <hr></hr>
-            {leaderboard.length > 0 ? (
-              <>
-                {otherAgent.map((profile) => (
-                  <OtherAgentDisplay
-                    key={profile.agent_id}
-                    person={profile}
-                    handleAgent={handleAgent}
-                    agent_id={profile.agent_id}
-                    rank={profile.rank}
-                    show={profile.str_agent_id}
-                  />
-                ))}
-              </>
-            ) : (
-              <div className={styles.empty_state}>
-                <h3>An overview of your agents performance shows here.</h3>
-              </div>
-            )}
-            {/* <div className={styles.Header_content}>
-              <div className={styles.Header_profile_container}>
-                <img src={ProfileName} className="" alt="profile1" />
-                <p className={styles.Agent_ID}>AG685500DE</p>
-              </div>
-              <p>24</p>
-              <p>5/10</p>
-              <p>5th</p>
-            </div>
-            <div className={styles.Header_content}>
-              <div className={styles.Header_profile_container}>
-                <img src={ProfileName} className="" alt="profile1" />
-                <p className={styles.Agent_ID}>AG685500DE</p>
-              </div>
-              <p>24</p>
-              <p>5/10</p>
-              <p>5th</p>
-            </div>
-            <div className={styles.Header_content}>
-              <div className={styles.Header_profile_container}>
-                <img src={ProfileName} className="" alt="profile1" />
-                <p className={styles.Agent_ID}>AG685500DE</p>
-              </div>
-              <p>24</p>
-              <p>5/10</p>
-              <p>5th</p>
-            </div>
-            <div className={styles.Header_content}>
-              <div className={styles.Header_profile_container}>
-                <img src={ProfileName} className="" alt="profile1" />
-                <p className={styles.Agent_ID}>AG685500DE</p>
-              </div>
-              <p>24</p>
-              <p>5/10</p>
-              <p>5th</p>
-            </div> */}
-          </div>
-        </section>
+        <div className={styles.Profile_container}>
+          {leaderboard.length > 0 && (
+            <>
+              {leaderboard.map((profile, index, index2) => (
+                <LeaderBoardDisplay
+                  key={profile.agent_id}
+                  person={profile}
+                  index={index}
+                  index2={index2}
+                  handleAgent={handleAgent}
+                  agent_id={profile.agent_id}
+                  rank={profile.rank}
+                  show={profile.str_agent_id}
+                />
+              ))}
+            </>
+          )}
+        </div>
       </div>
+
+      <section className={styles.Tabular_Container}>
+        <div className={styles.Tabular_Content_Container}>
+          <div className={styles.Header_title}>
+            <p className={styles.Hide_for_mobile}>ID NUMBER</p>
+            <span className={styles.Hide_for_desktop}>ID</span>
+            <p className={styles.Hide_for_mobile}>No. of calls/week</p>
+            <span className={styles.Hide_for_desktop}>
+              <img src={CallIcon} className="" alt="profile1" />
+            </span>
+
+            <p className={styles.Hide_for_mobile}>Total score </p>
+            <span className={styles.Hide_for_desktop}>Score/10</span>
+
+            <p className={styles.Hide_for_mobile}>Rank </p>
+            <span className={styles.Hide_for_desktop}>
+              <img src={LeaderBoardIcon} className="" alt="profile1" />
+            </span>
+          </div>
+          <hr></hr>
+          {leaderboard.length > 0 ? (
+            <>
+              {otherAgent.map((profile) => (
+                <OtherAgentDisplay
+                  key={profile.agent_id}
+                  person={profile}
+                  handleAgent={handleAgent}
+                  agent_id={profile.agent_id}
+                  rank={profile.rank}
+                  show={profile.str_agent_id}
+                />
+              ))}
+            </>
+          ) : (
+            <div className={styles.empty_state}>
+              <h3>An overview of your agents performance shows here.</h3>
+            </div>
+          )}
+        </div>
+      </section>
     </>
   );
 }

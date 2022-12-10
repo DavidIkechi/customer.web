@@ -1,4 +1,8 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
+import TopNav from "./components/TopNav";
+import styles from "./pages/DashboardOverview/DashboardOverview.module.scss";
+import NewDesignSideBar from "./components/NewDesignSidebar";
+import { useState } from "react";
 
 export const fetchToken = () => {
   return {
@@ -7,10 +11,17 @@ export const fetchToken = () => {
   };
 };
 
-export function RequireToken({ children }) {
+export function RequireToken() {
   let auth = fetchToken();
   let location = useLocation();
   const tokenExpirationTime = 120; //in minutes
+
+  const [toggleSidebar, setToggleSidebar] = useState(false);
+  const [isSearching, setIsSearching] = useState("");
+
+  const setterFn = (e) => {
+    setIsSearching(e.target.value);
+  };
 
   if (
     // if there is no token or no activation time or (there is an activationTime but it is greater than 120 mins) then redirect to login page

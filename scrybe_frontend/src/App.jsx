@@ -74,10 +74,8 @@ import ForgetPasswordNew from "./pages/ForgotPasswordNew/Index";
 import NewSetNewPassword from "./pages/NewSetNewPassword";
 import NewPasswordResetSuccessful from "./pages/NewPasswordResetSuccessful";
 import CompleteSignup from "./pages/NewSignup/CompleteSignup/CompleteSignup";
-
-import * as atatus from "atatus-js";
-
-atatus.config("e7b42895d6f546a2b1f86414988a8afa").install();
+import * as atatus from "atatus-spa";
+atatus.config("006cee2d85d74c12953a30f3e9b78569").install();
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -90,7 +88,7 @@ const router = createBrowserRouter(
       }
     >
       <Route path="/" element={<HomePageRedesign />} />
-      <Route path="/signup" element={<NewSignup />} />
+      <Route path="/signup" element={<CompleteSignup />} />
       <Route path="/login" element={<NewSignin />} />
       <Route path="/check-mail" element={<CheckMail />} />
       <Route path="/try" element={<TryForFree />} />

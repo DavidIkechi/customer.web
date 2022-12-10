@@ -111,7 +111,7 @@ const TopNav = ({ openSidebar, search }) => {
               src={
                 currentUser?.company_logo_url
                   ? currentUser?.company_logo_url
-                  : "img/dummy.png"
+                  : DummyImg
               }
               alt={currentUser?.first_name}
             />

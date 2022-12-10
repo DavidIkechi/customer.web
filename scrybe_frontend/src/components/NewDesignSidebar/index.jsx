@@ -14,6 +14,7 @@ import axios from "axios";
 import SearchInput from "../SearchInput";
 import DropDownModal from "./DropdownMenu";
 import styles from "./generalSidebar.module.scss";
+import Avatar from "./icons/user_avatar.svg";
 
 /**
  * Wrap your component with this component to get a sidebar with a logo, a search input field and a list of links.
@@ -146,7 +147,7 @@ function NewDesignSideBar({
               src={
                 currentUser?.company_logo_url
                   ? currentUser?.company_logo_url
-                  : "img/dummy.png"
+                  : Avatar
               }
               alt={currentUser?.first_name}
             />
