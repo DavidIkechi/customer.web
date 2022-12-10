@@ -82,7 +82,7 @@ function App() {
         {/* access without sign in */}
         <Route path="/" element={<HomePageRedesign />} />
         <Route path="/signup" element={<CreateAccount />} />
-        <Route path='/complete-signup' element={<CompleteSignup />} />
+        <Route path="/complete-signup" element={<CompleteSignup />} />
         <Route path="/login" element={<NewSignin />} />
         <Route path="/check-mail" element={<CheckMail />} />
         <Route path="/try" element={<TryForFree />} />
