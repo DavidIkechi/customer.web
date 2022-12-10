@@ -207,12 +207,17 @@
   border: none;
   margin-top: 1em;
   margin-bottom: .5em;
+  cursor: pointer;
 }
 
 .primary-button:hover {
   color: #006CFF;
   background-color: #ffffFF;
   border: 1px solid #006CFF;
+}
+.primary-button:disabled{
+  background-color: #0062E8;
+  opacity: 0.5;
 }
 
 .progress-wrapper {
