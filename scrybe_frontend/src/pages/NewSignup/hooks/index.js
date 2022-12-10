@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router";
+import ErrorHandler from "../../../helpers/axioshelp/Utils/ErrorHandler";
 import ApiService from "../../../helpers/axioshelp/apis";
 
 const createAccount = () => {
@@ -78,7 +79,6 @@ const createAccount = () => {
 
     localStorage.setItem("data", JSON.stringify(data));
   };
-  // console.log(value.data);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const validate = useCallback(
@@ -149,14 +149,14 @@ const completeRegistration = () => {
   const [companyStateTest, setCompanyStateTest] = useState(false);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [value, setValue] = useState({});
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [response, setResponse] = useState({ type: "", message: "" });
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const navigate = useNavigate();
 
   const companyNameTest = new RegExp(/^[a-zA-Z]{2,}$/);
-  const addressTest = new RegExp(
-    /^(\d{1,}) [a-zA-Z0-9\s]+(\.)? [a-zA-Z]+(\,)? [A-Z]{2} [0-9]{5,6}/g
-  );
+  const addressTest = new RegExp(/[A-Za-z0-9'\.\-\s\,]{8,}$/);
 
   const tester = (e, reg, func) => {
     if (reg.test(e.target.value)) {
@@ -188,13 +188,12 @@ const completeRegistration = () => {
     const data = {
       first_name: value.first_name,
       last_name: value.last_name,
-      password: value.password,
       email: value.email,
       company_name: company_name,
       company_address: company_address,
+      password: value.password,
     };
-    console.log(data.first_name);
-
+    console.log(data);
     try {
       await ApiService.SignUp(data);
 
@@ -202,7 +201,7 @@ const completeRegistration = () => {
 
       navigate("/verify-signup");
     } catch (error) {
-      // console.log(error);
+      setResponse(ErrorHandler(error));
     }
   };
 
@@ -215,6 +214,8 @@ const completeRegistration = () => {
     companyStateTest,
     handleTotalSubmit,
     value,
+    response,
+    setResponse,
   };
 };
 
