@@ -222,7 +222,11 @@ const TableData = ({ searchKeyword }) => {
                           const job_status = recording?.job_details?.job_status;
 
                           return (
-                            <tr key={recording?.id}>
+                            <tr
+                              key={recording?.id}
+                              className={styles.fileRow}
+                              data-job-id={recording?.job_id}
+                            >
                               <td
                                 className={
                                   styles.uploaded_table_body_checkbox_img_wrap
@@ -246,7 +250,9 @@ const TableData = ({ searchKeyword }) => {
                                   }
                                 />
                               </td>
-                              <td>{shortenfilename(recording?.filename)}</td>
+                              <td className={styles.filename}>
+                                {shortenfilename(recording?.filename)}
+                              </td>
                               <td>{formatAudioLen(recording?.duration)}</td>
                               <td>{formatAudioSize(recording?.size)}</td>
                               <td>{formatDate(recording?.timestamp)}</td>
