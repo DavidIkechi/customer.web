@@ -232,6 +232,8 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     audio_file = file.file.read()
     bucket = "hng-heed"
 
+    
+    
     s3.upload_fileobj(
         io.BytesIO(audio_file),
         bucket,
@@ -241,7 +243,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     audio_s3_url = f"https://{bucket}.s3.amazonaws.com/{file.filename}"
 
 
-    # transcript = transcript
+     # transcript = transcript
     
     size = Path(file.filename).stat().st_size / 1048576
     duration = audio_details(file.filename)["mins"]
@@ -284,7 +286,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     return {
         "id":audio_id,
         "transcript_id": transcript_id,
-        "s3 bucket url": audio_s3_url
+ #       "s3 bucket url": audio_s3_url
     }
 
 # create the endpoint
@@ -512,7 +514,7 @@ def get_sentiment_result(id: int, db: Session = Depends(get_db)):
 @app.get("/list-audios-by-user", summary = "list all user audios with their status")
 def list_audios_by_user(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     result = crud.get_audios_by_user(db, user_id=user.id)
-    audios = []
+    audio_list = []
     for i in result:
         audio = {
             "id": i.id,
@@ -524,7 +526,8 @@ def list_audios_by_user(db: Session = Depends(get_db), user: models.User = Depen
             "job_details": i.job
 
         }
-        audios.append(audio)
+        audio_list.append(audio)
+    audios = sorted(audio_list, key=lambda x: x['id'], reverse=True)   
     return audios
     
 @app.get("/get_uploaded_jobs", summary="List all uploaded jobs with job details", status_code=status.HTTP_200_OK, tags=['jobs'])
