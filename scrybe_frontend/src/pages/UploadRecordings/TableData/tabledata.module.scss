@@ -1,11 +1,5 @@
 .uploaded_recordings {
   padding: 2rem !important;
-  background: #f9f9f9;
-  // height: 100%;
-}
-
-.no_items_found .uploaded_table_wrap {
-  height: 100vh;
 }
 
 .modal_open {
@@ -54,7 +48,7 @@
       padding: 1rem;
       margin-top: 3rem;
       p {
-        font-family: "Kanit";
+        font-family: "poppins", sans-serif;
         font-style: normal;
         font-weight: 600;
         font-size: 20px;
@@ -73,7 +67,7 @@
           height: 56px;
           padding: 16px 32px;
           border-radius: 4px;
-          font-family: "Kanit";
+          font-family: "poppins", sans-serif;
           border: none;
           font-style: normal;
           font-weight: 500;
@@ -104,7 +98,7 @@
 
   h1,
   h2 {
-    font-family: "Kanit";
+    font-family: "poppins", sans-serif;
     font-weight: 600;
     font-size: 20px;
     line-height: 24px;
@@ -129,7 +123,7 @@
       border: none;
       background: none;
       color: #ffffff;
-      font-family: "Kanit";
+      font-family: "poppins", sans-serif;
       font-weight: 500;
       font-size: 14px;
     }
@@ -151,7 +145,7 @@
   // overflow-y: hidden;
   height: fit-content;
   .expired {
-    font-family: "Kanit";
+    font-family: "poppins", sans-serif;
     font-style: normal;
     font-weight: 600;
     font-size: 30px;
@@ -203,37 +197,35 @@
   }
 }
 
+.no_items_found .uploaded_table {
+  height: 62vh !important;
+}
+
 .uploaded_table {
   border-collapse: collapse;
   margin: 25px 0;
-  width: 100%;
+  width: 100% !important;
   background: #ffffff;
   position: relative;
   overflow: hidden;
 }
 .not_found_wrap {
   margin: 3rem 0;
-  display: grid;
-  place-items: center;
-  place-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
-  // justify-content: center;
   flex-direction: column;
-  width: 100%;
+  width: 100% !important;
   img {
-    // width: 100%;
-    // height: 100%;
-    // position: absolute;
     margin-bottom: 2rem;
   }
   p {
-    font-family: "Kanit";
+    font-family: "poppins" sans-serif;
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
     line-height: 26px;
-    /* identical to box height, or 130% */
-
     color: #000000;
   }
 }
@@ -260,7 +252,7 @@
 }
 
 .uploaded_table td {
-  font-family: "Kanit";
+  font-family: "poppins", sans-serif;
   padding: 20px 15px;
   font-style: normal;
   font-weight: 300;
@@ -319,7 +311,7 @@
       word-wrap: break-word;
       // display: flex;
       p {
-        font-family: "Kanit";
+        font-family: "poppins", sans-serif;
         font-style: normal;
         font-weight: 300;
         font-size: 16px;
@@ -330,7 +322,7 @@
       }
       .callback_url {
         margin-right: 1rem;
-        font-family: "Kanit";
+        font-family: "poppins", sans-serif;
         span {
           color: #006cff;
           border-bottom: 1px solid #006cff;
@@ -341,7 +333,7 @@
   .view_resultbtn {
     border-radius: 4px;
     padding: 15px 25px;
-    font-family: "Kanit";
+    font-family: "poppins", sans-serif;
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
@@ -366,7 +358,7 @@
       align-items: center;
       justify-content: center;
       // flex-direction: column;
-      font-family: "Kanit";
+      font-family: "poppins", sans-serif;
       font-style: normal;
       font-weight: 500;
       font-size: 16px;
@@ -413,7 +405,7 @@
         border: 0.5px solid rgba(18, 18, 18, 0.15);
         border-radius: 4px;
         z-index: 1;
-        font-family: "Kanit";
+        font-family: "poppins", sans-serif;
         font-style: normal;
         font-weight: 300;
         font-size: 14px;
@@ -421,7 +413,7 @@
         display: none;
         strong {
           padding: 2px 0;
-          font-family: "Kanit";
+          font-family: "poppins", sans-serif;
           font-style: normal;
           font-weight: 300;
           font-size: 14px;
@@ -432,7 +424,7 @@
         }
         p {
           padding: 2px 0;
-          font-family: "Kanit";
+          font-family: "poppins", sans-serif;
           font-style: normal;
           font-weight: 300;
           font-size: 14px;
@@ -546,7 +538,7 @@
       .calbackurl_wrap {
         display: none;
         p {
-          font-family: "Kanit";
+          font-family: "poppins", sans-serif;
           font-style: normal;
           font-weight: 300;
           font-size: 16px !important;
@@ -557,7 +549,7 @@
         }
         .callback_url {
           margin-right: 1rem;
-          font-family: "Kanit";
+          font-family: "poppins", sans-serif;
           span {
             color: #006cff;
             border-bottom: 1px solid #006cff;
@@ -568,7 +560,7 @@
     .view_resultbtn {
       border-radius: 4px;
       padding: 20px;
-      font-family: "Kanit";
+      font-family: "poppins", sans-serif;
       font-style: normal;
       font-weight: 600;
       font-size: 16px;
