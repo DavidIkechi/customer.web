@@ -1,6 +1,6 @@
 import { React } from "react";
 import styles from "./NewSignup.module.scss";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { createAccount } from "../hooks";
 
 import logo from "../assets/logo.png";
@@ -21,7 +21,9 @@ const NewSignup = () => {
       </div>
 
       <div className={styles.inputsection}>
-        <img src={logo} alt="heedLogo" />
+        <NavLink to="/">
+          <img src={logo} alt="heedLogo" />
+        </NavLink>
 
         <div className={styles.greeting}>
           <h1>Create an accout</h1>

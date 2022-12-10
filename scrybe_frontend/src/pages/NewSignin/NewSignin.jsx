@@ -1,6 +1,6 @@
 import { React, useState, useCallback, useEffect } from "react";
 import SnackBar from "../../components/SnackBar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 // import Loading from "../../components/Loading";
 import Cookies from "js-cookie";
 import styles from "./NewSignin.module.scss";
@@ -125,7 +125,9 @@ const NewSignin = () => {
         </div>
 
         <div className={styles.inputsection}>
-          <img src={logo} alt="heedLogo" />
+          <NavLink to="/">
+            <img src={logo} alt="heedLogo" />
+          </NavLink>
 
           <div className={styles.greeting}>
             <h1>Welcome back Heeder</h1>

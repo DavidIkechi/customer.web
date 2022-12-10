@@ -110,7 +110,9 @@ function Signin() {
           <div
             className={`${styles.first} ${styles.signin} ${styles.otherThanSignup}`}
           >
-            <img className={styles.heedLogo} src={heedLogo} alt="logo" />
+            <NavLink to="/">
+              <img className={styles.heedLogo} src={heedLogo} alt="logo" />
+            </NavLink>
             <h1>Welcome back</h1>
             <h3>Please enter your details</h3>
             <form onSubmit={handleSubmit}>
