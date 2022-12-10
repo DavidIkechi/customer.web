@@ -276,6 +276,7 @@
 }
 .pricing tr th:first-child,
 .pricing tr td:first-child {
+    width: pix-rem(360);
   text-align: left;
   position: sticky;
   left: 0;
@@ -284,14 +285,20 @@
   }
 }
 
+.pricing tr td:nth-child(1) {
+ 
+  @include media(1200px) {
+    background-color: #fff;
+  }
+}
 .pricing tr td:nth-child(2) {
-  width: pix-rem(182);
+  width: pix-rem(200);
   @include media(1200px) {
     background-color: #fff;
   }
 }
 .pricing tr th:first-child {
-  width: pix-rem(360);
+
   @include media(1200px) {
     background-color: #005584;
   }
