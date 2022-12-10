@@ -117,10 +117,7 @@ const Login = () => {
         <div className={styles.bgcontainer}>
           <div className={styles.text}>
             <p>...Speak, we listen</p>
-            <p>
-              Unlock insights and extract meaningful data from your customer
-              support conversations
-            </p>
+            <p>Unlock insight and meaningful data from team call records.</p>
           </div>
         </div>
 
