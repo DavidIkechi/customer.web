@@ -8,7 +8,7 @@ export function RequireToken() {
   let location = useLocation();
 
   if (!auth) {
-    return <Navigate to="/signin" state={{ from: location }} />;
+    return <Navigate to="/login" state={{ from: location }} />;
   }
 
   return <Outlet />;

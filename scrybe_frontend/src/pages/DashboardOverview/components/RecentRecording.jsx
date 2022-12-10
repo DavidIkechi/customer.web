@@ -31,21 +31,22 @@ const RecentRecording = ({ recentRecording }) => {
             </tr>
           </thead>
           <tbody>
-            {recentRecording.map((data, index) => (
-              <tr key={index + 2}>
-                <td>
-                  <img src={toneWave} alt="tone wave" />
-                </td>
-                <td style={{ textAlign: "left" }}>{data.filename}</td>
-                <td>{data.duration} mins</td>
-                <td>{data.size} mb</td>
-                <td>
-                  {data.timestamp.charAt(11) === "0"
-                    ? data.timestamp.replace("T0", " ")
-                    : data.timestamp.replace("T", " ")}
-                </td>
-              </tr>
-            ))}
+            {recentRecording &&
+              recentRecording?.map((data, index) => (
+                <tr key={index + 2}>
+                  <td>
+                    <img src={toneWave} alt="tone wave" />
+                  </td>
+                  <td style={{ textAlign: "left" }}>{data.filename}</td>
+                  <td>{data.duration} mins</td>
+                  <td>{data.size} mb</td>
+                  <td>
+                    {data.timestamp.charAt(11) === "0"
+                      ? data.timestamp.replace("T0", " ")
+                      : data.timestamp.replace("T", " ")}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       ) : (

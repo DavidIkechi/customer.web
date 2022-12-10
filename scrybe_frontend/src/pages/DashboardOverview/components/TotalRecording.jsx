@@ -72,10 +72,6 @@ const TotalRecording = ({ totalRecordingData }) => {
           <option value="month">This month</option>
         </select>
       </div>
-
-      {/* <h2 className={styles.thismonth}>
-      This month <img src={chevron} alt="" />
-    </h2> */}
       {selectedTotalRecordings.length > 0 ? (
         <div className={styles.recordings__chart}>
           <div>
