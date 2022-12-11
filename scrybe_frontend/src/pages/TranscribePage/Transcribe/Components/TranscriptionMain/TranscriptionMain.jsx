@@ -53,6 +53,7 @@ function TranscriptionMain() {
       audioElem.current.play();
       updateCurrentTime();
     } else audioElem.current.pause();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPlaying]);
   const getTranscriptionId = () => {
     return window.location.pathname.substring(
@@ -83,7 +84,7 @@ function TranscriptionMain() {
           generateArray(newRes.data.sentiment_result.transcript)
         );
         setAudioSrc(newRes.data.sentiment_result.audio_url);
-        setAudioFileSize(formatBytes(newRes.data.sentiment_result.audio_size));
+        setAudioFileSize(newRes.data.sentiment_result.audio_size);
         setAudioFileName(newRes.data.sentiment_result.audio_filename);
         setDownloadData(newRes.data);
       })
@@ -96,6 +97,7 @@ function TranscriptionMain() {
     const accessToken = localStorage.getItem("heedAccessToken");
     fetchActualData(accessToken, getTranscriptionId());
     fetchRecentRecordings(accessToken);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // format array function
@@ -118,12 +120,13 @@ function TranscriptionMain() {
       return cleanedData;
     }
 
+    // eslint-disable-next-line array-callback-return
     wordArray.map((word) => {
       if (counter < 20) {
         emptyString = emptyString + " " + word;
         counter++;
       }
-      if (counter == 20) {
+      if (counter === 20) {
         objectID++;
         time = time + 5;
         const formatedTime = timeFormatter(time);
@@ -168,18 +171,6 @@ function TranscriptionMain() {
       .then((newRes) => {
         setRecentRecordings(newRes.data);
       });
-  };
-  //format bytes to kb, mb, gb, tb
-  const formatBytes = (bytes, decimals = 0) => {
-    if (!+bytes) return "0 bytes";
-
-    const k = 1024;
-    const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ["bytes", "kb", "mb", "GB", "TB", "PB", "EB", "ZB", "YB"];
-
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
   };
 
   return (
