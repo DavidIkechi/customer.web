@@ -44,7 +44,7 @@ function SentimentAnalysis({ donwloadData }) {
         </div>
       </div>
       <div className={styles.mobileSentimentAnalysis}>
-        <Link to="/sentiment-analysis/:userId">
+        <Link to={`/sentiment-analysis/${getTranscriptionID()}`}>
           <div className={styles.mobileContainer}>
             <h5>sentiment analysis</h5>
             <svg
