@@ -3,7 +3,6 @@ import { BsInstagram, BsTwitter } from "react-icons/bs";
 import { GrFacebookOption } from "react-icons/gr";
 import { Link, NavLink } from "react-router-dom";
 import locate from "./assets/location-marker.png";
-import logo from "./assets/logo.png";
 import email from "./assets/mail.png";
 import call from "./assets/phone.png";
 import styles from "./footer.module.scss";
@@ -34,7 +33,6 @@ function Footer() {
             </div>
 
             <div className={styles.joinContainer}>
-              <p className={styles.provide}>Join our community:</p>
               <div className={styles.socials}>
                 <a href="https://heed.hng.tech">
                   <BsInstagram />
@@ -123,6 +121,5 @@ function Footer() {
     </div>
   );
 }
-
 
 export default Footer;

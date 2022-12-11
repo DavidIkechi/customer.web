@@ -111,7 +111,7 @@ function NavBar() {
           </div>
           <div className={styles.nav__ctas}>
             <button type="button">
-              <NavLink to="/signin">Login</NavLink>
+              <NavLink to="/login">Login</NavLink>
             </button>
             <button type="button">
               <NavLink to="/create-account">Sign Up</NavLink>

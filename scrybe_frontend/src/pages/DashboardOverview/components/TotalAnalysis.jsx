@@ -79,7 +79,6 @@ const TotalAnalysis = ({ totalAnalysisData }) => {
     {}
   );
 
-  // console.log("Max", indexOfMax[Max]);
   let sentiment, sign;
   switch (indexOfMax[Max]) {
     case 0:
@@ -94,8 +93,6 @@ const TotalAnalysis = ({ totalAnalysisData }) => {
       sentiment = <RiEmotionUnhappyLine />;
       sign = " -Ve";
   }
-
-  // console.log("sentiment", sentiment);
 
   return (
     <div className={styles.analysis}>

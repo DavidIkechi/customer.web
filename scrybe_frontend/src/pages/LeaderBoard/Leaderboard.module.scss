@@ -31,12 +31,12 @@ display: flex;
     margin: auto;
   border-radius: 20px;
   }
-  
+
 }
 
 .right_section {
   position: relative;
-} 
+}
 
 .right_section h2 {
   color: #434342;
@@ -64,10 +64,26 @@ display: flex;
   line-height: 24px;
 }
 
+.empty_state{
+  text-align: center;
+  padding-top: 2rem;
+  font-size: 18px;
+  color: #6a6a6a;
+}
+
+.empty_state h3{
+  padding-top: 1rem;
+}
+
+.empty_state img{
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* End of styling new design for Leaderbord */
 
 .content_container {
-  background-color: #fefefd;
+  background-color: #f9f9f9;
   // display: grid;
   // grid-template-columns: 0.8fr 2.5fr;
   width: 100%;
@@ -78,7 +94,7 @@ display: flex;
 }
 
 .right_section {
-  background-color: #fefefd;
+  background-color: #f9f9f9;
   //   margin-left: 15px;
   //   margin-right: 15px;
   padding: 2rem;
@@ -96,7 +112,7 @@ display: flex;
 }
 
 input {
-  width: 120%;
+  width: 100%;
   border: 1px solid #c5c5c5b2;
   padding: 8px 15px;
   border-radius: 5px;
@@ -104,10 +120,11 @@ input {
   outline: none;
   font-size: 16px;
   font-weight: 400;
+
 }
 
 .InputWithIcon input {
-  padding-left: 20px;
+  padding-left: 60px;
 }
 
 select {
@@ -146,7 +163,7 @@ select {
   display: flex;
   flex-direction: row;
   // grid-template-columns: 2fr 2fr 2fr;
-  gap: 1.5rem;
+  gap: 2.5rem;
   align-items: center;
   justify-content: center;
 
@@ -157,10 +174,20 @@ select {
   margin-top: 3rem;
 }
 
+.Profile1:hover{
+  box-shadow: 6px 6px 13px #f6f6f6, 6px 6px 13px rgba(0, 0, 0, 0.16);
+  cursor: pointer;
+}
+
 .Profile2 {
   text-align: center;
   margin-top: 3rem;
   background-color: #edf9f0;
+}
+
+.UppercaseName{
+  text-transform: uppercase;
+  margin-top: -1rem;
 }
 
 .Profile3 {
@@ -246,7 +273,7 @@ select {
   display: none;
 }
 .Tabular_Container {
-  padding: 1rem 4rem;
+  padding: 2.5rem 2rem;
 }
 
 .Tabular_Content_Container {
@@ -271,15 +298,30 @@ hr {
 }
 
 .Header_content {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  // display: flex;
+  // flex-direction: row;
+  justify-content: space-around;
+  display: grid;
+  grid-template-columns: 8fr 6fr 5fr 0fr;
   margin-bottom: 1rem;
 }
 
 .Header_content p {
   font-size: 16px;
   font-weight: 300;
+
+}
+
+.Agent_ID{
+  font-size: 16px;
+  font-weight: 300;
+  color: hsl(215, 100%, 50%);
+  cursor: pointer;
+}
+
+.Agent_ID:hover{
+  color: hsl(215, 97%, 31%);
+
 }
 
 .Header_profile_container {
