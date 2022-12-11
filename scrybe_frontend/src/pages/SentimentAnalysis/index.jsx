@@ -61,70 +61,81 @@ function SentimentAnalysis() {
 
   return (
     <>
-      <div className={styles.page__container}>
-        <div className={styles.audio__mobile}>
-          <AudioCard sentimentData={sentimentData} />
-        </div>
-        <div className={styles.sentiment__tab__opener}>
-          <div className={styles.opener__content} onClick={openSentimentTab}>
-            Overall sentiment
-            <div className={styles.arrow__container}>
-              <img src={blueArrowIcon} alt="arrow icon" />
-            </div>
+      <TopNav
+        openSidebar={() => {
+          setToggleSidebar(!toggleSidebar);
+        }}
+      />
+      <NewDesignSideBar
+        toggleSidebar={toggleSidebar}
+        needSearchMobile="needSearchMobile"
+        closeSidebar={() => setToggleSidebar(!toggleSidebar)}
+      >
+        <div className={styles.page__container}>
+          <div className={styles.audio__mobile}>
+            <AudioCard sentimentData={sentimentData} />
           </div>
-          <SentimentAside
-            isMobileAsideOpen={isMobileAsideOpen}
-            closeFunction={closeSentimentTab}
-            sentimentData={sentimentData}
-          />
-        </div>
-        <main className={styles.main__container}>
-          <span className={styles.main__container__top}>
-            <div
-              className={styles.main__container__top__arrow__icon__container}
-            >
-              <Link to={`/dashboard/transcriptions/${params.AudioId}`}>
-                <img
-                  className={
-                    styles.main__container__top__arrow__icon__container__image
-                  }
-                  src={arrowIcon}
-                  alt="arrow icon"
-                />
-              </Link>
+          <div className={styles.sentiment__tab__opener}>
+            <div className={styles.opener__content} onClick={openSentimentTab}>
+              Overall sentiment
+              <div className={styles.arrow__container}>
+                <img src={blueArrowIcon} alt="arrow icon" />
+              </div>
             </div>
-            <div className={styles.main__container__top__title}>
-              Sentiment analysis
-            </div>
-          </span>
-          <div className={styles.analysis__cards}>
-            <AnalysisCard sentimentData={sentimentData} />;
+            <SentimentAside
+              isMobileAsideOpen={isMobileAsideOpen}
+              closeFunction={closeSentimentTab}
+              sentimentData={sentimentData}
+            />
           </div>
-        </main>
-        <aside className={styles.aside__container}>
-          <AudioCard sentimentData={sentimentData} />
-          <OverAllSentimentCard sentimentData={sentimentData} />
-          <VerdictCard sentimentData={sentimentData} />
-          <PhraseTagCard
-            tags={
-              sentimentData.positiveTags
-                ? sentimentData.positiveTags
-                : positiveTags
-            }
-            title={"Positive phrase tags"}
-            sentimentData={sentimentData}
-          />
-          <PhraseTagCard
-            tags={
-              sentimentData.negativeTags
-                ? sentimentData.negativeTags
-                : negativeTags
-            }
-            title={"Negative phrase tags"}
-            sentimentData={sentimentData}
-          />
-        </aside>
-      </div>
+          <main className={styles.main__container}>
+            <span className={styles.main__container__top}>
+              <div
+                className={styles.main__container__top__arrow__icon__container}
+              >
+                <Link to={`/transcriptions/${params.AudioId}`}>
+                  <img
+                    className={
+                      styles.main__container__top__arrow__icon__container__image
+                    }
+                    src={arrowIcon}
+                    alt="arrow icon"
+                  />
+                </Link>
+              </div>
+              <div className={styles.main__container__top__title}>
+                Sentiment analysis
+              </div>
+            </span>
+            <div className={styles.analysis__cards}>
+              <AnalysisCard sentimentData={sentimentData} />;
+            </div>
+          </main>
+          <aside className={styles.aside__container}>
+            <AudioCard sentimentData={sentimentData} />
+            <OverAllSentimentCard sentimentData={sentimentData} />
+            <VerdictCard sentimentData={sentimentData} />
+            <PhraseTagCard
+              tags={
+                sentimentData.positiveTags
+                  ? sentimentData.positiveTags
+                  : positiveTags
+              }
+              title={"Positive phrase tags"}
+              sentimentData={sentimentData}
+            />
+            <PhraseTagCard
+              tags={
+                sentimentData.negativeTags
+                  ? sentimentData.negativeTags
+                  : negativeTags
+              }
+              title={"Negative phrase tags"}
+              sentimentData={sentimentData}
+            />
+          </aside>
+        </div>
+      </NewDesignSideBar>
     </>
   );
 }

@@ -14,7 +14,6 @@ import axios from "axios";
 import SearchInput from "../SearchInput";
 import DropDownModal from "./DropdownMenu";
 import styles from "./generalSidebar.module.scss";
-import Avatar from "./icons/user_avatar.svg";
 
 /**
  * Wrap your component with this component to get a sidebar with a logo, a search input field and a list of links.
@@ -82,7 +81,7 @@ function NewDesignSideBar({
           </div>
           <div className={styles.navLinks}>
             <NavLink
-              to="/dashboard/"
+              to="/dashboard"
               className={({ isActive }) =>
                 isActive
                   ? `${styles.active} ${styles.navLink}`
@@ -96,7 +95,7 @@ function NewDesignSideBar({
               <p>Overview</p>
             </NavLink>
             <NavLink
-              to="/dashboard/uploaded-recordings"
+              to="/uploaded-recordings"
               className={({ isActive }) =>
                 isActive
                   ? `${styles.active} ${styles.navLink}`
@@ -111,7 +110,7 @@ function NewDesignSideBar({
             </NavLink>
 
             <NavLink
-              to="/dashboard/leaderboard"
+              to="/leaderboard"
               className={({ isActive }) =>
                 isActive
                   ? `${styles.active} ${styles.navLink} `
@@ -125,7 +124,7 @@ function NewDesignSideBar({
               <p>Leaderboard</p>
             </NavLink>
             <NavLink
-              to="/dashboard/settings"
+              to="/settings"
               className={({ isActive }) =>
                 isActive
                   ? `${styles.active} ${styles.navLink}`
@@ -147,13 +146,13 @@ function NewDesignSideBar({
               src={
                 currentUser?.company_logo_url
                   ? currentUser?.company_logo_url
-                  : Avatar
+                  : "img/dummy.png"
               }
               alt={currentUser?.first_name}
             />
             <div className={styles.generalSidebar_user_desktop_nameDetails}>
               <div className={styles.generalSidebar_user_desktop_name_arr}>
-                <Link to="/dashboard/account" className={styles.name}>
+                <Link to="/account" className={styles.name}>
                   {currentUser?.first_name
                     ? `${currentUser?.first_name} ${currentUser?.last_name}`
                     : "John Doe"}

@@ -110,34 +110,36 @@ function Leaderboard() {
         </div>
       </div>
       {/* implemented by rambey */}
+      <NewDesignSideBar
+        toggleSidebar={toggleSidebar}
+        needSearchMobile="needSearchMobile"
+        closeSidebar={() => setToggleSidebar(!toggleSidebar)}
+      >
+        <div className={styles.content_container}>
+          <section>
+            <div className={styles.right_section_top}>
+              <TopNav
+                openSidebar={() => {
+                  setToggleSidebar(!toggleSidebar);
+                }}
+              />
+            </div>
 
-      <div className={styles.content_container}>
-        <section>
-          <div className={styles.right_section}>
-            <h2>Leaderboard</h2>
-            <p>
-              This is a list showing the performance your mounted agents on Heed
-              via the number of customer calls they’ve received.
-            </p>
-            <p className={styles.long_paragraph}>
-              Please note that each agent’s performance was rated using the
-              amount of calls they were able to receive per week, divided by the
-              number of days in a week.
-            </p>
-            <h6>To view agent report, please click on any on the agent IDs </h6>
+            <div className={styles.right_section}>
+              <h2>Leaderboard</h2>
+              <p>
+                This is a list showing the performance your mounted agents on
+                Heed via the number of customer calls they’ve received.
+              </p>
+              <p className={styles.long_paragraph}>
+                Please note that each agent’s performance was rated using the
+                amount of calls they were able to receive per week, divided by
+                the number of days in a week.
+              </p>
+              <h6>
+                To view agent report, please click on any on the agent IDs{" "}
+              </h6>
 
-            <div className={styles.right_content2_container}>
-              <div className={styles.InputWithIcon}>
-                <img src={SearchIcon} className="" alt="hero img" />
-                <input
-                  type="text"
-                  name=""
-                  id="search-bar"
-                  placeholder="   Input Agent ID/Name"
-                  required
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-              </div>
               <div className={styles.right_content2_container}>
                 <div className={styles.InputWithIcon}>
                   <img src={SearchIcon} className="" alt="hero img" />
@@ -145,8 +147,9 @@ function Leaderboard() {
                     type="text"
                     name=""
                     id="search-bar"
-                    placeholder="  &nbsp; &nbsp; &nbsp; Input Agent ID"
+                    placeholder="   Input Agent ID/Name"
                     required
+                    onChange={(e) => setSearch(e.target.value)}
                   />
                 </div>
 
@@ -194,67 +197,96 @@ function Leaderboard() {
                 )}
               </div>
             </div>
-          </div>
-        </section>
-        <div className={styles.Profile_container}>
-          {leaderboard.length > 0 && (
-            <>
-              {leaderboard.map((profile, index, index2) => (
-                <LeaderBoardDisplay
-                  key={profile.agent_id}
-                  person={profile}
-                  index={index}
-                  index2={index2}
-                  handleAgent={handleAgent}
-                  agent_id={profile.agent_id}
-                  rank={profile.rank}
-                  show={profile.str_agent_id}
-                />
-              ))}
-            </>
-          )}
-        </div>
-      </div>
+          </section>
 
-      <section className={styles.Tabular_Container}>
-        <div className={styles.Tabular_Content_Container}>
-          <div className={styles.Header_title}>
-            <p className={styles.Hide_for_mobile}>ID NUMBER</p>
-            <span className={styles.Hide_for_desktop}>ID</span>
-            <p className={styles.Hide_for_mobile}>No. of calls/week</p>
-            <span className={styles.Hide_for_desktop}>
-              <img src={CallIcon} className="" alt="profile1" />
-            </span>
+          <section className={styles.Tabular_Container}>
+            <div className={styles.Tabular_Content_Container}>
+              <div className={styles.Header_title}>
+                <p className={styles.Hide_for_mobile}>AGENT NAME</p>
+                <span className={styles.Hide_for_desktop}>ID</span>
+                <p className={styles.Hide_for_mobile}>No. of calls/week</p>
+                <span className={styles.Hide_for_desktop}>
+                  <img src={CallIcon} className="" alt="profile1" />
+                </span>
 
-            <p className={styles.Hide_for_mobile}>Total score </p>
-            <span className={styles.Hide_for_desktop}>Score/10</span>
+                <p className={styles.Hide_for_mobile}>Total score </p>
+                <span className={styles.Hide_for_desktop}>Score/10</span>
 
-            <p className={styles.Hide_for_mobile}>Rank </p>
-            <span className={styles.Hide_for_desktop}>
-              <img src={LeaderBoardIcon} className="" alt="profile1" />
-            </span>
-          </div>
-          <hr></hr>
-          {leaderboard.length > 0 ? (
-            <>
-              {otherAgent.map((profile) => (
-                <OtherAgentDisplay
-                  key={profile.agent_id}
-                  person={profile}
-                  handleAgent={handleAgent}
-                  agent_id={profile.agent_id}
-                  rank={profile.rank}
-                  show={profile.str_agent_id}
-                />
-              ))}
-            </>
-          ) : (
-            <div className={styles.empty_state}>
-              <h3>An overview of your agents performance shows here.</h3>
+                <p className={styles.Hide_for_mobile}>Rank </p>
+                <span className={styles.Hide_for_desktop}>
+                  <img src={LeaderBoardIcon} className="" alt="profile1" />
+                </span>
+              </div>
+              <hr></hr>
+              {leaderboard.length > 0 ? (
+                <>
+                  {otherAgent
+                    .filter((profile) => {
+                      return search.toLowerCase() === ""
+                        ? profile
+                        : profile.firstname.toLowerCase().includes(search) ||
+                            profile.str_agent_id
+                              .toLowerCase()
+                              .includes(search) ||
+                            profile.lastname.toLowerCase().includes(search);
+                    })
+                    .map((profile) => (
+                      <OtherAgentDisplay
+                        key={profile.agent_id}
+                        person={profile}
+                        handleAgent={handleAgent}
+                        agent_id={profile.agent_id}
+                        rank={profile.rank}
+                        show={profile.str_agent_id}
+                      />
+                    ))}
+                </>
+              ) : (
+                <div className={styles.empty_state}>
+                  <img src={notfoundImg} alt="not found" />
+                  <h3>Sorry, No Agent Record Found.</h3>
+                </div>
+              )}
+              {/* <div className={styles.Header_content}>
+              <div className={styles.Header_profile_container}>
+                <img src={ProfileName} className="" alt="profile1" />
+                <p className={styles.Agent_ID}>AG685500DE</p>
+              </div>
+              <p>24</p>
+              <p>5/10</p>
+              <p>5th</p>
             </div>
-          )}
+            <div className={styles.Header_content}>
+              <div className={styles.Header_profile_container}>
+                <img src={ProfileName} className="" alt="profile1" />
+                <p className={styles.Agent_ID}>AG685500DE</p>
+              </div>
+              <p>24</p>
+              <p>5/10</p>
+              <p>5th</p>
+            </div>
+            <div className={styles.Header_content}>
+              <div className={styles.Header_profile_container}>
+                <img src={ProfileName} className="" alt="profile1" />
+                <p className={styles.Agent_ID}>AG685500DE</p>
+              </div>
+              <p>24</p>
+              <p>5/10</p>
+              <p>5th</p>
+            </div>
+            <div className={styles.Header_content}>
+              <div className={styles.Header_profile_container}>
+                <img src={ProfileName} className="" alt="profile1" />
+                <p className={styles.Agent_ID}>AG685500DE</p>
+              </div>
+              <p>24</p>
+              <p>5/10</p>
+              <p>5th</p>
+            </div> */}
+            </div>
+          </section>
         </div>
-      </section>
+      </NewDesignSideBar>
     </>
   );
 }
