@@ -1,10 +1,4 @@
-import {
-  Route,
-  Routes,
-  createBrowserRouter,
-  createRoutesFromElements,
-  Outlet,
-} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.scss";
 import { RequireToken } from "./Auth";
 import About from "./pages/AboutUs";
@@ -57,6 +51,7 @@ import TermsOfService from "./pages/TermsOfService";
 // import TryProcessing from "./pages/TryForFree/tryProcessing";
 import TryResults from "./pages/TryForFree/tryResults";
 import UploadedRecordings from "./pages/UploadRecordings";
+import { UploadModal } from "./pages/UploadRecordingsModal";
 import Logout from "./pages/Logout";
 import EmailVerify from "./pages/VerificationEmail/EmailVerify";
 // import CheckMail from "./pages/CheckMail";
@@ -74,125 +69,110 @@ import ForgetPasswordNew from "./pages/ForgotPasswordNew/Index";
 import NewSetNewPassword from "./pages/NewSetNewPassword";
 import NewPasswordResetSuccessful from "./pages/NewPasswordResetSuccessful";
 import CompleteSignup from "./pages/NewSignup/CompleteSignup/CompleteSignup";
+
 import * as atatus from "atatus-spa";
 atatus.config("006cee2d85d74c12953a30f3e9b78569").install();
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route
-      path="/"
-      element={
-        <div>
-          <Outlet />
-        </div>
-      }
-    >
-      <Route path="/" element={<HomePageRedesign />} />
-      <Route path="/signup" element={<CompleteSignup />} />
-      <Route path="/login" element={<NewSignin />} />
-      <Route path="/check-mail" element={<CheckMail />} />
-      <Route path="/try" element={<TryForFree />} />
-      <Route path="/careers" element={<Careers />} />
-      <Route path="/privacy" element={<PrivacyPolicy />} />
-      <Route path="/services" element={<Services />} />
-      <Route path="/solutions" element={<Solutions />} />
-      <Route path="/about-us" element={<About />} />
-      <Route path="/terms" element={<TermsAndCondition />} />
-      <Route path="/terms-of-service" element={<TermsOfService />} />
-      <Route path="/faq" element={<FAQs />} />
-      <Route path="/help-support" element={<HelpSupport />} />
-      <Route path="/create-account" element={<Signup />} />
-      <Route path="/signin" element={<Signin />} />
-      <Route path="/verify-signup" element={<SignUpVerify />} />
-      <Route path="/support-team" element={<Support />} />
-      <Route path="/logout" element={<Logout />} />
-      <Route path="/emailverification/:token" element={<EmailVerify />} />
-      <Route path="*" element={<Error />} />
-      <Route path="/demos" element={<DummyPage someText="demo pages" />} />
-      <Route path="/blog" element={<Blogs />} />
-      <Route path="/blog/:id" element={<BlogPostPage />} />
-      <Route path="press" element={<Press />} />
-      <Route path="/partners" element={<PartnersPage />} />
-      <Route path="press-article" element={<PressArticle />} />
-      <Route path="pricing" element={<Pricing />} />
-      <Route path="/events" element={<Events />} />
-      <Route path="/dashboard" element={<DashboardOverview />} />
-      <Route path="/leaderboard" element={<LeaderboardPage />} />
-      <Route path="/homeB" element={<HomePageB />} />
-      <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
-      <Route path="/agent-report/:agentId" element={<AgentReport />} />
-      <Route path="/reviews" element={<Reviews />} />
-      {/* <Route path="/try-processing" element={<TryProcessing />} /> */}
-      <Route path="/try-results/:transcribeId" element={<TryResults />} />
-      <Route
-        path="settings/personal-information"
-        element={<PersonalInformation />}
-      />
-      <Route path="/reviews" element={<Reviews />} />
-      <Route path="/blog" element={<Blogs />} />
-      <Route path="/blog/:id" element={<BlogPostPage />} />
-      <Route path="press" element={<Press />} />
-      <Route path="/partners" element={<PartnersPage />} />
-      <Route path="press-article" element={<PressArticle />} />
-      <Route path="pricing" element={<Pricing />} />
-      <Route path="/help-support-general" element={<General />} />
-      <Route path="/promoted-articles" element={<PromotedArticles />} />
-      <Route path="/try-results" element={<TryResults />} />
-      <Route path="/sales-team" element={<LandingPageSalesTeam />} />
+function App() {
+  return (
+    <>
+      <Routes>
+        {/* access without sign in */}
+        <Route path="/" element={<HomePageRedesign />} />
+        <Route path="/signup" element={<CreateAccount />} />
+        <Route path="/complete-signup" element={<CompleteSignup />} />
+        <Route path="/login" element={<FinalSignIn />} />
+        <Route path="/check-mail" element={<CheckMail />} />
+        <Route path="/try" element={<TryForFree />} />
+        <Route path="/careers" element={<Careers />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/solutions" element={<Solutions />} />
+        <Route path="/about-us" element={<About />} />
+        <Route path="/terms" element={<TermsAndCondition />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/faq" element={<FAQs />} />
+        <Route path="/help-support" element={<HelpSupport />} />
+        <Route path="/create-account" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/verify-signup" element={<SignUpVerify />} />
+        <Route path="/support-team" element={<Support />} />
+        <Route path="/logout" element={<Logout />} />
+        <Route path="/coming-soon" element={<ComingSoon />} />
 
-      <Route path="checkout-startup" element={<StartUp />} />
-      <Route path="checkout-growing" element={<Growing />} />
-      <Route path="checkout-enterprise" element={<Enterprise />} />
+        <Route path="/emailverification/:token" element={<EmailVerify />} />
+        <Route path="/try-results" element={<TryResults />} />
 
-      {/* path for forgot/reset password */}
-      <Route path="/forget-password" element={<ForgetPasswordNew />} />
-      <Route path="/set-new-password" element={<NewSetNewPassword />} />
-      <Route
-        path="/pw-reset-successful"
-        element={<NewPasswordResetSuccessful />}
-      />
-
-      <Route path="/dashboard" element={<RequireToken />}>
-        <Route path="/dashboard/account" element={<Account />} />
+        <Route path="/sales-team" element={<LandingPageSalesTeam />} />
+        <Route path="*" element={<Error />} />
+        <Route path="/demos" element={<DummyPage someText="demo pages" />} />
+        <Route path="/blog" element={<Blogs />} />
+        <Route path="/blog/:id" element={<BlogPostPage />} />
+        <Route path="press" element={<Press />} />
+        <Route path="/partners" element={<PartnersPage />} />
+        <Route path="press-article" element={<PressArticle />} />
+        <Route path="pricing" element={<Pricing />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/try-results/:transcribeId" element={<TryResults />} />
         <Route
-          path="/dashboard/uploaded-recordings"
-          element={<UploadedRecordings />}
-        />
-        <Route
-          path="/dashboard/agent-report/:Agent_id"
-          element={<AgentReport />}
-        />
-        <Route
-          path="/dashboard/sentiment-analysis/:AudioId"
-          element={<SentimentAnalysis />}
-        />
-        <Route
-          path="/dashboard/transcriptions/:userId"
-          element={<TranscribePage />}
-        />
-        <Route path="/dashboard/history" element={<History />} />
-        <Route path="/dashboard/" element={<DashboardOverview />} />
-        <Route path="/dashboard/leaderboard" element={<LeaderboardPage />} />
-        <Route
-          path="/dashboard/agent-report/:agentId"
-          element={<AgentReport />}
-        />
-        <Route path="/dashboard/settings" element={<SettingsIndex />} />
-        <Route
-          path="/dashboard/settings/account-security"
-          element={<AccountSettings />}
-        />
-        <Route
-          path="/dashboard/settings/notifications"
-          element={<NotificationSettings />}
-        />
-        <Route
-          path="/dashboard/settings/personal-information"
+          path="settings/personal-information"
           element={<PersonalInformation />}
         />
-      </Route>
-    </Route>
-  )
-);
+        <Route path="/reviews" element={<Reviews />} />
+        <Route path="/blog" element={<Blogs />} />
+        <Route path="/blog/:id" element={<BlogPostPage />} />
+        <Route path="press" element={<Press />} />
+        <Route path="/partners" element={<PartnersPage />} />
+        <Route path="press-article" element={<PressArticle />} />
+        <Route path="pricing" element={<Pricing />} />
+        <Route path="/help-support-general" element={<General />} />
+        <Route path="/promoted-articles" element={<PromotedArticles />}></Route>
 
-export default router;
+        {/* cant access without signin */}
+
+        <Route element={<RequireToken />}>
+          <Route path="/account" element={<Account />} />
+          <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
+          <Route path="/agent-report/:Agent_id" element={<AgentReport />} />
+          <Route path="/upload-new-file" element={<UploadModal />} />
+          <Route
+            path="/sentiment-analysis/:AudioId"
+            element={<SentimentAnalysis />}
+          />
+          <Route path="/transcriptions/:userId" element={<TranscribePage />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/dashboard" element={<DashboardOverview />} />
+          <Route path="/leaderboard" element={<LeaderboardPage />} />
+          <Route path="/homeB" element={<HomePageB />} />
+          <Route path="/agent-report/:agentId" element={<AgentReport />} />
+          <Route path="/settings" element={<SettingsIndex />} />
+          <Route
+            path="settings/account-security"
+            element={<AccountSettings />}
+          />
+          <Route
+            path="settings/notifications"
+            element={<NotificationSettings />}
+          />
+          <Route
+            path="settings/personal-information"
+            element={<PersonalInformation />}
+          />
+        </Route>
+        <Route path="checkout-startup" element={<StartUp />} />
+        <Route path="checkout-growing" element={<Growing />} />
+        <Route path="checkout-enterprise" element={<Enterprise />} />
+
+        {/* path for forgot/reset password */}
+        <Route path="/forget-password" element={<ForgetPasswordNew />} />
+        <Route path="/set-new-password" element={<NewSetNewPassword />} />
+        <Route
+          path="/pw-reset-successful"
+          element={<NewPasswordResetSuccessful />}
+        />
+      </Routes>
+    </>
+  );
+}
+
+export default App;

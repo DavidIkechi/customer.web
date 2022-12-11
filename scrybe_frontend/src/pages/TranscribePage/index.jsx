@@ -17,7 +17,13 @@ function TranscribePage() {
 
   return (
     <div className={styles.TranscribePage}>
-      <Transcribe />
+      <NewDesignSideBar
+        toggleSidebar={toggleSidebar}
+        needSearchMobile="needSearchMobile"
+        closeSidebar={() => setToggleSidebar(!toggleSidebar)}
+      >
+        <Transcribe />
+      </NewDesignSideBar>
     </div>
   );
 }

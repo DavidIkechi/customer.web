@@ -65,101 +65,73 @@ export default function History() {
 
   return (
     <div className={styles.history}>
-      <HistoryContext.Provider
-        value={{ setIsGrid, setIsList, currHistoryData }}
+      {show && <SideBarMobile ref={refed} />}
+
+      {width >= 790 ? (
+        <div className={styles.history__sidebar}>
+          <SideBar ref={ref} />
+        </div>
+      ) : (
+        ""
+      )}
+      <div
+        className={
+          btnSideClick
+            ? `${styles.history__content}`
+            : `${styles.small__margin}`
+        }
       >
-        <TitleSection />
-        {isGrid && (
-          <div className={styles.history__grids}>
-            {width >= 768 ? (
-              <>
-                {currHistoryData.map((item, i) => (
-                  <GridView
-                    title={item.name}
-                    name={item.agent}
-                    review={item.analysis}
-                    date={item.date}
-                    color={
-                      item.analysis.toLowerCase() === "positive"
-                        ? "#dbeabb"
-                        : item.analysis.toLowerCase() === "negative"
-                        ? "#ffc2cb"
-                        : "#ececec"
-                    }
-                    key={i + 1}
-                  />
-                ))}
-              </>
-            ) : (
-              <>
-                {currHistoryData.map((item, i) => (
-                  <GridView
-                    title={item.name}
-                    name={item.agent}
-                    review={item.analysis}
-                    date={item.date}
-                    key={i.toLocaleString()}
-                    color={
-                      item.analysis.toLowerCase() === "positive"
-                        ? "#dbeabb"
-                        : item.analysis.toLowerCase() === "negative"
-                        ? "#ffc2cb"
-                        : "#ececec"
-                    }
-                  />
-                ))}
-              </>
-            )}
-          </div>
-        )}
-        <div className={styles.history__list}>
-          {isList && (
+        <div className={styles.history__listHeader}>
+          {width >= 790 ? (
             <>
-              {width >= 790 ? (
+              <div className={styles.inputWithIcon}>
+                <input
+                  type="text"
+                  name=""
+                  id="search-bar"
+                  placeholder="Search"
+                />
+              </div>
+              <div className={styles.upload_profile_container}>
+                <img src={profileUpload} className="" alt="hero img" />
+                <button className={styles.Upload_button}>
+                  <img src={uploadIcon} alt="" />
+                  upload
+                </button>
+              </div>
+            </>
+          ) : (
+            <div className={styles.upload__md}>
+              <img
+                src={buggerMenu}
+                className={styles.upload__bugger}
+                alt="icon"
+                ref={ref}
+                onClick={handleClick}
+              />
+              <div>
+                <button className={styles.uploadBtn__md}>
+                  <img src={uploadIcon} alt="" />
+                  upload
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+        <HistoryContext.Provider
+          value={{ setIsGrid, setIsList, currHistoryData }}
+        >
+          <TitleSection />
+          {isGrid && (
+            <div className={styles.history__grids}>
+              {width >= 768 ? (
                 <>
-                  <div>
-                    <div className={styles.list__header}>
-                      <div className={styles.header__title}>
-                        <p>File Name</p>
-                        <p>Agent</p>
-                        <p>Sentiment Result</p>
-                        <p>Date Update</p>
-                        <p>Length</p>
-                      </div>
-                    </div>
-                    {currHistoryData.map((item, i) => (
-                      <ListView
-                        title={item.name}
-                        name={item.agent}
-                        review={item.analysis}
-                        date={`${item.date}, ${item.time}`}
-                        length={item.lenght}
-                        color={
-                          item.analysis.toLowerCase() === "positive"
-                            ? "#dbeabb"
-                            : item.analysis.toLowerCase() === "negative"
-                            ? "#ffc2cb"
-                            : "#ececec"
-                        }
-                        key={i + 1}
-                      />
-                    ))}
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className={styles.list__header}>
-                    <div className={styles.header__title}>
-                      <p>File Name</p>
-                      <p>Agent</p>
-                      <p>Sentiment Result</p>
-                    </div>
-                  </div>
                   {currHistoryData.map((item, i) => (
-                    <ListView
+                    <GridView
                       title={item.name}
                       name={item.agent}
                       review={item.analysis}
+                      date={item.date}
                       color={
                         item.analysis.toLowerCase() === "positive"
                           ? "#dbeabb"
@@ -171,19 +143,101 @@ export default function History() {
                     />
                   ))}
                 </>
+              ) : (
+                <>
+                  {currHistoryData.map((item, i) => (
+                    <GridView
+                      title={item.name}
+                      name={item.agent}
+                      review={item.analysis}
+                      date={item.date}
+                      key={i.toLocaleString()}
+                      color={
+                        item.analysis.toLowerCase() === "positive"
+                          ? "#dbeabb"
+                          : item.analysis.toLowerCase() === "negative"
+                          ? "#ffc2cb"
+                          : "#ececec"
+                      }
+                    />
+                  ))}
+                </>
               )}
-            </>
+            </div>
           )}
+          <div className={styles.history__list}>
+            {isList && (
+              <>
+                {width >= 790 ? (
+                  <>
+                    <div>
+                      <div className={styles.list__header}>
+                        <div className={styles.header__title}>
+                          <p>File Name</p>
+                          <p>Agent</p>
+                          <p>Sentiment Result</p>
+                          <p>Date Update</p>
+                          <p>Length</p>
+                        </div>
+                      </div>
+                      {currHistoryData.map((item, i) => (
+                        <ListView
+                          title={item.name}
+                          name={item.agent}
+                          review={item.analysis}
+                          date={`${item.date}, ${item.time}`}
+                          length={item.lenght}
+                          color={
+                            item.analysis.toLowerCase() === "positive"
+                              ? "#dbeabb"
+                              : item.analysis.toLowerCase() === "negative"
+                              ? "#ffc2cb"
+                              : "#ececec"
+                          }
+                          key={i + 1}
+                        />
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className={styles.list__header}>
+                      <div className={styles.header__title}>
+                        <p>File Name</p>
+                        <p>Agent</p>
+                        <p>Sentiment Result</p>
+                      </div>
+                    </div>
+                    {currHistoryData.map((item, i) => (
+                      <ListView
+                        title={item.name}
+                        name={item.agent}
+                        review={item.analysis}
+                        color={
+                          item.analysis.toLowerCase() === "positive"
+                            ? "#dbeabb"
+                            : item.analysis.toLowerCase() === "negative"
+                            ? "#ffc2cb"
+                            : "#ececec"
+                        }
+                        key={i + 1}
+                      />
+                    ))}
+                  </>
+                )}
+              </>
+            )}
+          </div>
+        </HistoryContext.Provider>
+        <div className={styles.history__pagination}>
+          <Pagination
+            className="pagination-bar"
+            currentPage={currentPage}
+            totalCount={data.length}
+            pageSize={PageSize}
+            onPageChange={(page) => setCurrentPage(page)}
+          />
         </div>
-      </HistoryContext.Provider>
-      <div className={styles.history__pagination}>
-        <Pagination
-          className="pagination-bar"
-          currentPage={currentPage}
-          totalCount={data.length}
-          pageSize={PageSize}
-          onPageChange={(page) => setCurrentPage(page)}
-        />
       </div>
     </div>
   );

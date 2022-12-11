@@ -89,7 +89,11 @@ function Account() {
   return (
     <>
       <SnackBar response={response} setResponse={setResponse} />
-      <>
+      <NewDesignSidebar
+        toggleSidebar={toggleSidebar}
+        needSearchMobile="needSearchMobile"
+        closeSidebar={() => setToggleSidebar(!toggleSidebar)}
+      >
         <div className={accountStyles.account__container}>
           <div
             className={
@@ -192,7 +196,11 @@ function Account() {
               </form>
             </div>
           </div>
-
+          <TopNav
+            openSidebar={() => {
+              setToggleSidebar(!toggleSidebar);
+            }}
+          />
           <div className={accountStyles.account__div}>
             <section className={accountStyles.mobile_head__section}>
               <button type="button" onClick={() => navigate(-1)}>
@@ -231,7 +239,7 @@ function Account() {
                   </div>
                 </div>
                 <div className={accountStyles.profile__settings_btn}>
-                  <Link to="/dashboard/settings">Edit Profile</Link>
+                  <Link to="/settings">Edit Profile</Link>
                 </div>
               </section>
               <section className={accountStyles.body__section}>
@@ -304,7 +312,7 @@ function Account() {
             </div>
           </div>
         </div>
-      </>
+      </NewDesignSidebar>
     </>
   );
 }

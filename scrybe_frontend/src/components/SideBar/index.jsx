@@ -79,7 +79,7 @@ function SideBar({
             <p>Overview</p>
           </NavLink>
           <NavLink
-            to="dashboard/transcriptions/:userId"
+            to="/transcriptions/:userId"
             className={({ isActive }) =>
               isActive
                 ? `${styles.active} ${styles.navLink} ${
@@ -109,7 +109,7 @@ function SideBar({
             <p>Insight</p>
           </NavLink> */}
           <NavLink
-            to="dashboard/leaderboard"
+            to="/leaderboard"
             className={({ isActive }) =>
               isActive
                 ? `${styles.active} ${styles.navLink} ${
@@ -139,7 +139,7 @@ function SideBar({
             <p>Monthly Analysis</p>
           </NavLink> */}
           <NavLink
-            to="dashboard/settings"
+            to="/settings"
             className={({ isActive }) =>
               isActive
                 ? `${styles.active} ${styles.navLink} ${
