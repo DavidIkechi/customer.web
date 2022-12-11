@@ -24,7 +24,6 @@ const colorMap = {
 
 function Leaderboard() {
   const [search, setSearch] = useState("");
-  console.log(search);
   const [toggleSidebar, setToggleSidebar] = useState(false);
 
   const [leaderboard, setLeaderboard] = useState([]);
@@ -75,17 +74,6 @@ function Leaderboard() {
     setAgentShow(show);
     setControll(true);
   };
-
-  // const agentStyle = {
-  //   position: "absolute",
-  //   zIndex: 9999,
-  //   width: "60%",
-  //   margin: "auto",
-  //   top: "0",
-  //   left: "0",
-  //   border: "0",
-  //   borderRadius: "20px",
-  // };
 
   // // implemented by rambey
 
@@ -188,7 +176,7 @@ function Leaderboard() {
                           index={index}
                           index2={index2}
                           handleAgent={handleAgent}
-                          agent_id={profile}
+                          agent_id={profile.agent_id}
                           rank={profile.rank}
                           show={profile.str_agent_id}
                         />
