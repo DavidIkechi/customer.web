@@ -1,6 +1,7 @@
 import { useState } from "react";
 import NewDesignSideBar from "../../components/NewDesignSidebar";
 import TopNav from "../../components/TopNav";
+import PersonalInformation from "./components/PersonalInformation";
 import SubPageSelector from "./components/SubPageSelector";
 import UserCard from "./components/UserCard";
 import styles from "./SettingsRedesigned.module.scss";
@@ -21,7 +22,17 @@ export default function Settings() {
             <UserCard />
             <SubPageSelector />
           </div>
-          <div className={styles.subpage__container}></div>
+          <div className={styles.subpage__container}>
+            <div className={styles.plan}>
+              <div className={styles.current__plan}>
+                You are currently using the limited free plan.{" "}
+              </div>
+              <div className={styles.advertise__plan}>
+                Go unlimited with Pro version
+              </div>
+            </div>
+            <PersonalInformation />
+          </div>
         </div>
         <button className={styles.delete__button}>Delete Account</button>
       </div>

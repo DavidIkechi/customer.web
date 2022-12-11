@@ -4,9 +4,11 @@
   width: 100%;
   padding: pix-rem(32);
   color: white;
+  background-color: #002d6b;
   background-image: url("./assets/images/Profile_bg.png");
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: 100% 100%;
   border-radius: pix-rem(8);
   overflow: hidden;
   display: flex;
@@ -15,7 +17,7 @@
   margin-bottom: pix-rem(24);
 
   .user__image {
-    flex: 0.2;
+    flex: 0.2 0 60px;
     img {
       object-fit: contain;
       width: 100%;
@@ -27,6 +29,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     gap: 0.5rem;
 
     .user__name {
@@ -34,10 +37,11 @@
       font-weight: 700;
     }
 
-    .user__role,
-    .user__email {
+    .role,
+    .email {
       font-weight: 300;
-      font-size: pix-rem(14);
+      // font-size: pix-rem(14);
+      // color: black;
     }
   }
 }

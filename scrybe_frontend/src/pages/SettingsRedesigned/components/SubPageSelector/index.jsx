@@ -2,7 +2,6 @@ import styles from "./SubPages.module.scss";
 import rightChevron from "./images/right_chevron.png";
 
 export default function SubPageSelector() {
-  console.log(styles);
   const cardDetails = [
     {
       path: "personal-information",
@@ -26,7 +25,10 @@ export default function SubPageSelector() {
     <div className={styles.selector}>
       {cardDetails.map((card, index) => {
         return (
-          <div className={styles.card__option__container}>
+          <div
+            className={styles.card__option__container}
+            key={index + Math.random()}
+          >
             {index === 0 ? (
               <input
                 type="radio"

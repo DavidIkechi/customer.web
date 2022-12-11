@@ -8,10 +8,14 @@
     display: flex;
     gap: pix-rem(80);
 
+    @include media(1350px) {
+      gap: pix-rem(20);
+    }
+
     .subpage__selector__container {
       display: flex;
       flex-direction: column;
-      flex: 1 0 200px;
+      flex: 1 0 300px;
 
       .title {
         font-size: pix-rem(32);
@@ -22,10 +26,29 @@
     }
     .subpage__container {
       flex: 1 1 500px;
-      background-color: blue;
 
       @include media(768px) {
         display: none;
+      }
+
+      .plan {
+        font-size: pix-rem(14);
+        font-weight: 300;
+        padding: pix-rem(12) pix-rem(24);
+        width: 100%;
+        text-align: center;
+        border-radius: pix-rem(64);
+        background-color: #fffdeb;
+        margin-bottom: pix-rem(20);
+
+        * {
+          display: inline;
+        }
+
+        .advertise__plan {
+          font-weight: 600;
+          color: #006cff;
+        }
       }
     }
   }
