@@ -187,7 +187,10 @@ const TableData = ({ searchKeyword }) => {
             Estimated Time Left:{" "}
             <strong className={styles.est_time_left_num}>{timeLeft}</strong> Min
           </h2> */}
-          <div className={styles.UploadedNavbarRec_btnwrap}>
+          <div
+            className={styles.UploadedNavbarRec_btnwrap}
+            onClick={() => setModalOpen(true)}
+          >
             <img src={uploadBtn_icon} alt="" />
             <button className={styles.UploadedNavbarRec_btn}>Upload</button>
           </div>
@@ -200,9 +203,9 @@ const TableData = ({ searchKeyword }) => {
             <>
               {sessionExpired ? (
                 <h1 className={styles.expired}>
-                  <small>Your Session has expired, please signin again</small>
+                  <small>Your Session has expired, please login again</small>
                   <p>
-                    <Link to="/signin">Signin</Link>
+                    <Link to="/login">Login</Link>
                   </p>
                 </h1>
               ) : (
