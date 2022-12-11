@@ -55,7 +55,7 @@ import { UploadModal } from "./pages/UploadRecordingsModal";
 import Logout from "./pages/Logout";
 import EmailVerify from "./pages/VerificationEmail/EmailVerify";
 // import CheckMail from "./pages/CheckMail";
-import NewSignin from "./pages/NewSignin/NewSignin";
+// import NewSignin from "./pages/NewSignin/NewSignin";
 // import CreateAccount from "./pages/NewSignup/CreateAccount";
 import CreateAccount from "./pages/NewSignup/CreateAccount";
 import StartUp from "./pages/Checkout/Startup";
@@ -83,7 +83,7 @@ function App() {
         <Route path="/" element={<HomePageRedesign />} />
         <Route path="/signup" element={<CreateAccount />} />
         <Route path="/complete-signup" element={<CompleteSignup />} />
-        <Route path="/login" element={<NewSignin />} />
+        <Route path="/login" element={<FinalSignIn />} />
         <Route path="/check-mail" element={<CheckMail />} />
         <Route path="/try" element={<TryForFree />} />
         <Route path="/careers" element={<Careers />} />
