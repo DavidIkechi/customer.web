@@ -46,7 +46,6 @@ const useAgentReport = (props) => {
         .then((res) => {
           setAgentRecentReports(res.data.Agent_Performance_Report);
         });
-      console.log(props.controll);
     }
   }, [props]);
 
