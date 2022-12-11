@@ -1,0 +1,12 @@
+@import "../../../../functions.scss";
+
+.selector {
+  background-color: green;
+  width: 100%;
+
+  .card__option {
+    background-color: #e6f6ff;
+    padding: pix-rem(24);
+    height: 100px;
+  }
+}

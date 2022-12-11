@@ -1,0 +1,43 @@
+@import "../../../../functions.scss";
+
+.user__info {
+  width: 100%;
+  padding: pix-rem(32);
+  color: white;
+  background-image: url("./assets/images/Profile_bg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: pix-rem(8);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: pix-rem(24);
+
+  .user__image {
+    flex: 0.2;
+    img {
+      object-fit: contain;
+      width: 100%;
+    }
+  }
+
+  .user__info__text {
+    flex: 0.8;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .user__name {
+      font-size: pix-rem(20);
+      font-weight: 700;
+    }
+
+    .user__role,
+    .user__email {
+      font-weight: 300;
+      font-size: pix-rem(14);
+    }
+  }
+}

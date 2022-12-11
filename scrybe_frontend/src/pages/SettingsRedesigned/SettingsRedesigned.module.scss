@@ -1,0 +1,32 @@
+@import "../../functions.scss";
+
+.page__container {
+  width: 100%;
+
+  .inner__page__container {
+    padding: 1rem;
+    display: flex;
+    gap: pix-rem(80);
+
+    .subpage__selector__container {
+      display: flex;
+      flex-direction: column;
+      flex: 1 0 200px;
+
+      .title {
+        font-size: pix-rem(32);
+        font-weight: 600;
+        color: #3f3f3f;
+        margin-bottom: pix-rem(24);
+      }
+    }
+    .subpage__container {
+      flex: 1 1 500px;
+      background-color: blue;
+
+      @include media(768px) {
+        display: none;
+      }
+    }
+  }
+}
