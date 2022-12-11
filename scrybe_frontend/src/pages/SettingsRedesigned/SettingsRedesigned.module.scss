@@ -29,4 +29,16 @@
       }
     }
   }
+
+  .delete__button {
+    padding: pix-rem(16) pix-rem(32);
+    background-color: #de3d31;
+    color: white;
+    font-size: pix-rem(16);
+    font-weight: 500;
+    border: none;
+    border-radius: pix-rem(4);
+    margin-left: 1rem;
+    cursor: pointer;
+  }
 }

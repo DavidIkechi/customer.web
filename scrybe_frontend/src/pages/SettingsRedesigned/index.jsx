@@ -23,6 +23,7 @@ export default function Settings() {
           </div>
           <div className={styles.subpage__container}></div>
         </div>
+        <button className={styles.delete__button}>Delete Account</button>
       </div>
     </NewDesignSideBar>
   );

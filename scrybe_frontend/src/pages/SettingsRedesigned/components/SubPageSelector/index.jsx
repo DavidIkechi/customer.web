@@ -5,8 +5,8 @@ export default function SubPageSelector() {
   console.log(styles);
   const cardDetails = [
     {
-      path: "account-information",
-      title: "Account information",
+      path: "personal-information",
+      title: "Personal information",
       description:
         "Change/Verify your account details and set your profile picture",
     },
