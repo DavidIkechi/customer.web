@@ -1,4 +1,5 @@
-import styles from "./SubPageSelector.module.scss";
+import styles from "./SubPages.module.scss";
+import rightChevron from "./images/right_chevron.png";
 
 export default function SubPageSelector() {
   console.log(styles);
@@ -6,7 +7,8 @@ export default function SubPageSelector() {
     {
       path: "account-information",
       title: "Account information",
-      description: "Change your account details and set your profile picture",
+      description:
+        "Change/Verify your account details and set your profile picture",
     },
     {
       path: "account-security",
@@ -22,7 +24,29 @@ export default function SubPageSelector() {
   ];
   return (
     <div className={styles.selector}>
-      <div className={styles.card__option}>sd</div>
+      {cardDetails.map((card, index) => {
+        return (
+          <div className={styles.card__option__container}>
+            {index === 0 ? (
+              <input
+                type="radio"
+                name="subpage"
+                value={card.path}
+                defaultChecked
+              />
+            ) : (
+              <input type="radio" name="subpage" value={card.path} />
+            )}
+            <div className={styles.card__option}>
+              <div className={styles.card__title}>
+                {card.title}
+                <img src={rightChevron} alt="chevron right" />
+              </div>
+              <div className={styles.card__description}>{card.description}</div>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

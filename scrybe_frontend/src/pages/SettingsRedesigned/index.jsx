@@ -1,7 +1,7 @@
 import { useState } from "react";
 import NewDesignSideBar from "../../components/NewDesignSidebar";
 import TopNav from "../../components/TopNav";
-import SubPageSelector from "./components/SubpageSelector";
+import SubPageSelector from "./components/SubPageSelector";
 import UserCard from "./components/UserCard";
 import styles from "./SettingsRedesigned.module.scss";
 
