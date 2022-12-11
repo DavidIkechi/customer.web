@@ -8,10 +8,11 @@
 
   > *:last-child {
     overflow-y: scroll;
+    // height: 100vh;
   }
 
   .generalSidebar_header {
-    width: 280px;
+    width: 280px !important;
     height: 100vh;
     border-right: 0.5px solid #dfdede;
     background-color: #fff;

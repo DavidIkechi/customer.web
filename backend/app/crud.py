@@ -348,7 +348,7 @@ def refresh_api_key(db:Session, user_id: int):
     return key
     
 def get_queued_jobs(db: Session):
-    return db.query(models.Job).filter(models.Job.job_status != "completed").all()
+    return db.query(models.Job).filter(models.Job.job_status != "completed").order_by(models.Job.audio_id.desc()).all()
 
 def analyse_and_store_audio(db:Session, job_id, user_id):
     Job = db.query(models.Audio).filter(models.Audio.job_id == job_id).first()
