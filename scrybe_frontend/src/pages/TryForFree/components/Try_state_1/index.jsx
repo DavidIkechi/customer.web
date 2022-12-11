@@ -2,7 +2,7 @@
 // TODO disable eslint warning for this todo ;)
 import React, { useState, useRef } from "react";
 import axios from "axios";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "./try_state_1.module.scss";
 // import RecordingLogo from "../../assets/Recording-logo.png";
 import { useEffect } from "react";
@@ -14,7 +14,7 @@ import LastSection from "../LastSection/index";
 export default function TryState1() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [transcribeId, setTranscribeId] = useState("");
-  // const [hasError, setError] = useState(true);
+  const [hasError, setError] = useState(false);
   // const [display, setDisplay] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
@@ -49,6 +49,7 @@ export default function TryState1() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setProcessing(true);
+    setError(true);
     const formData = new FormData();
     formData.append("file", selectedFile);
     try {
@@ -59,13 +60,28 @@ export default function TryState1() {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setUploadSuccess(true);
+      setError(false);
       setTranscribeId(response.data.transcript_id);
     } catch (error) {
-      console.log(error);
+      // console.log(error.message);
+      console.log(error.response.status);
+      // console.log(error);
+      setError(true);
+      setProcessing(false);
       setUploadSuccess(false);
     }
   };
   if (processing) return <Processing />;
+  if (hasError)
+    return (
+      <div className={styles.error}>
+        Server error. Please click{" "}
+        <Link to="/" className={styles.link}>
+          here
+        </Link>{" "}
+        to go to Homepage or refresh the page and try again
+      </div>
+    );
 
   if (selectedFile)
     return (
