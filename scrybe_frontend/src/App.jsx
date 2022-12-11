@@ -71,9 +71,8 @@ import NewSetNewPassword from "./pages/NewSetNewPassword";
 import NewPasswordResetSuccessful from "./pages/NewPasswordResetSuccessful";
 import CompleteSignup from "./pages/NewSignup/CompleteSignup/CompleteSignup";
 
-import * as atatus from "atatus-js";
-
-atatus.config("e7b42895d6f546a2b1f86414988a8afa").install();
+import * as atatus from "atatus-spa";
+atatus.config("006cee2d85d74c12953a30f3e9b78569").install();
 
 function App() {
   return (
@@ -97,26 +96,15 @@ function App() {
         <Route path="/help-support" element={<HelpSupport />} />
         <Route path="/create-account" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
-        {/* <Route path="/reset-successful" element={<Successful />} /> */}
         <Route path="/verify-signup" element={<SignUpVerify />} />
         <Route path="/support-team" element={<Support />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/coming-soon" element={<ComingSoon />} />
 
-        {/* <Route
-          path="/set-new-password?token=:token"
-          element={<SetNewPassword />}
-        /> */}
         <Route path="/emailverification/:token" element={<EmailVerify />} />
-        {/* <Route path="/try-processing" element={<TryProcessing />} /> */}
         <Route path="/try-results" element={<TryResults />} />
-        {/* <Route path="/forget-password" element={<ForgetPassword />} /> */}
 
         <Route path="/sales-team" element={<LandingPageSalesTeam />} />
-        {/* <Route
-          path="/pw-reset-successful"
-          element={<PasswordResetSuccessful />}
-        /> */}
         <Route path="*" element={<Error />} />
         <Route path="/demos" element={<DummyPage someText="demo pages" />} />
         <Route path="/blog" element={<Blogs />} />
@@ -126,13 +114,6 @@ function App() {
         <Route path="press-article" element={<PressArticle />} />
         <Route path="pricing" element={<Pricing />} />
         <Route path="/events" element={<Events />} />
-        {/* <Route path="/dashboard" element={<DashboardOverview />} />
-        <Route path="/leaderboard" element={<LeaderboardPage />} /> */}
-        {/* <Route path="/homeB" element={<HomePageB />} /> */}
-        {/* <Route path="/uploaded-recordings" element={<UploadedRecordings />} /> */}
-        {/* <Route path="/agent-report/:agentId" element={<AgentReport />} /> */}
-        {/* <Route path="/reviews" element={<Reviews />} /> */}
-        {/* <Route path="/try-processing" element={<TryProcessing />} /> */}
         <Route path="/try-results/:transcribeId" element={<TryResults />} />
         <Route
           path="settings/personal-information"

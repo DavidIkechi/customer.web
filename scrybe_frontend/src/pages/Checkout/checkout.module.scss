@@ -3,6 +3,7 @@
 .checkout {
   background-color: #f9fdff;
   min-height: 95vh;
+
   h2 {
     font-size: pix-rem(20);
     line-height: pix-rem(24);
@@ -15,6 +16,7 @@
 .checkout .container {
   width: min(100%, 75.25rem);
   margin-inline: auto;
+  margin-bottom: 4rem;
 }
 
 .checkout .header .heroH1 {
@@ -61,9 +63,6 @@
   @include media(1220px) {
     flex-direction: column-reverse;
     margin-top: 3rem;
-    div {
-      margin-top: 2rem;
-    }
   }
 }
 .formCardDetails {
@@ -219,6 +218,10 @@
     margin: 10px 0;
     box-shadow: 0 1px 2px #10182820;
     background-color: transparent;
+
+    &:focus {
+      border: 1px solid #1570ef;
+    }
   }
 
   .chkContainer {
@@ -260,6 +263,27 @@
   border-radius: 3px;
 }
 
+.chkContainer input:checked ~ .chkbox {
+  border: 2px solid #1570ef;
+}
+
+.chkbox::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  height: pix-rem(16);
+  width: pix-rem(10);
+  border: solid #1570ef;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+  border-radius: 2px;
+  display: none;
+}
+
+.chkContainer input:checked ~ .chkbox::after {
+  display: block;
+}
+
 .checkboxsection {
   padding-block: 2rem;
 }
@@ -279,6 +303,7 @@
     line-height: pix-rem(24);
     font-weight: 300;
     margin-block-end: pix-rem(10);
+
     span {
       color: #006cff;
       text-decoration: underline;
@@ -296,6 +321,10 @@
 
 .cardTypes {
   display: flex;
+}
+
+.paymentTypes {
+  margin-top: 2rem;
 }
 
 .orderSummary {

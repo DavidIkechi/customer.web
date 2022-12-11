@@ -5,6 +5,7 @@ import ApiService from "../../helpers/axioshelp/apis/index";
 import { useState, useEffect, useRef } from "react";
 import SearchIcon from "./images/search-icon.png";
 import ProfileName from "./images/profile-circle.png";
+import notfoundImg from "./images/notfound.svg";
 import CallIcon from "./images/Call-icon.png";
 import LeaderBoardIcon from "./images/leaderboard-icon.png";
 import AgentReport from "../AgentReport";
@@ -22,6 +23,8 @@ const colorMap = {
 };
 
 function Leaderboard() {
+  const [search, setSearch] = useState("");
+  console.log(search);
   const [toggleSidebar, setToggleSidebar] = useState(false);
 
   const [leaderboard, setLeaderboard] = useState([]);
@@ -144,8 +147,9 @@ function Leaderboard() {
                     type="text"
                     name=""
                     id="search-bar"
-                    placeholder="  &nbsp; &nbsp; &nbsp; Input Agent ID"
+                    placeholder="   Input Agent ID/Name"
                     required
+                    onChange={(e) => setSearch(e.target.value)}
                   />
                 </div>
 
@@ -167,18 +171,28 @@ function Leaderboard() {
               <div className={styles.Profile_container}>
                 {leaderboard.length > 0 && (
                   <>
-                    {leaderboard.map((profile, index, index2) => (
-                      <LeaderBoardDisplay
-                        key={profile.agent_id}
-                        person={profile}
-                        index={index}
-                        index2={index2}
-                        handleAgent={handleAgent}
-                        agent_id={profile.agent_id}
-                        rank={profile.rank}
-                        show={profile.str_agent_id}
-                      />
-                    ))}
+                    {leaderboard
+                      .filter((profile) => {
+                        return search.toLowerCase() === ""
+                          ? profile
+                          : profile.firstname.toLowerCase().includes(search) ||
+                              profile.str_agent_id
+                                .toLowerCase()
+                                .includes(search) ||
+                              profile.lastname.toLowerCase().includes(search);
+                      })
+                      .map((profile, index, index2) => (
+                        <LeaderBoardDisplay
+                          key={profile.agent_id}
+                          person={profile}
+                          index={index}
+                          index2={index2}
+                          handleAgent={handleAgent}
+                          agent_id={profile}
+                          rank={profile.rank}
+                          show={profile.str_agent_id}
+                        />
+                      ))}
                   </>
                 )}
               </div>
@@ -188,7 +202,7 @@ function Leaderboard() {
           <section className={styles.Tabular_Container}>
             <div className={styles.Tabular_Content_Container}>
               <div className={styles.Header_title}>
-                <p className={styles.Hide_for_mobile}>ID NUMBER</p>
+                <p className={styles.Hide_for_mobile}>AGENT NAME</p>
                 <span className={styles.Hide_for_desktop}>ID</span>
                 <p className={styles.Hide_for_mobile}>No. of calls/week</p>
                 <span className={styles.Hide_for_desktop}>
@@ -206,20 +220,31 @@ function Leaderboard() {
               <hr></hr>
               {leaderboard.length > 0 ? (
                 <>
-                  {otherAgent.map((profile) => (
-                    <OtherAgentDisplay
-                      key={profile.agent_id}
-                      person={profile}
-                      handleAgent={handleAgent}
-                      agent_id={profile.agent_id}
-                      rank={profile.rank}
-                      show={profile.str_agent_id}
-                    />
-                  ))}
+                  {otherAgent
+                    .filter((profile) => {
+                      return search.toLowerCase() === ""
+                        ? profile
+                        : profile.firstname.toLowerCase().includes(search) ||
+                            profile.str_agent_id
+                              .toLowerCase()
+                              .includes(search) ||
+                            profile.lastname.toLowerCase().includes(search);
+                    })
+                    .map((profile) => (
+                      <OtherAgentDisplay
+                        key={profile.agent_id}
+                        person={profile}
+                        handleAgent={handleAgent}
+                        agent_id={profile.agent_id}
+                        rank={profile.rank}
+                        show={profile.str_agent_id}
+                      />
+                    ))}
                 </>
               ) : (
                 <div className={styles.empty_state}>
-                  <h3>An overview of your agents performance shows here.</h3>
+                  <img src={notfoundImg} alt="not found" />
+                  <h3>Sorry, No Agent Record Found.</h3>
                 </div>
               )}
               {/* <div className={styles.Header_content}>
@@ -285,9 +310,14 @@ function LeaderBoardDisplay({
         <div className={styles.Profile_img}>
           <img src={ProfileName} className="" alt="profile1" />
         </div>
-        <h2>{person.str_agent_id}</h2>
+        <p>ID: {person.str_agent_id}</p>
+        <h2 className={styles.UppercaseName}>
+          {person.firstname.toUpperCase()} {person.lastname.toUpperCase()}
+        </h2>
+
         <p>
-          No. of calls taken this {person.week}: {person.total_calls}
+          No. of calls taken this {person.weekly || person.monthly}:{" "}
+          {person.total_calls}
         </p>
         <h1 style={{ color: colorMap[index] }}>
           {person.average_score} <span className={styles.small_text}>/10</span>
@@ -307,7 +337,7 @@ function OtherAgentDisplay({ person, handleAgent, agent_id, rank, show }) {
           className={styles.Agent_ID}
           onClick={() => handleAgent(agent_id, rank, show)}
         >
-          {person.str_agent_id}
+          {person.firstname.toUpperCase()} {person.lastname.toUpperCase()}
         </p>
       </div>
       <p>{person.total_calls}</p>
