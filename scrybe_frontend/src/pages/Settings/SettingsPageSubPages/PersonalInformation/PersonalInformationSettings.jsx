@@ -3,8 +3,6 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import BlueEditPen from "../../assets/icons/blue-pencil.png";
-// import BlackEditPen from "../../assets/icons/edit.svg";
-// import ProfilePic from "../../assets/images/Pic.png";
 import RedirectNav from "../../Components/SettingsPageRedirectNav/SettingsPageRedirectNav";
 import PersonalInfo from "./PersonalInformationSettings.module.scss";
 import ErrorHandler from "../../../../helpers/axioshelp/Utils/ErrorHandler";

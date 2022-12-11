@@ -7,7 +7,10 @@ function Dummy({ formattedData, isFetching, apiError, stillProcessing }) {
   return (
     <div className={styles.TranscriptionsList}>
       <div className={styles.headText}>
-        <Link to="/uploaded-recordings" className={styles.headTextLink}>
+        <Link
+          to="/dashboard/uploaded-recordings"
+          className={styles.headTextLink}
+        >
           <svg
             width="16"
             height="16"
