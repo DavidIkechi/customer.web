@@ -73,6 +73,7 @@
     border-radius: 0;
     box-shadow: none;
     filter: none;
+    margin: pix-rem(32) 0;
 
     h2,
     p,
@@ -83,6 +84,7 @@
 
   .mobileSentimentAnalysis {
     display: block;
+    background-color: none;
     width: 100%;
     display: flex;
     justify-content: right;
@@ -93,6 +95,7 @@
     justify-content: space-between;
     align-items: center;
     column-gap: 8px;
+    background-color: none;
 
     h5 {
       font-weight: 300;

@@ -12,6 +12,9 @@ function DropDownModal({ closeModal }) {
     localStorage.removeItem("currentUser");
     localStorage.removeItem("auth");
     localStorage.removeItem("tokenType");
+    localStorage.removeItem("currentUserEmail");
+    localStorage.removeItem("accessTokenActivationTime");
+    localStorage.removeItem("heedAccessTokenType");
   };
   return (
     <div className={styles.dropdown}>
@@ -28,7 +31,7 @@ function DropDownModal({ closeModal }) {
       </div>
       <div className={styles.list}>
         <img src={logout} alt="" />
-        <Link to="/signin" className={styles.p} onClick={signout}>
+        <Link to="/login" className={styles.p} onClick={signout}>
           Logout
         </Link>
       </div>

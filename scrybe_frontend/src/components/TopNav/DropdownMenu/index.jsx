@@ -45,7 +45,7 @@ function DropDownModal({ closeModal }) {
       {currentUser && (
         <div className={styles.list}>
           <img src={logout} alt="" />
-          <Link to="/signin" className={styles.p} onClick={signout}>
+          <Link to="/login" className={styles.p} onClick={signout}>
             Logout
           </Link>
         </div>

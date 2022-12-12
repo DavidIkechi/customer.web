@@ -8,6 +8,7 @@ import { PropTypes } from "prop-types";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import IsLoadingSkeleton from "../../../components/LoadingSkeleton";
+import Modal from "../../../components/Modal";
 import { formatAudioLen } from "../../../helpers/formatAudioLen/index";
 import { formatAudioSize } from "../../../helpers/formatAudioSize/index";
 import { formatDate } from "../../../helpers/formatDate";
@@ -29,6 +30,7 @@ const TableData = ({ searchKeyword }) => {
   // const [deleted, setDeleted] = useState(false);
   const [sessionExpired, setSessionExpired] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   // const timeLeft = 20;
 
@@ -185,10 +187,14 @@ const TableData = ({ searchKeyword }) => {
             Estimated Time Left:{" "}
             <strong className={styles.est_time_left_num}>{timeLeft}</strong> Min
           </h2> */}
-          <div className={styles.UploadedNavbarRec_btnwrap}>
+          <div
+            className={styles.UploadedNavbarRec_btnwrap}
+            onClick={() => setModalOpen(true)}
+          >
             <img src={uploadBtn_icon} alt="" />
             <button className={styles.UploadedNavbarRec_btn}>Upload</button>
           </div>
+          <Modal open={modalOpen} setOpen={setModalOpen} />
         </div>
         <div className={styles.uploaded_table_wrap}>
           {isFetching ? (
@@ -197,9 +203,9 @@ const TableData = ({ searchKeyword }) => {
             <>
               {sessionExpired ? (
                 <h1 className={styles.expired}>
-                  <small>Your Session has expired, please signin again</small>
+                  <small>Your Session has expired, please login again</small>
                   <p>
-                    <Link to="/signin">Signin</Link>
+                    <Link to="/login">Login</Link>
                   </p>
                 </h1>
               ) : (
