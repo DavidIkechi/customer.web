@@ -30,7 +30,7 @@ const EmailVerify = () => {
         <img src={mail} alt="mail" />
         <p className={styles.status}>Verified!</p>
         <p className={styles.msg}>{message}</p>
-        <Link to="/signin">Login</Link>
+        <Link to="/login">Login</Link>
       </div>
     </div>
   );

@@ -42,8 +42,8 @@ import SettingsIndex from "./pages/Settings/SettingsIndex";
 import AccountSettings from "./pages/Settings/SettingsPageSubPages/AccountSettings/AccountSettings";
 import NotificationSettings from "./pages/Settings/SettingsPageSubPages/Notifications/NotificationSettings";
 import PersonalInformation from "./pages/Settings/SettingsPageSubPages/PersonalInformation/PersonalInformationSettings";
-import Signin from "./pages/SignIn/SignIn";
-import Signup from "./pages/SignUp/SignUp";
+// import Signin from "./pages/SignIn/SignIn";
+// import Signup from "./pages/SignUp/SignUp";
 import SignUpVerify from "./pages/SignUpVerify/SignUpVerify";
 // import Successful from "./pages/Successful/Successful";
 import Support from "./pages/Support/support";
@@ -94,8 +94,8 @@ function App() {
         <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="/faq" element={<FAQs />} />
         <Route path="/help-support" element={<HelpSupport />} />
-        <Route path="/create-account" element={<Signup />} />
-        <Route path="/signin" element={<Signin />} />
+        {/* <Route path="/create-account" element={<CreateAccount />} /> */}
+        {/* <Route path="/signin" element={<Signin />} /> */}
         <Route path="/verify-signup" element={<SignUpVerify />} />
         <Route path="/support-team" element={<Support />} />
         <Route path="/logout" element={<Logout />} />
