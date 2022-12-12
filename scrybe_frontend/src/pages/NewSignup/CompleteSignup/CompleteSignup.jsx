@@ -51,7 +51,7 @@ const CompleteSignup = () => {
               />
               {!completeSignup.companyStateTest ? (
                 <p className={styles.err}>
-                  company name must be 2-16 letters only
+                  company name must be 4-16 letters only
                 </p>
               ) : (
                 ""
