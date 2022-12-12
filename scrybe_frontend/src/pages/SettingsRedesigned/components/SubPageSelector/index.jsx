@@ -1,7 +1,10 @@
 import styles from "./SubPages.module.scss";
 import rightChevron from "./images/right_chevron.png";
+import PropTypes from "prop-types";
+import { useState } from "react";
 
-export default function SubPageSelector() {
+function SubPageSelector({ setCurrentSubPage }) {
+  const [selectedOption, setSelectedOption] = useState("personal-information");
   const cardDetails = [
     {
       path: "personal-information",
@@ -21,6 +24,12 @@ export default function SubPageSelector() {
         "Change how we send you updates, newsletters, periodic summaries, and other notifications",
     },
   ];
+
+  const handleOptionChange = (e) => {
+    setSelectedOption(e.target.value);
+    setCurrentSubPage(e.target.value);
+  };
+
   return (
     <div className={styles.selector}>
       {cardDetails.map((card, index) => {
@@ -29,16 +38,13 @@ export default function SubPageSelector() {
             className={styles.card__option__container}
             key={index + Math.random()}
           >
-            {index === 0 ? (
-              <input
-                type="radio"
-                name="subpage"
-                value={card.path}
-                defaultChecked
-              />
-            ) : (
-              <input type="radio" name="subpage" value={card.path} />
-            )}
+            <input
+              type="radio"
+              name="subpage"
+              value={card.path}
+              checked={selectedOption === card.path}
+              onChange={handleOptionChange}
+            />
             <div className={styles.card__option}>
               <div className={styles.card__title}>
                 {card.title}
@@ -52,3 +58,9 @@ export default function SubPageSelector() {
     </div>
   );
 }
+
+SubPageSelector.propTypes = {
+  setCurrentSubPage: PropTypes.func.isRequired,
+};
+
+export default SubPageSelector;

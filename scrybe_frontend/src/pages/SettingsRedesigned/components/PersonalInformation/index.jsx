@@ -2,7 +2,6 @@ import styles from "./PersonalInformation.module.scss";
 import dummyPic from "../../../../assets/dummy.png";
 import pencilIcon from "./assets/pencil.svg";
 import { useRef } from "react";
-import { useState } from "react";
 
 export default function PersonalInformation() {
   const imageChanger = useRef(null);

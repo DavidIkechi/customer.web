@@ -1,0 +1,19 @@
+@import "../../../../functions.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: pix-rem(24);
+
+  .title {
+    font-size: pix-rem(24);
+    font-weight: 600;
+    color: #3f3f3f;
+  }
+
+  .subtitle {
+    font-size: pix-rem(20);
+    font-weight: 600;
+    color: #3f3f3f;
+  }
+}
