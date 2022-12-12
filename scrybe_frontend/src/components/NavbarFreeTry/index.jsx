@@ -114,7 +114,7 @@ function NavBar() {
               <NavLink to="/login">Login</NavLink>
             </button>
             <button type="button">
-              <NavLink to="/create-account">Sign Up</NavLink>
+              <NavLink to="/sign-up">Sign Up</NavLink>
             </button>
           </div>
 
