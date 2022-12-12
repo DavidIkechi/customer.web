@@ -16,4 +16,131 @@
     font-weight: 600;
     color: #3f3f3f;
   }
+
+  .password__form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: pix-rem(24);
+
+    label {
+      position: relative;
+      font-size: pix-rem(12);
+      color: #6a6a6a;
+
+      @include media(1024px) {
+        display: flex;
+        flex-direction: column;
+
+        input {
+          width: 100%;
+        }
+      }
+
+      input {
+        padding: pix-rem(16);
+        font-size: pix-rem(16);
+        font-weight: 300;
+
+        &::placeholder,
+        &::-webkit-input-placeholder {
+          color: #a9a9a9;
+          font-size: pix-rem(30);
+        }
+
+        &:disabled {
+          background-color: white;
+        }
+      }
+
+      .input__info {
+        display: flex;
+        position: absolute;
+        right: 2em;
+        top: 50%;
+        gap: 1em;
+        align-items: center;
+
+        .unlock__edit {
+          display: flex;
+          gap: 1em;
+          font-size: pix-rem(11);
+          color: #3f3f3f;
+          cursor: pointer;
+
+          img {
+            filter: invert(1);
+          }
+        }
+        [hidden] {
+          display: none;
+        }
+      }
+    }
+
+    .submission {
+      width: 100%;
+      display: flex;
+      gap: pix-rem(24);
+
+      button {
+        padding: pix-rem(16) pix-rem(32);
+        border-radius: pix-rem(4);
+        cursor: pointer;
+        transition: scale 0.3s;
+
+        &:hover {
+          scale: 1.05;
+        }
+
+        &:nth-child(1) {
+          background-color: #006cff;
+          color: white;
+          border: none;
+        }
+      }
+    }
+
+    .connected__apps {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      li {
+        padding: pix-rem(32);
+        background-color: #fffdeb;
+        display: flex;
+        align-items: center;
+        width: 100%;
+
+        .app__info {
+          margin-right: auto;
+          height: 100%;
+
+          .app__name {
+            font-size: pix-rem(24);
+            font-weight: 700;
+          }
+
+          .app__date {
+            font-size: pix-rem(11);
+          }
+        }
+
+        .no__apps {
+          font-size: pix-rem(24);
+          font-weight: 500;
+          text-align: center;
+          width: 100%;
+        }
+
+        .disconnect {
+          font-size: pix-rem(16);
+          font-weight: 500;
+          color: #006cff;
+          cursor: pointer;
+        }
+      }
+    }
+  }
 }
