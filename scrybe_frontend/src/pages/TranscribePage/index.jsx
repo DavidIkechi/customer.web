@@ -1,19 +1,11 @@
 import React from "react";
 import styles from "./TranscribePage.module.scss";
 import NewDesignSideBar from "../../components/NewDesignSidebar";
-import Transcribe from "./Transcribe/Transcribe";
+import TopNav from "../../components/TopNav";
+import TranscriptionMain from "./Transcribe/Components/TranscriptionMain/TranscriptionMain";
 
 function TranscribePage() {
   const [toggleSidebar, setToggleSidebar] = React.useState(false);
-
-  // const [transcribedText, setTranscribedText] = useState("");
-  // const sentimentData = useMockAuthAndReadSentiment(1);
-
-  // useEffect(() => {
-  //   console.log("fired");
-  //   setTranscribedText(sentimentData.transcript);
-  //   console.log(sentimentData.transcript);
-  // }, [sentimentData]);
 
   return (
     <div className={styles.TranscribePage}>
@@ -22,7 +14,14 @@ function TranscribePage() {
         needSearchMobile="needSearchMobile"
         closeSidebar={() => setToggleSidebar(!toggleSidebar)}
       >
-        <Transcribe />
+        <div className={styles.Transcribe}>
+          <TopNav
+            openSidebar={() => {
+              setToggleSidebar(!toggleSidebar);
+            }}
+          />
+          <TranscriptionMain />
+        </div>
       </NewDesignSideBar>
     </div>
   );

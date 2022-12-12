@@ -37,14 +37,14 @@ function SentimentAnalysis({ donwloadData }) {
               fill="white"
             />
           </svg>
-          <a href={`/sentiment-analysis/${audioId}`}>View analysis</a>
+          <Link to={`/sentiment-analysis/${audioId}`}>View analysis</Link>
         </button>
         <div className={styles.downloadButton} onClick={exportData}>
           <img src={downloadIcon} alt="download-icon" />
         </div>
       </div>
       <div className={styles.mobileSentimentAnalysis}>
-        <Link to="/sentiment-analysis/:userId">
+        <Link to={`/sentiment-analysis/${getTranscriptionID()}`}>
           <div className={styles.mobileContainer}>
             <h5>sentiment analysis</h5>
             <svg

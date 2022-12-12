@@ -100,7 +100,8 @@ const Login = () => {
 
       localStorage.setItem("auth", username);
 
-      navigate("/dashboard");
+      // navigate("/dashboard");
+      window.location.href = "/dashboard";
     } catch (err) {
       // setIsLoading(false);
 

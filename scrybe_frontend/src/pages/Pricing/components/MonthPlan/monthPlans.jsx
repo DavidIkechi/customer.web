@@ -2,20 +2,15 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./monthplans.module.scss";
 import currency from "../../assets/dollar.svg";
-import startUpIcon from "../../assets/star.svg";
-import growingIcon from "../../assets/auto_graph.svg";
-import enterpriseIcon from "../../assets/corporate_fare.svg";
 import checkIcon from "../../assets/check.svg";
-import data from "../../../History/assets/data";
 import { monthlyPricing } from "./data";
 import axios from "axios";
 
 function MonthPlans({ monthState }) {
   const navigate = useNavigate();
   const token = localStorage.getItem("heedAccessToken");
-  console.log(token);
+
   const checkoutStartup = async (pricing) => {
-    console.log(token);
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -34,7 +29,6 @@ function MonthPlans({ monthState }) {
       });
   };
   const checkoutGrowing = async (pricing) => {
-    console.log(token);
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -76,8 +70,15 @@ function MonthPlans({ monthState }) {
     <div className={`${styles.month}`}>
       <div className={`${styles.plans}`}>
         {monthlyPricing.map((data) => {
-          const { id, title, pricing, headDescription, duration, features } =
-            data;
+          const {
+            id,
+            icon,
+            title,
+            pricing,
+            headDescription,
+            duration,
+            features,
+          } = data;
 
           return (
             <div
@@ -88,7 +89,7 @@ function MonthPlans({ monthState }) {
               <div className={styles.plansCardHeading}>
                 <div className={styles.plansCardTitle}>
                   <div className={styles.plansCardIcon}>
-                    <img src={startUpIcon} alt="star icon" />
+                    <img src={icon} alt="star icon" />
                   </div>
                   <h3>{title}</h3>
                 </div>
@@ -101,7 +102,7 @@ function MonthPlans({ monthState }) {
                   </div>
                   <h4>{pricing}</h4>
                 </div>
-                <p>per month</p>
+                <p>{duration}</p>
               </div>
               <div className={styles.FtnBtn}>
                 <div className={styles.pricingFeatures}>
@@ -112,7 +113,7 @@ function MonthPlans({ monthState }) {
                     </div>
                   ))}
                 </div>
-                {/* <button onClick={() => checkout(pricing)}>Get Started</button> */}
+
                 <button
                   onClick={() => {
                     id === 1

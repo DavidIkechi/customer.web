@@ -1,7 +1,6 @@
 import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 from nltk.tokenize import sent_tokenize
-from textblob import TextBlob
 import json
 
 def sentiment(transcript):
@@ -12,14 +11,12 @@ def sentiment(transcript):
     postive_sentences = []
     sentiment = SentimentIntensityAnalyzer().polarity_scores(transcript)
     #getting the most positive and negative sentences
-    for sentence in transcript.split():
-        cleaned_word = TextBlob(sentence)
-
-        individual_sentiment = cleaned_word.sentiment.polarity
-        if individual_sentiment <= -0.05:
-            negative_sentences.append({"sentence": sentence, "negativity_score": individual_sentiment})
-        elif individual_sentiment >= 0.05:
-            postive_sentences.append({"sentence": sentence, "positivity_score": individual_sentiment})
+    for sentence in sentences:
+        individual_sentiment = SentimentIntensityAnalyzer().polarity_scores(sentence)
+        if individual_sentiment['neg'] > 0.5:
+            negative_sentences.append({"sentence": sentence, "negativity_score": individual_sentiment['neg']})
+        elif individual_sentiment['pos'] > 0.5:
+            postive_sentences.append({"sentence": sentence, "positivity_score": individual_sentiment['pos']})
     most_negative_sentences =json.dumps(negative_sentences)
     most_postive_sentences = json.dumps(postive_sentences)
     result = {
@@ -37,7 +34,6 @@ def sentiment(transcript):
             "most_negative_sentences": most_negative_sentences,
             "most_postive_sentences": most_postive_sentences
             }
-    
     return sentiment
 
 

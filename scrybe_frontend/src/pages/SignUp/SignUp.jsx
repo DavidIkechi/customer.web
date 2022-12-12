@@ -308,7 +308,7 @@ function Signup() {
                   <NavLink to={""}>Privacy Policy</NavLink>
                   <br />
                   Already have an account?{" "}
-                  <NavLink to={"/signin"}>Sign in</NavLink>
+                  <NavLink to={"/login"}>Sign in</NavLink>
                 </span>
               </div>
             </form>
