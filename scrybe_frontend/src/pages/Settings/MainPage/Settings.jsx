@@ -76,7 +76,7 @@ const MainPage = () => {
       .catch((err) => {
         // Redirect to Signin Page if authentication error
         if (err.response.status === 401) {
-          navigate("/signin");
+          navigate("/login");
         } else {
           // In case of error, log to the console
           console.log("Server returned the following error:");

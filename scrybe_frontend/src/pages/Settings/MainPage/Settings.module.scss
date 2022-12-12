@@ -17,7 +17,7 @@ $error: #de3d31;
 }
 
 .mainpage__wrapper {
-  width: 100% !important;
+  width: 100%;
 }
 
 .mainpage__container {
@@ -217,9 +217,6 @@ $error: #de3d31;
 }
 
 @media (min-width: 1024px) {
-  .mainpage__wrapper {
-    width: 90% !important;
-  }
   .mainpage__container {
     align-items: flex-end;
   }

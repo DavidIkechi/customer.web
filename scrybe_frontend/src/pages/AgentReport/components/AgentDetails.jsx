@@ -6,11 +6,7 @@ function AgentDetails({ selectData }) {
   // const agentReportData = useAgentReport(props);
   return (
     <>
-      {selectData?.length === 0 ? (
-        <p className={styles.empty}>
-          You will see an overview of your detail here.
-        </p>
-      ) : (
+      {selectData?.length > 0 ? (
         <div className={styles.agentDetails} key={selectData?.str_agent_id}>
           <div className={styles.details}>
             <div className={styles.callDetails}>
@@ -68,6 +64,10 @@ function AgentDetails({ selectData }) {
             </div>
           </div>
         </div>
+      ) : (
+        <p className={styles.empty}>
+          You will see an overview of your detail here.
+        </p>
       )}
     </>
   );
