@@ -187,14 +187,14 @@ const TableData = ({ searchKeyword }) => {
             Estimated Time Left:{" "}
             <strong className={styles.est_time_left_num}>{timeLeft}</strong> Min
           </h2> */}
-          <div
+          {/* <div
             className={styles.UploadedNavbarRec_btnwrap}
             onClick={() => setModalOpen(true)}
           >
             <img src={uploadBtn_icon} alt="" />
             <button className={styles.UploadedNavbarRec_btn}>Upload</button>
           </div>
-          <Modal open={modalOpen} setOpen={setModalOpen} />
+          <Modal open={modalOpen} setOpen={setModalOpen} /> */}
         </div>
         <div className={styles.uploaded_table_wrap}>
           {isFetching ? (

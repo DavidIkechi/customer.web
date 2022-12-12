@@ -1,0 +1,49 @@
+@import "../../../../functions.scss";
+
+.selector {
+  width: 100%;
+
+  .card__option__container {
+    position: relative;
+
+    .card__option {
+      padding: pix-rem(24);
+      cursor: pointer;
+
+      .card__title {
+        font-size: pix-rem(20);
+        font-weight: 600;
+        color: #3f3f3f;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: pix-rem(12);
+
+        img {
+          object-fit: contain;
+          width: 40px;
+          height: 1em;
+        }
+      }
+
+      .card__description {
+        color: #00456b;
+        font-size: pix-rem(20);
+        font-weight: 300;
+      }
+    }
+
+    input[type="radio"] {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+  }
+
+  input[type="radio"]:checked + .card__option {
+    background-color: #e6f6ff;
+  }
+}
