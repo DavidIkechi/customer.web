@@ -136,10 +136,10 @@ async def main_login(form_data, db):
     if not user.is_active:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="You account is not active, Please activate your accout.",
+            detail=f"Sorry {user.first_name}, your active is yet to be activated.",
             headers={"WWW-Authenticate": "Bearer"},
         )
-        
+    
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     refresh_token_expires = timedelta(minutes=REFRESH_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
