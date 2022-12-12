@@ -91,7 +91,7 @@ function Charts({ selectReport }) {
           </div>
         </div>
         <div className={styles.chartImg}>
-          {selectReport?.length >= 0 ? (
+          {selectReport?.length > 0 ? (
             <Bar data={userData} options={option} />
           ) : (
             <p className={styles.empty}>
