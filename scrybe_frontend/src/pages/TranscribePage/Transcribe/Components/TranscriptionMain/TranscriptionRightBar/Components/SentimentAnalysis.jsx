@@ -37,7 +37,7 @@ function SentimentAnalysis({ donwloadData }) {
               fill="white"
             />
           </svg>
-          <a href={`/sentiment-analysis/${audioId}`}>View analysis</a>
+          <Link to={`/sentiment-analysis/${audioId}`}>View analysis</Link>
         </button>
         <div className={styles.downloadButton} onClick={exportData}>
           <img src={downloadIcon} alt="download-icon" />

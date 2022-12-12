@@ -1,6 +1,10 @@
 @import "../../assets/styles/utilities/functionsANDmedia";
 @import "./media";
 
+.page__wrap{
+  width: 100%;
+}
+
 .page__container {
   padding: pix-rem(32);
   display: flex;
