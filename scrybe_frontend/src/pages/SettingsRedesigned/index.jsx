@@ -6,10 +6,17 @@ import AccountSecurity from "./components/AccountSecurity";
 import SubPageSelector from "./components/SubPageSelector";
 import UserCard from "./components/UserCard";
 import styles from "./SettingsRedesigned.module.scss";
+import NotificationSubPage from "./components/NotificationSubPage";
 
 export default function Settings() {
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const [currentSubPage, setCurrentSubPage] = useState("personal-information");
+
+  const subPageDictionary = {
+    "personal-information": <PersonalInformation />,
+    "account-security": <AccountSecurity />,
+    "notification-sub-page": <NotificationSubPage />,
+  };
   return (
     <NewDesignSideBar>
       <div className={styles.page__container}>
@@ -33,11 +40,9 @@ export default function Settings() {
                 Go unlimited with Pro version
               </div>
             </div>
-            {currentSubPage === "personal-information" ? (
-              <PersonalInformation />
-            ) : (
-              <AccountSecurity />
-            )}
+            {subPageDictionary[currentSubPage]
+              ? subPageDictionary[currentSubPage]
+              : "Invalid Option"}
           </div>
         </div>
         <button className={styles.delete__button}>Delete Account</button>

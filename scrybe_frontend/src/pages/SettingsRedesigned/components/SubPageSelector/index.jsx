@@ -18,7 +18,7 @@ function SubPageSelector({ setCurrentSubPage }) {
       description: "Change your password and manage your connected Apps",
     },
     {
-      path: "notifications",
+      path: "notification-sub-page",
       title: "Notification",
       description:
         "Change how we send you updates, newsletters, periodic summaries, and other notifications",
