@@ -43,7 +43,6 @@ import Support from "./pages/Support/support";
 import TermsOfService from "./pages/TermsOfService";
 import TryResults from "./pages/TryForFree/tryResults";
 import UploadedRecordings from "./pages/UploadRecordings";
-import { UploadModal } from "./pages/UploadRecordingsModal";
 import Logout from "./pages/Logout";
 import EmailVerify from "./pages/VerificationEmail/EmailVerify";
 // import CheckMail from "./pages/CheckMail";
@@ -125,7 +124,6 @@ function App() {
           <Route path="/account" element={<Account />} />
           <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
           <Route path="/agent-report/:Agent_id" element={<AgentReport />} />
-          <Route path="/upload-new-file" element={<UploadModal />} />
           <Route
             path="/sentiment-analysis/:AudioId"
             element={<SentimentAnalysis />}
