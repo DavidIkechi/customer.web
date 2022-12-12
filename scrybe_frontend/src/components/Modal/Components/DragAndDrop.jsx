@@ -69,7 +69,11 @@ const DragAndDrop = ({
         </div>
         <div className={style["right-or"]}></div>
       </div>
-      <button disabled={btnDisabled} className={style["primary-button"]}>
+      <button
+        disabled={btnDisabled}
+        onClick={() => console.log("heyy")}
+        className={style["primary-button"]}
+      >
         <label htmlFor="file">Browse Files</label>
       </button>
       <p className={style["small-text"]}>
@@ -84,22 +88,25 @@ const DragAndDrop = ({
           multiple
           disabled={true}
           accept="audio/*"
-          onChange={(event) =>
-            handleOnSelectFile(Array.from(event.target.files)[0])
-          }
+          onChange={(event) => {
+            console.log("working");
+            handleOnSelectFile(Array.from(event.target.files)[0]);
+          }}
         />
       ) : (
-        ///testing this function
+        //testing this function
         <input
           type="file"
           id="file"
           name="file"
           hidden
           multiple
+          disabled={false}
           accept="audio/*"
-          onChange={(event) =>
-            handleOnSelectFile(Array.from(event.target.files)[0])
-          }
+          onChange={(event) => {
+            console.log("workin");
+            handleOnSelectFile(Array.from(event.target.files)[0]);
+          }}
         />
       )}
     </section>
