@@ -222,7 +222,7 @@ function Signin() {
               )}
               <p>
                 Don’t have an account?
-                <NavLink to={"/create-account"}>Sign up</NavLink>
+                <NavLink to={"/sign-up"}>Sign up</NavLink>
               </p>
             </form>
           </div>
