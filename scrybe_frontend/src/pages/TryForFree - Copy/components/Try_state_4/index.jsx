@@ -75,7 +75,7 @@ export default function TryFourth() {
         <Link to="/" className={styles.button1}>
           View Pricing Plan
         </Link>
-        <Link to="/signin" className={styles.button2}>
+        <Link to="/login" className={styles.button2}>
           Sign Up
         </Link>
       </div>

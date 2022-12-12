@@ -80,7 +80,7 @@ const PersonalInformation = () => {
       setAccountUser(res.data);
     } catch (err) {
       if (err.status === 401) {
-        navigate("/signin");
+        navigate("/login");
       }
       setResponse(ErrorHandler(err));
     }
