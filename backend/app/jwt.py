@@ -136,7 +136,7 @@ async def main_login(form_data, db):
     if not user.is_active:
         raise HTTPException(
             status_code=400,
-            detail=f"Sorry {user.first_name}, your active is yet to be activated.",
+            detail=f"Sorry {user.first_name}, your account is yet to be activated.",
             headers={"WWW-Authenticate": "Bearer"},
         )
     
