@@ -961,10 +961,14 @@ def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: mo
             if i["agent_id"] == agent_id:
                 result["week"] = i
                 break
+            else: 
+                result["week"] = []
         for j in leaderboard[1]:
             if j["agent_id"] == agent_id:
                 result["month"] = j
                 break
+            else: 
+                result["month"] = []
         return {"Agent_Performance_Report": {"week": result["week"], "month": result["month"]}}
     except:
         return {"message": "agent details does not exist"}
