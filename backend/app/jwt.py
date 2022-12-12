@@ -133,7 +133,7 @@ async def main_login(form_data, db):
             headers={"WWW-Authenticate": "Bearer"},
         )
     
-    if not user.isactive:
+    if not user.is_active:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="You account is not active, Please activate your accout.",
