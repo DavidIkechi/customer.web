@@ -101,7 +101,7 @@ function App() {
         <Route path="/logout" element={<Logout />} />
         <Route path="/coming-soon" element={<ComingSoon />} />
 
-        <Route path="/emailverification/:token" element={<EmailVerify />} />
+        <Route path="/emailverification" element={<EmailVerify />} />
         <Route path="/try-results" element={<TryResults />} />
 
         <Route path="/sales-team" element={<LandingPageSalesTeam />} />
