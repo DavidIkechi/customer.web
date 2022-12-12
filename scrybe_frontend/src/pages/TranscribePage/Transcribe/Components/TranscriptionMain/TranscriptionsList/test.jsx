@@ -4,6 +4,10 @@ import IsLoadingSkeleton from "../../../../../../components/LoadingSkeleton";
 import { Link } from "react-router-dom";
 
 function Dummy({ formattedData, isFetching, apiError, stillProcessing }) {
+  const reloadPage = () => {
+    window.location.reload();
+  };
+
   return (
     <div className={styles.TranscriptionsList}>
       <div className={styles.headText}>
@@ -27,6 +31,9 @@ function Dummy({ formattedData, isFetching, apiError, stillProcessing }) {
         {apiError ? (
           <div className={styles.error}>
             ServerSide Error...Kindly refresh the page.
+            <div className={styles.refreshButton} onClick={reloadPage}>
+              Refresh Page
+            </div>
           </div>
         ) : (
           <div></div>
@@ -37,6 +44,9 @@ function Dummy({ formattedData, isFetching, apiError, stillProcessing }) {
           <div className={styles.error}>
             Wow, seems like your Audio file is heavy... We are still processing
             your audio... Kindly wait for a few more moments.
+            <div className={styles.refreshButton} onClick={reloadPage}>
+              Refresh Page
+            </div>
           </div>
         ) : (
           <div></div>
