@@ -225,7 +225,7 @@ function Leaderboard() {
                 </span>
               </div>
               <hr></hr>
-              {leaderboard.length >= 0 ? (
+              {leaderboard.length > 0 ? (
                 <>
                   {otherAgent.map((profile) => (
                     <OtherAgentDisplay
