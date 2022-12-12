@@ -30,6 +30,9 @@ export default function Settings() {
             <div className={styles.title}>Settings</div>
             <UserCard />
             <SubPageSelector setCurrentSubPage={setCurrentSubPage} />
+            <div className={styles.delete__container}>
+              <button className={styles.delete__button}>Delete Account</button>
+            </div>
           </div>
           <div className={styles.subpage__container}>
             <div className={styles.plan}>
@@ -45,7 +48,6 @@ export default function Settings() {
               : "Invalid Option"}
           </div>
         </div>
-        <button className={styles.delete__button}>Delete Account</button>
       </div>
     </NewDesignSideBar>
   );

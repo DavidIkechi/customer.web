@@ -2,11 +2,35 @@
 
 .page__container {
   width: 100%;
+  padding-bottom: 10rem;
+  position: relative;
 
   .inner__page__container {
     padding: 1rem;
     display: flex;
     gap: pix-rem(80);
+
+    .delete__container {
+      width: 100%;
+      padding: 0;
+      margin-top: pix-rem(24);
+
+      .delete__button {
+        padding: pix-rem(16) pix-rem(32);
+        background-color: #de3d31;
+        color: white;
+        font-size: pix-rem(16);
+        font-weight: 500;
+        border: none;
+        border-radius: pix-rem(4);
+        transition: scale 0.3s;
+        cursor: pointer;
+
+        &:hover {
+          scale: 1.02;
+        }
+      }
+    }
 
     @include media(1350px) {
       gap: pix-rem(20);
@@ -28,7 +52,8 @@
       flex: 1 1 500px;
 
       @include media(768px) {
-        display: none;
+        // display: none;
+        position: absolute;
       }
 
       .plan {
@@ -51,17 +76,5 @@
         }
       }
     }
-  }
-
-  .delete__button {
-    padding: pix-rem(16) pix-rem(32);
-    background-color: #de3d31;
-    color: white;
-    font-size: pix-rem(16);
-    font-weight: 500;
-    border: none;
-    border-radius: pix-rem(4);
-    margin-left: 1rem;
-    cursor: pointer;
   }
 }
