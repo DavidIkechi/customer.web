@@ -155,8 +155,8 @@ const completeRegistration = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const navigate = useNavigate();
 
-  const companyNameTest = new RegExp(/^[a-zA-Z]{2,}$/);
-  const addressTest = new RegExp(/[A-Za-z0-9'\.\-\s\,]{8,}$/);
+  const companyNameTest = new RegExp(/[A-Za-z0-9'.\-\s,]{4,}$/);
+  const addressTest = new RegExp(/[A-Za-z0-9'.\-\s,]{8,}$/);
 
   const tester = (e, reg, func) => {
     if (reg.test(e.target.value)) {

@@ -158,6 +158,7 @@
     margin-top: 3rem;
     color: #a9a9a9;
     width: 100% !important;
+    padding: 1rem 0;
     // // transform: translate(50%);
     // -webkit-transform: translate(50%);
     // -moz-transform: translate(50%);
@@ -598,7 +599,7 @@
 }
 
 //ipad styles
-@media screen and (min-width: 768px) and (max-width: 1024px) {
+@media screen and (min-width: 768px) and (max-width: 920px) {
   .uploaded_recordings {
     padding: 1rem 5px !important;
     width: 100%;
