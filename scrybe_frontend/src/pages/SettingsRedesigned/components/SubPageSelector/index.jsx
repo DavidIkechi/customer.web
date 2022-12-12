@@ -3,7 +3,7 @@ import rightChevron from "./images/right_chevron.png";
 import PropTypes from "prop-types";
 import { useState } from "react";
 
-function SubPageSelector({ setCurrentSubPage }) {
+function SubPageSelector({ setCurrentSubPage, openSubPage }) {
   const [selectedOption, setSelectedOption] = useState("personal-information");
   const cardDetails = [
     {
@@ -37,6 +37,7 @@ function SubPageSelector({ setCurrentSubPage }) {
           <div
             className={styles.card__option__container}
             key={index + Math.random()}
+            onClick={openSubPage}
           >
             <input
               type="radio"
@@ -61,6 +62,7 @@ function SubPageSelector({ setCurrentSubPage }) {
 
 SubPageSelector.propTypes = {
   setCurrentSubPage: PropTypes.func.isRequired,
+  openSubPage: PropTypes.func.isRequired,
 };
 
 export default SubPageSelector;
