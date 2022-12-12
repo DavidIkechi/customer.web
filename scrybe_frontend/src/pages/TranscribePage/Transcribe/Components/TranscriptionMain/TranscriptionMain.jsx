@@ -115,18 +115,22 @@ function TranscriptionMain() {
         id: 0,
         timeCount: "00:00",
         stringText: str,
+        isActive: false,
       };
       cleanedData.push(object);
       return cleanedData;
     }
 
     // eslint-disable-next-line array-callback-return
-    wordArray.map((word) => {
+    wordArray.map((word, index) => {
       if (counter < 20) {
         emptyString = emptyString + " " + word;
         counter++;
       }
-      if (counter === 20) {
+      if (
+        counter === 20 ||
+        wordArray[wordArray.length - 1] === wordArray[index]
+      ) {
         objectID++;
         time = time + 5;
         const formatedTime = timeFormatter(time);
