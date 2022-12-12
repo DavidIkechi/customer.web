@@ -128,15 +128,15 @@ async def main_login(form_data, db):
     user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
+            status_code=400,
             detail="Incorrect email or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
     
     if not user.is_active:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=f"Sorry {user.first_name}, your active is yet to be activated.",
+            status_code=400,
+            detail=f"Sorry {user.first_name}, your account is yet to be activated.",
             headers={"WWW-Authenticate": "Bearer"},
         )
     
