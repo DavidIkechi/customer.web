@@ -75,6 +75,18 @@ function Leaderboard() {
     setControll(true);
   };
 
+  useEffect(() => {
+    let FilteredLeaderboard = leaderboard.filter((profile) => {
+      return search.toLowerCase() === ""
+        ? profile
+        : profile.firstname.toLowerCase().includes(search) ||
+            profile.str_agent_id.toLowerCase().includes(search) ||
+            profile.lastname.toLowerCase().includes(search);
+    });
+
+    setLeaderboard(FilteredLeaderboard);
+  }, [search]);
+
   // // implemented by rambey
 
   return (
@@ -159,17 +171,8 @@ function Leaderboard() {
               <div className={styles.Profile_container}>
                 {leaderboard.length > 0 && (
                   <>
-                    {leaderboard
-                      .filter((profile) => {
-                        return search.toLowerCase() === ""
-                          ? profile
-                          : profile.firstname.toLowerCase().includes(search) ||
-                              profile.str_agent_id
-                                .toLowerCase()
-                                .includes(search) ||
-                              profile.lastname.toLowerCase().includes(search);
-                      })
-                      .map((profile, index, index2) => (
+                    {leaderboard.map((profile, index, index2) => (
+                      <>
                         <LeaderBoardDisplay
                           key={profile.agent_id}
                           person={profile}
@@ -180,7 +183,8 @@ function Leaderboard() {
                           rank={profile.rank}
                           show={profile.str_agent_id}
                         />
-                      ))}
+                      </>
+                    ))}
                   </>
                 )}
               </div>

@@ -1,5 +1,4 @@
 const ErrorHandler = (err) => {
-  console.log("enetrd");
   if (err.code === "ERR_NETWORK") {
     return {
       type: "Error",
