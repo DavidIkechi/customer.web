@@ -130,7 +130,7 @@ const Login = () => {
             <p>Please enter your details</p>
           </div>
 
-          <a href="/coming-soon" className={styles.googlego}>
+          {/* <a href="/coming-soon" className={styles.googlego}>
             <img src={google} alt="google" />
             Sign in With google
           </a>
@@ -139,7 +139,7 @@ const Login = () => {
             <div className={styles.dash}></div>
             <p>or</p>
             <div className={styles.dash}></div>
-          </div>
+          </div> */}
 
           <form className={styles.formContainer} onSubmit={handleSubmit}>
             <div
