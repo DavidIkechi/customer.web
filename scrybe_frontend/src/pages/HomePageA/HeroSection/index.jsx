@@ -25,7 +25,7 @@ function Hero(isHomePageA) {
             <NavLink to="/demos" className={styles.ctaDemo}>
               Request a Demo
             </NavLink>
-            <NavLink to="/signin" className={styles.ctaStarter}>
+            <NavLink to="/login" className={styles.ctaStarter}>
               Get Started
             </NavLink>
           </div>

@@ -21,7 +21,7 @@ const Hero = () => {
       </div>
 
       <div className={styles.CTAs}>
-        <NavLink to="/create-account" className={styles.ctaDemo}>
+        <NavLink to="/signup" className={styles.ctaDemo}>
           Sign up
         </NavLink>
         <NavLink to="/try" className={styles.ctaStarter}>

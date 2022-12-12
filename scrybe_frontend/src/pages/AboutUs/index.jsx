@@ -33,7 +33,7 @@ function About() {
           <div className={styles.first__top}>
             <div className={styles.first__heading}>
               <h1 className={styles.first__head}>
-                Heed helps sales mangers work{" "}
+                Heed helps sales managers work{" "}
                 <span className={styles.first__inline}>faster</span>, with
                 <span className={styles.first__inline}> simplified roles</span>
               </h1>

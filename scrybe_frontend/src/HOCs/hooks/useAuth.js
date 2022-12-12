@@ -30,7 +30,7 @@ const useAuth = () => {
   useEffect(() => {
     fetchCurrentUser();
     if (!currentUser) {
-      navigate("/signin");
+      navigate("/login");
     }
   }, [currentUser, navigate]);
 

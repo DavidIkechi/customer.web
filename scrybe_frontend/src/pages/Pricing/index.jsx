@@ -274,7 +274,7 @@ function Pricing() {
             </ul>
             <div className={styles.benefitCTA}>
               <Link to="/try">Try for Free</Link>
-              <Link to="/demos">Schedule a Demo</Link>
+              {/* <Link to="/demos">Schedule a Demo</Link> */}
             </div>
           </div>
           <div className={styles.BenefitsImage}>
