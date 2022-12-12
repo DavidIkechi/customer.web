@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import styles from "./SentimentAnalysis.module.scss";
 import arrowIcon from "./assets/icons/arrow_back.svg";
 import blueArrowIcon from "./assets/icons/blue_arrow.svg";
 import AnalysisCard from "./components/AnalysisCard";
 import AudioCard from "./components/AudioCard";
-import SentimentAside from "./components/SentimentAside";
 import OverAllSentimentCard from "./components/OverallSentimentCard";
-import VerdictCard from "./components/VerdictCard";
 import PhraseTagCard from "./components/PhraseTagCard";
+import SentimentAside from "./components/SentimentAside";
+import VerdictCard from "./components/VerdictCard";
+import styles from "./SentimentAnalysis.module.scss";
 // import SideBar from "../../components/SideBar";
-import { useReadSentiment } from "./hooks";
-import NewDesignSideBar from "../../components/NewDesignSidebar/index";
+import NewDesignSideBar from "../../components/NewDesignSidebar";
 import TopNav from "../../components/TopNav";
+import { useReadSentiment } from "./hooks";
 
 function SentimentAnalysis() {
   const [isMobileAsideOpen, setIsMobileAsideOpen] = useState(false);
@@ -60,17 +60,17 @@ function SentimentAnalysis() {
   };
 
   return (
-    <>
-      <TopNav
-        openSidebar={() => {
-          setToggleSidebar(!toggleSidebar);
-        }}
-      />
-      <NewDesignSideBar
-        toggleSidebar={toggleSidebar}
-        needSearchMobile="needSearchMobile"
-        closeSidebar={() => setToggleSidebar(!toggleSidebar)}
-      >
+    <NewDesignSideBar
+      toggleSidebar={toggleSidebar}
+      needSearchMobile="needSearchMobile"
+      closeSidebar={() => setToggleSidebar(!toggleSidebar)}
+    >
+      <div className={styles.page__wrap}>
+        <TopNav
+          openSidebar={() => {
+            setToggleSidebar(!toggleSidebar);
+          }}
+        />
         <div className={styles.page__container}>
           <div className={styles.audio__mobile}>
             <AudioCard sentimentData={sentimentData} />
@@ -135,8 +135,8 @@ function SentimentAnalysis() {
             />
           </aside>
         </div>
-      </NewDesignSideBar>
-    </>
+      </div>
+    </NewDesignSideBar>
   );
 }
 
