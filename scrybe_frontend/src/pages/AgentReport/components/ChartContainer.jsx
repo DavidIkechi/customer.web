@@ -10,7 +10,6 @@ import {
 import Icon from "../assets/table-icon.png";
 ChartJS.register(CategoryScale, LinearScale, BarElement);
 
-// agentAnalysis
 function Charts({ selectReport }) {
   const [option, setOption] = useState({});
 

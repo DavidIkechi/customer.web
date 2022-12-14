@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 import { useAgentReport } from "./hooks";
 import { useAgentAnalysis } from "./hooks";
 
-// { recentAgentReport, agentAnalysis}
 const Content = (props) => {
   const agentReportData = useAgentReport(props);
   const agentAnalysisData = useAgentAnalysis(props);
@@ -49,14 +48,8 @@ const Content = (props) => {
         </div>
       </div>
       <div className={styles.topDetailsDiv}>
-        <Charts
-          // agentAnalysis={agentAnalysis}
-          selectReport={selectReport}
-        />
-        <AgentDetails
-          selectData={selectData}
-          // recentAgentReport={recentAgentReport}
-        />
+        <Charts selectReport={selectReport} />
+        <AgentDetails selectData={selectData} />
       </div>
     </div>
   );
