@@ -40,31 +40,6 @@ import NewPasswordResetSuccessful from "./pages/NewPasswordResetSuccessful";
 import CompleteSignup from "./pages/NewSignup/CompleteSignup/CompleteSignup";
 import SettingsRedesigned from "./pages/SettingsRedesigned";
 
-// useless
-
-// import ComingSoon from "./pages/ComingSoonPage/index";
-// import CheckMail from "./pages/CheckMail";
-// import PartnersPage from "./pages/PartnersPage";
-// import BlogPostPage from "./pages/BlogPostPage";
-// import Services from "./pages/Services/Services";
-// import HomePageB from "./pages/HomePageB";
-// import DummyPage from "./pages/DummyPage";
-// import Events from "./pages/Events/Events";
-// import PressArticle from "./pages/PressArticle";
-// import Press from "./pages/PressPage";
-// import Solutions from "./pages/Solutions/Solutions";
-// import Blogs from "./pages/BlogsPage";
-// import Careers from "./pages/Careers";
-// import General from "./pages/HelpAndSupport/components/General";
-// import PromotedArticles from "./pages/HelpAndSupport/components/PromotedArticles";
-// import Signin from "./pages/SignIn/SignIn";
-// import Signup from "./pages/SignUp/SignUp";
-// import TermsOfService from "./pages/TermsOfService";
-// import NewSignin from "./pages/NewSignin/NewSignin";
-// import CreateAccount from "./pages/NewSignup/CreateAccount";
-
-// useless
-
 import * as atatus from "atatus-spa";
 atatus.config("006cee2d85d74c12953a30f3e9b78569").install();
 
@@ -146,76 +121,3 @@ function App() {
 }
 
 export default App;
-
-// useless
-
-{
-  /* <Route path="/careers" element={<Careers />} /> */
-}
-{
-  /* <Route path="/services" element={<Services />} /> */
-}
-{
-  /* <Route path="/solutions" element={<Solutions />} /> */
-}
-{
-  /* <Route path="/terms-of-service" element={<TermsOfService />} /> */
-}
-{
-  /* <Route path="/create-account" element={<CreateAccount />} /> */
-}
-{
-  /* <Route path="/signin" element={<Signin />} /> */
-}
-{
-  /* <Route path="/coming-soon" element={<ComingSoon />} /> */
-}
-{
-  /* <Route path="/demos" element={<DummyPage someText="demo pages" />} /> */
-}
-{
-  /* <Route path="/blog" element={<Blogs />} />
-<Route path="/blog/:id" element={<BlogPostPage />} /> */
-}
-{
-  /* <Route path="press" element={<Press />} /> */
-}
-{
-  /* <Route path="/partners" element={<PartnersPage />} /> */
-}
-{
-  /* <Route path="press-article" element={<PressArticle />} /> */
-}
-{
-  /* <Route path="/events" element={<Events />} /> */
-}
-{
-  /* <Route path="/blog" element={<Blogs />} />
-<Route path="/blog/:id" element={<BlogPostPage />} /> */
-}
-{
-  /* <Route path="press" element={<Press />} /> */
-}
-{
-  /* <Route path="/partners" element={<PartnersPage />} /> */
-}
-{
-  /* <Route path="press-article" element={<PressArticle />} /> */
-}
-{
-  /* <Route path="pricing" element={<Pricing />} /> */
-}
-{
-  /* <Route path="/help-support-general" element={<General />} /> */
-}
-{
-  /* <Route path="/promoted-articles" element={<PromotedArticles />}></Route> */
-}
-{
-  /* <Route path="/homeB" element={<HomePageB />} /> */
-}
-{
-  /* path for forgot/reset password */
-}
-
-// useless
