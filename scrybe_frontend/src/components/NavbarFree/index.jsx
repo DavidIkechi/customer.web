@@ -2,11 +2,13 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import logo from "../../assets/heed_logo_with_text.svg";
 import { headers } from "../../helpers/axioshelp";
+import { useFetchUserQuery } from "../../redux/baseEndpoints";
 import styles from "./nav.module.scss";
 
 function NavBar() {
+  const { data, isLoading } = useFetchUserQuery();
+
   const [clicked, setClicked] = useState(false);
   const [activeUser, setActiveUser] = useState(null);
 
@@ -21,7 +23,8 @@ function NavBar() {
       setActiveUser(null);
     }
   };
-
+  console.log(data);
+  console.log(isLoading);
   const logoutUser = async () => {
     Cookies.remove("heedAccessToken");
     localStorage.removeItem("heedAccessToken");
