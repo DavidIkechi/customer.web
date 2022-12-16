@@ -1,30 +1,32 @@
-import axios from "axios";
 import Cookies from "js-cookie";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { headers } from "../../helpers/axioshelp";
 import { useFetchUserQuery } from "../../redux/baseEndpoints";
 import styles from "./nav.module.scss";
 
 function NavBar() {
-  const { data, isLoading } = useFetchUserQuery();
+  const { data, isLoading, isError, error } = useFetchUserQuery({
+    refetchOnMountOrArgChange: true,
+  });
 
   const [clicked, setClicked] = useState(false);
-  const [activeUser, setActiveUser] = useState(null);
+  const activeUser = data;
 
-  const fetchUser = async () => {
-    try {
-      const res = await axios.get("account", { headers });
-      if (res.status === 200) {
-        setActiveUser(res.data);
-      }
-    } catch (error) {
-      // console.log(error)
-      setActiveUser(null);
-    }
-  };
+  // const fetchUser = async () => {
+  //   try {
+  //     const res = await axios.get("account", { headers });
+  //     if (res.status === 200) {
+  //       setActiveUser(res.data);
+  //     }
+  //   } catch (error) {
+  //     // console.log(error)
+  //     setActiveUser(null);
+  //   }
+  // };
   console.log(data);
   console.log(isLoading);
+  console.log(isError);
+  console.log(error?.data?.detail);
   const logoutUser = async () => {
     Cookies.remove("heedAccessToken");
     localStorage.removeItem("heedAccessToken");
@@ -32,12 +34,12 @@ function NavBar() {
     localStorage.removeItem("currentUserEmail");
     localStorage.removeItem("auth");
     localStorage.removeItem("heedAccessTokenType");
-    setActiveUser(null);
+    // setActiveUser(null);
   };
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
+  // useEffect(() => {
+  //   fetchUser();
+  // }, []);
 
   function handleClick() {
     setClicked((pre) => !pre);
@@ -84,24 +86,27 @@ function NavBar() {
             {activeUser && <NavLink to="/dashboard">Dashboard</NavLink>}
           </div>
           <div className={styles.nav__ctas}>
-            {activeUser ? (
-              <>
-                <button className={`${styles.logout}`} onClick={logoutUser}>
-                  {" "}
-                  Logout{" "}
-                </button>
-                {/* <NavLink to="/try" className={styles.ctas__button}>
-                  Try for Free
-                </NavLink> */}
-              </>
+            {isLoading ? (
+              <div>Loading...</div>
             ) : (
               <>
-                <NavLink to="/login" className={styles.ctas__button}>
-                  Login
-                </NavLink>
-                <NavLink to="/try" className={styles.ctas__button}>
-                  Try for Free
-                </NavLink>
+                {activeUser ? (
+                  <>
+                    <button className={`${styles.logout}`} onClick={logoutUser}>
+                      {" "}
+                      Logout{" "}
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <NavLink to="/login" className={styles.ctas__button}>
+                      Login
+                    </NavLink>
+                    <NavLink to="/try" className={styles.ctas__button}>
+                      Try for Free
+                    </NavLink>
+                  </>
+                )}
               </>
             )}
           </div>

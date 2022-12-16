@@ -1,18 +1,26 @@
-import { React, useState, useCallback, useEffect } from "react";
-import SnackBar from "../../components/SnackBar";
+import { React, useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import SnackBar from "../../components/SnackBar";
 // import Loading from "../../components/Loading";
-import Cookies from "js-cookie";
-import styles from "./Login.module.scss";
-import ApiService from "../../helpers/axioshelp/apis";
 import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
+import styles from "./Login.module.scss";
 
-import logo from "./assets/logo.png";
-import google from "./assets/google.png";
-import visible from "./assets/visible.png";
+import Cookies from "js-cookie";
+import { useLoginUserMutation } from "../../redux/baseEndpoints";
 import hidden from "./assets/hidden.png";
+import logo from "./assets/logo.png";
+import visible from "./assets/visible.png";
 
 const Login = () => {
+  const [
+    loginUser,
+    {
+      data: loginData,
+      isSuccess: isLoginSuccess,
+      isError: isLoginError,
+      error: loginError,
+    },
+  ] = useLoginUserMutation();
   const emailTest = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
   const passwordTest = new RegExp(/^["0-9a-zA-Z!@#$&()\\-`.+,/"]{8,}$/);
 
@@ -75,39 +83,25 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     let formData = new FormData();
-
     formData.append("username", username);
     formData.append("password", password);
 
-    // setIsLoading(true);
-
-    try {
-      const response = await ApiService.SignIn(formData);
-
-      // setIsLoading(false)
-
-      localStorage.setItem("heedAccessToken", response.data.access_token);
-
-      localStorage.setItem("heedRefreshToken", response.data.refresh_token);
-
-      Cookies.set("heedAccessToken", response.data.access_token);
-
-      localStorage.setItem("heedAccessTokenType", response.data.token_type);
-
-      localStorage.setItem("currentUserEmail", username);
-
-      localStorage.setItem("auth", username);
-
-      // navigate("/dashboard");
-      window.location.href = "/dashboard";
-    } catch (err) {
-      // setIsLoading(false);
-
-      setResponse(ErrorHandler(err));
-    }
+    // login user redux hook
+    await loginUser(formData);
   };
+
+  useEffect(() => {
+    if (isLoginSuccess) {
+      localStorage.setItem("heedAccessToken", loginData.access_token);
+      localStorage.setItem("heedRefreshToken", loginData.refresh_token);
+      Cookies.set("heedAccessToken", loginData.access_token);
+      localStorage.setItem("heedAccessTokenType", loginData.token_type);
+      window.location.href = "/dashboard";
+    } else if (isLoginError) {
+      setResponse(ErrorHandler(loginError));
+    }
+  }, [isLoginError, isLoginSuccess, loginData, loginError, navigate]);
 
   return (
     <>
@@ -197,7 +191,9 @@ const Login = () => {
               <Link to="/forget-password">Forgot Password</Link>
             </div>
 
-            <button disabled={!isValid}>Sign In</button>
+            <button type="submit" disabled={!isValid}>
+              Sign In
+            </button>
           </form>
 
           <div className={styles.linkbottom}>
