@@ -1,6 +1,6 @@
 import React from "react";
 import NewSignup from "./Signup/NewSignup";
-import CompleteSignup from "./CompleteSignup/CompleteSignup";
+// import CompleteSignup from "./CompleteSignup/CompleteSignup";
 
 const CreateAccount = () => {
   return (
