@@ -44,7 +44,7 @@ const MainPage = () => {
   const navigate = useNavigate();
 
   const togglePage = (page) => {
-    if (page === "Account information") {
+    if (page === "Personal information") {
       setPage(true);
       setIsAccountPage(false);
       setIsNotificationPage(false);
