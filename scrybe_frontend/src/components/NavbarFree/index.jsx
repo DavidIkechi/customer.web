@@ -23,8 +23,6 @@ function NavBar() {
       setActiveUser(null);
     }
   };
-  console.log(data);
-  console.log(isLoading);
   const logoutUser = async () => {
     Cookies.remove("heedAccessToken");
     localStorage.removeItem("heedAccessToken");
