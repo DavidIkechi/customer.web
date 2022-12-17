@@ -10,8 +10,6 @@ import tag from "./assets/sell.svg";
 import checkIcon from "./assets/check.svg";
 import visa from "./assets/VisaInc.png";
 import master from "./assets/Mastercard.png";
-import NavBarFree from "../../components/NavbarFree";
-import Footer from "../../components/Footer";
 import axios from "axios";
 
 function Checkout() {
@@ -40,7 +38,6 @@ function Checkout() {
 
   return (
     <div className={styles.checkout}>
-      <NavBarFree />
       <div className={styles.container}>
         <div className={styles.header}>
           <h1 className={styles.heroH1}>
@@ -254,7 +251,6 @@ function Checkout() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

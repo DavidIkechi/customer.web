@@ -10,24 +10,10 @@ import partner1 from "./assets/partner1.svg";
 import partner2 from "./assets/partner2.svg";
 import partner3 from "./assets/partner3.svg";
 import partner4 from "./assets/partner4.svg";
-// import team1 from "./assets/team1.png";
-// import team2 from "./assets/team2.png";
-// import team3 from "./assets/team3.png";
-// import team4 from "./assets/team4.png";
-// import team5 from "./assets/team5.png";
-// import team6 from "./assets/team6.png";
-// import team7 from "./assets/team7.png";
-// import team8 from "./assets/team8.png";
-// import HeroIcon from "./assets/hero__icon.png";
 
 function About() {
-  React.useEffect(() => {
-    // 👇️ scroll to top on page load
-    window.scrollTo({ top: 0, left: 0 });
-  }, []);
   return (
-    <div className="App" data-testid="app-container">
-      <NavBar />
+    <>
       <section className={styles.first__section}>
         <div className={styles.sect__container}>
           <div className={styles.first__top}>
@@ -309,9 +295,7 @@ function About() {
           </div>
         </div>
       </section>
-
-      <Footer />
-    </div>
+    </>
   );
 }
 
