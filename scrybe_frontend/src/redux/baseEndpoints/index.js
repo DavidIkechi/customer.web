@@ -44,7 +44,23 @@ export const baseAPI = createApi({
         url: `audios/delete?audios=${[id]}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Recording"],
+      // us to refetch the recordings after deleting one
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(
+            baseAPI.util.updateQueryData(
+              "fetchUserRecordings",
+              undefined,
+              (draft) => {
+                return draft.filter((recording) => recording.id !== args);
+              }
+            )
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      },
     }),
   }),
 });

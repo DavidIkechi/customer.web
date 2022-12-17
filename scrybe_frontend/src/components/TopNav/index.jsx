@@ -15,11 +15,10 @@ import uploadBtn_icon from "./imgs/uploadBtnIcon.svg";
 import styles from "./topbar.module.scss";
 
 const TopNav = ({ openSidebar, search }) => {
-  const { data, isLoading, isError, error } = useFetchUserQuery({
-    refetchOnMountOrArgChange: true,
-  });
+  const { data, isLoading, isError, error } = useFetchUserQuery();
   const [show, setShow] = useState(false);
   const currentUser = data;
+  const [userError, setUserError] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [response, setResponse] = useState({ type: "", message: "" });
 

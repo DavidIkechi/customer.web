@@ -5,9 +5,7 @@ import { useFetchUserQuery } from "../../redux/baseEndpoints";
 import styles from "./nav.module.scss";
 
 function NavBar() {
-  const { data, isLoading } = useFetchUserQuery({
-    refetchOnMountOrArgChange: true,
-  });
+  const { data, isLoading } = useFetchUserQuery();
 
   const [clicked, setClicked] = useState(false);
   const activeUser = data;

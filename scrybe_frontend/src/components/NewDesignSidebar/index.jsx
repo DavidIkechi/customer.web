@@ -34,9 +34,7 @@ function NewDesignSideBar({
   closeSidebar,
   toggleSidebar,
 }) {
-  const { data, isLoading } = useFetchUserQuery({
-    refetchOnMountOrArgChange: true,
-  });
+  const { data, isLoading } = useFetchUserQuery();
   const currentUser = data;
   const [show, setShow] = useState(false);
   // const fetchUser = async () => {
