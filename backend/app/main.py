@@ -11,6 +11,7 @@ import auth
 from routers.score import score_count
 import uvicorn
 from routers.transcribe import transcript_router
+from routers.users import user_router
 from routers.score import score_count
 import models, json
 from auth import get_active_user, get_current_user, get_admin
@@ -109,7 +110,13 @@ app = FastAPI(
     openapi_url="/openapi.json"
 )
 
-app.include_router(transcript_router)
+app.include_router(
+    transcript_router
+    )
+
+app.include_router(
+    user_router
+    )
 app.add_middleware(ElasticAPM, client=apm)
 
 origins = [
@@ -170,10 +177,10 @@ def main() -> None:
 AWS_KEY_ID = os.getenv("AWS_KEY_ID")
 AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
 
-@app.on_event('startup')
-@repeat_every(seconds = 3, wait_first = True)
-def periodic():
-    cron_status.check_and_update_jobs()
+# @app.on_event('startup')
+# @repeat_every(seconds = 3, wait_first = True)
+# def periodic():
+#     cron_status.check_and_update_jobs()
     
 
 @app.get("/")
@@ -289,10 +296,6 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     }
 
 # create the endpoint
-@app.post('/login', summary = "create access token for logged in user", tags=['users'])
-async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    # return token once the user has been successfully authenticated, or it returns an error.
-    return await main_login(form_data, db)
 
 @app.post('/refresh-token', summary = "refresh expired access token of logged in user", tags=['users'])
 async def refresh_token(refresh_token: schema.RefreshToken, db: Session = Depends(get_db)):
@@ -301,113 +304,6 @@ async def refresh_token(refresh_token: schema.RefreshToken, db: Session = Depend
 
 
 
-@app.post("/create_users", summary = "create/register a user", response_model=schema.User, tags=['users'])
-async def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):
-    db_user = crud.get_user_by_email(db, email=user.email)
-
-    if db_user:
-        raise HTTPException(status_code=400, detail="Email already registered")
-
-    await send_email([user.email], user)
-    return crud.create_user(db=db, user=user)
-
-
-@app.get("/get_all_users", summary = "get all users", response_model=list[schema.User], tags=['users'])
-def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    users = crud.get_users(db, skip=skip, limit=limit)
-    return users
-
-
-@app.get("/get_user/{user_id}", summary = "get user by id", response_model=schema.User, tags=['users'])
-def read_user(user_id: int, db: Session = Depends(get_db), user: models.User = Depends(get_admin)):
-    db_user = crud.get_user(db, user_id=user_id)
-    if db_user is None:
-        raise HTTPException(status_code=404, detail="User not found")
-
-    return db_user
-
-
-# @app.post("/users/upload_picture", summary="Upload company logo image", status_code=status.HTTP_202_ACCEPTED, tags=['users'])
-# def upload_picture(db:Session = Depends(get_db), image_file: UploadFile = File(..., description="Company Profile Image/Logo"), 
-#                    current_user:schema.User = Depends(get_active_user)):
-#     return crud.upload_user_image(user_id=current_user.id, db=db, image_file=image_file)
-
-# @app.patch("/users/update_profile", summary="Update user profile details", status_code=status.HTTP_200_OK, tags=['users'])
-# def update_adress(profile:schema.UserProfileUpdate, db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
-#     return crud.update_user_profile(db=db, profile=profile, user_id=current_user.id)
-
-@app.patch("/users/update_profile", summary="Update user profile details", status_code=status.HTTP_200_OK, tags=['users'])
-def update_profile( 
-                   firstname:Optional[str] = Form(None), 
-                   lastname:Optional[str] = Form(None), 
-                   company_name: Optional[str] = Form(None), 
-                   company_address:Optional[str] = Form(None), 
-                   phone_number: Optional[str] = Form(None), 
-                   db:Session = Depends(get_db), 
-                   current_user:schema.User = Depends(get_active_user),
-                  image_file: Optional[UploadFile] = File(None, description="Company Profile Image/Logo")):
-    user_profile = db.query(models.UserProfile).filter(models.UserProfile.id == current_user.id).first()
-    if user_profile is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                        detail=f"The Profile for user with id {current_user.id} does not exist")
-        
-    if user_profile.id != current_user.id:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , 
-                                    detail="Not authorized to perform requested action")
-        
-    user = db.query(models.User).filter(models.User.id == user_profile.id).first()
-    company = db.query(models.Company).filter(models.Company.id == user.company_id).first()
-    field_names = [company_name, company_address, phone_number, firstname, lastname, image_file]
-    for field in field_names:
-        if field == None:
-            pass
-        elif field is company_name:
-            company.name = company_name
-        elif field is company_address:
-            user_profile.company_address = company_address
-        elif field is phone_number:
-            user_profile.phone_number = phone_number
-        elif field is firstname:
-            user.first_name = firstname  
-        elif field is lastname:
-           user.last_name = lastname
-        else:
-            try:
-                image_response = cloudinary.uploader.upload(image_file.file)
-                image_url = image_response.get("secure_url") 
-                user_profile.company_logo_url = image_url        
-            except Exception:
-                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="There was an error uploading the file")
-
-    db.commit() 
-    db.refresh(company)
-    db.refresh(user_profile)
-    return user_profile
-
-    
-           
-
-@app.delete("/users/delete_account/{user_id}", summary="delete user account", tags=['users'])
-def delete_user_account(user_id: int , db:Session = Depends(get_db), current_user:schema.User = Depends(get_active_user)):
-    return crud.delete_user(db=db, user_id=user_id)
-
-@app.get('/verification', summary = "verify a user by email", tags=['users'])
-async def email_verification(request: Request, token: str, db: Session = Depends(get_db)):
-
-    user = await verify_token(token, db)
-
-
-    if user and not user.is_active:
-        user.is_active = True
-        user.is_verified = True
-        db.commit()
-        return{
-            "status" : "ok",
-            "data" : f"Hello {user.first_name}, your account has been successfully verified"}
-    return {
-        "status": "ok",
-        "data" : f"Hello {user.first_name}, you already have an active account with Heed!"
-    }
 
 @app.post("/tryForFree")
 async def free_trial(db : Session = Depends(get_db), file: UploadFile = File(...)):
@@ -740,81 +636,6 @@ def get_total_agent_analysis(agent_id: int, db: Session = Depends(get_db), user:
                     result["month"][4]["neutral"] += 1
 
     return result
-
-
-@app.get("/account", summary = "get user profile details", tags=['users'])
-async def my_profile (db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    user_id = user.id
-    return crud.get_user_profile(db, user_id)
-
-
-
-@app.post('/forgot-password', summary = "get token for password reset", tags=['users'])
-async def forgot_password(email: schema.ForgetPassword, db: Session = Depends(get_db)):
-    user: models.User = crud.get_user_by_email(db, email.email)
-
-    if user is None:
-        raise HTTPException(status_code=404, detail="User not found")
-
-    
-    token = await send_password_reset_email([email.email], user)
-    return token
-    
-
-@app.patch('/reset-password', summary = "reset password", tags=['users'])
-async def reset_password(token: str, new_password: schema.UpdatePassword, db: Session = Depends(get_db)):
-
-    email = password_verif_token(token)
-    user: models.User = crud.get_user_by_email(db, email)
-        
-    if user is None:
-        raise HTTPException(status_code=404, detail="User not found")
-
-    its_match = verify_password(new_password.password, user.password)
-    its_le_eight = len(new_password.password) < 8
-
-    if its_match:
-        raise HTTPException(status_code=500, detail="New password cannot be the same as old password")
-    elif its_le_eight:
-        raise HTTPException(status_code=500, detail="Password must have at least 8 characters")
-
-    
-    reset_done = crud.reset_password(db, new_password.password, user)
-
-    if reset_done is None:
-        raise HTTPException(status_code=500, detail="Failed to update password")
-    
-    return reset_done
-
-
-
-@app.patch('/change-password', summary = "change password", tags=['users'])
-async def change_password(password_schema: schema.ChangePassword, db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
-    its_match = password_schema.old_password == password_schema.new_password
-    its_le_eight = len(password_schema.new_password) < 8
-
-    if its_match:
-        raise HTTPException(status_code=500, detail="New password cannot be the same as old password")
-    elif its_le_eight:
-        raise HTTPException(status_code=500, detail="Password must have at least 8 characters")
-
-    user_db = crud.get_user_by_email(db, user.email)
-
-    if user_db is None:
-        raise HTTPException(status_code=404, detail="User not found")
-
-    password_match =  verify_password(password_schema.old_password, user_db.password)
-
-    if not password_match:
-        raise HTTPException(status_code=500, detail="Password does not match")
-    
-    reset_done = crud.reset_password(db, password_schema.new_password, user_db)
-
-    if reset_done is None:
-        raise HTTPException(status_code=500, detail="Failed to update password")
-    
-    return reset_done
-
 
 
 @app.get('/login/google')
