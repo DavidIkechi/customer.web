@@ -5,7 +5,7 @@ import { useFetchUserQuery } from "../../redux/baseEndpoints";
 import styles from "./nav.module.scss";
 
 function NavBar() {
-  const { data, isLoading, isError, error } = useFetchUserQuery({
+  const { data, isLoading } = useFetchUserQuery({
     refetchOnMountOrArgChange: true,
   });
 
@@ -23,10 +23,6 @@ function NavBar() {
   //     setActiveUser(null);
   //   }
   // };
-  console.log(data);
-  console.log(isLoading);
-  console.log(isError);
-  console.log(error?.data?.detail);
   const logoutUser = async () => {
     Cookies.remove("heedAccessToken");
     localStorage.removeItem("heedAccessToken");

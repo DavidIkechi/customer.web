@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorHandler from "../../../helpers/axioshelp/Utils/ErrorHandler";
-import ApiService from "../../../helpers/axioshelp/apis";
+import { useRegisterUserMutation } from "../../../redux/baseEndpoints";
 
 const createAccount = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -137,8 +137,20 @@ const createAccount = () => {
 };
 
 export { createAccount };
+export { completeRegistration };
 
 const completeRegistration = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [
+    registerUser,
+    {
+      data: registerUserData,
+      isSuccess: isRegisterUserSuccess,
+      isError: isRegisterUserError,
+      error: registerUserError,
+    },
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+  ] = useRegisterUserMutation();
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [company_name, setCompany] = useState("");
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -194,16 +206,27 @@ const completeRegistration = () => {
       password: value.password,
     };
     console.log(data);
-    try {
-      await ApiService.SignUp(data);
+    await registerUser(data);
+    // try {
+    //   await ApiService.SignUp(data);
 
-      localStorage.clear();
+    //   localStorage.clear();
 
-      navigate("/verify-signup");
-    } catch (error) {
-      setResponse(ErrorHandler(error));
-    }
+    //   navigate("/verify-signup");
+    // } catch (error) {
+    //   setResponse(ErrorHandler(error));
+    // }
   };
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (isRegisterUserSuccess) {
+      localStorage.clear();
+      navigate("/verify-signup");
+    } else if (isRegisterUserError) {
+      setResponse(ErrorHandler(registerUserError));
+    }
+  }, [isRegisterUserError, isRegisterUserSuccess, navigate, registerUserError]);
 
   return {
     handleCompanyName,
@@ -216,7 +239,6 @@ const completeRegistration = () => {
     value,
     response,
     setResponse,
+    registerUserData,
   };
 };
-
-export { completeRegistration };

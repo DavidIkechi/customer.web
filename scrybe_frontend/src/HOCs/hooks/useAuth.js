@@ -1,38 +1,43 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useFetchUserQuery } from "../../redux/baseEndpoints";
 
-// const currentUser = localStorage.getItem("heedAccessToken") || null;
+const token = localStorage.getItem("heedAccessToken");
 
 const useAuth = () => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const { data, isLoading, isError, error } = useFetchUserQuery({
+    refetchOnMountOrArgChange: true,
+  });
+  const currentUser = data;
   const navigate = useNavigate();
 
-  const fetchCurrentUser = async () => {
-    const config = {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
-      },
-    };
-    await axios
-      .get("account", config)
-      .then((res) => {
-        setCurrentUser(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-        // navigate('/login');
-        setCurrentUser(null);
-      });
-  };
+  // const fetchCurrentUser = async () => {
+  //   const config = {
+  //     withCredentials: true,
+  //     headers: {
+  //       Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
+  //     },
+  //   };
+  //   await axios
+  //     .get("account", config)
+  //     .then((res) => {
+  //       setCurrentUser(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       // navigate('/login');
+  //       setCurrentUser(null);
+  //     });
+  // };
 
+  console.log("error in useAuth: ", error);
+  console.log("error in useAuth: ", isError);
   useEffect(() => {
-    fetchCurrentUser();
-    if (!currentUser) {
+    // fetchCurrentUser();
+    if (!token) {
       navigate("/login");
     }
-  }, [currentUser, navigate]);
+  }, [error, navigate]);
 
   return currentUser;
 };
