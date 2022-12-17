@@ -258,3 +258,15 @@ async def change_password(password_schema: schema.ChangePassword,
     return {
         "detail": reset_done
     }
+    
+@user_router.post('/refresh-token', summary = "refresh expired access token of logged in user")
+async def refresh_token(refresh_token: schema.RefreshToken, db: Session = Depends(_services.get_session)):
+    # return new access token for logged in user once it has verified the refresh token sent from the frontend.
+    try:
+        return {"detail": refresh(refresh_token, db)}
+    except Exception as e:
+        return JSONResponse(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+        
