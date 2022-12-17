@@ -53,6 +53,7 @@ import NewPasswordResetSuccessful from "./pages/NewPasswordResetSuccessful";
 import CompleteSignup from "./pages/NewSignup/CompleteSignup/CompleteSignup";
 
 import * as atatus from "atatus-spa";
+import PublicLayout from "./PublicLayout";
 atatus.config("006cee2d85d74c12953a30f3e9b78569").install();
 
 function App() {
@@ -60,34 +61,40 @@ function App() {
     <>
       <Routes>
         {/* access without sign in */}
-        <Route path="/" element={<HomePageRedesign />} />
         <Route path="/signup" element={<CreateAccount />} />
         <Route path="/complete-signup" element={<CompleteSignup />} />
         <Route path="/login" element={<FinalSignIn />} />
         <Route path="/check-mail" element={<CheckMail />} />
-        <Route path="/try" element={<TryForFree />} />
-        <Route path="/privacy" element={<PrivacyPolicy />} />
-        <Route path="/about-us" element={<About />} />
-        <Route path="/terms" element={<TermsAndCondition />} />
-        <Route path="/faq" element={<FAQs />} />
-        <Route path="/help-support" element={<HelpSupport />} />
         <Route path="/verify-signup" element={<SignUpVerify />} />
-        <Route path="/support-team" element={<Support />} />
         <Route path="/logout" element={<Logout />} />
-
         <Route path="/emailverification" element={<EmailVerify />} />
-        <Route path="/try-results" element={<TryResults />} />
-
-        <Route path="/sales-team" element={<LandingPageSalesTeam />} />
-        <Route path="*" element={<Error />} />
-        <Route path="pricing" element={<Pricing />} />
-        <Route path="/try-results/:transcribeId" element={<TryResults />} />
+        <Route path="/forgot-password" element={<ForgetPasswordNew />} />
+        <Route path="/set-new-password" element={<NewSetNewPassword />} />
         <Route
-          path="settings/personal-information"
-          element={<PersonalInformation />}
+          path="/pw-reset-successful"
+          element={<NewPasswordResetSuccessful />}
         />
-        <Route path="/reviews" element={<Reviews />} />
 
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<HomePageRedesign />} />
+          <Route path="/try" element={<TryForFree />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/about-us" element={<About />} />
+          <Route path="/terms" element={<TermsAndCondition />} />
+          <Route path="/faq" element={<FAQs />} />
+          <Route path="/help-support" element={<HelpSupport />} />
+          <Route path="/support-team" element={<Support />} />
+          <Route path="/try-results" element={<TryResults />} />
+          <Route path="/sales-team" element={<LandingPageSalesTeam />} />
+          <Route path="pricing" element={<Pricing />} />
+          <Route path="/try-results/:transcribeId" element={<TryResults />} />
+
+          <Route path="/checkout-startup" element={<StartUp />} />
+          <Route path="/checkout-growing" element={<Growing />} />
+          <Route path="/checkout-enterprise" element={<Enterprise />} />
+
+          <Route path="/reviews" element={<Reviews />} />
+        </Route>
         {/* cant access without signin */}
 
         <Route element={<RequireToken />}>
@@ -117,16 +124,8 @@ function App() {
             element={<PersonalInformation />}
           />
         </Route>
-        <Route path="checkout-startup" element={<StartUp />} />
-        <Route path="checkout-growing" element={<Growing />} />
-        <Route path="checkout-enterprise" element={<Enterprise />} />
 
-        <Route path="/forget-password" element={<ForgetPasswordNew />} />
-        <Route path="/set-new-password" element={<NewSetNewPassword />} />
-        <Route
-          path="/pw-reset-successful"
-          element={<NewPasswordResetSuccessful />}
-        />
+        <Route path="*" element={<Error />} />
       </Routes>
     </>
   );

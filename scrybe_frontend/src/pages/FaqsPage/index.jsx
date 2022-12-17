@@ -7,10 +7,6 @@ import { Hero } from "./assets";
 import Footer from "../../components/Footer";
 import NavBar from "../../components/NavbarFree";
 function FAQs() {
-  React.useEffect(() => {
-    // 👇️ scroll to top on page load
-    window.scrollTo({ top: 0, left: 0 });
-  }, []);
   const [faqs, setFaqs] = useState([
     {
       question: "How can I register?",
@@ -65,8 +61,6 @@ function FAQs() {
 
   return (
     <div className={styles.faq__wrapper}>
-      <NavBar />
-
       <div className={styles.faq__hero}>
         <div className={styles.faqFlex}>
           <div className={styles.FAQs}>
@@ -102,7 +96,6 @@ function FAQs() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
