@@ -1,6 +1,9 @@
 @use "../../functions.scss" as *;
 
 .nav {
+  a {
+    text-decoration: none !important;
+  }
   padding: 0 5%;
   $mobile: 950px;
   background-color: white;
@@ -130,11 +133,10 @@
       max-width: pix-rem(86);
     }
   }
-  .logout {
+  .logoutBtn {
     background-color: red;
-    color: white;
+    color: white !important;
     font-size: 1rem;
-
     border: 1px solid red;
     padding: pix-rem(10, em) pix-rem(25, em);
     transition: all 0.3s ease-in-out;
@@ -142,6 +144,7 @@
     -moz-transition: all 0.3s;
     -ms-transition: all 0.3s;
     -o-transition: all 0.3s;
+    // text-decoration: none !important;
     &:hover {
       background-color: transparent !important;
       color: #5e5e5e !important;

@@ -1,41 +1,20 @@
-import axios from "axios";
-import Cookies from "js-cookie";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
-import { headers } from "../../helpers/axioshelp";
+import { localStorageUser } from "../../helpers/localStorageUser";
 import { useFetchUserQuery } from "../../redux/baseEndpoints";
+import { logoutUser } from "../../redux/user/userSlice";
 import styles from "./nav.module.scss";
 
 function NavBar() {
-  const { data, isLoading } = useFetchUserQuery();
+  const { isLoading } = useFetchUserQuery();
 
   const [clicked, setClicked] = useState(false);
-  const [activeUser, setActiveUser] = useState(null);
-
-  const fetchUser = async () => {
-    try {
-      const res = await axios.get("account", { headers });
-      if (res.status === 200) {
-        setActiveUser(res.data);
-      }
-    } catch (error) {
-      // console.log(error)
-      setActiveUser(null);
-    }
+  const activeUser = localStorageUser();
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logoutUser());
   };
-  const logoutUser = async () => {
-    Cookies.remove("heedAccessToken");
-    localStorage.removeItem("heedAccessToken");
-    localStorage.removeItem("heedRefreshToken");
-    localStorage.removeItem("currentUserEmail");
-    localStorage.removeItem("auth");
-    localStorage.removeItem("heedAccessTokenType");
-    setActiveUser(null);
-  };
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
 
   function handleClick() {
     setClicked((pre) => !pre);
@@ -82,24 +61,31 @@ function NavBar() {
             {activeUser && <NavLink to="/dashboard">Dashboard</NavLink>}
           </div>
           <div className={styles.nav__ctas}>
-            {activeUser ? (
-              <>
-                <button className={`${styles.logout}`} onClick={logoutUser}>
-                  {" "}
-                  Logout{" "}
-                </button>
-                {/* <NavLink to="/try" className={styles.ctas__button}>
-                  Try for Free
-                </NavLink> */}
-              </>
+            {isLoading ? (
+              <div>Loading...</div>
             ) : (
               <>
-                <NavLink to="/login" className={styles.ctas__button}>
-                  Login
-                </NavLink>
-                <NavLink to="/try" className={styles.ctas__button}>
-                  Try for Free
-                </NavLink>
+                {activeUser ? (
+                  <>
+                    <NavLink
+                      to="/"
+                      className={`${styles.logoutBtn}`}
+                      onClick={handleLogout}
+                    >
+                      {" "}
+                      Logout{" "}
+                    </NavLink>
+                  </>
+                ) : (
+                  <>
+                    <NavLink to="/login" className={styles.ctas__button}>
+                      Login
+                    </NavLink>
+                    <NavLink to="/try" className={styles.ctas__button}>
+                      Try for Free
+                    </NavLink>
+                  </>
+                )}
               </>
             )}
           </div>

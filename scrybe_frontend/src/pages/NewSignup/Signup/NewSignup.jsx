@@ -21,9 +21,9 @@ const NewSignup = () => {
       </div>
 
       <div className={styles.inputsection}>
-        <NavLink to="/">
+        <Link to="/">
           <img src={logo} alt="heedLogo" />
-        </NavLink>
+        </Link>
 
         <div className={styles.greeting}>
           <h1>Create an accout</h1>
