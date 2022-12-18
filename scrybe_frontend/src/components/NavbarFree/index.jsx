@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import { localStorageUser } from "../../helpers/localStorageUser";
 import { useFetchUserQuery } from "../../redux/baseEndpoints";
-import { logoutUser } from "../../redux/user/userSlice";
+import { logoutUser, resetUser } from "../../redux/user/userSlice";
 import styles from "./nav.module.scss";
 
 function NavBar() {
@@ -13,7 +13,7 @@ function NavBar() {
   const activeUser = localStorageUser();
   const dispatch = useDispatch();
   const handleLogout = async () => {
-    dispatch(logoutUser());
+    dispatch(logoutUser(), resetUser());
   };
 
   function handleClick() {

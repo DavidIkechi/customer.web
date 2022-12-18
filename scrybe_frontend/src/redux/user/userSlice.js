@@ -7,6 +7,7 @@ const initialState = {
   userData: JSON.parse(localStorage.getItem("user")) || null,
   status: null,
   error: null,
+  getUser: null,
 };
 
 // fech user data from backend
@@ -47,21 +48,27 @@ export const logoutUser = createAsyncThunk("user/logout", async () => {
 const userSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    resetUser: (state) => {
+      state.status = null;
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getUser.pending, (state) => {
-        state.status = "loading";
+        state.getUser = "loading";
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.userData = action.payload;
-        state.status = "success";
         state.error = null;
+        state.getUser = "success";
+        state.status = null;
       })
       .addCase(getUser.rejected, (state, action) => {
         state.error = null;
         state.userData = null;
-        state.status = "failed";
+        state.getUser = "failed";
       })
       .addCase(registerUser.pending, (state) => {
         state.status = "loading";
@@ -70,23 +77,29 @@ const userSlice = createSlice({
         state.userData = action.payload;
         state.status = "success";
         state.error = null;
+        state.getUser = null;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.error = action.payload;
         state.userData = null;
         state.status = "failed";
+        state.getUser = null;
       })
       .addCase(loginUser.pending, (state) => {
         state.status = "loading";
+        state.getUser = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.userData = action.payload;
         state.status = "success";
+        state.error = null;
+        state.getUser = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.error = action.payload;
         state.status = "failed";
         state.userData = null;
+        state.getUser = null;
       });
     // [getUser.pending]: (state) => {
     //   state.status = "loading";
@@ -102,6 +115,6 @@ const userSlice = createSlice({
   },
 });
 
-// export const { loginUser, registerUser, logoutUser } = userSlice.actions;
+export const { resetUser } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { localStorageUser } from "../../../helpers/localStorageUser";
-import { logoutUser } from "../../../redux/user/userSlice";
+import { logoutUser, resetUser } from "../../../redux/user/userSlice";
 import account from "./assets/account.jpg";
 import logout from "./assets/logout.jpg";
 import support from "./assets/support.jpg";
@@ -10,7 +10,7 @@ function DropDownModal({ closeModal }) {
   const currentUser = localStorageUser();
   const dispatch = useDispatch();
   const signout = () => {
-    dispatch(logoutUser());
+    dispatch(logoutUser(), resetUser());
   };
   return (
     <div className={styles.dropdown}>

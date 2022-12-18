@@ -24,10 +24,14 @@ const ErrorHandler = (err) => {
   //   type: "Error",
   //   message: "Something went wrong",
   // };
-  return {
-    type: "Error",
-    message: err?.data?.detail ? err?.data?.detail : "Something went wrong",
-  };
+  if (err.type) {
+    return {
+      type: "Error",
+      message: err?.data?.detail ? err?.data?.detail : "Something went wrong",
+    };
+  } else {
+    return err;
+  }
 };
 
 export default ErrorHandler;

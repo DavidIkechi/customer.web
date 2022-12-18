@@ -6,7 +6,7 @@ import styles from "./Login.module.scss";
 
 import { useDispatch, useSelector } from "react-redux";
 import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
-import { loginUser } from "../../redux/user/userSlice";
+import { getUser, loginUser } from "../../redux/user/userSlice";
 import hidden from "./assets/hidden.png";
 import logo from "./assets/logo.png";
 import visible from "./assets/visible.png";
@@ -107,12 +107,19 @@ const Login = () => {
   // }, [isLoginError, isLoginSuccess, loginData, loginError, navigate]);
 
   useEffect(() => {
+    console.log("status", status);
     if (status === "success") {
-      window.location.href = "/dashboard";
+      dispatch(getUser());
+      setResponse(ErrorHandler("Login successful"));
+
+      setTimeout(() => {
+        window.location.href = "/dashboard";
+      }, 1000);
     } else if (error) {
       setResponse(ErrorHandler(error));
     }
-  }, [status, userData, error]);
+    // dispatch(resetUser());
+  }, [status, userData, error, dispatch]);
 
   return (
     <>

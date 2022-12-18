@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const API_URL = "https://api.heed.hng.tech";
-const token = localStorage.getItem("heedAccessToken");
+const token = Cookies.get("heedAccessToken");
 const headers = {
   "content-type": "application/json",
   Authorization: `Bearer ${token}`,

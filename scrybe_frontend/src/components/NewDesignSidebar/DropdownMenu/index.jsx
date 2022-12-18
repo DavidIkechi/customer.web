@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { logoutUser } from "../../../redux/user/userSlice";
+import { logoutUser, resetUser } from "../../../redux/user/userSlice";
 import account from "./assets/account.jpg";
 import logout from "./assets/logout.jpg";
 import support from "./assets/support.jpg";
@@ -8,7 +8,7 @@ import styles from "./dropdown.module.scss";
 function DropDownModal({ closeModal }) {
   const dispatch = useDispatch();
   const signout = () => {
-    dispatch(logoutUser());
+    dispatch(logoutUser(), resetUser());
   };
   return (
     <div className={styles.dropdown}>
