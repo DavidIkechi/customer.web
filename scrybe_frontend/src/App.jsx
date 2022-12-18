@@ -49,8 +49,8 @@ function App() {
     <>
       <Routes>
         {/* access without sign in */}
-        <Route path="/signup" element={<CreateAccount />} />
         <Route element={<Authenticated />}>
+          <Route path="/signup" element={<CreateAccount />} />
           <Route path="/complete-signup" element={<CompleteSignup />} />
           <Route path="/login" element={<FinalSignIn />} />
         </Route>
