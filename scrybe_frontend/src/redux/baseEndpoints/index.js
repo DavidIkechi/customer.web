@@ -5,7 +5,7 @@ export const baseAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://api.heed.hng.tech/",
     // add your tagTypes here used in the `queryFulfilled`;
-    tagTypes: ["User", "Recording"],
+    tagTypes: ["User"],
     prepareHeaders: (headers, { getState }) => {
       const token = localStorage.getItem("heedAccessToken");
       if (token) {

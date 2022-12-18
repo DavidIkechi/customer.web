@@ -1,33 +1,16 @@
-import axios from "axios";
-import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { localStorageUser } from "../../../helpers/localStorageUser";
+import { logoutUser } from "../../../redux/user/userSlice";
 import account from "./assets/account.jpg";
 import logout from "./assets/logout.jpg";
 import support from "./assets/support.jpg";
 import styles from "./dropdown.module.scss";
 function DropDownModal({ closeModal }) {
-  const [currentUser, setCurrentUser] = useState(null);
-  const getUserAccount = async () => {
-    const config = {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
-      },
-    };
-    const res = await axios.get("account", config);
-    setCurrentUser(res.data);
-  };
-  useEffect(() => {
-    getUserAccount();
-  }, []);
+  const currentUser = localStorageUser();
+  const dispatch = useDispatch();
   const signout = () => {
-    Cookies.remove("heedAccessToken");
-    localStorage.removeItem("heedAccessToken");
-    localStorage.removeItem("heedRefreshToken");
-    localStorage.removeItem("currentUserEmail");
-    localStorage.removeItem("auth");
-    localStorage.removeItem("heedAccessTokenType");
+    dispatch(logoutUser());
   };
   return (
     <div className={styles.dropdown}>

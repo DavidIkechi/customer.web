@@ -2,6 +2,7 @@ import { PropTypes } from "prop-types";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
+import { localStorageUser } from "../../helpers/localStorageUser";
 import { useFetchUserQuery } from "../../redux/baseEndpoints";
 import Modal from "../Modal";
 import SearchInput from "../SearchInput";
@@ -15,9 +16,9 @@ import uploadBtn_icon from "./imgs/uploadBtnIcon.svg";
 import styles from "./topbar.module.scss";
 
 const TopNav = ({ openSidebar, search }) => {
-  const { data, isLoading, isError, error } = useFetchUserQuery();
+  const { isLoading, isError, error } = useFetchUserQuery();
   const [show, setShow] = useState(false);
-  const currentUser = data;
+  const currentUser = localStorageUser();
   const [userError, setUserError] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [response, setResponse] = useState({ type: "", message: "" });

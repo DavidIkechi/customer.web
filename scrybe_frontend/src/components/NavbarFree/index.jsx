@@ -1,39 +1,20 @@
-import Cookies from "js-cookie";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
+import { localStorageUser } from "../../helpers/localStorageUser";
 import { useFetchUserQuery } from "../../redux/baseEndpoints";
+import { logoutUser } from "../../redux/user/userSlice";
 import styles from "./nav.module.scss";
 
 function NavBar() {
-  const { data, isLoading } = useFetchUserQuery();
+  const { isLoading } = useFetchUserQuery();
 
   const [clicked, setClicked] = useState(false);
-  const activeUser = data;
-
-  // const fetchUser = async () => {
-  //   try {
-  //     const res = await axios.get("account", { headers });
-  //     if (res.status === 200) {
-  //       setActiveUser(res.data);
-  //     }
-  //   } catch (error) {
-  //     // console.log(error)
-  //     setActiveUser(null);
-  //   }
-  // };
-  const logoutUser = async () => {
-    Cookies.remove("heedAccessToken");
-    localStorage.removeItem("heedAccessToken");
-    localStorage.removeItem("heedRefreshToken");
-    localStorage.removeItem("currentUserEmail");
-    localStorage.removeItem("auth");
-    localStorage.removeItem("heedAccessTokenType");
-    // setActiveUser(null);
+  const activeUser = localStorageUser();
+  const dispatch = useDispatch();
+  const handleLogout = async () => {
+    dispatch(logoutUser());
   };
-
-  // useEffect(() => {
-  //   fetchUser();
-  // }, []);
 
   function handleClick() {
     setClicked((pre) => !pre);
@@ -86,7 +67,10 @@ function NavBar() {
               <>
                 {activeUser ? (
                   <>
-                    <button className={`${styles.logout}`} onClick={logoutUser}>
+                    <button
+                      className={`${styles.logout}`}
+                      onClick={handleLogout}
+                    >
                       {" "}
                       Logout{" "}
                     </button>

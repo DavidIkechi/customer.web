@@ -2,25 +2,28 @@ import { React, useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SnackBar from "../../components/SnackBar";
 // import Loading from "../../components/Loading";
-import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
 import styles from "./Login.module.scss";
 
-import Cookies from "js-cookie";
-import { useLoginUserMutation } from "../../redux/baseEndpoints";
+import { useDispatch, useSelector } from "react-redux";
+import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
+import { loginUser } from "../../redux/user/userSlice";
 import hidden from "./assets/hidden.png";
 import logo from "./assets/logo.png";
 import visible from "./assets/visible.png";
 
 const Login = () => {
-  const [
-    loginUser,
-    {
-      data: loginData,
-      isSuccess: isLoginSuccess,
-      isError: isLoginError,
-      error: loginError,
-    },
-  ] = useLoginUserMutation();
+  // const [
+  //   loginUser,
+  //   {
+  //     data: loginData,
+  //     isSuccess: isLoginSuccess,
+  //     isError: isLoginError,
+  //     error: loginError,
+  //   },
+  // ] = useLoginUserMutation();
+  const { userData, status, error } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
   const emailTest = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
   const passwordTest = new RegExp(/^["0-9a-zA-Z!@#$&()\\-`.+,/"]{8,}$/);
 
@@ -88,20 +91,28 @@ const Login = () => {
     formData.append("password", password);
 
     // login user redux hook
-    await loginUser(formData);
+    dispatch(loginUser(formData));
   };
 
+  // useEffect(() => {
+  //   if (isLoginSuccess) {
+  //     localStorage.setItem("heedAccessToken", loginData.access_token);
+  //     localStorage.setItem("heedRefreshToken", loginData.refresh_token);
+  //     Cookies.set("heedAccessToken", loginData.access_token);
+  //     localStorage.setItem("heedAccessTokenType", loginData.token_type);
+  //     window.location.href = "/dashboard";
+  //   } else if (isLoginError) {
+  //     setResponse(ErrorHandler(loginError));
+  //   }
+  // }, [isLoginError, isLoginSuccess, loginData, loginError, navigate]);
+
   useEffect(() => {
-    if (isLoginSuccess) {
-      localStorage.setItem("heedAccessToken", loginData.access_token);
-      localStorage.setItem("heedRefreshToken", loginData.refresh_token);
-      Cookies.set("heedAccessToken", loginData.access_token);
-      localStorage.setItem("heedAccessTokenType", loginData.token_type);
+    if (status === "success") {
       window.location.href = "/dashboard";
-    } else if (isLoginError) {
-      setResponse(ErrorHandler(loginError));
+    } else if (error) {
+      setResponse(ErrorHandler(error));
     }
-  }, [isLoginError, isLoginSuccess, loginData, loginError, navigate]);
+  }, [status, userData, error]);
 
   return (
     <>
@@ -117,7 +128,9 @@ const Login = () => {
         </div>
 
         <div className={styles.inputsection}>
-          <img src={logo} alt="heedLogo" />
+          <Link to="/">
+            <img src={logo} alt="heedLogo" />
+          </Link>
 
           <div className={styles.greeting}>
             <h1>Welcome back Heeder</h1>

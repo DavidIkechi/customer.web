@@ -1,20 +1,14 @@
-import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { logoutUser } from "../../../redux/user/userSlice";
 import account from "./assets/account.jpg";
 import logout from "./assets/logout.jpg";
 import support from "./assets/support.jpg";
 import styles from "./dropdown.module.scss";
 function DropDownModal({ closeModal }) {
+  const dispatch = useDispatch();
   const signout = () => {
-    Cookies.remove("heedAccessToken");
-    localStorage.removeItem("heedAccessToken");
-    localStorage.removeItem("heedRefreshToken");
-    localStorage.removeItem("currentUser");
-    localStorage.removeItem("auth");
-    localStorage.removeItem("tokenType");
-    localStorage.removeItem("currentUserEmail");
-    localStorage.removeItem("accessTokenActivationTime");
-    localStorage.removeItem("heedAccessTokenType");
+    dispatch(logoutUser());
   };
   return (
     <div className={styles.dropdown}>

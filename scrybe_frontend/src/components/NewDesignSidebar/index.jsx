@@ -10,6 +10,7 @@ import DropDownModal from "./DropdownMenu";
 import styles from "./generalSidebar.module.scss";
 
 import { useFetchUserQuery } from "../../redux/baseEndpoints";
+import { localStorageUser } from "../../helpers/localStorageUser";
 
 /**
  * Wrap your component with this component to get a sidebar with a logo, a search input field and a list of links.
@@ -34,8 +35,8 @@ function NewDesignSideBar({
   closeSidebar,
   toggleSidebar,
 }) {
-  const { data, isLoading } = useFetchUserQuery();
-  const currentUser = data;
+  const { isLoading } = useFetchUserQuery();
+  const currentUser = localStorageUser();
   const [show, setShow] = useState(false);
   // const fetchUser = async () => {
   //   const config = {
