@@ -1,5 +1,5 @@
 import { React, useCallback, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SnackBar from "../../components/SnackBar";
 // import Loading from "../../components/Loading";
 import styles from "./Login.module.scss";
@@ -12,15 +12,6 @@ import logo from "./assets/logo.png";
 import visible from "./assets/visible.png";
 
 const Login = () => {
-  // const [
-  //   loginUser,
-  //   {
-  //     data: loginData,
-  //     isSuccess: isLoginSuccess,
-  //     isError: isLoginError,
-  //     error: loginError,
-  //   },
-  // ] = useLoginUserMutation();
   const { userData, status, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -33,10 +24,7 @@ const Login = () => {
   const [emailStateTest, setEmailStateTest] = useState(false);
   const [passStateTest, setPassStateTest] = useState(false);
   const [isValid, setIsValid] = useState(true);
-  // const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState({ type: "", message: "" });
-
-  const navigate = useNavigate();
 
   const tester = (e, reg, func) => {
     if (reg.test(e.target.value)) {
@@ -63,7 +51,7 @@ const Login = () => {
     ) {
       return true;
     }
-  }, [username, password]);
+  }, [username.length, password.length, passStateTest, emailStateTest]);
 
   useEffect(() => {
     const isValid = validate();
@@ -94,31 +82,19 @@ const Login = () => {
     dispatch(loginUser(formData));
   };
 
-  // useEffect(() => {
-  //   if (isLoginSuccess) {
-  //     localStorage.setItem("heedAccessToken", loginData.access_token);
-  //     localStorage.setItem("heedRefreshToken", loginData.refresh_token);
-  //     Cookies.set("heedAccessToken", loginData.access_token);
-  //     localStorage.setItem("heedAccessTokenType", loginData.token_type);
-  //     window.location.href = "/dashboard";
-  //   } else if (isLoginError) {
-  //     setResponse(ErrorHandler(loginError));
-  //   }
-  // }, [isLoginError, isLoginSuccess, loginData, loginError, navigate]);
-
   useEffect(() => {
-    console.log("status", status);
     if (status === "success") {
       dispatch(getUser());
-      setResponse(ErrorHandler("Login successful"));
-
+      setResponse(
+        ErrorHandler({ type: "Success", message: "Login successful" })
+      );
+      // ignore this line for now
       setTimeout(() => {
         window.location.href = "/dashboard";
-      }, 1000);
+      }, 2500);
     } else if (error) {
       setResponse(ErrorHandler(error));
     }
-    // dispatch(resetUser());
   }, [status, userData, error, dispatch]);
 
   return (
@@ -217,7 +193,7 @@ const Login = () => {
           </form>
 
           <div className={styles.linkbottom}>
-            <p>Don't have an account yet?</p>
+            <p style={{ marginRight: "5px" }}>Don't have an account yet?</p>{" "}
             <span>
               <Link to="/signup">Sign up</Link>
             </span>

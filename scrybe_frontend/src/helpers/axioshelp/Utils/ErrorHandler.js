@@ -24,7 +24,7 @@ const ErrorHandler = (err) => {
   //   type: "Error",
   //   message: "Something went wrong",
   // };
-  if (err.type) {
+  if (err?.data?.detail) {
     return {
       type: "Error",
       message: err?.data?.detail ? err?.data?.detail : "Something went wrong",

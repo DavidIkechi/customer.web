@@ -1,6 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-// import axios from "axios";
-// import { headers } from "../.././helpers/axioshelp";
 import authServices from "./service";
 
 const initialState = {
@@ -72,6 +70,7 @@ const userSlice = createSlice({
       })
       .addCase(registerUser.pending, (state) => {
         state.status = "loading";
+        state.getUser = null;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.userData = action.payload;
@@ -100,18 +99,23 @@ const userSlice = createSlice({
         state.status = "failed";
         state.userData = null;
         state.getUser = null;
+      })
+      .addCase(logoutUser.pending, (state) => {
+        state.status = "loading";
+        state.getUser = null;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.userData = null;
+        state.status = null;
+        state.error = null;
+        state.getUser = null;
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.error = action.payload;
+        state.status = "failed";
+        state.userData = null;
+        state.getUser = null;
       });
-    // [getUser.pending]: (state) => {
-    //   state.status = "loading";
-    // },
-    // [getUser.fulfilled]: (state, action) => {
-    //   state.status = "success";
-    //   state.userData = action.payload;
-    // },
-    // [getUser.rejected]: (state, action) => {
-    //   state.status = "failed";
-    //   state.error = action.payload;
-    // },
   },
 });
 

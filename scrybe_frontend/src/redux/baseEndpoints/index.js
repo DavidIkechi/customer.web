@@ -4,7 +4,6 @@ export const baseAPI = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://api.heed.hng.tech/",
-    // add your tagTypes here used in the `queryFulfilled`;
     tagTypes: ["User"],
     prepareHeaders: (headers, { getState }) => {
       const token = localStorage.getItem("heedAccessToken");
@@ -17,24 +16,7 @@ export const baseAPI = createApi({
   endpoints: (builder) => ({
     fetchUser: builder.query({
       query: () => "account",
-      // this will trigger the `queryFulfilled` action with the `User` tagType, to handle refetching the user
       providesTags: ["User"],
-    }),
-    loginUser: builder.mutation({
-      query: (body) => ({
-        url: "login",
-        method: "POST",
-        body,
-      }),
-      invalidatesTags: ["User"],
-    }),
-    registerUser: builder.mutation({
-      query: (body) => ({
-        url: "create_users",
-        method: "POST",
-        body,
-      }),
-      invalidatesTags: ["User"],
     }),
     fetchUserRecordings: builder.query({
       query: () => "list-audios-by-user",
