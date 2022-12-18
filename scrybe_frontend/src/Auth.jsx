@@ -10,3 +10,12 @@ export function RequireToken() {
 
   return <Outlet />;
 }
+
+export function Authenticated() {
+  let auth = localStorageUser();
+  if (auth) {
+    return <Navigate to="/dashboard" />;
+  }
+
+  return <Outlet />;
+}

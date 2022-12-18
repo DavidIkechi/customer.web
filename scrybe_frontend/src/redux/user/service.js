@@ -10,14 +10,13 @@ const headers = {
 
 // register user
 const register = async (registerDetails) => {
-  const response = await axios.post(`${API_URL}/create_users`, registerDetails);
-  console.log(response);
+  const response = await axios.post(`create_users`, registerDetails);
   return response.data;
 };
 
 // login user
 const login = async (loginDetails) => {
-  const response = await axios.post(`${API_URL}/login`, loginDetails);
+  const response = await axios.post(`login`, loginDetails);
   if (response.data.access_token) {
     localStorage.setItem("heedAccessToken", response.data.access_token);
     localStorage.setItem("heedRefreshToken", response.data.refresh_token);
@@ -34,7 +33,7 @@ const logout = () => {
 };
 
 const getuser = async () => {
-  const response = await axios.get(`${API_URL}/account`, {
+  const response = await axios.get(`account`, {
     headers,
   });
   localStorage.setItem("user", JSON.stringify(response.data));
