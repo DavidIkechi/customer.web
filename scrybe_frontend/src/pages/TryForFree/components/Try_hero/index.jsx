@@ -17,8 +17,8 @@ export default function tryHero() {
               Experience a touch of Heed without committing to our
               subscriptions. Try our other features when you sign up with us.
             </p>
-            <Link to="/signin" className={styles.HeroButton}>
-              Start Free Trial
+            <Link to="/signup" className={styles.HeroButton}>
+              Sign Up Now
             </Link>
           </div>
           <div className={styles.Hero2}>
@@ -28,7 +28,7 @@ export default function tryHero() {
             />
           </div>
 
-          <Link to="/signin" className={styles.HeroButtonMobile}>
+          <Link to="/signup" className={styles.HeroButtonMobile}>
             Sign Up Now
           </Link>
           <img className={styles.backgroundImage} src={Background} alt="some" />
