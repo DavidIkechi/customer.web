@@ -123,31 +123,37 @@ async def main_login(form_data, db):
     N.B: form_data is a parameter in your endpoint should depend on OAuth2PasswordRequestForm, i.e:
             form_data: OAuth2PasswordRequestForm = Depends()
     """
-
-
-    user = authenticate_user(db, form_data.username, form_data.password)
-    if not user:
-        raise HTTPException(
-            status_code=400,
-            detail="Incorrect email or password",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
     
-    if not user.is_active:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Sorry {user.first_name}, your account is yet to be activated.",
-            headers={"WWW-Authenticate": "Bearer"},
+    try:
+        user = authenticate_user(db, form_data.username, form_data.password)
+        if not user:
+            raise HTTPException(
+                status_code=400,
+                detail="Incorrect email or password",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        
+        if not user.is_active:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Sorry {user.first_name}, your account is yet to be activated.",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        
+        access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        refresh_token_expires = timedelta(minutes=REFRESH_TOKEN_EXPIRE_MINUTES)
+        access_token = create_access_token(
+            data={"sub": user.email}, expires_delta=access_token_expires
         )
-    
-    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    refresh_token_expires = timedelta(minutes=REFRESH_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(
-        data={"sub": user.email}, expires_delta=access_token_expires
-    )
-    refresh_token = create_refresh_token(
-        data={"sub": user.email}, expires_delta=refresh_token_expires
-    )
+        refresh_token = create_refresh_token(
+            data={"sub": user.email}, expires_delta=refresh_token_expires
+        )
+        
+    except Exception as e:
+        return {
+            status_code: status.HTTP_400_BAD_REQUEST,
+            detail: e.message
+        }
     return {"access_token": access_token,
             "refresh_token": refresh_token,
             "token_type": "bearer"}
