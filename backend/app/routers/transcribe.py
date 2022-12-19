@@ -61,5 +61,43 @@ def view_transcript(job_id: Union[int, str], db: Session = Depends(_services.get
 
     return sentiment_result
 
+@transcript_router.get("/get_transcript/{transcript_id}", description="Retrieving transcript by audio ID")
+def view_transcript(transcript_id: Union[int, str], db: Session = Depends(_services.get_session)):
+    transcript = crud.get_freetrial(db, id = transcript_id)
+    if not transcript:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, 
+            detail=f"Transcription with id: {transcript_id} was not found")
+    
+    try:
+        transcript_audio_id = transcript_id
+        
+        current_status = transcript.transcript_status.split(",")
+        current_status_filename = current_status[1]
+        current_status_size = current_status[2]
+        transcript_audio = get_transcript_result(transcript_audio_id)
+        transcript.job_status = transcript_audio['status']
+        transcript.transcript_status = ",".join([transcript.job_status, current_status_filename, current_status_size])
+        db.commit()
+        db.refresh(transcript)
+        
+        if transcript_audio['status'] != "completed":
+            return {"status":transcript_audio['status']}
+        else:
+            # get the text.
+            transcripted_word = transcript_audio['text']
+            sentiment_result = sentiment.sentiment(transcripted_word)
+
+            overall_sentiment = sentiment_result['overall_sentiment']
+    except Exception as e:
+        return JSONResponse(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+
+    return {"transcription": transcripted_word, "overall_sentiment_result": overall_sentiment,
+            "filename":current_status_filename, "filesize":current_status_size, 
+            "status": transcript_audio['status']}
+
 
 
