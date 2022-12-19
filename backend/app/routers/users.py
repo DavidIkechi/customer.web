@@ -2,7 +2,13 @@ from fastapi import FastAPI, status, Depends, APIRouter,  UploadFile, File, Form
 from typing import List, Union, Optional
 import services as _services
 import models, schema
+from fastapi_pagination import Page, paginate, Params
 from sqlalchemy.orm import Session
+from auth import (
+    get_active_user,
+    get_admin,
+    get_current_user
+)
 import auth
 from . import utility as utils
 from fastapi.responses import JSONResponse
@@ -140,22 +146,27 @@ def update_profile(
 
 @user_router.get('/verification', summary = "verify a user by email", status_code = status.HTTP_200_OK)
 async def email_verification(request: Request, token: str, db: Session = Depends(_services.get_session)):
-
-    user = await verify_token(token, db)
-
-
-    if user and not user.is_active:
-        user.is_active = True
-        user.is_verified = True
-        db.commit()
-        return{
-            "detail" : f"Hello {user.first_name}, your account has been successfully verified"}
+    try:
+        user = await verify_token(token, db)
+        if user and not user.is_active:
+            user.is_active = True
+            user.is_verified = True
+            db.commit()
+            return{
+                "detail" : f"Hello {user.first_name}, your account has been successfully verified"
+                }
+    except Exception as e:
+        return JSONResponse(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+        
     return {
         "detail" : f"Hello {user.first_name}, you already have an active account with Heed!"
     }
     
     
-@user_router.get("/account", summary = "get user profile details", tags=['users'])
+@user_router.get("/account", summary = "get user profile details", status_code = 200)
 async def my_profile (db: Session = Depends(_services.get_session), user: models.User = Depends(auth.get_active_user)):
     user_id = user.id
     try:
@@ -173,11 +184,8 @@ async def forgot_password(email: schema.ForgetPassword, db: Session = Depends(_s
     
     try:
         user: models.User = crud.get_user_by_email(db, email.email)
-
         if user is None:
             raise HTTPException(status_code=404, detail="User not found")
-
-        
         token = await send_password_reset_email([email.email], user)
     except Exception as e:
         return JSONResponse(
@@ -269,4 +277,72 @@ async def refresh_token(refresh_token: schema.RefreshToken, db: Session = Depend
             status_code= status.HTTP_400_BAD_REQUEST,
             content=jsonable_encoder({"detail": str(e)}),
         )
+        
+@user_router.get('/login/google', status_code = 200)
+async def login(request: Request):
+    try:
+        redirect_uri = "https://api.heed.hng.tech/users/auth/google"
+        # request.url_for('auth')   This creates the url for our /auth endpoint
+        return await oauth.google.authorize_redirect(request, redirect_uri)
+    except Exception as e:
+        return JSONResponse(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+
+
+@user_router.get('/auth/google', status_code = 200)
+async def auth(request: Request, db: Session = Depends(_services.get_session)):
+    try:
+        access_token = await oauth.google.authorize_access_token(request)
+    
+        user_data = access_token['userinfo']
+        email = user_data.email
+        user_db = crud.get_user_by_email(db, email)
+
+        if user_db is None:
+            raise HTTPException(status_code=404, detail="User not found, Are you sure this is the email you used when signing up for the platform?")
+
+        tokens = get_access_token(email)
+    except Exception as e:
+        return JSONResponse(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+    return {
+        "detail": tokens
+    }
+
+@user_router.get("/refresh-api-key", status_code = 200)
+async def refresh_api_key(user: models.User = Depends(get_active_user), db: Session = Depends(_services.get_session)):
+    try:
+        user_id = user.id
+        return {
+            "detail": crud.refresh_api_key(db, user_id)
+        }
+    except Exception as e:
+        return JSONResponse(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+
+
+@user_router.get('/history', summary = "get user history", response_model=Page[schema.History], status_code = 200)
+async def get_history(user: models.User = Depends(get_active_user),
+                      db: Session = Depends(_services.get_session), params: Params = Depends()):
+    try:
+        user_history = paginate(crud.get_history_by_user_id(db, user.id), params)
+        if not user_history:
+                raise HTTPException(
+                status_code=404,
+                detail="The user's history doesn't exist",
+            )
+    except Exception as e:
+        return JSONResponse(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+    return {
+        "detail": user_history
+    }
         
