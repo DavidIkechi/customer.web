@@ -1,15 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import mail from "./assets/mail.svg";
 import styles from "./Email.module.scss";
 
 const EmailVerify = () => {
   const [message, setMessage] = useState("");
-  const query = new URLSearchParams(useLocation);
-  // const token = query.get("token");
-  const { token } = useParams();
-  console.log(token);
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
+
   useEffect(() => {
     handleSubmit();
   }, []);
@@ -30,7 +29,7 @@ const EmailVerify = () => {
         <img src={mail} alt="mail" />
         <p className={styles.status}>Verified!</p>
         <p className={styles.msg}>{message}</p>
-        <Link to="/signin">Login</Link>
+        <Link to="/login">Login</Link>
       </div>
     </div>
   );

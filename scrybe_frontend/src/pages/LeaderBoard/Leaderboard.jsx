@@ -24,7 +24,6 @@ const colorMap = {
 
 function Leaderboard() {
   const [search, setSearch] = useState("");
-  console.log(search);
   const [toggleSidebar, setToggleSidebar] = useState(false);
 
   const [leaderboard, setLeaderboard] = useState([]);
@@ -76,16 +75,27 @@ function Leaderboard() {
     setControll(true);
   };
 
-  // const agentStyle = {
-  //   position: "absolute",
-  //   zIndex: 9999,
-  //   width: "60%",
-  //   margin: "auto",
-  //   top: "0",
-  //   left: "0",
-  //   border: "0",
-  //   borderRadius: "20px",
-  // };
+  useEffect(() => {
+    let FilteredLeaderboard = leaderboard.filter((profile) => {
+      return search.toLowerCase() === ""
+        ? profile
+        : profile.firstname.toLowerCase().includes(search) ||
+            profile.str_agent_id.toLowerCase().includes(search) ||
+            profile.lastname.toLowerCase().includes(search);
+    });
+
+    let FilteredotherAgent = otherAgent.filter((profile) => {
+      return search.toLowerCase() === ""
+        ? profile
+        : profile.firstname.toLowerCase().includes(search) ||
+            profile.str_agent_id.toLowerCase().includes(search) ||
+            profile.lastname.toLowerCase().includes(search);
+    });
+
+    setOtherAgent(FilteredotherAgent);
+
+    setLeaderboard(FilteredLeaderboard);
+  }, [search]);
 
   // // implemented by rambey
 
@@ -128,8 +138,8 @@ function Leaderboard() {
             <div className={styles.right_section}>
               <h2>Leaderboard</h2>
               <p>
-                This is a list showing the performance your mounted agents on
-                Heed via the number of customer calls they’ve received.
+                This is a list showing the performance of your agents on heed
+                via the number of customers calls they have received..
               </p>
               <p className={styles.long_paragraph}>
                 Please note that each agent’s performance was rated using the
@@ -169,32 +179,29 @@ function Leaderboard() {
               </div>
 
               <div className={styles.Profile_container}>
-                {leaderboard.length > 0 && (
-                  <>
-                    {leaderboard
-                      .filter((profile) => {
-                        return search.toLowerCase() === ""
-                          ? profile
-                          : profile.firstname.toLowerCase().includes(search) ||
-                              profile.str_agent_id
-                                .toLowerCase()
-                                .includes(search) ||
-                              profile.lastname.toLowerCase().includes(search);
-                      })
-                      .map((profile, index, index2) => (
-                        <LeaderBoardDisplay
-                          key={profile.agent_id}
-                          person={profile}
-                          index={index}
-                          index2={index2}
-                          handleAgent={handleAgent}
-                          agent_id={profile}
-                          rank={profile.rank}
-                          show={profile.str_agent_id}
-                        />
-                      ))}
-                  </>
-                )}
+                {/* {leaderboard.length > 0 ? ( */}
+                <>
+                  {leaderboard.map((profile, index, index2) => (
+                    <>
+                      <LeaderBoardDisplay
+                        key={profile.agent_id}
+                        person={profile}
+                        index={index}
+                        index2={index2}
+                        handleAgent={handleAgent}
+                        agent_id={profile.agent_id}
+                        rank={profile.rank}
+                        show={profile.str_agent_id}
+                      />
+                    </>
+                  ))}
+                </>
+                {/* ) : (
+                  <div className={styles.empty_state}>
+                    <img src={notfoundImg} alt="not found" />
+                    <h3>Sorry, No Agent Record Found.</h3>
+                  </div>
+                )} */}
               </div>
             </div>
           </section>
@@ -220,26 +227,16 @@ function Leaderboard() {
               <hr></hr>
               {leaderboard.length > 0 ? (
                 <>
-                  {otherAgent
-                    .filter((profile) => {
-                      return search.toLowerCase() === ""
-                        ? profile
-                        : profile.firstname.toLowerCase().includes(search) ||
-                            profile.str_agent_id
-                              .toLowerCase()
-                              .includes(search) ||
-                            profile.lastname.toLowerCase().includes(search);
-                    })
-                    .map((profile) => (
-                      <OtherAgentDisplay
-                        key={profile.agent_id}
-                        person={profile}
-                        handleAgent={handleAgent}
-                        agent_id={profile.agent_id}
-                        rank={profile.rank}
-                        show={profile.str_agent_id}
-                      />
-                    ))}
+                  {otherAgent.map((profile) => (
+                    <OtherAgentDisplay
+                      key={profile.agent_id}
+                      person={profile}
+                      handleAgent={handleAgent}
+                      agent_id={profile.agent_id}
+                      rank={profile.rank}
+                      show={profile.str_agent_id}
+                    />
+                  ))}
                 </>
               ) : (
                 <div className={styles.empty_state}>
@@ -247,42 +244,6 @@ function Leaderboard() {
                   <h3>Sorry, No Agent Record Found.</h3>
                 </div>
               )}
-              {/* <div className={styles.Header_content}>
-              <div className={styles.Header_profile_container}>
-                <img src={ProfileName} className="" alt="profile1" />
-                <p className={styles.Agent_ID}>AG685500DE</p>
-              </div>
-              <p>24</p>
-              <p>5/10</p>
-              <p>5th</p>
-            </div>
-            <div className={styles.Header_content}>
-              <div className={styles.Header_profile_container}>
-                <img src={ProfileName} className="" alt="profile1" />
-                <p className={styles.Agent_ID}>AG685500DE</p>
-              </div>
-              <p>24</p>
-              <p>5/10</p>
-              <p>5th</p>
-            </div>
-            <div className={styles.Header_content}>
-              <div className={styles.Header_profile_container}>
-                <img src={ProfileName} className="" alt="profile1" />
-                <p className={styles.Agent_ID}>AG685500DE</p>
-              </div>
-              <p>24</p>
-              <p>5/10</p>
-              <p>5th</p>
-            </div>
-            <div className={styles.Header_content}>
-              <div className={styles.Header_profile_container}>
-                <img src={ProfileName} className="" alt="profile1" />
-                <p className={styles.Agent_ID}>AG685500DE</p>
-              </div>
-              <p>24</p>
-              <p>5/10</p>
-              <p>5th</p>
-            </div> */}
             </div>
           </section>
         </div>
@@ -322,7 +283,7 @@ function LeaderBoardDisplay({
         <h1 style={{ color: colorMap[index] }}>
           {person.average_score} <span className={styles.small_text}>/10</span>
         </h1>
-        <p className={styles.Agent_position}> {person.rank}th</p>
+        <p className={styles.Agent_position}> {person.rank}</p>
       </div>
     </div>
   );
@@ -342,7 +303,7 @@ function OtherAgentDisplay({ person, handleAgent, agent_id, rank, show }) {
       </div>
       <p>{person.total_calls}</p>
       <p>{person.average_score}/10</p>
-      <p>{person.rank}th</p>
+      <p>{person.rank}</p>
     </div>
   );
 }

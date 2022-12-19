@@ -42,7 +42,7 @@ function AudioControl({
           <img src={recordingIcon} alt="recording-icon" />
           <div className={styles.AudioName}>
             <h2>{audioFilename ? `${audioFilename}` : `Recording 01.mp3`}</h2>
-            <p>{`${audioFileSize}`}</p>
+            <p>{`${audioFileSize} mb`}</p>
           </div>
         </div>
 

@@ -77,8 +77,23 @@
   flex: 1 1 auto;
   height: 60vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
+}
+
+.refreshButton {
+  background-color: #006affdc;
+  padding: 8px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+  margin: 20px 0;
+}
+
+.refreshButton:hover {
+  background-color: #3480ebdc;
 }
 
 @media screen and (max-width: 960px) {

@@ -1,20 +1,8 @@
 import React from "react";
 import styles from "./RecordingList.module.scss";
 import recordingIcon from "../../../../../assets/recording call.png";
-import { Link } from "react-router-dom";
 
 function RecordingList({ recentRecordings }) {
-  const formatBytes = (bytes, decimals = 0) => {
-    if (!+bytes) return "0 bytes";
-
-    const k = 1024;
-    const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ["bytes", "kb", "mb", "GB", "TB", "PB", "EB", "ZB", "YB"];
-
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
-  };
   return (
     <div className={styles.RecordingList}>
       <input
@@ -40,16 +28,15 @@ function RecordingList({ recentRecordings }) {
         </svg>
       </div>
       <div className={styles.audioList}>
-        {recentRecordings.map((list, index) => {
+        {recentRecordings.map((list) => {
           return (
-            <Link className={styles.AudioInfo} key={list.id} to="/">
-              {/* <Link className={styles.AudioInfo} key={list.id} to={`/transcriptions/${list.tracnscription_id}`}> */}
+            <div className={styles.AudioInfo} key={list.id}>
               <img src={recordingIcon} alt="recording-Icon" />
               <div className={styles.AudioName}>
                 <h2>{list.filename}</h2>
-                <p>{`${formatBytes(list.size)}`}</p>
+                <p>{`${list.size} mb`}</p>
               </div>
-            </Link>
+            </div>
           );
         })}
         {/* <div className={styles.AudioInfo}>

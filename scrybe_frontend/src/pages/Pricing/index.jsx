@@ -2,20 +2,10 @@ import React from "react";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Pricing.module.scss";
-// import heroImage from "./assets/heroimage.svg";
-// import curves from "./assets/Sectionbottom.png";
-// import checkIcon from "./assets/check.svg";
-// import BenefitsImage from "./assets/benefitsimage.svg";
 import YearPlans from "./components/YearPlan/yearPlans";
 import MonthPlans from "./components/MonthPlan/monthPlans";
-import NavBarFree from "../../components/NavbarFree";
-import Footer from "../../components/Footer";
 
 function Pricing() {
-  React.useEffect(() => {
-    // 👇️ scroll to top on page load
-    window.scrollTo({ top: 0, left: 0 });
-  }, []);
   const plansRef = useRef();
   const [showMonth, setshowMonth] = useState(true);
   const [showYear, setshowYear] = useState(false);
@@ -43,7 +33,6 @@ function Pricing() {
 
   return (
     <>
-      <NavBarFree />
       <div className={styles.pricing}>
         <div className={styles.hero}>
           <div className={styles.container}>
@@ -274,7 +263,7 @@ function Pricing() {
             </ul>
             <div className={styles.benefitCTA}>
               <Link to="/try">Try for Free</Link>
-              <Link to="/demos">Schedule a Demo</Link>
+              {/* <Link to="/demos">Schedule a Demo</Link> */}
             </div>
           </div>
           <div className={styles.BenefitsImage}>
@@ -285,7 +274,6 @@ function Pricing() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }
