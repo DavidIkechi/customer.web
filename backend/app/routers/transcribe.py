@@ -9,6 +9,8 @@ import models, schema
 from . import utility as utils
 from dotenv import load_dotenv
 from . import sentiment
+from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
 import os
 import crud
 
@@ -47,21 +49,24 @@ def transcribe_file(file_url):
    audio_to_word = get_transcript(file_url)
    return audio_to_word
 
-
-# """ Please Note that these endpoints are subject to change as the query would be better suited to retrieve transcripts from the transcript table by transcript_id and
-#     not Audio by audio_id.
-#     If the transcript table is available, the code will be refractored to implement changes and queries to the transcript table """
-
 # ENDPOINT TO GET A PARTICULAR TRANSCRIPT USING THE AUDIO ID
-@transcript_router.get("/{job_id}", description="Retrieving transcript by audio ID")
-def view_transcript(job_id: Union[int, str], db: Session = Depends(_services.get_session), current_user: Union[str , int] = Depends(auth.get_active_user)):
-    user_id = current_user.id
-    
-    sentiment_result = crud.analyse_and_store_audio(db, job_id, user_id)
+@transcript_router.get("/{job_id}", description="Retrieving transcript by audio ID", status_code = 200)
+def view_transcript(job_id: Union[int, str], db: Session = Depends(_services.get_session), 
+                    current_user: Union[str , int] = Depends(auth.get_active_user)):
+    try:
+        user_id = current_user.id  
+        sentiment_result = crud.analyse_and_store_audio(db, job_id, user_id)
+    except Exception as e:
+        return JSONResponse(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
 
-    return sentiment_result
+    return {
+        "detail": sentiment_result
+    }
 
-@transcript_router.get("/get_transcript/{transcript_id}", description="Retrieving transcript by audio ID")
+@transcript_router.get("/get_transcript/{transcript_id}", description="Retrieving transcript by audio ID", status_code = 200)
 def view_transcript(transcript_id: Union[int, str], db: Session = Depends(_services.get_session)):
     transcript = crud.get_freetrial(db, id = transcript_id)
     if not transcript:

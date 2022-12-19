@@ -1,26 +1,18 @@
 from typing import List, Union, Optional
-from pathlib import Path
-from models import Audio
 from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form, Query
-from fastapi_pagination import Page, paginate, Params
 from fastapi.middleware.cors import CORSMiddleware
-from routers.sentiment import sentiment
-from routers.transcribe import transcribe_file, get_transcript_result
-from routers import sentiment
-import auth
+
 from routers.score import score_count
 import uvicorn
 from routers.transcribe import transcript_router
 from routers.users import user_router
 from routers.orders import order_router
 from routers.audios import audio_router
+from routers.sentiment import sentiment_router
+from routers.analyze import analyze_router
 from routers.score import score_count
 import models, json
 from auth import get_active_user, get_current_user, get_admin
-
-from jwt import main_login, get_access_token, verify_password, refresh
-
-
 
 from authlib.integrations.starlette_client import OAuth
 from authlib.integrations.starlette_client import OAuthError
@@ -37,9 +29,9 @@ from db import Base, engine, SessionLocal
 from sqlalchemy.orm import Session
 import crud, schema
 from emails import send_email, verify_token, send_password_reset_email, password_verif_token
-from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
+from routers.agent import agent_router
 import cloudinary
 import cloudinary.uploader
 from BitlyAPI import shorten_urls
@@ -69,7 +61,7 @@ apm_config = {
     'ENVIRONMENT': 'production',
     'GLOBAL_LABELS': 'platform=DemoPlatform, application=DemoApplication'
 }
-apm = make_apm_client(apm_config)
+# apm = make_apm_client(apm_config)
 
 load_dotenv()
 
@@ -127,7 +119,20 @@ app.include_router(
 app.include_router(
     audio_router
 )
-app.add_middleware(ElasticAPM, client=apm)
+
+app.include_router(
+    agent_router
+)
+
+app.include_router(
+    sentiment_router
+)
+
+app.include_router(
+    analyze_router
+)
+
+# app.add_middleware(ElasticAPM, client=apm)
 
 origins = [
     "http://localhost",
@@ -187,10 +192,10 @@ def main() -> None:
 AWS_KEY_ID = os.getenv("AWS_KEY_ID")
 AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
 
-@app.on_event('startup')
-@repeat_every(seconds = 3, wait_first = True)
-def periodic():
-    cron_status.check_and_update_jobs()
+# @app.on_event('startup')
+# @repeat_every(seconds = 3, wait_first = True)
+# def periodic():
+#     cron_status.check_and_update_jobs()
     
 
 @app.get("/")
