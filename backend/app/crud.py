@@ -454,3 +454,18 @@ def analyse_and_store_audio(db:Session, job_id, user_id):
     }
     dic2 = dict(sentiment_result, **other_details)
     return {"sentiment_result": dic2}
+
+#News letter.
+def add_newsletter_subscriber(db: Session, subscriber: schema.Newsletter):
+    db_subscriber = models.Newsletter(email = subscriber.email)
+    db.add(db_subscriber)
+    db.commit()
+    db.refresh(db_subscriber)
+    return db_subscriber
+
+def check_subscrition_email(db: Session, email: str):
+    return db.query(models.Newsletter).filter(models.Newsletter.email == email).first()
+
+
+def get_newsletter_subscribers(db: Session, skip: int = 0):
+    return db.query(models.Newsletter).offset(skip).all()

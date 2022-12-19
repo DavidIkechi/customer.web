@@ -1,4 +1,4 @@
-from fastapi import FastAPI, status, Depends, APIRouter,  UploadFile, File, Form, Query, Request
+from fastapi import FastAPI, status, Depends, APIRouter,  UploadFile, File, Form, Query, Request, HTTPException
 from typing import List, Union, Optional
 import services as _services
 import models, schema
@@ -47,6 +47,12 @@ async def create_user(user: schema.UserCreate, db: Session = Depends(_services.g
     # if user exists, throw an exception.
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
+
+    # check if email exists and is valid
+    email_exists = utils.validate_and_verify_email(user.email)
+    if not email_exists:
+        raise HTTPException(status_code=400, detail="Your email could not be verified. Please enter a valid email")
+
     try:
         # create the user before sending a mail.
         new_user = crud.create_user(db=db, user=user)
@@ -344,4 +350,21 @@ async def get_history(user: models.User = Depends(get_active_user),
     return {
         "detail": user_history
     }
-        
+
+@user_router.post("/newsletter-subscription", summary="newsletter subscription", response_model= schema.Newsletter, tags=['subscribers'])
+def subscribe_to_newletter(subscriber: schema.Newsletter, db: Session = Depends(_services.get_session)):
+    db_subscriber = crud.check_subscrition_email(db,email=subscriber.email)
+
+    if db_subscriber:
+        raise HTTPException(status_code=400, detail="You are already subscribed to our newsletter")
+    try:
+        crud.add_newsletter_subscriber(db=db, subscriber=subscriber)
+        return subscriber
+    except:
+        raise HTTPException(status_code=400, detail="An unknown error occured. Try Again") 
+
+@user_router.get("/get_newsletter-subscribers", summary="Get all existing subscribers", response_model=list[schema.Newsletter], tags=['subscribers'])
+def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session)):
+    subscribers = crud.get_newsletter_subscribers(db, skip=skip)
+
+    return subscribers

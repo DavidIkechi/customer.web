@@ -153,3 +153,9 @@ class Order(Base):
     total_amount = Column(Float, index=True)
     order_date = Column(Date, index=True, default=date.today())
     next_payment_due_date = Column(Date, index=True)
+
+class Newsletter(Base):
+    __tablename__ = "newsleetter_subscribers"
+
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String(255), nullable = False)
