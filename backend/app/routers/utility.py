@@ -10,6 +10,7 @@ import time
 import os
 
 from dotenv import load_dotenv
+from email_validate import validate
 
 load_dotenv()
 
@@ -77,3 +78,19 @@ def get_paragraphs(polling_endpoint, header):
         paragraphs.append(para)
 
     return paragraphs
+
+# Verify/Validate email address
+
+def validate_and_verify_email(input_email):
+    email = str(input_email)
+    isValid = validate(
+        email_address=email,
+        check_format=True,
+        check_blacklist=True,
+        check_dns=True,
+        dns_timeout=10,
+        check_smtp=False,
+        smtp_debug=False
+    )
+    return isValid
+

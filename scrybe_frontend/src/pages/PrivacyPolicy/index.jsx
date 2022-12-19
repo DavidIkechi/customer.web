@@ -1,6 +1,4 @@
 import React from "react";
-import Footer from "../../components/Footer";
-import Header from "../../components/NavbarFree";
 import Analytics from "./Components/Analytics.jsx";
 import Changes from "./Components/Changes.jsx";
 import CiCdTools from "./Components/CiCdTools.jsx";
@@ -24,13 +22,8 @@ import YourRights from "./Components/YourRights.jsx";
 import "./Style/privacyPolicy.scss";
 
 function PrivacyPolicy() {
-  React.useEffect(() => {
-    // 👇️ scroll to top on page load
-    window.scrollTo({ top: 0, left: 0 });
-  }, []);
   return (
     <section className="privacy">
-      <Header />
       <div className="container">
         <div className="heading">
           <h1>PRIVACY POLICY</h1>
@@ -58,7 +51,6 @@ function PrivacyPolicy() {
           <ContactUs />
         </div>
       </div>
-      <Footer />
     </section>
   );
 }

@@ -15,7 +15,6 @@ import styles from "./landingpage.module.scss";
 function HomePage() {
   return (
     <div>
-      <NavBarFree />
       <Hero />
       <section aria-label="Our Clients">
         <BrandsLogo />
@@ -145,7 +144,6 @@ function HomePage() {
           </form>
         </div>
       </section>
-      <Footer />
     </div>
   );
 }
