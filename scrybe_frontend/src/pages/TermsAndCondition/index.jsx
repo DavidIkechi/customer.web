@@ -8,17 +8,10 @@ import React from "react";
 // import { termsData } from "./data";
 import styles from "./style.module.scss";
 import { Link } from "react-router-dom";
-import Header from "../../components/NavbarFree";
-import Footer from "../../components/Footer";
 
 function TermsAndCondition() {
-  React.useEffect(() => {
-    // 👇️ scroll to top on page load
-    window.scrollTo({ top: 0, left: 0 });
-  }, []);
   return (
     <section className={styles.overallSection}>
-      <Header />
       <div className={styles.theDiv}>
         <div>
           <div className={styles.termsContainer}>
@@ -448,7 +441,6 @@ function TermsAndCondition() {
           </div>
         </div>
       </div>
-      <Footer />
     </section>
   );
 }
