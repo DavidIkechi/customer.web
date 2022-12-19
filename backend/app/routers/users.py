@@ -30,13 +30,12 @@ user_router = APIRouter(
     tags=['users'],
 )
 
-
 # endpoint for user login
 @user_router.post('/login', summary = "create access token for logged in user",
                   status_code= status.HTTP_200_OK)
 async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(_services.get_session)):
     # return token once the user has been successfully authenticated, or it returns an error.
-    return await jwt.main_login(form_data, db)
+    return await main_login(form_data, db)
 
 
 # creating a users account.

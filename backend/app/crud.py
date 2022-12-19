@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, UploadFile, File, Depends, Response
 import models, schema
 from random import randint
-from routers.sentiment import sentiment
+from routers.sentiment_utility import sentiment, sentiment_assembly
 from routers import transcribe
 from passlib.context import CryptContext
 from fastapi import HTTPException 
@@ -29,7 +29,7 @@ def get_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.User).offset(skip).limit(limit).all()
 
 def create_company(db: Session, company_name: str, company_address: str, id: int):
-    db_company = models.Company(id= id, name=company_name, address = company_address)
+    db_company = models.Company(id= id, name=company_name, address = company_address, plan = "Free", time_left = 0)
     db.add(db_company)
     db.commit()
     db.refresh(db_company)
@@ -405,13 +405,15 @@ def analyse_and_store_audio(db:Session, job_id, user_id):
 
         if transcript_audio['status'] != "completed":
             return {
-                "status":transcript_audio['status']
+                "detail":{
+                    "status":transcript_audio['status']
+                }
             }
 
         # get the text.
         transcripted_word = transcript_audio['text']
         
-    sentiment_result = sentiment(transcripted_word)
+    sentiment_result = sentiment_assembly(transcript_audio)
 
     negativity_score = sentiment_result['negativity_score']
     positivity_score = sentiment_result['positivity_score']

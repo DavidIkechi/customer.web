@@ -22,6 +22,8 @@ class Company(Base):
     name = Column(String(255), index=True)
     address = Column(TEXT)
     size = Column(Integer)
+    plan = Column(String(255), index=True)
+    time_left = Column(Float, index=True, nullable = True)
 
     users = relationship("User", back_populates="company")
     agents = relationship("Agent", back_populates="company")
