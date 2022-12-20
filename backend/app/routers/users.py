@@ -40,10 +40,9 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
 
 # creating a users account.
 @user_router.post("/create_users", status_code= status.HTTP_201_CREATED, 
-                  summary = "create/register a new user user", response_model=schema.User)
+                  summary = "create/register a new user user")
 async def create_user(user: schema.UserCreate, db: Session = Depends(_services.get_session)):
     db_user = crud.get_user_by_email(db, email=user.email)
-    
     # if user exists, throw an exception.
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
@@ -53,18 +52,13 @@ async def create_user(user: schema.UserCreate, db: Session = Depends(_services.g
     if not email_exists:
         raise HTTPException(status_code=400, detail="Your email could not be verified. Please enter a valid email")
 
-    try:
-        # create the user before sending a mail.
-        new_user = crud.create_user(db=db, user=user)
-        await send_email([user.email], user)
-    except Exception as e:
-        return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
-            content=jsonable_encoder({"detail": str(e)}),
-        )
+    # create the user before sending a mail.
+    new_user = crud.create_user(db=db, user=user)
+    await send_email([user.email], user)
+    
         
     return {    
-        "detail" : new_user
+        "detail" : "yes"
     }
 
 # get all users, only available for the admin end.
@@ -283,3 +277,88 @@ async def refresh_token(refresh_token: schema.RefreshToken, db: Session = Depend
             content=jsonable_encoder({"detail": str(e)}),
         )
         
+@user_router.get('/login/google', status_code = 200)
+async def login(request: Request):
+    try:
+        redirect_uri = "https://api.heed.hng.tech/users/auth/google"
+        # request.url_for('auth')   This creates the url for our /auth endpoint
+        return await oauth.google.authorize_redirect(request, redirect_uri)
+    except Exception as e:
+        return JSONResponse(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+
+
+@user_router.get('/auth/google', status_code = 200)
+async def auth(request: Request, db: Session = Depends(_services.get_session)):
+    try:
+        access_token = await oauth.google.authorize_access_token(request)
+    
+        user_data = access_token['userinfo']
+        email = user_data.email
+        user_db = crud.get_user_by_email(db, email)
+
+        if user_db is None:
+            raise HTTPException(status_code=404, detail="User not found, Are you sure this is the email you used when signing up for the platform?")
+
+        tokens = get_access_token(email)
+    except Exception as e:
+        return JSONResponse(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+    return {
+        "detail": tokens
+    }
+
+@user_router.get("/refresh-api-key", status_code = 200)
+async def refresh_api_key(user: models.User = Depends(get_active_user), db: Session = Depends(_services.get_session)):
+    try:
+        user_id = user.id
+        return {
+            "detail": crud.refresh_api_key(db, user_id)
+        }
+    except Exception as e:
+        return JSONResponse(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+
+
+@user_router.get('/history', summary = "get user history", response_model=Page[schema.History], status_code = 200)
+async def get_history(user: models.User = Depends(get_active_user),
+                      db: Session = Depends(_services.get_session), params: Params = Depends()):
+    try:
+        user_history = paginate(crud.get_history_by_user_id(db, user.id), params)
+        if not user_history:
+                raise HTTPException(
+                status_code=404,
+                detail="The user's history doesn't exist",
+            )
+    except Exception as e:
+        return JSONResponse(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+    return {
+        "detail": user_history
+    }
+
+@user_router.post("/newsletter-subscription", summary="newsletter subscription", response_model= schema.Newsletter, tags=['subscribers'])
+def subscribe_to_newletter(subscriber: schema.Newsletter, db: Session = Depends(_services.get_session)):
+    db_subscriber = crud.check_subscrition_email(db,email=subscriber.email)
+
+    if db_subscriber:
+        raise HTTPException(status_code=400, detail="You are already subscribed to our newsletter")
+    try:
+        crud.add_newsletter_subscriber(db=db, subscriber=subscriber)
+        return subscriber
+    except:
+        raise HTTPException(status_code=400, detail="An unknown error occured. Try Again") 
+
+@user_router.get("/get_newsletter-subscribers", summary="Get all existing subscribers", response_model=list[schema.Newsletter], tags=['subscribers'])
+def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session)):
+    subscribers = crud.get_newsletter_subscribers(db, skip=skip)
+
+    return subscribers

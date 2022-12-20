@@ -1,6 +1,6 @@
 from fastapi import (BackgroundTasks, UploadFile,File, Form, Depends, HTTPException, status)
-from fastapi_mail import FastMail, ConnectionConfig, MessageSchema
-from typing import List
+from fastapi_mail import FastMail, ConnectionConfig, MessageSchema, MessageType
+from typing import List, Dict, Any
 from jose import jwt, JWTError
 from fastapi.exceptions import HTTPException
 from datetime import datetime, timedelta
@@ -13,6 +13,8 @@ from crud import get_user_by_email
 from sqlalchemy.orm import Session
 from dotenv import load_dotenv
 import os
+from pydantic import EmailStr, BaseModel
+
 
 
 # Load all environment variables
@@ -28,9 +30,13 @@ conf = ConnectionConfig(
     MAIL_STARTTLS = False,
     USE_CREDENTIALS = True,
     MAIL_SSL_TLS= True,
-    VALIDATE_CERTS = True
+    VALIDATE_CERTS = True,
+    TEMPLATE_FOLDER='../templates'
+
 )
 
+class EmailSchema(BaseModel):
+    body: Dict[str, Any]
 
 async def send_email(email: List, instance: User):
     token_data = {
@@ -39,28 +45,33 @@ async def send_email(email: List, instance: User):
     }
 
     token = jwt.encode(token_data, os.getenv('SECRET'), algorithm='HS256')
+    
+    emails: EmailSchema = {
+        "body": {
+            "url": f"https://api.heed.hng.tech/verification?token={token}"
+        } 
+    }
 
+    # template = f"""
+    #     <div>
+    #                 <h3>Account Verification </h3>
+    #                 <br>
+    #                 <p>Thank you for registering with us. Kindly click on the link below to
+    #                 verify your email and have full acccess to the platform.</p>
 
-    template = f"""
-        <div>
-                    <h3>Account Verification </h3>
-                    <br>
-                    <p>Thank you for registering with us. Kindly click on the link below to
-                    verify your email and have full acccess to the platform.</p>
-
-                    <a href="https://api.heed.hng.tech/verification?token={token}">Verify your email address </a>
-        </div>
-    """
+    #                 <a href="https://api.heed.hng.tech/verification?token={token}">Verify your email address </a>
+    #     </div>
+    # """
 
     message = MessageSchema(
         subject = "Account Verification",
         recipients =email,
-        body = template,
-        subtype = "html"
+        template_body=emails.get("body"),
+        subtype=MessageType.html,
     )
 
     fm =FastMail(conf)
-    await fm.send_message(message=message)
+    await fm.send_message(message=message, template_name='EmailVerification/index.html')
 
 
 async def verify_token(token: str, db: Session):

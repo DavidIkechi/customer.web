@@ -66,7 +66,7 @@ class Audio(Base):
     job_id = Column(String(255), index=True)
     timestamp = Column(DateTime, index=True, default=datetime.now())
     size = Column(Integer, index=True)
-    duration = Column(Integer, index=True)
+    duration = Column(String(255), index=True)
     transcript = Column(TEXT, nullable = True)
     positivity_score = Column(Float, index=True, nullable = True)
     negativity_score = Column(Float, index=True, nullable = True)

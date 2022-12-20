@@ -395,8 +395,21 @@ def analyse_and_store_audio(db:Session, job_id, user_id):
     audio_id = Job.id
 
     db_job = db.query(models.Job).filter(models.Job.audio_id == audio_id).first()
-    if db_job.job_status == "completed":
-        transcripted_word = Job.transcript
+    if db_job.job_status == "completed":        
+        return {
+                "transcript": Job.transcript,
+                "positivity_score": Job.positivity_score,
+                "negativity_score": Job.negativity_score,
+                "neutrality_score": Job.neutrality_score,
+                "overall_sentiment": Job.overall_sentiment,
+                "most_negative_sentences": Job.most_negative_sentences,
+                "most_positive_sentences": Job.most_positive_sentences,
+                "audio_url": Job.audio_path,
+                "audio_size": Job.size,
+                "audio_duration": Job.duration,
+                "audio_filename": Job.filename 
+            }
+        
     else:
         transcript_audio = transcribe.get_transcript_result(job_audio_id)
 
@@ -420,7 +433,7 @@ def analyse_and_store_audio(db:Session, job_id, user_id):
     neutrality_score = sentiment_result['neutrality_score']
     overall_sentiment = sentiment_result['overall_sentiment']
     most_negative_sentences = sentiment_result['most_negative_sentences']
-    most_positive_sentences = sentiment_result ['most_postive_sentences']
+    most_positive_sentences = sentiment_result ['most_positive_sentences']
     total_score = positivity_score + neutrality_score + negativity_score
     average_score = round((positivity_score/ total_score) * 10, 1)
 

@@ -55,10 +55,10 @@ def sentiment_assembly(transcript):
             neu_result.append(get_sentiment)
         elif get_sentiment == 'POSITIVE':
             pos_result.append(get_sentiment)
-            pos_sent.append(i['text'])
+            pos_sent.append({"sentence": i['text'], "positivity_score": i['confidence']})
         else:
             neg_result.append(get_sentiment)
-            neg_sent.append(i['text'])
+            neg_sent.append({"sentence": i['text'], "negativity_score": i['confidence']})
         
     pos_score = len(pos_result)
     neg_score = len(neg_result)
@@ -76,7 +76,7 @@ def sentiment_assembly(transcript):
             "negativity_score": round(negativity_score, 4),
             "neutrality_score": round(neutral_score, 4),
             "overall_sentiment": overall_sentiment,
-            "most_negative_sentences": neg_sent,
-            "most_positive_sentences": pos_sent
+            "most_negative_sentences": json.dumps(neg_sent),
+            "most_positive_sentences": json.dumps(pos_sent)
             }
     return sentiment        
