@@ -33,7 +33,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from db import Base, engine, SessionLocal
 from sqlalchemy.orm import Session
 import crud, schema
-from emails import send_email, verify_token, send_password_reset_email, password_verif_token
+from emails import send_email, verify_token, send_password_reset_email, password_verif_token, transcription_result_email
 from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
