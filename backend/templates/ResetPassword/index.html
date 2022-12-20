@@ -1,76 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Heed</title>
 
-<style>
- @import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;800&display=swap");
-*{
-    box-sizing: border-box;
-    padding: 0;
-    border: 0;
-}
-.main{
-    padding-inline:40px;
-    max-width:1440px;
-    width:100%;
-    padding-top:22px;
-    font-family: "Kanit" , sans-serif;
-    color:#3F3F3F
-}
-.message{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-span{
-    color:#006CFF
-}
-p{
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 20px;
-    text-align: center;
-}
-button{
-    background-color: #006CFF;
-    color:#FFFFFF;
-    padding-inline: 61.5px;
-    padding-block: 16px;
-    font-family:inherit;
-    font-size: 16px;
-    font-weight: 500;
-    border-radius: 4px;
-}
-.copyright{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap:10px
-}
-</style>
-</head>
-<body>
-  <div class="main">
-    <div class="logo">
-      <img src="https://res.cloudinary.com/dcsv5etuw/image/upload/v1671352986/logo_rwgpkh.jpg" alt="">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;800&display=swap");
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        border: 0;
+      }
+      .main {
+        padding-inline: 40px;
+        max-width: 1440px;
+        width: 100%;
+        padding-top: 22px;
+        font-family: "Kanit", sans-serif;
+        color: #3f3f3f;
+      }
+      .message {
+        display: block;
+        text-align: center;
+      }
+      .logo img {
+        width: 150px;
+        max-width: 30%;
+      }
+      .heed {
+        color: #006cff;
+      }
+      .mail {
+        width: 100%;
+        max-width: 300px;
+      }
+      p {
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 24px;
+        text-align: center;
+      }
+      .copyright {
+        text-align: center;
+      }
+      .copyright p {
+        font-weight: 400;
+      }
+      .message a {
+        color: white;
+        text-decoration: none;
+        background-color: #006cff;
+        color: #ffffff;
+        padding-inline: 61.5px !important;
+        padding-block: 16px !important;
+        font-family: inherit;
+        font-size: 16px;
+        font-weight: 500;
+        border-radius: 4px;
+        margin-left: auto;
+        padding: 16px 20px !important;
+      }
+      .email {
+        margin-top: 30px;
+        margin-bottom: 20px;
+      }
+      .copy {
+        font-size: 16px;
+        padding-inline: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div class="logo">
+        <a href="https://heed.cx"
+          ><img
+            src="https://res.cloudinary.com/dcsv5etuw/image/upload/v1671352986/logo_rwgpkh.jpg"
+            alt=""
+        /></a>
+      </div>
+      <div class="message">
+        <img
+          src="https://res.cloudinary.com/dcsv5etuw/image/upload/v1671353053/password_wemowg.jpg"
+          alt=""
+          class="mail"
+        />
+        <h1>Reset Password</h1>
+        <p>
+          You recently requested to reset the password for your account. 
+          Click the button below to proceed. 
+        </p>
+        <div class="email">
+          <a href="www.google.com">Reset password</a>
+        </div>
+        <p>If you did not request a password reset, please ignore this email or reply to let us know.</p>
+      </div>
+      <div class="copyright">
+        <!-- <img src="https://res.cloudinary.com/dcsv5etuw/image/upload/v1671353006/copyright_frjemi.jpg" alt=""> -->
+        <p><span class="copy">©</span>Copyright 2022 | Heed</p>
+      </div>
     </div>
-    <div class="message">
-      <img src="https://res.cloudinary.com/dcsv5etuw/image/upload/v1671353053/password_wemowg.jpg" alt="">
-      <h1>Reset Password</h1>
-      <p>You recently requested to reset the password for your account. 
-        Click the button below to proceed.</p>
-      <button>Reset password</button>
-      <p>If you did not request a password reset, please ignore this email or reply to let us know.</p>
-    </div>
-    <div class="copyright">
-      <img src="https://res.cloudinary.com/dcsv5etuw/image/upload/v1671353006/copyright_frjemi.jpg" alt=""> 
-      <p>Copyright 2022 | Heed</p>
-    </div>
-  </div>
-</body>
+  </body>
 </html>
