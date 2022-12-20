@@ -1,4 +1,4 @@
-from fastapi import FastAPI, status, Depends, APIRouter,  UploadFile, File, Form, Query, Request
+from fastapi import FastAPI, status, Depends, APIRouter,  UploadFile, File, HTTPException, Form, Query, Request
 from typing import List, Union, Optional
 import services as _services
 import models, schema
@@ -68,7 +68,7 @@ def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(_services.
             content=jsonable_encoder({"detail": str(e)}),
         )
     return {      
-        detail: users
+        "detail": users
     }
     
 @user_router.get("/get_user/{user_id}", summary = "get user by id", status_code=200, response_model=schema.User)
@@ -269,4 +269,24 @@ async def refresh_token(refresh_token: schema.RefreshToken, db: Session = Depend
             status_code= status.HTTP_400_BAD_REQUEST,
             content=jsonable_encoder({"detail": str(e)}),
         )
-        
+
+@user_router.post("/deactivate_user/{user_Id}", status_code=status.HTTP_200_OK)
+async def deactivate(user_Id: int, db: Session = Depends(_services.get_session), user:schema.User = Depends(auth.get_active_user)):
+    user = crud.get_user(db, user_id=user_Id)
+    try:
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        else:
+            if user.is_active == False :
+                raise HTTPException(status_code=404, detail="User Account Is Not Active")
+            user.is_active = False
+            db.commit()
+            await send_email([user.email], user)
+    except Exception as e:
+        return JSONResponse(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+    return {      
+        "detail": "User Deactivated"
+    }   
