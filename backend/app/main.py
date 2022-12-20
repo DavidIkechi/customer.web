@@ -171,7 +171,7 @@ AWS_KEY_ID = os.getenv("AWS_KEY_ID")
 AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
 
 @app.on_event('startup')
-@repeat_every(seconds = 10, wait_first = True)
+@repeat_every(seconds = 3, wait_first = True)
 def periodic():
     cron_status.check_and_update_jobs()
     
@@ -226,22 +226,24 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     except Exception:
         return {"error": "There was an error uploaading the file"}
 
-    s3 = boto3.client('s3', aws_access_key_id= AWS_KEY_ID,
-        aws_secret_access_key= AWS_SECRET_KEY
-        )
+    #     s3 = boto3.client('s3', aws_access_key_id= AWS_KEY_ID,
+    #         aws_secret_access_key= AWS_SECRET_KEY
+    #         )
     audio_file = file.file.read()
     bucket = "hng-heed"
 
-    s3.upload_fileobj(
-        io.BytesIO(audio_file),
-        bucket,
-        file.filename,
-        ExtraArgs = {"ACL": "public-read"}
-    )
-    audio_s3_url = f"https://{bucket}.s3.amazonaws.com/{file.filename}"
+    
+    
+    #     s3.upload_fileobj(
+    #         io.BytesIO(audio_file),
+    #         bucket,
+    #         file.filename,
+    #         ExtraArgs = {"ACL": "public-read"}
+    #     )
+    #     audio_s3_url = f"https://{bucket}.s3.amazonaws.com/{file.filename}"
 
 
-    # transcript = transcript
+     # transcript = transcript
     
     size = Path(file.filename).stat().st_size / 1048576
     duration = audio_details(file.filename)["mins"]
@@ -284,7 +286,6 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), db: Session
     return {
         "id":audio_id,
         "transcript_id": transcript_id,
-        "s3 bucket url": audio_s3_url
     }
 
 # create the endpoint
@@ -512,7 +513,7 @@ def get_sentiment_result(id: int, db: Session = Depends(get_db)):
 @app.get("/list-audios-by-user", summary = "list all user audios with their status")
 def list_audios_by_user(db: Session = Depends(get_db), user: models.User = Depends(get_active_user)):
     result = crud.get_audios_by_user(db, user_id=user.id)
-    audios = []
+    audio_list = []
     for i in result:
         audio = {
             "id": i.id,
@@ -524,7 +525,8 @@ def list_audios_by_user(db: Session = Depends(get_db), user: models.User = Depen
             "job_details": i.job
 
         }
-        audios.append(audio)
+        audio_list.append(audio)
+    audios = sorted(audio_list, key=lambda x: x['id'], reverse=True)   
     return audios
     
 @app.get("/get_uploaded_jobs", summary="List all uploaded jobs with job details", status_code=status.HTTP_200_OK, tags=['jobs'])
@@ -817,7 +819,8 @@ async def change_password(password_schema: schema.ChangePassword, db: Session = 
 
 @app.get('/login/google')
 async def login(request: Request):
-    redirect_uri = request.url_for('auth')  # This creates the url for our /auth endpoint
+    redirect_uri = "https://api.heed.hng.tech/auth/google"
+    # request.url_for('auth')   This creates the url for our /auth endpoint
     return await oauth.google.authorize_redirect(request, redirect_uri)
 
 
@@ -958,10 +961,14 @@ def get_agent_performance(agent_id: int, db: Session = Depends(get_db), user: mo
             if i["agent_id"] == agent_id:
                 result["week"] = i
                 break
+            else: 
+                result["week"] = []
         for j in leaderboard[1]:
             if j["agent_id"] == agent_id:
                 result["month"] = j
                 break
+            else: 
+                result["month"] = []
         return {"Agent_Performance_Report": {"week": result["week"], "month": result["month"]}}
     except:
         return {"message": "agent details does not exist"}

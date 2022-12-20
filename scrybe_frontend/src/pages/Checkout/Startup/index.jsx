@@ -9,8 +9,6 @@ import tag from "../assets/sell.svg";
 import checkIcon from "../assets/check.svg";
 import visa from "../assets/VisaInc.png";
 import master from "../assets/Mastercard.png";
-import NavBarFree from "../../../components/NavbarFree";
-import Footer from "../../../components/Footer";
 import axios from "axios";
 
 function Checkout() {
@@ -66,7 +64,6 @@ function Checkout() {
 
   return (
     <div className={styles.checkout}>
-      <NavBarFree />
       <div className={styles.container}>
         <div className={styles.header}>
           <h1 className={styles.heroH1}>
@@ -170,6 +167,7 @@ function Checkout() {
                       name="cardName"
                       id="card_name"
                       placeholder="John Doe"
+                      required
                     />
                   </div>
                   <div className={styles.formEmail}>
@@ -179,6 +177,7 @@ function Checkout() {
                       name="cardName"
                       id="card_name"
                       placeholder="name@company.com"
+                      required
                     />
                   </div>
                 </form>
@@ -197,6 +196,7 @@ function Checkout() {
                       name="cardName"
                       id="card_name"
                       placeholder="1234 1234 1234 1234"
+                      required
                     />
                   </div>
                   <div className={styles.checkoutInputRow}>
@@ -216,8 +216,10 @@ function Checkout() {
                         name="cardName"
                         id="card_name"
                         placeholder="CVC"
+                        required
                       />
                     </div>
+                    <small></small>
                   </div>
                   <div className={styles.checkboxsection}>
                     <label htmlFor="checkbox" className={styles.chkContainer}>
@@ -260,7 +262,7 @@ function Checkout() {
                 </div>
               </div>
             </div>
-            <div>
+            <div className={styles.paymentTypes}>
               <h2>Accepted payment types</h2>
               <div>
                 <div className={styles.cardTypes}>
@@ -297,7 +299,6 @@ function Checkout() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

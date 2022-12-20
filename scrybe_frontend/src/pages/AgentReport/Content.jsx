@@ -7,17 +7,15 @@ import { useState, useEffect } from "react";
 import { useAgentReport } from "./hooks";
 import { useAgentAnalysis } from "./hooks";
 
-// { recentAgentReport, agentAnalysis}
 const Content = (props) => {
   const agentReportData = useAgentReport(props);
   const agentAnalysisData = useAgentAnalysis(props);
-
   const [selectData, setSelectData] = useState([]);
   const [selectReport, setSelectReport] = useState([]);
 
   useEffect(() => {
-    setSelectReport(agentAnalysisData.week);
-    setSelectData(agentReportData.week);
+    setSelectReport(agentAnalysisData?.week);
+    setSelectData(agentReportData?.week);
   }, [agentAnalysisData, agentReportData]);
 
   const handleDate = (e) => {
@@ -50,14 +48,8 @@ const Content = (props) => {
         </div>
       </div>
       <div className={styles.topDetailsDiv}>
-        <Charts
-          // agentAnalysis={agentAnalysis}
-          selectReport={selectReport}
-        />
-        <AgentDetails
-          selectData={selectData}
-          // recentAgentReport={recentAgentReport}
-        />
+        <Charts selectReport={selectReport} />
+        <AgentDetails selectData={selectData} />
       </div>
     </div>
   );

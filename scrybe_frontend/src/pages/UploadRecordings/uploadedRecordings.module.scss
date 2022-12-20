@@ -9,13 +9,14 @@
     position: relative;
     overflow-y: scroll;
     padding-bottom: 2rem;
+    background: #f9f9f9;
   }
 }
 
 .sidebaroverlay {
   width: 100%;
   height: 100%;
-  z-index: 4;
+  z-index: 0;
   background: rgba(18, 18, 18, 0.3);
   position: fixed;
   top: 0;

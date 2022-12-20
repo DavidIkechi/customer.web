@@ -37,8 +37,9 @@
   border-radius: 4px;
   outline: none;
   border: none;
+  cursor: pointer;
 }
-.plansCard a:hover {
+.plansCard button:hover {
   background-color: #549dff;
 }
 
@@ -84,4 +85,8 @@
 .plansPricingFigure h4 {
   font-size: 4.5rem;
   font-weight: 600;
+}
+
+.plansPricing p {
+  margin-block-end: 1rem;
 }

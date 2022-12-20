@@ -5,6 +5,7 @@ import ApiService from "../../helpers/axioshelp/apis/index";
 import { useState, useEffect, useRef } from "react";
 import SearchIcon from "./images/search-icon.png";
 import ProfileName from "./images/profile-circle.png";
+import notfoundImg from "./images/notfound.svg";
 import CallIcon from "./images/Call-icon.png";
 import LeaderBoardIcon from "./images/leaderboard-icon.png";
 import AgentReport from "../AgentReport";
@@ -22,6 +23,7 @@ const colorMap = {
 };
 
 function Leaderboard() {
+  const [search, setSearch] = useState("");
   const [toggleSidebar, setToggleSidebar] = useState(false);
 
   const [leaderboard, setLeaderboard] = useState([]);
@@ -73,16 +75,27 @@ function Leaderboard() {
     setControll(true);
   };
 
-  // const agentStyle = {
-  //   position: "absolute",
-  //   zIndex: 9999,
-  //   width: "60%",
-  //   margin: "auto",
-  //   top: "0",
-  //   left: "0",
-  //   border: "0",
-  //   borderRadius: "20px",
-  // };
+  useEffect(() => {
+    let FilteredLeaderboard = leaderboard.filter((profile) => {
+      return search.toLowerCase() === ""
+        ? profile
+        : profile.firstname.toLowerCase().includes(search) ||
+            profile.str_agent_id.toLowerCase().includes(search) ||
+            profile.lastname.toLowerCase().includes(search);
+    });
+
+    let FilteredotherAgent = otherAgent.filter((profile) => {
+      return search.toLowerCase() === ""
+        ? profile
+        : profile.firstname.toLowerCase().includes(search) ||
+            profile.str_agent_id.toLowerCase().includes(search) ||
+            profile.lastname.toLowerCase().includes(search);
+    });
+
+    setOtherAgent(FilteredotherAgent);
+
+    setLeaderboard(FilteredLeaderboard);
+  }, [search]);
 
   // // implemented by rambey
 
@@ -125,8 +138,8 @@ function Leaderboard() {
             <div className={styles.right_section}>
               <h2>Leaderboard</h2>
               <p>
-                This is a list showing the performance your mounted agents on
-                Heed via the number of customer calls they’ve received.
+                This is a list showing the performance of your agents on heed
+                via the number of customers calls they have received..
               </p>
               <p className={styles.long_paragraph}>
                 Please note that each agent’s performance was rated using the
@@ -144,8 +157,9 @@ function Leaderboard() {
                     type="text"
                     name=""
                     id="search-bar"
-                    placeholder="  &nbsp; &nbsp; &nbsp; Input Agent ID"
+                    placeholder="   Input Agent ID/Name"
                     required
+                    onChange={(e) => setSearch(e.target.value)}
                   />
                 </div>
 
@@ -165,9 +179,10 @@ function Leaderboard() {
               </div>
 
               <div className={styles.Profile_container}>
-                {leaderboard.length > 0 && (
-                  <>
-                    {leaderboard.map((profile, index, index2) => (
+                {/* {leaderboard.length > 0 ? ( */}
+                <>
+                  {leaderboard.map((profile, index, index2) => (
+                    <>
                       <LeaderBoardDisplay
                         key={profile.agent_id}
                         person={profile}
@@ -178,9 +193,15 @@ function Leaderboard() {
                         rank={profile.rank}
                         show={profile.str_agent_id}
                       />
-                    ))}
-                  </>
-                )}
+                    </>
+                  ))}
+                </>
+                {/* ) : (
+                  <div className={styles.empty_state}>
+                    <img src={notfoundImg} alt="not found" />
+                    <h3>Sorry, No Agent Record Found.</h3>
+                  </div>
+                )} */}
               </div>
             </div>
           </section>
@@ -188,7 +209,7 @@ function Leaderboard() {
           <section className={styles.Tabular_Container}>
             <div className={styles.Tabular_Content_Container}>
               <div className={styles.Header_title}>
-                <p className={styles.Hide_for_mobile}>ID NUMBER</p>
+                <p className={styles.Hide_for_mobile}>AGENT NAME</p>
                 <span className={styles.Hide_for_desktop}>ID</span>
                 <p className={styles.Hide_for_mobile}>No. of calls/week</p>
                 <span className={styles.Hide_for_desktop}>
@@ -219,45 +240,10 @@ function Leaderboard() {
                 </>
               ) : (
                 <div className={styles.empty_state}>
-                  <h3>An overview of your agents performance shows here.</h3>
+                  <img src={notfoundImg} alt="not found" />
+                  <h3>Sorry, No Agent Record Found.</h3>
                 </div>
               )}
-              {/* <div className={styles.Header_content}>
-              <div className={styles.Header_profile_container}>
-                <img src={ProfileName} className="" alt="profile1" />
-                <p className={styles.Agent_ID}>AG685500DE</p>
-              </div>
-              <p>24</p>
-              <p>5/10</p>
-              <p>5th</p>
-            </div>
-            <div className={styles.Header_content}>
-              <div className={styles.Header_profile_container}>
-                <img src={ProfileName} className="" alt="profile1" />
-                <p className={styles.Agent_ID}>AG685500DE</p>
-              </div>
-              <p>24</p>
-              <p>5/10</p>
-              <p>5th</p>
-            </div>
-            <div className={styles.Header_content}>
-              <div className={styles.Header_profile_container}>
-                <img src={ProfileName} className="" alt="profile1" />
-                <p className={styles.Agent_ID}>AG685500DE</p>
-              </div>
-              <p>24</p>
-              <p>5/10</p>
-              <p>5th</p>
-            </div>
-            <div className={styles.Header_content}>
-              <div className={styles.Header_profile_container}>
-                <img src={ProfileName} className="" alt="profile1" />
-                <p className={styles.Agent_ID}>AG685500DE</p>
-              </div>
-              <p>24</p>
-              <p>5/10</p>
-              <p>5th</p>
-            </div> */}
             </div>
           </section>
         </div>
@@ -285,14 +271,19 @@ function LeaderBoardDisplay({
         <div className={styles.Profile_img}>
           <img src={ProfileName} className="" alt="profile1" />
         </div>
-        <h2>{person.str_agent_id}</h2>
+        <p>ID: {person.str_agent_id}</p>
+        <h2 className={styles.UppercaseName}>
+          {person.firstname.toUpperCase()} {person.lastname.toUpperCase()}
+        </h2>
+
         <p>
-          No. of calls taken this {person.week}: {person.total_calls}
+          No. of calls taken this {person.weekly || person.monthly}:{" "}
+          {person.total_calls}
         </p>
         <h1 style={{ color: colorMap[index] }}>
           {person.average_score} <span className={styles.small_text}>/10</span>
         </h1>
-        <p className={styles.Agent_position}> {person.rank}th</p>
+        <p className={styles.Agent_position}> {person.rank}</p>
       </div>
     </div>
   );
@@ -307,12 +298,12 @@ function OtherAgentDisplay({ person, handleAgent, agent_id, rank, show }) {
           className={styles.Agent_ID}
           onClick={() => handleAgent(agent_id, rank, show)}
         >
-          {person.str_agent_id}
+          {person.firstname.toUpperCase()} {person.lastname.toUpperCase()}
         </p>
       </div>
       <p>{person.total_calls}</p>
       <p>{person.average_score}/10</p>
-      <p>{person.rank}th</p>
+      <p>{person.rank}</p>
     </div>
   );
 }

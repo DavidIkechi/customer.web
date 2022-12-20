@@ -10,7 +10,6 @@ import {
 import Icon from "../assets/table-icon.png";
 ChartJS.register(CategoryScale, LinearScale, BarElement);
 
-// agentAnalysis
 function Charts({ selectReport }) {
   const [option, setOption] = useState({});
 
@@ -91,7 +90,7 @@ function Charts({ selectReport }) {
           </div>
         </div>
         <div className={styles.chartImg}>
-          {selectReport?.length >= 0 ? (
+          {selectReport?.length > 0 ? (
             <Bar data={userData} options={option} />
           ) : (
             <p className={styles.empty}>

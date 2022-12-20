@@ -1,7 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import ErrorHandler from "../../../helpers/axioshelp/Utils/ErrorHandler";
-import ApiService from "../../../helpers/axioshelp/apis";
+import { registerUser } from "../../../redux/user/userSlice";
 
 const createAccount = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -137,8 +138,12 @@ const createAccount = () => {
 };
 
 export { createAccount };
+export { completeRegistration };
 
 const completeRegistration = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { userData, status, error } = useSelector((state) => state.auth);
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [company_name, setCompany] = useState("");
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -154,9 +159,11 @@ const completeRegistration = () => {
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const navigate = useNavigate();
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const dispatch = useDispatch();
 
-  const companyNameTest = new RegExp(/^[a-zA-Z]{2,}$/);
-  const addressTest = new RegExp(/[A-Za-z0-9'\.\-\s\,]{8,}$/);
+  const companyNameTest = new RegExp(/[A-Za-z0-9'.\-\s,]{4,}$/);
+  const addressTest = new RegExp(/[A-Za-z0-9'.\-\s,]{8,}$/);
 
   const tester = (e, reg, func) => {
     if (reg.test(e.target.value)) {
@@ -193,17 +200,23 @@ const completeRegistration = () => {
       company_address: company_address,
       password: value.password,
     };
-    console.log(data);
-    try {
-      await ApiService.SignUp(data);
+    dispatch(registerUser(data));
+  };
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (status === "success") {
       localStorage.clear();
-
-      navigate("/verify-signup");
-    } catch (error) {
+      setResponse(
+        ErrorHandler({ type: "Success", message: "Registration Successful" })
+      );
+      setTimeout(() => {
+        navigate("/verify-signup");
+      }, 2500);
+    } else if (status === "failed") {
       setResponse(ErrorHandler(error));
     }
-  };
+  }, [userData, status, error, navigate, dispatch]);
 
   return {
     handleCompanyName,
@@ -216,7 +229,6 @@ const completeRegistration = () => {
     value,
     response,
     setResponse,
+    userData,
   };
 };
-
-export { completeRegistration };

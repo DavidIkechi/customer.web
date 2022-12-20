@@ -2,20 +2,10 @@ import React from "react";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Pricing.module.scss";
-// import heroImage from "./assets/heroimage.svg";
-// import curves from "./assets/Sectionbottom.png";
-// import checkIcon from "./assets/check.svg";
-// import BenefitsImage from "./assets/benefitsimage.svg";
 import YearPlans from "./components/YearPlan/yearPlans";
 import MonthPlans from "./components/MonthPlan/monthPlans";
-import NavBarFree from "../../components/NavbarFree";
-import Footer from "../../components/Footer";
 
 function Pricing() {
-  React.useEffect(() => {
-    // 👇️ scroll to top on page load
-    window.scrollTo({ top: 0, left: 0 });
-  }, []);
   const plansRef = useRef();
   const [showMonth, setshowMonth] = useState(true);
   const [showYear, setshowYear] = useState(false);
@@ -43,7 +33,6 @@ function Pricing() {
 
   return (
     <>
-      <NavBarFree />
       <div className={styles.pricing}>
         <div className={styles.hero}>
           <div className={styles.container}>
@@ -78,7 +67,7 @@ function Pricing() {
           <h2 className={styles.CTAtitle}>
             Choose a plan that fits your needs
           </h2>
-          <div className={styles.CTAs}>
+          {/* <div className={styles.CTAs}>
             <button
               className={`${styles.ctaMonth} ${
                 listmonthActive
@@ -102,7 +91,7 @@ function Pricing() {
             >
               Yearly
             </button>
-          </div>
+          </div> */}
         </div>
         <div>
           <div>{showMonth && <MonthPlans monthState={true} />}</div>
@@ -117,13 +106,13 @@ function Pricing() {
                 <tr>
                   <th>Overview</th>
                   <th>Startup</th>
-                  <th>Growing</th>
-                  <th>Enterprise</th>
+                  <th>Enterprise (Pre recorded)</th>
+                  <th>Enterprise (Live stream)</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Ai-Powered call transcriptions</td>
+                  <td>Rest APIs</td>
                   <td>
                     <img
                       src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
@@ -144,7 +133,7 @@ function Pricing() {
                   </td>
                 </tr>
                 <tr>
-                  <td>Call Tracking & Recording</td>
+                  <td>Support for 30+ dialects and languages.</td>
                   <td>
                     <img
                       src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
@@ -165,7 +154,7 @@ function Pricing() {
                   </td>
                 </tr>
                 <tr>
-                  <td> Business Hours</td>
+                  <td> Calculated per second that is transcribed.</td>
                   <td>
                     <img
                       src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
@@ -186,7 +175,7 @@ function Pricing() {
                   </td>
                 </tr>
                 <tr>
-                  <td>Email & Chat Support</td>
+                  <td>Live or pre-recorded transcription</td>
                   <td>
                     <img
                       src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
@@ -207,24 +196,14 @@ function Pricing() {
                   </td>
                 </tr>
                 <tr>
-                  <td>API & Webhook Access</td>
-                  <td></td>
+                  <td>No additional charge for the second audio channel.</td>
+
                   <td>
                     <img
                       src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
                       alt="check-mark icon"
                     />
                   </td>
-                  <td>
-                    <img
-                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
-                      alt="check-mark icon"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Custom Workflows</td>
-                  <td></td>
                   <td>
                     <img
                       src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
@@ -239,8 +218,8 @@ function Pricing() {
                   </td>
                 </tr>
                 <tr>
-                  <td>Dedicated Account Manager</td>
-                  <td></td>
+                  <td>Email-based support service.</td>
+
                   <td>
                     <img
                       src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
@@ -253,82 +232,6 @@ function Pricing() {
                       alt="check-mark icon"
                     />
                   </td>
-                </tr>
-                <tr>
-                  <td>Priority Support</td>
-                  <td></td>
-                  <td>
-                    <img
-                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
-                      alt="check-mark icon"
-                    />
-                  </td>
-                  <td>
-                    <img
-                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
-                      alt="check-mark icon"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Agent Assist</td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <img
-                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
-                      alt="check-mark icon"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Professional Services</td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <img
-                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
-                      alt="check-mark icon"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Custom Analytics & Reports</td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <img
-                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
-                      alt="check-mark icon"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Personalized Onboarding Support</td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <img
-                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
-                      alt="check-mark icon"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Agent Coaching & Call Scoring</td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <img
-                      src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
-                      alt="check-mark icon"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td> Dedicated Technical Support</td>
-                  <td></td>
-                  <td></td>
                   <td>
                     <img
                       src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/check_qmeoqn.webp"
@@ -360,7 +263,7 @@ function Pricing() {
             </ul>
             <div className={styles.benefitCTA}>
               <Link to="/try">Try for Free</Link>
-              <Link to="/demos">Schedule a Demo</Link>
+              {/* <Link to="/demos">Schedule a Demo</Link> */}
             </div>
           </div>
           <div className={styles.BenefitsImage}>
@@ -371,7 +274,6 @@ function Pricing() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

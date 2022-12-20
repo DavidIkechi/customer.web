@@ -11,6 +11,7 @@ import cloudinary
 import cloudinary.uploader
 from datetime import datetime
 import uuid
+from collections import defaultdict
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -268,11 +269,20 @@ def get_leaderboard(db: Session, user_id: int):
     unique_ids = []
     week = datetime.now().isocalendar().week
     month = datetime.now().month
+    total_week = 0
+    total_month = 0
 
     for i in results:
         if i.job.job_status == "completed":
             unique_id = i.agent_id
             unique_ids.append(unique_id)
+
+        if i.timestamp.isocalendar().week == week:
+            total_week += 1
+        
+        if i.timestamp.month == month:
+            total_month += 1
+
 
     for i in unique_ids:
         average_scores = []
@@ -285,8 +295,8 @@ def get_leaderboard(db: Session, user_id: int):
             if j.job.job_status == "completed":
                 if j.agent_id == i:
                     if j.timestamp.isocalendar().week == week:
-                        per_agent["week"]["firstname"] = j.agent_firstname
-                        per_agent["week"]["lastname"] = j.agent_lastname
+                        per_agent["week"]["firstname"] = j.agent_firstname.capitalize()
+                        per_agent["week"]["lastname"] = j.agent_lastname.capitalize()
                         per_agent["week"]["agent_id"] = j.agent_id
                         per_agent["week"]["total_calls"] += 1
                         if j.overall_sentiment == "Positive":
@@ -300,9 +310,15 @@ def get_leaderboard(db: Session, user_id: int):
                         per_agent["week"]["str_agent_id"] = "AG" + str(1000000 + per_agent["week"]['agent_id']) + "DE"
                         per_agent["week"]["weekly"] = "week"
 
+                    if j.timestamp.isocalendar().week != week:
+                        per_agent["week"] = {}
+
+                    if j.timestamp.month != month:
+                        per_agent["month"] = {}
+
                     if j.timestamp.month == month:
-                        per_agent["month"]["firstname"] = j.agent_firstname
-                        per_agent["month"]["lastname"] = j.agent_lastname
+                        per_agent["month"]["firstname"] = j.agent_firstname.capitalize()
+                        per_agent["month"]["lastname"] = j.agent_lastname.capitalize()
                         per_agent["month"]["agent_id"] = j.agent_id
                         per_agent["month"]["total_calls"] += 1
                         if j.overall_sentiment == "Positive":
@@ -319,20 +335,40 @@ def get_leaderboard(db: Session, user_id: int):
         
     leaderboard_week = []
     leaderboard_month = []
-    for i in agents.values():
-        leaderboard_week.append(i["week"])
-        leaderboard_month.append(i["month"])
-        
-    leaderboard_week = sorted(leaderboard_week, key=lambda k: k['average_score'], reverse=True)
-    leaderboard_month = sorted(leaderboard_month, key=lambda k: k['average_score'], reverse=True)
+    if total_week > 0:
+        for i in agents.values():
+            if i["week"] != {}:
+                leaderboard_week.append(i["week"])
+            
+        leaderboard_week = sorted(leaderboard_week, key=lambda k: k['average_score'], reverse=True)
+
+    if total_month > 0:
+        for i in agents.values():
+            if i["month"] != {}:
+                leaderboard_month.append(i["month"])
+        leaderboard_month = sorted(leaderboard_month, key=lambda k: k['average_score'], reverse=True)
 
     for i in leaderboard_week:
-        i['rank'] = leaderboard_week.index(i) + 1
-        # i["str_agent_id"] = "AG" + str(1000000 + i['agent_id']) + "DE"
+        rank = str(leaderboard_week.index(i) + 1)
+        if rank[-1] == "1":
+            i['rank'] = str(rank) + "st"
+        elif rank[-1] == "2":
+            i['rank'] = str(rank) + "nd"
+        elif rank[-1] == "3":
+            i['rank'] = str(rank) + "rd"
+        else:
+            i['rank'] = str(rank) + "th"
 
     for i in leaderboard_month:
-        i['rank'] = leaderboard_month.index(i) + 1
-        # i["str_agent_id"] = "AG" + str(1000000 + i['agent_id']) + "DE"
+        rank = str(leaderboard_month.index(i) + 1)
+        if rank[-1] == "1":
+            i['rank'] = str(rank) + "st"
+        elif rank[-1] == "2":
+            i['rank'] = str(rank) + "nd"
+        elif rank[-1] == "3":
+            i['rank'] = str(rank) + "rd"
+        else:
+            i['rank'] = str(rank) + "th"
     
     leaderboard.append(leaderboard_week)
     leaderboard.append(leaderboard_month)
@@ -348,7 +384,7 @@ def refresh_api_key(db:Session, user_id: int):
     return key
     
 def get_queued_jobs(db: Session):
-    return db.query(models.Job).filter(models.Job.job_status != "completed").all()
+    return db.query(models.Job).filter(models.Job.job_status != "completed").order_by(models.Job.audio_id.desc()).all()
 
 def analyse_and_store_audio(db:Session, job_id, user_id):
     Job = db.query(models.Audio).filter(models.Audio.job_id == job_id).first()
