@@ -7,6 +7,8 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 import models
 from crud import get_user_by_email
+from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
 # from db import engine, SessionLocal
 
 from dotenv import load_dotenv
@@ -40,9 +42,6 @@ user_not_found_exception = HTTPException(
     detail="User not found",
     headers={"WWW-Authenticate": "Bearer"},
 )
-
-
-
 
 # Pydantic classes for type checking
 class Token(BaseModel):
@@ -150,10 +149,10 @@ async def main_login(form_data, db):
         )
         
     except Exception as e:
-        return {
-            status_code: status.HTTP_400_BAD_REQUEST,
-            detail: e.message
-        }
+        return JSONResponse(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
     return {"access_token": access_token,
             "refresh_token": refresh_token,
             "token_type": "bearer"}

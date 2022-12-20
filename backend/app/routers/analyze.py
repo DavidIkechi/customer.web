@@ -1,4 +1,4 @@
-from fastapi import FastAPI, status, Depends, APIRouter,  UploadFile, File, Form, Query, Request
+from fastapi import FastAPI, status, Depends, APIRouter,  UploadFile, File, Form, Query, Request, HTTPException
 from typing import List, Union, Optional
 from pathlib import Path
 from audio import audio_details
@@ -36,6 +36,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(),
     try:
         user_id = user.id
         company_id = user.company_id
+        print(company_id)
         
         # convert to lower case for both first and last name.    
         first_name = first_name.lower()
@@ -47,11 +48,13 @@ async def analyse(first_name: str = Form(), last_name: str = Form(),
             f.write(contents)
         duration = audio_details(file.filename)
         db_company = db.query(models.Company).filter(models.Company.id == company_id).first()
-        
         # if the time left is less.
         if db_company.time_left < duration['overall']:
-            raise HTTPException(status_code = 406, detail="You don't have enough Credit left")
-
+            return JSONResponse(
+            status_code= 406,
+            content=jsonable_encoder({"detail": "You don't have enough Credit left"}),
+            )
+        # if the time left is more.
         result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
                                             chunk_size = 6000000)
         url = result.get("secure_url")
