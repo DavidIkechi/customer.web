@@ -241,9 +241,7 @@ const Index = () => {
                 />
               </div>
               <div className={styles.profile__head}>
-                <h5 className={styles.profile__name}>
-                  Mark Essien, CEO Hotels.ng
-                </h5>
+                <h5 className={styles.profile__name}>David Abraham</h5>
               </div>
               <div className={styles.profile__text}>
                 <p className={styles.profile__msg}>
