@@ -143,9 +143,7 @@ def password_verif_token(token):
 
 
 
-
-
-async def send_email(email: List, instance: User):
+async def send_deactivation_email(email: List, instance: User):
     token_data = {
         'email': instance.email,
         # 'username': instance.username

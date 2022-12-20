@@ -1,8 +1,14 @@
-from fastapi import FastAPI, status, Depends, APIRouter,  UploadFile, File, HTTPException, Form, Query, Request
+from fastapi import FastAPI, status, Depends, APIRouter,  UploadFile, File, Form, Query, Request, HTTPException
 from typing import List, Union, Optional
 import services as _services
 import models, schema
+from fastapi_pagination import Page, paginate, Params
 from sqlalchemy.orm import Session
+from auth import (
+    get_active_user,
+    get_admin,
+    get_current_user
+)
 import auth
 from . import utility as utils
 from fastapi.responses import JSONResponse
@@ -24,13 +30,12 @@ user_router = APIRouter(
     tags=['users'],
 )
 
-
 # endpoint for user login
 @user_router.post('/login', summary = "create access token for logged in user",
                   status_code= status.HTTP_200_OK)
 async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(_services.get_session)):
     # return token once the user has been successfully authenticated, or it returns an error.
-    return await jwt.main_login(form_data, db)
+    return await main_login(form_data, db)
 
 
 # creating a users account.
@@ -42,6 +47,12 @@ async def create_user(user: schema.UserCreate, db: Session = Depends(_services.g
     # if user exists, throw an exception.
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
+
+    # check if email exists and is valid
+    email_exists = utils.validate_and_verify_email(user.email)
+    if not email_exists:
+        raise HTTPException(status_code=400, detail="Your email could not be verified. Please enter a valid email")
+
     try:
         # create the user before sending a mail.
         new_user = crud.create_user(db=db, user=user)
@@ -140,22 +151,27 @@ def update_profile(
 
 @user_router.get('/verification', summary = "verify a user by email", status_code = status.HTTP_200_OK)
 async def email_verification(request: Request, token: str, db: Session = Depends(_services.get_session)):
-
-    user = await verify_token(token, db)
-
-
-    if user and not user.is_active:
-        user.is_active = True
-        user.is_verified = True
-        db.commit()
-        return{
-            "detail" : f"Hello {user.first_name}, your account has been successfully verified"}
+    try:
+        user = await verify_token(token, db)
+        if user and not user.is_active:
+            user.is_active = True
+            user.is_verified = True
+            db.commit()
+            return{
+                "detail" : f"Hello {user.first_name}, your account has been successfully verified"
+                }
+    except Exception as e:
+        return JSONResponse(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+        
     return {
         "detail" : f"Hello {user.first_name}, you already have an active account with Heed!"
     }
     
     
-@user_router.get("/account", summary = "get user profile details", tags=['users'])
+@user_router.get("/account", summary = "get user profile details", status_code = 200)
 async def my_profile (db: Session = Depends(_services.get_session), user: models.User = Depends(auth.get_active_user)):
     user_id = user.id
     try:
@@ -173,11 +189,8 @@ async def forgot_password(email: schema.ForgetPassword, db: Session = Depends(_s
     
     try:
         user: models.User = crud.get_user_by_email(db, email.email)
-
         if user is None:
             raise HTTPException(status_code=404, detail="User not found")
-
-        
         token = await send_password_reset_email([email.email], user)
     except Exception as e:
         return JSONResponse(
@@ -269,24 +282,4 @@ async def refresh_token(refresh_token: schema.RefreshToken, db: Session = Depend
             status_code= status.HTTP_400_BAD_REQUEST,
             content=jsonable_encoder({"detail": str(e)}),
         )
-
-@user_router.post("/deactivate_user/{user_Id}", status_code=status.HTTP_200_OK)
-async def deactivate(user_Id: int, db: Session = Depends(_services.get_session), user:schema.User = Depends(auth.get_active_user)):
-    user = crud.get_user(db, user_id=user_Id)
-    try:
-        if not user:
-            raise HTTPException(status_code=404, detail="User not found")
-        else:
-            if user.is_active == False :
-                raise HTTPException(status_code=404, detail="User Account Is Not Active")
-            user.is_active = False
-            db.commit()
-            await send_email([user.email], user)
-    except Exception as e:
-        return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
-            content=jsonable_encoder({"detail": str(e)}),
-        )
-    return {      
-        "detail": "User Deactivated"
-    }   
+        

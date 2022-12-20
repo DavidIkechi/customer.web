@@ -22,6 +22,8 @@ class Company(Base):
     name = Column(String(255), index=True)
     address = Column(TEXT)
     size = Column(Integer)
+    plan = Column(String(255), index=True)
+    time_left = Column(Float, index=True, nullable = True)
 
     users = relationship("User", back_populates="company")
     agents = relationship("Agent", back_populates="company")
@@ -151,3 +153,9 @@ class Order(Base):
     total_amount = Column(Float, index=True)
     order_date = Column(Date, index=True, default=date.today())
     next_payment_due_date = Column(Date, index=True)
+
+class Newsletter(Base):
+    __tablename__ = "newsleetter_subscribers"
+
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String(255), nullable = False)

@@ -26,7 +26,7 @@ async def get_order_summary (db: Session = Depends(_services.get_session), user:
     user_email = user.email
     return crud.get_order_summary_by_email(db, user_email)
 
-@order_router.get("/orders/{order_id}", description="Retrieving a specific order by id")
+@order_router.get("/{order_id}", description="Retrieving a specific order by id")
 async def get_order_summary (order_id: int, db: Session = Depends(_services.get_session), user: models.User = Depends(auth.get_active_user)):
     order_summary = crud.get_order_summary_by_id(db, order_id=order_id)
     if order_summary is None:
