@@ -40,10 +40,9 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
 
 # creating a users account.
 @user_router.post("/create_users", status_code= status.HTTP_201_CREATED, 
-                  summary = "create/register a new user user", response_model=schema.User)
+                  summary = "create/register a new user user")
 async def create_user(user: schema.UserCreate, db: Session = Depends(_services.get_session)):
     db_user = crud.get_user_by_email(db, email=user.email)
-    
     # if user exists, throw an exception.
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
@@ -53,18 +52,13 @@ async def create_user(user: schema.UserCreate, db: Session = Depends(_services.g
     if not email_exists:
         raise HTTPException(status_code=400, detail="Your email could not be verified. Please enter a valid email")
 
-    try:
-        # create the user before sending a mail.
-        new_user = crud.create_user(db=db, user=user)
-        await send_email([user.email], user)
-    except Exception as e:
-        return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
-            content=jsonable_encoder({"detail": str(e)}),
-        )
+    # create the user before sending a mail.
+    new_user = crud.create_user(db=db, user=user)
+    await send_email([user.email], user)
+    
         
     return {    
-        "detail" : new_user
+        "detail" : "yes"
     }
 
 # get all users, only available for the admin end.
@@ -351,7 +345,8 @@ async def get_history(user: models.User = Depends(get_active_user),
         "detail": user_history
     }
 
-@user_router.post("/newsletter-subscription", summary="newsletter subscription", response_model= schema.Newsletter, tags=['subscribers'])
+@user_router.post("/newsletter-subscription", summary="newsletter subscription", 
+                  response_model= schema.Newsletter, status_code = 200)
 def subscribe_to_newletter(subscriber: schema.Newsletter, db: Session = Depends(_services.get_session)):
     db_subscriber = crud.check_subscrition_email(db,email=subscriber.email)
 
@@ -363,7 +358,8 @@ def subscribe_to_newletter(subscriber: schema.Newsletter, db: Session = Depends(
     except:
         raise HTTPException(status_code=400, detail="An unknown error occured. Try Again") 
 
-@user_router.get("/get_newsletter-subscribers", summary="Get all existing subscribers", response_model=list[schema.Newsletter], tags=['subscribers'])
+@user_router.get("/get_newsletter-subscribers", summary="Get all existing subscribers", response_model=list[schema.Newsletter],
+                 status_code = 200)
 def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session)):
     subscribers = crud.get_newsletter_subscribers(db, skip=skip)
 
