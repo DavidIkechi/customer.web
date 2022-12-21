@@ -41,6 +41,7 @@
     }
     .joinContainer {
       display: flex;
+      padding-top: 20px;
       //       margin-top: 31vh;
       p {
         font-weight: 400;
@@ -97,6 +98,13 @@
         font-weight: 400;
         font-size: 0.9em;
         line-height: 24px;
+      }
+      a{
+        color:white;
+        text-align:center
+      }
+      a:hover{
+        color:#006cff
       }
       .footer__right__logo {
         padding-right: 5%;
