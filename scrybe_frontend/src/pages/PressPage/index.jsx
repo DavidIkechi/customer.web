@@ -19,9 +19,7 @@ import styles from "./press.module.scss";
 const index = () => {
   return (
     <div>
-      <div>
-        <NavBar />
-      </div>
+      <div></div>
       <section className={styles.section__one}>
         <div className={styles.sect__container}>
           <div className={styles.hero__heading}>
@@ -644,9 +642,7 @@ const index = () => {
           </div>
         </div>
       </section>
-      <div>
-        <Footer />
-      </div>
+      <div></div>
     </div>
   );
 };

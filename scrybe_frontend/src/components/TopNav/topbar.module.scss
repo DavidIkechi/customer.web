@@ -161,7 +161,7 @@
       display: flex;
       height: 48px;
       background-color: #006affdc !important;
-
+      margin: 0 1rem !important;
       img {
         margin-right: 0 !important;
       }
@@ -192,6 +192,12 @@
 
     .TopNav_toggle {
       display: flex;
+    }
+
+    .TopNav_btnwrap {
+      width: fit-content;
+      // background-color: red;
+      margin: 0 1rem !important;
     }
 
     .TopNav_user_desktop {
@@ -227,7 +233,7 @@
     }
     .TopNav_btnwrap {
       width: fit-content;
-      background-color: red;
+      // background-color: red;
     }
     .TopNav_user_mobile {
       display: block !important;

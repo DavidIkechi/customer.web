@@ -18,9 +18,7 @@ import input__ctrl from "../PartnersPage/assets/input__ctrl.png";
 const PartnersPage = () => {
   return (
     <div>
-      <div>
-        <NavBar />
-      </div>
+      <div></div>
       <section className={styles.first__sect}>
         <div className={styles.sect__container}>
           <div className={styles.first__flex}>
@@ -397,9 +395,6 @@ const PartnersPage = () => {
           </div>
         </div>
       </section>
-      <div className={styles.footer__container}>
-        <Footer />
-      </div>
     </div>
   );
 };
