@@ -47,7 +47,15 @@ export default function TryFourth() {
           <div className={styles.callback}>
             <h3>
               Please copy this transcribe url below to access your results or
-              refresh after some time.
+              click
+              <span
+                onClick={() => window.location.reload(false)}
+                className={styles.link}
+              >
+                {" "}
+                Refresh{" "}
+              </span>
+              to reload the page and see the results after some time .
             </h3>
             <p>https://heed.hng.tech/try-results/{transcribeId}</p>
           </div>

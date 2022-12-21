@@ -64,14 +64,31 @@ export default function TryState1() {
       setTranscribeId(response.data.transcript_id);
     } catch (error) {
       // console.log(error.message);
-      console.log(error.response.status);
-      // console.log(error);
-      setError(true);
+      // console.log(error.response.status);
+      console.log(error);
+      // setError(true);
       setProcessing(false);
       setUploadSuccess(false);
+      const err = error.response.status;
+      console.log(err);
+      setError(err);
     }
   };
   if (processing) return <Processing />;
+  if (hasError === 406)
+    return (
+      <div className={styles.error}>
+        File is more than 5MB. Please click{" "}
+        <span
+          onClick={() => window.location.reload(false)}
+          className={styles.link}
+        >
+          {" "}
+          Refresh{" "}
+        </span>
+        to reload the page and upload a smaller audio file.
+      </div>
+    );
   if (hasError)
     return (
       <div className={styles.error}>
@@ -79,7 +96,15 @@ export default function TryState1() {
         <Link to="/" className={styles.link}>
           here
         </Link>{" "}
-        to go to Homepage or refresh the page and try again
+        to go to Homepage or click{" "}
+        <span
+          onClick={() => window.location.reload(false)}
+          className={styles.link}
+        >
+          {" "}
+          Refresh{" "}
+        </span>
+        to reload the page and try again.
       </div>
     );
 
@@ -107,6 +132,7 @@ export default function TryState1() {
                 <div className={styles.pDiv}>
                   <p>OR</p>
                 </div>
+                <div className={styles.orRight} />
               </div>
 
               <form onSubmit={handleSubmit}>
