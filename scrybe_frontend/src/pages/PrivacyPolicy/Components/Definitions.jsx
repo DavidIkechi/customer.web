@@ -8,7 +8,7 @@ function Definitions() {
       <p>
         <span>SERVICE</span> means the{" "}
         <Link to="/" className="link">
-          heed.com.ng
+          www.heed.cx
         </Link>{" "}
         website operated by Heed.
       </p>

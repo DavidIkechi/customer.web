@@ -1,4 +1,7 @@
 .TopNav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   background: #ffffff;
   height: 80px;
   width: 100%;

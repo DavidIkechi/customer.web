@@ -21,7 +21,7 @@ ALGORITHM = "HS256"
 
 
 # Create an instance of the OAuth
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl = 'login')
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl = 'users/login')
 
 # Exception for invalid credentials
 credentials_exception = HTTPException(
