@@ -192,3 +192,9 @@ class ChangePassword(BaseModel):
 
 class RefreshToken(BaseModel):
     refresh_token:str
+
+class Newsletter(BaseModel):
+    email: EmailStr
+
+    class Config:
+        orm_mode = True

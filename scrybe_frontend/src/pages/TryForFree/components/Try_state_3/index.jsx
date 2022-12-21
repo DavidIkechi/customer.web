@@ -35,8 +35,9 @@ export default function TryThird() {
       <div className={styles.wait}>
         <p>
           Transcription may take up to 3 minutes. Kindly wait or{" "}
-          <Link to="/login" className={styles.signUp}>
-            Sign Up
+          <Link to="/signup" className={styles.signUp}>
+            {" "}
+            Sign Up{" "}
           </Link>
           to use the job ID feature.
         </p>

@@ -1,36 +1,10 @@
 import React from "react";
 import styles from "./homePageRedesign.module.scss";
-import Footer from "../../components/Footer";
-import NavBar from "../../components/NavbarFree";
-// import heroCenter from "./assets/hero__center.png";
-// import saveTime from "./assets/save__time.png";
-// import easeUse from "./assets/ease__icon.png";
-// import powerIcon from "./assets/power__icon.png";
-import uploadScreen from "./assets/upload__icon.png";
-// import transScreen from "./assets/trans__screen.png";
-// import analyzeScreen from "./assets/analyze__screen.png";
-// import clientOne from "./assets/client__one.png";
-// import clientTwo from "./assets/client__two.png";
-// import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Index = () => {
-  // const [supportColor, setSupportColor] = useState(true);
-  // const [saleColor, setSaleColor] = useState(false);
-  // const [supportText, setSupportText] = useState(true);
-  // const [saleText, setSaleText] = useState(false);
-
-  // function toggleColor() {
-  //   setSupportColor((preval) => !preval);
-  //   setSaleColor((preval) => !preval);
-  //   setSupportText((preval) => !preval);
-  //   setSaleText((preval) => !preval);
-  // }
-
   return (
     <div>
-      <NavBar />
-
       <section className={styles.first__section}>
         <div className={styles.sect__container}>
           <div className={styles.hero__flex}>
@@ -267,9 +241,7 @@ const Index = () => {
                 />
               </div>
               <div className={styles.profile__head}>
-                <h5 className={styles.profile__name}>
-                  Mark Essien, CEO Hotels.ng
-                </h5>
+                <h5 className={styles.profile__name}>David Abraham</h5>
               </div>
               <div className={styles.profile__text}>
                 <p className={styles.profile__msg}>
@@ -324,11 +296,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-      <div>
-        <Footer />
-      </div>
-
-      {/* <Footer /> */}
     </div>
   );
 };

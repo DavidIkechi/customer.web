@@ -10,6 +10,7 @@ import time
 import os
 
 from dotenv import load_dotenv
+from email_validate import validate
 
 load_dotenv()
 
@@ -27,41 +28,12 @@ def _read_file(filename, chunk_size=5242880):
                 break
             yield data
 
-
-# Uploads a file to AAI servers
-def upload_file(audio_file, header):
-    try:
-        # upload_response = requests.post(
-        #     upload_endpoint,
-        #     headers=header, data=_read_file(audio_file)
-        # )
-        bucket_name = "code-bearer"
-        object_name = audio_file
-
-        iam_access_id = os.getenv("Access_key_id")
-        iam_secret_key = os.getenv("secret_access_key")
-        s3_client = boto3.client(
-            's3', 
-            aws_access_key_id=iam_access_id,
-            aws_secret_access_key=iam_secret_key
-            )
-        p_url = s3_client.generate_presigned_url(
-            ClientMethod='get_object',
-            Params={'Bucket': bucket_name, 'Key': object_name},
-            ExpiresIn = 1800)
-        for bucket in s3.buckets.all():
-            print(bucket.name)
-
-    except ClientError as e:
-        logging.error(e)
-    
-    return p_url
-
-
 # Request transcript for file uploaded to AAI servers
 def request_transcript(upload_url, header):
     transcript_request = {
-        'audio_url': upload_url
+        'audio_url': upload_url,
+        'sentiment_analysis': True
+
     }
     transcript_response = requests.post(
         transcript_endpoint,
@@ -106,3 +78,19 @@ def get_paragraphs(polling_endpoint, header):
         paragraphs.append(para)
 
     return paragraphs
+
+# Verify/Validate email address
+
+def validate_and_verify_email(input_email):
+    email = str(input_email)
+    isValid = validate(
+        email_address=email,
+        check_format=True,
+        check_blacklist=True,
+        check_dns=True,
+        dns_timeout=10,
+        check_smtp=False,
+        smtp_debug=False
+    )
+    return isValid
+

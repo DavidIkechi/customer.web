@@ -1,5 +1,4 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import footerImg from "./assets/forget-pw-successful.png";
 import styles from "./SignUpVerify.module.scss";
 
@@ -14,18 +13,11 @@ function SignUpVerify() {
             <h1>Verify your Account</h1>
             <h3>We sent a link to your mail to verify your account</h3>
             {/* <form action=""> */}
-            <a
-              href="https://mail.google.com/"
-              target="_blank"
-              className={styles.successbtn}
-              rel="noreferrer"
-            >
-              Open email{" "}
-            </a>
-            <p className="successful-p">
+            <div className={styles.successbtn}>Click to resend</div>
+            {/* <p className="successful-p">
               Didn’t receive an email?{" "}
               <NavLink to={""}>Click to resend.</NavLink>
-            </p>
+            </p> */}
             {/* </form> */}
           </div>
           <div className={styles.second}>
