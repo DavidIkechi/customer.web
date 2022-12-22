@@ -385,3 +385,24 @@ def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session))
     subscribers = crud.get_newsletter_subscribers(db, skip=skip)
 
     return subscribers
+
+@user_router.post("/deactivate_user/{user_id}")
+async def deactivate(user_id: int, db: Session = Depends(_services.get_session)):
+    try:
+        db_user = crud.get_user(db, user_id=user_id)
+        if not db_user:
+            raise HTTPException(status_code=404, detail="No User With This ID")
+        else:
+            if db_user.is_active == False:
+                raise HTTPException(status_code=404, detail="This User Is Not Active")
+            db_user.is_active = False
+            db.commit()
+            await send_deactivation_email([db_user.email], db_user)
+    except Exception as e:
+        return JSONResponse(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+    return {
+        "detail": "This User Has Been Deactivated"
+    }
