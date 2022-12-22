@@ -22,8 +22,6 @@ class Company(Base):
     name = Column(String(255), index=True)
     address = Column(TEXT)
     size = Column(Integer)
-    plan = Column(String(255), index=True)
-    time_left = Column(Float, index=True, nullable = True)
 
     users = relationship("User", back_populates="company")
     agents = relationship("Agent", back_populates="company")
@@ -66,7 +64,7 @@ class Audio(Base):
     job_id = Column(String(255), index=True)
     timestamp = Column(DateTime, index=True, default=datetime.now())
     size = Column(Integer, index=True)
-    duration = Column(String(255), index=True)
+    duration = Column(Integer, index=True)
     transcript = Column(TEXT, nullable = True)
     positivity_score = Column(Float, index=True, nullable = True)
     negativity_score = Column(Float, index=True, nullable = True)
@@ -153,9 +151,3 @@ class Order(Base):
     total_amount = Column(Float, index=True)
     order_date = Column(Date, index=True, default=date.today())
     next_payment_due_date = Column(Date, index=True)
-
-class Newsletter(Base):
-    __tablename__ = "newsleetter_subscribers"
-
-    id = Column(Integer, primary_key=True, index=True)
-    email = Column(String(255), nullable = False)
