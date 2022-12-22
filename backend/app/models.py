@@ -10,9 +10,13 @@ from db import Base
 
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
-
+from random import randint
 def generate_uuid():
     return str(uuid.uuid4())
+
+def generate_agent_id():
+    agent_id = randint(0, 1000000)
+    return agent_id
 
 
 class Company(Base):
@@ -48,7 +52,7 @@ class User(Base):
 class Agent(Base):
     __tablename__ = "agents"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, unique=True, nullable=False, default=generate_agent_id)
     first_name = Column(String(255), index=True)
     last_name = Column(String(255), index=True)
     location = Column(String(255), index=True)
