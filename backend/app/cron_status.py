@@ -36,6 +36,7 @@ def initialize_db():
 def check_and_update_jobs():
     db = initialize_db()
     jobs = crud.get_queued_jobs(db)
+    print(len(jobs))
     # get the Job id which matches with the audio id.
     for job in jobs:
         get_job_id = job.audio_id
