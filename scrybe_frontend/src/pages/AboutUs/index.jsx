@@ -297,7 +297,7 @@ function About() {
                 <div className={styles.profile__text}>
                   <h5 className={styles.profile__name}>Victor Chukwueke</h5>
                   <p className={styles.profile__desc}>
-                    Chief Financial Officer
+                    Chief Operation Officer
                   </p>
                 </div>
               </div>
