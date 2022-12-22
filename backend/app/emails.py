@@ -195,3 +195,31 @@ async def verify_token(token: str, db: Session):
             headers={"WWW.Authenticate": "Bearer"}
         )
     return user
+
+
+async def send_freeTrial_email(email: List, instance: User):
+    token_data = {
+        'email': instance.email,
+        # 'username': instance.username
+    }
+
+    token = jwt.encode(token_data, os.getenv('SECRET'), algorithm='HS256')
+
+
+    template = f"""
+        <div>
+                    <h3>Free Trial Result</h3>
+                    <br>
+                    <p>Dummy Free Trial Email</p>
+        </div>
+    """
+
+    message = MessageSchema(
+        subject = "Free Trial Result",
+        recipients =email,
+        body = template,
+        subtype = "html"
+    )
+
+    fm =FastMail(conf)
+    await fm.send_message(message=message)

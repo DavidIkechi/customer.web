@@ -139,6 +139,7 @@ class FreeTrial(Base):
     __tablename__ = "FreeTrial"
 
     id = Column(Integer, primary_key=True, index=True)
+    email = Column(String(255), index=True)
     transcript_id = Column(String(255), index=True)
     transcript_status = Column(TEXT)
 

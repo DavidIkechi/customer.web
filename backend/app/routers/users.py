@@ -20,7 +20,7 @@ from BitlyAPI import shorten_urls
 import crud
 from jwt import main_login, get_access_token, verify_password, refresh
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from emails import send_email, verify_token, send_password_reset_email, password_verif_token
+from emails import send_email, verify_token, send_password_reset_email, password_verif_token, send_deactivation_email
 
 
 
@@ -362,3 +362,24 @@ def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session))
     subscribers = crud.get_newsletter_subscribers(db, skip=skip)
 
     return subscribers
+
+@user_router.post("/deactivate_user/{user_id}")
+async def deactivate(user_id = int, db: Session = Depends(_services.get_session)):
+    try:
+        user = crud.get_user(db, user_id = user_id)
+        if not user:
+            raise HTTPException(status_code=404, detail="No Such User")
+        else:
+            if user.is_active == False:
+                return{"detail": "This User Is Not Active"}
+            user.is_active = False
+            db.commit()
+            send = await send_deactivation_email([user.email], user)
+    except Exception as e:
+        return JSONResponse(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+    return {
+        "detail": "User Account Deactivated Successfully"
+    }
