@@ -22,6 +22,29 @@ from jwt import main_login, get_access_token, verify_password, refresh
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from emails import send_email, verify_token, send_password_reset_email, password_verif_token
 
+from authlib.integrations.starlette_client import OAuth
+from authlib.integrations.starlette_client import OAuthError
+from starlette.config import Config
+from starlette.middleware.sessions import SessionMiddleware
+from starlette.responses import HTMLResponse
+from starlette.responses import RedirectResponse
+
+
+# OAuth settings
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID') or None
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET') or None
+if GOOGLE_CLIENT_ID is None or GOOGLE_CLIENT_SECRET is None:
+    raise BaseException('Missing env variables')
+
+# Set up OAuth
+config_data = {'GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID, 'GOOGLE_CLIENT_SECRET': GOOGLE_CLIENT_SECRET}
+starlette_config = Config(environ=config_data)
+oauth = OAuth(starlette_config)
+oauth.register(
+    name='google',
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+    client_kwargs={'scope': 'openid email profile'},
+)
 
 
 
@@ -280,8 +303,7 @@ async def refresh_token(refresh_token: schema.RefreshToken, db: Session = Depend
 @user_router.get('/login/google', status_code = 200)
 async def login(request: Request):
     try:
-        redirect_uri = "https://api.heed.hng.tech/users/auth/google"
-        # request.url_for('auth')   This creates the url for our /auth endpoint
+        redirect_uri = request.url_for('auth') # request.url_for('auth')   This creates the url for our /auth endpoint
         return await oauth.google.authorize_redirect(request, redirect_uri)
     except Exception as e:
         return JSONResponse(
@@ -300,7 +322,7 @@ async def auth(request: Request, db: Session = Depends(_services.get_session)):
         user_db = crud.get_user_by_email(db, email)
 
         if user_db is None:
-            raise HTTPException(status_code=404, detail="User not found, Are you sure this is the email you used when signing up for the platform?")
+            raise HTTPException(status_code=404, detail="User not found.")
 
         tokens = get_access_token(email)
     except Exception as e:
@@ -364,3 +386,6 @@ def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session))
     subscribers = crud.get_newsletter_subscribers(db, skip=skip)
 
     return subscribers
+
+
+
