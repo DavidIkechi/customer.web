@@ -125,6 +125,8 @@ origins = [
     "https://heed.hng.tech:3000",
     "https://heed.hng.tech:5173",
     "https://heed.hng.tech:1111",
+    "hhtp://heed.cx",
+    "hhtps://heed.cx",
 ]
 
 app.add_middleware(
