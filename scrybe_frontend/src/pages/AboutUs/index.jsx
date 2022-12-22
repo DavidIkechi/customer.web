@@ -14,6 +14,7 @@ import partner4 from "./assets/partner4.svg";
 import cto from "./assets/cto.webp";
 import cfo from "./assets/cfo.webp";
 import cmo from "./assets/cmo.webp";
+import ceo from "./assets/ceo.webp";
 
 function About() {
   return (
@@ -228,7 +229,8 @@ function About() {
               <div className={styles.profile__box}>
                 <div className={styles.profile__icon}>
                   <img
-                    src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579335/team3_tdoajn.webp"
+                    // src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579335/team3_tdoajn.webp"
+                    src={ceo}
                     alt="team members"
                   />
                 </div>
