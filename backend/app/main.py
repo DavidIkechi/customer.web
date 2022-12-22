@@ -14,11 +14,6 @@ from routers.score import score_count
 import models, json
 from auth import get_active_user, get_current_user, get_admin
 
-from authlib.integrations.starlette_client import OAuth
-from authlib.integrations.starlette_client import OAuthError
-from fastapi import FastAPI
-from fastapi import Request
-from starlette.config import Config
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.responses import HTMLResponse
 from starlette.responses import RedirectResponse
@@ -157,21 +152,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# OAuth settings
-GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID') or None
-GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET') or None
-if GOOGLE_CLIENT_ID is None or GOOGLE_CLIENT_SECRET is None:
-    raise BaseException('Missing env variables')
-
-# Set up OAuth
-config_data = {'GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID, 'GOOGLE_CLIENT_SECRET': GOOGLE_CLIENT_SECRET}
-starlette_config = Config(environ=config_data)
-oauth = OAuth(starlette_config)
-oauth.register(
-    name='google',
-    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
-    client_kwargs={'scope': 'openid email profile'},
-)
 
 # Set up the middleware to read the request session
 SECRET_KEY = os.getenv('SECRET_KEY') or None
