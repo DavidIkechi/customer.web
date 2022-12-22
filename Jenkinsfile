@@ -10,7 +10,7 @@ pipeline {
 
 			steps {
 				sh "cd scrybe_frontend"
-				sh "cd scrybe_frontend && npm i --force && CI=false npm run build"
+				sh "cd scrybe_frontend && npm i --force && sudo CI=false npm run build"
 			} 
                 } 
         	stage("build backend"){
