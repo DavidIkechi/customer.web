@@ -35,13 +35,25 @@ function Footer() {
 
             <div className={styles.joinContainer}>
               <div className={styles.socials}>
-                <a href="https://www.linkedin.com/company/heed-cx/" target="_blank">
+                <a
+                  href="https://www.linkedin.com/company/heed-cx/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <BsLinkedin />
                 </a>
-                <a href="https://www.facebook.com/profile.php?id=100088581892757&mibextid=ZbWKwL" target="_blank">
+                <a
+                  href="https://www.facebook.com/profile.php?id=100088581892757&mibextid=ZbWKwL"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <GrFacebookOption />
                 </a>
-                <a href="https://twitter.com/heed_cx" target="_blank">
+                <a
+                  href="https://twitter.com/heed_cx"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <BsTwitter />
                 </a>
               </div>
@@ -93,13 +105,17 @@ function Footer() {
                   <img src={email} alt="emailpic" />
                 </div>
                 <a href="mailto:support@heed.cx">info@heed.cx </a>
-              </div> 
+              </div>
               <div className={styles.footer__right__contact}>
                 <div className={styles.footer__right__logo}>
-                  <img src={email} alt="emailpic" style={{maxWidth:20 , height : 20}} />
+                  <img
+                    src={email}
+                    alt="emailpic"
+                    style={{ maxWidth: 20, height: 20 }}
+                  />
                 </div>
                 <a href="mailto:support@heed.cx">support@heed.cx </a>
-              </div> 
+              </div>
             </div>
           </div>
         </div>
