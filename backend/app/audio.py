@@ -26,16 +26,8 @@ def audio_details(filename):
 
     audio_info = audio_file.info
     length = int(audio_info.length)
-    overall = length
-    hours = length // 3600  # calculate in hours
-    length %= 3600
-    mins = length // 60  # calculate in minutes
-    length %= 60
-    seconds = length  # calculate in seconds
-  
-    audio["hours"] = hours
-    audio['secs'] = seconds
-    audio['overall'] = overall
+    mins = math.ceil(length / 60)
+
 
     audio["size"] = math.ceil(int(file.stat().st_size) / 1048576)
     audio["mins"] = mins
