@@ -9,6 +9,8 @@ import models
 from crud import get_user_by_email
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
 # from db import engine, SessionLocal
 
 from dotenv import load_dotenv
@@ -85,10 +87,10 @@ def verify_password(plain_password, hashed_password):
 def authenticate_user(db: Session, email: str, password: str):
     user = get_user_by_email(db, email)
     if not user:
-        return False
+        return False, "No user with such account details found"
     if not verify_password(password, user.password):
-        return False
-    return user
+        return False, "You've entered an incorrect password"
+    return True, user
 
 #Creates access_token for jwt authentication
 def create_access_token(data: dict, expires_delta: Union[timedelta, None] = None):
@@ -124,12 +126,11 @@ async def main_login(form_data, db):
     """
     
     try:
-        user = authenticate_user(db, form_data.username, form_data.password)
-        if not user:
-            raise HTTPException(
-                status_code=400,
-                detail="Incorrect email or password",
-                headers={"WWW-Authenticate": "Bearer"},
+        check_user, user = authenticate_user(db, form_data.username, form_data.password)
+        if not check_user:
+            return JSONResponse(
+            status_code=400,
+            content=jsonable_encoder({"detail": user}),
             )
         
         if not user.is_active:

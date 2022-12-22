@@ -58,7 +58,7 @@ async def create_user(user: schema.UserCreate, db: Session = Depends(_services.g
     
         
     return {    
-        "detail" : "yes"
+        "detail" : "Account was successfully created."
     }
 
 # get all users, only available for the admin end.
@@ -354,13 +354,23 @@ def subscribe_to_newletter(subscriber: schema.Newsletter, db: Session = Depends(
         raise HTTPException(status_code=400, detail="You are already subscribed to our newsletter")
     try:
         crud.add_newsletter_subscriber(db=db, subscriber=subscriber)
-        return subscriber
+        return {
+            "detail": subscriber
+        }
     except:
         raise HTTPException(status_code=400, detail="An unknown error occured. Try Again") 
 
 @user_router.get("/get_newsletter-subscribers", summary="Get all existing subscribers", response_model=list[schema.Newsletter],
                  status_code = 200)
-def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session)):
-    subscribers = crud.get_newsletter_subscribers(db, skip=skip)
-
-    return subscribers
+def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session), user: models.User = Depends(get_active_user)):
+    try:
+        subscribers = crud.get_newsletter_subscribers(db, skip=skip)
+    except Exception as e:
+        return JSONResponse(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+        
+    return {
+        "detail": subscribers
+    }

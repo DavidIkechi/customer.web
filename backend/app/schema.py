@@ -10,6 +10,11 @@ class UserBase(BaseModel):
     last_name: str
     email: str
     # created_at: datetime
+    
+class PaymentBase(BaseModel):
+    amount: float
+    minutes: int
+    plan: str
 
 
 class UserCreate(UserBase):

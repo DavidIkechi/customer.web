@@ -38,9 +38,9 @@ def sentiment(transcript):
 
 def get_overall_sentiment(pos, neg, neu):
     result = {
-        "POSITIVE":pos,
-        "NEGATIVE":neg,
-        "NEUTRAL": neu
+        "Positive":pos,
+        "Negative":neg,
+        "Neutral": neu
     }
     
     return max(result, key=result.get)
@@ -52,12 +52,12 @@ def sentiment_assembly(transcript):
     for i in transcript['sentiment_analysis_results']:
         get_sentiment = i['sentiment']
         if get_sentiment == 'NEUTRAL':
-            neu_result.append(get_sentiment)
+            neu_result.append(get_sentiment.title())
         elif get_sentiment == 'POSITIVE':
-            pos_result.append(get_sentiment)
+            pos_result.append(get_sentiment.title())
             pos_sent.append({"sentence": i['text'], "positivity_score": i['confidence']})
         else:
-            neg_result.append(get_sentiment)
+            neg_result.append(get_sentiment.title())
             neg_sent.append({"sentence": i['text'], "negativity_score": i['confidence']})
         
     pos_score = len(pos_result)
