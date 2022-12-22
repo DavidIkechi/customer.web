@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, UploadFile, File, Depends, Response
 import models, schema
 from random import randint
-from routers.sentiment import sentiment
+from routers.sentiment_utility import sentiment, sentiment_assembly
 from routers import transcribe
 from passlib.context import CryptContext
 from fastapi import HTTPException 
@@ -29,7 +29,7 @@ def get_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.User).offset(skip).limit(limit).all()
 
 def create_company(db: Session, company_name: str, company_address: str, id: int):
-    db_company = models.Company(id= id, name=company_name, address = company_address)
+    db_company = models.Company(id= id, name=company_name, address = company_address, plan = "Free", time_left = 0)
     db.add(db_company)
     db.commit()
     db.refresh(db_company)
@@ -395,8 +395,21 @@ def analyse_and_store_audio(db:Session, job_id, user_id):
     audio_id = Job.id
 
     db_job = db.query(models.Job).filter(models.Job.audio_id == audio_id).first()
-    if db_job.job_status == "completed":
-        transcripted_word = Job.transcript
+    if db_job.job_status == "completed":        
+        return {
+                "transcript": Job.transcript,
+                "positivity_score": Job.positivity_score,
+                "negativity_score": Job.negativity_score,
+                "neutrality_score": Job.neutrality_score,
+                "overall_sentiment": Job.overall_sentiment,
+                "most_negative_sentences": Job.most_negative_sentences,
+                "most_positive_sentences": Job.most_positive_sentences,
+                "audio_url": Job.audio_path,
+                "audio_size": Job.size,
+                "audio_duration": Job.duration,
+                "audio_filename": Job.filename 
+            }
+        
     else:
         transcript_audio = transcribe.get_transcript_result(job_audio_id)
 
@@ -405,20 +418,22 @@ def analyse_and_store_audio(db:Session, job_id, user_id):
 
         if transcript_audio['status'] != "completed":
             return {
-                "status":transcript_audio['status']
+                "detail":{
+                    "status":transcript_audio['status']
+                }
             }
 
         # get the text.
         transcripted_word = transcript_audio['text']
         
-    sentiment_result = sentiment(transcripted_word)
+    sentiment_result = sentiment_assembly(transcript_audio)
 
     negativity_score = sentiment_result['negativity_score']
     positivity_score = sentiment_result['positivity_score']
     neutrality_score = sentiment_result['neutrality_score']
     overall_sentiment = sentiment_result['overall_sentiment']
     most_negative_sentences = sentiment_result['most_negative_sentences']
-    most_positive_sentences = sentiment_result ['most_postive_sentences']
+    most_positive_sentences = sentiment_result ['most_positive_sentences']
     total_score = positivity_score + neutrality_score + negativity_score
     average_score = round((positivity_score/ total_score) * 10, 1)
 
@@ -452,3 +467,18 @@ def analyse_and_store_audio(db:Session, job_id, user_id):
     }
     dic2 = dict(sentiment_result, **other_details)
     return {"sentiment_result": dic2}
+
+#News letter.
+def add_newsletter_subscriber(db: Session, subscriber: schema.Newsletter):
+    db_subscriber = models.Newsletter(email = subscriber.email)
+    db.add(db_subscriber)
+    db.commit()
+    db.refresh(db_subscriber)
+    return db_subscriber
+
+def check_subscrition_email(db: Session, email: str):
+    return db.query(models.Newsletter).filter(models.Newsletter.email == email).first()
+
+
+def get_newsletter_subscribers(db: Session, skip: int = 0):
+    return db.query(models.Newsletter).offset(skip).all()
