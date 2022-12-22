@@ -192,7 +192,7 @@ async def email_verification(request: Request, token: str, db: Session = Depends
 async def my_profile (db: Session = Depends(_services.get_session), user: models.User = Depends(auth.get_active_user)):
     user_id = user.id
     try:
-        return crud.get_user_profile(db, user_id)
+        return {"detail": crud.get_user_profile(db, user_id)}
     except Exception as e:
         return JSONResponse(
             status_code= status.HTTP_400_BAD_REQUEST,
@@ -382,7 +382,7 @@ def subscribe_to_newletter(subscriber: schema.Newsletter, db: Session = Depends(
 
 @user_router.get("/get_newsletter-subscribers", summary="Get all existing subscribers", response_model=list[schema.Newsletter],
                  status_code = 200)
-def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session)):
+def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session), user: models.User = Depends(get_admin)):
     subscribers = crud.get_newsletter_subscribers(db, skip=skip)
 
     return subscribers
