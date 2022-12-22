@@ -304,9 +304,9 @@ function About() {
             </div>
           </div>
 
-          <div className={styles.team__content}>
+          {/* <div className={styles.team__content}>
             <Link className={styles.team__expand}>See more in our team</Link>
-          </div>
+          </div> */}
         </div>
       </section>
     </>
