@@ -48,20 +48,9 @@ async def send_email(email: List, instance: User):
     
     emails: EmailSchema = {
         "body": {
-            "url": f"https://api.heed.hng.tech/verification?token={token}"
+            "url": f"https://api.heed.cx/users/verification?token={token}"
         } 
     }
-
-    # template = f"""
-    #     <div>
-    #                 <h3>Account Verification </h3>
-    #                 <br>
-    #                 <p>Thank you for registering with us. Kindly click on the link below to
-    #                 verify your email and have full acccess to the platform.</p>
-
-    #                 <a href="https://api.heed.hng.tech/verification?token={token}">Verify your email address </a>
-    #     </div>
-    # """
 
     message = MessageSchema(
         subject = "Account Verification",

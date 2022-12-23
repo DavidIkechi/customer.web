@@ -58,6 +58,12 @@ def sentiment_assembly(transcript):
             pos_sent.append({"sentence": i['text'], "positivity_score": i['confidence']})
         else:
             neg_result.append("Negative")
+            neu_result.append(get_sentiment.title())
+        elif get_sentiment == 'POSITIVE':
+            pos_result.append(get_sentiment.title())
+            pos_sent.append({"sentence": i['text'], "positivity_score": i['confidence']})
+        else:
+            neg_result.append(get_sentiment.title())
             neg_sent.append({"sentence": i['text'], "negativity_score": i['confidence']})
         
     pos_score = len(pos_result)
