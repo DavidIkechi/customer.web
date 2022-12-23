@@ -1,12 +1,16 @@
 @use "../../functions.scss" as *;
 
 .nav {
-  a {
-    text-decoration: none !important;
-  }
+  position: sticky;
+  width: 100%;
+  top: 0;
+  z-index: 10;
   padding: 0 5%;
   $mobile: 950px;
   background-color: white;
+  a {
+    text-decoration: none !important;
+  }
   &__ctl {
     display: none;
     @include media($mobile) {

@@ -7,7 +7,7 @@ function Introduction() {
       <p>
         Our Privacy Policy governs your visit to{" "}
         <Link to="/" className="link">
-          heed.com.ng
+          www.heed.cx
         </Link>
         , and explains how we collect, safeguard and disclose information that
         results from your use of our Service.
