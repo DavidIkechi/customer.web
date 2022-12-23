@@ -27,7 +27,10 @@ const login = async (loginDetails) => {
 
 // logout user
 const logout = () => {
-  localStorage.clear();
+  localStorage.removeItem("heedAccessToken");
+  localStorage.removeItem("heedRefreshToken");
+  localStorage.removeItem("heedAccessTokenType");
+  localStorage.removeItem("user");
   Cookies.remove("heedAccessToken");
 };
 
