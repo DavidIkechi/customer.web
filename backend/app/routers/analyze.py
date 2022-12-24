@@ -199,29 +199,3 @@ async def free_trial(email: str = Form(), db : Session = Depends(_services.get_s
             "file_size": status_break[2]
         }
     }
-
-
-    # try:
-    # ####### saving the audio file
-    #     
-    #     ###### transcribing the file
-    #     if not file:
-    #         raise HTTPException(status_code = 406, detail="No File Selected")
-    #     elif getSize > fileSize :
-    #         os.unlink(file.filename)
-    #         raise HTTPException(status_code = 406, detail="File Must Not Be More Than 5MB")
-    #     else:
-    #         
-    # except Exception as e:
-    #     return JSONResponse(
-    #         status_code= status.HTTP_400_BAD_REQUEST,
-    #         content=jsonable_encoder({"detail": str(e)}),
-    #     ) 
-    # return {
-    #     "detail":{
-    #         "transcript_id": transcript_id, 
-    #         "status": status_break[0], 
-    #         "filaname": status_break[1], 
-    #         "file_size": status_break[2]
-    #     }
-    # }

@@ -383,12 +383,11 @@ def subscribe_to_newletter(subscriber: schema.Newsletter, db: Session = Depends(
 
 @user_router.get("/get_newsletter-subscribers", summary="Get all existing subscribers", response_model=list[schema.Newsletter],
                  status_code = 200)
-<<<<<<< HEAD
 def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session)):
     subscribers = crud.get_newsletter_subscribers(db, skip=skip)
 
     return subscribers
-=======
+
 def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session), user: models.User = Depends(get_admin)):
     try:
         subscribers = crud.get_newsletter_subscribers(db, skip=skip)
@@ -401,7 +400,7 @@ def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session),
     return {
         "detail": subscribers
     }
->>>>>>> 7ab624f4a3997ddfe568855cfca37f9fc8a53fc0
+    
 
 @user_router.post("/deactivate_user/{user_id}")
 async def deactivate(user_id: int, db: Session = Depends(_services.get_session)):

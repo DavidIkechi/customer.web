@@ -52,21 +52,12 @@ def sentiment_assembly(transcript):
     for i in transcript['sentiment_analysis_results']:
         get_sentiment = i['sentiment']
         if get_sentiment == 'NEUTRAL':
-<<<<<<< HEAD
-            neu_result.append("Neutral")
-        elif get_sentiment == 'POSITIVE':
-            pos_result.append("Positive")
-            pos_sent.append({"sentence": i['text'], "positivity_score": i['confidence']})
-        else:
-            neg_result.append("Negative")
-=======
             neu_result.append(get_sentiment.title())
         elif get_sentiment == 'POSITIVE':
             pos_result.append(get_sentiment.title())
             pos_sent.append({"sentence": i['text'], "positivity_score": i['confidence']})
         else:
             neg_result.append(get_sentiment.title())
->>>>>>> 7ab624f4a3997ddfe568855cfca37f9fc8a53fc0
             neg_sent.append({"sentence": i['text'], "negativity_score": i['confidence']})
         
     pos_score = len(pos_result)
