@@ -140,12 +140,14 @@ async def free_trial(email: str = Form(), db : Session = Depends(_services.get_s
         audio_time = str(duration['hours'])+":"+ str(duration['mins'])+":"+ str(duration['secs'])
 
         
-        if email_check == email_lower:
+        if email_check:
+            os.unlink(file.filename)
             return JSONResponse(
             status_code= 400,
             content=jsonable_encoder({"detail": "Email Has Been Used For Free Trial Before, Please Sign Up For Our Paid Plan."})
             )
         if getSize > fileSize:
+            os.unlink(file.filename)
             return JSONResponse(
             status_code= 406,
             content=jsonable_encoder({"detail": "File Must Not Be More Than 5MB"})
@@ -176,12 +178,11 @@ async def free_trial(email: str = Form(), db : Session = Depends(_services.get_s
 
 
             db_result = models.FreeTrial(transcript_id=transcript_id, transcript_status=audio_list, email=email)
-
+            
+           
             db.add(db_result)
             db.commit()
             db.refresh(db_result)
-            ### sending email
-            await send_freeTrial_email([email_check.email], email_check)
             # delete the file
             os.remove(file.filename)
             status_break = audio_list.split(",")
