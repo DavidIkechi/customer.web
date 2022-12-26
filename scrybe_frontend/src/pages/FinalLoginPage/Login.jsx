@@ -6,6 +6,7 @@ import styles from "./Login.module.scss";
 
 import { useDispatch, useSelector } from "react-redux";
 import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
+import { useFetchUserQuery } from "../../redux/baseEndpoints";
 import { getUser, loginUser } from "../../redux/user/userSlice";
 import hidden from "./assets/hidden.png";
 import logo from "./assets/logo.png";
@@ -13,6 +14,14 @@ import visible from "./assets/visible.png";
 
 const Login = () => {
   const { userData, status, error } = useSelector((state) => state.auth);
+  const {
+    data,
+    isLoading,
+    isSuccess,
+    isError,
+    error: hasError,
+  } = useFetchUserQuery();
+
   const dispatch = useDispatch();
 
   const emailTest = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
@@ -85,6 +94,8 @@ const Login = () => {
   useEffect(() => {
     if (status === "success") {
       dispatch(getUser());
+    }
+    if (isSuccess) {
       setResponse(
         ErrorHandler({ type: "Success", message: "Login successful" })
       );
@@ -95,7 +106,10 @@ const Login = () => {
     } else if (error) {
       setResponse(ErrorHandler(error));
     }
-  }, [status, userData, error, dispatch]);
+    if (hasError) {
+      setResponse(ErrorHandler(hasError));
+    }
+  }, [status, data, userData, error, dispatch, isSuccess, hasError]);
 
   return (
     <>
