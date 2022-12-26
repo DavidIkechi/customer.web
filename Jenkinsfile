@@ -19,7 +19,7 @@ pipeline {
 				sh "cd backend"
 				sh "cd backend/app && sudo python3 -m pip install --upgrade pip"
 				sh "cd backend/app && sudo pip3 install -r requirements.txt --force"
-				sh "cd backend/app && sudo alembic revision --autogenerate -m 'first migration' && alembic upgrade head"
+				
 " 
 		
 			} 
