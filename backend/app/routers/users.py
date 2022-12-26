@@ -20,7 +20,7 @@ from BitlyAPI import shorten_urls
 import crud
 from jwt import main_login, get_access_token, verify_password, refresh
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from emails import send_email, verify_token, send_password_reset_email, password_verif_token, send_deactivation_email
+from emails import send_email, verify_token, send_password_reset_email, password_verif_token
 
 from authlib.integrations.starlette_client import OAuth
 from authlib.integrations.starlette_client import OAuthError
@@ -28,24 +28,8 @@ from starlette.config import Config
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.responses import HTMLResponse
 from starlette.responses import RedirectResponse
-
-
-# OAuth settings
-GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID') or None
-GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET') or None
-if GOOGLE_CLIENT_ID is None or GOOGLE_CLIENT_SECRET is None:
-    raise BaseException('Missing env variables')
-
-# Set up OAuth
-config_data = {'GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID, 'GOOGLE_CLIENT_SECRET': GOOGLE_CLIENT_SECRET}
-starlette_config = Config(environ=config_data)
-oauth = OAuth(starlette_config)
-oauth.register(
-    name='google',
-    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
-    client_kwargs={'scope': 'openid email profile'},
-)
-
+from google.oauth2 import id_token
+from google.auth.transport import requests
 
 
 user_router = APIRouter(
@@ -96,7 +80,7 @@ def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(_services.
             content=jsonable_encoder({"detail": str(e)}),
         )
     return {      
-        "detail": users
+        detail: users
     }
     
 @user_router.get("/get_user/{user_id}", summary = "get user by id", status_code=200, response_model=schema.User)
@@ -223,7 +207,7 @@ async def reset_password(token: str, new_password: schema.UpdatePassword, db: Se
     try:
         email = password_verif_token(token)
         user: models.User = crud.get_user_by_email(db, email)
-        
+            
         if user is None:
             raise HTTPException(status_code=404, detail="User not found")
 
@@ -299,26 +283,13 @@ async def refresh_token(refresh_token: schema.RefreshToken, db: Session = Depend
             status_code= status.HTTP_400_BAD_REQUEST,
             content=jsonable_encoder({"detail": str(e)}),
         )
-        
-@user_router.get('/login/google', status_code = 200)
-async def login(request: Request):
-    try:
-        redirect_uri = request.url_for('auth') # request.url_for('auth')   This creates the url for our /auth endpoint
-        return await oauth.google.authorize_redirect(request, redirect_uri)
-    except Exception as e:
-        return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
-            content=jsonable_encoder({"detail": str(e)}),
-        )
 
 
 @user_router.get('/auth/google', status_code = 200)
-async def auth(request: Request, db: Session = Depends(_services.get_session)):
+async def auth(token: str, db: Session = Depends(_services.get_session)):
     try:
-        access_token = await oauth.google.authorize_access_token(request)
-    
-        user_data = access_token['userinfo']
-        email = user_data.email
+        user_data = id_token.verify_oauth2_token(token, requests.Request(), '52549300621-88h498tmo9vulmi8t5dl0lci9ut724bi.apps.googleusercontent.com')
+        email = user_data['email']
         user_db = crud.get_user_by_email(db, email)
 
         if user_db is None:
@@ -367,7 +338,8 @@ async def get_history(user: models.User = Depends(get_active_user),
         "detail": user_history
     }
 
-@user_router.post("/newsletter-subscription", summary="newsletter subscription", response_model= schema.Newsletter, tags=['subscribers'])
+@user_router.post("/newsletter-subscription", summary="newsletter subscription", 
+                  response_model= schema.Newsletter, status_code = 200)
 def subscribe_to_newletter(subscriber: schema.Newsletter, db: Session = Depends(_services.get_session)):
     db_subscriber = crud.check_subscrition_email(db,email=subscriber.email)
 
@@ -383,11 +355,6 @@ def subscribe_to_newletter(subscriber: schema.Newsletter, db: Session = Depends(
 
 @user_router.get("/get_newsletter-subscribers", summary="Get all existing subscribers", response_model=list[schema.Newsletter],
                  status_code = 200)
-def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session)):
-    subscribers = crud.get_newsletter_subscribers(db, skip=skip)
-
-    return subscribers
-
 def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session), user: models.User = Depends(get_admin)):
     try:
         subscribers = crud.get_newsletter_subscribers(db, skip=skip)
@@ -402,23 +369,4 @@ def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session),
     }
 
 
-@user_router.post("/deactivate_user/{user_id}")
-async def deactivate(user_id: int, db: Session = Depends(_services.get_session)):
-    try:
-        db_user = crud.get_user(db, user_id=user_id)
-        if not db_user:
-            raise HTTPException(status_code=404, detail="No User With This ID")
-        else:
-            if db_user.is_active == False:
-                raise HTTPException(status_code=404, detail="This User Is Not Active")
-            db_user.is_active = False
-            db.commit()
-            await send_deactivation_email([db_user.email], db_user)
-    except Exception as e:
-        return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
-            content=jsonable_encoder({"detail": str(e)}),
-        )
-    return {
-        "detail": "This User Has Been Deactivated"
-    }
+
