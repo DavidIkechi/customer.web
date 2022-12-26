@@ -96,7 +96,7 @@ def validate_and_verify_email(input_email):
     return isValid
 
 def check_if_professional(email_address: str) -> int:
-    get_data = pd.read_csv('email-providers.csv', header= None)
+    get_data = pd.read_csv(os.path.normcase(os.path.abspath('email-providers.csv')), header= None)
     free_domain = email_address.split('@')[1]
     return len(get_data.loc[get_data[0] == free_domain])
     
