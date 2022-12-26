@@ -140,9 +140,6 @@ def password_verif_token(token):
     
     return email
 
-
-
-
 async def send_deactivation_email(email: List, instance: User):
     token_data = {
         'email': instance.email,
@@ -212,3 +209,4 @@ async def send_freeTrial_email(email: List, instance: User):
 
     fm =FastMail(conf)
     await fm.send_message(message=message)
+

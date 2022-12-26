@@ -11,12 +11,20 @@ import cloudinary
 import cloudinary.uploader
 from datetime import datetime
 import uuid
+from sqlalchemy.sql import func
 from collections import defaultdict
+from routers.utility import *
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 def generate_uuid():
     return str(uuid.uuid4())
+
+
+def is_admin_check(email_address: str):
+    admin_list = ['davidakwuruu@gmail.com','tekkieware@gmail.com', 'collinsakpaka@gmail.com']
+    
+    return email_address.lower() in admin_list
 
 
 def get_user(db: Session, user_id: int):
@@ -28,8 +36,9 @@ def get_user_by_email(db: Session, email: str):
 def get_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.User).offset(skip).limit(limit).all()
 
-def create_company(db: Session, company_name: str, company_address: str, id: int):
-    db_company = models.Company(id= id, name=company_name, address = company_address, plan = "Free", time_left = 0)
+def create_company(db: Session, company_name: str, company_address: str, id: int, time_left: float):
+    db_company = models.Company(id= id, name=company_name, address = company_address, plan = "Free", 
+                                time_left = time_left)
     db.add(db_company)
     db.commit()
     db.refresh(db_company)
@@ -42,9 +51,19 @@ def create_user(db: Session, user: schema.User):
         company_id = randint(0, 1000000)
 
     # create the company.
-    create_company(db, user.company_name, user.company_address, company_id)
+    if is_admin_check(user.email):
+        is_admin = True
+        time_left = 6000.0
+    else:
+        # check if the email address is a professional email address.
+        if check_if_professional(user.email) < 1:
+            raise HTTPException(status_code=400, detail="Please use a Business email address")
+        is_admin = False
+        time_left = 0.0
+    create_company(db, user.company_name, user.company_address, company_id, time_left)
     # create the user.
-    db_user = models.User(first_name=user.first_name, last_name=user.last_name, email=user.email, password=pwd_context.hash(user.password), company_id = company_id)
+    db_user = models.User(first_name=user.first_name, last_name=user.last_name, is_admin= is_admin, 
+                          email=user.email, password=pwd_context.hash(user.password), company_id = company_id)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
@@ -485,3 +504,7 @@ def get_newsletter_subscribers(db: Session, skip: int = 0):
 
 def free_user_by_email(db: Session, email: str):
     return db.query(models.FreeTrial).filter(models.FreeTrial.email == email).first()
+    
+def get_distinct_ids(db: Session):
+    # return db.query(func.count(func.distinct(Table.column)))
+    return db.query(models.Job.job_id).distinct().count()

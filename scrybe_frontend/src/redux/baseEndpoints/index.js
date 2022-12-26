@@ -4,6 +4,7 @@ export const baseAPI = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://api.heed.hng.tech/",
+    tagTypes: ["User"],
     prepareHeaders: (headers, { getState }) => {
       const token = localStorage.getItem("heedAccessToken");
       if (token) {
@@ -15,6 +16,7 @@ export const baseAPI = createApi({
   endpoints: (builder) => ({
     fetchUser: builder.query({
       query: () => "account",
+      providesTags: ["User"],
     }),
     fetchUserRecordings: builder.query({
       query: () => "list-audios-by-user",
@@ -24,6 +26,23 @@ export const baseAPI = createApi({
         url: `audios/delete?audios=${[id]}`,
         method: "DELETE",
       }),
+      // us to refetch the recordings after deleting one
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(
+            baseAPI.util.updateQueryData(
+              "fetchUserRecordings",
+              undefined,
+              (draft) => {
+                return draft.filter((recording) => recording.id !== args);
+              }
+            )
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      },
     }),
   }),
 });
@@ -32,4 +51,6 @@ export const {
   useFetchUserQuery,
   useFetchUserRecordingsQuery,
   useDeleteRecordingMutation,
+  useLoginUserMutation,
+  useRegisterUserMutation,
 } = baseAPI;

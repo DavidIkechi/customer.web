@@ -223,7 +223,7 @@ async def reset_password(token: str, new_password: schema.UpdatePassword, db: Se
     try:
         email = password_verif_token(token)
         user: models.User = crud.get_user_by_email(db, email)
-            
+        
         if user is None:
             raise HTTPException(status_code=404, detail="User not found")
 

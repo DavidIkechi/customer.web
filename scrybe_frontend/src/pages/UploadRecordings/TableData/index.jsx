@@ -8,29 +8,32 @@ import { PropTypes } from "prop-types";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import IsLoadingSkeleton from "../../../components/LoadingSkeleton";
-import Modal from "../../../components/Modal";
 import { formatAudioLen } from "../../../helpers/formatAudioLen/index";
 import { formatAudioSize } from "../../../helpers/formatAudioSize/index";
 import { formatDate } from "../../../helpers/formatDate";
 import { shortenfilename } from "../../../helpers/shortenFileLen";
+import {
+  useDeleteRecordingMutation,
+  useFetchUserRecordingsQuery,
+} from "../../../redux/baseEndpoints";
 import closeModalIcon from "./imgs/close-icon.svg";
 import deleteIcon from "./imgs/delete-icon.svg";
 import notfoundImg from "./imgs/notfound.svg";
 import dropdownIcon from "./imgs/select-arrow.svg";
 import soundwave from "./imgs/soundwave.svg";
-import uploadBtn_icon from "./imgs/uploadBtnIcon.svg";
 import styles from "./tabledata.module.scss";
 
 const TableData = ({ searchKeyword }) => {
-  const [allRecordings, setAllRecordings] = useState([]);
+  const { data, error, isLoading } = useFetchUserRecordingsQuery();
+  const [deleteRecording] = useDeleteRecordingMutation();
+  const allRecordings = data;
   const [recordCheckedList, setRecordCheckedList] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [recordingsProcessed, setRecordingsProcessed] = useState(false);
   const [openDeletePopup, setOpenDeletePopup] = useState(false);
   // const [deleted, setDeleted] = useState(false);
-  const [sessionExpired, setSessionExpired] = useState(true);
-  const [isFetching, setIsFetching] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
+  const sessionExpired = error;
+  const isFetching = isLoading;
 
   // const timeLeft = 20;
 
@@ -50,34 +53,34 @@ const TableData = ({ searchKeyword }) => {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
   };
-  const fetchData = async () => {
-    setIsFetching(true);
-    try {
-      await axios
-        .get("list-audios-by-user", { headers })
-        .then((res) => {
-          if (res.status === 200) {
-            setSessionExpired(false);
-            setAllRecordings(res.data);
-            setIsFetching(false);
-          }
-        })
-        .catch((err) => {
-          if (err.response.status === 401) {
-            setSessionExpired(true);
-            setIsFetching(false);
-          }
-        });
-    } catch (error) {
-      console.log(error);
-      setSessionExpired(true);
-      setIsFetching(false);
-    }
-  };
+  // const fetchData = async () => {
+  //   setIsFetching(true);
+  //   try {
+  //     await axios
+  //       .get("list-audios-by-user", { headers })
+  //       .then((res) => {
+  //         if (res.status === 200) {
+  //           setSessionExpired(false);
+  //           setAllRecordings(res.data);
+  //           setIsFetching(false);
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         if (err.response.status === 401) {
+  //           setSessionExpired(true);
+  //           setIsFetching(false);
+  //         }
+  //       });
+  //   } catch (error) {
+  //     console.log(error);
+  //     setSessionExpired(true);
+  //     setIsFetching(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   const handleOpen = () => {
     setOpenModal(true);
@@ -86,7 +89,7 @@ const TableData = ({ searchKeyword }) => {
     setOpenDeletePopup(false);
     setRecordCheckedList([]);
     setOpenModal(false);
-    fetchData();
+    // fetchData();
   };
   // api.heed.hng.tech/audios/delete?audios=6&audios=7
   const deleteBulkRecordings = async () => {
@@ -99,27 +102,27 @@ const TableData = ({ searchKeyword }) => {
       .then((res) => {
         if (res.status === 200) {
           setRecordCheckedList([]);
-          fetchData();
+          // fetchData();
         }
       });
     handleClose();
     setOpenDeletePopup(false);
   };
 
-  const deleteRecording = async (id) => {
-    await axios
-      .delete(`audios/delete?audios=${[id]}`, {
-        headers,
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          fetchData();
-        }
-      });
-  };
+  // const deleteRecording = async (id) => {
+  //   await axios
+  //     .delete(`audios/delete?audios=${[id]}`, {
+  //       headers,
+  //     })
+  //     .then((res) => {
+  //       if (res.status === 200) {
+  //         fetchData();
+  //       }
+  //     });
+  // };
 
   const allRecordingsProcessed = () => {
-    const allProcessed = allRecordings.every(
+    const allProcessed = allRecordings?.every(
       (item) =>
         item?.job_details?.job_status !== "Processing" &&
         item?.job_details?.job_status !== "Pending" &&
@@ -133,7 +136,7 @@ const TableData = ({ searchKeyword }) => {
   };
 
   const searchRecordings = (allrecords) => {
-    return allrecords.filter((item) => {
+    return allrecords?.filter((item) => {
       return JSON.stringify(item?.filename)
         ?.toLowerCase()
         .includes(searchKeyword.toLowerCase());
@@ -147,7 +150,7 @@ const TableData = ({ searchKeyword }) => {
   return (
     <div
       className={`${styles.uploaded_recordings} ${
-        searchRecordings(allRecordings).length < 1 ? styles.no_items_found : ""
+        searchRecordings(allRecordings)?.length < 1 ? styles.no_items_found : ""
       } ${recordingsProcessed ? styles.processed : ""}`}
     >
       <div className={styles.overall_table}>
@@ -222,9 +225,9 @@ const TableData = ({ searchKeyword }) => {
                     </tr>
                   </thead>
                   <>
-                    {searchRecordings(allRecordings).length > 0 ? (
+                    {searchRecordings(allRecordings)?.length > 0 ? (
                       <tbody className={styles.uploaded_table_body}>
-                        {searchRecordings(allRecordings).map((recording) => {
+                        {searchRecordings(allRecordings)?.map((recording) => {
                           const job_status = recording?.job_details?.job_status;
 
                           return (
@@ -315,7 +318,7 @@ const TableData = ({ searchKeyword }) => {
             </>
           )}
         </div>
-        {searchRecordings(allRecordings).length > 0 && (
+        {searchRecordings(allRecordings)?.length > 0 && (
           <div className={styles.uploaded_recordings_options}>
             <div
               className={`${styles.bulkbtn_calbackurl_wrap} ${
