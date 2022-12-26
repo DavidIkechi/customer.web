@@ -286,10 +286,8 @@ async def refresh_token(refresh_token: schema.RefreshToken, db: Session = Depend
 
 
 @user_router.get('/auth/google', status_code = 200)
-async def auth(token: str, db: Session = Depends(_services.get_session)):
+async def auth(email: str, db: Session = Depends(_services.get_session)):
     try:
-        user_data = id_token.verify_oauth2_token(token, requests.Request(), '52549300621-88h498tmo9vulmi8t5dl0lci9ut724bi.apps.googleusercontent.com')
-        email = user_data['email']
         user_db = crud.get_user_by_email(db, email)
 
         if user_db is None:
