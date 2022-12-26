@@ -38,7 +38,7 @@ conf = ConnectionConfig(
 class EmailSchema(BaseModel):
     body: Dict[str, Any]
 
-async def send_email(email: List, instance: User):
+async def send_email(email: List, instance: User, firstname: str):
     token_data = {
         'email': instance.email,
         # 'username': instance.username
@@ -48,7 +48,8 @@ async def send_email(email: List, instance: User):
     
     emails: EmailSchema = {
         "body": {
-            "url": f"https://api.heed.cx/users/verification?token={token}"
+            "url": f"https://api.heed.cx/users/verification?token={token}",
+            "firstname": firstname
         } 
     }
 
