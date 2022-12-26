@@ -140,3 +140,6 @@ def password_verif_token(token):
         raise credentials_exception
     
     return email
+
+    
+    
