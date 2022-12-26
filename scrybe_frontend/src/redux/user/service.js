@@ -15,7 +15,7 @@ const register = async (registerDetails) => {
 
 // login user
 const login = async (loginDetails) => {
-  const response = await axios.post(`login`, loginDetails);
+  const response = await axios.post(`users/login`, loginDetails);
   if (response.data.access_token) {
     localStorage.setItem("heedAccessToken", response.data.access_token);
     localStorage.setItem("heedRefreshToken", response.data.refresh_token);
@@ -35,10 +35,14 @@ const logout = () => {
 };
 
 const getuser = async () => {
-  const response = await axios.get(`account`, {
+  const response = await axios.get(`users/account`, {
     headers,
   });
   localStorage.setItem("user", JSON.stringify(response.data));
+  // if (response?.data) {
+  // } else {
+  //   localStorage.removeItem("user");
+  // }
   return response.data;
 };
 
