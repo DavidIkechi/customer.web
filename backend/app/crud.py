@@ -502,6 +502,9 @@ def check_subscrition_email(db: Session, email: str):
 def get_newsletter_subscribers(db: Session, skip: int = 0):
     return db.query(models.Newsletter).offset(skip).all()
 
+def free_user_by_email(db: Session, email: str):
+    return db.query(models.FreeTrial).filter(models.FreeTrial.email == email).first()
+    
 def get_distinct_ids(db: Session):
     # return db.query(func.count(func.distinct(Table.column)))
     return db.query(models.Job.job_id).distinct().count()
