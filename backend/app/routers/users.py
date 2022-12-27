@@ -75,7 +75,7 @@ def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(_services.
         users = crud.get_users(db, skip=skip, limit=limit)
     except Exception as e:
        return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
     return {      
@@ -90,7 +90,7 @@ def read_user(user_id: int, db: Session = Depends(_services.get_session)):
             raise HTTPException(status_code=404, detail="User not found")
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
     
@@ -162,7 +162,7 @@ async def email_verification(request: Request, token: str, db: Session = Depends
                 }
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
         
@@ -178,7 +178,7 @@ async def my_profile (db: Session = Depends(_services.get_session), user: models
         return {"detail": crud.get_user_profile(db, user_id)}
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
 
@@ -226,7 +226,7 @@ async def reset_password(token: str, new_password: schema.UpdatePassword, db: Se
         
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
     
@@ -264,7 +264,7 @@ async def change_password(password_schema: schema.ChangePassword,
             raise HTTPException(status_code=400, detail="Failed to update password")
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
     
@@ -293,7 +293,7 @@ async def auth(email: str, db: Session = Depends(_services.get_session)):
         tokens = get_access_token(email)
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
     return {
@@ -311,7 +311,7 @@ async def auth(email: str, db: Session = Depends(_services.get_session)):
         tokens = get_access_token(email)
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
     return {
@@ -344,7 +344,7 @@ async def get_history(user: models.User = Depends(get_active_user),
             )
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
     return {
@@ -364,7 +364,7 @@ def subscribe_to_newletter(subscriber: schema.Newsletter, db: Session = Depends(
             "detail": subscriber
         }
     except:
-        raise HTTPException(status_code=400, detail="An unknown error occured. Try Again") 
+        raise HTTPException(status_code=500, detail="An unknown error occured. Try Again") 
 
 @user_router.get("/get_newsletter-subscribers", summary="Get all existing subscribers", response_model=list[schema.Newsletter],
                  status_code = 200)
@@ -373,7 +373,7 @@ def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session),
         subscribers = crud.get_newsletter_subscribers(db, skip=skip)
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
         
