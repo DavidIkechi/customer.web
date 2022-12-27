@@ -22,8 +22,8 @@ def generate_uuid():
 
 
 def is_admin_check(email_address: str):
-    admin_list = ['davidakwuruu@gmail.com','tekkieware@gmail.com', 'collinsakpaka@gmail.com']
-    
+    admin_list = ['davidakwuruu@gmail.com','tekkieware@gmail.com', 'collinsakpaka@gmail.com','dprincecoder@gmail.com']
+    print(email_address.lower() in admin_list)
     return email_address.lower() in admin_list
 
 
@@ -51,12 +51,12 @@ def create_user(db: Session, user: schema.User):
         company_id = randint(0, 1000000)
 
     # create the company.
-    if is_admin_check(user.email):
+    if is_admin_check(user.email) is True:
         is_admin = True
         time_left = 6000.0
     else:
         # check if the email address is a professional email address.
-        if check_if_professional(user.email) < 1:
+        if check_if_professional(user.email) > 0:
             raise HTTPException(status_code=400, detail="Please use a Business email address")
         is_admin = False
         time_left = 0.0

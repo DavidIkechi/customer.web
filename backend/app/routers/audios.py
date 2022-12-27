@@ -48,7 +48,7 @@ def list_audios_by_user(db: Session = Depends(_services.get_session), user: mode
         audios = sorted(audio_list, key=lambda x: x['id'], reverse=True)
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )   
     return {
@@ -63,7 +63,7 @@ def get_uploaded_jobs(db:Session = Depends(_services.get_session), current_user 
         }
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
 
@@ -92,7 +92,7 @@ def read_sentiment(audio_id: int, db: Session = Depends(_services.get_session), 
                     }
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
     return {"detail": sentiment}
@@ -106,7 +106,7 @@ def get_recent_recordings(skip: int = 0, limit: int = 5, db: Session = Depends(_
         recordings = db.query(models.Audio).filter(models.Audio.user_id == user.id).order_by(models.Audio.timestamp.desc()).offset(skip).limit(limit).all()
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
     return {
@@ -179,7 +179,7 @@ def total_recordings_user(db: Session = Depends(_services.get_session), user: mo
     
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )        
 
@@ -198,7 +198,7 @@ def delete_audios(audios: List[int] = Query(None),
                 deleted_audios.append(db_audio.audio_path)
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
     return {"detail": "operation successful", "deleted audion(s)": deleted_audios}
