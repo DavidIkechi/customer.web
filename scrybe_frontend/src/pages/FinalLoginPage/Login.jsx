@@ -14,13 +14,7 @@ import visible from "./assets/visible.png";
 
 const Login = () => {
   const { userData, status, error } = useSelector((state) => state.auth);
-  const {
-    data,
-    isLoading,
-    isSuccess,
-    isError,
-    error: hasError,
-  } = useFetchUserQuery();
+  const { data, isSuccess, error: hasError } = useFetchUserQuery();
 
   const dispatch = useDispatch();
 
@@ -106,9 +100,9 @@ const Login = () => {
     } else if (error) {
       setResponse(ErrorHandler(error));
     }
-    if (hasError) {
-      setResponse(ErrorHandler(hasError));
-    }
+    // if (hasError) {
+    //   setResponse(ErrorHandler(hasError));
+    // }
   }, [status, data, userData, error, dispatch, isSuccess, hasError]);
 
   return (
