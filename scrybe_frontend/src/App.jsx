@@ -14,7 +14,6 @@ import FAQs from "./pages/FaqsPage";
 import FinalSignIn from "./pages/FinalLoginPage/Login";
 import ForgetPasswordNew from "./pages/ForgotPasswordNew/Index";
 import HelpSupport from "./pages/HelpAndSupport/HelpSupport";
-import History from "./pages/History";
 import HomePageRedesign from "./pages/HomePageRedesign";
 import LeaderboardPage from "./pages/LeaderBoard/Leaderboard";
 import Logout from "./pages/Logout";
@@ -79,15 +78,14 @@ function App() {
           <Route path="pricing" element={<Pricing />} />
           <Route path="/try-results/:transcribeId" element={<TryResults />} />
 
-          <Route path="/checkout-startup" element={<StartUp />} />
-          <Route path="/checkout-growing" element={<Growing />} />
-          <Route path="/checkout-enterprise" element={<Enterprise />} />
-
           <Route path="/reviews" element={<Reviews />} />
         </Route>
         {/* cant access without signin */}
 
         <Route element={<RequireToken />}>
+          <Route path="/checkout-startup" element={<StartUp />} />
+          <Route path="/checkout-growing" element={<Growing />} />
+          <Route path="/checkout-enterprise" element={<Enterprise />} />
           <Route path="/account" element={<Account />} />
           <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
           <Route path="/agent-report/:Agent_id" element={<AgentReport />} />
@@ -96,7 +94,7 @@ function App() {
             element={<SentimentAnalysis />}
           />
           <Route path="/transcriptions/:userId" element={<TranscribePage />} />
-          <Route path="/history" element={<History />} />
+          {/* <Route path="/history" element={<History />} /> */}
           <Route path="/dashboard" element={<DashboardOverview />} />
           <Route path="/leaderboard" element={<LeaderboardPage />} />
           <Route path="/agent-report/:agentId" element={<AgentReport />} />

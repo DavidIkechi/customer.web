@@ -1,7 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import Footer from "../../components/Footer";
-import NavBar from "../../components/NavbarFree";
 import styles from "./About.module.scss";
 import icon1 from "./assets/icon1.svg";
 import icon2 from "./assets/icon2.svg";
