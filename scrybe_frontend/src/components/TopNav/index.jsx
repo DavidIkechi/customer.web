@@ -49,7 +49,7 @@ const TopNav = ({ openSidebar, search }) => {
       </div>
       <div className={styles.TopNav_user_btn}>
         {isLoading ? (
-          <p>Loading...</p>
+          <p className={styles.desktopLoader}>Loading...</p>
         ) : (
           <>
             {currentUser ? (
@@ -115,17 +115,21 @@ const TopNav = ({ openSidebar, search }) => {
           </>
         )}
 
-        <div className={styles.TopNav_user_mobile}>
-          <img
-            className={styles.userimg}
-            src={
-              currentUser?.company_logo_url
-                ? currentUser?.company_logo_url
-                : "img/dummy.png"
-            }
-            alt={currentUser?.first_name}
-          />
-        </div>
+        {isLoading ? (
+          <p className={styles.mobileLoader}>Lodaing...</p>
+        ) : (
+          <div className={styles.TopNav_user_mobile}>
+            <img
+              className={styles.userimg}
+              src={
+                currentUser?.company_logo_url
+                  ? currentUser?.company_logo_url
+                  : DummyImg
+              }
+              alt={currentUser?.first_name}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
