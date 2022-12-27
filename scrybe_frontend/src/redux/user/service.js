@@ -9,7 +9,7 @@ const headers = {
 
 // register user
 const register = async (registerDetails) => {
-  const response = await axios.post(`create_users`, registerDetails);
+  const response = await axios.post(`users/create_users`, registerDetails);
   return response.data;
 };
 

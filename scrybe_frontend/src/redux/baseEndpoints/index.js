@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const baseAPI = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.heed.hng.tech/",
+    baseUrl: "https://api.heed.cx/",
     tagTypes: ["User"],
     prepareHeaders: (headers, { getState }) => {
       const token = localStorage.getItem("heedAccessToken");
