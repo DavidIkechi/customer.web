@@ -282,8 +282,24 @@ async def refresh_token(refresh_token: schema.RefreshToken, db: Session = Depend
             status_code= status.HTTP_400_BAD_REQUEST,
             content=jsonable_encoder({"detail": str(e)}),
         )
+@user_router.get('/auth/google', status_code = 200)
+async def auth(email: str, db: Session = Depends(_services.get_session)):
+    try:
+        user_db = crud.get_user_by_email(db, email)
 
+        if user_db is None:
+            raise HTTPException(status_code=404, detail="User not found.")
 
+        tokens = get_access_token(email)
+    except Exception as e:
+        return JSONResponse(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+    return {
+        "detail": tokens
+    }
+    
 @user_router.get('/auth/google', status_code = 200)
 async def auth(email: str, db: Session = Depends(_services.get_session)):
     try:
