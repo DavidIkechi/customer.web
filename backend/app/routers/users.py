@@ -28,8 +28,7 @@ from starlette.config import Config
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.responses import HTMLResponse
 from starlette.responses import RedirectResponse
-from google.oauth2 import id_token
-from google.auth.transport import requests
+
 
 
 user_router = APIRouter(
