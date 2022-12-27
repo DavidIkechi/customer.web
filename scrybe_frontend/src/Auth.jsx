@@ -5,7 +5,7 @@ export function RequireToken() {
   let auth = localStorageUser();
   let location = useLocation();
   if (!auth) {
-    return <Navigate to="/login" state={{ from: location }} />;
+    return <Navigate to="/login" replace />;
   }
 
   return <Outlet />;
@@ -14,7 +14,7 @@ export function RequireToken() {
 export function Authenticated() {
   let auth = localStorageUser();
   if (auth) {
-    return <Navigate to="/dashboard" />;
+    return <Navigate to="/dashboard" replace />;
   }
 
   return <Outlet />;
