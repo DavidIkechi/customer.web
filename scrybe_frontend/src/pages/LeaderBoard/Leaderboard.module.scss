@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 
 /* Implementing new design for Leaderbaord*/
 
@@ -7,7 +7,7 @@
 }
 
 .agentStyle.active {
-display: flex;
+  display: flex;
 }
 
 .agentStyle {
@@ -21,7 +21,7 @@ display: flex;
   transform: translate(-50%, -50%);
   display: none;
   backdrop-filter: blur(4px) saturate(200%);
-  background-color: hsla(0,0%,77%,.66);
+  background-color: hsla(0, 0%, 77%, 0.66);
   border: 1px solid rgba(255, 255, 255, 0.125);
 
   .agent {
@@ -29,9 +29,8 @@ display: flex;
     background: #fff;
     filter: drop-shadow(2px 2px 8px rgba(255, 255, 255, 0.125));
     margin: auto;
-  border-radius: 20px;
+    border-radius: 20px;
   }
-
 }
 
 .right_section {
@@ -64,18 +63,18 @@ display: flex;
   line-height: 24px;
 }
 
-.empty_state{
+.empty_state {
   text-align: center;
   padding-top: 2rem;
   font-size: 18px;
   color: #6a6a6a;
 }
 
-.empty_state h3{
+.empty_state h3 {
   padding-top: 1rem;
 }
 
-.empty_state img{
+.empty_state img {
   margin-left: auto;
   margin-right: auto;
 }
@@ -87,7 +86,7 @@ display: flex;
   // display: grid;
   // grid-template-columns: 0.8fr 2.5fr;
   width: 100%;
-  font-family: "Kanit", sans-serif;
+  font-family: "Poppins", sans-serif;
   height: 100vh;
   position: relative;
   overflow-y: scroll;
@@ -120,7 +119,6 @@ input {
   outline: none;
   font-size: 16px;
   font-weight: 400;
-
 }
 
 .InputWithIcon input {
@@ -166,7 +164,6 @@ select {
   gap: 2.5rem;
   align-items: center;
   justify-content: center;
-
 }
 
 .Profile1 {
@@ -174,7 +171,7 @@ select {
   margin-top: 3rem;
 }
 
-.Profile1:hover{
+.Profile1:hover {
   box-shadow: 6px 6px 13px #f6f6f6, 6px 6px 13px rgba(0, 0, 0, 0.16);
   cursor: pointer;
 }
@@ -185,7 +182,7 @@ select {
   background-color: #edf9f0;
 }
 
-.UppercaseName{
+.UppercaseName {
   text-transform: uppercase;
   margin-top: -1rem;
 }
@@ -309,19 +306,17 @@ hr {
 .Header_content p {
   font-size: 16px;
   font-weight: 300;
-
 }
 
-.Agent_ID{
+.Agent_ID {
   font-size: 16px;
   font-weight: 300;
   color: hsl(215, 100%, 50%);
   cursor: pointer;
 }
 
-.Agent_ID:hover{
+.Agent_ID:hover {
   color: hsl(215, 97%, 31%);
-
 }
 
 .Header_profile_container {
@@ -344,7 +339,7 @@ hr {
     background-color: #f1f1f1;
     display: grid;
     grid-template-columns: 2.5fr;
-    font-family: "Kanit", sans-serif;
+    font-family: "Poppins", sans-serif;
   }
 }
 
@@ -361,7 +356,7 @@ hr {
     background-color: #f1f1f1;
     display: grid;
     grid-template-columns: 2.5fr;
-    font-family: "Kanit", sans-serif;
+    font-family: "Poppins", sans-serif;
   }
 
   .Profile_container {
@@ -557,14 +552,14 @@ hr {
 }
 
 @media (max-width: 944px) {
-    .agentStyle {
-      overflow: scroll !important;
-    }
+  .agentStyle {
+    overflow: scroll !important;
+  }
 }
 
 @media (max-width: 900px) {
   .agentStyle {
-    .agent{
+    .agent {
       width: 90%;
     }
   }
