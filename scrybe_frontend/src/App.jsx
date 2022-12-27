@@ -36,7 +36,7 @@ import TermsAndCondition from "./pages/TermsAndCondition";
 import TranscribePage from "./pages/TranscribePage";
 import TryForFree from "./pages/TryForFree";
 import TryResults from "./pages/TryForFree/tryResults";
-import UploadedRecordings from "./pages/UploadRecordings";
+import UploadedRecordings from "./pages/UploadedRecordings";
 import EmailVerify from "./pages/VerificationEmail/EmailVerify";
 
 import * as atatus from "atatus-spa";
