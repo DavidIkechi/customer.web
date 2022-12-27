@@ -190,7 +190,10 @@ async def forgot_password(email: schema.ForgetPassword, db: Session = Depends(_s
     try:
         user: models.User = crud.get_user_by_email(db, email.email)
         if user is None:
-            raise HTTPException(status_code=404, detail="User not found")
+            return JSONResponse(
+                status_code= status.HTTP_400_BAD_REQUEST,
+                content=jsonable_encoder({"detail": "User not found"}),
+            )        
         token = await send_password_reset_email([email.email], user)
     except Exception as e:
         return JSONResponse(
