@@ -48,7 +48,8 @@ async def send_email(email: List, instance: User):
     
     emails: EmailSchema = {
         "body": {
-            "url": f"https://api.heed.cx/users/verification?token={token}"
+            "url": f"https://heed.cx/verification?token={token}",
+            "firstname": instance.first_name
         } 
     }
 
