@@ -1,5 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&display=swap");
-*, *::before, *::after {
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -11,8 +13,19 @@ img {
   max-width: 100%;
 }
 
-h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
-  font-family: "Kanit", sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+input,
+textarea,
+label,
+span,
+button {
+  font-family: "Poppins", sans-serif;
 }
 
 .sect__container {
@@ -71,7 +84,7 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
 }
 .first__section .bottom__content .second__top .second__subhead {
   font-size: 1rem;
-  color: #A9A9A9;
+  color: #a9a9a9;
   font-weight: 400;
   font-style: normal;
   fill: solid;
@@ -86,8 +99,8 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
   border: none;
   border-radius: 0.3rem;
   padding: 0.8em 0.8em;
-  background-color: #006CFF;
-  color: #FFFFFF;
+  background-color: #006cff;
+  color: #ffffff;
   font-size: 0.7rem;
   line-height: 1.5rem;
   outline: none;
@@ -96,7 +109,7 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
 .second__section {
   flex-basis: 48%;
   margin: auto 0;
-  background-color: #E6F0FF;
+  background-color: #e6f0ff;
   border-radius: 0.5rem;
   height: 95vh;
   display: flex;
@@ -149,4 +162,4 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
     width: 70%;
     margin: 0 auto;
   }
-}/*# sourceMappingURL=resetSuccessful.module.css.map */
+} /*# sourceMappingURL=resetSuccessful.module.css.map */

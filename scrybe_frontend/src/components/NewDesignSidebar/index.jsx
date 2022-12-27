@@ -9,8 +9,8 @@ import SearchInput from "../SearchInput";
 import DropDownModal from "./DropdownMenu";
 import styles from "./generalSidebar.module.scss";
 
-import { useFetchUserQuery } from "../../redux/baseEndpoints";
 import { localStorageUser } from "../../helpers/localStorageUser";
+import { useFetchUserQuery } from "../../redux/user/rtkquery";
 
 /**
  * Wrap your component with this component to get a sidebar with a logo, a search input field and a list of links.
@@ -38,19 +38,6 @@ function NewDesignSideBar({
   const { isLoading } = useFetchUserQuery();
   const currentUser = localStorageUser();
   const [show, setShow] = useState(false);
-  // const fetchUser = async () => {
-  //   const config = {
-  //     withCredentials: true,
-  //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
-  //     },
-  //   };
-  //   const res = await axios.get("account", config);
-  //   setCurrentUser(res.data);
-  // };
-  // useEffect(() => {
-  //   fetchUser();
-  // }, []);
   return (
     <div
       className={`${styles.generalSidebar}

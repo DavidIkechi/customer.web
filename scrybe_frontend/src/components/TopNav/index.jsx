@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
 import { localStorageUser } from "../../helpers/localStorageUser";
-import { useFetchUserQuery } from "../../redux/baseEndpoints";
+import { useFetchUserQuery } from "../../redux/user/rtkquery";
 import Modal from "../Modal";
 import SearchInput from "../SearchInput";
 import SnackBar from "../SnackBar";
@@ -19,18 +19,8 @@ const TopNav = ({ openSidebar, search }) => {
   const { isLoading, isError, error } = useFetchUserQuery();
   const [show, setShow] = useState(false);
   const currentUser = localStorageUser();
-  const [userError, setUserError] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [response, setResponse] = useState({ type: "", message: "" });
-
-  // const getUserAccount = async () => {
-  //   const res = await axios.get("account", { headers });
-  //   setCurrentUser(res.data);
-  // };
-
-  // React.useEffect(() => {
-  //   getUserAccount();
-  // }, []);
 
   useEffect(() => {
     if (isError) {
@@ -59,7 +49,7 @@ const TopNav = ({ openSidebar, search }) => {
       </div>
       <div className={styles.TopNav_user_btn}>
         {isLoading ? (
-          <p>Loading...</p>
+          <p className={styles.desktopLoader}>Loading...</p>
         ) : (
           <>
             {currentUser ? (
@@ -125,17 +115,21 @@ const TopNav = ({ openSidebar, search }) => {
           </>
         )}
 
-        <div className={styles.TopNav_user_mobile}>
-          <img
-            className={styles.userimg}
-            src={
-              currentUser?.company_logo_url
-                ? currentUser?.company_logo_url
-                : "img/dummy.png"
-            }
-            alt={currentUser?.first_name}
-          />
-        </div>
+        {isLoading ? (
+          <p className={styles.mobileLoader}>Lodaing...</p>
+        ) : (
+          <div className={styles.TopNav_user_mobile}>
+            <img
+              className={styles.userimg}
+              src={
+                currentUser?.company_logo_url
+                  ? currentUser?.company_logo_url
+                  : DummyImg
+              }
+              alt={currentUser?.first_name}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

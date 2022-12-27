@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const baseAPI = createApi({
-  reducerPath: "baseApi",
+export const recordAPI = createApi({
+  reducerPath: "recordAPI",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.heed.hng.tech/",
+    baseUrl: "https://api.heed.cx/",
     tagTypes: ["User"],
     prepareHeaders: (headers, { getState }) => {
       const token = localStorage.getItem("heedAccessToken");
@@ -14,10 +14,6 @@ export const baseAPI = createApi({
     },
   }),
   endpoints: (builder) => ({
-    fetchUser: builder.query({
-      query: () => "account",
-      providesTags: ["User"],
-    }),
     fetchUserRecordings: builder.query({
       query: () => "list-audios-by-user",
     }),
@@ -31,7 +27,7 @@ export const baseAPI = createApi({
         try {
           await queryFulfilled;
           dispatch(
-            baseAPI.util.updateQueryData(
+            recordAPI.util.updateQueryData(
               "fetchUserRecordings",
               undefined,
               (draft) => {
@@ -48,9 +44,8 @@ export const baseAPI = createApi({
 });
 
 export const {
-  useFetchUserQuery,
   useFetchUserRecordingsQuery,
   useDeleteRecordingMutation,
   useLoginUserMutation,
   useRegisterUserMutation,
-} = baseAPI;
+} = recordAPI;

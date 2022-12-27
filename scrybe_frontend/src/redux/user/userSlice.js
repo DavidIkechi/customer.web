@@ -50,6 +50,8 @@ const userSlice = createSlice({
     resetUser: (state) => {
       state.status = null;
       state.error = null;
+      state.getUser = null;
+      state.userData = null;
     },
   },
   extraReducers: (builder) => {
@@ -61,10 +63,10 @@ const userSlice = createSlice({
         state.userData = action.payload;
         state.error = null;
         state.getUser = "success";
-        state.status = null;
+        state.status = "success";
       })
       .addCase(getUser.rejected, (state, action) => {
-        state.error = null;
+        state.error = action.payload;
         state.userData = null;
         state.getUser = "failed";
       })

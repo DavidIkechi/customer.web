@@ -8,14 +8,14 @@ import { PropTypes } from "prop-types";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import IsLoadingSkeleton from "../../../components/LoadingSkeleton";
-import { formatAudioLen } from "../../../helpers/formatAudioLen/index";
-import { formatAudioSize } from "../../../helpers/formatAudioSize/index";
-import { formatDate } from "../../../helpers/formatDate";
-import { shortenfilename } from "../../../helpers/shortenFileLen";
+import { formatAudioLen } from "./formatAudioLen";
+import { formatAudioSize } from "./formatAudioSize";
+import { formatDate } from "./formatDate";
+import { shortenfilename } from "./shortenFileLen";
 import {
   useDeleteRecordingMutation,
   useFetchUserRecordingsQuery,
-} from "../../../redux/baseEndpoints";
+} from "../../../redux/uploadedRecodings/rtkquery";
 import closeModalIcon from "./imgs/close-icon.svg";
 import deleteIcon from "./imgs/delete-icon.svg";
 import notfoundImg from "./imgs/notfound.svg";
