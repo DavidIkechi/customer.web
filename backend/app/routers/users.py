@@ -96,7 +96,7 @@ def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(_services.
             content=jsonable_encoder({"detail": str(e)}),
         )
     return {      
-        detail: users
+        "detail": users
     }
     
 @user_router.get("/get_user/{user_id}", summary = "get user by id", status_code=200, response_model=schema.User)

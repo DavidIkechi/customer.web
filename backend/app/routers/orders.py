@@ -1,4 +1,4 @@
-from fastapi import FastAPI, status, Depends, APIRouter,  UploadFile, File, Form, Query, Request
+from fastapi import FastAPI, status, Depends, APIRouter,  UploadFile, File, Form, Query, Request, HTTPException
 from typing import List, Union, Optional
 import services as _services
 import models, schema
