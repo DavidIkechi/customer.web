@@ -15,7 +15,7 @@ export const baseAPI = createApi({
   }),
   endpoints: (builder) => ({
     fetchUser: builder.query({
-      query: () => "account",
+      query: () => "users/account",
       providesTags: ["User"],
     }),
     fetchUserRecordings: builder.query({
