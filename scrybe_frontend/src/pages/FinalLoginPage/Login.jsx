@@ -6,7 +6,7 @@ import styles from "./Login.module.scss";
 
 import { useDispatch, useSelector } from "react-redux";
 import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
-import { useFetchUserQuery } from "../../redux/baseEndpoints";
+import { useFetchUserQuery } from "../../redux/user/rtkquery";
 import { getUser, loginUser } from "../../redux/user/userSlice";
 import hidden from "./assets/hidden.png";
 import logo from "./assets/logo.png";
