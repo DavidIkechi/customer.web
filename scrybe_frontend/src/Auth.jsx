@@ -2,19 +2,21 @@ import { Navigate, Outlet } from "react-router-dom";
 import { localStorageUser } from "./helpers/localStorageUser";
 
 export function RequireToken() {
-   let auth = localStorageUser();
-  if (!auth) {
-    return <Navigate to="/login" replace />;
-  }
+    let auth = localStorageUser();
+    if (!auth) {
+        return <Navigate to = "/login"
+        replace / > ;
+    }
 
-  return <Outlet />;
+    return <Outlet / > ;
 }
 
 export function Authenticated() {
-  let auth = localStorageUser();
-  if (auth) {
-    return <Navigate to="/dashboard" replace />;
-  }
+    let auth = localStorageUser();
+    if (auth) {
+        return <Navigate to = "/dashboard"
+        replace / > ;
+    }
 
-  return <Outlet />;
+    return <Outlet / > ;
 }
