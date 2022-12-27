@@ -2,7 +2,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { localStorageUser } from "./helpers/localStorageUser";
 
 export function RequireToken() {
-   let auth = localStorageUser();
+  let auth = localStorageUser();
   if (!auth) {
     return <Navigate to="/login" replace />;
   }
