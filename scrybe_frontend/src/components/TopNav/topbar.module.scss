@@ -2,7 +2,7 @@
   position: sticky;
   position: -webkit-sticky;
   top: 0;
-  z-index: 10;
+  z-index: 2;
   background: #ffffff;
   height: 80px;
   width: 100%;
@@ -132,6 +132,9 @@
       }
     }
   }
+  .mobileLoader {
+    display: none;
+  }
 }
 .showDropup .arrow {
   transform: rotate(180deg);
@@ -186,6 +189,12 @@
     .TopNav_search {
       display: none;
     }
+    .desktopLoader {
+      display: none;
+    }
+    .mobileLoader {
+      display: block;
+    }
   }
 }
 
@@ -220,6 +229,9 @@
         right: 1rem;
       }
     }
+    .desktopLoader {
+      display: block;
+    }
   }
 }
 
@@ -249,5 +261,11 @@
         right: 1rem;
       }
     }
+  }
+  .desktopLoader {
+    display: none;
+  }
+  .mobileLoader {
+    display: block;
   }
 }
