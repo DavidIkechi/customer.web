@@ -50,6 +50,8 @@ const userSlice = createSlice({
     resetUser: (state) => {
       state.status = null;
       state.error = null;
+      state.getUser = null;
+      state.userData = null;
     },
   },
   extraReducers: (builder) => {

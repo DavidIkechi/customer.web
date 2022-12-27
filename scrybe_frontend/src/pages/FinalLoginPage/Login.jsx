@@ -6,8 +6,8 @@ import styles from "./Login.module.scss";
 
 import { useDispatch, useSelector } from "react-redux";
 import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
-import { useFetchUserQuery } from "../../redux/baseEndpoints";
-import { getUser, loginUser } from "../../redux/user/userSlice";
+import { useFetchUserQuery } from "../../redux/user/rtkquery";
+import { getUser, loginUser, resetUser } from "../../redux/user/userSlice";
 import hidden from "./assets/hidden.png";
 import logo from "./assets/logo.png";
 import visible from "./assets/visible.png";
@@ -99,6 +99,7 @@ const Login = () => {
       }, 2500);
     } else if (error) {
       setResponse(ErrorHandler(error));
+      dispatch(resetUser());
     }
     // if (hasError) {
     //   setResponse(ErrorHandler(hasError));

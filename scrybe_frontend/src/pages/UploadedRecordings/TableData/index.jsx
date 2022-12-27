@@ -15,7 +15,7 @@ import { shortenfilename } from "./shortenFileLen";
 import {
   useDeleteRecordingMutation,
   useFetchUserRecordingsQuery,
-} from "../../../redux/baseEndpoints";
+} from "../../../redux/uploadedRecodings/rtkquery";
 import closeModalIcon from "./imgs/close-icon.svg";
 import deleteIcon from "./imgs/delete-icon.svg";
 import notfoundImg from "./imgs/notfound.svg";
