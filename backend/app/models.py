@@ -10,11 +10,31 @@ from db import Base
 
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
-
+from random import randint
 def generate_uuid():
     return str(uuid.uuid4())
 
+def generate_agent_id():
+    agent_id = randint(0, 1000000)
+    return agent_id
 
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    first_name = Column(String(255), index=True)
+    last_name = Column(String(255), index=True)
+    email = Column(String(255))
+    password = Column(String(255))
+    is_active = Column(Boolean, default=False)
+    is_admin = Column(Boolean, default=False)
+    is_verified = Column(Boolean, default=False)
+    company_id = Column(Integer, ForeignKey("companies.id", ondelete='CASCADE'))
+    created_at = Column(DateTime(timezone=True), default=datetime.now())
+
+    
 class Company(Base):
     __tablename__ = 'companies'
 
@@ -25,38 +45,15 @@ class Company(Base):
     plan = Column(String(255), index=True)
     time_left = Column(Float, index=True, nullable = True)
 
-    users = relationship("User", back_populates="company")
-    agents = relationship("Agent", back_populates="company")
-
-class User(Base):
-    __tablename__ = "users"
-
-    id = Column(Integer, primary_key=True, index=True)
-    first_name = Column(String(255), index=True)
-    last_name = Column(String(255), index=True)
-    email = Column(String(255), unique=True, index=True)
-    password = Column(String(255))
-    is_active = Column(Boolean, default=False)
-    is_admin = Column(Boolean, default=False)
-    is_verified = Column(Boolean, default=False)
-    company_id = Column(Integer, ForeignKey("companies.id"))
-    created_at = Column(DateTime(timezone=True), default=datetime.now())
-
-    company = relationship("Company", back_populates="users")
-    audios = relationship("Audio", back_populates="user")
-
 class Agent(Base):
     __tablename__ = "agents"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, unique=True, nullable=False, default=generate_agent_id)
     first_name = Column(String(255), index=True)
     last_name = Column(String(255), index=True)
     location = Column(String(255), index=True)
-    company_id = Column(Integer, ForeignKey("companies.id"))
+    company_id = Column(Integer, ForeignKey("companies.id", ondelete='CASCADE'))
     aud_id = Column(Integer, index=True)
-
-    audios = relationship("Audio")
-    company = relationship("Company", back_populates="agents")
 
 class Audio(Base):
     __tablename__ = "audios"
@@ -75,12 +72,11 @@ class Audio(Base):
     overall_sentiment = Column(Enum("Positive", "Negative", "Neutral"), index=True, nullable = True)
     most_positive_sentences = Column(JSON, nullable = True)
     most_negative_sentences = Column(JSON, nullable = True)
-    agent_id = Column(Integer, ForeignKey("agents.id"))
+    agent_id = Column(Integer, ForeignKey("agents.id", ondelete='CASCADE'))
     agent_firstname = Column(String(255), index=True)
     agent_lastname = Column(String(255), index=True)
-    user_id = Column(Integer, ForeignKey("users.id"))
-    job = relationship("Job", back_populates="audio", uselist=False)
-    user = relationship("User", back_populates="audios")
+    user_id = Column(Integer, ForeignKey("users.id", ondelete='CASCADE'))
+  
 
 class Job(Base):
     __tablename__ = "jobs"
@@ -88,8 +84,8 @@ class Job(Base):
     id = Column(Integer, primary_key=True, index=True)
     timestamp = Column(DateTime, index=True, default=datetime.now())
     job_status = Column(TEXT)
-    audio_id = Column(Integer, ForeignKey("audios.id"))
-    audio = relationship("Audio", back_populates="job")
+    job_id = Column(Integer, index=True)
+    audio_id = Column(Integer, ForeignKey("audios.id", ondelete='CASCADE'))
 
 class uploaded_Job(Base):
     __tablename__ = "uploaded_jobs"
@@ -107,7 +103,7 @@ class History(Base):
     audio_name = Column(String(255), index=True)
     agent_name = Column(String(255), index=True)
     date_uploaded = Column(DateTime, default=datetime.utcnow(), index=True)
-    user_id = Column(Integer, ForeignKey("users.id"))
+    user_id = Column(Integer, ForeignKey("users.id", ondelete='CASCADE'))
     
 class Analysis(Base):
     __tablename__ = "analysis"
@@ -121,7 +117,7 @@ class Analysis(Base):
     neutrality_score = Column(Float, index=True)
     overall_sentiment = Column(Enum("Positive", "Negative", "Neutral"), index=True)
 
-    agent_id = Column(Integer, ForeignKey("agents.id"))
+    agent_id = Column(Integer, ForeignKey("agents.id", ondelete='CASCADE'))
 
 class UserProfile(Base):
     __tablename__ = "accounts"
@@ -130,7 +126,7 @@ class UserProfile(Base):
     phone_number = Column(String(255))
     company_address = Column(TEXT)
     email = Column(String(255), nullable=True)
-    company_id = Column(Integer, ForeignKey("companies.id"))
+    company_id = Column(Integer, ForeignKey("companies.id", ondelete='CASCADE'))
     company_logo_url = Column(URLType, nullable=True)
     api_key = Column(String(255), name="uuid", primary_key=True, default=generate_uuid)
 
@@ -139,23 +135,22 @@ class FreeTrial(Base):
     __tablename__ = "FreeTrial"
 
     id = Column(Integer, primary_key=True, index=True)
+    email = Column(String(255), index=True)
     transcript_id = Column(String(255), index=True)
     transcript_status = Column(TEXT)
 
-class Order(Base):
-    __tablename__ = "orders"
-
-    id = Column(Integer, primary_key=True, index=True)
-    user_email = Column(String(255), ForeignKey("users.email"), nullable=True)
-    billing_plan = Column(String(255), index=True)
-    monthly_amount = Column(Float, index=True)
-    annual_amount = Column(Float, index=True)
-    total_amount = Column(Float, index=True)
-    order_date = Column(Date, index=True, default=date.today())
-    next_payment_due_date = Column(Date, index=True)
-
 class Newsletter(Base):
-    __tablename__ = "newsleetter_subscribers"
+    __tablename__ = "newsletter_subscribers"
 
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String(255), nullable = False)
+    name = Column(Integer)
+    
+    
+class ProductPlan(Base):
+    __tablename__ = "product_plans"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(255), nullable=False)
+    price = Column(Float, index=True, nullable=False)
+    features = Column(JSON, nullable=False)
+    

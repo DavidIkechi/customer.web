@@ -1,7 +1,7 @@
 ::placeholder {
   font-size: 0.875rem;
   font-weight: 300;
-  font-family: "Kanit", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 :focus {
@@ -32,20 +32,20 @@
     margin-bottom: 3rem;
 
     .errorInput {
-      border: 1px solid #F44336 !important;
+      border: 1px solid #f44336 !important;
     }
-    
+
     .errorMsg {
       font-size: 12px;
       line-height: 16px;
-      color: #F44336 !important;
+      color: #f44336 !important;
       text-align: left !important;
       margin-bottom: 0.5rem;
     }
-      
+
     .submitValid {
       button {
-        background: #006CFF !important;
+        background: #006cff !important;
         color: #ffffff !important;
       }
     }
@@ -59,8 +59,8 @@
 
     .formSubmit {
       button {
-        color: #C5C5C5;
-        background-color: #ECECEC;
+        color: #c5c5c5;
+        background-color: #ececec;
       }
     }
 
@@ -87,7 +87,7 @@
       background-color: #006cff;
       border-radius: 4px;
       color: white;
-      font-family: "Kanit", sans-serif;
+      font-family: "Poppins", sans-serif;
       font-size: 0.875rem !important;
       font-weight: 500 !important;
     }
@@ -150,7 +150,6 @@
   }
 }
 @media (min-width: 1024px) {
-
   .formGroup {
     width: 100%;
   }

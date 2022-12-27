@@ -20,7 +20,7 @@ from BitlyAPI import shorten_urls
 import crud
 from jwt import main_login, get_access_token, verify_password, refresh
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from emails import send_email, verify_token, send_password_reset_email, password_verif_token
+from emails import send_email, verify_token, send_password_reset_email, password_verif_token, send_deactivation_email
 
 from authlib.integrations.starlette_client import OAuth
 from authlib.integrations.starlette_client import OAuthError
@@ -223,7 +223,7 @@ async def reset_password(token: str, new_password: schema.UpdatePassword, db: Se
     try:
         email = password_verif_token(token)
         user: models.User = crud.get_user_by_email(db, email)
-            
+        
         if user is None:
             raise HTTPException(status_code=404, detail="User not found")
 
@@ -367,8 +367,7 @@ async def get_history(user: models.User = Depends(get_active_user),
         "detail": user_history
     }
 
-@user_router.post("/newsletter-subscription", summary="newsletter subscription", 
-                  response_model= schema.Newsletter, status_code = 200)
+@user_router.post("/newsletter-subscription", summary="newsletter subscription", response_model= schema.Newsletter, tags=['subscribers'])
 def subscribe_to_newletter(subscriber: schema.Newsletter, db: Session = Depends(_services.get_session)):
     db_subscriber = crud.check_subscrition_email(db,email=subscriber.email)
 
@@ -384,6 +383,11 @@ def subscribe_to_newletter(subscriber: schema.Newsletter, db: Session = Depends(
 
 @user_router.get("/get_newsletter-subscribers", summary="Get all existing subscribers", response_model=list[schema.Newsletter],
                  status_code = 200)
+def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session)):
+    subscribers = crud.get_newsletter_subscribers(db, skip=skip)
+
+    return subscribers
+
 def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session), user: models.User = Depends(get_admin)):
     try:
         subscribers = crud.get_newsletter_subscribers(db, skip=skip)
@@ -398,4 +402,23 @@ def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session),
     }
 
 
-
+@user_router.post("/deactivate_user/{user_id}")
+async def deactivate(user_id: int, db: Session = Depends(_services.get_session)):
+    try:
+        db_user = crud.get_user(db, user_id=user_id)
+        if not db_user:
+            raise HTTPException(status_code=404, detail="No User With This ID")
+        else:
+            if db_user.is_active == False:
+                raise HTTPException(status_code=404, detail="This User Is Not Active")
+            db_user.is_active = False
+            db.commit()
+            await send_deactivation_email([db_user.email], db_user)
+    except Exception as e:
+        return JSONResponse(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+    return {
+        "detail": "This User Has Been Deactivated"
+    }

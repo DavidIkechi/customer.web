@@ -30,20 +30,6 @@ const index = () => {
                   </p>
                 </div>
               </div>
-              <form className={styles.form__container}>
-                <div className={styles.form__action}>
-                  <a
-                    href="https://mail.google.com/"
-                    target="_blank"
-                    rel="noreferrer"
-                    type="submit"
-                    value="Reset password"
-                    className={styles.form__button}
-                  >
-                    Open email
-                  </a>
-                </div>
-              </form>
               <div className={styles.link__container}>
                 <p className={styles.link__text}>
                   Didn't receive an email?

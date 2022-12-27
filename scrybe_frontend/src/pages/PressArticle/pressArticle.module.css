@@ -1,5 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&display=swap");
-*, *::before, *::after {
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -11,8 +13,19 @@ img {
   max-width: 100%;
 }
 
-h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
-  font-family: "Kanit", sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+input,
+textarea,
+label,
+span,
+button {
+  font-family: "Poppins", sans-serif;
 }
 
 .sect__container {
@@ -44,7 +57,8 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
 .second__section .left__container .left__date {
   margin-bottom: 0.5em;
 }
-.second__section .left__container .date__month, .second__section .left__subtext .left__text {
+.second__section .left__container .date__month,
+.second__section .left__subtext .left__text {
   font-size: 0.7rem;
   color: #313131;
   font-weight: 300;
@@ -120,4 +134,4 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
 .right__container .article__details .arrowleft {
   width: 0.7rem;
   margin-left: 0.2em;
-}/*# sourceMappingURL=pressArticle.module.css.map */
+} /*# sourceMappingURL=pressArticle.module.css.map */

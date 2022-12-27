@@ -37,7 +37,6 @@ conf = ConnectionConfig(
 
 class EmailSchema(BaseModel):
     body: Dict[str, Any]
-    
 
 async def send_email(email: List, instance: User):
     token_data = {
@@ -49,7 +48,8 @@ async def send_email(email: List, instance: User):
     
     emails: EmailSchema = {
         "body": {
-            "url": f"https://api.heed.cx/users/verification?token={token}"
+            "url": f"https://heed.cx/verification?token={token}",
+            "firstname": instance.first_name
         } 
     }
 
@@ -140,3 +140,74 @@ def password_verif_token(token):
         raise credentials_exception
     
     return email
+
+async def send_deactivation_email(email: List, instance: User):
+    token_data = {
+        'email': instance.email,
+        # 'username': instance.username
+    }
+
+    token = jwt.encode(token_data, os.getenv('SECRET'), algorithm='HS256')
+
+
+    template = f"""
+        <div>
+                    <h3>Account Deactivation</h3>
+                    <br>
+                    <p>Dummy Deactivation Email</p>
+        </div>
+    """
+
+    message = MessageSchema(
+        subject = "Account Deactivation",
+        recipients =email,
+        body = template,
+        subtype = "html"
+    )
+
+    fm =FastMail(conf)
+    await fm.send_message(message=message)
+
+
+async def verify_token(token: str, db: Session):
+    try:
+        payload = jwt.decode(token, os.getenv('SECRET'), algorithms=['HS256'])
+        user = get_user_by_email(db, payload.get("email"))
+
+    except Exception as e:
+        print(e)
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or expired token",
+            headers={"WWW.Authenticate": "Bearer"}
+        )
+    return user
+
+
+async def send_freeTrial_email(email: List, instance: User):
+    token_data = {
+        'email': instance.email,
+        # 'username': instance.username
+    }
+
+    token = jwt.encode(token_data, os.getenv('SECRET'), algorithm='HS256')
+
+
+    template = f"""
+        <div>
+                    <h3>Free Trial Result</h3>
+                    <br>
+                    <p>Dummy Free Trial Email</p>
+        </div>
+    """
+
+    message = MessageSchema(
+        subject = "Free Trial Result",
+        recipients =email,
+        body = template,
+        subtype = "html"
+    )
+
+    fm =FastMail(conf)
+    await fm.send_message(message=message)
+
