@@ -48,6 +48,7 @@ def request_transcript(upload_url, header):
 def make_polling_endpoint(transcript_response):
     polling_endpoint = "https://api.assemblyai.com/v2/transcript/"
     polling_endpoint += transcript_response
+    print("getting the polls")
     return polling_endpoint
 
 
@@ -96,7 +97,7 @@ def validate_and_verify_email(input_email):
     return isValid
 
 def check_if_professional(email_address: str) -> int:
-    get_data = pd.read_csv('email-providers.csv', header= None)
+    get_data = pd.read_csv(os.path.normcase(os.path.abspath('routers/email-providers.csv')), header= None)
     free_domain = email_address.split('@')[1]
     return len(get_data.loc[get_data[0] == free_domain])
     
