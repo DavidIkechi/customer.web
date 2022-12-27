@@ -1,7 +1,6 @@
 @import "./utilities/functionsANDmedia";
 @import "./utilities/variables";
 @import "./reset";
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 .logout {
   display: flex;
@@ -10,9 +9,6 @@
   height: 100vh;
 }
 
-// .logout_logo__div {
-//   align-self: flex-start;
-// }
 
 .logout_logo__div img {
   height: pix-rem(24);
