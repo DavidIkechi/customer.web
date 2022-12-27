@@ -32,16 +32,15 @@ def convert_plan(current_plan:str, new_plan:str, time:float):
 
 @change_plan_router.post("/", description="Change the user's subscription plan", status_code=status.HTTP_200_OK)
 def change_plan(user_plan:schema.ChangePlan, user:models.User = Depends(auth.get_active_user), db: Session = Depends(_services.get_session)):
-    # user_company = db.query(models.Company).filter(models.Company.id == user.company_id).first()
-    user_company = user.company
-    current_plan = user_company.plan
-    balance_time = user_company.time_left
+    company = db.query(models.Company).filter(models.Company.id == user.company_id).first()
+    current_plan = company.plan
+    balance_time = company.time_left
     new_plan = user_plan.plan
     upload_time = convert_plan(current_plan, new_plan, balance_time)
-    user_company.plan = new_plan
-    user_company.time_left = upload_time
+    company.plan = new_plan
+    company.time_left = upload_time
     db.commit()
-    db.refresh(user_company)
+    db.refresh(company)
     
     return {"message": f"plan succesfully changed to {new_plan}"}
 

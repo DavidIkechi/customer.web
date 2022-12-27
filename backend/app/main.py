@@ -33,7 +33,7 @@ from BitlyAPI import shorten_urls
 import services as _services
 
 from datetime import datetime, timedelta, date
-from fastapi_utils.tasks import repeat_every
+# from fastapi_utils.tasks import repeat_every
 
 
 import shutil
