@@ -11,9 +11,9 @@ import oneIcon from "./assets/one__icon.png";
 import twoIcon from "./assets/two__icon.png";
 import threeIcon from "./assets/three__icon.png";
 import fourIcon from "./assets/four__icon.png";
-import NavBar from "../../components/NavbarFree";
-import Footer from "../../components/Footer";
-import input__ctrl from "../PartnersPage/assets/input__ctrl.png";
+import NavBar from "../../src/components/NavbarFree";
+import Footer from "../../src/components/Footer";
+import input__ctrl from "./assets/input__ctrl.png";
 
 const PartnersPage = () => {
   return (
