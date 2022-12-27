@@ -1,20 +1,20 @@
-@use "../../../functions.scss"as *;
+@use "../../../functions.scss" as *;
 
-.WhoWEServe{
-    padding: 4rem;
-    display: flex;
-    flex-direction: column;
-    @include media(320px) {
-        padding: 2rem;
-    }
-    .heading{
-        font-family: 'Kanit';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 28px;
-        line-height: 42px;
-        color: #313131;
-        text-align: center;
-        margin-bottom: 2rem;
-    }
+.WhoWEServe {
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  @include media(320px) {
+    padding: 2rem;
+  }
+  .heading {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 42px;
+    color: #313131;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
 }

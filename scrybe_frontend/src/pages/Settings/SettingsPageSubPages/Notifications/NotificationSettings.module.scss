@@ -124,7 +124,7 @@
     background: #006cff;
     border-radius: 4px;
     border: none;
-    font-family: "Kanit", sans-serif;
+    font-family: "Poppins", sans-serif;
     font-weight: 500 !important;
     margin-top: 1rem;
     cursor: pointer;
@@ -183,11 +183,11 @@
     padding: 1rem;
     border: 1px solid #c5c5c5;
     border-radius: 4px;
-    font-family: "Kanit", sans-serif;
+    font-family: "Poppins", sans-serif;
     background-color: white !important;
 
     &:focus {
-      border:1px solid #006cff !important;
+      border: 1px solid #006cff !important;
     }
   }
 }
