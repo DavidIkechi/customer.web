@@ -19,18 +19,8 @@ const TopNav = ({ openSidebar, search }) => {
   const { isLoading, isError, error } = useFetchUserQuery();
   const [show, setShow] = useState(false);
   const currentUser = localStorageUser();
-  const [userError, setUserError] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [response, setResponse] = useState({ type: "", message: "" });
-
-  // const getUserAccount = async () => {
-  //   const res = await axios.get("account", { headers });
-  //   setCurrentUser(res.data);
-  // };
-
-  // React.useEffect(() => {
-  //   getUserAccount();
-  // }, []);
 
   useEffect(() => {
     if (isError) {

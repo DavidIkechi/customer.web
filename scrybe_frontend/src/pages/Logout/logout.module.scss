@@ -1,7 +1,7 @@
 @import "../../assets/styles/utilities/functionsANDmedia";
 @import "../../assets/styles/utilities/variables";
 @import "../../assets/styles/reset";
-@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 .logout {
   display: flex;
@@ -13,11 +13,11 @@
   @include easyMediaQueries("min-width:1024px") {
     padding: pix-rem(40) pix-rem(112);
 
-    >{
+    > {
       div:last-of-type {
         display: flex;
 
-        >{
+        > {
           *:first-of-type {
             width: min(50%, 30rem);
           }
@@ -30,7 +30,8 @@
 .logo__div img {
   height: pix-rem(24);
 
-  @include easyMediaQueries("min-width:1024px") {}
+  @include easyMediaQueries("min-width:1024px") {
+  }
 }
 
 .login_form__div {
@@ -87,7 +88,7 @@
     font-size: pix-rem(14);
     line-height: pix-rem(24);
   }
-  >{
+  > {
     p:last-of-type {
       font-weight: 400;
       font-size: pix-rem(16);
@@ -102,7 +103,8 @@
     }
   }
 
-  @include easyMediaQueries("min-width:1024px") {}
+  @include easyMediaQueries("min-width:1024px") {
+  }
 }
 
 .login_header__div {
@@ -111,7 +113,8 @@
   gap: pix-rem(8);
   margin-bottom: pix-rem(32);
 
-  @include easyMediaQueries("min-width:1024px") {}
+  @include easyMediaQueries("min-width:1024px") {
+  }
 }
 
 .login_fields__div {
@@ -119,7 +122,8 @@
   flex-direction: column;
   gap: pix-rem(24);
 
-  @include easyMediaQueries("min-width:1024px") {}
+  @include easyMediaQueries("min-width:1024px") {
+  }
 }
 
 .login_options__div {
@@ -136,7 +140,8 @@
     line-height: pix-rem(16);
   }
 
-  @include easyMediaQueries("min-width:1024px") {}
+  @include easyMediaQueries("min-width:1024px") {
+  }
 }
 
 .desktop_illustration__div {

@@ -1,5 +1,5 @@
 ::placeholder {
-  font-family: "Kanit", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 300 !important;
   font-size: 14px !important;
   color: #a9a9a9;
@@ -87,7 +87,7 @@
       border-radius: 4px;
       border: 1px solid #c5c5c5;
       width: 100%;
-      font-family: "Kanit", sans-serif;
+      font-family: "Poppins", sans-serif;
       background-color: white !important;
 
       &:focus {
@@ -115,21 +115,21 @@
       font-size: 0.7rem !important;
     }
   }
-  
+
   .errorInput {
-    border: 1px solid #F44336 !important;
+    border: 1px solid #f44336 !important;
   }
-  
+
   .errorMsg {
     font-size: 12px;
     line-height: 16px;
-    color: #F44336 !important;
+    color: #f44336 !important;
     text-align: left !important;
     margin-bottom: 0.5rem;
   }
-  
+
   .submitValid {
-    background: #006CFF !important;
+    background: #006cff !important;
     color: #ffffff !important;
 
     &:hover {
@@ -147,14 +147,14 @@
     gap: 1rem;
 
     button {
-      color: #C5C5C5;
-      background-color: #ECECEC;
+      color: #c5c5c5;
+      background-color: #ececec;
       padding: 0.8rem 2rem;
       border: none;
       font-size: 0.875rem !important;
       font-weight: 500 !important;
       border-radius: 4px;
-      font-family: "Kanit", sans-serif;
+      font-family: "Poppins", sans-serif;
       cursor: pointer;
     }
 
@@ -189,7 +189,6 @@
 }
 @media (min-width: 1024px) {
   .PersonalInfo_wrapper {
-
     .formGroup {
       label {
         font-size: 0.875rem !important;

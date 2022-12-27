@@ -1,5 +1,6 @@
 .TopNav {
   position: sticky;
+  position: -webkit-sticky;
   top: 0;
   z-index: 10;
   background: #ffffff;
@@ -8,7 +9,7 @@
   display: flex;
   justify-content: space-between;
   padding: 1rem;
-  position: relative;
+  // position: relative;
 
   //toggle nav and logo
   .TopNav_toggle {
@@ -60,7 +61,7 @@
           .TopNav_user_desktop_name_arr {
             display: flex;
             .name {
-              font-family: "Kanit";
+              font-family: "Poppins";
               font-style: normal;
               font-weight: 600;
               font-size: 20px;
@@ -82,7 +83,7 @@
             }
           }
           .workspace_name {
-            font-family: "Kanit";
+            font-family: "Poppins";
             font-style: normal;
             font-weight: 300;
             font-size: 14px;
@@ -125,7 +126,7 @@
         border: none;
         background: none;
         color: #ffffff;
-        font-family: "Kanit";
+        font-family: "Poppins";
         font-weight: 500;
         font-size: 14px;
       }
