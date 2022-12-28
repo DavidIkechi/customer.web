@@ -18,7 +18,7 @@ This repo contains both the Front and Back end for the ![Heed app](https://heed.
 
 ## Deployment to Live Link
 
-- Repo deploys to ![https://heed.cx](https://heed.cx) from branch "main" and Continuous deployment is setup with Jenkins
+- Repo deploys to ![heed](https://heed.cx) from branch "main" and Continuous deployment is setup with Jenkins
 
 ## Contributing - Frontend
 
