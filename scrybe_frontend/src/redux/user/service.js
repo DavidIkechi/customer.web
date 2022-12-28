@@ -38,7 +38,7 @@ const getuser = async() => {
     const response = await axios.get(`users/account`, {
         headers,
     });
-    if (response ? .data.first_name) {
+    if (response?.data?.first_name) {
         localStorage.setItem("user", JSON.stringify(response.data));
     } else {
         localStorage.removeItem("user");
