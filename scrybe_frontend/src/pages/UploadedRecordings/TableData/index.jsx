@@ -35,7 +35,7 @@ const TableData = ({ searchKeyword }) => {
   const sessionExpired = error;
   const isFetching = isLoading;
 
-  // const timeLeft = 20;
+  const timeLeft = 20;
 
   const getChecked = (e) => {
     let checkedList = [...recordCheckedList];
