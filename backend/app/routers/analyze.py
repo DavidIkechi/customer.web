@@ -11,6 +11,7 @@ from auth import (
     get_admin,
     get_current_user
 )
+from . import utility as utils
 import auth
 from . import utility as utils
 from fastapi.responses import JSONResponse
@@ -33,94 +34,117 @@ analyze_router = APIRouter(
 
 @analyze_router.post("/upload_audios", status_code = 200)
 async def analyse(first_name: str = Form(), last_name: str = Form(), 
-                  db: Session = Depends(_services.get_session), file: UploadFile=File(...), user: models.User = Depends(get_active_user)):
+                  db: Session = Depends(_services.get_session), files: List[UploadFile]=File(...), 
+                  user: models.User = Depends(get_active_user)):
     try:
+        # initialize the total file length to 0
+        total_length = 0
+        # check if the length of the file is more than 5
+        if len(files) > 5:
+            return JSONResponse(
+                status_code= 406,
+                content=jsonable_encoder({"detail": "You can not upload more than two files"}),
+            )
+        # if the file type is not audio.
+        if not utils.check_if_audio(files):
+            return JSONResponse(
+                status_code= 406,
+                content=jsonable_encoder({"detail": "Please ensure you have uploaded an audio file."}),
+            )    
+        # get the length of the audio file altogether.
+        total_length = utils.get_length(files)
         user_id = user.id
-        company_id = user.company_id
-        print(company_id)
-        
+        company_id = user.company_id        
         # convert to lower case for both first and last name.    
         first_name = first_name.lower()
         last_name = last_name.lower()
         agent_name = "%s %s" %(first_name, last_name) 
-
-        contents = file.file.read()
-        with open(file.filename, 'wb') as f:
-            f.write(contents)
-        duration = audio_details(file.filename)
+        
         db_company = db.query(models.Company).filter(models.Company.id == company_id).first()
+        
+        # get all distinct ids.
+        distinct_id = len(crud.get_distinct_ids(db)) + 1
+       
         # if the time left is less.
-        if db_company.time_left < duration['overall']:
+        if db_company.time_left < total_length:
             return JSONResponse(
-            status_code= 406,
-            content=jsonable_encoder({"detail": "You don't have enough Credit left"}),
+                status_code= 406,
+                content=jsonable_encoder({"detail": "You don't have enough Credit left"}),
             )
+        
+        for file in files: 
         # if the time left is more.
-        result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
-                                            chunk_size = 6000000)
-        url = result.get("secure_url")
-        urls = [url]
-        response = shorten_urls(urls)
-        retrieve_url = response[0]
-        new_url = retrieve_url.short_url
-        
-        size = Path(file.filename).stat().st_size / 1048576
-        audio_time = str(duration['hours'])+":"+ str(duration['mins'])+":"+ str(duration['secs'])
-        transcript = transcribe_file(new_url)
-        # get some essential parameters
-        audio_url = transcript['audio_url']
-        job_status = transcript['status']
-        transcript_id = transcript['id']
-        
-        db_company.time_left = db_company.time_left - duration['overall']
-        db.commit()
-        
-        # if the agent name is already in the database before creating for the agent.
-        if not db.query(models.Agent).filter(models.Agent.first_name == first_name, 
-                                        models.Agent.last_name == last_name).first():
-            db_agent = models.Agent(first_name=first_name, last_name=last_name, location = " ", company_id=company_id)
-            # Add Agent
-            db.add(db_agent)
+            # doing it.
+            duration = audio_details(file.filename)
+            result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
+                                                      chunk_size = 6000000)
+            url = result.get("secure_url")
+            urls = [url]
+            response = shorten_urls(urls)
+            retrieve_url = response[0]
+            new_url = retrieve_url.short_url
+            print(new_url)
+            
+            size = Path(file.filename).stat().st_size / 1048576
+            audio_time = str(duration['hours'])+":"+ str(duration['mins'])+":"+ str(duration['secs'])
+            transcript = transcribe_file(new_url)
+            # get some essential parameters
+            audio_url = transcript['audio_url']
+            job_status = transcript['status']
+            transcript_id = transcript['id']
+            print(transcript_id)
+            
+            db_company.time_left = db_company.time_left - duration['overall']
             db.commit()
-            db.refresh(db_agent)
-        else:
+            
+            # if the agent name is already in the database before creating for the agent.
+            if not db.query(models.Agent).filter(models.Agent.first_name == first_name, 
+                                            models.Agent.last_name == last_name).first():
+                db_agent = models.Agent(first_name=first_name, last_name=last_name, location = " ", company_id=company_id)
+                # Add Agent
+                db.add(db_agent)
+                db.commit()
+                db.refresh(db_agent)
+            else:
+                db_agent = db.query(models.Agent).filter(models.Agent.first_name == first_name, 
+                                            models.Agent.last_name == last_name).first()
+            
+
+            db_audio = models.Audio(audio_path=audio_url, job_id = transcript_id, user_id=user_id, size=size, duration=audio_time, 
+                                    agent_id=db_agent.id, agent_firstname= db_agent.first_name, agent_lastname=db_agent.last_name, 
+                                    filename = file.filename)
+
+            db.add(db_audio)
+            db.commit()
+            db.refresh(db_audio)
+            # get the audio id and some details from the audio table.
+            aud_details = db.query(models.Audio).filter(models.Audio.job_id == transcript_id).first()
+            audio_id = aud_details.id
+            # update the Agent table.
             db_agent = db.query(models.Agent).filter(models.Agent.first_name == first_name, 
-                                        models.Agent.last_name == last_name).first()
-        
+                                            models.Agent.last_name == last_name).first()
+            db_agent.aud_id = audio_id
+            db.commit()
+            # create the Job Table as well.
+            db_job = models.Job(job_status=job_status, audio_id = audio_id, job_id = distinct_id)
+            db.add(db_job)
+            db.commit()
+            db.refresh(db_job)
+            
+            # delete the file
+            os.remove(file.filename)
+            db_company = db.query(models.Company).filter(models.Company.id == company_id).first()
 
-        db_audio = models.Audio(audio_path=audio_url, job_id = transcript_id, user_id=user_id, size=size, duration=audio_time, 
-                                agent_id=db_agent.id, agent_firstname= db_agent.first_name, agent_lastname=db_agent.last_name, 
-                                filename = file.filename)
-
-        db.add(db_audio)
-        db.commit()
-        db.refresh(db_audio)
-        # get the audio id and some details from the audio table.
-        aud_details = db.query(models.Audio).filter(models.Audio.job_id == transcript_id).first()
-        audio_id = aud_details.id
-        # update the Agent table.
-        db_agent = db.query(models.Agent).filter(models.Agent.first_name == first_name, 
-                                        models.Agent.last_name == last_name).first()
-        db_agent.aud_id = audio_id
-        db.commit()
-        # create the Job Table as well.
-        db_job = models.Job(job_status=job_status, audio_id = audio_id)
-        db.add(db_job)
-        db.commit()
-        db.refresh(db_job)
-        
-        # delete the file
-        os.remove(file.filename)
 
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         ) 
     
     return {
         "detail":{
-            "id":audio_id,
+            "id":distinct_id,
             "transcript_id": transcript_id,
         }   
     }
