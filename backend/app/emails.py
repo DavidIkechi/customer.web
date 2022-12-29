@@ -142,7 +142,7 @@ def password_verif_token(token):
     return email
 
 
-async def transcription_result_email(email: List, instance: User, job_id: str, filename: str):
+async def transcription_result_email(email: List, instance: User):
     first_name = instance.first_name
 
     template = f"""
@@ -151,14 +151,14 @@ async def transcription_result_email(email: List, instance: User, job_id: str, f
             <br>
             <p><b>Dear {first_name},</b></p>
             <p>
-                The results for {filename} are ready! 
-                <a href="https://heed.hng.tech/transcriptions/{job_id}">
+                The results for your recent recordings are ready! 
+                <a href="https://heed.hng.tech/transcriptions/">
                     Click here to view
                 </a>
             </p>
 
             <p>Alternatively, you can paste the following link in your browser's address bar:</p>
-            <p>"https://heed.hng.tech/transcriptions/{job_id}"</p>
+            <p>"https://heed.hng.tech/transcriptions/"</p>
 
             <p>Sincerely,</p>
             <p>Heed Team</p>
