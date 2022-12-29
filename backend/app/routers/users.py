@@ -20,7 +20,7 @@ from BitlyAPI import shorten_urls
 import crud
 from jwt import main_login, get_access_token, verify_password, refresh
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from emails import send_email, verify_token, send_password_reset_email, password_verif_token
+from emails import send_email, verify_token, send_password_reset_email, password_verif_token, send_deactivation_email
 
 from authlib.integrations.starlette_client import OAuth
 from authlib.integrations.starlette_client import OAuthError
@@ -387,7 +387,7 @@ def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session),
 
 
 @user_router.post("/deactivate_user/{user_Id}")
-def deactivate(user_id = int, db: Session = Depends(_services.get_session)):
+async def deactivate(user_id = int, db: Session = Depends(_services.get_session)):
     try:
         db_user = crud.get_user(db, user_id=user_id)
         if not db_user:
@@ -397,6 +397,7 @@ def deactivate(user_id = int, db: Session = Depends(_services.get_session)):
             raise HTTPException(status_code=400, detail="This User Is Not Active")
         db_user.is_active = False
         db.commit()
+        await send_deactivation_email([db_user.email], db_user)
 
     except Exception as e:
         return JSONResponse(
