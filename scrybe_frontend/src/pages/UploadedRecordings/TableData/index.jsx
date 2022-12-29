@@ -53,34 +53,7 @@ const TableData = ({ searchKeyword }) => {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
   };
-  // const fetchData = async () => {
-  //   setIsFetching(true);
-  //   try {
-  //     await axios
-  //       .get("list-audios-by-user", { headers })
-  //       .then((res) => {
-  //         if (res.status === 200) {
-  //           setSessionExpired(false);
-  //           setAllRecordings(res.data);
-  //           setIsFetching(false);
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         if (err.response.status === 401) {
-  //           setSessionExpired(true);
-  //           setIsFetching(false);
-  //         }
-  //       });
-  //   } catch (error) {
-  //     console.log(error);
-  //     setSessionExpired(true);
-  //     setIsFetching(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  
 
   const handleOpen = () => {
     setOpenModal(true);
