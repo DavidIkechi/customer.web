@@ -107,13 +107,6 @@ async def view_transcript(transcript_id: Union[int, str], db: Session = Depends(
             total_score = positivity_score + neutrality_score + negativity_score
             average_score = round((positivity_score/ total_score) * 10, 1)
 
-            ### Sending Email
-            if not transcript.email:
-                return JSONResponse(
-                status_code= 406,
-                content=jsonable_encoder({"detail": "No Such Email."})
-                )
-            await send_freeTrial_email([transcript.email], transcript)
     except Exception as e:
         return JSONResponse(
             status_code= status.HTTP_400_BAD_REQUEST,
