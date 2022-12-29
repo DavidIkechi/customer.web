@@ -1,13 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { baseAPI } from "./baseEndpoints";
+import { recordAPI } from "./uploadedRecodings/rtkquery";
+import { userAPI } from "./user/rtkquery";
+import userReducer from "./user/userSlice";
 
-// import userReducer from "./user/userSlice";
 const store = configureStore({
   reducer: {
-    [baseAPI.reducerPath]: baseAPI.reducer,
+    auth: userReducer,
+    [userAPI.reducerPath]: userAPI.reducer,
+    [recordAPI.reducerPath]: recordAPI.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(baseAPI.middleware),
+    getDefaultMiddleware().concat(userAPI.middleware, recordAPI.middleware),
 });
 
 export default store;

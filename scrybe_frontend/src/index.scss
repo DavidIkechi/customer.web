@@ -1,6 +1,6 @@
 @use "./reset.scss";
 @use "./functions.scss" as *;
-@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap");
 
 .container {
   width: min(100%, pix-rem(1264));
@@ -36,7 +36,7 @@
 }
 
 :root {
-  font-family: "Kanit", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 16px;
 
   font-synthesis: none;

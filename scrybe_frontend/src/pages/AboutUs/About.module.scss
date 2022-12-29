@@ -1,4 +1,3 @@
-
 img {
   max-width: 100%;
 }
@@ -15,7 +14,7 @@ textarea,
 label,
 span,
 button {
-  font-family: "Kanit", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .sect__container {
@@ -25,14 +24,14 @@ button {
 }
 
 .first__section {
-  margin-top: 3em;
+  margin-top: 4.5em;
 
   .first__top .first__heading {
     width: 85%;
-    margin-bottom: .5em;
+    margin-bottom: 0.5em;
   }
 
-  .first__top .first__head {
+  .first__heading .first__head {
     font-size: 1.5rem;
     color: #313131;
     font-weight: 600;
@@ -42,11 +41,11 @@ button {
   }
 
   .first__top .first__inline {
-    color: #006CFF;
+    color: #006cff;
   }
 
   .first__bottom .first__subhead {
-    font-size: .7rem;
+    font-size: 0.7rem;
     color: #454545;
     font-weight: 300;
     font-style: bold;
@@ -64,11 +63,10 @@ button {
   }
 }
 
-
 //Styling of the second section
 
 .second__section {
-  margin-top: 3em;
+  margin-top: 4.5em;
 
   .head__container {
     text-align: center;
@@ -84,9 +82,9 @@ button {
   }
 
   .second__bottom .each__box {
-    border: 1px solid #8ABBFF;
-    border-radius: .5rem;
-    padding: 1em .8em 1em 1em;
+    border: 1px solid #8abbff;
+    border-radius: 0.5rem;
+    padding: 1em 0.8em 1em 1em;
     margin-top: 1em;
   }
 
@@ -98,7 +96,7 @@ button {
 
   .second__bottom .box__head {
     font-size: 1.1rem;
-    color: #1D1D1C;
+    color: #1d1d1c;
     font-weight: 600;
     font-style: bold;
     fill: solid;
@@ -106,12 +104,12 @@ button {
   }
 
   .second__bottom .core__icons {
-    margin-left: .8em;
+    margin-left: 0.8em;
     width: 1rem;
   }
 
   .second__bottom .box__text {
-    font-size: .7rem;
+    font-size: 0.7rem;
     color: #454545;
     font-weight: 300;
     font-style: bold;
@@ -120,16 +118,15 @@ button {
   }
 }
 
-
 //Styling of the third section
 
 .third__section {
-  margin-top: 3em;
+  margin-top: 4.5em;
 
   .third__container {
-    background-color: #F5F8FA;
-    padding: 1.25em .875em;
-    border-radius: .25rem;
+    background-color: #f5f8fa;
+    padding: 1.25em 0.875em;
+    border-radius: 0.25rem;
   }
 
   .third__container .third__top {
@@ -142,7 +139,7 @@ button {
 
   .third__container .third__head {
     font-size: 1.5rem;
-    color: #1D1D1C;
+    color: #1d1d1c;
     font-weight: 600;
     font-style: bold;
     fill: solid;
@@ -150,11 +147,11 @@ button {
   }
 
   .third__container .third__subtext {
-    margin-bottom: .5em;
+    margin-bottom: 0.5em;
   }
 
   .third__container .third__subhead {
-    font-size: .7rem;
+    font-size: 0.7rem;
     color: #454545;
     font-weight: 300;
     font-style: bold;
@@ -175,29 +172,26 @@ button {
   .third__bottom .third__flex {
     display: flex;
     align-items: center;
-    margin-top: .5em;
+    margin-top: 0.5em;
   }
 
   .third__bottom .comp__icons {
-    width: .8rem;
+    width: 0.8rem;
   }
 
   .third__bottom .icon__head {
-    font-size: .6rem;
-    color: #1D1D1C;
+    font-size: 0.6rem;
+    color: #1d1d1c;
     font-weight: 600;
-    font-style: bold;
-    fill: solid;
     line-height: 1rem;
-    margin-left: .5em;
+    margin: 0 10px 0 5px;
   }
 }
-
 
 //Styling of the fourth section
 
 .fourth__section {
-  margin: 3em 0em;
+  margin: 4.5em 0em;
 
   .fourth__top .fourth__heading {
     margin-bottom: 1em;
@@ -206,7 +200,7 @@ button {
 
   .fourth__top .fourth__head {
     font-size: 1.5rem;
-    color: #1F1F1F;
+    color: #1f1f1f;
     font-weight: 600;
     font-style: bold;
     fill: solid;
@@ -218,7 +212,7 @@ button {
   }
 
   .fourth__top .fourth__subhead {
-    font-size: .7rem;
+    font-size: 0.7rem;
     color: #454545;
     font-weight: 300;
     font-style: bold;
@@ -230,6 +224,7 @@ button {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    margin-top: 3.5em;
   }
 
   .fourth__bottom .profile__box {
@@ -239,11 +234,11 @@ button {
 
   .fourth__bottom .profile__text {
     text-align: center;
-    margin-top: .5em;
+    margin-top: 1.5em;
   }
 
   .fourth__bottom .profile__name {
-    font-size: .7rem;
+    font-size: 0.7rem;
     color: #313131;
     font-weight: 600;
     font-style: bold;
@@ -252,31 +247,40 @@ button {
   }
 
   .fourth__bottom .profile__desc {
-    font-size: .7rem;
+    font-size: 0.7rem;
     color: #454545;
     font-weight: 400;
     font-style: normal;
     fill: solid;
-    line-height: 1rem;
+    line-height: 1.75rem;
   }
 
+  .team__content {
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .team__content .team__expand {
+    font-size: 1.25rem;
+    color: #006cff;
+    font-weight: 300;
+    font-style: bold;
+    fill: solid;
+    line-height: 1.75rem;
+  }
 }
 
-
-@media (min-width: 768px) {
-
-
+@media (min-width: 768px), (min-width: 4000px) {
   //Styling of the first section (desktop view)
 
   .first__section {
-
     .first__top .first__heading {
       width: 60%;
       margin-bottom: unset;
     }
 
     .first__top .first__head {
-      font-size: 2rem;
+      font-size: 3rem;
     }
 
     .first__bottom {
@@ -285,7 +289,7 @@ button {
     }
 
     .first__bottom .first__subhead {
-      font-size: 1rem;
+      font-size: 1.25rem;
       line-height: 1.5rem;
       margin-bottom: 1em;
     }
@@ -314,7 +318,7 @@ button {
     }
 
     .head__container .second__head {
-      font-size: 2rem;
+      font-size: 3rem;
     }
 
     .second__bottom .each__box {
@@ -323,60 +327,79 @@ button {
     }
 
     .second__bottom .box__head {
-      font-size: 1.25rem;
+      font-size: 1.5rem;
     }
 
     .second__bottom .box__text {
-      font-size: .9rem;
+      font-size: 1.25rem;
     }
 
+    .second__bottom .core__icons {
+      width: 1.9rem;
+    }
   }
 
   //Styling of the third section (desktop view)
 
   .third__section {
-     .third__container .third__head {
-        font-size: 2rem;
-      }
+    .third__container {
+      padding: 3em 0em 3em;
+    }
 
-      .third__container .third__subtext {
-        margin: 1em auto;
-        width: 70%;
-      }
+    .third__container .third__head {
+      font-size: 3rem;
+    }
 
-      .third__container .third__subhead {
-        font-size: 1rem;
-        color: #3F3F3F;
-      }
+    .third__container .third__subtext {
+      margin: 1em auto;
+      width: 70%;
+    }
 
-      .third__bottom .each__flex {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        width: 45%;
-      }
+    .third__container .third__subhead {
+      font-size: 1.25rem;
+      color: #3f3f3f;
+    }
 
-      .third__bottom .reverse {
-        flex-direction: row;
-      }
+    .third__bottom {
+      // display: flex;
+      // justify-content: center;
+      margin: 0 auto;
+      width: 90%;
+    }
 
-      .third__bottom .third__flex {
-        width: 40%;
-      }
+    .third__bottom .each__flex {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 45%;
+    }
 
-      .third__bottom .comp__icons {
-        width: 2rem;
-      }
+    .third__bottom .reverse {
+      flex-direction: row;
+    }
 
-      .third__bottom .icon__head {
-        font-size: .9rem;
-      }
+    .third__bottom .third__flex {
+      width: 40%;
+    }
+
+    .third__bottom .comp__icons {
+      width: 4rem;
+    }
+
+    .third__bottom .icon__head {
+      font-size: 1rem;
+      color: #686868;
+    }
+
+    .third__bottom .desk__icon {
+      width: 3rem;
+    }
   }
 
   .fourth__section {
     .fourth__top .fourth__head {
-      font-size: 2rem;
-      color: #1F1F1F;
+      font-size: 3rem;
+      color: #1f1f1f;
     }
 
     .fourth__top .fourth__subtext {
@@ -385,7 +408,7 @@ button {
     }
 
     .fourth__top .fourth__subhead {
-      font-size: 1rem;
+      font-size: 1.25rem;
     }
 
     .fourth__bottom .flex__profile {
@@ -400,29 +423,77 @@ button {
     }
 
     .fourth__bottom .profile__name {
-      font-size: 1rem;
+      font-size: 1.25rem;
     }
 
-  .fourth__bottom .profile__desc {
-      font-size: 1rem;
+    .fourth__bottom .profile__desc {
+      font-size: 1.25rem;
     }
   }
 }
 
 @media (min-width: 1000px), (min-width: 4000px) {
-    .first__bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+  .first__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
+@media only screen and (min-width: 1024px) {
+  .third__section {
+    .third__bottom .desk__icon {
+      width: 3rem;
+    }
+
+    .third__bottom .desk__wrap {
+      white-space: nowrap;
+      width: 5%;
+    }
+  }
+}
+
+@media only screen and (min-width: 1300px) {
+  .third__section {
+    .third__bottom .icon__head {
+      font-size: 1.5rem;
+      color: #686868;
+    }
+  }
+}
 
 @media only screen and (min-width: 1515px) {
-    .sect__container {
-        padding: 0 2.5em;
-    }
+  .sect__container {
+    width: 78%;
+  }
 }
 
+@media only screen and (min-width: 1600px) {
+  .sect__container {
+    width: 76%;
+  }
+}
 
+@media only screen and (min-width: 1700px) {
+  .sect__container {
+    width: 72%;
+  }
+}
 
+@media only screen and (min-width: 1800px) {
+  .sect__container {
+    width: 68%;
+  }
+}
+
+@media only screen and (min-width: 1900px) {
+  .sect__container {
+    width: 64%;
+  }
+}
+
+@media only screen and (min-width: 2000px) {
+  .sect__container {
+    width: 60%;
+  }
+}

@@ -24,7 +24,7 @@ print(autho_url)
 # 4084084084084081
 
 # veri = paystack.verification().resolve_card_bin('408408')
-veri = paystack.transaction().verify(reference = '6unj1ppzz4')
+veri = paystack.transaction().verify(reference = '3796eowv9x')
 get_status = veri['data']
 if get_status['status'].strip().lower() == "success":
     amount = get_status['amount']
@@ -34,4 +34,4 @@ if get_status['status'].strip().lower() == "success":
     minutes = get_status['metadata']['minutes']
     plan = get_status['metadata']['plan']
     
-print(plan)
+print(get_status)

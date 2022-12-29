@@ -34,7 +34,7 @@ function TermsAndCondition() {
                   These Terms of Service (“Terms”, “Terms of Service”) govern
                   your use of our website located at{" "}
                   <Link to="/" className={styles.link}>
-                    heed.hng.ng
+                    www.heed.cx
                   </Link>{" "}
                   (together or individually “Service”) operated by Heed.
                 </p>
@@ -49,7 +49,8 @@ function TermsAndCondition() {
                 <p>
                   If you do not agree with (or cannot comply with) Agreements,
                   then you may not use the Service, but please let us know by
-                  emailing at <a href="mailto:info@heed.com"> info@heed.com </a>
+                  emailing at{" "}
+                  <a href="mailto:support@heed.cx"> support@heed.cx </a>
                   so we can try to find a solution. These Terms apply to all
                   visitors, users and others who wish to access or use Service.
                 </p>
@@ -63,7 +64,7 @@ function TermsAndCondition() {
                   may send. However, you may opt out of receiving any, or all,
                   of these communications from us by following the unsubscribe
                   link or by emailing at{" "}
-                  <a href="mailto:info@heed.com"> info@heed.com </a>
+                  <a href="mailto:support@heed.cx"> support@heed.cx </a>
                 </p>
               </div>
               <div>
@@ -122,7 +123,7 @@ function TermsAndCondition() {
                   these limits may require purchase of additional resources and
                   the payment of fees. Please see Heed’s Pricing Terms at{" "}
                   <Link to="/pricing" className={styles.link}>
-                    https://heed.hng.tech/pricing
+                    www.heed.cx/pricing
                   </Link>{" "}
                   for details regarding pricing for the Services.
                 </p>
@@ -133,7 +134,7 @@ function TermsAndCondition() {
                   These Services are provided in accordance with our Privacy
                   Policy, which can be found at{" "}
                   <Link to="/privacy" className={styles.link}>
-                    https://heed.hng.tech/privacy
+                    www.heed.cx/privacy
                   </Link>
                   . You agree to the use of your User Content and personal
                   information in accordance with these Terms and Heed’s Privacy
@@ -434,7 +435,7 @@ function TermsAndCondition() {
                 <p>
                   Please send your feedback, comments, requests for technical
                   support by email:{" "}
-                  <a href="mailto:info@heed.com"> info@heed.com </a>.
+                  <a href="mailto:support@heed.cx"> support@heed.cx</a>.
                 </p>
               </div>
             </section>

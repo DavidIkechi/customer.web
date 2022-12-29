@@ -10,15 +10,17 @@ pipeline {
 
 			steps {
 				sh "cd scrybe_frontend"
-				sh "cd scrybe_frontend && npm i --force && CI=false npm run build"
+				sh "cd scrybe_frontend && npm i --force && sudo CI=false npm run build"
 			} 
                 } 
         	stage("build backend"){
 
 			steps {
 				sh "cd backend"
-				sh "cd backend/app && python3 -m pip install --upgrade pip"
-				sh "cd backend/app && pip3 install -r requirements.txt --force"
+				sh "cd backend/app && sudo python3 -m pip install --upgrade pip"
+				sh "cd backend/app && sudo pip3 install -r requirements.txt --force"
+				
+		
 			} 
         	}
 		stage("deploy") {

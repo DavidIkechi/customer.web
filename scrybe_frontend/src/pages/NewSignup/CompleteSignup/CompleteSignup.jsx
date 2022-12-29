@@ -1,8 +1,9 @@
 import React from "react";
-import styles from "./CompleteSignup.module.scss";
-import { completeRegistration } from "../hooks";
 import SnackBar from "../../../components/SnackBar";
+import { completeRegistration } from "../hooks";
+import styles from "./CompleteSignup.module.scss";
 
+import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 
 const CompleteSignup = () => {
@@ -25,10 +26,12 @@ const CompleteSignup = () => {
         </div>
 
         <div className={styles.inputsection}>
-          <img src={logo} alt="heedLogo" />
+          <Link to="/">
+            <img src={logo} alt="heedLogo" />
+          </Link>
 
           <div className={styles.greeting}>
-            <h1>Welcome {completeSignup.value.first_name}.</h1>
+            <h1>Welcome {completeSignup?.value?.first_name}.</h1>
             <p>We’re almost there. Please enter the required information</p>
           </div>
 

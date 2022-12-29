@@ -1,6 +1,6 @@
 import React from "react";
-import { BsInstagram, BsTwitter } from "react-icons/bs";
-import { GrFacebookOption } from "react-icons/gr";
+import { BsInstagram, BsLinkedin, BsMailbox, BsMailbox2, BsTwitter } from "react-icons/bs";
+import { GrFacebookOption, GrMail } from "react-icons/gr";
 import { Link, NavLink } from "react-router-dom";
 import locate from "./assets/location-marker.png";
 import email from "./assets/mail.png";
@@ -34,13 +34,13 @@ function Footer() {
 
             <div className={styles.joinContainer}>
               <div className={styles.socials}>
-                <a href="https://heed.hng.tech">
-                  <BsInstagram />
+              <a href="https://www.linkedin.com/company/heed-cx/" target="_blank">
+                  <BsLinkedin/>
                 </a>
-                <a href="https://heed.hng.tech">
+                <a href="https://www.facebook.com/profile.php?id=100088581892757&mibextid=ZbWKwL" target="_blank">
                   <GrFacebookOption />
                 </a>
-                <a href="https://heed.hng.tech">
+                <a href="https://twitter.com/heed_cx?s=21&t=_jBdeIQ-Ne4sjKDFx-giAQ" target="_blank">
                   <BsTwitter />
                 </a>
               </div>
@@ -50,11 +50,6 @@ function Footer() {
           <div className={styles.footerRight}>
             <ul>
               <h4> Explore</h4>
-              <li>
-                <NavLink to="/" className={styles.links}>
-                  Home
-                </NavLink>
-              </li>
               <li>
                 <NavLink to="/about-us" className={styles.links}>
                   About Us
@@ -76,7 +71,7 @@ function Footer() {
               <h4>Quick links</h4>
               <li>
                 <NavLink to="/pricing" className={styles.links}>
-                  Billing and pricing
+                  Pricing
                 </NavLink>
               </li>
               <li>
@@ -86,7 +81,7 @@ function Footer() {
               </li>
               <li>
                 <NavLink to="/help-support" className={styles.links}>
-                  Help and Support
+                  Support
                 </NavLink>
               </li>
             </ul>
@@ -94,21 +89,10 @@ function Footer() {
               <h4>Contact</h4>
               <div className={styles.footer__right__contact}>
                 <div className={styles.footer__right__logo}>
-                  <img src={call} alt="" />
+                  {/* <img src={email} alt="" /> */}
+                  <GrMail />
                 </div>
-                <p>+2348790900976</p>
-              </div>
-              <div className={styles.footer__right__contact}>
-                <div className={styles.footer__right__logo}>
-                  <img src={email} alt="" />
-                </div>
-                <p>info@heed.co.za</p>
-              </div>
-              <div className={styles.footer__right__contact}>
-                <div className={styles.footer__right__logo}>
-                  <img src={locate} alt="" />
-                </div>
-                <p>54 jones close Abuja</p>
+                <a href ="mailto:info@heed.cx">info@heed.cx</a>
               </div>
             </div>
           </div>

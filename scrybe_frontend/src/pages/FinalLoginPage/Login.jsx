@@ -1,19 +1,29 @@
-import { React, useState, useCallback, useEffect } from "react";
+import { React, useCallback, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import SnackBar from "../../components/SnackBar";
-import { Link, useNavigate } from "react-router-dom";
 // import Loading from "../../components/Loading";
-import Cookies from "js-cookie";
 import styles from "./Login.module.scss";
-import ApiService from "../../helpers/axioshelp/apis";
-import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
 
-import logo from "./assets/logo.png";
-import google from "./assets/google.png";
-import visible from "./assets/visible.png";
+import { useDispatch, useSelector } from "react-redux";
+import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
+<<<<<<< HEAD
+import { useFetchUserQuery } from "../../redux/user/rtkquery";
+import { getUser, loginUser, resetUser } from "../../redux/user/userSlice";
+=======
+import { useFetchUserQuery } from "../../redux/baseEndpoints";
+import { getUser, loginUser } from "../../redux/user/userSlice";
+>>>>>>> 61beb8878b59897d187fa1fb25683b12d1e46989
 import hidden from "./assets/hidden.png";
+import logo from "./assets/logo.png";
+import visible from "./assets/visible.png";
 
 const Login = () => {
-  const emailTest = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
+  const { userData, status, error } = useSelector((state) => state.auth);
+  const { data, isSuccess, error: hasError } = useFetchUserQuery();
+
+  const dispatch = useDispatch();
+
+  const emailTest = new RegExp(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/);
   const passwordTest = new RegExp(/^["0-9a-zA-Z!@#$&()\\-`.+,/"]{8,}$/);
 
   const [username, setUsername] = useState("");
@@ -22,10 +32,7 @@ const Login = () => {
   const [emailStateTest, setEmailStateTest] = useState(false);
   const [passStateTest, setPassStateTest] = useState(false);
   const [isValid, setIsValid] = useState(true);
-  // const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState({ type: "", message: "" });
-
-  const navigate = useNavigate();
 
   const tester = (e, reg, func) => {
     if (reg.test(e.target.value)) {
@@ -52,7 +59,7 @@ const Login = () => {
     ) {
       return true;
     }
-  }, [username, password]);
+  }, [username.length, password.length, passStateTest, emailStateTest]);
 
   useEffect(() => {
     const isValid = validate();
@@ -75,39 +82,34 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     let formData = new FormData();
-
     formData.append("username", username);
     formData.append("password", password);
 
-    // setIsLoading(true);
-
-    try {
-      const response = await ApiService.SignIn(formData);
-
-      // setIsLoading(false)
-
-      localStorage.setItem("heedAccessToken", response.data.access_token);
-
-      localStorage.setItem("heedRefreshToken", response.data.refresh_token);
-
-      Cookies.set("heedAccessToken", response.data.access_token);
-
-      localStorage.setItem("heedAccessTokenType", response.data.token_type);
-
-      localStorage.setItem("currentUserEmail", username);
-
-      localStorage.setItem("auth", username);
-
-      // navigate("/dashboard");
-      window.location.href = "/dashboard";
-    } catch (err) {
-      // setIsLoading(false);
-
-      setResponse(ErrorHandler(err));
-    }
+    // login user redux hook
+    dispatch(loginUser(formData));
   };
+
+  useEffect(() => {
+    if (status === "success") {
+      dispatch(getUser());
+    }
+    if (isSuccess) {
+      setResponse(
+        ErrorHandler({ type: "Success", message: "Login successful" })
+      );
+      // ignore this line for now
+      setTimeout(() => {
+        window.location.href = "/dashboard";
+      }, 2500);
+    } else if (error) {
+      setResponse(ErrorHandler(error));
+      dispatch(resetUser());
+    }
+    // if (hasError) {
+    //   setResponse(ErrorHandler(hasError));
+    // }
+  }, [status, data, userData, error, dispatch, isSuccess, hasError]);
 
   return (
     <>
@@ -123,7 +125,9 @@ const Login = () => {
         </div>
 
         <div className={styles.inputsection}>
-          <img src={logo} alt="heedLogo" />
+          <Link to="/">
+            <img src={logo} alt="heedLogo" />
+          </Link>
 
           <div className={styles.greeting}>
             <h1>Welcome back Heeder</h1>
@@ -197,11 +201,13 @@ const Login = () => {
               <Link to="/forget-password">Forgot Password</Link>
             </div>
 
-            <button disabled={!isValid}>Sign In</button>
+            <button type="submit" disabled={!isValid}>
+              Sign In
+            </button>
           </form>
 
           <div className={styles.linkbottom}>
-            <p>Don't have an account yet?</p>
+            <p style={{ marginRight: "5px" }}>Don't have an account yet?</p>{" "}
             <span>
               <Link to="/signup">Sign up</Link>
             </span>

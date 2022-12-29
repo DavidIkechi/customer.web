@@ -1,10 +1,12 @@
-import axios from "axios";
 import { PropTypes } from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { headers } from "../../helpers/axioshelp";
+import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
+import { localStorageUser } from "../../helpers/localStorageUser";
+import { useFetchUserQuery } from "../../redux/user/rtkquery";
 import Modal from "../Modal";
 import SearchInput from "../SearchInput";
+import SnackBar from "../SnackBar";
 import DropDownModal from "./DropdownMenu";
 import dropdown_arr from "./imgs/dropdownArr.svg";
 import DummyImg from "./imgs/dummy.png";
@@ -14,24 +16,26 @@ import uploadBtn_icon from "./imgs/uploadBtnIcon.svg";
 import styles from "./topbar.module.scss";
 
 const TopNav = ({ openSidebar, search }) => {
+  const { isLoading, isError, error } = useFetchUserQuery();
   const [show, setShow] = useState(false);
-  const [currentUser, setCurrentUser] = React.useState(null);
+  const currentUser = localStorageUser();
   const [modalOpen, setModalOpen] = useState(false);
+  const [response, setResponse] = useState({ type: "", message: "" });
 
-  const getUserAccount = async () => {
-    const res = await axios.get("account", { headers });
-    setCurrentUser(res.data);
-  };
-
-  React.useEffect(() => {
-    getUserAccount();
-  }, []);
+  useEffect(() => {
+    if (isError) {
+      setResponse(ErrorHandler(error));
+    }
+  }, [isError, error]);
 
   return (
     <div
       className={`${styles.TopNav} ${show ? styles.showDropup : ""} `}
       onClick={() => show && setShow(false)}
     >
+      {response.message !== "" && (
+        <SnackBar response={response} setResponse={setResponse} />
+      )}
       <div className={styles.TopNav_toggle}>
         <img src={toggleNavIcon} alt="" onClick={openSidebar} />
         {/* <img src={logo} alt="" /> */}
@@ -44,40 +48,58 @@ const TopNav = ({ openSidebar, search }) => {
         <SearchInput inputValue={search} />
       </div>
       <div className={styles.TopNav_user_btn}>
-        <div className={styles.TopNav_user}>
-          <div className={styles.TopNav_user_desktop}>
-            <img
-              className={styles.userimg}
-              src={
-                currentUser?.company_logo_url
-                  ? currentUser?.company_logo_url
-                  : DummyImg
-              }
-              alt="john doe"
-            />
-            <div className={styles.TopNav_user_desktop_nameDetails}>
-              <div className={styles.TopNav_user_desktop_name_arr}>
-                <p className={styles.name}>
-                  {currentUser?.first_name
-                    ? `${currentUser?.first_name} ${currentUser?.last_name}`
-                    : "John Doe"}
-                </p>
-                <img
-                  src={dropdown_arr}
-                  alt="dropdown arrow"
-                  onClick={() => setShow((prev) => !prev)}
-                  className={styles.arrow}
-                />
-                {show && <DropDownModal closeModal={() => setShow(false)} />}
+        {isLoading ? (
+          <p className={styles.desktopLoader}>Loading...</p>
+        ) : (
+          <>
+            {currentUser ? (
+              <div className={styles.TopNav_user}>
+                <div className={styles.TopNav_user_desktop}>
+                  <img
+                    className={styles.userimg}
+                    src={currentUser?.company_logo_url}
+                    alt="john doe"
+                  />
+                  <div className={styles.TopNav_user_desktop_nameDetails}>
+                    <div className={styles.TopNav_user_desktop_name_arr}>
+                      <p className={styles.name}>
+                        {currentUser?.first_name} {currentUser?.last_name}
+                      </p>
+                      <img
+                        src={dropdown_arr}
+                        alt="dropdown arrow"
+                        onClick={() => setShow((prev) => !prev)}
+                        className={styles.arrow}
+                      />
+                      {show && (
+                        <DropDownModal closeModal={() => setShow(false)} />
+                      )}
+                    </div>
+                    <p className={styles.workspace_name}>
+                      {currentUser?.company_name}
+                    </p>
+                  </div>
+                </div>
               </div>
-              <p className={styles.workspace_name}>
-                {currentUser?.company_name
-                  ? currentUser?.company_name
-                  : "Office workspace"}
-              </p>
-            </div>
-          </div>
-        </div>
+            ) : (
+              <div className={styles.TopNav_user}>
+                <div className={styles.TopNav_user_desktop}>
+                  <img
+                    className={styles.userimg}
+                    src={DummyImg}
+                    alt="john doe"
+                  />
+                  <div className={styles.TopNav_user_desktop_nameDetails}>
+                    <div className={styles.TopNav_user_desktop_name_arr}>
+                      <p className={styles.name}>John Doe</p>
+                    </div>
+                    <p className={styles.workspace_name}>Office workspace</p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </>
+        )}
         {currentUser && (
           <>
             {/* <NavLink > */}
@@ -93,17 +115,21 @@ const TopNav = ({ openSidebar, search }) => {
           </>
         )}
 
-        <div className={styles.TopNav_user_mobile}>
-          <img
-            className={styles.userimg}
-            src={
-              currentUser?.company_logo_url
-                ? currentUser?.company_logo_url
-                : "img/dummy.png"
-            }
-            alt={currentUser?.first_name}
-          />
-        </div>
+        {isLoading ? (
+          <p className={styles.mobileLoader}>Lodaing...</p>
+        ) : (
+          <div className={styles.TopNav_user_mobile}>
+            <img
+              className={styles.userimg}
+              src={
+                currentUser?.company_logo_url
+                  ? currentUser?.company_logo_url
+                  : DummyImg
+              }
+              alt={currentUser?.first_name}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

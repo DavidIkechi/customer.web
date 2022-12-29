@@ -1,7 +1,7 @@
 @import "../../assets/styles/utilities/functionsANDmedia";
 @import "../../assets/styles/utilities/variables";
 @import "../../assets/styles/reset";
-@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 .account__container {
   width: 100%;
@@ -34,21 +34,21 @@
   border-radius: pix-rem(16);
   gap: pix-rem(16);
   width: clamp(pix-rem(320), calc(100vw - pix-rem(32)), pix-rem(930));
-  
+
   .errorInput {
-    border: 1px solid #F44336 !important;
+    border: 1px solid #f44336 !important;
   }
-  
+
   .errorMsg {
     font-size: 12px;
     line-height: 16px;
-    color: #F44336 !important;
+    color: #f44336 !important;
     text-align: left !important;
     margin-bottom: 0.5rem;
   }
-  
+
   .submitValid {
-    background: #006CFF !important;
+    background: #006cff !important;
     color: #ffffff !important;
   }
 
@@ -81,7 +81,7 @@
       flex-direction: row;
       cursor: pointer;
     }
-    label[for="consent-to-email"]>span {
+    label[for="consent-to-email"] > span {
       color: $text;
     }
     input {
@@ -123,8 +123,8 @@
       border: none;
       border-radius: pix-rem(4);
       padding: pix-rem(16);
-      color: #C5C5C5;
-      background-color: #ECECEC;
+      color: #c5c5c5;
+      background-color: #ececec;
       font-weight: 500;
       font-size: pix-rem(14);
       line-height: pix-rem(24);
@@ -169,7 +169,7 @@
 }
 
 .account__div {
-  font-family: "Kanit", sans-serif;
+  font-family: "Poppins", sans-serif;
   background-color: $grey-50;
   position: relative;
   min-height: 100vh;
@@ -207,7 +207,7 @@
     font-size: pix-rem(20);
     line-height: pix-rem(26);
   }
-  
+
   @include easyMediaQueries("min-width:1024px") {
     display: none;
   }
@@ -220,7 +220,7 @@
   line-height: pix-rem(40);
   text-align: center;
   width: 100%;
-  
+
   @include easyMediaQueries("min-width:1024px") {
     text-align: start;
   }
@@ -254,8 +254,8 @@
     justify-content: center;
     align-items: center;
   }
-  
-  @include easyMediaQueries("min-width:1024px"){
+
+  @include easyMediaQueries("min-width:1024px") {
     flex-direction: row;
     align-items: center;
     text-align: start;
@@ -267,13 +267,13 @@
 
 .user_profile__img {
   color: white;
-  
+
   img {
     width: pix-rem(100);
     object-fit: cover;
     aspect-ratio: 1/1;
     border-radius: 50%;
-    border: 1px solid #00456B;
+    border: 1px solid #00456b;
     font-size: 14px !important;
   }
 }
@@ -292,7 +292,6 @@
     flex-direction: column;
     text-align: left;
   }
-  
 
   @include easyMediaQueries("min-width:1024px") {
     flex-direction: row;
@@ -328,7 +327,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: pix-rem(24);
-  
+
   > {
     div {
       color: $green-900;
@@ -349,12 +348,11 @@
           border: pix-rem(0.329741) solid $grey-50;
           border-radius: pix-rem(2.63793);
           padding: pix-rem(16);
-
         }
       }
     }
   }
-  
+
   @include easyMediaQueries("min-width:1024px") {
     gap: pix-rem(40);
     justify-content: space-between;
@@ -372,7 +370,8 @@
             min-height: pix-rem(208);
             border: pix-rem(0.5) solid $grey-50;
             border-radius: pix-rem(4);
-            box-shadow: 0px 20px 24px -4px rgba(197, 197, 197, 0.08), 0px 8px 8px -4px rgba(197, 197, 197, 0.03);
+            box-shadow: 0px 20px 24px -4px rgba(197, 197, 197, 0.08),
+              0px 8px 8px -4px rgba(197, 197, 197, 0.03);
             padding: pix-rem(24);
           }
         }
@@ -384,7 +383,7 @@
     justify-content: space-evenly;
   }
 }
-  
+
 .personal_info__div,
 .company_info__div {
   > {
@@ -467,7 +466,7 @@
             width: pix-rem(16);
           }
         }
-        
+
         button:hover {
           border-radius: pix-rem(5);
           background-color: rgba(0, 0, 0, 0.062);

@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import closeIcon from "./icons/closeIcon.svg";
-import logoSVG from "./icons/logo.svg";
-// import insight from "./assets/icons/insight.svg";
-// import leaderboard from "./icons/leaderboard.svg";
-// import monthlyAnalysis from "./assets/icons/monthly-analysis.svg";
-// import analysis from "./icons/analysis.svg";
 import dropdown_arr from "./icons/dropdownArr.svg";
-// import myScrybe from "./icons/my-scrybe.svg";
-// import settings from "./icons/settings.svg";
+import DummyImg from "./icons/dummy.png";
+import logoSVG from "./icons/logo.svg";
 
-import axios from "axios";
 import SearchInput from "../SearchInput";
 import DropDownModal from "./DropdownMenu";
 import styles from "./generalSidebar.module.scss";
+
+import { localStorageUser } from "../../helpers/localStorageUser";
+<<<<<<< HEAD
+import { useFetchUserQuery } from "../../redux/user/rtkquery";
+=======
+import { useFetchUserQuery } from "../../redux/baseEndpoints";
+>>>>>>> 61beb8878b59897d187fa1fb25683b12d1e46989
 
 /**
  * Wrap your component with this component to get a sidebar with a logo, a search input field and a list of links.
@@ -38,21 +39,9 @@ function NewDesignSideBar({
   closeSidebar,
   toggleSidebar,
 }) {
-  const [currentUser, setCurrentUser] = React.useState(null);
-  const fetchUser = async () => {
-    const config = {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
-      },
-    };
-    const res = await axios.get("account", config);
-    setCurrentUser(res.data);
-  };
+  const { isLoading } = useFetchUserQuery();
+  const currentUser = localStorageUser();
   const [show, setShow] = useState(false);
-  useEffect(() => {
-    fetchUser();
-  }, []);
   return (
     <div
       className={`${styles.generalSidebar}
@@ -140,38 +129,68 @@ function NewDesignSideBar({
           </div>
         </div>
         <div className={styles.generalSidebar__bottom}>
-          <div className={styles.generalSidebar_user_desktop}>
-            <img
-              className={styles.userimg}
-              src={
-                currentUser?.company_logo_url
-                  ? currentUser?.company_logo_url
-                  : "img/dummy.png"
-              }
-              alt={currentUser?.first_name}
-            />
-            <div className={styles.generalSidebar_user_desktop_nameDetails}>
-              <div className={styles.generalSidebar_user_desktop_name_arr}>
-                <Link to="/account" className={styles.name}>
-                  {currentUser?.first_name
-                    ? `${currentUser?.first_name} ${currentUser?.last_name}`
-                    : "John Doe"}
-                </Link>
-                <img
-                  src={dropdown_arr}
-                  alt="dropdown arrow"
-                  onClick={() => setShow((prev) => !prev)}
-                  className={styles.arrow}
-                />
-                {show && <DropDownModal closeModal={() => setShow(false)} />}
-              </div>
-              <p className={styles.workspace_name}>
-                {currentUser?.company_name
-                  ? currentUser?.company_name
-                  : "Office workspace"}
-              </p>
-            </div>
-          </div>
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <>
+              {currentUser ? (
+                <div className={styles.generalSidebar_user_desktop}>
+                  <img
+                    className={styles.userimg}
+                    src={currentUser?.company_logo_url}
+                    alt={currentUser?.first_name}
+                  />
+                  <div
+                    className={styles.generalSidebar_user_desktop_nameDetails}
+                  >
+                    <div
+                      className={styles.generalSidebar_user_desktop_name_arr}
+                    >
+                      <Link to="/account" className={styles.name}>
+                        {currentUser?.first_name} {currentUser?.last_name}
+                      </Link>
+                      <img
+                        src={dropdown_arr}
+                        alt="dropdown arrow"
+                        onClick={() => setShow((prev) => !prev)}
+                        className={styles.arrow}
+                      />
+                      {show && (
+                        <DropDownModal closeModal={() => setShow(false)} />
+                      )}
+                    </div>
+                    <p className={styles.workspace_name}>
+                      {currentUser?.company_name}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className={styles.generalSidebar_user_desktop}>
+                  <img
+                    className={styles.userimg}
+                    src={DummyImg}
+                    alt="John Doe"
+                  />
+                  <div
+                    className={styles.generalSidebar_user_desktop_nameDetails}
+                  >
+                    <div
+                      className={styles.generalSidebar_user_desktop_name_arr}
+                    >
+                      <p className={styles.name}>John Doe</p>
+                      <img
+                        src={dropdown_arr}
+                        alt="dropdown arrow"
+                        onClick={() => setShow((prev) => !prev)}
+                        className={styles.arrow}
+                      />
+                    </div>
+                    <p className={styles.workspace_name}>Office workspace</p>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
         </div>
       </div>
       {children}
