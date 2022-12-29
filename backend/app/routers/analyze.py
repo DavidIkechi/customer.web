@@ -74,6 +74,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(),
         
         for file in files: 
         # if the time left is more.
+            # doing it.
             duration = audio_details(file.filename)
             result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
                                                       chunk_size = 6000000)
