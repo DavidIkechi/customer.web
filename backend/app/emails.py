@@ -159,7 +159,7 @@ async def verify_token(token: str, db: Session):
         print(e)
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid or expired token",
+            detail="The token is invalid or has expired!",
             headers={"WWW.Authenticate": "Bearer"}
         )
     return user
