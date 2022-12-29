@@ -19,7 +19,6 @@ def generate_agent_id():
     return agent_id
 
 
-
 class User(Base):
     __tablename__ = "users"
 
@@ -34,7 +33,7 @@ class User(Base):
     company_id = Column(Integer, ForeignKey("companies.id", ondelete='CASCADE'))
     created_at = Column(DateTime(timezone=True), default=datetime.now())
 
-    
+
 class Company(Base):
     __tablename__ = 'companies'
 
@@ -45,6 +44,7 @@ class Company(Base):
     plan = Column(String(255), index=True)
     time_left = Column(Float, index=True, nullable = True)
 
+
 class Agent(Base):
     __tablename__ = "agents"
 
@@ -54,6 +54,7 @@ class Agent(Base):
     location = Column(String(255), index=True)
     company_id = Column(Integer, ForeignKey("companies.id", ondelete='CASCADE'))
     aud_id = Column(Integer, index=True)
+
 
 class Audio(Base):
     __tablename__ = "audios"
@@ -132,7 +133,7 @@ class UserProfile(Base):
 
 
 class FreeTrial(Base):
-    __tablename__ = "FreeTrial"
+    __tablename__ = "free_trial"
 
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String(255), index=True)
