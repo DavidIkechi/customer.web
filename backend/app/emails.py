@@ -1,5 +1,5 @@
 from fastapi import (BackgroundTasks, UploadFile,File, Form, Depends, HTTPException, status)
-from fastapi_mail import FastMail, ConnectionConfig, MessageSchema, MessageType
+from fastapi_mail import FastMail, ConnectionConfig, MessageSchema
 from typing import List, Dict, Any
 from jose import jwt, JWTError
 from fastapi.exceptions import HTTPException
@@ -37,7 +37,6 @@ conf = ConnectionConfig(
 
 class EmailSchema(BaseModel):
     body: Dict[str, Any]
-    
 
 async def send_email(email: List, instance: User):
     token_data = {
@@ -49,7 +48,8 @@ async def send_email(email: List, instance: User):
     
     emails: EmailSchema = {
         "body": {
-            "url": f"https://api.heed.cx/users/verification?token={token}"
+            "url": f"https://heed.cx/verification?token={token}",
+            "firstname": instance.first_name
         } 
     }
 
@@ -57,7 +57,7 @@ async def send_email(email: List, instance: User):
         subject = "Account Verification",
         recipients =email,
         template_body=emails.get("body"),
-        subtype=MessageType.html,
+        subtype='html',
     )
 
     fm =FastMail(conf)
@@ -91,41 +91,22 @@ async def send_password_reset_email(email: List, instance: User):
 
     token = jwt.encode(token_data, os.getenv('SECRET'), algorithm='HS256')
 
-    first_name = instance.first_name
-
-
-
-    template = f"""
-        <div>
-                    <h3>Reset Password</h3>
-                    <br>
-                    <p>Dear, {first_name}</p>
-                    <p>
-                        To reset your password
-                        <a href="http://heed.hng.tech/set-new-password?token={token}">
-                            Click here
-                        </a>.
-                    </p>
-
-                    <p>Alternatively, you can paste the following link in your browser's address bar:</p>
-                    <p>"http://heed.hng.tech/set-new-password?token={token}"</p>
-                    <p>If you have not requested a password reset simply ignore this message.</p>
-
-                    <p>Sincerely</p>
-                    <p>Heed Team</p>
-
-        </div>
-    """
+    emails: EmailSchema = {
+        "body": {
+            "url": f"https://heed.cx/set-new-password?token={token}",
+            "firstname": instance.first_name
+        } 
+    }
 
     message = MessageSchema(
-        subject = "Reset Password",
+        subject = "Password Reset",
         recipients =email,
-        body = template,
-        subtype = "html"
+        template_body=emails.get("body"),
+        subtype='html',
     )
 
     fm =FastMail(conf)
-    await fm.send_message(message=message)
+    await fm.send_message(message=message, template_name='ResetPassword/index.html')
 
     return token
 

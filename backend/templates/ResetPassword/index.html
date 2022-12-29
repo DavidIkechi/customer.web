@@ -7,19 +7,23 @@
     <title>Heed</title>
 
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;800&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap");
       * {
         box-sizing: border-box;
         padding: 0;
         border: 0;
       }
+      body{
+        background-color: #f7f7f7;
+      }
       .main {
         padding-inline: 40px;
-        max-width: 1440px;
-        width: 100%;
+        max-width: 700px;
         padding-top: 22px;
-        font-family: "Kanit", sans-serif;
+        font-family: "Poppins", sans-serif;
         color: #3f3f3f;
+        margin: 0 auto;  
+        background-color: #ffffff;    
       }
       .message {
         display: block;
@@ -44,34 +48,42 @@
       }
       .copyright {
         text-align: center;
+        margin-top: 10vw;
       }
       .copyright p {
         font-weight: 400;
       }
       .message a {
-        color: white;
         text-decoration: none;
         background-color: #006cff;
         color: #ffffff;
-        padding-inline: 61.5px !important;
-        padding-block: 16px !important;
         font-family: inherit;
         font-size: 16px;
         font-weight: 500;
         border-radius: 4px;
         margin-left: auto;
-        padding: 16px 20px !important;
+        padding: 20px 5vw !important;
       }
       .email {
-        margin-top: 30px;
-        margin-bottom: 20px;
+        margin-top: 40px;
+        margin-bottom: 50px;
       }
       .copy {
         font-size: 16px;
         padding-inline: 5px;
       }
+      h3 {
+        text-align: unset;
+        margin-right: 450px;
+        font-weight: 300;
+        font-size: large;
+    }
+      @media screen and (max-width:375px){
+        h1{
+          font-size: 8vw;
+        }
+      }
     </style>
-  </head>
   <body>
     <div class="main">
       <div class="logo">
@@ -87,6 +99,7 @@
           alt=""
           class="mail"
         />
+        <h3>Hello {{firstname}},</h3>
         <h1>Reset Password</h1>
         <p>
           You recently requested to reset the password for your account. Click
@@ -101,7 +114,6 @@
         </p>
       </div>
       <div class="copyright">
-        <!-- <img src="https://res.cloudinary.com/dcsv5etuw/image/upload/v1671353006/copyright_frjemi.jpg" alt=""> -->
         <p><span class="copy">©</span> Copyright 2022 | Heed</p>
       </div>
     </div>

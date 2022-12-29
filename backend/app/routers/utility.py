@@ -6,11 +6,14 @@ from botocore.exceptions import ClientError
 import logging
 import requests
 import time
+from fastapi import FastAPI, status, Depends, APIRouter,  UploadFile, File, Form, Query, Request, HTTPException
+import pandas as pd
 
 import os
 
 from dotenv import load_dotenv
 from email_validate import validate
+from audio import audio_details
 
 load_dotenv()
 
@@ -47,6 +50,7 @@ def request_transcript(upload_url, header):
 def make_polling_endpoint(transcript_response):
     polling_endpoint = "https://api.assemblyai.com/v2/transcript/"
     polling_endpoint += transcript_response
+    print("getting the polls")
     return polling_endpoint
 
 
@@ -82,15 +86,39 @@ def get_paragraphs(polling_endpoint, header):
 # Verify/Validate email address
 
 def validate_and_verify_email(input_email):
-    email = str(input_email)
+    email = input_email
     isValid = validate(
         email_address=email,
         check_format=True,
         check_blacklist=True,
         check_dns=True,
         dns_timeout=10,
-        check_smtp=False,
-        smtp_debug=False
+        check_smtp=True,
+        smtp_debug=True
     )
     return isValid
 
+def check_if_professional(email_address: str) -> int:
+    get_data = pd.read_csv(os.path.normcase(os.path.abspath('routers/email-providers.csv')), header= None)
+    free_domain = email_address.split('@')[1]
+    return len(get_data.loc[get_data[0] == free_domain])
+
+"""
+file must be audios.
+"""
+def check_if_audio(files) -> bool:
+    for file in files:
+        if file.content_type.split("/")[0] != "audio":
+            return False
+    return True
+    
+# get the total length of the files in secs.
+def get_length(files) -> int:
+    total_length = 0
+    for file in files:
+        contents = file.file.read()
+        with open(file.filename, 'wb') as f:
+            f.write(contents)
+        total_length += audio_details(file.filename)['overall']
+    
+    return total_length

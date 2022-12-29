@@ -7,7 +7,7 @@
     <title>Heed</title>
 
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;800&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap");
       * {
         box-sizing: border-box;
         padding: 0;
@@ -15,11 +15,12 @@
       }
       .main {
         padding-inline: 40px;
-        max-width: 1440px;
-        width: 100%;
+        max-width: 700px;
         padding-top: 22px;
-        font-family: "Kanit", sans-serif;
+        font-family: "Poppins", sans-serif;
         color: #3f3f3f;
+        margin: 0 auto;
+        border: 1px solid grey;
       }
       .message {
         display: block;
@@ -44,6 +45,7 @@
       }
       .copyright {
         text-align: center;
+        margin-top: 10vw;
       }
       .copyright p {
         font-weight: 400;
@@ -70,6 +72,17 @@
         font-size: 16px;
         padding-inline: 5px;
       }
+      h3 {
+        text-align: unset;
+        margin-right: 450px;
+        font-weight: 300;
+        width: 168px;
+      }
+      @media screen and (max-width: 375px) {
+        h1 {
+          font-size: 8vw;
+        }
+      }
     </style>
   </head>
   <body>
@@ -87,14 +100,15 @@
           alt=""
           class="mail"
         />
+        <h3>Hello {{firstname}},</h3>
         <h1>Welcome to <span class="heed">Heed!</span></h1>
         <p>
-          You registered an account on Heed, before being able to use your
-          account you need to verify that this is your email address by clicking
-          the button below:
+          You registered an account on Heed. Before being able to use your
+          account, you need to verify that this is your email address by
+          clicking the button below:
         </p>
         <div class="email">
-          <a href="{{url}}">Verify email address</a>
+          <a href="www.google.com">Verify email address</a>
         </div>
         <p>If you have any questions, please Contact Us</p>
       </div>

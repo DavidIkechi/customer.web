@@ -20,7 +20,7 @@ from BitlyAPI import shorten_urls
 import crud
 from jwt import main_login, get_access_token, verify_password, refresh
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from emails import send_email, verify_token, send_password_reset_email, password_verif_token
+from emails import send_email, verify_token, send_password_reset_email, password_verif_token, send_deactivation_email
 
 from authlib.integrations.starlette_client import OAuth
 from authlib.integrations.starlette_client import OAuthError
@@ -28,23 +28,6 @@ from starlette.config import Config
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.responses import HTMLResponse
 from starlette.responses import RedirectResponse
-
-
-# OAuth settings
-GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID') or None
-GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET') or None
-if GOOGLE_CLIENT_ID is None or GOOGLE_CLIENT_SECRET is None:
-    raise BaseException('Missing env variables')
-
-# Set up OAuth
-config_data = {'GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID, 'GOOGLE_CLIENT_SECRET': GOOGLE_CLIENT_SECRET}
-starlette_config = Config(environ=config_data)
-oauth = OAuth(starlette_config)
-oauth.register(
-    name='google',
-    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
-    client_kwargs={'scope': 'openid email profile'},
-)
 
 
 
@@ -72,16 +55,35 @@ async def create_user(user: schema.UserCreate, db: Session = Depends(_services.g
 
     # check if email exists and is valid
     email_exists = utils.validate_and_verify_email(user.email)
-    if not email_exists:
-        raise HTTPException(status_code=400, detail="Your email could not be verified. Please enter a valid email")
+    # if not email_exists:
+    #     raise HTTPException(status_code=400, detail="Your email could not be verified. Please enter a valid email")
 
     # create the user before sending a mail.
     new_user = crud.create_user(db=db, user=user)
     await send_email([user.email], user)
-    
         
     return {    
         "detail" : "Account was successfully created."
+    }
+
+@user_router.post("/resend_verify_email", status_code= status.HTTP_200_OK, summary = "Resend verify user email")
+async def resend_verify_email(email_address: str, db: Session = Depends(_services.get_session)):
+    try:        
+        users = crud.get_user_by_email(db, email=email_address)
+        if users is None:
+            return JSONResponse(
+                status_code= 400,
+                content=jsonable_encoder({"detail": "Sorry!, no user with such email address!"}),
+            )
+        await send_email([email_address], users)
+    
+    except Exception as e:
+       return JSONResponse(
+            status_code= 500,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+    return {      
+        "detail": f"verification mail for {users.first_name} was sent successfully"
     }
 
 # get all users, only available for the admin end.
@@ -92,7 +94,7 @@ def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(_services.
         users = crud.get_users(db, skip=skip, limit=limit)
     except Exception as e:
        return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
     return {      
@@ -107,7 +109,7 @@ def read_user(user_id: int, db: Session = Depends(_services.get_session)):
             raise HTTPException(status_code=404, detail="User not found")
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
     
@@ -179,7 +181,7 @@ async def email_verification(request: Request, token: str, db: Session = Depends
                 }
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
         
@@ -195,7 +197,7 @@ async def my_profile (db: Session = Depends(_services.get_session), user: models
         return {"detail": crud.get_user_profile(db, user_id)}
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
 
@@ -207,7 +209,10 @@ async def forgot_password(email: schema.ForgetPassword, db: Session = Depends(_s
     try:
         user: models.User = crud.get_user_by_email(db, email.email)
         if user is None:
-            raise HTTPException(status_code=404, detail="User not found")
+            return JSONResponse(
+                status_code= status.HTTP_400_BAD_REQUEST,
+                content=jsonable_encoder({"detail": "User not found"}),
+            )        
         token = await send_password_reset_email([email.email], user)
     except Exception as e:
         return JSONResponse(
@@ -243,7 +248,7 @@ async def reset_password(token: str, new_password: schema.UpdatePassword, db: Se
         
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
     
@@ -281,7 +286,7 @@ async def change_password(password_schema: schema.ChangePassword,
             raise HTTPException(status_code=400, detail="Failed to update password")
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
     
@@ -299,26 +304,9 @@ async def refresh_token(refresh_token: schema.RefreshToken, db: Session = Depend
             status_code= status.HTTP_400_BAD_REQUEST,
             content=jsonable_encoder({"detail": str(e)}),
         )
-        
-@user_router.get('/login/google', status_code = 200)
-async def login(request: Request):
-    try:
-        redirect_uri = request.url_for('auth') # request.url_for('auth')   This creates the url for our /auth endpoint
-        return await oauth.google.authorize_redirect(request, redirect_uri)
-    except Exception as e:
-        return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
-            content=jsonable_encoder({"detail": str(e)}),
-        )
-
-
 @user_router.get('/auth/google', status_code = 200)
-async def auth(request: Request, db: Session = Depends(_services.get_session)):
+async def auth(email: str, db: Session = Depends(_services.get_session)):
     try:
-        access_token = await oauth.google.authorize_access_token(request)
-    
-        user_data = access_token['userinfo']
-        email = user_data.email
         user_db = crud.get_user_by_email(db, email)
 
         if user_db is None:
@@ -327,7 +315,25 @@ async def auth(request: Request, db: Session = Depends(_services.get_session)):
         tokens = get_access_token(email)
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+    return {
+        "detail": tokens
+    }
+    
+@user_router.get('/auth/google', status_code = 200)
+async def auth(email: str, db: Session = Depends(_services.get_session)):
+    try:
+        user_db = crud.get_user_by_email(db, email)
+
+        if user_db is None:
+            raise HTTPException(status_code=404, detail="User not found.")
+
+        tokens = get_access_token(email)
+    except Exception as e:
+        return JSONResponse(
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
     return {
@@ -360,7 +366,7 @@ async def get_history(user: models.User = Depends(get_active_user),
             )
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
     return {
@@ -380,7 +386,7 @@ def subscribe_to_newletter(subscriber: schema.Newsletter, db: Session = Depends(
             "detail": subscriber
         }
     except:
-        raise HTTPException(status_code=400, detail="An unknown error occured. Try Again") 
+        raise HTTPException(status_code=500, detail="An unknown error occured. Try Again") 
 
 @user_router.get("/get_newsletter-subscribers", summary="Get all existing subscribers", response_model=list[schema.Newsletter],
                  status_code = 200)
@@ -389,7 +395,7 @@ def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session),
         subscribers = crud.get_newsletter_subscribers(db, skip=skip)
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
         
@@ -399,3 +405,25 @@ def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session),
 
 
 
+@user_router.post("/deactivate_user/{user_Id}")
+async def deactivate(user_id = int, db: Session = Depends(_services.get_session)):
+    try:
+        db_user = crud.get_user(db, user_id=user_id)
+        if not db_user:
+            raise HTTPException(status_code=404, detail="User not found")
+
+        if db_user.is_active == False:
+            raise HTTPException(status_code=400, detail="This User Is Not Active")
+        db_user.is_active = False
+        db.commit()
+        await send_deactivation_email([db_user.email], db_user)
+
+    except Exception as e:
+        return JSONResponse(
+            status_code= 500,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+        
+    return {
+        "detail": "User Deactivated"
+    }

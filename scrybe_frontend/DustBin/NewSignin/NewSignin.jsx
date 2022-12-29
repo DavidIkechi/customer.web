@@ -1,11 +1,11 @@
 import { React, useState, useCallback, useEffect } from "react";
-import SnackBar from "../../components/SnackBar";
+import SnackBar from "../../src/components/SnackBar";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 // import Loading from "../../components/Loading";
 import Cookies from "js-cookie";
 import styles from "./NewSignin.module.scss";
-import ApiService from "../../helpers/axioshelp/apis";
-import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
+import ApiService from "../../src/helpers/axioshelp/apis";
+import ErrorHandler from "../../src/helpers/axioshelp/Utils/ErrorHandler";
 
 import logo from "./assets/logo.png";
 import google from "./assets/google.png";

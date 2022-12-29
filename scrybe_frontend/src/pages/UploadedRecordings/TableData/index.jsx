@@ -8,14 +8,14 @@ import { PropTypes } from "prop-types";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import IsLoadingSkeleton from "../../../components/LoadingSkeleton";
-import { formatAudioLen } from "../../../helpers/formatAudioLen/index";
-import { formatAudioSize } from "../../../helpers/formatAudioSize/index";
-import { formatDate } from "../../../helpers/formatDate";
-import { shortenfilename } from "../../../helpers/shortenFileLen";
+import { formatAudioLen } from "./formatAudioLen";
+import { formatAudioSize } from "./formatAudioSize";
+import { formatDate } from "./formatDate";
+import { shortenfilename } from "./shortenFileLen";
 import {
   useDeleteRecordingMutation,
   useFetchUserRecordingsQuery,
-} from "../../../redux/baseEndpoints";
+} from "../../../redux/uploadedRecodings/rtkquery";
 import closeModalIcon from "./imgs/close-icon.svg";
 import deleteIcon from "./imgs/delete-icon.svg";
 import notfoundImg from "./imgs/notfound.svg";
@@ -35,7 +35,7 @@ const TableData = ({ searchKeyword }) => {
   const sessionExpired = error;
   const isFetching = isLoading;
 
-  // const timeLeft = 20;
+  const timeLeft = 20;
 
   const getChecked = (e) => {
     let checkedList = [...recordCheckedList];
@@ -53,34 +53,7 @@ const TableData = ({ searchKeyword }) => {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
   };
-  // const fetchData = async () => {
-  //   setIsFetching(true);
-  //   try {
-  //     await axios
-  //       .get("list-audios-by-user", { headers })
-  //       .then((res) => {
-  //         if (res.status === 200) {
-  //           setSessionExpired(false);
-  //           setAllRecordings(res.data);
-  //           setIsFetching(false);
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         if (err.response.status === 401) {
-  //           setSessionExpired(true);
-  //           setIsFetching(false);
-  //         }
-  //       });
-  //   } catch (error) {
-  //     console.log(error);
-  //     setSessionExpired(true);
-  //     setIsFetching(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  
 
   const handleOpen = () => {
     setOpenModal(true);

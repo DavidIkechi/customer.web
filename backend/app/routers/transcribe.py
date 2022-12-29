@@ -9,10 +9,12 @@ import models, schema
 from . import utility as utils
 from dotenv import load_dotenv
 from . import sentiment
+from routers.sentiment_utility import sentiment, sentiment_assembly
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 import os
 import crud
+from emails import send_email, verify_token, send_password_reset_email, password_verif_token, send_freeTrial_email
 
 load_dotenv()
 
@@ -58,7 +60,7 @@ def view_transcript(job_id: Union[int, str], db: Session = Depends(_services.get
         sentiment_result = crud.analyse_and_store_audio(db, job_id, user_id)
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
 
@@ -67,7 +69,7 @@ def view_transcript(job_id: Union[int, str], db: Session = Depends(_services.get
     }
 
 @transcript_router.get("/get_transcript/{transcript_id}", description="Retrieving transcript by audio ID", status_code = 200)
-def view_transcript(transcript_id: Union[int, str], db: Session = Depends(_services.get_session)):
+async def view_transcript(transcript_id: Union[int, str], db: Session = Depends(_services.get_session)):
     transcript = crud.get_freetrial(db, id = transcript_id)
     if not transcript:
         raise HTTPException(
@@ -87,22 +89,37 @@ def view_transcript(transcript_id: Union[int, str], db: Session = Depends(_servi
         db.refresh(transcript)
         
         if transcript_audio['status'] != "completed":
-            return {"status":transcript_audio['status']}
+            return JSONResponse(
+            status_code= 406,
+            content=jsonable_encoder({"detail": "Your File Audio File Is Still Transcribing Please Hold On For A little While."})
+            )
         else:
             # get the text.
             transcripted_word = transcript_audio['text']
-            sentiment_result = sentiment.sentiment(transcripted_word)
+            sentiment_result = sentiment_assembly(transcript_audio)
 
+            negativity_score = sentiment_result['negativity_score']
+            positivity_score = sentiment_result['positivity_score']
+            neutrality_score = sentiment_result['neutrality_score']
             overall_sentiment = sentiment_result['overall_sentiment']
+            most_negative_sentences = sentiment_result['most_negative_sentences']
+            most_positive_sentences = sentiment_result ['most_positive_sentences']
+            total_score = positivity_score + neutrality_score + negativity_score
+            average_score = round((positivity_score/ total_score) * 10, 1)
+
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
 
-    return {"transcription": transcripted_word, "overall_sentiment_result": overall_sentiment,
+    return {"detail": {"transcription": transcripted_word,"most positive": most_positive_sentences,         
+            "most_negative_score": most_negative_sentences,  
+            "overall_sentiment_result": overall_sentiment,
+            "average_score": average_score,
             "filename":current_status_filename, "filesize":current_status_size, 
             "status": transcript_audio['status']}
+    }
 
 
 

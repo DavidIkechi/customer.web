@@ -1,4 +1,3 @@
-// @import "../../assets/styles/utilities/functionsANDmedia";
 @import "../../assets/styles/utilities/variables";
 
 .generalSidebar {
@@ -103,7 +102,7 @@
           .generalSidebar_user_desktop_name_arr {
             display: flex;
             .name {
-              font-family: "Kanit";
+              font-family: "Poppins";
               font-style: normal;
               font-weight: 600;
               font-size: 20px;
@@ -114,7 +113,7 @@
             }
           }
           .workspace_name {
-            font-family: "Kanit";
+            font-family: "Poppins";
             font-style: normal;
             font-weight: 300;
             font-size: 14px;
