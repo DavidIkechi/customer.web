@@ -6,7 +6,7 @@
 
 ![Heed Logo](/scrybe_frontend/src/assets/heed_logo_with_text.svg)
 
-This repo contains both the Front and Back end for the ![<img align='center' alt='coding' width='100%' height="350px" src='/scrybe_frontend/src/assets/heed_logo_with_text.svg'>Heed App](https://heed.cx) 
+This repo contains both the Front and Back end for the ![Heed App](/scrybe_frontend/src/assets/heed_logo_with_text.svg)
 
 ## Current Setup (This project uses:)
 
@@ -18,7 +18,7 @@ This repo contains both the Front and Back end for the ![<img align='center' alt
 
 ## Deployment to Live Link
 
-- Repo deploys to ![<img align='center' alt='coding' width='100%' height="350px" src='/scrybe_frontend/src/assets/heed_logo_with_text.svg'>Heed App](https://heed.cx)  from branch "main" and Continuous deployment is setup with Jenkins
+- Repo deploys to ![Heed App](/scrybe_frontend/src/assets/heed_logo_with_text.svg)  from branch "main" and Continuous deployment is setup with Jenkins
 
 ## Contributing - Frontend
 
