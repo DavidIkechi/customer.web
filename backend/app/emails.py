@@ -57,7 +57,7 @@ async def send_email(email: List, instance: User):
         subject = "Account Verification",
         recipients =email,
         template_body=emails.get("body"),
-        subtype=MessageType.html,
+        subtype='html',
     )
 
     fm =FastMail(conf)

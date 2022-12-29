@@ -55,16 +55,35 @@ async def create_user(user: schema.UserCreate, db: Session = Depends(_services.g
 
     # check if email exists and is valid
     email_exists = utils.validate_and_verify_email(user.email)
-    if not email_exists:
-        raise HTTPException(status_code=400, detail="Your email could not be verified. Please enter a valid email")
+    # if not email_exists:
+    #     raise HTTPException(status_code=400, detail="Your email could not be verified. Please enter a valid email")
 
     # create the user before sending a mail.
     new_user = crud.create_user(db=db, user=user)
     await send_email([user.email], user)
-    
         
     return {    
         "detail" : "Account was successfully created."
+    }
+
+@user_router.post("/resend_verify_email", status_code= status.HTTP_200_OK, summary = "Resend verify user email")
+async def resend_verify_email(email_address: str, db: Session = Depends(_services.get_session)):
+    try:        
+        users = crud.get_user_by_email(db, email=email_address)
+        if users is None:
+            return JSONResponse(
+                status_code= 400,
+                content=jsonable_encoder({"detail": "Sorry!, no user with such email address!"}),
+            )
+        await send_email([email_address], users)
+    
+    except Exception as e:
+       return JSONResponse(
+            status_code= 500,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+    return {      
+        "detail": f"verification mail for {users.first_name} was sent successfully"
     }
 
 # get all users, only available for the admin end.
