@@ -155,3 +155,20 @@ class ProductPlan(Base):
     price = Column(Float, index=True, nullable=False)
     features = Column(JSON, nullable=False)
     
+    
+class PaymentHistory(Base):
+    __tablename__ = "payment_history"
+    id = Column(Integer, primary_key=True, index=True)
+    transaction_id = Column(Integer, index= True)
+    reference = Column(String(255), nullable= True)
+    amount = Column(Float, index=True, nullable=False)
+    plan = Column(String(255), nullable=False)
+    time_paid = Column(DateTime(timezone=True))
+    minutes = Column(Integer, index = True)
+    payment_type = Column(String(255), nullable= True)
+    email = Column(String(255), nullable= True)
+    
+    
+   
+    
+    
