@@ -11,16 +11,23 @@
       box-sizing: border-box;
       padding: 0;
       border: 0;
+      margin:0
+    }
+    .body{
+        background-color: #f7f7f7;
+        padding:30px 16px
     }
     .main {
       padding-left: 40px;
       padding-right: 40px;
       max-width: 700px;
       padding-top: 22px;
+      padding-bottom: 15px;
       font-family: "Poppins", sans-serif;
       color: #3f3f3f;
       margin:0 auto;
-      border:1px solid grey;
+      background-color: #ffffff;
+      border-radius: 16px;
     }
     .message {
       display: block;
@@ -48,7 +55,7 @@
     }
     .copyright {
       text-align: center;
-      margin-top: 10vw;
+      margin-top: 5vw;
     }
     .copyright p {
       font-weight: 400;
@@ -59,13 +66,22 @@
     }
     .copy {
       font-size: 16px;
-      padding-inline: 5px;
+      padding-left: 5px;
+      padding-left: 5px;
     }
-    h3{
-      text-align: unset;
+    h5 {
       margin-right: 450px;
-      font-weight: 300;
-      width:168px;
+      font-weight: normal;
+      font-size: 18px;
+      float: left;
+      color:#006CAF;
+      white-space: nowrap;
+    }
+     .no-wrap wbr{
+      display:none
+    }
+    h1{
+      margin-bottom: 15px;
     }
     @media screen and (max-width:375px){
       h1{
@@ -75,33 +91,34 @@
   </style>
 </head>
 <body>
-  <div class="main">
-    <div class="logo">
-      <a href="https://heed.cx"
-        ><img
-          src="https://res.cloudinary.com/dcsv5etuw/image/upload/v1671352986/logo_rwgpkh.jpg"
+  <div class="body">
+    <div class="main">
+      <div class="logo">
+        <a href="https://heed.cx"
+          ><img
+            src="https://res.cloudinary.com/dcsv5etuw/image/upload/v1671352986/logo_rwgpkh.jpg"
+            alt=""
+        /></a>
+      </div>
+      <div class="message">
+        <img
+          src="https://res.cloudinary.com/dcsv5etuw/image/upload/v1671760242/Frame_1000002580_zdw3vf.jpg"
           alt=""
-      /></a>
-    </div>
-    <div class="message">
-      <img
-        src="https://res.cloudinary.com/dcsv5etuw/image/upload/v1671760242/Frame_1000002580_zdw3vf.jpg"
-        alt=""
-        class="mail"
-      />
-      <h3>Hello Oyindamola,</h3>
-      <h1>Account Deletion</h1>
-      <p>
-        This email confirms that your account has been successfully deleted. We are sorry that you have decided to move on.
-      </p>
-      <p>You do not have an account with us anymore. Your login credentials no longer exists, so we can no longer offer you our services.
-      </p>
-      <p>
-        Visit our <a href="mailto:info@heed.cx">Help Centre</a> for more info or reach out to our <a href="mailto:support@heed.cx">Support team</a>.
-      </p>
-    <div class="copyright">
-      <!-- <img src="https://res.cloudinary.com/dcsv5etuw/image/upload/v1671353006/copyright_frjemi.jpg" alt=""> -->
-      <p><span class="copy">©</span> Copyright 2022 | Heed</p>
+          class="mail"
+        />
+        <h5 class="no-wrap">Hello Oyindamola,</h5>
+        <h1>Account Deletion</h1>
+        <p>
+          This email confirms that your account has been successfully deleted. We are sorry that you have decided to move on.
+        </p>
+        <p>You do not have an account with us anymore. Your login credentials no longer exists, so we can no longer offer you our services.
+        </p>
+        <p>
+          Visit our <a href="mailto:info@heed.cx">Help Centre</a> for more info or reach out to our <a href="mailto:support@heed.cx">Support team</a>.
+        </p>
+      <div class="copyright">
+        <p><span class="copy">©</span> Copyright 2022 | Heed</p>
+      </div>
     </div>
   </div>
 </body>
