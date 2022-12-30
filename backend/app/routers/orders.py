@@ -28,7 +28,7 @@ order_router = APIRouter(
     tags=['orders'],
 )
 
-@order_router.post("/create_order", description="Create an order for a user", status_code = 200)
+@order_router.post("/create_order", description="Create Paystack order for a user", status_code = 200)
 async def create_order(userPayment: schema.PaymentBase, user: models.User = Depends(auth.get_active_user)):
     paystack = Paystack(secret_key=os.getenv('PAYSTACK_SECRET_KEY'))
     user_email = user.email

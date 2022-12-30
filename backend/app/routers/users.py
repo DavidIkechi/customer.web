@@ -404,7 +404,6 @@ def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session),
     }
 
 
-
 @user_router.post("/deactivate_user/{user_Id}")
 async def deactivate(user_id = int, db: Session = Depends(_services.get_session)):
     try:
@@ -427,3 +426,5 @@ async def deactivate(user_id = int, db: Session = Depends(_services.get_session)
     return {
         "detail": "User Deactivated"
     }
+
+@user_router.post()
