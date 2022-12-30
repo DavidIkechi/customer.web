@@ -71,6 +71,8 @@ async def analyse(first_name: str = Form(), last_name: str = Form(),
                 status_code= 406,
                 content=jsonable_encoder({"detail": "You don't have enough Credit left"}),
             )
+        # store all the transcripts here.
+        all_transcripts = []
         
         for file in files: 
         # if the time left is more.
@@ -92,7 +94,6 @@ async def analyse(first_name: str = Form(), last_name: str = Form(),
             audio_url = transcript['audio_url']
             job_status = transcript['status']
             transcript_id = transcript['id']
-            print(transcript_id)
             
             db_company.time_left = db_company.time_left - duration['overall']
             db.commit()
@@ -131,6 +132,12 @@ async def analyse(first_name: str = Form(), last_name: str = Form(),
             db.commit()
             db.refresh(db_job)
             
+            all_transcripts.append({
+                "id":distinct_id,
+                "audio_id": audio_id,
+                "transcript_id": transcript_id, 
+            })
+            
             # delete the file
             os.remove(file.filename)
             db_company = db.query(models.Company).filter(models.Company.id == company_id).first()
@@ -143,10 +150,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(),
         ) 
     
     return {
-        "detail":{
-            "id":distinct_id,
-            "transcript_id": transcript_id,
-        }   
+        "detail":all_transcripts
     }
 
 

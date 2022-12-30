@@ -32,6 +32,8 @@ class User(Base):
     is_verified = Column(Boolean, default=False)
     company_id = Column(Integer, ForeignKey("companies.id", ondelete='CASCADE'))
     created_at = Column(DateTime(timezone=True), default=datetime.now())
+    is_deactivated = Column(Boolean, default=False)
+    deactivated_at = Column(DateTime(timezone=True), default=datetime.now())
 
 
 class Company(Base):
@@ -97,10 +99,8 @@ class uploaded_Job(Base):
 
 class History(Base):
     __tablename__ = "history"
-
     id = Column(Integer, primary_key=True, index=True)
     sentiment_result = Column(Enum("Positive", "Negative", "Neutral"), index=True)
-
     audio_name = Column(String(255), index=True)
     agent_name = Column(String(255), index=True)
     date_uploaded = Column(DateTime, default=datetime.utcnow(), index=True)
