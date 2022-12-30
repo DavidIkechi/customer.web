@@ -67,8 +67,9 @@ async def create_user(user: schema.UserCreate, db: Session = Depends(_services.g
     }
 
 @user_router.post("/resend_verify_email", status_code= status.HTTP_200_OK, summary = "Resend verify user email")
-async def resend_verify_email(email_address: str, db: Session = Depends(_services.get_session)):
-    try:        
+async def resend_verify_email(email_address: schema.Newsletter, db: Session = Depends(_services.get_session)):
+    try:  
+        email_address = email_address.email      
         users = crud.get_user_by_email(db, email=email_address)
         if users is None:
             return JSONResponse(
@@ -404,10 +405,11 @@ def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session),
     }
 
 
-@user_router.post("/deactivate_user/{user_Id}")
-async def deactivate(user_id = int, db: Session = Depends(_services.get_session)):
+@user_router.post("/deactivate_user")
+async def deactivate(db: Session = Depends(_services.get_session), user: models.User = Depends(get_active_user)):
     try:
-        db_user = crud.get_user(db, user_id=user_id)
+        user_email = user.email
+        db_user = crud.get_user_by_email(db, email=user.email)
         if not db_user:
             raise HTTPException(status_code=404, detail="User not found")
 
@@ -415,7 +417,7 @@ async def deactivate(user_id = int, db: Session = Depends(_services.get_session)
             raise HTTPException(status_code=400, detail="This User Is Not Active")
         db_user.is_active = False
         db.commit()
-        await send_deactivation_email([db_user.email], db_user)
+        await send_deactivation_email([user_email], db_user)
 
     except Exception as e:
         return JSONResponse(
@@ -427,4 +429,18 @@ async def deactivate(user_id = int, db: Session = Depends(_services.get_session)
         "detail": "User Deactivated"
     }
 
-@user_router.post()
+@user_router.post("/add_new_plan")
+async def add_new_plan(plan: schema.Plan, 
+                       db: Session = Depends(_services.get_session), user: models.User = Depends(get_admin)):
+    try:
+        add_plan = crud.add_plan(db, plan)
+    except Exception as e:
+        return JSONResponse(
+            status_code= 500,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+    return {
+        "detail": "Plan Added Successfully"
+    }
+        
+

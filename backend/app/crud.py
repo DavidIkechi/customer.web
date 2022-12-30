@@ -509,3 +509,10 @@ def free_user_by_email(db: Session, email: str):
     
 def get_distinct_ids(db: Session):
     return db.execute("SELECT DISTINCT job_id FROM jobs").all()
+
+def add_plan(db: Session, plan: schema.Plan):
+    db_plan = models.ProductPlan(name = plan.name, price = plan.price, features = plan.features)
+    db.add(db_plan)
+    db.commit()
+    db.refresh(db_plan)
+    return db_plan
