@@ -427,4 +427,4 @@ async def deactivate(user_id = int, db: Session = Depends(_services.get_session)
         "detail": "User Deactivated"
     }
 
-@user_router.post()
+# @user_router.post()
