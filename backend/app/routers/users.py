@@ -500,5 +500,3 @@ async def reactivate_user(user_id: int, db: Session = Depends(_services.get_sess
     return {
         "detail": "User Account was successfully Reactivated!"
     }    
-        
-
