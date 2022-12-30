@@ -16,9 +16,10 @@ pipeline {
         	stage("build backend"){
 
 			steps {
-				sh "cd backend"
+				sh "cd backend/app"
 				sh "cd backend/app && python3 -m pip install --upgrade pip"
 				sh "cd backend/app && pip3 install -r requirements.txt --force"
+				sh "cd backend/app && alembic revision --autogenerate -m 'first migration' && alembic upgrade head"
 				
 		
 			} 
