@@ -133,18 +133,17 @@ async def main_login(form_data, db):
             content=jsonable_encoder({"detail": user}),
             )
         if not user.is_verified:
-            raise HTTPException(
+            return JSONResponse(
                 status_code=400,
-                detail=f"Sorry {user.first_name}, your account is yet to be verified.",
-                headers={"WWW-Authenticate": "Bearer"},
+                content=jsonable_encoder({"detail": f"Sorry {user.first_name}, your account is yet to be verified."}),
             )
             
         if not user.is_active:
-            raise HTTPException(
+            return JSONResponse(
                 status_code=400,
-                detail=f"Sorry {user.first_name}, your account is yet to be activated.",
-                headers={"WWW-Authenticate": "Bearer"},
+                content=jsonable_encoder({"detail": f"Sorry {user.first_name}, your account is yet to be activated."}),
             )
+
         
         access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
         refresh_token_expires = timedelta(minutes=REFRESH_TOKEN_EXPIRE_MINUTES)
