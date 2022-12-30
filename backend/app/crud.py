@@ -121,20 +121,16 @@ def upload_user_image(db:Session , user_id:int, image_file:UploadFile):
     return {"image_url": image_url}
 
     
-def delete_user(db: Session, user_id: int, current_user):
-    deleted_user = db.query(models.User).filter(models.User.id == user_id).first()
-    if deleted_user is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f"The user with id {user_id} does not exist")
-    if user_id != current_user.id:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , 
-                                detail="Not authorized to perform requested action")
-        
-    user_profile= db.query(models.UserProfile).filter(models.UserProfile.id == deleted_user.id).first()
-    db.delete(deleted_user)
-    db.delete(user_profile)
+def delete_user(db: Session, user_id: int):
+    # the company is the base model. Like the very top model. 
+    # so deleting from there would affect every table.
+    get_company = get_user(db, user_id)
+    if get_company is None:
+            raise HTTPException(status_code=404, 
+                                detail="User not found")
+    deleted_user = db.query(models.Company).filter(models.Company.id == get_company.company_id).delete()
     db.commit()
-    return {"message":f"User {deleted_user.first_name} with id:{deleted_user.id} has been deleted"}
+    return {"message":"Success"}
 
 def get_audio(db: Session, audio_id: int):
     return db.query(models.Audio).filter(models.Audio.id == audio_id).first()
@@ -509,3 +505,13 @@ def free_user_by_email(db: Session, email: str):
     
 def get_distinct_ids(db: Session):
     return db.execute("SELECT DISTINCT job_id FROM jobs").all()
+
+def add_plan(db: Session, plan: schema.Plan):
+    db_plan = models.ProductPlan(name = plan.name.lower(), price = plan.price, features = plan.features)
+    db.add(db_plan)
+    db.commit()
+    db.refresh(db_plan)
+    return db_plan
+
+def get_plan_by_name(db: Session, plan_name: str):
+    return db.query(models.ProductPlan).filter(models.ProductPlan.name == plan_name).first()

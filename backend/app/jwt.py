@@ -132,7 +132,13 @@ async def main_login(form_data, db):
             status_code=400,
             content=jsonable_encoder({"detail": user}),
             )
-        
+        if not user.is_verified:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Sorry {user.first_name}, your account is yet to be verified.",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+            
         if not user.is_active:
             raise HTTPException(
                 status_code=400,

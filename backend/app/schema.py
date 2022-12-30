@@ -12,7 +12,6 @@ class UserBase(BaseModel):
     # created_at: datetime
     
 class PaymentBase(BaseModel):
-    amount: float
     minutes: int
     plan: str
 
@@ -203,3 +202,8 @@ class Newsletter(BaseModel):
 
     class Config:
         orm_mode = True
+        
+class Plan(BaseModel):
+    name: str
+    price: float
+    features: list

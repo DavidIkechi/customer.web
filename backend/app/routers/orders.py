@@ -1,4 +1,4 @@
-from fastapi import FastAPI, status, Depends, APIRouter,  UploadFile, File, Form, Query, Request
+from fastapi import FastAPI, status, Depends, APIRouter,  UploadFile, File, Form, Query, Request, HTTPException
 from typing import List, Union, Optional
 import services as _services
 import models, schema
@@ -29,15 +29,23 @@ order_router = APIRouter(
 )
 
 @order_router.post("/create_order", description="Create Paystack order for a user", status_code = 200)
-async def create_order(userPayment: schema.PaymentBase, user: models.User = Depends(auth.get_active_user)):
+async def create_order(userPayment: schema.PaymentBase, db: Session = Depends(_services.get_session), user: models.User = Depends(auth.get_active_user)):
     paystack = Paystack(secret_key=os.getenv('PAYSTACK_SECRET_KEY'))
     user_email = user.email
     try:
         # initialize a transaction.
         trans = paystack.transaction()
-        res = trans.initialize(email= user_email, amount=userPayment.amount, 
+        
+        # get amount for the plan.
+        get_plan_details = crud.get_plan_by_name(db, userPayment.plan.lower())
+        if get_plan_details is None:
+            raise HTTPException(status_code=400, 
+                                detail="Sorry, we do not have that plan")
+            
+        amount = get_plan_details.price * userPayment.minutes * 100
+        res = trans.initialize(email= user_email, amount = amount, 
                                metadata = {'minutes': userPayment.minutes, 'plan': userPayment.plan},
-                               callback_url= "https://heed.hng.tech/checkout-growing")
+                               callback_url= "https://heed.hng.tech/paymentSuccess")
         
         if res['status'] == True:
         # get the authorization url, access_code, and also the reference number.
@@ -51,7 +59,7 @@ async def create_order(userPayment: schema.PaymentBase, user: models.User = Depe
             
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
     
