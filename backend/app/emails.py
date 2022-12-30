@@ -1,5 +1,5 @@
 from fastapi import (BackgroundTasks, UploadFile,File, Form, Depends, HTTPException, status)
-from fastapi_mail import FastMail, ConnectionConfig, MessageSchema
+from fastapi_mail import FastMail, ConnectionConfig, MessageSchema, MessageType
 from typing import List, Dict, Any
 from jose import jwt, JWTError
 from fastapi.exceptions import HTTPException
@@ -57,7 +57,7 @@ async def send_email(email: List, instance: User):
         subject = "Account Verification",
         recipients =email,
         template_body=emails.get("body"),
-        subtype='html',
+        subtype=MessageType.html,
     )
 
     fm =FastMail(conf)
@@ -102,7 +102,7 @@ async def send_password_reset_email(email: List, instance: User):
         subject = "Password Reset",
         recipients =email,
         template_body=emails.get("body"),
-        subtype='html',
+        subtype=MessageType.html,
     )
 
     fm =FastMail(conf)
@@ -143,7 +143,7 @@ async def send_deactivation_email(email: List, instance: User):
         subject = "Account Deactivation",
         recipients =email,
         body = template,
-        subtype = "html"
+        subtype = MessageType.html,
     )
 
     fm =FastMail(conf)
@@ -186,7 +186,7 @@ async def send_freeTrial_email(email: List, instance: User):
         subject = "Free Trial Result",
         recipients =email,
         body = template,
-        subtype = "html"
+        subtype = MessageType.html,
     )
 
     fm =FastMail(conf)
