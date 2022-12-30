@@ -8,13 +8,24 @@ export const authApiSlice = userAPI.injectEndpoints({
       // providesTags: ["User"],
     }),
     loginUser: builder.mutation({
-      query: (credentials) => ({
+      query: (loginCredentials) => ({
         url: "users/login",
         method: "POST",
-        body: { ...credentials },
+        body: loginCredentials,
+      }),
+    }),
+    registerUser: builder.mutation({
+      query: (registerCredentials) => ({
+        url: "users/create_users",
+        method: "POST",
+        body: registerCredentials,
       }),
     }),
   }),
 });
 
-export const { useFetchUserQuery, useLoginUserMutation } = authApiSlice;
+export const {
+  useFetchUserQuery,
+  useLoginUserMutation,
+  useRegisterUserMutation,
+} = authApiSlice;

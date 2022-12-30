@@ -106,8 +106,8 @@ const Login = () => {
       // setTimeout(() => {
       //   window.location.href = "/dashboard";
       // }, 2500);
-    } else if (hasError) {
-      setResponse(ErrorHandler(hasError));
+    } else if (loginError) {
+      setResponse(ErrorHandler(loginError));
       dispatch(resetUser());
     }
     // if (hasError) {

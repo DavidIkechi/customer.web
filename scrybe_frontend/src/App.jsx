@@ -20,7 +20,7 @@ import Logout from "./pages/Logout";
 import LandingPageSalesTeam from "./pages/NewLandingPageSalesTeam/index";
 import NewPasswordResetSuccessful from "./pages/NewPasswordResetSuccessful";
 import NewSetNewPassword from "./pages/NewSetNewPassword";
-import CompleteSignup from "./pages/NewSignup/CompleteSignup/CompleteSignup";
+import CompleteSignup from "./pages/NewSignup/CompleteSignup";
 import CreateAccount from "./pages/NewSignup/CreateAccount";
 import Pricing from "./pages/Pricing";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
