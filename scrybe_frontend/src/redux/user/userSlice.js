@@ -59,7 +59,7 @@ const userSlice = createSlice({
       const { access_token } = action.payload;
       state.token = access_token;
     },
-    logoutUser: (state) => {
+    logoutuser: (state) => {
       state.status = null;
       state.error = null;
       state.getUser = null;
@@ -134,6 +134,8 @@ const userSlice = createSlice({
   },
 });
 
-export const { resetUser } = userSlice.actions;
+export const { resetUser, setCredentials, logoutuser } = userSlice.actions;
 
 export default userSlice.reducer;
+export const selectCurrentUser = (state) => state.auth.user
+export const selectCurrentToken = (state) => state.auth.Token
