@@ -515,3 +515,25 @@ def add_plan(db: Session, plan: schema.Plan):
 
 def get_plan_by_name(db: Session, plan_name: str):
     return db.query(models.ProductPlan).filter(models.ProductPlan.name == plan_name).first()
+
+
+def store_transaction(db: Session, trans: dict):
+    db_trans = models.PaymentHistory(
+        transaction_id = trans['trans_id'],
+        reference = trans['reference'],
+        amount = trans['amount'],
+        plan = trans['plan'],
+        time_paid = trans['time_paid'],
+        minutes = trans['minutes'],
+        payment_type = trans['payment_channel'],
+        email = trans['email_address']
+    )
+    
+    db.add(db_trans)
+    db.commit()
+    db.refresh(db_trans)
+    
+    return db_trans
+
+def check_transaction(db: Session, ref_code: str):
+    return db.query(models.PaymentHistory).filter(models.PaymentHistory.reference == ref_code).first()
