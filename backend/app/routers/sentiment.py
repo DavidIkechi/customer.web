@@ -55,7 +55,7 @@ def download (id: Union[int, str], db: Session = Depends(_services.get_session),
                         }
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
     return sentiment
@@ -92,7 +92,7 @@ def get_total_analysis(db: Session = Depends(_services.get_session), user: model
             
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
     return {"detail": result}
@@ -112,7 +112,7 @@ def get_sentiment_result(id: int, db: Session = Depends(_services.get_session)):
             )
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
         

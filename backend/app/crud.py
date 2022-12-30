@@ -22,7 +22,9 @@ def generate_uuid():
 
 
 def is_admin_check(email_address: str):
-    admin_list = ['davidakwuruu@gmail.com','tekkieware@gmail.com', 'collinsakpaka@gmail.com','dprincecoder@gmail.com']
+    admin_list = ['davidakwuruu@gmail.com','tekkieware@gmail.com', 
+                  'collinsakpaka@gmail.com','dprincecoder@gmail.com', 
+                  'oyindamoladekeye@gmail.com', 'daakwuru@gmail.com']
     print(email_address.lower() in admin_list)
     return email_address.lower() in admin_list
 
@@ -506,5 +508,4 @@ def free_user_by_email(db: Session, email: str):
     return db.query(models.FreeTrial).filter(models.FreeTrial.email == email).first()
     
 def get_distinct_ids(db: Session):
-    # return db.query(func.count(func.distinct(Table.column)))
-    return db.query(models.Job.job_id).distinct().count()
+    return db.execute("SELECT DISTINCT job_id FROM jobs").all()

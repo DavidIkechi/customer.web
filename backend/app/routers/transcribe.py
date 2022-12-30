@@ -60,7 +60,7 @@ def view_transcript(job_id: Union[int, str], db: Session = Depends(_services.get
         sentiment_result = crud.analyse_and_store_audio(db, job_id, user_id)
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
 
@@ -109,16 +109,17 @@ async def view_transcript(transcript_id: Union[int, str], db: Session = Depends(
 
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
 
-    return {"transcription": transcripted_word,"most positive": most_positive_sentences,         
+    return {"detail": {"transcription": transcripted_word,"most positive": most_positive_sentences,         
             "most_negative_score": most_negative_sentences,  
             "overall_sentiment_result": overall_sentiment,
             "average_score": average_score,
             "filename":current_status_filename, "filesize":current_status_size, 
             "status": transcript_audio['status']}
+    }
 
 
 
