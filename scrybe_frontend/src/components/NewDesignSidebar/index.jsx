@@ -10,7 +10,7 @@ import DropDownModal from "./DropdownMenu";
 import styles from "./generalSidebar.module.scss";
 
 import { localStorageUser } from "../../helpers/localStorageUser";
-import { useFetchUserQuery } from "../../redux/user/rtkquery";
+import { useFetchUserQuery } from "../../redux/user/rtkquery/authApiSlice";
 
 /**
  * Wrap your component with this component to get a sidebar with a logo, a search input field and a list of links.

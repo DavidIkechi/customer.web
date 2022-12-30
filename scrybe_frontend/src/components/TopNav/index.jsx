@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
 import { localStorageUser } from "../../helpers/localStorageUser";
-import { useFetchUserQuery } from "../../redux/user/rtkquery";
+import { useFetchUserQuery } from "../../redux/user/rtkquery/authApiSlice";
 import Modal from "../Modal";
 import SearchInput from "../SearchInput";
 import SnackBar from "../SnackBar";

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import { localStorageUser } from "../../helpers/localStorageUser";
-import { useFetchUserQuery } from "../../redux/user/rtkquery";
+import { useFetchUserQuery } from "../../redux/user/rtkquery/authApiSlice";
 import { logoutUser } from "../../redux/user/userSlice";
 import styles from "./nav.module.scss";
 
