@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
-import { localStorageUser } from "../../helpers/localStorageUser";
-import { useFetchUserQuery } from "../../redux/user/rtkquery/authApiSlice";
-import { logoutUser } from "../../redux/user/userSlice";
+// import { localStorageUser } from "../../helpers/localStorageUser";
+// import { useFetchUserQuery } from "../../redux/user/rtkquery/authApiSlice";
+import { useCachedUserData } from "../../helpers/cachedUserData/index";
+import { logoutuser } from "../../redux/user/rtkquery/apiSlice";
 import styles from "./nav.module.scss";
 
 function NavBar() {
-  const { isLoading } = useFetchUserQuery();
+  // const { data: activeUser, isLoading } = useFetchUserQuery();
 
   const [clicked, setClicked] = useState(false);
-  const activeUser = localStorageUser();
+  const { activeUser, isLoading } = useCachedUserData();
   const dispatch = useDispatch();
   const handleLogout = () => {
-    dispatch(logoutUser());
+    dispatch(logoutuser());
   };
 
   function handleClick() {

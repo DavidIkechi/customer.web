@@ -5,7 +5,7 @@ export const authApiSlice = userAPI.injectEndpoints({
     fetchUser: builder.query({
       query: () => "users/account",
       keepUnusedDataFor: 5,
-      // providesTags: ["User"],
+      providesTags: ["User"],
     }),
     loginUser: builder.mutation({
       query: (loginCredentials) => ({

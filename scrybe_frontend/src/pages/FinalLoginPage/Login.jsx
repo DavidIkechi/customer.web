@@ -1,5 +1,5 @@
 import { React, useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SnackBar from "../../components/SnackBar";
 // import Loading from "../../components/Loading";
 import styles from "./Login.module.scss";
@@ -11,6 +11,7 @@ import {
   useLoginUserMutation,
 } from "../../redux/user/rtkquery/authApiSlice";
 // import { getUser, loginUser, resetUser } from "../../redux/user/userSlice";
+import Cookies from "js-cookie";
 import { resetUser, setCredentials } from "../../redux/user/rtkquery/apiSlice";
 import hidden from "./assets/hidden.png";
 import logo from "./assets/logo.png";
@@ -25,6 +26,7 @@ const Login = () => {
   ] = useLoginUserMutation();
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const emailTest = new RegExp(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/);
   const passwordTest = new RegExp(/^["0-9a-zA-Z!@#$&()\\-`.+,/"]{8,}$/);
@@ -90,29 +92,29 @@ const Login = () => {
     formData.append("password", password);
 
     // login user redux hook
-    dispatch(loginUser(formData));
+    dispatch(loginUser(formData).unwrap());
   };
 
   useEffect(() => {
+    // if (loginSuccess) {
+    //   dispatch(fetchUser());
+    // }
     if (loginSuccess) {
-      dispatch(fetchUser());
-    }
-    if (isSuccess) {
       setResponse(
         ErrorHandler({ type: "Success", message: "Login successful" })
       );
-      setCredentials(loginData.access_token);
+      dispatch(setCredentials(loginData));
+      localStorage.setItem("heedAccessToken", loginData.access_token);
+      Cookies.set("heedAccessToken", loginData.access_token);
+
       // ignore this line for now
-      // setTimeout(() => {
-      //   window.location.href = "/dashboard";
-      // }, 2500);
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2500);
     } else if (loginError) {
       setResponse(ErrorHandler(loginError));
       dispatch(resetUser());
     }
-    // if (hasError) {
-    //   setResponse(ErrorHandler(hasError));
-    // }
   }, [
     loginData,
     loginError,
@@ -121,6 +123,7 @@ const Login = () => {
     hasError,
     loginSuccess,
     fetchUser,
+    navigate,
   ]);
 
   return (

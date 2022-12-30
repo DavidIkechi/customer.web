@@ -1,9 +1,9 @@
 import { PropTypes } from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
-import { localStorageUser } from "../../helpers/localStorageUser";
-import { useFetchUserQuery } from "../../redux/user/rtkquery/authApiSlice";
+// import { localStorageUser } from "../../helpers/localStorageUser";
+// import { useFetchUserQuery } from "../../redux/user/rtkquery/authApiSlice";
+import { useCachedUserData } from "../../helpers/cachedUserData/index";
 import Modal from "../Modal";
 import SearchInput from "../SearchInput";
 import SnackBar from "../SnackBar";
@@ -16,17 +16,18 @@ import uploadBtn_icon from "./imgs/uploadBtnIcon.svg";
 import styles from "./topbar.module.scss";
 
 const TopNav = ({ openSidebar, search }) => {
-  const { isLoading, isError, error } = useFetchUserQuery();
+  // const { isLoading, isError, error } = useFetchUserQuery();
   const [show, setShow] = useState(false);
-  const currentUser = localStorageUser();
+  // const currentUser = localStorageUser();
+  const { activeUser: currentUser, isLoading } = useCachedUserData();
   const [modalOpen, setModalOpen] = useState(false);
   const [response, setResponse] = useState({ type: "", message: "" });
 
-  useEffect(() => {
-    if (isError) {
-      setResponse(ErrorHandler(error));
-    }
-  }, [isError, error]);
+  // useEffect(() => {
+  //   if (isError) {
+  //     setResponse(ErrorHandler(error));
+  //   }
+  // }, [isError, error]);
 
   return (
     <div
@@ -57,8 +58,12 @@ const TopNav = ({ openSidebar, search }) => {
                 <div className={styles.TopNav_user_desktop}>
                   <img
                     className={styles.userimg}
-                    src={currentUser?.company_logo_url}
-                    alt="john doe"
+                    src={
+                      currentUser?.company_logo_url
+                        ? currentUser?.company_logo_url
+                        : DummyImg
+                    }
+                    alt={currentUser?.first_name}
                   />
                   <div className={styles.TopNav_user_desktop_nameDetails}>
                     <div className={styles.TopNav_user_desktop_name_arr}>
