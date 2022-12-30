@@ -20,7 +20,7 @@ from BitlyAPI import shorten_urls
 import crud
 from jwt import main_login, get_access_token, verify_password, refresh
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from emails import send_email, verify_token, send_password_reset_email, password_verif_token, send_deactivation_email
+from emails import send_delete_email, send_email, verify_token, send_password_reset_email, password_verif_token, send_deactivation_email
 
 from authlib.integrations.starlette_client import OAuth
 from authlib.integrations.starlette_client import OAuthError
@@ -28,7 +28,7 @@ from starlette.config import Config
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.responses import HTMLResponse
 from starlette.responses import RedirectResponse
-
+from datetime import datetime, date
 
 
 user_router = APIRouter(
@@ -88,7 +88,7 @@ async def resend_verify_email(email_address: schema.Newsletter, db: Session = De
     }
 
 # get all users, only available for the admin end.
-@user_router.get("/get_all_users", summary = "get all users", status_code= 200, response_model=list[schema.User])
+@user_router.get("/get_all_users", summary = "get all users", status_code= 200)
 def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(_services.get_session), 
                user: models.User = Depends(auth.get_admin)):
     try:
@@ -99,11 +99,11 @@ def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(_services.
             content=jsonable_encoder({"detail": str(e)}),
         )
     return {      
-        detail: users
+        "detail": users
     }
     
 @user_router.get("/get_user/{user_id}", summary = "get user by id", status_code=200, response_model=schema.User)
-def read_user(user_id: int, db: Session = Depends(_services.get_session)):
+def read_user(user_id: int, db: Session = Depends(_services.get_session), user: models.User = Depends(auth.get_admin)):
     try:
         db_user = crud.get_user(db, user_id=user_id)
         if db_user is None:
@@ -416,6 +416,8 @@ async def deactivate(db: Session = Depends(_services.get_session), user: models.
         if db_user.is_active == False:
             raise HTTPException(status_code=400, detail="This User Is Not Active")
         db_user.is_active = False
+        db_user.is_deactivated = True
+        db_user.deactivated_at = datetime.now()
         db.commit()
         await send_deactivation_email([user_email], db_user)
 
@@ -442,5 +444,61 @@ async def add_new_plan(plan: schema.Plan,
     return {
         "detail": "Plan Added Successfully"
     }
+    
+@user_router.post("/delete_user/{user_id}")
+async def delete_user(user_id: int, db: Session = Depends(_services.get_session), user: models.User = Depends(get_admin)):
+    try:
+       # first check if the user account exists at first.
+        db_user = crud.get_user(db, user_id)
+        user_email = db_user.email
+        db_user_id = crud.get_user_by_email(db, email=user_email)
+
+        user_details = {
+            "first_name": db_user_id.first_name
+        }
+        if db_user is None:
+            raise HTTPException(status_code=404, 
+                                detail="User not found")
+        # delete the user account
+        crud.delete_user(db, user_id)
+        await send_delete_email([user_email], user_details)
+        
+        return {"detail": 
+            "Account was successfully deleted"}
+        
+    except Exception as e:
+        return JSONResponse(
+            status_code= 500,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+    return {
+        "detail": "User Account was successfully deleted!"
+    }
+       
+@user_router.post("/reactivate_user/{user_id}")
+async def reactivate_user(user_id: int, db: Session = Depends(_services.get_session), user: models.User = Depends(get_admin)):
+    try:
+       # first check if the user account exists at first.
+        db_user = crud.get_user(db, user_id)
+        user_email = db_user.email
+        
+        if db_user is None:
+            raise HTTPException(status_code=404, 
+                                detail="User not found")
+        # delete the user account
+        db_user.is_active = True
+        db_user.is_deactivated = False
+        db.commit()
+        # await send_reactivation_email([user_email], db_user)
+        
+    except Exception as e:
+        return JSONResponse(
+            status_code= 500,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+        
+    return {
+        "detail": "User Account was successfully Reactivated!"
+    }    
         
 

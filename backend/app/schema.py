@@ -12,7 +12,6 @@ class UserBase(BaseModel):
     # created_at: datetime
     
 class PaymentBase(BaseModel):
-    amount: float
     minutes: int
     plan: str
 
