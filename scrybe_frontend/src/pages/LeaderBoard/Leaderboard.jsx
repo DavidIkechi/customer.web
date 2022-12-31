@@ -2,13 +2,15 @@ import styles from "./Leaderboard.module.scss";
 import NewDesignSideBar from "../../components/NewDesignSidebar";
 import TopNav from "../../components/TopNav";
 import ApiService from "../../helpers/axioshelp/apis/index";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import SearchIcon from "./images/search-icon.png";
 import ProfileName from "./images/profile-circle.png";
 import notfoundImg from "./images/notfound.svg";
 import CallIcon from "./images/Call-icon.png";
 import LeaderBoardIcon from "./images/leaderboard-icon.png";
 import AgentReport from "../AgentReport";
+import { useSelector } from "react-redux";
+import { getLeaderboard } from "../../redux/leaderboard/leaderboardSlice";
 
 const bgMap = {
   0: "#E6F0FF",
@@ -23,6 +25,8 @@ const colorMap = {
 };
 
 function Leaderboard() {
+  const leaderboardData = useSelector((state) => state.leaderboard);
+
   const [search, setSearch] = useState("");
   const [toggleSidebar, setToggleSidebar] = useState(false);
 
