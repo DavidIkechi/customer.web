@@ -11,6 +11,7 @@ const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(userAPI.middleware, recordAPI.middleware),
+  devTools: true,
 });
 
 export default store;

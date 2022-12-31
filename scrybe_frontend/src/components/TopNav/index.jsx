@@ -1,9 +1,9 @@
 import { PropTypes } from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
-import { localStorageUser } from "../../helpers/localStorageUser";
-import { useFetchUserQuery } from "../../redux/user/rtkquery";
+// import { localStorageUser } from "../../helpers/localStorageUser";
+// import { useFetchUserQuery } from "../../redux/user/rtkquery/authApiSlice";
+import { useCachedUserData } from "../../helpers/cachedUserData/index";
 import Modal from "../Modal";
 import SearchInput from "../SearchInput";
 import SnackBar from "../SnackBar";
@@ -16,17 +16,18 @@ import uploadBtn_icon from "./imgs/uploadBtnIcon.svg";
 import styles from "./topbar.module.scss";
 
 const TopNav = ({ openSidebar, search }) => {
-  const { isLoading, isError, error } = useFetchUserQuery();
+  // const { isLoading, isError, error } = useFetchUserQuery();
   const [show, setShow] = useState(false);
-  const currentUser = localStorageUser();
+  // const currentUser = localStorageUser();
+  const { activeUser: currentUser, isLoading } = useCachedUserData();
   const [modalOpen, setModalOpen] = useState(false);
   const [response, setResponse] = useState({ type: "", message: "" });
 
-  useEffect(() => {
-    if (isError) {
-      setResponse(ErrorHandler(error));
-    }
-  }, [isError, error]);
+  // useEffect(() => {
+  //   if (isError) {
+  //     setResponse(ErrorHandler(error));
+  //   }
+  // }, [isError, error]);
 
   return (
     <div
@@ -62,6 +63,7 @@ const TopNav = ({ openSidebar, search }) => {
                         ? currentUser?.company_logo_url
                         : DummyImg
                     }
+
                     alt="john doe"
                   />
                   <div className={styles.TopNav_user_desktop_nameDetails}>

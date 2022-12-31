@@ -9,8 +9,9 @@ import SearchInput from "../SearchInput";
 import DropDownModal from "./DropdownMenu";
 import styles from "./generalSidebar.module.scss";
 
-import { localStorageUser } from "../../helpers/localStorageUser";
-import { useFetchUserQuery } from "../../redux/user/rtkquery";
+// import { localStorageUser } from "../../helpers/localStorageUser";
+// import { useFetchUserQuery } from "../../redux/user/rtkquery/authApiSlice";
+import { useCachedUserData } from "../../helpers/cachedUserData/index";
 
 /**
  * Wrap your component with this component to get a sidebar with a logo, a search input field and a list of links.
@@ -35,8 +36,8 @@ function NewDesignSideBar({
   closeSidebar,
   toggleSidebar,
 }) {
-  const { isLoading } = useFetchUserQuery();
-  const currentUser = localStorageUser();
+  // const { isLoading } = useFetchUserQuery();
+  const { activeUser: currentUser, isLoading } = useCachedUserData();
   const [show, setShow] = useState(false);
   return (
     <div
