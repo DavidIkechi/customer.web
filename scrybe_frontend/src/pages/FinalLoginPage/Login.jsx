@@ -86,16 +86,18 @@ const Login = () => {
   };
 
   useEffect(() => {
+    console.log(status);
     if (status === "success") {
       dispatch(getUser());
     }
-    if (isSuccess) {
+    if (status === "success") {
       setResponse(
         ErrorHandler({ type: "Success", message: "Login successful" })
       );
       // ignore this line for now
       setTimeout(() => {
         window.location.href = "/dashboard";
+        dispatch(resetUser());
       }, 2500);
     } else if (error) {
       setResponse(ErrorHandler(error));
@@ -104,7 +106,7 @@ const Login = () => {
     // if (hasError) {
     //   setResponse(ErrorHandler(hasError));
     // }
-  }, [status, data, userData, error, dispatch, isSuccess, hasError]);
+  }, [status, data, userData, error, dispatch]);
 
   return (
     <>

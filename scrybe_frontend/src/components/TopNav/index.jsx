@@ -57,7 +57,11 @@ const TopNav = ({ openSidebar, search }) => {
                 <div className={styles.TopNav_user_desktop}>
                   <img
                     className={styles.userimg}
-                    src={currentUser?.company_logo_url}
+                    src={
+                      currentUser?.company_logo_url
+                        ? currentUser?.company_logo_url
+                        : DummyImg
+                    }
                     alt="john doe"
                   />
                   <div className={styles.TopNav_user_desktop_nameDetails}>
