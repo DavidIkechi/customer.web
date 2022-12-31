@@ -99,6 +99,10 @@ async def verify_order(ref_code: str, db: Session = Depends(_services.get_sessio
         
         #push the details into the database.
         trans_crud = crud.store_transaction(db, transaction)
+        top_up_details = {"minutes": get_status['metadata']['minutes'],
+                       "plan": get_status['metadata']['plan']}
+        # top up the users account
+        top_up = crud.top_up(db,user.email, top_up_details)
         # send a mail receipt
         # await send_transaction_receipt([user.email], transaction)
         

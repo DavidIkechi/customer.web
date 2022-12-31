@@ -537,3 +537,32 @@ def store_transaction(db: Session, trans: dict):
 
 def check_transaction(db: Session, ref_code: str):
     return db.query(models.PaymentHistory).filter(models.PaymentHistory.reference == ref_code).first()
+
+def top_up(db: Session, email_address: str, top_details: dict):
+    # get the user 
+    get_user = get_user_by_email(db, email_address)
+    if get_user is None:
+            raise HTTPException(status_code=404, 
+                                detail="User not found")
+    get_company = db.query(models.Company).filter(models.Company.id == get_user.company_id).first()
+    get_plan = get_company.plan
+    get_time = get_company.time_left
+    
+    if get_plan.lower() != "free":
+    # get price for plans.
+        initial_plan = get_plan_by_name(db, get_plan)
+        initial_price = initial_plan.price
+        # top up details
+        top_plan = get_plan_by_name(db, top_details['plan'])
+        top_price = top_plan.price
+        # add the time left for the user.
+        new_time = (initial_price / top_price) * get_time
+    else:
+        new_time = get_time
+    
+    add_mins = float(top_details['minutes']) * 60
+    get_company.time_left = round(new_time + add_mins, 2)
+    get_company.plan = top_details['plan']
+    db.commit()
+    
+    return get_company
