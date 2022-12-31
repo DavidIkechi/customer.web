@@ -1,7 +1,7 @@
 from fastapi import FastAPI, status, Depends, APIRouter,  UploadFile, File, Form, Query, Request
 from typing import List, Union, Optional
 import services as _services
-import models, schema
+import models, schema, json
 from fastapi_pagination import Page, paginate, Params
 from sqlalchemy.orm import Session
 from auth import (
@@ -21,6 +21,7 @@ import crud
 from jwt import main_login, get_access_token, verify_password, refresh
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from emails import send_email, verify_token, send_password_reset_email, password_verif_token
+from datetime import datetime, timedelta, date
 
 
 audio_router = APIRouter(
@@ -100,7 +101,7 @@ def read_sentiment(audio_id: int, db: Session = Depends(_services.get_session), 
 
 #get recent recordings
 @audio_router.get("/recent-recordings", summary = "get user recent recording upload", 
-         status_code = 200, response_model=list[schema.Recordings])
+         status_code = 200)
 def get_recent_recordings(skip: int = 0, limit: int = 5, db: Session = Depends(_services.get_session), user: models.User = Depends(get_active_user)):
     try:
         recordings = db.query(models.Audio).filter(models.Audio.user_id == user.id).order_by(models.Audio.timestamp.desc()).offset(skip).limit(limit).all()

@@ -14,6 +14,8 @@ from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 import os
 import crud
+from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
 from emails import send_email, verify_token, send_password_reset_email, password_verif_token, send_freeTrial_email
 
 load_dotenv()
@@ -23,7 +25,10 @@ def get_transcript(upload_url):
         'authorization': os.getenv("ASSEMBLY_KEY"),
         'content-type': 'application/json'
     }
-    transcript_response = utils.request_transcript(upload_url, header)
+    try:
+        transcript_response = utils.request_transcript(upload_url, header)
+    except Exception as e:
+        return False
 
     return transcript_response
 
