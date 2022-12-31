@@ -59,28 +59,29 @@ async def transcription_mail():
     for user in users:
         this_list = []
         for job in jobs:
-            get_job_id = job.id
+            get_job_id = job.job_id
             audios = crud.get_audios_by_user(db, user.id)
             for i in audios:
-                if i.job.id == get_job_id:
+                if i.job.job_id == get_job_id:
                     audio = i
             if user.id == audio.user_id:
-                get_job = crud.get_job(db, get_job_id)
+                get_job = crud.get_job(db, audio.job.id)
                 if get_job.job_status == "completed" and get_job.mail_sent == False:
-                    this_list.append(audio.job.id)
+                    this_list.append(get_job_id)
                     false_job[str(user.id)] = this_list
                     
     if len(false_job) > 0:
         for item in false_job:
             user = crud.get_user(db, item)
             email = user.email
-            audios = crud.get_audios_by_user(db, item)
  
             await transcription_result_email([email], user)
+
             for j in false_job[item]:
-                job = crud.get_job(db, j)
-                job.mail_sent = True
-                db.commit()
+                jobs = crud.get_jobs_by_job_id(db, j)
+                for i in jobs:
+                    i.mail_sent = True
+                    db.commit()
             
         
         

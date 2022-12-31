@@ -193,7 +193,7 @@ AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
 #     cron_status.check_and_update_jobs()
 
 @app.on_event('startup')
-@repeat_every(seconds = 30, wait_first = True)
+@repeat_every(seconds = 60, wait_first = True)
 async def loader():
     await cron_status.transcription_mail()
     

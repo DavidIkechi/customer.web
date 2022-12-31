@@ -132,14 +132,14 @@ async def transcription_result_email(email: List, instance: User):
             <br>
             <p><b>Dear {first_name},</b></p>
             <p>
-                The results for your recent recordings are ready! 
-                <a href="https://heed.hng.tech/transcriptions/">
+                The results for your uploads are ready! 
+                <a href="https://heed.cx/transcriptions/">
                     Click here to view
                 </a>
             </p>
 
             <p>Alternatively, you can paste the following link in your browser's address bar:</p>
-            <p>"https://heed.hng.tech/transcriptions/"</p>
+            <p>"https://heed.cx/transcriptions/"</p>
 
             <p>Sincerely,</p>
             <p>Heed Team</p>
