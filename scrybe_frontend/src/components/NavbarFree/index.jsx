@@ -11,7 +11,7 @@ function NavBar() {
   // const { data: activeUser, isLoading } = useFetchUserQuery();
 
   const [clicked, setClicked] = useState(false);
-  const { activeUser, isLoading } = useCachedUserData();
+  const { activeUser, isLoading, refetch } = useCachedUserData();
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logoutuser());

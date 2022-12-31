@@ -13,6 +13,7 @@ export const authApiSlice = userAPI.injectEndpoints({
         method: "POST",
         body: loginCredentials,
       }),
+      invalidatesTags: ["User"],
     }),
     registerUser: builder.mutation({
       query: (registerCredentials) => ({
@@ -20,6 +21,7 @@ export const authApiSlice = userAPI.injectEndpoints({
         method: "POST",
         body: registerCredentials,
       }),
+      invalidatesTags: ["User"],
     }),
   }),
 });
