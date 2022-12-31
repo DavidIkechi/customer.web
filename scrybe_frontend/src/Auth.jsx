@@ -1,9 +1,11 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { localStorageUser } from "./helpers/localStorageUser";
+// import { localStorageUser } from "./helpers/localStorageUser";
+import { useCachedUserData } from "./helpers/cachedUserData/index";
 
 export function RequireToken() {
-  let auth = localStorageUser();
-  if (!auth) {
+  const { activeUser } = useCachedUserData();
+
+  if (!activeUser) {
     return <Navigate to="/login" replace />;
   }
 
@@ -11,8 +13,10 @@ export function RequireToken() {
 }
 
 export function Authenticated() {
-  let auth = localStorageUser();
-  if (auth) {
+  // let auth = localStorageUser();
+  const { activeUser } = useCachedUserData();
+
+  if (activeUser) {
     return <Navigate to="/dashboard" replace />;
   }
 

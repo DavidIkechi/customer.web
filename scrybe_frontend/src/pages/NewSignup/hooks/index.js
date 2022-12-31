@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ErrorHandler from "../../../helpers/axioshelp/Utils/ErrorHandler";
-import { registerUser } from "../../../redux/user/userSlice";
+import { useRegisterUserMutation } from "../../../redux/user/rtkquery/authApiSlice";
 
 const createAccount = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -143,6 +143,8 @@ export { completeRegistration };
 const completeRegistration = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { userData, status, error } = useSelector((state) => state.auth);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [registerUser, { isLoading }] = useRegisterUserMutation();
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [company_name, setCompany] = useState("");

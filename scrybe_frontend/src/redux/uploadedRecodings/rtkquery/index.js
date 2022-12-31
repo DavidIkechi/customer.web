@@ -6,7 +6,7 @@ export const recordAPI = createApi({
     baseUrl: "https://api.heed.cx/",
     tagTypes: ["User"],
     prepareHeaders: (headers, { getState }) => {
-      const token = localStorage.getItem("heedAccessToken");
+      const token = getState().auth.token;
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
@@ -15,7 +15,7 @@ export const recordAPI = createApi({
   }),
   endpoints: (builder) => ({
     fetchUserRecordings: builder.query({
-      query: () => "list-audios-by-user",
+      query: () => "audios/list-audios-by-user",
     }),
     deleteRecording: builder.mutation({
       query: (id) => ({

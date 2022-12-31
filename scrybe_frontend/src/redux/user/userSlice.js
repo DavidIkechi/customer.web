@@ -2,10 +2,11 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import authServices from "./service";
 
 const initialState = {
-  userData: JSON.parse(localStorage.getItem("user")) || null,
+  userData: null,
   status: null,
   error: null,
   getUser: null,
+  token: null
 };
 
 // fech user data from backend
@@ -52,6 +53,18 @@ const userSlice = createSlice({
       state.error = null;
       state.getUser = null;
       state.userData = null;
+      state.token = null;
+    },
+    setCredentials: (state, action) => {
+      const { access_token } = action.payload;
+      state.token = access_token;
+    },
+    logoutuser: (state) => {
+      state.status = null;
+      state.error = null;
+      state.getUser = null;
+      state.userData = null;
+      state.token = null;
     },
   },
   extraReducers: (builder) => {
@@ -121,6 +134,8 @@ const userSlice = createSlice({
   },
 });
 
-export const { resetUser } = userSlice.actions;
+export const { resetUser, setCredentials, logoutuser } = userSlice.actions;
 
 export default userSlice.reducer;
+export const selectCurrentUser = (state) => state.auth.user
+export const selectCurrentToken = (state) => state.auth.Token
