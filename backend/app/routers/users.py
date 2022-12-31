@@ -194,7 +194,6 @@ async def email_verification(request: Request, token: str, db: Session = Depends
 @user_router.get("/account", summary = "get user profile details", status_code = 200)
 async def my_profile (db: Session = Depends(_services.get_session), user: models.User = Depends(auth.get_active_user)):
     user_id = user.id
-    print(user.users.id)
     try:
         return {"detail": crud.get_user_profile(db, user_id)}
     except Exception as e:
