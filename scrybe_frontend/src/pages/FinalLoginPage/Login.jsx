@@ -1,22 +1,32 @@
 import { React, useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SnackBar from "../../components/SnackBar";
 // import Loading from "../../components/Loading";
 import styles from "./Login.module.scss";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
-import { useFetchUserQuery } from "../../redux/user/rtkquery";
-import { getUser, loginUser, resetUser } from "../../redux/user/userSlice";
+import {
+  useFetchUserQuery,
+  useLoginUserMutation,
+} from "../../redux/user/rtkquery/authApiSlice";
+// import { getUser, loginUser, resetUser } from "../../redux/user/userSlice";
+import Cookies from "js-cookie";
+import { resetUser, setCredentials } from "../../redux/user/rtkquery/apiSlice";
 import hidden from "./assets/hidden.png";
 import logo from "./assets/logo.png";
 import visible from "./assets/visible.png";
 
 const Login = () => {
-  const { userData, status, error } = useSelector((state) => state.auth);
-  const { data, isSuccess, error: hasError } = useFetchUserQuery();
+  // const { userData, status, error } = useSelector((state) => state.auth);
+  const { fetchUser, isSuccess, error: hasError } = useFetchUserQuery();
+  const [
+    loginUser,
+    { data: loginData, error: loginError, isSuccess: loginSuccess },
+  ] = useLoginUserMutation();
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const emailTest = new RegExp(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/);
   const passwordTest = new RegExp(/^["0-9a-zA-Z!@#$&()\\-`.+,/"]{8,}$/);
@@ -82,29 +92,39 @@ const Login = () => {
     formData.append("password", password);
 
     // login user redux hook
-    dispatch(loginUser(formData));
+    dispatch(loginUser(formData).unwrap());
   };
 
   useEffect(() => {
-    if (status === "success") {
-      dispatch(getUser());
-    }
-    if (isSuccess) {
+    // if (loginSuccess) {
+    //   dispatch(fetchUser());
+    // }
+    if (loginSuccess) {
       setResponse(
         ErrorHandler({ type: "Success", message: "Login successful" })
       );
+      dispatch(setCredentials(loginData));
+      localStorage.setItem("heedAccessToken", loginData.access_token);
+      Cookies.set("heedAccessToken", loginData.access_token);
+
       // ignore this line for now
       setTimeout(() => {
-        window.location.href = "/dashboard";
+        navigate("/dashboard");
       }, 2500);
-    } else if (error) {
-      setResponse(ErrorHandler(error));
+    } else if (loginError) {
+      setResponse(ErrorHandler(loginError));
       dispatch(resetUser());
     }
-    // if (hasError) {
-    //   setResponse(ErrorHandler(hasError));
-    // }
-  }, [status, data, userData, error, dispatch, isSuccess, hasError]);
+  }, [
+    loginData,
+    loginError,
+    dispatch,
+    isSuccess,
+    hasError,
+    loginSuccess,
+    fetchUser,
+    navigate,
+  ]);
 
   return (
     <>
