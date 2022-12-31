@@ -121,20 +121,16 @@ def upload_user_image(db:Session , user_id:int, image_file:UploadFile):
     return {"image_url": image_url}
 
     
-def delete_user(db: Session, user_id: int, current_user):
-    deleted_user = db.query(models.User).filter(models.User.id == user_id).first()
-    if deleted_user is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f"The user with id {user_id} does not exist")
-    if user_id != current_user.id:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , 
-                                detail="Not authorized to perform requested action")
-        
-    user_profile= db.query(models.UserProfile).filter(models.UserProfile.id == deleted_user.id).first()
-    db.delete(deleted_user)
-    db.delete(user_profile)
+def delete_user(db: Session, user_id: int):
+    # the company is the base model. Like the very top model. 
+    # so deleting from there would affect every table.
+    get_company = get_user(db, user_id)
+    if get_company is None:
+            raise HTTPException(status_code=404, 
+                                detail="User not found")
+    deleted_user = db.query(models.Company).filter(models.Company.id == get_company.company_id).delete()
     db.commit()
-    return {"message":f"User {deleted_user.first_name} with id:{deleted_user.id} has been deleted"}
+    return {"message":"Success"}
 
 def get_audio(db: Session, audio_id: int):
     return db.query(models.Audio).filter(models.Audio.id == audio_id).first()
@@ -509,3 +505,64 @@ def free_user_by_email(db: Session, email: str):
     
 def get_distinct_ids(db: Session):
     return db.execute("SELECT DISTINCT job_id FROM jobs").all()
+
+def add_plan(db: Session, plan: schema.Plan):
+    db_plan = models.ProductPlan(name = plan.name.lower(), price = plan.price, features = plan.features)
+    db.add(db_plan)
+    db.commit()
+    db.refresh(db_plan)
+    return db_plan
+
+def get_plan_by_name(db: Session, plan_name: str):
+    return db.query(models.ProductPlan).filter(models.ProductPlan.name == plan_name).first()
+
+
+def store_transaction(db: Session, trans: dict):
+    db_trans = models.PaymentHistory(
+        transaction_id = trans['trans_id'],
+        reference = trans['reference'],
+        amount = trans['amount'],
+        plan = trans['plan'],
+        time_paid = trans['time_paid'],
+        minutes = trans['minutes'],
+        payment_type = trans['payment_channel'],
+        email = trans['email_address']
+    )
+    
+    db.add(db_trans)
+    db.commit()
+    db.refresh(db_trans)
+    
+    return db_trans
+
+def check_transaction(db: Session, ref_code: str):
+    return db.query(models.PaymentHistory).filter(models.PaymentHistory.reference == ref_code).first()
+
+def top_up(db: Session, email_address: str, top_details: dict):
+    # get the user 
+    get_user = get_user_by_email(db, email_address)
+    if get_user is None:
+            raise HTTPException(status_code=404, 
+                                detail="User not found")
+    get_company = db.query(models.Company).filter(models.Company.id == get_user.company_id).first()
+    get_plan = get_company.plan
+    get_time = get_company.time_left
+    
+    if get_plan.lower() != "free":
+    # get price for plans.
+        initial_plan = get_plan_by_name(db, get_plan)
+        initial_price = initial_plan.price
+        # top up details
+        top_plan = get_plan_by_name(db, top_details['plan'])
+        top_price = top_plan.price
+        # add the time left for the user.
+        new_time = (initial_price / top_price) * get_time
+    else:
+        new_time = get_time
+    
+    add_mins = float(top_details['minutes']) * 60
+    get_company.time_left = round(new_time + add_mins, 2)
+    get_company.plan = top_details['plan']
+    db.commit()
+    
+    return get_company

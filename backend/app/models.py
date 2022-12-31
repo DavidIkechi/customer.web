@@ -32,6 +32,8 @@ class User(Base):
     is_verified = Column(Boolean, default=False)
     company_id = Column(Integer, ForeignKey("companies.id", ondelete='CASCADE'))
     created_at = Column(DateTime(timezone=True), default=datetime.now())
+    is_deactivated = Column(Boolean, default=False)
+    deactivated_at = Column(DateTime(timezone=True), default=datetime.now())
 
 
 class Company(Base):
@@ -97,10 +99,8 @@ class uploaded_Job(Base):
 
 class History(Base):
     __tablename__ = "history"
-
     id = Column(Integer, primary_key=True, index=True)
     sentiment_result = Column(Enum("Positive", "Negative", "Neutral"), index=True)
-
     audio_name = Column(String(255), index=True)
     agent_name = Column(String(255), index=True)
     date_uploaded = Column(DateTime, default=datetime.utcnow(), index=True)
@@ -154,4 +154,21 @@ class ProductPlan(Base):
     name = Column(String(255), nullable=False)
     price = Column(Float, index=True, nullable=False)
     features = Column(JSON, nullable=False)
+    
+    
+class PaymentHistory(Base):
+    __tablename__ = "payment_history"
+    id = Column(Integer, primary_key=True, index=True)
+    transaction_id = Column(Integer, index= True)
+    reference = Column(String(255), nullable= True)
+    amount = Column(Float, index=True, nullable=False)
+    plan = Column(String(255), nullable=False)
+    time_paid = Column(DateTime(timezone=True))
+    minutes = Column(Integer, index = True)
+    payment_type = Column(String(255), nullable= True)
+    email = Column(String(255), nullable= True)
+    
+    
+   
+    
     
