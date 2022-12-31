@@ -9,6 +9,8 @@ from auth import (
     get_admin,
     get_current_user
 )
+from datetime import datetime, timedelta, date
+
 import auth
 from . import utility as utils
 from fastapi.responses import JSONResponse
@@ -17,7 +19,7 @@ import os
 import cloudinary
 import cloudinary.uploader
 from BitlyAPI import shorten_urls
-import crud
+import crud, json
 from jwt import main_login, get_access_token, verify_password, refresh
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from emails import send_email, verify_token, send_password_reset_email, password_verif_token
@@ -36,7 +38,10 @@ def download (id: Union[int, str], db: Session = Depends(_services.get_session),
         db_audio = crud.get_freeaudio(db, audio_id=id)
 
         if db_audio is None:
-            raise HTTPException(status_code=404, detail="No Audio With This ID")
+            return JSONResponse(
+                status_code= 500,
+                content=jsonable_encoder({"detail": "Sorry, this transcript is not available for download"}),
+            )        
         else:
             positivity_score = float(db_audio.positivity_score)
             negativity_score = float(db_audio.negativity_score)

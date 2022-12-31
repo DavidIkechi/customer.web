@@ -1,5 +1,5 @@
 from fastapi import (BackgroundTasks, UploadFile,File, Form, Depends, HTTPException, status)
-from fastapi_mail import FastMail, ConnectionConfig, MessageSchema
+from fastapi_mail import FastMail, ConnectionConfig, MessageSchema, MessageType
 from typing import List, Dict, Any
 from jose import jwt, JWTError
 from fastapi.exceptions import HTTPException
@@ -57,7 +57,7 @@ async def send_email(email: List, instance: User):
         subject = "Account Verification",
         recipients =email,
         template_body=emails.get("body"),
-        subtype='html',
+        subtype=MessageType.html,
     )
 
     fm =FastMail(conf)
@@ -102,7 +102,7 @@ async def send_password_reset_email(email: List, instance: User):
         subject = "Password Reset",
         recipients =email,
         template_body=emails.get("body"),
-        subtype='html',
+        subtype=MessageType.html,
     )
 
     fm =FastMail(conf)
@@ -156,3 +156,86 @@ async def transcription_result_email(email: List, instance: User):
 
     fm =FastMail(conf)
     await fm.send_message(message=message)
+async def send_deactivation_email(email: List, instance: User):
+
+    emails: EmailSchema = {
+        "body": {
+            "firstname": instance.first_name
+        } 
+    }
+
+    message = MessageSchema(
+        subject = "Account Deactivation",
+        recipients =email,
+        template_body=emails.get("body"),
+        subtype=MessageType.html,
+    )
+
+    fm =FastMail(conf)
+    await fm.send_message(message=message, template_name='Deactivation/index.html')
+
+    return {
+        "detail": "Your Account has been deactivated successfully"
+    }
+
+async def send_delete_email(email: List, instance: dict):
+
+    emails: EmailSchema = {
+        "body": {
+            "firstname": instance["first_name"]
+        } 
+    }
+
+    message = MessageSchema(
+        subject = "Account Deletion",
+        recipients =email,
+        template_body=emails.get("body"),
+        subtype=MessageType.html,
+    )
+
+    fm =FastMail(conf)
+    await fm.send_message(message=message, template_name='Deletion/index.html')
+
+
+async def verify_token(token: str, db: Session):
+    try:
+        payload = jwt.decode(token, os.getenv('SECRET'), algorithms=['HS256'])
+        user = get_user_by_email(db, payload.get("email"))
+
+    except Exception as e:
+        print(e)
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="The token is invalid or has expired!",
+            headers={"WWW.Authenticate": "Bearer"}
+        )
+    return user
+
+
+async def send_freeTrial_email(email: List, instance: User):
+    token_data = {
+        'email': instance.email,
+        # 'username': instance.username
+    }
+
+    token = jwt.encode(token_data, os.getenv('SECRET'), algorithm='HS256')
+
+
+    template = f"""
+        <div>
+                    <h3>Free Trial Result</h3>
+                    <br>
+                    <p>Dummy Free Trial Email</p>
+        </div>
+    """
+
+    message = MessageSchema(
+        subject = "Free Trial Result",
+        recipients =email,
+        body = template,
+        subtype = MessageType.html,
+    )
+
+    fm =FastMail(conf)
+    await fm.send_message(message=message)
+
