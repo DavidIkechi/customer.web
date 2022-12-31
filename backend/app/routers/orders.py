@@ -38,13 +38,25 @@ async def create_order(userPayment: schema.PaymentBase, db: Session = Depends(_s
         # get amount for the plan.
         get_plan_details = crud.get_plan_by_name(db, userPayment.plan.lower())
         if get_plan_details is None:
-            raise HTTPException(status_code=400, 
-                                detail="Sorry, we do not have that plan")
+            return JSONResponse(
+                status_code= 400,
+                content=jsonable_encoder({"detail": "Sorry, we do not have that plan"}),
+            )
+            
+        
             
         amount = get_plan_details.price * userPayment.minutes * 100
-        res = trans.initialize(email= user_email, amount = amount, 
-                               metadata = {'minutes': userPayment.minutes, 'plan': userPayment.plan},
-                               callback_url= "https://heed.hng.tech/paymentSuccess")
+        if amount < 10:
+            return JSONResponse(
+                status_code= 400,
+                content=jsonable_encoder({"detail": "Sorry, minimum order you can place is $10"}),
+            )
+        
+        # initialise the transaction
+        res = trans.initialize(email= user_email, amount = amount,
+                               metadata = {'minutes': userPayment.minutes, 'plan': userPayment.plan,
+                                           'cancel_action': "https://heed.cx/paymentFailure"},
+                               callback_url= "https://heed.cx/paymentSuccess")
         
         if res['status'] == True:
         # get the authorization url, access_code, and also the reference number.
@@ -52,8 +64,10 @@ async def create_order(userPayment: schema.PaymentBase, db: Session = Depends(_s
             access_code = res['data']['access_code']
             reference = res['data']['reference']
         else:
-            raise HTTPException(status_code=400, 
-                                detail="An Error occurred while trying to initialize the transaction")
+            return JSONResponse(
+                status_code= 400,
+                content=jsonable_encoder({"detail": "An error occured while trying to initialise payment, please try again"}),
+            )
 
             
     except Exception as e:
