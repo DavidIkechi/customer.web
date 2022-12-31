@@ -63,7 +63,8 @@ const TopNav = ({ openSidebar, search }) => {
                         ? currentUser?.company_logo_url
                         : DummyImg
                     }
-                    alt={currentUser?.first_name}
+
+                    alt="john doe"
                   />
                   <div className={styles.TopNav_user_desktop_nameDetails}>
                     <div className={styles.TopNav_user_desktop_name_arr}>
