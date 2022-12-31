@@ -38,8 +38,8 @@ const getuser = async () => {
   const response = await axios.get(`users/account`, {
     headers,
   });
-  if (response?.data?.first_name) {
-    localStorage.setItem("user", JSON.stringify(response.data));
+  if (response?.data?.detail?.first_name) {
+    localStorage.setItem("user", JSON.stringify(response.data.detail));
   } else {
     localStorage.removeItem("user");
   }

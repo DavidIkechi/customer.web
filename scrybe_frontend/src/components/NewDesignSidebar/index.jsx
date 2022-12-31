@@ -133,7 +133,11 @@ function NewDesignSideBar({
                 <div className={styles.generalSidebar_user_desktop}>
                   <img
                     className={styles.userimg}
-                    src={currentUser?.company_logo_url}
+                    src={
+                      currentUser?.company_logo_url
+                        ? currentUser?.company_logo_url
+                        : DummyImg
+                    }
                     alt={currentUser?.first_name}
                   />
                   <div
