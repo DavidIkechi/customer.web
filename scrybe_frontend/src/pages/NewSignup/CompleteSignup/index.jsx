@@ -11,7 +11,7 @@ const CompleteSignup = () => {
 
   return (
     <>
-      {completeSignup.response.message !== "" && (
+      {completeSignup.response?.message !== "" && (
         <SnackBar
           response={completeSignup.response}
           setResponse={completeSignup.setResponse}
