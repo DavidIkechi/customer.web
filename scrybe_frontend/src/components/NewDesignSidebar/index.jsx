@@ -5,13 +5,12 @@ import dropdown_arr from "./icons/dropdownArr.svg";
 import DummyImg from "./icons/dummy.png";
 import logoSVG from "./icons/logo.svg";
 
+import DropDownModal from "../DropdownMenu";
 import SearchInput from "../SearchInput";
-import DropDownModal from "./DropdownMenu";
 import styles from "./generalSidebar.module.scss";
 
-// import { localStorageUser } from "../../helpers/localStorageUser";
-// import { useFetchUserQuery } from "../../redux/user/rtkquery/authApiSlice";
-import { useCachedUserData } from "../../helpers/cachedUserData/index";
+import { useSelector } from "react-redux";
+import { selectUserState } from "../../redux/user/userSlice";
 
 /**
  * Wrap your component with this component to get a sidebar with a logo, a search input field and a list of links.
@@ -36,8 +35,9 @@ function NewDesignSideBar({
   closeSidebar,
   toggleSidebar,
 }) {
-  // const { isLoading } = useFetchUserQuery();
-  const { activeUser: currentUser, isLoading } = useCachedUserData();
+  const { userData: currentUser, isLoading } = useSelector((state) =>
+    selectUserState(state)
+  );
   const [show, setShow] = useState(false);
   return (
     <div

@@ -1,11 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
-// import { localStorageUser } from "./helpers/localStorageUser";
-import { useCachedUserData } from "./helpers/cachedUserData/index";
 
 export function RequireToken() {
-  const { activeUser } = useCachedUserData();
+  const auth = sessionStorage.getItem("heedAccessToken");
 
-  if (!activeUser) {
+  if (!auth) {
     return <Navigate to="/login" replace />;
   }
 
@@ -13,10 +11,9 @@ export function RequireToken() {
 }
 
 export function Authenticated() {
-  // let auth = localStorageUser();
-  const { activeUser } = useCachedUserData();
+  const auth = sessionStorage.getItem("heedAccessToken");
 
-  if (activeUser) {
+  if (auth) {
     return <Navigate to="/dashboard" replace />;
   }
 
