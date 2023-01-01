@@ -194,7 +194,6 @@ async def email_verification(request: Request, token: str, db: Session = Depends
 @user_router.get("/account", summary = "get user profile details", status_code = 200)
 async def my_profile (db: Session = Depends(_services.get_session), user: models.User = Depends(auth.get_active_user)):
     user_id = user.id
-    print(user.users.id)
     try:
         return {"detail": crud.get_user_profile(db, user_id)}
     except Exception as e:
@@ -501,3 +500,17 @@ async def reactivate_user(user_id: int, db: Session = Depends(_services.get_sess
     return {
         "detail": "User Account was successfully Reactivated!"
     }    
+
+@user_router.get("/get_all_plans", summary = "get all plans", status_code= 200)
+def read_plans(skip: int = 0, limit: int = 100, db: Session = Depends(_services.get_session), 
+               user: models.User = Depends(get_active_user)):
+    try:
+        plans = crud.get_all_plans(db, skip=skip, limit=limit)
+    except Exception as e:
+       return JSONResponse(
+            status_code= 500,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+    return {      
+        "detail": plans
+    }

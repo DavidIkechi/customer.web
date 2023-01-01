@@ -23,9 +23,8 @@ def generate_uuid():
 
 def is_admin_check(email_address: str):
     admin_list = ['davidakwuruu@gmail.com','tekkieware@gmail.com', 
-                  'collinsakpaka@gmail.com','dprincecoder@gmail.com', 
-                  'oyindamoladekeye@gmail.com', 'daakwuru@gmail.com']
-    print(email_address.lower() in admin_list)
+                  'collinsakpaka@gmail.com','dprincecoder@gmail.com']
+    
     return email_address.lower() in admin_list
 
 
@@ -136,7 +135,7 @@ def get_audio(db: Session, audio_id: int):
     return db.query(models.Audio).filter(models.Audio.id == audio_id).first()
 
 def get_freeaudio(db: Session, audio_id: int):
-    return db.query(models.Audio).filter(models.Audio.job_id == id).first()
+    return db.query(models.Audio).filter(models.Audio.job_id == audio_id).first()
 
 def get_freetrial(db: Session, id: int):
     return db.query(models.FreeTrial).filter(models.FreeTrial.transcript_id == id).first()
@@ -545,8 +544,10 @@ def top_up(db: Session, email_address: str, top_details: dict):
             raise HTTPException(status_code=404, 
                                 detail="User not found")
     get_company = db.query(models.Company).filter(models.Company.id == get_user.company_id).first()
-    get_plan = get_company.plan
-    get_time = get_company.time_left
+    # get_plan = get_company.plan
+    # get_time = get_company.time_left
+    get_plan = get_user.company.plan
+    get_time = get_user.company.time_left
     
     if get_plan.lower() != "free":
     # get price for plans.
@@ -561,8 +562,13 @@ def top_up(db: Session, email_address: str, top_details: dict):
         new_time = get_time
     
     add_mins = float(top_details['minutes']) * 60
+    get_company = db.query(models.Company).filter(models.Company.id == get_user.company_id).first()
+
     get_company.time_left = round(new_time + add_mins, 2)
     get_company.plan = top_details['plan']
     db.commit()
     
     return get_company
+
+def get_all_plans(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.ProductPlan).offset(skip).limit(limit).all()

@@ -1,13 +1,12 @@
 import { PropTypes } from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
-import { localStorageUser } from "../../helpers/localStorageUser";
-import { useFetchUserQuery } from "../../redux/user/rtkquery";
+import { selectUserState } from "../../redux/user/userSlice";
+import DropDownModal from "../DropdownMenu";
 import Modal from "../Modal";
 import SearchInput from "../SearchInput";
 import SnackBar from "../SnackBar";
-import DropDownModal from "./DropdownMenu";
 import dropdown_arr from "./imgs/dropdownArr.svg";
 import DummyImg from "./imgs/dummy.png";
 import logo from "./imgs/logo.svg";
@@ -16,17 +15,12 @@ import uploadBtn_icon from "./imgs/uploadBtnIcon.svg";
 import styles from "./topbar.module.scss";
 
 const TopNav = ({ openSidebar, search }) => {
-  const { isLoading, isError, error } = useFetchUserQuery();
   const [show, setShow] = useState(false);
-  const currentUser = localStorageUser();
+  const { userData: currentUser, isLoading } = useSelector((state) =>
+    selectUserState(state)
+  );
   const [modalOpen, setModalOpen] = useState(false);
   const [response, setResponse] = useState({ type: "", message: "" });
-
-  useEffect(() => {
-    if (isError) {
-      setResponse(ErrorHandler(error));
-    }
-  }, [isError, error]);
 
   return (
     <div
@@ -62,7 +56,7 @@ const TopNav = ({ openSidebar, search }) => {
                         ? currentUser?.company_logo_url
                         : DummyImg
                     }
-                    alt="john doe"
+                    alt={currentUser?.first_name}
                   />
                   <div className={styles.TopNav_user_desktop_nameDetails}>
                     <div className={styles.TopNav_user_desktop_name_arr}>

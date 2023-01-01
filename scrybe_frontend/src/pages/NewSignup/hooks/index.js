@@ -2,7 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ErrorHandler from "../../../helpers/axioshelp/Utils/ErrorHandler";
-import { registerUser } from "../../../redux/user/userSlice";
+// import { useRegisterUserMutation } from "../../../redux/user/rtkquery/authApiSlice";
+import {
+  registerUser,
+  resetUser,
+  selectUserState,
+} from "../../../redux/user/userSlice";
 
 const createAccount = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -142,7 +147,11 @@ export { completeRegistration };
 
 const completeRegistration = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { userData, status, error } = useSelector((state) => state.auth);
+  const { userData, status, error } = useSelector((state) =>
+    selectUserState(state)
+  );
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  // const [registerUser, { isLoading }] = useRegisterUserMutation();
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [company_name, setCompany] = useState("");
@@ -207,14 +216,14 @@ const completeRegistration = () => {
   useEffect(() => {
     if (status === "success") {
       localStorage.clear();
-      setResponse(
-        ErrorHandler({ type: "Success", message: "Registration Successful" })
-      );
+      setResponse(ErrorHandler(userData));
       setTimeout(() => {
         navigate("/verify-signup");
       }, 2500);
+      dispatch(resetUser());
     } else if (status === "failed") {
       setResponse(ErrorHandler(error));
+      dispatch(resetUser());
     }
   }, [userData, status, error, navigate, dispatch]);
 
