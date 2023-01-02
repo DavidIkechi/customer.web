@@ -1,8 +1,14 @@
 import axios from "axios";
 
+const token = localStorage.getItem("heedAccessToken");
+const headers = {
+  "content-type": "application/json",
+  Authorization: `Bearer ${token}`,
+};
+
 const getLeaderboard = async () => {
-  const response = await axios.get("agents/leaderboard");
-  return response?.detail;
+  const response = await axios.get("agents/leaderboard", { headers });
+  return response?.data?.detail;
 };
 
 const leaderboardService = { getLeaderboard };

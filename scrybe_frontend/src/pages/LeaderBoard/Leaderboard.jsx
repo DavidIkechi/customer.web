@@ -1,7 +1,6 @@
 import styles from "./Leaderboard.module.scss";
 import NewDesignSideBar from "../../components/NewDesignSidebar";
 import TopNav from "../../components/TopNav";
-import ApiService from "../../helpers/axioshelp/apis/index";
 import { useState, useEffect } from "react";
 import SearchIcon from "./images/search-icon.png";
 import ProfileName from "./images/profile-circle.png";
@@ -9,7 +8,7 @@ import notfoundImg from "./images/notfound.svg";
 import CallIcon from "./images/Call-icon.png";
 import LeaderBoardIcon from "./images/leaderboard-icon.png";
 import AgentReport from "../AgentReport";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getLeaderboard } from "../../redux/leaderboard/leaderboardSlice";
 
 const bgMap = {
@@ -25,7 +24,11 @@ const colorMap = {
 };
 
 function Leaderboard() {
-  const leaderboardData = useSelector((state) => state.leaderboard);
+  const leaderboardData = useSelector(
+    (state) => state.leaderboard.leaderboardData
+  );
+  const dispatch = useDispatch();
+  console.log(leaderboardData);
 
   const [search, setSearch] = useState("");
   const [toggleSidebar, setToggleSidebar] = useState(false);
@@ -36,27 +39,28 @@ function Leaderboard() {
   const [range, setRange] = useState("week");
 
   async function accessData() {
-    const response = await ApiService.Leaderboard();
-    const arr = response.data.week.Top3_Agents;
-    setData(response.data);
+    const response = leaderboardData;
+    const arr = response?.data?.week?.Top3_Agents;
+    setData(response?.data);
     setLeaderboard(arr);
-    const otherAgents = response.data.week.Other_Agents;
+    const otherAgents = response?.data?.week?.Other_Agents;
     setOtherAgent(otherAgents);
   }
 
   useEffect(() => {
+    dispatch(getLeaderboard());
     accessData();
   }, []);
 
   useEffect(() => {
     if (data) {
       if (range === "week") {
-        setLeaderboard(data.week.Top3_Agents);
-        setOtherAgent(data.week.Other_Agents);
+        setLeaderboard(data?.week?.Top3_Agents);
+        setOtherAgent(data?.week?.Other_Agents);
       }
       if (range === "month") {
-        setLeaderboard(data.month.Top3_Agents);
-        setOtherAgent(data.month.Other_Agents);
+        setLeaderboard(data?.month?.Top3_Agents);
+        setOtherAgent(data?.month?.Other_Agents);
       }
     }
   }, [range, data]);

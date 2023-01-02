@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import leaderboardService from "./axiosRequest";
 
 const initialState = {
-  leaderboardData: null,
+  leaderboardData: [],
   status: null,
   error: null,
   loading: null,
@@ -19,7 +19,7 @@ export const getLeaderboard = createAsyncThunk(
   }
 );
 
-const leaderboadrSlice = createSlice({
+const leaderboadSlice = createSlice({
   name: "leaderboard",
   initialState,
   reducers: {},
@@ -29,9 +29,9 @@ const leaderboadrSlice = createSlice({
         state.loading = "loading";
       })
       .addCase(getLeaderboard.fulfilled, (state, action) => {
-        state.leaderboardData = action.payload;
         state.status = "success";
         state.error = null;
+        state.leaderboardData = action.payload;
         state.loading = null;
       })
       .addCase(getLeaderboard.rejected, (state, action) => {
@@ -43,4 +43,4 @@ const leaderboadrSlice = createSlice({
   },
 });
 
-export default leaderboadrSlice.reducer;
+export default leaderboadSlice.reducer;

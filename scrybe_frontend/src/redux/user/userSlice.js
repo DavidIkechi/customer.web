@@ -6,7 +6,7 @@ const initialState = {
   status: null,
   error: null,
   getUser: null,
-  token: null
+  token: null,
 };
 
 // fech user data from backend
@@ -137,5 +137,5 @@ const userSlice = createSlice({
 export const { resetUser, setCredentials, logoutuser } = userSlice.actions;
 
 export default userSlice.reducer;
-export const selectCurrentUser = (state) => state.auth.user
-export const selectCurrentToken = (state) => state.auth.Token
+export const selectCurrentUser = (state) => state.auth.user;
+export const selectCurrentToken = (state) => state.auth.Token;
