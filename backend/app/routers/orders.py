@@ -96,13 +96,8 @@ async def verify_order(ref_code: str, db: Session = Depends(_services.get_sessio
             
         veri = paystack.transaction().verify(reference = ref_code)
         get_status = veri['data']
-        if get_status['status'].strip().lower() != "success":
-            return JSONResponse(
-                status_code= 400,
-                content=jsonable_encoder({"detail": "Sorry, your payment failed, please try again"}),
-            )
         transaction = {"amount": get_status['amount']/100,
-                       "trans_id": get_status['id'],
+                       "trans_id": str(get_status['id']),
                        "reference": get_status['reference'],
                        "minutes": get_status['metadata']['minutes'],
                        "plan": get_status['metadata']['plan'],
@@ -111,6 +106,15 @@ async def verify_order(ref_code: str, db: Session = Depends(_services.get_sessio
                        "email_address": user.email
                     }
         
+        if get_status['status'].strip().lower() != "success":
+            # send a mail receipt
+            # await send_transaction_failure_receipt([user.email], transaction)
+            return JSONResponse(
+                status_code= 400,
+                content=jsonable_encoder({"detail": "Sorry, your payment failed, please try again"}),
+            )
+        
+        
         #push the details into the database.
         trans_crud = crud.store_transaction(db, transaction)
         top_up_details = {"minutes": get_status['metadata']['minutes'],
@@ -118,7 +122,7 @@ async def verify_order(ref_code: str, db: Session = Depends(_services.get_sessio
         # top up the users account
         top_up = crud.top_up(db,user.email, top_up_details)
         # send a mail receipt
-        # await send_transaction_receipt([user.email], transaction)
+        # await send_transaction_success_receipt([user.email], transaction)
         
     except Exception as e:
         return JSONResponse(

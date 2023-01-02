@@ -74,7 +74,10 @@ def read_sentiment(audio_id: int, db: Session = Depends(_services.get_session), 
     try:
         db_audio = crud.get_audio(db, audio_id=audio_id)
         if db_audio is None:
-            raise HTTPException(status_code=404, detail="Sentiment does not exist")
+            return JSONResponse(
+                status_code= 500,
+                content=jsonable_encoder({"detail": "sentiment does not exists"}),
+            )        
         else:
             positivity_score = float(db_audio.positivity_score)
             negativity_score = float(db_audio.negativity_score)
