@@ -1,27 +1,29 @@
 import { React, useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SnackBar from "../../components/SnackBar";
 // import Loading from "../../components/Loading";
 import styles from "./Login.module.scss";
 
 import { useDispatch, useSelector } from "react-redux";
 import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
-<<<<<<< HEAD
-import { useFetchUserQuery } from "../../redux/user/rtkquery";
-import { getUser, loginUser, resetUser } from "../../redux/user/userSlice";
-=======
-import { useFetchUserQuery } from "../../redux/baseEndpoints";
-import { getUser, loginUser } from "../../redux/user/userSlice";
->>>>>>> 61beb8878b59897d187fa1fb25683b12d1e46989
+// import { useFetchUserQuery } from "../../redux/user/rtkquery";
+import {
+  loginUser,
+  resetUser,
+  selectUserState,
+} from "../../redux/user/userSlice";
 import hidden from "./assets/hidden.png";
 import logo from "./assets/logo.png";
 import visible from "./assets/visible.png";
 
 const Login = () => {
-  const { userData, status, error } = useSelector((state) => state.auth);
-  const { data, isSuccess, error: hasError } = useFetchUserQuery();
+  const { userData, status, error } = useSelector((state) =>
+    selectUserState(state)
+  );
+  // const { data, isSuccess, error: hasError } = useFetchUserQuery();
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const emailTest = new RegExp(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/);
   const passwordTest = new RegExp(/^["0-9a-zA-Z!@#$&()\\-`.+,/"]{8,}$/);
@@ -92,24 +94,19 @@ const Login = () => {
 
   useEffect(() => {
     if (status === "success") {
-      dispatch(getUser());
-    }
-    if (isSuccess) {
       setResponse(
         ErrorHandler({ type: "Success", message: "Login successful" })
       );
       // ignore this line for now
       setTimeout(() => {
         window.location.href = "/dashboard";
+        dispatch(resetUser());
       }, 2500);
     } else if (error) {
       setResponse(ErrorHandler(error));
       dispatch(resetUser());
     }
-    // if (hasError) {
-    //   setResponse(ErrorHandler(hasError));
-    // }
-  }, [status, data, userData, error, dispatch, isSuccess, hasError]);
+  }, [status, userData, error, dispatch, navigate]);
 
   return (
     <>

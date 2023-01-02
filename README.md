@@ -6,7 +6,7 @@
 
 ![Heed Logo](/scrybe_frontend/src/assets/heed_logo_with_text.svg)
 
-This repo contains both the Front and Back end for the ![Heed app](https://heed.hng.tech)
+This repo contains both the Front and Back end for the <a href="https://heed.cx/" target="blank">Heed App</a>
 
 ## Current Setup (This project uses:)
 
@@ -18,7 +18,7 @@ This repo contains both the Front and Back end for the ![Heed app](https://heed.
 
 ## Deployment to Live Link
 
-- Repo deploys to ![https://heed.hng.tech](https://heed.hng.tech) from branch "main" and Continuous deployment is setup with Jenkins
+- Repo deploys to <a href="https://heed.cx/" target="blank">Heed App</a>  from branch "main" and Continuous deployment is setup with Jenkins
 
 ## Contributing - Frontend
 

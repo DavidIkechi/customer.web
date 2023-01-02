@@ -14,6 +14,8 @@ from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 import os
 import crud
+from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
 from emails import send_email, verify_token, send_password_reset_email, password_verif_token, send_freeTrial_email
 
 load_dotenv()
@@ -23,7 +25,10 @@ def get_transcript(upload_url):
         'authorization': os.getenv("ASSEMBLY_KEY"),
         'content-type': 'application/json'
     }
-    transcript_response = utils.request_transcript(upload_url, header)
+    try:
+        transcript_response = utils.request_transcript(upload_url, header)
+    except Exception as e:
+        return False
 
     return transcript_response
 
@@ -60,7 +65,7 @@ def view_transcript(job_id: Union[int, str], db: Session = Depends(_services.get
         sentiment_result = crud.analyse_and_store_audio(db, job_id, user_id)
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
 
@@ -107,25 +112,19 @@ async def view_transcript(transcript_id: Union[int, str], db: Session = Depends(
             total_score = positivity_score + neutrality_score + negativity_score
             average_score = round((positivity_score/ total_score) * 10, 1)
 
-            ### Sending Email
-            if not transcript.email:
-                return JSONResponse(
-                status_code= 406,
-                content=jsonable_encoder({"detail": "No Such Email."})
-                )
-            await send_freeTrial_email([transcript.email], transcript)
     except Exception as e:
         return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
+            status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
 
-    return {"transcription": transcripted_word,"most positive": most_positive_sentences,         
+    return {"detail": {"transcription": transcripted_word,"most positive": most_positive_sentences,         
             "most_negative_score": most_negative_sentences,  
             "overall_sentiment_result": overall_sentiment,
             "average_score": average_score,
             "filename":current_status_filename, "filesize":current_status_size, 
             "status": transcript_audio['status']}
+    }
 
 
 

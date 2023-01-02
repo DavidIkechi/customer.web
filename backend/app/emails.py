@@ -123,31 +123,44 @@ def password_verif_token(token):
     return email
 
 async def send_deactivation_email(email: List, instance: User):
-    token_data = {
-        'email': instance.email,
-        # 'username': instance.username
+
+    emails: EmailSchema = {
+        "body": {
+            "firstname": instance.first_name
+        } 
     }
-
-    token = jwt.encode(token_data, os.getenv('SECRET'), algorithm='HS256')
-
-
-    template = f"""
-        <div>
-                    <h3>Account Deactivation</h3>
-                    <br>
-                    <p>Dummy Deactivation Email</p>
-        </div>
-    """
 
     message = MessageSchema(
         subject = "Account Deactivation",
         recipients =email,
-        body = template,
-        subtype = "html"
+        template_body=emails.get("body"),
+        subtype=MessageType.html,
     )
 
     fm =FastMail(conf)
-    await fm.send_message(message=message)
+    await fm.send_message(message=message, template_name='Deactivation/index.html')
+
+    return {
+        "detail": "Your Account has been deactivated successfully"
+    }
+
+async def send_delete_email(email: List, instance: dict):
+
+    emails: EmailSchema = {
+        "body": {
+            "firstname": instance["first_name"]
+        } 
+    }
+
+    message = MessageSchema(
+        subject = "Account Deletion",
+        recipients =email,
+        template_body=emails.get("body"),
+        subtype=MessageType.html,
+    )
+
+    fm =FastMail(conf)
+    await fm.send_message(message=message, template_name='Deletion/index.html')
 
 
 async def verify_token(token: str, db: Session):
@@ -159,7 +172,7 @@ async def verify_token(token: str, db: Session):
         print(e)
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid or expired token",
+            detail="The token is invalid or has expired!",
             headers={"WWW.Authenticate": "Bearer"}
         )
     return user
@@ -186,7 +199,7 @@ async def send_freeTrial_email(email: List, instance: User):
         subject = "Free Trial Result",
         recipients =email,
         body = template,
-        subtype = "html"
+        subtype = MessageType.html,
     )
 
     fm =FastMail(conf)

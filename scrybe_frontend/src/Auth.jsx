@@ -1,22 +1,21 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { localStorageUser } from "./helpers/localStorageUser";
 
 export function RequireToken() {
-    let auth = localStorageUser();
-    if (!auth) {
-        return <Navigate to = "/login"
-        replace / > ;
-    }
+  const auth = sessionStorage.getItem("heedAccessToken");
 
-    return <Outlet / > ;
+  if (!auth) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <Outlet />;
 }
 
 export function Authenticated() {
-    let auth = localStorageUser();
-    if (auth) {
-        return <Navigate to = "/dashboard"
-        replace / > ;
-    }
+  const auth = sessionStorage.getItem("heedAccessToken");
 
-    return <Outlet / > ;
+  if (auth) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return <Outlet />;
 }

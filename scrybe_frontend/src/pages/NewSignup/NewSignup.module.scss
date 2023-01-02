@@ -1,13 +1,13 @@
 .signinContainer {
     display: flex;
     align-items: center;
-    flex-direction: row-reverse;
+    // flex-direction: row-reverse;
     justify-content: space-between;
     height: 100vh;
     padding: 10px;
     
     .bgcontainer {
-        background: url(../assets/right-frame.png);
+        background: url(./assets/right-frame.png);
         background-size: cover;
         background-repeat: no-repeat;
         height: 100%;

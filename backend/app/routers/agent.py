@@ -33,20 +33,20 @@ agent_router = APIRouter(
 
 @agent_router.get("/leaderboard", summary = "get agent leaderboard", status_code = 200)
 def get_agents_leaderboard(db: Session = Depends(_services.get_session), user: models.User = Depends(get_active_user)):
-    try:
-        leaderboard = crud.get_leaderboard(db, user.id)
-        results = {"week":{"Top3_Agents": [], "Other_Agents": []},
-                "month":{"Top3_Agents": [], "Other_Agents": []}
-        }
-        results["week"]["Top3_Agents"] = leaderboard[0][:3]
-        results["week"]["Other_Agents"] = leaderboard[0][3:]
-        results["month"]["Top3_Agents"] = leaderboard[1][:3]
-        results["month"]["Other_Agents"] = leaderboard[1][3:]
-    except Exception as e:
-        return JSONResponse(
-            status_code= status.HTTP_400_BAD_REQUEST,
-            content=jsonable_encoder({"detail": str(e)}),
-        ) 
+    # try:
+    leaderboard = crud.get_leaderboard(db, user.id)
+    results = {"week":{"Top3_Agents": [], "Other_Agents": []},
+            "month":{"Top3_Agents": [], "Other_Agents": []}
+    }
+    results["week"]["Top3_Agents"] = leaderboard[0][:3]
+    results["week"]["Other_Agents"] = leaderboard[0][3:]
+    results["month"]["Top3_Agents"] = leaderboard[1][:3]
+    results["month"]["Other_Agents"] = leaderboard[1][3:]
+    # except Exception as e:
+    #     return JSONResponse(
+    #         status_code= status.HTTP_400_BAD_REQUEST,
+    #         content=jsonable_encoder({"detail": str(e)}),
+    #     ) 
 
     return {"detail": results}
 

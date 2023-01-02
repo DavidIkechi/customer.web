@@ -148,6 +148,12 @@ origins = [
     "https://www.heed.cx:1111",
     "http://www.heed.cx",
     "https://www.heed.cx",
+    "https://heed.cx:80",
+    "https://heed.cx:3000",
+    "https://heed.cx:5173",
+    "https://heed.cx:1111",
+    "http://heed.cx",
+    "https://heed.cx",
 ]
 
 app.add_middleware(
@@ -178,10 +184,10 @@ def main() -> None:
 AWS_KEY_ID = os.getenv("AWS_KEY_ID")
 AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
 
-# @app.on_event('startup')
-# @repeat_every(seconds = 3, wait_first = True)
-# def periodic():
-#     cron_status.check_and_update_jobs()
+@app.on_event('startup')
+@repeat_every(seconds = 3, wait_first = True)
+def periodic():
+    cron_status.check_and_update_jobs()
     
 
 @app.get("/")

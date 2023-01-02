@@ -33,5 +33,7 @@ if get_status['status'].strip().lower() == "success":
     currency = get_status['currency']
     minutes = get_status['metadata']['minutes']
     plan = get_status['metadata']['plan']
+    time_paid = get_status['paid_at']
+    payment_channel = get_status['channel']
     
 print(get_status)

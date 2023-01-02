@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import NewDesignSidebar from "../../components/NewDesignSidebar";
+import SnackBar from "../../components/SnackBar/index";
+import TopNav from "../../components/TopNav";
+import ApiService from "../../helpers/axioshelp/apis";
+import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
 import accountStyles from "./account.module.scss";
 import chevronLeft from "./assets/icons/chevron-left.svg";
 import plus from "./assets/icons/plus.svg";
-import NewDesignSidebar from "../../components/NewDesignSidebar";
-import TopNav from "../../components/TopNav";
-import { Link, useNavigate } from "react-router-dom";
-import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
-import SnackBar from "../../components/SnackBar/index";
-import ApiService from "../../helpers/axioshelp/apis";
 
 function Account() {
   const [accountModalIsActive, setAccountModalIsActive] = useState(false);
@@ -78,6 +78,7 @@ function Account() {
 
   useEffect(() => {
     getUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const first_name = watch("first_name");

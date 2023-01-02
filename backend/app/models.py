@@ -19,7 +19,6 @@ def generate_agent_id():
     return agent_id
 
 
-
 class User(Base):
     __tablename__ = "users"
 
@@ -33,8 +32,13 @@ class User(Base):
     is_verified = Column(Boolean, default=False)
     company_id = Column(Integer, ForeignKey("companies.id", ondelete='CASCADE'))
     created_at = Column(DateTime(timezone=True), default=datetime.now())
-
+    is_deactivated = Column(Boolean, default=False)
+    deactivated_at = Column(DateTime(timezone=True), default=datetime.now())
     
+    company = relationship("Company", back_populates="user")
+
+
+
 class Company(Base):
     __tablename__ = 'companies'
 
@@ -44,6 +48,11 @@ class Company(Base):
     size = Column(Integer)
     plan = Column(String(255), index=True)
     time_left = Column(Float, index=True, nullable = True)
+    
+    user = relationship("User", uselist=False, back_populates="company")
+    
+    
+
 
 class Agent(Base):
     __tablename__ = "agents"
@@ -54,6 +63,9 @@ class Agent(Base):
     location = Column(String(255), index=True)
     company_id = Column(Integer, ForeignKey("companies.id", ondelete='CASCADE'))
     aud_id = Column(Integer, index=True)
+    
+    
+
 
 class Audio(Base):
     __tablename__ = "audios"
@@ -76,7 +88,8 @@ class Audio(Base):
     agent_firstname = Column(String(255), index=True)
     agent_lastname = Column(String(255), index=True)
     user_id = Column(Integer, ForeignKey("users.id", ondelete='CASCADE'))
-  
+
+    job = relationship("Job", uselist=False, back_populates="audio")
 
 class Job(Base):
     __tablename__ = "jobs"
@@ -86,6 +99,8 @@ class Job(Base):
     job_status = Column(TEXT)
     job_id = Column(Integer, index=True)
     audio_id = Column(Integer, ForeignKey("audios.id", ondelete='CASCADE'))
+    
+    audio = relationship("Audio", back_populates="job")
 
 class uploaded_Job(Base):
     __tablename__ = "uploaded_jobs"
@@ -96,10 +111,8 @@ class uploaded_Job(Base):
 
 class History(Base):
     __tablename__ = "history"
-
     id = Column(Integer, primary_key=True, index=True)
     sentiment_result = Column(Enum("Positive", "Negative", "Neutral"), index=True)
-
     audio_name = Column(String(255), index=True)
     agent_name = Column(String(255), index=True)
     date_uploaded = Column(DateTime, default=datetime.utcnow(), index=True)
@@ -132,7 +145,7 @@ class UserProfile(Base):
 
 
 class FreeTrial(Base):
-    __tablename__ = "FreeTrial"
+    __tablename__ = "free_trial"
 
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String(255), index=True)
@@ -153,4 +166,21 @@ class ProductPlan(Base):
     name = Column(String(255), nullable=False)
     price = Column(Float, index=True, nullable=False)
     features = Column(JSON, nullable=False)
+    
+    
+class PaymentHistory(Base):
+    __tablename__ = "payment_history"
+    id = Column(Integer, primary_key=True, index=True)
+    transaction_id = Column(Integer, index= True)
+    reference = Column(String(255), nullable= True)
+    amount = Column(Float, index=True, nullable=False)
+    plan = Column(String(255), nullable=False)
+    time_paid = Column(DateTime(timezone=True))
+    minutes = Column(Integer, index = True)
+    payment_type = Column(String(255), nullable= True)
+    email = Column(String(255), nullable= True)
+    
+    
+   
+    
     
