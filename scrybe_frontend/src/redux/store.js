@@ -1,15 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { recordAPI } from "./uploadedRecodings/rtkquery";
-import userReducer from "./user/userSlice";
 import recordReducer from "./uploadedRecodings/recordSlice";
+import userReducer from "./user/userSlice";
 
 const store = configureStore({
   reducer: {
     auth: userReducer,
     recordAPI: recordReducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(recordAPI.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
   devTools: true,
 });
 
