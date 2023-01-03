@@ -97,7 +97,9 @@ class Job(Base):
     id = Column(Integer, primary_key=True, index=True)
     timestamp = Column(DateTime, index=True, default=datetime.now())
     job_status = Column(TEXT)
+    audio_id = Column(Integer, ForeignKey("audios.id"))
     job_id = Column(Integer, index=True)
+    mail_sent = Column(Boolean, default=False)
     audio_id = Column(Integer, ForeignKey("audios.id", ondelete='CASCADE'))
     
     audio = relationship("Audio", back_populates="job")
