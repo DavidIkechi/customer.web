@@ -13,6 +13,7 @@ import IsLoadingSkeleton from "../../../components/LoadingSkeleton";
 // } from "../../../redux/uploadedRecodings/rtkquery";
 import { useDispatch, useSelector } from "react-redux";
 import SnackBar from "../../../components/SnackBar/index";
+import ErrorHandler from "../../../helpers/axioshelp/Utils/ErrorHandler";
 import {
   deleteRecording,
   fetchRecordings,
@@ -28,7 +29,6 @@ import dropdownIcon from "./imgs/select-arrow.svg";
 import soundwave from "./imgs/soundwave.svg";
 import { shortenfilename } from "./shortenFileLen";
 import styles from "./tabledata.module.scss";
-import ErrorHandler from "../../../helpers/axioshelp/Utils/ErrorHandler";
 const TableData = ({ searchKeyword }) => {
   const { recordings, error, isLoading, deleteStatus } = useSelector((state) =>
     selectRecordingsState(state)
@@ -79,7 +79,10 @@ const TableData = ({ searchKeyword }) => {
     if (deleteStatus === "success") {
       handleClose();
       setResponse(
-        ErrorHandler({ type: "Success", message: "Audio deleted successfully" })
+        ErrorHandler({
+          type: "Success",
+          message: "Audio(s) deleted successfully",
+        })
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
