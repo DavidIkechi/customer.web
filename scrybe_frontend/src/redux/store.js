@@ -6,7 +6,6 @@ import recordReducer from "./uploadedRecodings/recordSlice";
 const store = configureStore({
   reducer: {
     auth: userReducer,
-    // [recordAPI.reducerPath]: recordAPI.reducer,
     recordAPI: recordReducer,
   },
   middleware: (getDefaultMiddleware) =>
