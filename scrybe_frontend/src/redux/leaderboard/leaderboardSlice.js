@@ -38,7 +38,7 @@ const leaderboadSlice = createSlice({
         state.error = action.payload;
         state.status = "failed";
         state.leaderboardData = null;
-        state.loading = null;
+        state.loading = false;
       });
   },
 });

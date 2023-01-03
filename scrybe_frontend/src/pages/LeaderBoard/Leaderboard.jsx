@@ -28,7 +28,6 @@ function Leaderboard() {
     (state) => state.leaderboard.leaderboardData
   );
   const dispatch = useDispatch();
-  console.log(leaderboardData);
 
   const [search, setSearch] = useState("");
   const [toggleSidebar, setToggleSidebar] = useState(false);
@@ -38,17 +37,18 @@ function Leaderboard() {
   const [otherAgent, setOtherAgent] = useState([]);
   const [range, setRange] = useState("week");
 
-  async function accessData() {
+  function accessData() {
     const response = leaderboardData;
-    const arr = response?.data?.week?.Top3_Agents;
-    setData(response?.data);
+    const arr = response?.week?.Top3_Agents;
+    console.log(arr);
+    setData(response);
     setLeaderboard(arr);
-    const otherAgents = response?.data?.week?.Other_Agents;
+    const otherAgents = response?.week?.Other_Agents;
     setOtherAgent(otherAgents);
   }
 
+  dispatch(getLeaderboard());
   useEffect(() => {
-    dispatch(getLeaderboard());
     accessData();
   }, []);
 
@@ -71,11 +71,8 @@ function Leaderboard() {
   const [agentShow, setAgentShow] = useState();
   const [modal, setModal] = useState(false);
 
-  // let modal = useRef();
-
   const [agent_id, setAgent_id] = useState("");
   const handleAgent = (agent_id, rank, show) => {
-    // modal.showModal();
     setModal(true);
     setAgent_id(agent_id);
     setRank(rank);
@@ -189,7 +186,7 @@ function Leaderboard() {
               <div className={styles.Profile_container}>
                 {/* {leaderboard.length > 0 ? ( */}
                 <>
-                  {leaderboard.map((profile, index, index2) => (
+                  {leaderboard?.map((profile, index, index2) => (
                     <>
                       <LeaderBoardDisplay
                         key={profile.agent_id}
