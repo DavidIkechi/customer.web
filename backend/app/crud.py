@@ -175,6 +175,9 @@ def get_jobs_uploaded(db:Session, current_user, skip: int , limit: int ):
 def get_job(db: Session, job_id: int):
     return db.query(models.Job).filter(models.Job.id == job_id).first()
 
+def get_jobs_by_job_id(db: Session, job_id: int):
+    return db.query(models.Job).filter(models.Job.job_id == job_id).all()
+
 def get_jobs(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Job).offset(skip).limit(limit).all()
 
