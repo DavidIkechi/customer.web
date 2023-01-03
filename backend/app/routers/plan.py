@@ -3,45 +3,57 @@ import services as _services
 import models, schema
 from sqlalchemy.orm import Session
 import auth
-
-change_plan_router = APIRouter(
-    prefix="/plans/change_plan",
-    tags=["Change Plans"])
+import crud
+import math
 
 
-def convert_plan(current_plan:str, new_plan:str, time:float):
-    """ Function to change user plans and convert balance upload time """
-    user_plans = {
-                    "startup": {"price": 0.068},
-                    "growing": {"price": 0.086},
-                    "enterprise": {"price": 0.785}
-                }
-    plan_names = ["startup", "growing", "enterprise"]
-    
-    for plan in plan_names:
-        if plan != current_plan and new_plan == plan:  
-            new_plan = plan 
-            cash_balance = time * user_plans[current_plan]["price"]
-            upload_time = float(cash_balance / user_plans[new_plan]["price"])
-            if upload_time < 1.00:
-                raise HTTPException(status_code=status.HTTP_402_PAYMENT_REQUIRED, detail="Your balance is too low for this plan")
-            # print (cash_balance, upload_time)
-            return upload_time
+plan_router = APIRouter(
+    prefix="/plans",
+    tags=["User Subscription Plans"])
 
 
-
-@change_plan_router.post("/", description="Change the user's subscription plan", status_code=status.HTTP_200_OK)
-def change_plan(user_plan:schema.ChangePlan, user:models.User = Depends(auth.get_active_user), db: Session = Depends(_services.get_session)):
+def convert_plan(plan_data: dict, user:models.User, db: Session):
+    """ Function to change user plans and convert balance time for new plans """
     company = db.query(models.Company).filter(models.Company.id == user.company_id).first()
-    current_plan = company.plan
-    balance_time = company.time_left
-    new_plan = user_plan.plan
-    upload_time = convert_plan(current_plan, new_plan, balance_time)
-    company.plan = new_plan
-    company.time_left = upload_time
-    db.commit()
-    db.refresh(company)
-    
-    return {"message": f"plan succesfully changed to {new_plan}"}
+    old_plan = plan_data["current_plan"]
+    balance_time = plan_data["minutes"]
+    if old_plan != "free":
+        initial_plan = crud.get_plan_by_name(db, old_plan)
+        initial_plan_price = initial_plan.price
+        upgrade_plan = crud.get_plan_by_name(db, plan_data["new_plan"])
+        upgrade_plan_price = upgrade_plan.price
+        
+        cash_amount = balance_time * initial_plan_price
+        upload_time = float(cash_amount / upgrade_plan_price)
+        
+        if upload_time < 3600:
+            raise HTTPException(status_code=status.HTTP_402_PAYMENT_REQUIRED, detail="Your balance is too low for this plan")
+        # print (cash_balance, upload_time)
+        else:
+            # return upload_time
+            company.plan = plan_data["new_plan"]
+            company.time_left = upload_time
+            db.commit()
+            db.refresh(company)
+            return {"message": f"plan succesfully changed to {plan_data['new_plan']}"}
 
+
+
+@plan_router.patch("/change_plan", description="Change the user's subscription plan", status_code=status.HTTP_200_OK)
+def change_plan(user_plan:schema.ChangePlan , logged_in_user:models.User = Depends(auth.get_active_user), db: Session = Depends(_services.get_session)):
+    plan_details = {"current_plan": logged_in_user.company.plan,
+                    "new_plan": user_plan.plan,
+                    "minutes": logged_in_user.company.time_left}
+    return convert_plan(plan_details, logged_in_user, db)
+        
+@plan_router.get("/view_plan", description="View User's current subscription plan", status_code=status.HTTP_200_OK)
+def view_user_plan(user: models.User=Depends(auth.get_active_user), db: Session = Depends(_services.get_session)):
+    user_plan = db.query(models.ProductPlan).filter(models.ProductPlan.name == user.company.plan).first()
+    amount_left = math.floor(user_plan.price * user.company.time_left)
+    
+    plan_details = {"current_plan": user_plan.name , 
+                    "Amount": amount_left,
+                    "Time_Left": math.floor(user.company.time_left / 60)}
+    
+    return plan_details
 

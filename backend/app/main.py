@@ -11,6 +11,7 @@ from routers.audios import audio_router
 from routers.sentiment import sentiment_router
 from routers.analyze import analyze_router
 from routers.score import score_count
+from routers.plan import plan_router
 import models, json
 from auth import get_active_user, get_current_user, get_admin
 
@@ -127,6 +128,10 @@ app.include_router(
     analyze_router
 )
 
+app.include_router(
+    plan_router
+)
+
 # app.add_middleware(ElasticAPM, client=apm)
 
 origins = [
@@ -184,10 +189,10 @@ def main() -> None:
 AWS_KEY_ID = os.getenv("AWS_KEY_ID")
 AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
 
-@app.on_event('startup')
-@repeat_every(seconds = 3, wait_first = True)
-def periodic():
-    cron_status.check_and_update_jobs()
+# @app.on_event('startup')
+# @repeat_every(seconds = 3, wait_first = True)
+# def periodic():
+#     cron_status.check_and_update_jobs()
     
 
 @app.get("/")
