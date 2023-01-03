@@ -36,8 +36,8 @@ const Modal = ({ open, setOpen }) => {
     myData.append("file", file);
     setFile({ file, progress: 0 });
 
-    const destinationUrl = "https://api.heed.hng.tech/upload_audios";
-    const token = localStorage.getItem("heedAccessToken");
+    const destinationUrl = "analyse/upload_audios";
+    const token = sessionStorage.getItem("heedAccessToken");
 
     const headers = { Authorization: `Bearer ${token}` };
     axios
@@ -98,7 +98,7 @@ const Modal = ({ open, setOpen }) => {
               {showProgressList && !showDropDownIcon && <UploadProgressList />}
               {isUploadComplete && (
                 <UploadComplete
-                  link={`https://heed.hng.tech/transcriptions/${link}`}
+                  link={`/transcriptions/${link}`}
                   transcript_id={link}
                 />
               )}
