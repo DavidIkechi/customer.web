@@ -3,15 +3,20 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 
-import axios from "axios";
 import { PropTypes } from "prop-types";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import IsLoadingSkeleton from "../../../components/LoadingSkeleton";
+// import {
+//   useDeleteRecordingMutation,
+//   useFetchUserRecordingsQuery,
+// } from "../../../redux/uploadedRecodings/rtkquery";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  useDeleteRecordingMutation,
-  useFetchUserRecordingsQuery,
-} from "../../../redux/uploadedRecodings/rtkquery";
+  deleteRecording,
+  fetchRecordings,
+  selectRecordingsState,
+} from "../../../redux/uploadedRecodings/recordSlice";
 import { formatAudioLen } from "./formatAudioLen";
 import { formatAudioSize } from "./formatAudioSize";
 import { formatDate } from "./formatDate";
@@ -22,11 +27,13 @@ import dropdownIcon from "./imgs/select-arrow.svg";
 import soundwave from "./imgs/soundwave.svg";
 import { shortenfilename } from "./shortenFileLen";
 import styles from "./tabledata.module.scss";
-
 const TableData = ({ searchKeyword }) => {
-  const { data, error, isLoading } = useFetchUserRecordingsQuery();
-  const [deleteRecording] = useDeleteRecordingMutation();
-  const allRecordings = data?.detail;
+  const { recordings, error, isLoading, deleteStatus } = useSelector((state) =>
+    selectRecordingsState(state)
+  );
+  const dispatch = useDispatch();
+  // const [deleteRecording] = useDeleteRecordingMutation();
+  const allRecordings = recordings;
   const [recordCheckedList, setRecordCheckedList] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [recordingsProcessed, setRecordingsProcessed] = useState(false);
@@ -35,7 +42,10 @@ const TableData = ({ searchKeyword }) => {
   const sessionExpired = error;
   const isFetching = isLoading;
 
-  const timeLeft = 20;
+  useEffect(() => {
+    dispatch(fetchRecordings());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getChecked = (e) => {
     let checkedList = [...recordCheckedList];
@@ -47,13 +57,6 @@ const TableData = ({ searchKeyword }) => {
     setRecordCheckedList(checkedList);
   };
 
-  // fetch data from backend
-  const token = localStorage.getItem("heedAccessToken");
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
-  };
-
   const handleOpen = () => {
     setOpenModal(true);
   };
@@ -61,37 +64,20 @@ const TableData = ({ searchKeyword }) => {
     setOpenDeletePopup(false);
     setRecordCheckedList([]);
     setOpenModal(false);
-    // fetchData();
+    dispatch(fetchRecordings());
   };
-  // api.heed.hng.tech/audios/delete?audios=6&audios=7
   const deleteBulkRecordings = async () => {
     const audioToInt = recordCheckedList.map((item) => Number(item));
     const params = audioToInt.map((i) => i).join("&audios=");
-    await axios
-      .delete(`audios/delete?audios=${params}`, {
-        headers,
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          setRecordCheckedList([]);
-          // fetchData();
-        }
-      });
-    handleClose();
-    setOpenDeletePopup(false);
+    dispatch(deleteRecording(params));
   };
 
-  // const deleteRecording = async (id) => {
-  //   await axios
-  //     .delete(`audios/delete?audios=${[id]}`, {
-  //       headers,
-  //     })
-  //     .then((res) => {
-  //       if (res.status === 200) {
-  //         fetchData();
-  //       }
-  //     });
-  // };
+  useEffect(() => {
+    if (deleteStatus === "success") {
+      handleClose();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deleteStatus]);
 
   const allRecordingsProcessed = () => {
     const allProcessed = allRecordings?.every(

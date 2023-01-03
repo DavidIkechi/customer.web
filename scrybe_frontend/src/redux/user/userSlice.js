@@ -142,5 +142,6 @@ const userSlice = createSlice({
 export const { resetUser } = userSlice.actions;
 
 export const selectUserState = (state) => state.auth;
+export const selectUserToken = (state) => state.auth.token;
 
 export default userSlice.reducer;

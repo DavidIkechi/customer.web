@@ -19,7 +19,7 @@ export const recordAPI = createApi({
     }),
     deleteRecording: builder.mutation({
       query: (id) => ({
-        url: `audios/delete?audios=${[id]}`,
+        url: `audios/delete?audios=${id}`,
         method: "DELETE",
       }),
       // us to refetch the recordings after deleting one
