@@ -239,3 +239,48 @@ async def send_freeTrial_email(email: List, instance: User):
     fm =FastMail(conf)
     await fm.send_message(message=message)
 
+
+
+async def send_successful_payment_email(email: List, instance: User, plan, minutes, price):
+
+    emails: EmailSchema = {
+        "body": {
+            "url": f"https://heed.cx/dashboard",
+            "firstname": instance.first_name,
+            "plan": plan,
+            "minutes" : minutes,
+            "price" : price
+        } 
+    }
+
+    message = MessageSchema(
+        subject = "HEED - Successful Top-Up",
+        recipients =email,
+        template_body=emails.get("body"),
+        subtype=MessageType.html,
+    )
+
+    fm =FastMail(conf)
+    await fm.send_message(message=message, template_name='TopUp/success.html')
+
+async def send_failed_payment_email(email: List, instance: User, plan, minutes, price, reference):
+
+    emails: EmailSchema = {
+        "body": {
+            "firstname": instance.first_name,
+            "plan": plan,
+            "minutes" : minutes,
+            "price" : price,
+            "reference": reference
+        } 
+    }
+
+    message = MessageSchema(
+        subject = "HEED - Failed Top-up",
+        recipients =email,
+        template_body=emails.get("body"),
+        subtype=MessageType.html,
+    )
+
+    fm =FastMail(conf)
+    await fm.send_message(message=message, template_name='TopUp/failure.html')

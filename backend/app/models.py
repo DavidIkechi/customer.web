@@ -173,7 +173,7 @@ class ProductPlan(Base):
 class PaymentHistory(Base):
     __tablename__ = "payment_history"
     id = Column(Integer, primary_key=True, index=True)
-    transaction_id = Column(Integer, index= True)
+    transaction_id = Column(String(255), nullable= True)
     reference = Column(String(255), nullable= True)
     amount = Column(Float, index=True, nullable=False)
     plan = Column(String(255), nullable=False)

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Heed</title>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap");
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        border: 0;
+        margin: 0;
+      }
+      .body {
+        background-color: #f7f7f7;
+        padding: 30px 1.1vw;
+      }
+      .main {
+        padding-left: 40px;
+        padding-right: 40px;
+        max-width: 700px;
+        padding-top: 22px;
+        padding-bottom: 15px;
+        font-family: "Poppins", sans-serif;
+        color: #3f3f3f;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 16px;
+      }
+      .message {
+        display: block;
+        text-align: center;
+      }
+      .logo img {
+        width: 150px;
+        max-width: 30%;
+      }
+      .heed {
+        color: #006cff;
+      }
+      .mail {
+        width: 100%;
+        max-width: 300px;
+      }
+      p {
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 24px;
+        text-align: center;
+      }
+      .copyright {
+        text-align: center;
+        margin-top: 5vw;
+      }
+      .copyright p {
+        font-weight: 400;
+      }
+      .message a {
+        text-decoration: none;
+        background-color: #006cff;
+        color: #ffffff;
+        font-family: inherit;
+        font-size: 16px;
+        font-weight: 500;
+        border-radius: 4px;
+        margin-left: auto;
+        padding: 20px 5vw !important;
+      }
+      .email {
+        margin-top: 40px;
+        margin-bottom: 50px;
+      }
+      .copy {
+        font-size: 16px;
+        padding-left: 5px;
+        padding-left: 5px;
+      }
+      h5 {
+        margin-right: 450px;
+        font-weight: normal;
+        font-size: 18px;
+        float: left;
+        white-space: nowrap;
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+      .no-wrap wbr {
+        display: none;
+      }
+      h1 {
+        margin-bottom: 15px;
+      }
+      @media screen and (max-width: 375px) {
+        h1 {
+          font-size: 8vw;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="body">
+      <div class="main">
+        <div class="logo">
+          <a href="https://heed.cx"
+            ><img
+              src="https://res.cloudinary.com/dcsv5etuw/image/upload/v1671352986/logo_rwgpkh.jpg"
+              alt=""
+          /></a>
+        </div>
+        <div class="message">
+          <img
+            src="https://res.cloudinary.com/dcsv5etuw/image/upload/v1671353020/mail_p2jchn.jpg"
+            alt=""
+            class="mail"
+          />
+          <div>
+          <h5 class="no-wrap">Hello {{firstname}},</h5>
+        </div>
+          <div>
+        <h1>Successful Top-Up On Your <i class="heed"> HEED</i> Account.</h1>
+        </div>
+          <p>
+            Find the details of your transaction below:
+          </p>
+          <p><b>Plan:</b> {{plan}}</p>
+          <p><b>Time:</b> {{minutes}} minutes</p>
+          <p><b>Price:</b> ${{price}}</p>
+          <div class="email">
+            <a href="{{url}}">Upload Audios.</a>
+          </div>
+          <p>If you have any questions, please Contact Us</p>
+        </div>
+        <div class="copyright">
+          <p><span class="copy">©</span> Copyright 2022 | Heed</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
