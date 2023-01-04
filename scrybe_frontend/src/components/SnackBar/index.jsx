@@ -1,9 +1,10 @@
-import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
+import { dispatch } from "../../redux/store";
+import { createResponse } from "../../redux/utils/UtilSlice";
 import Alert from "../Alert";
 import styles from "./SnackBar.module.scss";
 
-const SnackBar = ({ response, setResponse }) => {
+const SnackBar = ({ response }) => {
   const [open, setOpen] = useState(false);
   const [className, setClassName] = useState("");
 
@@ -18,10 +19,10 @@ const SnackBar = ({ response, setResponse }) => {
       setTimeout(() => {
         setOpen(false);
         setClassName("");
-        setResponse({ type: "", message: "" });
+        dispatch(createResponse({ type: "", message: "" }));
       }, 4000);
     }
-  }, [response, setResponse]);
+  }, [response]);
 
   return (
     <div id="snackbar" className={className}>
