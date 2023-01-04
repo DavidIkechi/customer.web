@@ -16,9 +16,7 @@ import styles from "./topbar.module.scss";
 
 const TopNav = ({ openSidebar, search }) => {
   const [show, setShow] = useState(false);
-  const { userData: currentUser, isLoading } = useSelector((state) =>
-    selectUserState(state)
-  );
+  const { user } = useSelector((state) => state.user);
   const [modalOpen, setModalOpen] = useState(false);
   const [response, setResponse] = useState({ type: "", message: "" });
 
@@ -42,63 +40,45 @@ const TopNav = ({ openSidebar, search }) => {
         <SearchInput inputValue={search} />
       </div>
       <div className={styles.TopNav_user_btn}>
-        {isLoading ? (
-          <p className={styles.desktopLoader}>Loading...</p>
+        {user ? (
+          <div className={styles.TopNav_user}>
+            <div className={styles.TopNav_user_desktop}>
+              <img
+                className={styles.userimg}
+                src={user?.company_logo_url ? user?.company_logo_url : DummyImg}
+                alt={user?.first_name}
+              />
+              <div className={styles.TopNav_user_desktop_nameDetails}>
+                <div className={styles.TopNav_user_desktop_name_arr}>
+                  <p className={styles.name}>
+                    {user?.first_name} {user?.last_name}
+                  </p>
+                  <img
+                    src={dropdown_arr}
+                    alt="dropdown arrow"
+                    onClick={() => setShow((prev) => !prev)}
+                    className={styles.arrow}
+                  />
+                  {show && <DropDownModal closeModal={() => setShow(false)} />}
+                </div>
+                <p className={styles.workspace_name}>{user?.company_name}</p>
+              </div>
+            </div>
+          </div>
         ) : (
-          <>
-            {currentUser ? (
-              <div className={styles.TopNav_user}>
-                <div className={styles.TopNav_user_desktop}>
-                  <img
-                    className={styles.userimg}
-                    src={
-                      currentUser?.company_logo_url
-                        ? currentUser?.company_logo_url
-                        : DummyImg
-                    }
-                    alt={currentUser?.first_name}
-                  />
-                  <div className={styles.TopNav_user_desktop_nameDetails}>
-                    <div className={styles.TopNav_user_desktop_name_arr}>
-                      <p className={styles.name}>
-                        {currentUser?.first_name} {currentUser?.last_name}
-                      </p>
-                      <img
-                        src={dropdown_arr}
-                        alt="dropdown arrow"
-                        onClick={() => setShow((prev) => !prev)}
-                        className={styles.arrow}
-                      />
-                      {show && (
-                        <DropDownModal closeModal={() => setShow(false)} />
-                      )}
-                    </div>
-                    <p className={styles.workspace_name}>
-                      {currentUser?.company_name}
-                    </p>
-                  </div>
+          <div className={styles.TopNav_user}>
+            <div className={styles.TopNav_user_desktop}>
+              <img className={styles.userimg} src={DummyImg} alt="john doe" />
+              <div className={styles.TopNav_user_desktop_nameDetails}>
+                <div className={styles.TopNav_user_desktop_name_arr}>
+                  <p className={styles.name}>John Doe</p>
                 </div>
+                <p className={styles.workspace_name}>Office workspace</p>
               </div>
-            ) : (
-              <div className={styles.TopNav_user}>
-                <div className={styles.TopNav_user_desktop}>
-                  <img
-                    className={styles.userimg}
-                    src={DummyImg}
-                    alt="john doe"
-                  />
-                  <div className={styles.TopNav_user_desktop_nameDetails}>
-                    <div className={styles.TopNav_user_desktop_name_arr}>
-                      <p className={styles.name}>John Doe</p>
-                    </div>
-                    <p className={styles.workspace_name}>Office workspace</p>
-                  </div>
-                </div>
-              </div>
-            )}
-          </>
+            </div>
+          </div>
         )}
-        {currentUser && (
+        {user && (
           <>
             {/* <NavLink > */}
             <div
@@ -113,21 +93,13 @@ const TopNav = ({ openSidebar, search }) => {
           </>
         )}
 
-        {isLoading ? (
-          <p className={styles.mobileLoader}>Lodaing...</p>
-        ) : (
-          <div className={styles.TopNav_user_mobile}>
-            <img
-              className={styles.userimg}
-              src={
-                currentUser?.company_logo_url
-                  ? currentUser?.company_logo_url
-                  : DummyImg
-              }
-              alt={currentUser?.first_name}
-            />
-          </div>
-        )}
+        <div className={styles.TopNav_user_mobile}>
+          <img
+            className={styles.userimg}
+            src={user?.company_logo_url ? user?.company_logo_url : DummyImg}
+            alt={user?.first_name}
+          />
+        </div>
       </div>
     </div>
   );
