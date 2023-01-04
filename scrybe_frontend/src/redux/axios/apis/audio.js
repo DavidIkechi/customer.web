@@ -1,38 +1,28 @@
 import api from "../axios";
 
-class Audio {
-  constructor(request) {
-    this.request = request;
-  }
-
-  async UserAudios() {
-    return this.request.get(`list-audios-by-user`);
-  }
-
-  async GetUploadedAudios() {
-    return this.request.get(`get_uploaded_jobs`);
-  }
-
-  async GetAudioSentiment(audio_id) {
-    return this.request.get(`${audio_id}/sentiment`);
-  }
-
-  async RecentRecordings() {
-    return this.request.get(`recent-recordings`);
-  }
-
-  async TotalRecordings() {
-    return this.request.get(`total-recordings-user`);
-  }
-
-  async Delete(id) {
-    return this.request.get(`delete?audios=${1}`);
-  }
-}
-
 const baseURL = "https://api.heed.cx/audios/";
 api.defaults.baseURL = baseURL;
 
-const AudioService = new Audio(api);
+export const UserAudiosApi = () => {
+  return api.get(`list-audios-by-user`);
+};
 
-export default AudioService;
+export const GetUploadedAudiosApi = () => {
+  return api.get(`get_uploaded_jobs`);
+};
+
+export const GetAudioSentimentApi = (audio_id) => {
+  return api.get(`${audio_id}/sentiment`);
+};
+
+export const RecentRecordingsApi = () => {
+  return api.get(`recent-recordings`);
+};
+
+export const TotalRecordingsApi = () => {
+  return api.get(`total-recordings-user`);
+};
+
+export const DeleteAudioApi = (id) => {
+  return api.get(`delete?audios=${1}`);
+};

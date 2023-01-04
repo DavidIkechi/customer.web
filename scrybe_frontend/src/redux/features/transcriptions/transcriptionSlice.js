@@ -1,13 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {};
+const initialState = {
+  transcipt: null,
+  transcription: null,
+};
 
 const transciptionSlice = createSlice({
   name: "transciption",
   initialState,
-  reducers: {},
+  reducers: {
+    setTranscript: (state, action) => {
+      state.transcipt = action.payload;
+    },
+    setTranscription: (state, action) => {
+      state.transcription = action.payload;
+    },
+  },
 });
 
-export const {} = transciptionSlice.actions;
+export const { setTranscript, setTranscription } = transciptionSlice.actions;
 
 export default transciptionSlice.reducer;

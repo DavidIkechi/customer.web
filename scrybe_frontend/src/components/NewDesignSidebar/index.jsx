@@ -10,7 +10,6 @@ import SearchInput from "../SearchInput";
 import styles from "./generalSidebar.module.scss";
 
 import { useSelector } from "react-redux";
-import { selectUserState } from "../../redux/user/userSlice";
 
 /**
  * Wrap your component with this component to get a sidebar with a logo, a search input field and a list of links.
