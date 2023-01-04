@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const token = localStorage.getItem("heedAccessToken");
+const token = sessionStorage.getItem("heedAccessToken");
 const headers = {
   "content-type": "application/json",
   Authorization: `Bearer ${token}`,

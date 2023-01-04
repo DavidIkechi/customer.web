@@ -27,6 +27,8 @@ function Leaderboard() {
   const leaderboardData = useSelector(
     (state) => state.leaderboard.leaderboardData
   );
+
+  console.log("leaderboard data line30", leaderboardData);
   const dispatch = useDispatch();
 
   const [search, setSearch] = useState("");
@@ -37,20 +39,15 @@ function Leaderboard() {
   const [otherAgent, setOtherAgent] = useState([]);
   const [range, setRange] = useState("week");
 
-  function accessData() {
+  useEffect(() => {
     const response = leaderboardData;
     const arr = response?.week?.Top3_Agents;
-    console.log(arr);
     setData(response);
     setLeaderboard(arr);
     const otherAgents = response?.week?.Other_Agents;
     setOtherAgent(otherAgents);
-  }
-
-  dispatch(getLeaderboard());
-  useEffect(() => {
-    accessData();
-  }, []);
+    dispatch(getLeaderboard());
+  }, [leaderboardData, dispatch]);
 
   useEffect(() => {
     if (data) {
@@ -81,7 +78,7 @@ function Leaderboard() {
   };
 
   useEffect(() => {
-    let FilteredLeaderboard = leaderboard.filter((profile) => {
+    let FilteredLeaderboard = leaderboard?.filter((profile) => {
       return search.toLowerCase() === ""
         ? profile
         : profile.firstname.toLowerCase().includes(search) ||
@@ -89,7 +86,7 @@ function Leaderboard() {
             profile.lastname.toLowerCase().includes(search);
     });
 
-    let FilteredotherAgent = otherAgent.filter((profile) => {
+    let FilteredotherAgent = otherAgent?.filter((profile) => {
       return search.toLowerCase() === ""
         ? profile
         : profile.firstname.toLowerCase().includes(search) ||
@@ -100,7 +97,7 @@ function Leaderboard() {
     setOtherAgent(FilteredotherAgent);
 
     setLeaderboard(FilteredLeaderboard);
-  }, [search]);
+  }, []);
 
   // // implemented by rambey
 
@@ -230,7 +227,7 @@ function Leaderboard() {
                 </span>
               </div>
               <hr></hr>
-              {leaderboard.length > 0 ? (
+              {leaderboard?.length > 0 ? (
                 <>
                   {otherAgent.map((profile) => (
                     <OtherAgentDisplay
