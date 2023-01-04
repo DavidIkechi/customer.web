@@ -72,6 +72,11 @@ const TableData = ({ searchKeyword }) => {
     dispatch(DeleteAudios(params));
   };
 
+  const singleDelete = async (id) => {
+    dispatch(DeleteAudios(id));
+    dispatch(GetUserAudios());
+  };
+
   // useEffect(() => {
   //   if (deleteStatus === "success") {
   //     handleClose();
@@ -268,7 +273,7 @@ const TableData = ({ searchKeyword }) => {
                                       "uploaded-table-body-cell delete-btn"
                                     ]
                                   }
-                                  onClick={() => DeleteAudios(recording?.id)}
+                                  onClick={() => singleDelete(recording?.id)}
                                 >
                                   <img
                                     src={deleteIcon}

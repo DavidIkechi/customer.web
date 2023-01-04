@@ -20,10 +20,10 @@ import {
 
 export const GetUserAudios = () => async () => {
   dispatch(setLoading(true));
-
   try {
     const res = await UserAudiosApi();
     dispatch(setAudios(res.data.detail));
+    dispatch(setLoading(false));
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
     dispatch(setLoading(false));
