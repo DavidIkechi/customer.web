@@ -1,14 +1,14 @@
-import UserService from "../../axios/apis/user";
+import { AccountApi, GoogleSignInApi, SignUpApi } from "../../axios/apis/user";
 import ErrorHandler from "../../axios/Utils/ErrorHandler";
 import { dispatch } from "../../store";
 import { setUser, setToken } from "./userSlice";
-import { createResponse } from "../../Utils/UtilSlice";
+import { createResponse } from "../../utils/UtilSlice";
 import Cookies from "js-cookie";
 import axios from "axios";
 
 export const SignUp = (data) => async () => {
   try {
-    const res = await UserService.SignUp(data);
+    const res = await SignUpApi(data);
     sessionStorage.setItem("heedAccessToken", res.data.access_token);
     localStorage.setItem("heedRefreshToken", res.data.refresh_token);
     Cookies.set("heedAccessToken", res.data.access_token);
@@ -46,7 +46,7 @@ export const SignIn = (data) => async () => {
 
 export const GetAccount = () => async () => {
   try {
-    const res = await UserService.Account();
+    const res = await AccountApi();
     dispatch(setUser(res.data.detail));
     sessionStorage.setItem("user", JSON.stringify(res.data.detail));
   } catch (error) {
@@ -56,7 +56,7 @@ export const GetAccount = () => async () => {
 
 export const UserGoogleLogin = (email) => async () => {
   try {
-    const res = await UserService.GoogleSignIn(email);
+    const res = await GoogleSignInApi(email);
     sessionStorage.setItem("heedAccessToken", res.data.detail.access_token);
     localStorage.setItem("heedRefreshToken", res.data.detail.refresh_token);
     Cookies.set("heedAccessToken", res.data.detail.access_token);

@@ -1,16 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { recordAPI } from "./uploadedRecodings/rtkquery";
-import authReducer from "./user/userSlice";
+import recordReducer from "./uploadedRecodings/recordSlice";
+import userReducer from "./features/users/userSlice";
 import agentReducer from "./features/agents/agentSlice";
 import analyzeReducer from "./features/analyze/analyzeSlice";
 import audioReducer from "./features/audios/audioSlice";
 import orderReducer from "./features/orders/orderSlice";
 import transcriptionReducer from "./features/transcriptions/transcriptionSlice";
 import utilReducer from "./utils/UtilSlice";
-import userReducer from "./features/users/userSlice";
 
 const store = configureStore({
   reducer: {
+    recordAPI: recordReducer,
     user: userReducer,
     agent: agentReducer,
     analyze: analyzeReducer,
@@ -18,7 +18,6 @@ const store = configureStore({
     order: orderReducer,
     transciption: transcriptionReducer,
     util: utilReducer,
-    [recordAPI.reducerPath]: recordAPI.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
   devTools: true,

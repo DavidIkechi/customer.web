@@ -22,7 +22,6 @@ import {
   provider,
 } from "../../redux/axios/Utils/Firebase";
 import { SignIn, UserGoogleLogin } from "../../redux/features/users/service";
-import { createResponse } from "../../redux/utils/UtilSlice";
 
 const Login = () => {
   // const { userData, status, error } = useSelector((state) =>
@@ -117,7 +116,7 @@ const Login = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/dashboard");
+      setTimeout(() => navigate("/dashboard"), 1000);
     }
   }, [user, navigate]);
 

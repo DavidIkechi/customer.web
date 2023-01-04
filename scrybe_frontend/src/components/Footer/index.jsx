@@ -1,5 +1,11 @@
 import React from "react";
-import { BsInstagram, BsLinkedin, BsMailbox, BsMailbox2, BsTwitter } from "react-icons/bs";
+import {
+  BsInstagram,
+  BsLinkedin,
+  BsMailbox,
+  BsMailbox2,
+  BsTwitter,
+} from "react-icons/bs";
 import { GrFacebookOption, GrMail } from "react-icons/gr";
 import { Link, NavLink } from "react-router-dom";
 import locate from "./assets/location-marker.png";
@@ -34,13 +40,25 @@ function Footer() {
 
             <div className={styles.joinContainer}>
               <div className={styles.socials}>
-              <a href="https://www.linkedin.com/company/heed-cx/" target="_blank">
-                  <BsLinkedin/>
+                <a
+                  href="https://www.linkedin.com/company/heed-cx/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <BsLinkedin />
                 </a>
-                <a href="https://www.facebook.com/profile.php?id=100088581892757&mibextid=ZbWKwL" target="_blank">
+                <a
+                  href="https://www.facebook.com/profile.php?id=100088581892757&mibextid=ZbWKwL"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <GrFacebookOption />
                 </a>
-                <a href="https://twitter.com/heed_cx?s=21&t=_jBdeIQ-Ne4sjKDFx-giAQ" target="_blank">
+                <a
+                  href="https://twitter.com/heed_cx?s=21&t=_jBdeIQ-Ne4sjKDFx-giAQ"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <BsTwitter />
                 </a>
               </div>
@@ -92,7 +110,7 @@ function Footer() {
                   {/* <img src={email} alt="" /> */}
                   <GrMail />
                 </div>
-                <a href ="mailto:info@heed.cx">info@heed.cx</a>
+                <a href="mailto:info@heed.cx">info@heed.cx</a>
               </div>
             </div>
           </div>
