@@ -38,7 +38,7 @@ axiosInstance.interceptors.response.use(
       const data = await RefreshToken();
       console.log(data);
       sessionStorage.setItem("heedAccessToken", data.access_token);
-      localStorage.setItem("heedRefreshToken", data.refresh_token);
+      sessionStorage.setItem("heedRefreshToken", data.refresh_token);
       axios.defaults.headers.common["Authorization"] =
         "Bearer " + data.access_token;
       return axiosInstance(originalRequest);

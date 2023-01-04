@@ -11,7 +11,6 @@ function NavBar() {
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(LogOut());
-    navigate("/login");
   };
 
   function handleClick() {

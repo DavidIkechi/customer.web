@@ -24,5 +24,5 @@ export const TotalRecordingsApi = () => {
 };
 
 export const DeleteAudioApi = (id) => {
-  return api.get(`delete?audios=${1}`);
+  return api.get(`delete?audios=${id}`);
 };
