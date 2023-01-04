@@ -2,11 +2,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import authServices from "./service";
 
 const initialState = {
-  userData: null,
+  userData: JSON.parse(localStorage.getItem("user")) || null,
   status: null,
   error: null,
   getUser: null,
-  token: null,
+  isLoading: false,
+  token: sessionStorage.getItem("heedAccessToken") || null,
 };
 
 // fech user data from backend
@@ -51,91 +52,95 @@ const userSlice = createSlice({
     resetUser: (state) => {
       state.status = null;
       state.error = null;
-      state.getUser = null;
-      state.userData = null;
-      state.token = null;
-    },
-    setCredentials: (state, action) => {
-      const { access_token } = action.payload;
-      state.token = access_token;
-    },
-    logoutuser: (state) => {
-      state.status = null;
-      state.error = null;
-      state.getUser = null;
-      state.userData = null;
-      state.token = null;
+      state.isLoading = false;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getUser.pending, (state) => {
         state.getUser = "loading";
+        state.status = "loading";
+        state.error = null;
+        state.isLoading = true;
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.userData = action.payload;
         state.error = null;
         state.getUser = "success";
         state.status = "success";
+        state.isLoading = false;
       })
       .addCase(getUser.rejected, (state, action) => {
         state.error = action.payload;
         state.userData = null;
         state.getUser = "failed";
+        state.status = "failed";
+        state.isLoading = false;
       })
       .addCase(registerUser.pending, (state) => {
         state.status = "loading";
         state.getUser = null;
+        state.error = null;
+        state.isLoading = true;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.userData = action.payload;
         state.status = "success";
         state.error = null;
         state.getUser = null;
+        state.isLoading = false;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.error = action.payload;
         state.userData = null;
         state.status = "failed";
         state.getUser = null;
+        state.isLoading = false;
       })
       .addCase(loginUser.pending, (state) => {
         state.status = "loading";
         state.getUser = null;
+        state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.userData = action.payload;
+        state.token = action.payload.access_token;
         state.status = "success";
         state.error = null;
         state.getUser = null;
+        state.isLoading = false;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.error = action.payload;
         state.status = "failed";
         state.userData = null;
         state.getUser = null;
+        state.isLoading = false;
       })
       .addCase(logoutUser.pending, (state) => {
         state.status = "loading";
         state.getUser = null;
+        state.error = null;
       })
       .addCase(logoutUser.fulfilled, (state) => {
         state.userData = null;
         state.status = null;
         state.error = null;
         state.getUser = null;
+        state.isLoading = false;
+        state.token = null;
       })
       .addCase(logoutUser.rejected, (state, action) => {
         state.error = action.payload;
         state.status = "failed";
         state.userData = null;
         state.getUser = null;
+        state.isLoading = false;
       });
   },
 });
 
-export const { resetUser, setCredentials, logoutuser } = userSlice.actions;
+export const { resetUser } = userSlice.actions;
+
+export const selectUserState = (state) => state.auth;
 
 export default userSlice.reducer;
-export const selectCurrentUser = (state) => state.auth.user;
-export const selectCurrentToken = (state) => state.auth.Token;

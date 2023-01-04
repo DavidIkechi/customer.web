@@ -323,23 +323,23 @@ async def auth(email: str, db: Session = Depends(_services.get_session)):
         "detail": tokens
     }
     
-@user_router.get('/auth/google', status_code = 200)
-async def auth(email: str, db: Session = Depends(_services.get_session)):
-    try:
-        user_db = crud.get_user_by_email(db, email)
+# @user_router.get('/auth/google', status_code = 200)
+# async def auth(email: str, db: Session = Depends(_services.get_session)):
+#     try:
+#         user_db = crud.get_user_by_email(db, email)
 
-        if user_db is None:
-            raise HTTPException(status_code=404, detail="User not found.")
+#         if user_db is None:
+#             raise HTTPException(status_code=404, detail="User not found.")
 
-        tokens = get_access_token(email)
-    except Exception as e:
-        return JSONResponse(
-            status_code= 500,
-            content=jsonable_encoder({"detail": str(e)}),
-        )
-    return {
-        "detail": tokens
-    }
+#         tokens = get_access_token(email)
+#     except Exception as e:
+#         return JSONResponse(
+#             status_code= 500,
+#             content=jsonable_encoder({"detail": str(e)}),
+#         )
+#     return {
+#         "detail": tokens
+#     }
 
 @user_router.get("/refresh-api-key", status_code = 200)
 async def refresh_api_key(user: models.User = Depends(get_active_user), db: Session = Depends(_services.get_session)):
@@ -500,3 +500,17 @@ async def reactivate_user(user_id: int, db: Session = Depends(_services.get_sess
     return {
         "detail": "User Account was successfully Reactivated!"
     }    
+
+@user_router.get("/get_all_plans", summary = "get all plans", status_code= 200)
+def read_plans(skip: int = 0, limit: int = 100, db: Session = Depends(_services.get_session), 
+               user: models.User = Depends(get_active_user)):
+    try:
+        plans = crud.get_all_plans(db, skip=skip, limit=limit)
+    except Exception as e:
+       return JSONResponse(
+            status_code= 500,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+    return {      
+        "detail": plans
+    }

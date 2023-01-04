@@ -4,26 +4,23 @@ import SnackBar from "../../components/SnackBar";
 // import Loading from "../../components/Loading";
 import styles from "./Login.module.scss";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
+// import { useFetchUserQuery } from "../../redux/user/rtkquery";
 import {
-  useFetchUserQuery,
-  useLoginUserMutation,
-} from "../../redux/user/rtkquery/authApiSlice";
-// import { getUser, loginUser, resetUser } from "../../redux/user/userSlice";
-import Cookies from "js-cookie";
-import { resetUser, setCredentials } from "../../redux/user/rtkquery/apiSlice";
+  loginUser,
+  resetUser,
+  selectUserState,
+} from "../../redux/user/userSlice";
 import hidden from "./assets/hidden.png";
 import logo from "./assets/logo.png";
 import visible from "./assets/visible.png";
 
 const Login = () => {
-  // const { userData, status, error } = useSelector((state) => state.auth);
-  const { fetchUser, isSuccess, error: hasError } = useFetchUserQuery();
-  const [
-    loginUser,
-    { data: loginData, error: loginError, isSuccess: loginSuccess },
-  ] = useLoginUserMutation();
+  const { userData, status, error } = useSelector((state) =>
+    selectUserState(state)
+  );
+  // const { data, isSuccess, error: hasError } = useFetchUserQuery();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -92,39 +89,24 @@ const Login = () => {
     formData.append("password", password);
 
     // login user redux hook
-    dispatch(loginUser(formData).unwrap());
+    dispatch(loginUser(formData));
   };
 
   useEffect(() => {
-    // if (loginSuccess) {
-    //   dispatch(fetchUser());
-    // }
-    if (loginSuccess) {
+    if (status === "success") {
       setResponse(
         ErrorHandler({ type: "Success", message: "Login successful" })
       );
-      dispatch(setCredentials(loginData));
-      localStorage.setItem("heedAccessToken", loginData.access_token);
-      Cookies.set("heedAccessToken", loginData.access_token);
-
       // ignore this line for now
       setTimeout(() => {
-        navigate("/dashboard");
+        window.location.href = "/dashboard";
+        dispatch(resetUser());
       }, 2500);
-    } else if (loginError) {
-      setResponse(ErrorHandler(loginError));
+    } else if (error) {
+      setResponse(ErrorHandler(error));
       dispatch(resetUser());
     }
-  }, [
-    loginData,
-    loginError,
-    dispatch,
-    isSuccess,
-    hasError,
-    loginSuccess,
-    fetchUser,
-    navigate,
-  ]);
+  }, [status, userData, error, dispatch, navigate]);
 
   return (
     <>

@@ -1,7 +1,7 @@
 from fastapi import FastAPI, status, Depends, APIRouter,  UploadFile, File, Form, Query, Request
 from typing import List, Union, Optional
 import services as _services
-import models, schema
+import models, schema, json
 from fastapi_pagination import Page, paginate, Params
 from sqlalchemy.orm import Session
 from auth import (
@@ -9,6 +9,8 @@ from auth import (
     get_admin,
     get_current_user
 )
+from datetime import datetime, timedelta, date
+
 import auth
 from . import utility as utils
 from fastapi.responses import JSONResponse
@@ -36,7 +38,10 @@ def download (id: Union[int, str], db: Session = Depends(_services.get_session),
         db_audio = crud.get_freeaudio(db, audio_id=id)
 
         if db_audio is None:
-            raise HTTPException(status_code=404, detail="No Audio With This ID")
+            return JSONResponse(
+                status_code= 500,
+                content=jsonable_encoder({"detail": "Sorry, this transcript is not available for download"}),
+            )        
         else:
             positivity_score = float(db_audio.positivity_score)
             negativity_score = float(db_audio.negativity_score)

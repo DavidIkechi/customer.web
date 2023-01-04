@@ -1,13 +1,12 @@
 import { PropTypes } from "prop-types";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-// import { localStorageUser } from "../../helpers/localStorageUser";
-// import { useFetchUserQuery } from "../../redux/user/rtkquery/authApiSlice";
-import { useCachedUserData } from "../../helpers/cachedUserData/index";
+import { selectUserState } from "../../redux/user/userSlice";
+import DropDownModal from "../DropdownMenu";
 import Modal from "../Modal";
 import SearchInput from "../SearchInput";
 import SnackBar from "../SnackBar";
-import DropDownModal from "./DropdownMenu";
 import dropdown_arr from "./imgs/dropdownArr.svg";
 import DummyImg from "./imgs/dummy.png";
 import logo from "./imgs/logo.svg";
@@ -16,18 +15,12 @@ import uploadBtn_icon from "./imgs/uploadBtnIcon.svg";
 import styles from "./topbar.module.scss";
 
 const TopNav = ({ openSidebar, search }) => {
-  // const { isLoading, isError, error } = useFetchUserQuery();
   const [show, setShow] = useState(false);
-  // const currentUser = localStorageUser();
-  const { activeUser: currentUser, isLoading } = useCachedUserData();
+  const { userData: currentUser, isLoading } = useSelector((state) =>
+    selectUserState(state)
+  );
   const [modalOpen, setModalOpen] = useState(false);
   const [response, setResponse] = useState({ type: "", message: "" });
-
-  // useEffect(() => {
-  //   if (isError) {
-  //     setResponse(ErrorHandler(error));
-  //   }
-  // }, [isError, error]);
 
   return (
     <div

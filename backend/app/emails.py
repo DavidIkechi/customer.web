@@ -122,6 +122,40 @@ def password_verif_token(token):
     
     return email
 
+
+async def transcription_result_email(email: List, instance: User):
+    first_name = instance.first_name
+
+    template = f"""
+        <div>
+            <h3>Transcription Result</h3>
+            <br>
+            <p><b>Dear {first_name},</b></p>
+            <p>
+                The results for your uploads are ready! 
+                <a href="https://heed.cx/transcriptions/">
+                    Click here to view
+                </a>
+            </p>
+
+            <p>Alternatively, you can paste the following link in your browser's address bar:</p>
+            <p>"https://heed.cx/transcriptions/"</p>
+
+            <p>Sincerely,</p>
+            <p>Heed Team</p>
+
+        </div>
+    """
+
+    message = MessageSchema(
+        subject = "Transcription Result",
+        recipients = email,
+        body = template,
+        subtype = "html"
+    )
+
+    fm =FastMail(conf)
+    await fm.send_message(message=message)
 async def send_deactivation_email(email: List, instance: User):
 
     emails: EmailSchema = {
@@ -205,3 +239,48 @@ async def send_freeTrial_email(email: List, instance: User):
     fm =FastMail(conf)
     await fm.send_message(message=message)
 
+
+
+async def send_successful_payment_email(email: List, instance: User, plan, minutes, price):
+
+    emails: EmailSchema = {
+        "body": {
+            "url": f"https://heed.cx/dashboard",
+            "firstname": instance.first_name,
+            "plan": plan,
+            "minutes" : minutes,
+            "price" : price
+        } 
+    }
+
+    message = MessageSchema(
+        subject = "HEED - Successful Top-Up",
+        recipients =email,
+        template_body=emails.get("body"),
+        subtype=MessageType.html,
+    )
+
+    fm =FastMail(conf)
+    await fm.send_message(message=message, template_name='TopUp/success.html')
+
+async def send_failed_payment_email(email: List, instance: User, plan, minutes, price, reference):
+
+    emails: EmailSchema = {
+        "body": {
+            "firstname": instance.first_name,
+            "plan": plan,
+            "minutes" : minutes,
+            "price" : price,
+            "reference": reference
+        } 
+    }
+
+    message = MessageSchema(
+        subject = "HEED - Failed Top-up",
+        recipients =email,
+        template_body=emails.get("body"),
+        subtype=MessageType.html,
+    )
+
+    fm =FastMail(conf)
+    await fm.send_message(message=message, template_name='TopUp/failure.html')

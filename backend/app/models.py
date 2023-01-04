@@ -34,6 +34,9 @@ class User(Base):
     created_at = Column(DateTime(timezone=True), default=datetime.now())
     is_deactivated = Column(Boolean, default=False)
     deactivated_at = Column(DateTime(timezone=True), default=datetime.now())
+    
+    company = relationship("Company", back_populates="user")
+
 
 
 class Company(Base):
@@ -45,6 +48,10 @@ class Company(Base):
     size = Column(Integer)
     plan = Column(String(255), index=True)
     time_left = Column(Float, index=True, nullable = True)
+    
+    user = relationship("User", uselist=False, back_populates="company")
+    
+    
 
 
 class Agent(Base):
@@ -56,6 +63,8 @@ class Agent(Base):
     location = Column(String(255), index=True)
     company_id = Column(Integer, ForeignKey("companies.id", ondelete='CASCADE'))
     aud_id = Column(Integer, index=True)
+    
+    
 
 
 class Audio(Base):
@@ -79,7 +88,8 @@ class Audio(Base):
     agent_firstname = Column(String(255), index=True)
     agent_lastname = Column(String(255), index=True)
     user_id = Column(Integer, ForeignKey("users.id", ondelete='CASCADE'))
-  
+
+    job = relationship("Job", uselist=False, back_populates="audio")
 
 class Job(Base):
     __tablename__ = "jobs"
@@ -87,8 +97,12 @@ class Job(Base):
     id = Column(Integer, primary_key=True, index=True)
     timestamp = Column(DateTime, index=True, default=datetime.now())
     job_status = Column(TEXT)
+    audio_id = Column(Integer, ForeignKey("audios.id"))
     job_id = Column(Integer, index=True)
+    mail_sent = Column(Boolean, default=False)
     audio_id = Column(Integer, ForeignKey("audios.id", ondelete='CASCADE'))
+    
+    audio = relationship("Audio", back_populates="job")
 
 class uploaded_Job(Base):
     __tablename__ = "uploaded_jobs"
@@ -159,7 +173,7 @@ class ProductPlan(Base):
 class PaymentHistory(Base):
     __tablename__ = "payment_history"
     id = Column(Integer, primary_key=True, index=True)
-    transaction_id = Column(Integer, index= True)
+    transaction_id = Column(String(255), nullable= True)
     reference = Column(String(255), nullable= True)
     amount = Column(Float, index=True, nullable=False)
     plan = Column(String(255), nullable=False)
