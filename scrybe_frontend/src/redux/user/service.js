@@ -1,6 +1,7 @@
 import axios from "axios";
+import { getToken } from "../../helpers/GetToken";
 
-const token = sessionStorage.getItem("heedAccessToken");
+const token = getToken();
 const headers = {
   "content-type": "application/json",
   Authorization: `Bearer ${token}`,
@@ -18,7 +19,6 @@ const login = async (loginDetails) => {
   if (response.data.access_token) {
     sessionStorage.setItem("heedAccessToken", response.data.access_token);
     sessionStorage.setItem("heedRefreshToken", response.data.refresh_token);
-    // Cookies.set("heedAccessToken", response.data.access_token);
   }
   return response.data;
 };
@@ -28,20 +28,20 @@ const logout = () => {
   sessionStorage.removeItem("heedAccessToken");
   sessionStorage.removeItem("heedRefreshToken");
   localStorage.removeItem("user");
-  // Cookies.remove("heedAccessToken");
 };
 
 const getuser = async () => {
-  const response = await axios.get(`users/account`, {
+  const res = await axios.get(`users/account`, {
     headers,
   });
-  if (response?.data?.detail?.first_name) {
-    localStorage.setItem("user", JSON.stringify(response.data.detail));
+  if (res.data.detail) {
+    localStorage.setItem("user", JSON.stringify(res.data.detail));
   } else {
     localStorage.removeItem("user");
+    sessionStorage.removeItem("heedAccessToken");
+    sessionStorage.removeItem("heedRefreshToken");
   }
-
-  return response.data?.detail;
+  return res.data?.detail;
 };
 
 const authServices = {

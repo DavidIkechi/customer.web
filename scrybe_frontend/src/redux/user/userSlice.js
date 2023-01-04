@@ -3,9 +3,11 @@ import authServices from "./service";
 
 const initialState = {
   userData: JSON.parse(localStorage.getItem("user")) || null,
-  status: null,
+  loginStatus: null,
+  registerStatus: null,
+  getuserStatus: null,
   error: null,
-  getUser: null,
+  logoutStatus: null,
   isLoading: false,
   token: sessionStorage.getItem("heedAccessToken") || null,
 };
@@ -53,87 +55,83 @@ const userSlice = createSlice({
       state.status = null;
       state.error = null;
       state.isLoading = false;
+      state.loginStatus = null;
+      state.registerStatus = null;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getUser.pending, (state) => {
-        state.getUser = "loading";
-        state.status = "loading";
+        state.getuserStatus = "loading";
         state.error = null;
         state.isLoading = true;
       })
       .addCase(getUser.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.userData = action.payload;
         state.error = null;
-        state.getUser = "success";
-        state.status = "success";
+        state.getuserStatus = "success";
         state.isLoading = false;
       })
       .addCase(getUser.rejected, (state, action) => {
         state.error = action.payload;
         state.userData = null;
-        state.getUser = "failed";
-        state.status = "failed";
+        state.getuserStatus = "failed";
         state.isLoading = false;
+        state.token = null;
+        localStorage.removeItem("user");
+        sessionStorage.removeItem("heedAccessToken");
+        sessionStorage.removeItem("heedRefreshToken");
       })
       .addCase(registerUser.pending, (state) => {
-        state.status = "loading";
-        state.getUser = null;
+        state.registerStatus = "loading";
         state.error = null;
         state.isLoading = true;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.userData = action.payload;
-        state.status = "success";
+        state.registerStatus = "success";
         state.error = null;
-        state.getUser = null;
         state.isLoading = false;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.error = action.payload;
         state.userData = null;
-        state.status = "failed";
-        state.getUser = null;
+        state.registerStatus = "failed";
         state.isLoading = false;
       })
       .addCase(loginUser.pending, (state) => {
-        state.status = "loading";
-        state.getUser = null;
+        state.loginStatus = "loading";
         state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.token = action.payload.access_token;
-        state.status = "success";
+        state.loginStatus = "success";
         state.error = null;
-        state.getUser = null;
         state.isLoading = false;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.error = action.payload;
-        state.status = "failed";
+        state.loginStatus = "failed";
         state.userData = null;
-        state.getUser = null;
         state.isLoading = false;
       })
       .addCase(logoutUser.pending, (state) => {
-        state.status = "loading";
-        state.getUser = null;
+        state.logoutStatus = "loading";
         state.error = null;
       })
       .addCase(logoutUser.fulfilled, (state) => {
         state.userData = null;
-        state.status = null;
+        state.logoutStatus = null;
         state.error = null;
-        state.getUser = null;
         state.isLoading = false;
         state.token = null;
+        state.getuserStatus = null;
       })
       .addCase(logoutUser.rejected, (state, action) => {
         state.error = action.payload;
-        state.status = "failed";
+        state.logoutStatus = "failed";
         state.userData = null;
-        state.getUser = null;
         state.isLoading = false;
       });
   },
