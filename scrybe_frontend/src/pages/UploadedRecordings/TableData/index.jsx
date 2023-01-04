@@ -8,7 +8,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import IsLoadingSkeleton from "../../../components/LoadingSkeleton";
-import SnackBar from "../../../components/SnackBar/index";
 import {
   DeleteAudios,
   GetUserAudios,
@@ -24,9 +23,6 @@ import soundwave from "./imgs/soundwave.svg";
 import { shortenfilename } from "./shortenFileLen";
 import styles from "./tabledata.module.scss";
 const TableData = ({ searchKeyword }) => {
-  // const { recordings, error, isLoading, deleteStatus } = useSelector((state) =>
-  //   selectRecordingsState(state)
-  // );
   const { audios, audioError } = useSelector((state) => state.audio);
   const { isLoading } = useSelector((state) => state.util);
   const dispatch = useDispatch();
@@ -36,7 +32,6 @@ const TableData = ({ searchKeyword }) => {
   const [openModal, setOpenModal] = useState(false);
   const [recordingsProcessed, setRecordingsProcessed] = useState(false);
   const [openDeletePopup, setOpenDeletePopup] = useState(false);
-  const [response, setResponse] = useState({ type: "", message: "" });
   // const [deleted, setDeleted] = useState(false);
   const sessionExpired = audioError;
   const isFetching = isLoading;
@@ -77,19 +72,6 @@ const TableData = ({ searchKeyword }) => {
     dispatch(GetUserAudios());
   };
 
-  // useEffect(() => {
-  //   if (deleteStatus === "success") {
-  //     handleClose();
-  //     setResponse(
-  //       ErrorHandler({
-  //         type: "Success",
-  //         message: "Audio(s) deleted successfully",
-  //       })
-  //     );
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [deleteStatus]);
-
   const allRecordingsProcessed = () => {
     const allProcessed = allRecordings?.every(
       (item) =>
@@ -118,10 +100,6 @@ const TableData = ({ searchKeyword }) => {
   }, [allRecordings, searchKeyword]);
   return (
     <>
-      {response.message !== "" && (
-        <SnackBar response={response} setResponse={setResponse} />
-      )}
-
       <div
         className={`${styles.uploaded_recordings} ${
           searchRecordings(allRecordings)?.length < 1

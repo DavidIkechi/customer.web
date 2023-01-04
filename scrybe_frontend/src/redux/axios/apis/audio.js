@@ -20,6 +20,6 @@ export const TotalRecordingsApi = () => {
   return api.get(`audios/total-recordings-user`);
 };
 
-export const DeleteAudioApi = (id) => {
-  return api.get(`audios/delete?audios=${id}`);
+export const DeleteAudioApi = (ids) => {
+  return api.delete(`audios/delete?audios=${ids}`);
 };

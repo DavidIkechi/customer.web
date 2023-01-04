@@ -70,8 +70,13 @@ export const GetTotalRecordings = () => async () => {
 export const DeleteAudios = (ids) => async () => {
   try {
     const res = await DeleteAudioApi(ids);
-
     console.log(res);
+    dispatch(
+      createResponse({
+        type: "Success",
+        message: "Audio(s) deleted successfully",
+      })
+    );
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
   }
