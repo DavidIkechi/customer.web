@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   audios: [],
+  audioError: null,
   uploadedAudios: [],
   audioSentiment: null,
   recentRecordings: [],
@@ -27,11 +28,15 @@ const audioSlice = createSlice({
     setTotalRecordings: (state, action) => {
       state.totalRecordings = action.payload;
     },
+    setAudiosError: (state, action) => {
+      state.audioError = action.payload;
+    },
   },
 });
 
 export const {
   setAudios,
+  setAudiosError,
   setUploadedAudios,
   setAudioSentiment,
   setRecentRecordings,

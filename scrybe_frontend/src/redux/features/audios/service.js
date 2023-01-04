@@ -12,21 +12,22 @@ import { createResponse, setLoading } from "../../utils/UtilSlice";
 import {
   setAudios,
   setAudioSentiment,
+  setAudiosError,
   setRecentRecordings,
   setTotalRecordings,
   setUploadedAudios,
 } from "./audioSlice";
 
 export const GetUserAudios = () => async () => {
-     dispatch(setLoading(true));
+  dispatch(setLoading(true));
 
   try {
     const res = await UserAudiosApi();
     dispatch(setAudios(res.data.detail));
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
-     dispatch(setLoading(false));
-     dispatch(setUploadedAudioError(error.response.data.detail));
+    dispatch(setLoading(false));
+    dispatch(setAudiosError(error.response.data.detail));
   }
 };
 
