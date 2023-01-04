@@ -17,7 +17,7 @@ import logo from "./assets/logo.png";
 import visible from "./assets/visible.png";
 
 const Login = () => {
-  const { userData, status, error } = useSelector((state) =>
+  const { userData, loginStatus, error } = useSelector((state) =>
     selectUserState(state)
   );
   // const { data, isSuccess, error: hasError } = useFetchUserQuery();
@@ -93,7 +93,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (status === "success") {
+    if (loginStatus === "success") {
       setResponse(
         ErrorHandler({ type: "Success", message: "Login successful" })
       );
@@ -106,7 +106,7 @@ const Login = () => {
       setResponse(ErrorHandler(error));
       dispatch(resetUser());
     }
-  }, [status, userData, error, dispatch, navigate]);
+  }, [loginStatus, userData, error, dispatch, navigate]);
 
   return (
     <>
