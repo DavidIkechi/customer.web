@@ -66,7 +66,8 @@ async def transcription_mail():
                     audio = i
             if user.id == audio.user_id:
                 get_job = crud.get_job(db, audio.job.id)
-                if get_job.job_status == "completed" and get_job.mail_sent == False:
+                
+                if get_job.job_status == "completed" and (get_job.mail_sent == False or get_job.mail_sent is None):
                     this_list.append(get_job_id)
                     false_job[str(user.id)] = this_list
                     

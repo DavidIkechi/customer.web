@@ -100,13 +100,8 @@ async def verify_order(ref_code: str, db: Session = Depends(_services.get_sessio
             
         veri = paystack.transaction().verify(reference = ref_code)
         get_status = veri['data']
-        if get_status['status'].strip().lower() != "success":
-            return JSONResponse(
-                status_code= 400,
-                content=jsonable_encoder({"detail": "Sorry, your payment failed, please try again"}),
-            )
         transaction = {"amount": get_status['amount']/100,
-                       "trans_id": get_status['id'],
+                       "trans_id": str(get_status['id']),
                        "reference": get_status['reference'],
                        "minutes": get_status['metadata']['minutes'],
                        "plan": get_status['metadata']['plan'],
@@ -115,6 +110,15 @@ async def verify_order(ref_code: str, db: Session = Depends(_services.get_sessio
                        "email_address": user.email
                     }
         
+        if get_status['status'].strip().lower() != "success":
+            # send a mail receipt
+            # await send_transaction_failure_receipt([user.email], transaction)
+            return JSONResponse(
+                status_code= 400,
+                content=jsonable_encoder({"detail": "Sorry, your payment failed, please try again"}),
+            )
+        
+        
         #push the details into the database.
         trans_crud = crud.store_transaction(db, transaction)
         top_up_details = {"minutes": get_status['metadata']['minutes'],
@@ -122,7 +126,7 @@ async def verify_order(ref_code: str, db: Session = Depends(_services.get_sessio
         # top up the users account
         top_up = crud.top_up(db,user.email, top_up_details)
         # send a mail receipt
-        # await send_transaction_receipt([user.email], transaction)
+        # await send_transaction_success_receipt([user.email], transaction)
         
     except Exception as e:
         return JSONResponse(
@@ -178,11 +182,24 @@ def create_stripe_order(userPayment: schema.PaymentBase, db: Session = Depends(_
         )
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-    print(checkout_session.url)
-    return RedirectResponse(checkout_session.url, status_code=303)
+    # print(checkout_session.url)
+    # return RedirectResponse(checkout_session.url, status_code=303)
+    return {"detail": {
+        "payment_url": checkout_session.url,
+        "gateway": "stripe"
+        }
+    }
 
 
 #webhook to handle all payments(successful, failed, declined) and fulfil order
+@order_router.post('/paystack-webhook', include_in_schema=False)
+async def heed_webhook_view(request: Request, stripe_signature: str = Header(str), db: Session = Depends(_services.get_session)):
+    payload = await request.body()
+    
+    print(payload)
+
+
+
 
 @order_router.post('/webhook', include_in_schema=False)
 async def heed_webhook_view(request: Request, stripe_signature: str = Header(str), db: Session = Depends(_services.get_session)):
