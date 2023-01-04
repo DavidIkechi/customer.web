@@ -5,18 +5,15 @@ import styles from "./CompleteSignup.module.scss";
 
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { useSelector } from "react-redux";
 
 const CompleteSignup = () => {
   const completeSignup = completeRegistration();
+  const { response } = useSelector((state) => state.util);
 
   return (
     <>
-      {completeSignup.response?.message !== "" && (
-        <SnackBar
-          response={completeSignup.response}
-          setResponse={completeSignup.setResponse}
-        />
-      )}
+      {response.message !== "" && <SnackBar response={response} />}
       <div className={styles.signinContainer}>
         <div className={styles.bgcontainer}>
           <div className={styles.text}>

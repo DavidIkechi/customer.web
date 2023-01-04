@@ -1,4 +1,4 @@
-from fastapi import FastAPI, status, Depends, APIRouter,  UploadFile, File, Form, Query, Request, HTTPException
+from fastapi import FastAPI, status, Depends, APIRouter,  UploadFile, File, Form, Query, Request, HTTPException, BackgroundTasks
 from typing import List, Union, Optional
 from pathlib import Path
 from audio import audio_details
@@ -11,6 +11,7 @@ from auth import (
     get_admin,
     get_current_user
 )
+from emails import *
 from . import utility as utils
 import auth
 from . import utility as utils
@@ -32,59 +33,23 @@ analyze_router = APIRouter(
     tags=['analyze'],
 )
 
-@analyze_router.post("/upload_audios", status_code = 200)
-async def analyse(first_name: str = Form(), last_name: str = Form(), 
-                  db: Session = Depends(_services.get_session), files: List[UploadFile]=File(...), 
-                  user: models.User = Depends(get_active_user)):
+
+async def analyse_audios(first_name: str, last_name: str, files: list, distinct_id:int, user_id: int, company_id: int, db: Session):
+    
+    db_company = db.query(models.Company).filter(models.Company.id == company_id).first()
+    
+    all_transcripts = []
     try:
-        # initialize the total file length to 0
-        total_length = 0
-        # check if the length of the file is more than 5
-        if len(files) > 5:
-            return JSONResponse(
-                status_code= 406,
-                content=jsonable_encoder({"detail": "You can not upload more than two files"}),
-            )
-        # if the file type is not audio.
-        if not utils.check_if_audio(files):
-            return JSONResponse(
-                status_code= 406,
-                content=jsonable_encoder({"detail": "Please ensure you have uploaded an audio file."}),
-            )    
-        # get the length of the audio file altogether.
-        total_length = utils.get_length(files)
-        user_id = user.id
-        company_id = user.company_id        
-        # convert to lower case for both first and last name.    
-        first_name = first_name.lower()
-        last_name = last_name.lower()
-        agent_name = "%s %s" %(first_name, last_name) 
-        
-        db_company = db.query(models.Company).filter(models.Company.id == company_id).first()
-        
-        # get all distinct ids.
-        distinct_id = len(crud.get_distinct_ids(db)) + 1
-       
-        # if the time left is less.
-        if db_company.time_left < total_length:
-            return JSONResponse(
-                status_code= 406,
-                content=jsonable_encoder({"detail": "You don't have enough Credit left"}),
-            )
-        # store all the transcripts here.
-        all_transcripts = []
-        
         for file in files: 
-        # if the time left is more.
-            # doing it.
             duration = audio_details(file.filename)
             result = cloudinary.uploader.upload_large(file.filename, resource_type = "auto", 
-                                                      chunk_size = 6000000)
+                                                        chunk_size = 6000000)
             url = result.get("secure_url")
             urls = [url]
             response = shorten_urls(urls)
             retrieve_url = response[0]
             new_url = retrieve_url.short_url
+            print(new_url)
             
             size = Path(file.filename).stat().st_size / 1048576
             audio_time = str(duration['hours'])+":"+ str(duration['mins'])+":"+ str(duration['secs'])
@@ -146,7 +111,61 @@ async def analyse(first_name: str = Form(), last_name: str = Form(),
             # delete the file
             os.remove(file.filename)
             db_company = db.query(models.Company).filter(models.Company.id == company_id).first()
+                    
+    except Exception as e:
+        # send an email to let them know their email failed.
+        db_user = crud.get_user(db, user_id)
+        user_email = db_user.email
+        
+        user = crud.get_user_by_email(db, email=user_email)
+        await transcription_fail_email([user_email], user)
+        
+        return JSONResponse(
+            status_code= 500,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
 
+@analyze_router.post("/upload_audios", status_code = 200)
+async def analyse(first_name: str = Form(), last_name: str = Form(), background_task: BackgroundTasks = BackgroundTasks(), 
+                  db: Session = Depends(_services.get_session), files: List[UploadFile]=File(...), 
+                  user: models.User = Depends(get_active_user)):
+    try:
+        # initialize the total file length to 0
+        total_length = 0
+        # check if the length of the file is more than 5
+        if len(files) > 5:
+            return JSONResponse(
+                status_code= 406,
+                content=jsonable_encoder({"detail": "You can not upload more than two files"}),
+            )
+        # if the file type is not audio.
+        if not utils.check_if_audio(files):
+            return JSONResponse(
+                status_code= 406,
+                content=jsonable_encoder({"detail": "Please ensure you have uploaded an audio file."}),
+            )    
+        # get the length of the audio file altogether.
+        total_length = utils.get_length(files)
+        user_id = user.id
+        company_id = user.company_id        
+        # convert to lower case for both first and last name.    
+        first_name = first_name.lower()
+        last_name = last_name.lower()
+        agent_name = "%s %s" %(first_name, last_name) 
+        
+        db_company = db.query(models.Company).filter(models.Company.id == company_id).first()
+        
+        # get all distinct ids.
+        distinct_id = len(crud.get_distinct_ids(db)) + 1
+       
+        # if the time left is less.
+        if db_company.time_left < total_length:
+            return JSONResponse(
+                status_code= 406,
+                content=jsonable_encoder({"detail": "You don't have enough Credit left"}),
+            )
+        # add the audios as background tasks
+        background_task.add_task(analyse_audios, first_name, last_name, files, distinct_id, user_id, company_id, db)
 
     except Exception as e:
         return JSONResponse(
@@ -155,7 +174,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(),
         ) 
     
     return {
-        "detail":all_transcripts
+        "detail":f"Your Job has been submitted with id {distinct_id}"
     }
 
 # @analyze_router.post("/upload_audios_multiple", status_code = 200)
