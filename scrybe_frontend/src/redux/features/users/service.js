@@ -12,10 +12,10 @@ export const SignUp = (data) => async () => {
     sessionStorage.setItem("heedAccessToken", res.data.access_token);
     localStorage.setItem("heedRefreshToken", res.data.refresh_token);
     Cookies.set("heedAccessToken", res.data.access_token);
-
-    dispatch(GetAccount());
+    dispatch(
+      createResponse({ type: "Success", message: "Registration Successful" })
+    );
   } catch (error) {
-    console.log(error);
     dispatch(createResponse(ErrorHandler(error)));
   }
 };
