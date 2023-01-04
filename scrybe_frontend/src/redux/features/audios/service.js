@@ -58,6 +58,7 @@ export const GetTotalRecordings = () => async () => {
 export const DeleteAudios = (ids) => async () => {
   try {
     const res = await AudioService.Delete(ids);
+
     console.log(res);
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
