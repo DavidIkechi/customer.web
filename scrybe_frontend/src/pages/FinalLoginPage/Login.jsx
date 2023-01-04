@@ -5,23 +5,17 @@ import SnackBar from "../../components/SnackBar";
 import styles from "./Login.module.scss";
 
 import { useDispatch, useSelector } from "react-redux";
-import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
 // import { useFetchUserQuery } from "../../redux/user/rtkquery";
 import {
-  loginUser,
-  resetUser,
-  selectUserState,
-} from "../../redux/user/userSlice";
+  auth,
+  provider,
+  signInWithPopup,
+} from "../../redux/axios/Utils/Firebase";
+import { SignIn, UserGoogleLogin } from "../../redux/features/users/service";
+import google from "./assets/google.png";
 import hidden from "./assets/hidden.png";
 import logo from "./assets/logo.png";
 import visible from "./assets/visible.png";
-import google from "./assets/google.png";
-import {
-  signInWithPopup,
-  auth,
-  provider,
-} from "../../redux/axios/Utils/Firebase";
-import { SignIn, UserGoogleLogin } from "../../redux/features/users/service";
 
 const Login = () => {
   // const { userData, status, error } = useSelector((state) =>
