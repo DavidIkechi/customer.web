@@ -1,16 +1,16 @@
 import api from "../axios";
 
-const baseURL = "https://api.heed.cx/sentiments/";
-api.defaults.baseURL = baseURL;
+// const baseURL = "https://api.heed.cx/sentiments/";
+// api.defaults.baseURL = baseURL;
 
 export const DownloadApi = (id) => {
-  return api.get(`download/${id}`);
+  return api.get(`sentiments/download/${id}`);
 };
 
 export const TotalAnalysisApi = () => {
-  return api.get(`total_analysis`);
+  return api.get(`sentiments/total_analysis`);
 };
 
 export const GetAnaylsisApi = (id) => {
-  return api.get(`new_analysis/${id}`);
+  return api.get(`sentiments/new_analysis/${id}`);
 };

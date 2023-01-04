@@ -5,20 +5,13 @@
 
 import { PropTypes } from "prop-types";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import IsLoadingSkeleton from "../../../components/LoadingSkeleton";
-// import {
-//   useDeleteRecordingMutation,
-//   useFetchUserRecordingsQuery,
-// } from "../../../redux/uploadedRecodings/rtkquery";
-import { useDispatch, useSelector } from "react-redux";
-import SnackBar from "../../../components/SnackBar/index";
-import ErrorHandler from "../../../helpers/axioshelp/Utils/ErrorHandler";
 import {
-  deleteRecording,
-  fetchRecordings,
-  selectRecordingsState,
-} from "../../../redux/uploadedRecodings/recordSlice";
+  DeleteAudios,
+  GetUserAudios,
+} from "../../../redux/features/audios/service";
 import { formatAudioLen } from "./formatAudioLen";
 import { formatAudioSize } from "./formatAudioSize";
 import { formatDate } from "./formatDate";
@@ -30,23 +23,22 @@ import soundwave from "./imgs/soundwave.svg";
 import { shortenfilename } from "./shortenFileLen";
 import styles from "./tabledata.module.scss";
 const TableData = ({ searchKeyword }) => {
-  const { recordings, error, isLoading, deleteStatus } = useSelector((state) =>
-    selectRecordingsState(state)
-  );
+  const { audios, audioError } = useSelector((state) => state.audio);
+  const { isLoading } = useSelector((state) => state.util);
   const dispatch = useDispatch();
   // const [deleteRecording] = useDeleteRecordingMutation();
-  const allRecordings = recordings;
+  const allRecordings = audios;
   const [recordCheckedList, setRecordCheckedList] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [recordingsProcessed, setRecordingsProcessed] = useState(false);
   const [openDeletePopup, setOpenDeletePopup] = useState(false);
-  const [response, setResponse] = useState({ type: "", message: "" });
   // const [deleted, setDeleted] = useState(false);
-  const sessionExpired = error;
+  const sessionExpired = audioError;
   const isFetching = isLoading;
 
   useEffect(() => {
-    dispatch(fetchRecordings());
+    // dispatch(fetchRecordings());
+    dispatch(GetUserAudios());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -67,26 +59,18 @@ const TableData = ({ searchKeyword }) => {
     setOpenDeletePopup(false);
     setRecordCheckedList([]);
     setOpenModal(false);
-    dispatch(fetchRecordings());
+    dispatch(GetUserAudios());
   };
   const deleteBulkRecordings = async () => {
     const audioToInt = recordCheckedList.map((item) => Number(item));
     const params = audioToInt.map((i) => i).join("&audios=");
-    dispatch(deleteRecording(params));
+    dispatch(DeleteAudios(params));
   };
 
-  useEffect(() => {
-    if (deleteStatus === "success") {
-      handleClose();
-      setResponse(
-        ErrorHandler({
-          type: "Success",
-          message: "Audio(s) deleted successfully",
-        })
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deleteStatus]);
+  const singleDelete = async (id) => {
+    dispatch(DeleteAudios(id));
+    dispatch(GetUserAudios());
+  };
 
   const allRecordingsProcessed = () => {
     const allProcessed = allRecordings?.every(
@@ -116,10 +100,6 @@ const TableData = ({ searchKeyword }) => {
   }, [allRecordings, searchKeyword]);
   return (
     <>
-      {response.message !== "" && (
-        <SnackBar response={response} setResponse={setResponse} />
-      )}
-
       <div
         className={`${styles.uploaded_recordings} ${
           searchRecordings(allRecordings)?.length < 1
@@ -271,7 +251,7 @@ const TableData = ({ searchKeyword }) => {
                                       "uploaded-table-body-cell delete-btn"
                                     ]
                                   }
-                                  onClick={() => deleteRecording(recording?.id)}
+                                  onClick={() => singleDelete(recording?.id)}
                                 >
                                   <img
                                     src={deleteIcon}

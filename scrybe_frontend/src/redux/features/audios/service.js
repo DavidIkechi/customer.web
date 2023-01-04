@@ -8,21 +8,26 @@ import {
 } from "../../axios/apis/audio";
 import ErrorHandler from "../../axios/Utils/ErrorHandler";
 import { dispatch } from "../../store";
-import { createResponse } from "../../utils/UtilSlice";
+import { createResponse, setLoading } from "../../utils/UtilSlice";
 import {
   setAudios,
   setAudioSentiment,
+  setAudiosError,
   setRecentRecordings,
   setTotalRecordings,
   setUploadedAudios,
 } from "./audioSlice";
 
 export const GetUserAudios = () => async () => {
+  dispatch(setLoading(true));
   try {
     const res = await UserAudiosApi();
     dispatch(setAudios(res.data.detail));
+    dispatch(setLoading(false));
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
+    dispatch(setLoading(false));
+    dispatch(setAudiosError(error.response.data.detail));
   }
 };
 
@@ -65,8 +70,13 @@ export const GetTotalRecordings = () => async () => {
 export const DeleteAudios = (ids) => async () => {
   try {
     const res = await DeleteAudioApi(ids);
-
     console.log(res);
+    dispatch(
+      createResponse({
+        type: "Success",
+        message: "Audio(s) deleted successfully",
+      })
+    );
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
   }

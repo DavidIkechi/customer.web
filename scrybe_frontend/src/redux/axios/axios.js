@@ -7,6 +7,8 @@ const headers = {
   "content-type": "Application/json",
 };
 
+axios.defaults.baseURL = "https://api.heed.cx/";
+
 const axiosInstance = axios.create({
   headers,
   timeout: 60000,
