@@ -31,24 +31,17 @@ const logout = () => {
 };
 
 const getuser = async () => {
-  await axios
-    .get(`users/account`, {
-      headers,
-    })
-    .then((response) => {
-      if (response.data.detail?.first_name) {
-        localStorage.setItem("user", JSON.stringify(response.data.detail));
-      }
-      return response.data?.detail;
-    })
-    .catch((error) => {
-      console.log(error);
-      localStorage.removeItem("user");
-      localStorage.removeItem("data"); // someone is setting this in their code
-      sessionStorage.removeItem("heedAccessToken");
-      sessionStorage.removeItem("heedRefreshToken");
-      return error;
-    });
+  const res = await axios.get(`users/account`, {
+    headers,
+  });
+  if (res.data.detail) {
+    localStorage.setItem("user", JSON.stringify(res.data.detail));
+  } else {
+    localStorage.removeItem("user");
+    sessionStorage.removeItem("heedAccessToken");
+    sessionStorage.removeItem("heedRefreshToken");
+  }
+  return res.data?.detail;
 };
 
 const authServices = {

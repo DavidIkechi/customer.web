@@ -67,6 +67,7 @@ const userSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getUser.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.userData = action.payload;
         state.error = null;
         state.getuserStatus = "success";
@@ -78,6 +79,9 @@ const userSlice = createSlice({
         state.getuserStatus = "failed";
         state.isLoading = false;
         state.token = null;
+        localStorage.removeItem("user");
+        sessionStorage.removeItem("heedAccessToken");
+        sessionStorage.removeItem("heedRefreshToken");
       })
       .addCase(registerUser.pending, (state) => {
         state.registerStatus = "loading";
@@ -122,6 +126,7 @@ const userSlice = createSlice({
         state.error = null;
         state.isLoading = false;
         state.token = null;
+        state.getuserStatus = null;
       })
       .addCase(logoutUser.rejected, (state, action) => {
         state.error = action.payload;
