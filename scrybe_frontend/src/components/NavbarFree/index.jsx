@@ -1,19 +1,16 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
-import { localStorageUser } from "../../helpers/localStorageUser";
-import { useFetchUserQuery } from "../../redux/user/rtkquery";
-import { logoutUser } from "../../redux/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { LogOut } from "../../redux/features/users/service";
 import styles from "./nav.module.scss";
 
 function NavBar() {
-  const { isLoading } = useFetchUserQuery();
-
+  const navigate = useNavigate();
   const [clicked, setClicked] = useState(false);
-  const activeUser = localStorageUser();
+  const { user: currentUser, isLoading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const handleLogout = () => {
-    dispatch(logoutUser());
+    dispatch(LogOut());
   };
 
   function handleClick() {
@@ -58,14 +55,14 @@ function NavBar() {
             >
               About Us
             </NavLink>
-            {activeUser && <NavLink to="/dashboard">Dashboard</NavLink>}
+            {currentUser && <NavLink to="/dashboard">Dashboard</NavLink>}
           </div>
           <div className={styles.nav__ctas}>
             {isLoading ? (
               <div>Loading...</div>
             ) : (
               <>
-                {activeUser ? (
+                {currentUser ? (
                   <>
                     <NavLink
                       to="/"

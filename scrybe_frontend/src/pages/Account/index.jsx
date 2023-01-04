@@ -1,20 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import NewDesignSidebar from "../../components/NewDesignSidebar";
-import SnackBar from "../../components/SnackBar/index";
 import TopNav from "../../components/TopNav";
-import ApiService from "../../helpers/axioshelp/apis";
-import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
 import accountStyles from "./account.module.scss";
 import chevronLeft from "./assets/icons/chevron-left.svg";
 import plus from "./assets/icons/plus.svg";
 
 function Account() {
+  const { user } = useSelector((state) => state.user);
   const [accountModalIsActive, setAccountModalIsActive] = useState(false);
   const [accountUser, setAccountUser] = useState();
-  const [response, setResponse] = useState({ type: "", message: "" });
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const toggleAccountModal = () => {
     setAccountModalIsActive((current) => !current);
@@ -30,20 +28,13 @@ function Account() {
     formState: { errors },
   } = useForm();
 
-  async function getUser() {
-    try {
-      const res = await ApiService.Account();
-      setAccountUser(res.data);
-    } catch (err) {
-      console.log("err");
-      if (err.response.status === 401) {
-        navigate("/login");
-      }
-      setResponse(ErrorHandler(err));
+  useEffect(() => {
+    if (user) {
+      setAccountUser(user);
     }
-  }
+  }, [user]);
 
-  const baseUrl = "https://api.heed.hng.tech";
+  const baseUrl = "https://api.heed.cx";
   const submitCallback = () => {
     const config = {
       headers: {
@@ -68,18 +59,12 @@ function Account() {
           if (res.status === 200) {
             toggleAccountModal();
             reset();
-            getUser();
           }
         })
         .catch((err) => {
           console.log("this is the error:", err.response);
         });
   };
-
-  useEffect(() => {
-    getUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const first_name = watch("first_name");
   const last_name = watch("last_name");
@@ -89,7 +74,6 @@ function Account() {
 
   return (
     <>
-      <SnackBar response={response} setResponse={setResponse} />
       <NewDesignSidebar
         toggleSidebar={toggleSidebar}
         needSearchMobile="needSearchMobile"
