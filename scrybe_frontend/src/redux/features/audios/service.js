@@ -8,7 +8,7 @@ import {
 } from "../../axios/apis/audio";
 import ErrorHandler from "../../axios/Utils/ErrorHandler";
 import { dispatch } from "../../store";
-import { createResponse } from "../../utils/UtilSlice";
+import { createResponse, setLoading } from "../../utils/UtilSlice";
 import {
   setAudios,
   setAudioSentiment,
@@ -18,11 +18,15 @@ import {
 } from "./audioSlice";
 
 export const GetUserAudios = () => async () => {
+     dispatch(setLoading(true));
+
   try {
     const res = await UserAudiosApi();
     dispatch(setAudios(res.data.detail));
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
+     dispatch(setLoading(false));
+     dispatch(setUploadedAudioError(error.response.data.detail));
   }
 };
 
