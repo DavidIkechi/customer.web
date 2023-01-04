@@ -147,7 +147,7 @@ export { completeRegistration };
 
 const completeRegistration = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { userData, registerStatus, error } = useSelector((state) =>
+  const { userData, status, error } = useSelector((state) =>
     selectUserState(state)
   );
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -214,18 +214,18 @@ const completeRegistration = () => {
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
-    if (registerStatus === "success") {
+    if (status === "success") {
       localStorage.clear();
       setResponse(ErrorHandler(userData));
       setTimeout(() => {
         navigate("/verify-signup");
       }, 2500);
       dispatch(resetUser());
-    } else if (registerStatus === "failed") {
+    } else if (status === "failed") {
       setResponse(ErrorHandler(error));
       dispatch(resetUser());
     }
-  }, [userData, registerStatus, error, navigate, dispatch]);
+  }, [userData, status, error, navigate, dispatch]);
 
   return {
     handleCompanyName,
