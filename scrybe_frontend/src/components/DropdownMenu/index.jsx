@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { logoutUser, resetUser } from "../../redux/user/userSlice";
+import { LogOut } from "../../redux/features/users/service";
 import account from "./assets/account.jpg";
 import logout from "./assets/logout.jpg";
 import support from "./assets/support.jpg";
@@ -9,7 +9,7 @@ function DropDownModal({ closeModal }) {
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const signout = () => {
-    dispatch(logoutUser(), resetUser());
+    dispatch(LogOut());
   };
   return (
     <div className={styles.dropdown}>

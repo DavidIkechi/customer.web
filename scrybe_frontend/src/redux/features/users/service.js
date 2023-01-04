@@ -68,3 +68,10 @@ export const UserGoogleLogin = (email) => async () => {
     dispatch(createResponse(ErrorHandler(error)));
   }
 };
+
+export const LogOut = () => async () => {
+  localStorage.clear();
+  sessionStorage.clear();
+  dispatch(setUser(null));
+  Cookies.remove("heedAccesToken");
+};
