@@ -17,7 +17,7 @@ pipeline {
 
 			steps {
 				sh "cd backend/app"
-				sh "cd backend/app && python3 -m pip3 install --upgrade pip && pip3 install pyopenssl --upgrade"
+				sh "cd backend/app && python3 -m pip install --upgrade pip && pip3 install pyopenssl --upgrade"
 				sh "cd backend/app && pip3 install -r requirements.txt --force"
 				sh "cd backend/app && alembic revision --autogenerate -m 'first migration' && alembic upgrade head"
 				
