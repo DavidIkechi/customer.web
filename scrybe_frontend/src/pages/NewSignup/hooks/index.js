@@ -2,12 +2,9 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ErrorHandler from "../../../helpers/axioshelp/Utils/ErrorHandler";
+import { SignIn, SignUp } from "../../../redux/features/users/service";
 // import { useRegisterUserMutation } from "../../../redux/user/rtkquery/authApiSlice";
-import {
-  registerUser,
-  resetUser,
-  selectUserState,
-} from "../../../redux/user/userSlice";
+import { resetUser, selectUserState } from "../../../redux/user/userSlice";
 
 const createAccount = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -147,9 +144,7 @@ export { completeRegistration };
 
 const completeRegistration = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { userData, status, error } = useSelector((state) =>
-    selectUserState(state)
-  );
+  const { user, token } = useSelector((state) => state.user);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   // const [registerUser, { isLoading }] = useRegisterUserMutation();
 
@@ -209,23 +204,18 @@ const completeRegistration = () => {
       company_address: company_address,
       password: value.password,
     };
-    dispatch(registerUser(data));
+    dispatch(SignUp(data));
   };
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
-    if (status === "success") {
+    if (token) {
       localStorage.clear();
-      setResponse(ErrorHandler(userData));
       setTimeout(() => {
         navigate("/verify-signup");
       }, 2500);
-      dispatch(resetUser());
-    } else if (status === "failed") {
-      setResponse(ErrorHandler(error));
-      dispatch(resetUser());
     }
-  }, [userData, status, error, navigate, dispatch]);
+  }, [token, navigate]);
 
   return {
     handleCompanyName,
@@ -238,6 +228,6 @@ const completeRegistration = () => {
     value,
     response,
     setResponse,
-    userData,
+    user,
   };
 };

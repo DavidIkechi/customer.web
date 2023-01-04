@@ -1,4 +1,7 @@
+import { useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
+import { setUser } from "./redux/features/users/userSlice";
+import { dispatch } from "./redux/store";
 
 export function RequireToken() {
   const auth = sessionStorage.getItem("heedAccessToken");

@@ -1,4 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { setUser } from "../features/users/userSlice";
+import { dispatch } from "../store";
 import authServices from "./service";
 
 const initialState = {
@@ -42,6 +44,9 @@ export const loginUser = createAsyncThunk(
 );
 
 export const logoutUser = createAsyncThunk("user/logout", async () => {
+  localStorage.clear();
+  sessionStorage.clear();
+  dispatch(setUser(null));
   return authServices.logout();
 });
 
