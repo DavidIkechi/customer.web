@@ -1,10 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import ErrorHandler from "../../../helpers/axioshelp/Utils/ErrorHandler";
-import { SignIn, SignUp } from "../../../redux/features/users/service";
-// import { useRegisterUserMutation } from "../../../redux/user/rtkquery/authApiSlice";
-import { resetUser, selectUserState } from "../../../redux/user/userSlice";
+import { SignUp } from "../../../redux/features/users/service";
 
 const createAccount = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
