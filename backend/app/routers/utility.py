@@ -50,7 +50,6 @@ def request_transcript(upload_url, header):
 def make_polling_endpoint(transcript_response):
     polling_endpoint = "https://api.assemblyai.com/v2/transcript/"
     polling_endpoint += transcript_response
-    print("getting the polls")
     return polling_endpoint
 
 

@@ -182,11 +182,24 @@ def create_stripe_order(userPayment: schema.PaymentBase, db: Session = Depends(_
         )
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-    print(checkout_session.url)
-    return RedirectResponse(checkout_session.url, status_code=303)
+    # print(checkout_session.url)
+    # return RedirectResponse(checkout_session.url, status_code=303)
+    return {"detail": {
+        "payment_url": checkout_session.url,
+        "gateway": "stripe"
+        }
+    }
 
 
 #webhook to handle all payments(successful, failed, declined) and fulfil order
+@order_router.post('/paystack-webhook', include_in_schema=False)
+async def heed_webhook_view(request: Request, stripe_signature: str = Header(str), db: Session = Depends(_services.get_session)):
+    payload = await request.body()
+    
+    print(payload)
+
+
+
 
 @order_router.post('/webhook', include_in_schema=False)
 async def heed_webhook_view(request: Request, stripe_signature: str = Header(str), db: Session = Depends(_services.get_session)):
