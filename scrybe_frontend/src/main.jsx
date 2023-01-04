@@ -6,9 +6,6 @@ import App from "./App";
 import "./index.scss";
 import "./interceptors/axios";
 import store from "./redux/store";
-import { getUser } from "./redux/user/userSlice";
-
-store.dispatch(getUser());
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
