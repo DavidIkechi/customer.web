@@ -1,7 +1,8 @@
+import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 
 export function RequireToken() {
-  const auth = sessionStorage.getItem("heedAccessToken");
+  const auth = useSelector((state) => state.user.token);
 
   if (!auth) {
     return <Navigate to="/login" replace />;
@@ -11,7 +12,7 @@ export function RequireToken() {
 }
 
 export function Authenticated() {
-  const auth = sessionStorage.getItem("heedAccessToken");
+  const auth = useSelector((state) => state.user.token);
 
   if (auth) {
     return <Navigate to="/dashboard" replace />;

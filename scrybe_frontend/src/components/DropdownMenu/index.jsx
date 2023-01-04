@@ -1,21 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  logoutUser,
-  resetUser,
-  selectUserState,
-} from "../../redux/user/userSlice";
+import { LogOut } from "../../redux/features/users/service";
 import account from "./assets/account.jpg";
 import logout from "./assets/logout.jpg";
 import support from "./assets/support.jpg";
 import styles from "./dropdown.module.scss";
 function DropDownModal({ closeModal }) {
-  const { userData: currentUser } = useSelector((state) =>
-    selectUserState(state)
-  );
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const signout = () => {
-    dispatch(logoutUser(), resetUser());
+    dispatch(LogOut());
   };
   return (
     <div className={styles.dropdown}>
@@ -30,7 +24,7 @@ function DropDownModal({ closeModal }) {
         <img src={support} alt="" />
         <p className={styles.p}>Support</p>
       </div>
-      {currentUser && (
+      {user && (
         <div className={styles.list}>
           <img src={logout} alt="" />
           <Link to="/login" className={styles.p} onClick={signout}>
