@@ -20,8 +20,7 @@ const store = configureStore({
     util: utilReducer,
     [recordAPI.reducerPath]: recordAPI.reducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(recordAPI.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
   devTools: true,
 });
 
