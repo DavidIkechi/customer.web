@@ -1,6 +1,6 @@
 import axios from "axios";
-import { getToken } from "../../helpers/GetToken";
-const token = getToken();
+import { GetToken } from "../../helpers/getToken";
+const token = GetToken();
 const headers = {
   "content-type": "application/json",
   Authorization: `Bearer ${token}`,
