@@ -1,12 +1,9 @@
 import api from "../axios";
 
-const baseURL = "https://api.heed.cx/transciption/";
-api.defaults.baseURL = baseURL;
-
 export const GetTranscriptionApi = (id) => {
-  return api.get(`${id}`);
+  return api.get(`transciption/${id}`);
 };
 
 export const GetTransciptApi = (id) => {
-  return api.get(`get_transcript/${id}`);
+  return api.get(`transciption/get_transcript/${id}`);
 };
