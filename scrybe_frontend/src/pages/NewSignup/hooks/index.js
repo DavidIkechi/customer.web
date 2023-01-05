@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { SignUp } from "../../../redux/features/users/service";
+import { setError } from "../../../redux/features/users/userSlice";
 
 const createAccount = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -141,7 +142,7 @@ export { completeRegistration };
 
 const completeRegistration = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { user, token } = useSelector((state) => state.user);
+  const { user, token, error } = useSelector((state) => state.user);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   // const [registerUser, { isLoading }] = useRegisterUserMutation();
 
@@ -206,13 +207,20 @@ const completeRegistration = () => {
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
+    if (error) {
+      localStorage.clear();
+      setTimeout(() => {
+        navigate("/signup");
+        dispatch(setError(false));
+      }, 2500);
+    }
     if (token) {
       localStorage.clear();
       setTimeout(() => {
         navigate("/verify-signup");
       }, 2500);
     }
-  }, [token, navigate]);
+  }, [token, navigate, error, dispatch]);
 
   return {
     handleCompanyName,
