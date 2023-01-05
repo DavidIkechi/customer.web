@@ -120,7 +120,7 @@ async def analyse_audios(first_name: str, last_name: str, files: list, distinct_
         user_email = db_user.email
         
         user = crud.get_user_by_email(db, email=user_email)
-        # await transcription_fail_email([user_email], user, files)
+        await transcription_fail_email([user_email], user)
         with open("error.log", "a") as f:
             f.write(str(user_email) + " " + str(datetime.now()) + " " + str(e) + "\n\n")
         # create a log file to log all errors
