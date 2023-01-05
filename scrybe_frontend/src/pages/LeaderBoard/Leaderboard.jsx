@@ -26,6 +26,8 @@ function Leaderboard() {
   const leaderboardData = useSelector((state) => state.agent.leaderboard);
   const dispatch = useDispatch();
 
+  const { isLoading } = useSelector((state) => state.util);
+
   const [search, setSearch] = useState("");
   const [toggleSidebar, setToggleSidebar] = useState(false);
 
