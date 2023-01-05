@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import recordReducer from "./uploadedRecodings/recordSlice";
 import userReducer from "./features/users/userSlice";
 import agentReducer from "./features/agents/agentSlice";
 import analyzeReducer from "./features/analyze/analyzeSlice";
@@ -10,7 +9,6 @@ import utilReducer from "./utils/UtilSlice";
 
 const store = configureStore({
   reducer: {
-    recordAPI: recordReducer,
     user: userReducer,
     agent: agentReducer,
     analyze: analyzeReducer,

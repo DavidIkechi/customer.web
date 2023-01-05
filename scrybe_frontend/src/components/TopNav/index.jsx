@@ -1,8 +1,10 @@
 import { PropTypes } from "prop-types";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import DropDownModal from "../DropdownMenu";
+import { NavSkeleton } from "../LoadingSkeleton";
 import Modal from "../Modal";
 import SearchInput from "../SearchInput";
 import SnackBar from "../SnackBar";
@@ -18,6 +20,13 @@ const TopNav = ({ openSidebar, search }) => {
   const { user } = useSelector((state) => state.user);
   const [modalOpen, setModalOpen] = useState(false);
   const [response, setResponse] = useState({ type: "", message: "" });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (user) {
+      setLoading(false);
+    }
+  }, [user]);
 
   return (
     <div
@@ -39,7 +48,7 @@ const TopNav = ({ openSidebar, search }) => {
         <SearchInput inputValue={search} />
       </div>
       <div className={styles.TopNav_user_btn}>
-        {user ? (
+        {!loading ? (
           <div className={styles.TopNav_user}>
             <div className={styles.TopNav_user_desktop}>
               <img
@@ -65,17 +74,18 @@ const TopNav = ({ openSidebar, search }) => {
             </div>
           </div>
         ) : (
-          <div className={styles.TopNav_user}>
-            <div className={styles.TopNav_user_desktop}>
-              <img className={styles.userimg} src={DummyImg} alt="john doe" />
-              <div className={styles.TopNav_user_desktop_nameDetails}>
-                <div className={styles.TopNav_user_desktop_name_arr}>
-                  <p className={styles.name}>John Doe</p>
-                </div>
-                <p className={styles.workspace_name}>Office workspace</p>
-              </div>
-            </div>
-          </div>
+          // <div className={styles.TopNav_user}>
+          //   <div className={styles.TopNav_user_desktop}>
+          //     <img className={styles.userimg} src={DummyImg} alt="john doe" />
+          //     <div className={styles.TopNav_user_desktop_nameDetails}>
+          //       <div className={styles.TopNav_user_desktop_name_arr}>
+          //         <p className={styles.name}>John Doe</p>
+          //       </div>
+          //       <p className={styles.workspace_name}>Office workspace</p>
+          //     </div>
+          //   </div>
+          // </div>
+          <NavSkeleton />
         )}
         {user && (
           <>
