@@ -46,14 +46,4 @@ def change_plan(user_plan:schema.ChangePlan , logged_in_user:models.User = Depen
                     "minutes": logged_in_user.company.time_left}
     return convert_plan(plan_details, logged_in_user, db)
         
-@plan_router.get("/view_plan", description="View User's current subscription plan", status_code=status.HTTP_200_OK)
-def view_user_plan(user: models.User=Depends(auth.get_active_user), db: Session = Depends(_services.get_session)):
-    user_plan = db.query(models.ProductPlan).filter(models.ProductPlan.name == user.company.plan).first()
-    amount_left = math.floor(user_plan.price * user.company.time_left)
-    
-    plan_details = {"current_plan": user_plan.name , 
-                    "Amount": amount_left,
-                    "Time_Left": math.floor(user.company.time_left / 60)}
-    
-    return plan_details
 
