@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const RefreshToken = async () => {
-  let refreshToken = localStorage.getItem("heedRefreshToken");
+  let refreshToken = sessionStorage.getItem("heedRefreshToken");
   const formBody = {
     refresh_token: refreshToken,
   };

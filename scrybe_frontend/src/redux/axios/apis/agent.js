@@ -1,30 +1,17 @@
 import api from "../axios";
 
-class Agent {
-  constructor(request) {
-    this.request = request;
-  }
+export const LeaderBoardApi = async () => {
+  return api.get(`agents/leaderboard`);
+};
 
-  async LeaderBoard() {
-    return this.request.get(`leaderboard`);
-  }
+export const TotalAgentAnalysisApi = async (id) => {
+  return api.get(`agents/total-agent-analysis?agent_id=${id}`);
+};
 
-  async TotalAgentAnalysis(id) {
-    return this.request.get(`total-agent-analysis?agent_id=${id}`);
-  }
+export const CreateApi = async (data) => {
+  return api.post(`agents/agent`, data);
+};
 
-  async Create(data) {
-    return this.request.post(`agent`, data);
-  }
-
-  async AgentDetails(id) {
-    return this.request.get(`AgentDetails?agent_id=${id}`);
-  }
-}
-
-const baseURL = "https://api.heed.cx/agents/";
-api.defaults.baseURL = baseURL;
-
-const AgentService = new Agent(api);
-
-export default AgentService;
+export const AgentDetailsApi = (id) => {
+  return api.get(`agents/AgentDetails?agent_id=${id}`);
+};

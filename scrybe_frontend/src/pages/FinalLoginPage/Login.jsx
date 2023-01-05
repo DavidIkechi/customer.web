@@ -21,7 +21,6 @@ const Login = () => {
   // const { userData, status, error } = useSelector((state) =>
   //   selectUserState(state)
   // );
-  const { response } = useSelector((state) => state.util);
   const { user } = useSelector((state) => state.user);
   // const { data, isSuccess, error: hasError } = useFetchUserQuery();
 
@@ -116,7 +115,6 @@ const Login = () => {
 
   return (
     <>
-      {response.message !== "" && <SnackBar response={response} />}
       <div className={styles.signinContainer}>
         <div className={styles.bgcontainer}>
           <div className={styles.text}>

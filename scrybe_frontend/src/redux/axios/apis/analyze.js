@@ -1,22 +1,9 @@
 import api from "../axios";
 
-class Analyze {
-  constructor(request) {
-    this.request = request;
-  }
+export const UploadAudiosApi = (data) => {
+  return api.post(`analyse/upload_audios`, data);
+};
 
-  async UploadAudios(data) {
-    return this.request.post(`upload_audios`, data);
-  }
-
-  async TryforFree(data) {
-    return this.request.post(`tryForFree`, data);
-  }
-}
-
-const baseURL = "https://api.heed.cx/analyse/";
-api.defaults.baseURL = baseURL;
-
-const AnalyzeService = new Analyze(api);
-
-export default AnalyzeService;
+export const TryforFreeApi = (data) => {
+  return api.post(`analyse/tryForFree`, data);
+};

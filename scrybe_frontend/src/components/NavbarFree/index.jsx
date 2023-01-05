@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
-import { logoutUser } from "../../redux/user/userSlice";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { LogOut } from "../../redux/features/users/service";
 import styles from "./nav.module.scss";
 
 function NavBar() {
-  // const { data: activeUser, isLoading } = useFetchUserQuery();
-
+  const navigate = useNavigate();
   const [clicked, setClicked] = useState(false);
   const { user: currentUser, isLoading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const handleLogout = () => {
-    dispatch(logoutUser());
+    dispatch(LogOut());
   };
 
   function handleClick() {

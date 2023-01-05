@@ -1,26 +1,16 @@
 import api from "../axios";
 
-class Sentiments {
-  constructor(request) {
-    this.request = request;
-  }
+// const baseURL = "https://api.heed.cx/sentiments/";
+// api.defaults.baseURL = baseURL;
 
-  async Download(id) {
-    return this.request.get(`download/${id}`);
-  }
+export const DownloadApi = (id) => {
+  return api.get(`sentiments/download/${id}`);
+};
 
-  async TotalAnalysis() {
-    return this.request.get(`total_analysis`);
-  }
+export const TotalAnalysisApi = () => {
+  return api.get(`sentiments/total_analysis`);
+};
 
-  async GetAnaylsis(id) {
-    return this.request.get(`new_analysis/${id}`);
-  }
-}
-
-const baseURL = "https://api.heed.cx/sentiments/";
-api.defaults.baseURL = baseURL;
-
-const SentimentService = new Sentiments(api);
-
-export default SentimentService;
+export const GetAnaylsisApi = (id) => {
+  return api.get(`sentiments/new_analysis/${id}`);
+};
