@@ -1,22 +1,31 @@
 import { React, useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SnackBar from "../../components/SnackBar";
 // import Loading from "../../components/Loading";
 import styles from "./Login.module.scss";
 
 import { useDispatch, useSelector } from "react-redux";
-import ErrorHandler from "../../helpers/axioshelp/Utils/ErrorHandler";
-import { useFetchUserQuery } from "../../redux/user/rtkquery";
-import { getUser, loginUser, resetUser } from "../../redux/user/userSlice";
+// import { useFetchUserQuery } from "../../redux/user/rtkquery";
+import {
+  auth,
+  provider,
+  signInWithPopup,
+} from "../../redux/axios/Utils/Firebase";
+import { SignIn, UserGoogleLogin } from "../../redux/features/users/service";
+import google from "./assets/google.png";
 import hidden from "./assets/hidden.png";
 import logo from "./assets/logo.png";
 import visible from "./assets/visible.png";
 
 const Login = () => {
-  const { userData, status, error } = useSelector((state) => state.auth);
-  const { data, isSuccess, error: hasError } = useFetchUserQuery();
+  // const { userData, status, error } = useSelector((state) =>
+  //   selectUserState(state)
+  // );
+  const { user } = useSelector((state) => state.user);
+  // const { data, isSuccess, error: hasError } = useFetchUserQuery();
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const emailTest = new RegExp(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/);
   const passwordTest = new RegExp(/^["0-9a-zA-Z!@#$&()\\-`.+,/"]{8,}$/);
@@ -27,7 +36,6 @@ const Login = () => {
   const [emailStateTest, setEmailStateTest] = useState(false);
   const [passStateTest, setPassStateTest] = useState(false);
   const [isValid, setIsValid] = useState(true);
-  const [response, setResponse] = useState({ type: "", message: "" });
 
   const tester = (e, reg, func) => {
     if (reg.test(e.target.value)) {
@@ -82,35 +90,31 @@ const Login = () => {
     formData.append("password", password);
 
     // login user redux hook
-    dispatch(loginUser(formData));
+    dispatch(SignIn(formData));
+  };
+
+  const GoogleLogin = () => {
+    signInWithPopup(auth, provider)
+      .then(async (result) => {
+        const email = result.user.email;
+
+        console.log(email);
+        dispatch(UserGoogleLogin(email));
+      })
+      .catch((error) => {
+        console.log(error);
+        return error;
+      });
   };
 
   useEffect(() => {
-    if (status === "success") {
-      dispatch(getUser());
+    if (user) {
+      setTimeout(() => navigate("/dashboard"), 1000);
     }
-    if (isSuccess) {
-      setResponse(
-        ErrorHandler({ type: "Success", message: "Login successful" })
-      );
-      // ignore this line for now
-      setTimeout(() => {
-        window.location.href = "/dashboard";
-      }, 2500);
-    } else if (error) {
-      setResponse(ErrorHandler(error));
-      dispatch(resetUser());
-    }
-    // if (hasError) {
-    //   setResponse(ErrorHandler(hasError));
-    // }
-  }, [status, data, userData, error, dispatch, isSuccess, hasError]);
+  }, [user, navigate]);
 
   return (
     <>
-      {response.message !== "" && (
-        <SnackBar response={response} setResponse={setResponse} />
-      )}
       <div className={styles.signinContainer}>
         <div className={styles.bgcontainer}>
           <div className={styles.text}>
@@ -129,16 +133,16 @@ const Login = () => {
             <p>Please enter your details</p>
           </div>
 
-          {/* <a href="/coming-soon" className={styles.googlego}>
+          <div className={styles.googlego} onClick={() => GoogleLogin()}>
             <img src={google} alt="google" />
             Sign in With google
-          </a>
+          </div>
 
           <div className={styles.line}>
             <div className={styles.dash}></div>
             <p>or</p>
             <div className={styles.dash}></div>
-          </div> */}
+          </div>
 
           <form className={styles.formContainer} onSubmit={handleSubmit}>
             <div
@@ -149,6 +153,7 @@ const Login = () => {
 
               <input
                 type="email"
+                name="email"
                 placeholder="Enter your company email"
                 onChange={handleUsername}
                 value={username}

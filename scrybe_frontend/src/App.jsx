@@ -20,7 +20,7 @@ import Logout from "./pages/Logout";
 import LandingPageSalesTeam from "./pages/NewLandingPageSalesTeam/index";
 import NewPasswordResetSuccessful from "./pages/NewPasswordResetSuccessful";
 import NewSetNewPassword from "./pages/NewSetNewPassword";
-import CompleteSignup from "./pages/NewSignup/CompleteSignup/CompleteSignup";
+import CompleteSignup from "./pages/NewSignup/CompleteSignup";
 import CreateAccount from "./pages/NewSignup/CreateAccount";
 import Pricing from "./pages/Pricing";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -41,11 +41,16 @@ import EmailVerify from "./pages/VerificationEmail/EmailVerify";
 
 import * as atatus from "atatus-spa";
 import PublicLayout from "./PublicLayout";
+import SnackBar from "./components/SnackBar/index";
+import { useSelector } from "react-redux";
 atatus.config("006cee2d85d74c12953a30f3e9b78569").install();
 
 function App() {
+  const { response } = useSelector((state) => state.util);
+
   return (
     <>
+      {response.message !== "" && <SnackBar response={response} />}
       <Routes>
         {/* access without sign in */}
         <Route element={<Authenticated />}>

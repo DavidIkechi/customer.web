@@ -14,9 +14,9 @@ const EmailVerify = () => {
   }, []);
   const handleSubmit = async () => {
     try {
-      const response = await axios.get(`verification?token=${token}`);
-      console.log(response.data.data);
-      setMessage(response.data.data);
+      const response = await axios.get(`users/verification?token=${token}`);
+      console.log(response.data.detail);
+      setMessage(response.data.detail);
     } catch (err) {
       console.log(err.response.data.detail);
       setMessage(err.response.data.detail);

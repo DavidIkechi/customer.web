@@ -1,7 +1,15 @@
 from typing import List, Union, Optional
 from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form, Query
 from fastapi.middleware.cors import CORSMiddleware
+from rocketry import Rocketry
+from rocketry.conds import (
+    every, hourly, daily,
+    after_success,
+    true, false
+)
+import logging
 
+import asyncio
 from routers.score import score_count
 import uvicorn
 from routers.transcribe import transcript_router
@@ -23,7 +31,8 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from db import Base, engine, SessionLocal
 from sqlalchemy.orm import Session
 import crud, schema
-from emails import send_email, verify_token, send_password_reset_email, password_verif_token
+from emails import send_email, verify_token, send_password_reset_email, password_verif_token, transcription_result_email
+from audio import audio_details
 from starlette.requests import Request
 import fastapi as _fastapi
 from routers.agent import agent_router
@@ -49,6 +58,7 @@ import uuid
 import random, string 
 from elasticapm.contrib.starlette import make_apm_client, ElasticAPM
 import cron_status
+from scheduler import cron_schedule as cron_rocketry
 
 apm_config = {
     'SERVICE_NAME': 'Heed_api',
@@ -98,6 +108,7 @@ app = FastAPI(
     redoc_url="/redoc",
     openapi_url="/openapi.json"
 )
+
 
 app.include_router(
     transcript_router
@@ -173,26 +184,42 @@ app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY)
 
 
 
-def main() -> None:
-    uvicorn.run(
+class Server(uvicorn.Server):
+    """Customized uvicorn.Server
+    
+    Uvicorn server overrides signals and we need to include
+    Rocketry to the signals."""
+    def handle_exit(self, sig: int, frame) -> None:
+        cron_rocketry.session.shut_down()
+        return super().handle_exit(sig, frame)
+
+
+async def main() -> None:
+    server = Server(uvicorn.Config(
         "main:app", 
         host=os.getenv("HOST"), 
         port=int(os.getenv("PORT")), 
-        reload=os.getenv("RELOAD")
+        reload=os.getenv("RELOAD"),
+        workers=1, 
+        loop="asyncio")
     )
+    
+    api = asyncio.create_task(server.serve())
+    sched = asyncio.create_task(cron_rocketry.serve())
+    await asyncio.wait([sched, api])
 
 AWS_KEY_ID = os.getenv("AWS_KEY_ID")
 AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
 
-@app.on_event('startup')
-@repeat_every(seconds = 3, wait_first = True)
-def periodic():
-    cron_status.check_and_update_jobs()
-    
 
 @app.get("/")
 async def ping():
     return {"message": "Heed Up"}
 
 if __name__ == "__main__":
-    main()
+    # Print Rocketry's logs to terminal
+    # logger = logging.getLogger("rocketry.task")
+    # logger.addHandler(logging.StreamHandler())
+
+    # Run both applications
+    asyncio.run(main())

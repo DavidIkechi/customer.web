@@ -9,11 +9,15 @@ import RedirectNav from "../../Components/SettingsPageRedirectNav/SettingsPageRe
 import PersonalInfo from "./PersonalInformationSettings.module.scss";
 import ErrorHandler from "../../../../helpers/axioshelp/Utils/ErrorHandler";
 import SnackBar from "../../../../components/SnackBar/index";
-import ApiService from "../../../../helpers/axioshelp/apis";
+import { dispatch } from "../../../../redux/store";
+import { createResponse } from "../../../../redux/utils/UtilSlice";
+import { GetAccount } from "../../../../redux/features/users/service";
+import { useSelector } from "react-redux";
 
 const PersonalInformation = () => {
+  const { user } = useSelector((state) => state.user);
+  const { response } = useSelector((state) => state.util);
   const [accountUser, setAccountUser] = useState();
-  const [response, setResponse] = useState({ type: "", message: "" });
   const [previewImg, setPreviewImg] = useState(accountUser?.company_logo_url);
 
   const navigate = useNavigate();
@@ -52,43 +56,34 @@ const PersonalInformation = () => {
     axios
       .request({
         method: "patch",
-        url: "https://api.heed.hng.tech/users/update_profile",
+        url: "https://api.heed.cx/users/update_profile",
         data: data,
         headers,
       })
       .then((res) => {
         if (res.status) {
           window.scrollTo(0, 0);
-          setResponse({
-            type: "Success",
-            message: "Profile Updated Successfully",
-          });
+          dispatch(
+            createResponse({
+              type: "Success",
+              message: "Profile Updated Successfully",
+            })
+          );
           reset();
-          getUser();
+          dispatch(GetAccount());
         }
       })
       .catch((err) => {
         console.log(err.response);
-        setResponse(ErrorHandler(err.response));
+        dispatch(createResponse(ErrorHandler(err.response)));
       });
   };
 
-  async function getUser() {
-    try {
-      const res = await ApiService.Account();
-      setPreviewImg(res.data.company_logo_url);
-      setAccountUser(res.data);
-    } catch (err) {
-      if (err.status === 401) {
-        navigate("/login");
-      }
-      setResponse(ErrorHandler(err));
-    }
-  }
-
   useEffect(() => {
-    getUser();
-  }, []);
+    if (user) {
+      setAccountUser(user);
+    }
+  }, [user]);
 
   const first_name = watch("first_name");
   const last_name = watch("last_name");
@@ -114,7 +109,7 @@ const PersonalInformation = () => {
 
   return (
     <>
-      <SnackBar response={response} setResponse={setResponse} />
+      <SnackBar response={response} />
       <RedirectNav />
       <div className="PersonalInfo-Container">
         <div className={PersonalInfo.PersonalInfo_wrapper}>

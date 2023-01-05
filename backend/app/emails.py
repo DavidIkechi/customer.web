@@ -122,6 +122,72 @@ def password_verif_token(token):
     
     return email
 
+
+async def transcription_result_email(email: List, instance: User):
+    first_name = instance.first_name
+
+    template = f"""
+        <div>
+            <h3>Transcription Result</h3>
+            <br>
+            <p><b>Dear {first_name},</b></p>
+            <p>
+                The results for your uploads are ready! 
+                <a href="https://heed.cx/transcriptions/">
+                    Click here to view
+                </a>
+            </p>
+
+            <p>Alternatively, you can paste the following link in your browser's address bar:</p>
+            <p>"https://heed.cx/transcriptions/"</p>
+
+            <p>Sincerely,</p>
+            <p>Heed Team</p>
+
+        </div>
+    """
+
+    message = MessageSchema(
+        subject = "Transcription Result",
+        recipients = email,
+        body = template,
+        subtype = "html"
+    )
+
+    fm =FastMail(conf)
+    await fm.send_message(message=message)
+    
+    
+async def transcription_fail_email(email: List, instance: User):
+    first_name = instance.first_name
+
+    template = f"""
+        <div>
+            <h3>Transcription Result</h3>
+            <br>
+            <p><b>Dear {first_name},</b></p>
+            <p>
+                An error occured while trying to upload your audios with file names: 
+                bla bla bla.
+            </p>
+
+            <p>Sincerely,</p>
+            <p>Heed Team</p>
+
+        </div>
+    """
+
+    message = MessageSchema(
+        subject = "Transcription Result",
+        recipients = email,
+        body = template,
+        subtype = "html"
+    )
+
+    fm =FastMail(conf)
+    await fm.send_message(message=message)
+    
+    
 async def send_deactivation_email(email: List, instance: User):
 
     emails: EmailSchema = {
