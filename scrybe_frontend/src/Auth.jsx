@@ -1,8 +1,9 @@
+import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
-import { localStorageUser } from "./helpers/localStorageUser";
 
 export function RequireToken() {
-  let auth = localStorageUser();
+  const auth = useSelector((state) => state.user.token);
+
   if (!auth) {
     return <Navigate to="/login" replace />;
   }
@@ -11,7 +12,8 @@ export function RequireToken() {
 }
 
 export function Authenticated() {
-  let auth = localStorageUser();
+  const auth = useSelector((state) => state.user.token);
+
   if (auth) {
     return <Navigate to="/dashboard" replace />;
   }

@@ -1,7 +1,7 @@
 from fastapi import FastAPI, status, Depends, APIRouter,  UploadFile, File, Form, Query, Request
 from typing import List, Union, Optional
 import services as _services
-import models, schema
+import models, schema, json
 from fastapi_pagination import Page, paginate, Params
 from sqlalchemy.orm import Session
 from auth import (
@@ -19,7 +19,7 @@ import os
 import cloudinary
 import cloudinary.uploader
 from BitlyAPI import shorten_urls
-import crud, json
+import crud
 from jwt import main_login, get_access_token, verify_password, refresh
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from emails import send_email, verify_token, send_password_reset_email, password_verif_token
