@@ -1,13 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import ErrorHandler from "../../../helpers/axioshelp/Utils/ErrorHandler";
-// import { useRegisterUserMutation } from "../../../redux/user/rtkquery/authApiSlice";
-import {
-  registerUser,
-  resetUser,
-  selectUserState,
-} from "../../../redux/user/userSlice";
+import { SignUp } from "../../../redux/features/users/service";
+import { setError } from "../../../redux/features/users/userSlice";
 
 const createAccount = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -147,9 +142,7 @@ export { completeRegistration };
 
 const completeRegistration = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { userData, status, error } = useSelector((state) =>
-    selectUserState(state)
-  );
+  const { user, token, error } = useSelector((state) => state.user);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   // const [registerUser, { isLoading }] = useRegisterUserMutation();
 
@@ -209,23 +202,25 @@ const completeRegistration = () => {
       company_address: company_address,
       password: value.password,
     };
-    dispatch(registerUser(data));
+    dispatch(SignUp(data));
   };
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
-    if (status === "success") {
+    if (error) {
       localStorage.clear();
-      setResponse(ErrorHandler(userData));
+      setTimeout(() => {
+        navigate("/signup");
+        dispatch(setError(false));
+      }, 2500);
+    }
+    if (token) {
+      localStorage.clear();
       setTimeout(() => {
         navigate("/verify-signup");
       }, 2500);
-      dispatch(resetUser());
-    } else if (status === "failed") {
-      setResponse(ErrorHandler(error));
-      dispatch(resetUser());
     }
-  }, [userData, status, error, navigate, dispatch]);
+  }, [token, navigate, error, dispatch]);
 
   return {
     handleCompanyName,
@@ -238,6 +233,6 @@ const completeRegistration = () => {
     value,
     response,
     setResponse,
-    userData,
+    user,
   };
 };

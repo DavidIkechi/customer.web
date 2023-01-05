@@ -1,5 +1,5 @@
 .roe {
-  margin-top: 30px;
+  margin-top: 0px;
   opacity: 0.5;
   width: 100%;
   .col {
@@ -73,7 +73,7 @@
       animation: skeleton-loading 1s linear infinite alternate;
     }
     .short {
-      margin: 2rem;
+      margin: 1rem;
       width: 250px;
       height: 20px;
       cursor: progress;

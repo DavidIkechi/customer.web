@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NewDesignSidebar from "../../../components/NewDesignSidebar";
 import ChevronRight from "../assets/icons/chevron-right.svg";
@@ -8,10 +8,10 @@ import AccountSetting from "../SettingsPageSubPages/AccountSettings/AccountSetti
 import Notification from "../SettingsPageSubPages/Notifications/NotificationSettings";
 import PersonalInformation from "../SettingsPageSubPages/PersonalInformation/PersonalInformationSettings";
 import MainPageCss from "./Settings.module.scss";
-import axios from "axios";
 import TopNav from "../../../components/TopNav";
 
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const MainPage = () => {
   const cardDetails = [
@@ -32,6 +32,7 @@ const MainPage = () => {
         "Change how we send you updates, newsletters, periodic summaries, and other notifications",
     },
   ];
+  const { user } = useSelector((state) => state.user);
   const [isMobile, setIsMobile] = React.useState(false);
   const [isPage, setPage] = React.useState(true);
   const [isAccountPage, setIsAccountPage] = React.useState(false);
@@ -61,35 +62,13 @@ const MainPage = () => {
     }
   };
 
-  async function getUser() {
-    await axios
-      // Get user details from backend
-      .get("https://api.heed.hng.tech/account", {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
-        },
-      })
-      .then((res) => {
-        setAccountUser(res.data);
-      })
-      .catch((err) => {
-        // Redirect to Signin Page if authentication error
-        if (err.response.status === 401) {
-          navigate("/login");
-        } else {
-          // In case of error, log to the console
-          console.log("Server returned the following error:");
-          console.log(err);
-        }
-      });
-  }
+  useEffect(() => {
+    if (user) {
+      setAccountUser(user);
+    }
+  }, [user]);
 
-  React.useEffect(() => {
-    getUser();
-  }, []);
-
-  React.useEffect(() => {
+  useEffect(() => {
     if (window.innerWidth < 768) {
       setIsMobile(true);
     } else {
