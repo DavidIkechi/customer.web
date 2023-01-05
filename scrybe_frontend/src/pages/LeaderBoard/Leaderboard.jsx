@@ -2,7 +2,6 @@ import styles from "./Leaderboard.module.scss";
 import NewDesignSideBar from "../../components/NewDesignSidebar";
 import TopNav from "../../components/TopNav";
 import { useState, useEffect } from "react";
-import ProfileName from "./images/profile-circle.png";
 import notfoundImg from "./images/notfound.svg";
 import CallIcon from "./images/Call-icon.png";
 import LeaderBoardIcon from "./images/leaderboard-icon.png";
@@ -10,6 +9,7 @@ import AgentReport from "../AgentReport";
 import { useSelector, useDispatch } from "react-redux";
 import { LeaderBoard } from "../../redux/features/agents/service";
 import TopAgents from "./components/TopAgents";
+import otherAgents from "./components/otherAgents";
 
 // const bgMap = {
 //   0: "#E6F0FF",
@@ -210,7 +210,7 @@ function Leaderboard() {
               {searchLeaderboard(otherAgent)?.length > 0 ? (
                 <>
                   {searchLeaderboard(otherAgent)?.map((profile) => (
-                    <OtherAgentDisplay
+                    <otherAgents
                       key={profile.agent_id}
                       person={profile}
                       handleAgent={handleAgent}
@@ -231,25 +231,6 @@ function Leaderboard() {
         </div>
       </NewDesignSideBar>
     </>
-  );
-}
-
-function OtherAgentDisplay({ person, handleAgent, agent_id, rank, show }) {
-  return (
-    <div className={styles.Header_content}>
-      <div className={styles.Header_profile_container}>
-        <img src={ProfileName} className="" alt="profile1" />
-        <p
-          className={styles.Agent_ID}
-          onClick={() => handleAgent(agent_id, rank, show)}
-        >
-          {person.firstname.toUpperCase()} {person.lastname.toUpperCase()}
-        </p>
-      </div>
-      <p>{person.total_calls}</p>
-      <p>{person.average_score}/10</p>
-      <p>{person.rank}</p>
-    </div>
   );
 }
 
