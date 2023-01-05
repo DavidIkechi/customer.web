@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../Leaderboard.module.scss";
 import ProfileName from "../images/profile-circle.png";
 
-const otherAgents = ({ person, handleAgent, agent_id, rank, show }) => {
+const OtherAgents = ({ person, handleAgent, agent_id, rank, show }) => {
   return (
     <div className={styles.Header_content}>
       <div className={styles.Header_profile_container}>
@@ -21,4 +21,4 @@ const otherAgents = ({ person, handleAgent, agent_id, rank, show }) => {
   );
 };
 
-export default otherAgents;
+export default OtherAgents;
