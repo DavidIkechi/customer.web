@@ -2,14 +2,14 @@ import styles from "./Leaderboard.module.scss";
 import NewDesignSideBar from "../../components/NewDesignSidebar";
 import TopNav from "../../components/TopNav";
 import { useState, useEffect } from "react";
-import SearchIcon from "./images/search-icon.png";
+// import SearchIcon from "./images/search-icon.png";
 import ProfileName from "./images/profile-circle.png";
 import notfoundImg from "./images/notfound.svg";
 import CallIcon from "./images/Call-icon.png";
 import LeaderBoardIcon from "./images/leaderboard-icon.png";
 import AgentReport from "../AgentReport";
 import { useSelector, useDispatch } from "react-redux";
-import { getLeaderboard } from "../../redux/leaderboard/leaderboardSlice";
+import { LeaderBoard } from "../../redux/features/agents/service";
 
 const bgMap = {
   0: "#E6F0FF",
@@ -24,11 +24,7 @@ const colorMap = {
 };
 
 function Leaderboard() {
-  const leaderboardData = useSelector(
-    (state) => state.leaderboard.leaderboardData
-  );
-
-  console.log("leaderboard data line30", leaderboardData);
+  const leaderboardData = useSelector((state) => state.agent.leaderboard);
   const dispatch = useDispatch();
 
   const [search, setSearch] = useState("");
@@ -40,14 +36,20 @@ function Leaderboard() {
   const [range, setRange] = useState("week");
 
   useEffect(() => {
-    const response = leaderboardData;
-    const arr = response?.week?.Top3_Agents;
-    setData(response);
-    setLeaderboard(arr);
-    const otherAgents = response?.week?.Other_Agents;
-    setOtherAgent(otherAgents);
-    dispatch(getLeaderboard());
-  }, [leaderboardData, dispatch]);
+    const getData = () => {
+      const response = leaderboardData;
+      const arr = response?.week?.Top3_Agents;
+      setData(response);
+      setLeaderboard(arr);
+      const otherAgents = response?.week?.Other_Agents;
+      setOtherAgent(otherAgents);
+    };
+    getData();
+  }, [leaderboardData]);
+
+  useEffect(() => {
+    dispatch(LeaderBoard());
+  }, [dispatch]);
 
   useEffect(() => {
     if (data) {
@@ -77,27 +79,47 @@ function Leaderboard() {
     setControll(true);
   };
 
-  useEffect(() => {
-    let FilteredLeaderboard = leaderboard?.filter((profile) => {
-      return search.toLowerCase() === ""
-        ? profile
-        : profile.firstname.toLowerCase().includes(search) ||
-            profile.str_agent_id.toLowerCase().includes(search) ||
-            profile.lastname.toLowerCase().includes(search);
+  const searchFunction = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const searchLeaderboard = (leaderboardSearch) => {
+    // let topAgentWeek = leaderboardSearch?.week?.Top3_Agents;
+    // let otherAgentWeek = leaderboardSearch?.week?.Other_Agents;
+    // let topAgentMonth = leaderboardSearch?.month?.Top3_Agents;
+    // let otherAgentMonth = leaderboardSearch?.month?.Other_Agents;
+    // let allData = topAgentWeek
+    //   ?.concat(otherAgentWeek)
+    //   ?.concat(topAgentMonth)
+    //   ?.concat(otherAgentMonth);
+    return leaderboardSearch?.filter((item) => {
+      return JSON.stringify(item?.firstname || item?.lastname)
+        ?.toLowerCase()
+        .includes(search.toLowerCase());
     });
+  };
 
-    let FilteredotherAgent = otherAgent?.filter((profile) => {
-      return search.toLowerCase() === ""
-        ? profile
-        : profile.firstname.toLowerCase().includes(search) ||
-            profile.str_agent_id.toLowerCase().includes(search) ||
-            profile.lastname.toLowerCase().includes(search);
-    });
+  // useEffect(() => {
+  //   let FilteredLeaderboard = leaderboard?.filter((profile) => {
+  //     return search.toLowerCase() === ""
+  //       ? profile
+  //       : profile.firstname.toLowerCase().includes(search) ||
+  //           profile.str_agent_id.toLowerCase().includes(search) ||
+  //           profile.lastname.toLowerCase().includes(search);
+  //   });
 
-    setOtherAgent(FilteredotherAgent);
+  //   let FilteredotherAgent = otherAgent?.filter((profile) => {
+  //     return search.toLowerCase() === ""
+  //       ? profile
+  //       : profile.firstname.toLowerCase().includes(search) ||
+  //           profile.str_agent_id.toLowerCase().includes(search) ||
+  //           profile.lastname.toLowerCase().includes(search);
+  //   });
 
-    setLeaderboard(FilteredLeaderboard);
-  }, []);
+  //   setOtherAgent(FilteredotherAgent);
+
+  //   setLeaderboard(FilteredLeaderboard);
+  // }, []);
 
   // // implemented by rambey
 
@@ -125,6 +147,7 @@ function Leaderboard() {
       <NewDesignSideBar
         toggleSidebar={toggleSidebar}
         needSearchMobile="needSearchMobile"
+        getValue={(e) => searchFunction(e)}
         closeSidebar={() => setToggleSidebar(!toggleSidebar)}
       >
         <div className={styles.content_container}>
@@ -134,6 +157,7 @@ function Leaderboard() {
                 openSidebar={() => {
                   setToggleSidebar(!toggleSidebar);
                 }}
+                search={(e) => searchFunction(e)}
               />
             </div>
 
@@ -153,7 +177,7 @@ function Leaderboard() {
               </h6>
 
               <div className={styles.right_content2_container}>
-                <div className={styles.InputWithIcon}>
+                {/* <div className={styles.InputWithIcon}>
                   <img src={SearchIcon} className="" alt="hero img" />
                   <input
                     type="text"
@@ -163,7 +187,7 @@ function Leaderboard() {
                     required
                     onChange={(e) => setSearch(e.target.value)}
                   />
-                </div>
+                </div> */}
 
                 <div className={styles.calender_content}>
                   <div>
@@ -183,20 +207,27 @@ function Leaderboard() {
               <div className={styles.Profile_container}>
                 {/* {leaderboard.length > 0 ? ( */}
                 <>
-                  {leaderboard?.map((profile, index, index2) => (
-                    <>
-                      <LeaderBoardDisplay
-                        key={profile.agent_id}
-                        person={profile}
-                        index={index}
-                        index2={index2}
-                        handleAgent={handleAgent}
-                        agent_id={profile.agent_id}
-                        rank={profile.rank}
-                        show={profile.str_agent_id}
-                      />
-                    </>
-                  ))}
+                  {searchLeaderboard(leaderboard)?.length > 0 ? (
+                    searchLeaderboard(leaderboard)?.map((profile, index) => (
+                      <>
+                        <LeaderBoardDisplay
+                          key={profile.agent_id}
+                          person={profile}
+                          index={index}
+                          // index2={index2}
+                          handleAgent={handleAgent}
+                          agent_id={profile.agent_id}
+                          rank={profile.rank}
+                          show={profile.str_agent_id}
+                        />
+                      </>
+                    ))
+                  ) : (
+                    <div className={styles.empty_state}>
+                      <img src={notfoundImg} alt="not found" />
+                      <h3>Sorry, No Agent Record Found.</h3>
+                    </div>
+                  )}
                 </>
                 {/* ) : (
                   <div className={styles.empty_state}>
@@ -227,9 +258,9 @@ function Leaderboard() {
                 </span>
               </div>
               <hr></hr>
-              {leaderboard?.length > 0 ? (
+              {searchLeaderboard(otherAgent)?.length > 0 ? (
                 <>
-                  {otherAgent.map((profile) => (
+                  {searchLeaderboard(otherAgent)?.map((profile) => (
                     <OtherAgentDisplay
                       key={profile.agent_id}
                       person={profile}
