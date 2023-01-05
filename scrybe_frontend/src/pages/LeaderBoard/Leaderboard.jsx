@@ -156,7 +156,7 @@ function Leaderboard() {
               <IsLoadingSkeleton />
             ) : (
               <>
-                <section>
+                <section className={styles.general_profile}>
                   <div className={styles.Profile_container}>
                     <>
                       {searchLeaderboard(leaderboard)?.length > 0 ? (
