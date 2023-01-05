@@ -2,7 +2,6 @@ import styles from "./Leaderboard.module.scss";
 import NewDesignSideBar from "../../components/NewDesignSidebar";
 import TopNav from "../../components/TopNav";
 import { useState, useEffect } from "react";
-// import SearchIcon from "./images/search-icon.png";
 import ProfileName from "./images/profile-circle.png";
 import notfoundImg from "./images/notfound.svg";
 import CallIcon from "./images/Call-icon.png";
@@ -64,7 +63,6 @@ function Leaderboard() {
     }
   }, [range, data]);
 
-  // implemented by rambey
   const [controll, setControll] = useState(false);
   const [rank, setRank] = useState();
   const [agentShow, setAgentShow] = useState();
@@ -84,14 +82,6 @@ function Leaderboard() {
   };
 
   const searchLeaderboard = (leaderboardSearch) => {
-    // let topAgentWeek = leaderboardSearch?.week?.Top3_Agents;
-    // let otherAgentWeek = leaderboardSearch?.week?.Other_Agents;
-    // let topAgentMonth = leaderboardSearch?.month?.Top3_Agents;
-    // let otherAgentMonth = leaderboardSearch?.month?.Other_Agents;
-    // let allData = topAgentWeek
-    //   ?.concat(otherAgentWeek)
-    //   ?.concat(topAgentMonth)
-    //   ?.concat(otherAgentMonth);
     return leaderboardSearch?.filter((item) => {
       return JSON.stringify(item?.firstname || item?.lastname)
         ?.toLowerCase()
@@ -99,33 +89,8 @@ function Leaderboard() {
     });
   };
 
-  // useEffect(() => {
-  //   let FilteredLeaderboard = leaderboard?.filter((profile) => {
-  //     return search.toLowerCase() === ""
-  //       ? profile
-  //       : profile.firstname.toLowerCase().includes(search) ||
-  //           profile.str_agent_id.toLowerCase().includes(search) ||
-  //           profile.lastname.toLowerCase().includes(search);
-  //   });
-
-  //   let FilteredotherAgent = otherAgent?.filter((profile) => {
-  //     return search.toLowerCase() === ""
-  //       ? profile
-  //       : profile.firstname.toLowerCase().includes(search) ||
-  //           profile.str_agent_id.toLowerCase().includes(search) ||
-  //           profile.lastname.toLowerCase().includes(search);
-  //   });
-
-  //   setOtherAgent(FilteredotherAgent);
-
-  //   setLeaderboard(FilteredLeaderboard);
-  // }, []);
-
-  // // implemented by rambey
-
   return (
     <>
-      {/* implemented by rambey */}
       <div
         className={
           modal
@@ -143,7 +108,7 @@ function Leaderboard() {
           />
         </div>
       </div>
-      {/* implemented by rambey */}
+
       <NewDesignSideBar
         toggleSidebar={toggleSidebar}
         needSearchMobile="needSearchMobile"
@@ -177,18 +142,6 @@ function Leaderboard() {
               </h6>
 
               <div className={styles.right_content2_container}>
-                {/* <div className={styles.InputWithIcon}>
-                  <img src={SearchIcon} className="" alt="hero img" />
-                  <input
-                    type="text"
-                    name=""
-                    id="search-bar"
-                    placeholder="   Input Agent ID/Name"
-                    required
-                    onChange={(e) => setSearch(e.target.value)}
-                  />
-                </div> */}
-
                 <div className={styles.calender_content}>
                   <div>
                     <p id={styles.sort_by}>Sort by </p>
@@ -205,7 +158,6 @@ function Leaderboard() {
               </div>
 
               <div className={styles.Profile_container}>
-                {/* {leaderboard.length > 0 ? ( */}
                 <>
                   {searchLeaderboard(leaderboard)?.length > 0 ? (
                     searchLeaderboard(leaderboard)?.map((profile, index) => (
@@ -229,12 +181,6 @@ function Leaderboard() {
                     </div>
                   )}
                 </>
-                {/* ) : (
-                  <div className={styles.empty_state}>
-                    <img src={notfoundImg} alt="not found" />
-                    <h3>Sorry, No Agent Record Found.</h3>
-                  </div>
-                )} */}
               </div>
             </div>
           </section>
