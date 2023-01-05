@@ -60,3 +60,5 @@ py4paystack==1.0.0
 paystackapi==2.1.0
 alembic==1.9.0
 pandas==1.4.2
+celery==5.1.2
+redis==3.5.3
