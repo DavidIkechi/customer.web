@@ -178,22 +178,23 @@ function About() {
         </div>
       </section>
 
-//       <section className={styles.fourth__section}>
-//         <div className={styles.sect__container}>
-//           <div className={styles.fourth__top}>
-//             <div className={styles.fourth__heading}>
-//               <h1 className={styles.fourth__head}>Meet Our Team</h1>
-//             </div>
-//             <div className={styles.fourth__subtext}>
-//               <p className={styles.fourth__subhead}>
-//                 We are a team of Product mangers, designers, developers and
-//                 sales representatives, under Workshop Apps Ventures studio ready
-//                 to help sales and customer support teams!
-//               </p>
-//             </div>
-//           </div>
-//         </div>
-//       </section>
+{/*   <section className={styles.fourth__section}>
+         <div className={styles.sect__container}>
+          <div className={styles.fourth__top}>
+            <div className={styles.fourth__heading}>
+              <h1 className={styles.fourth__head}>Meet Our Team</h1>
+            </div>
+             <div className={styles.fourth__subtext}>
+               <p className={styles.fourth__subhead}>
+                We are a team of Product mangers, designers, developers and
+                sales representatives, under Workshop Apps Ventures studio ready
+                to help sales and customer support teams!
+               </p>
+             </div>
+           </div>
+         </div>
+      </section>
+*/}
       {/*   <div className={styles.fourth__bottom}>
             <div className={styles.flex__profile}>
               <div className={styles.profile__box}>
