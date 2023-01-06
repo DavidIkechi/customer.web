@@ -10,6 +10,7 @@ import SearchInput from "../SearchInput";
 import styles from "./generalSidebar.module.scss";
 
 import { useSelector } from "react-redux";
+import TopNav from "../TopNav";
 
 /**
  * Wrap your component with this component to get a sidebar with a logo, a search input field and a list of links.
@@ -36,6 +37,8 @@ function NewDesignSideBar({
 }) {
   const { user } = useSelector((state) => state.user);
   const [show, setShow] = useState(false);
+  const [setToggleSidebar] = useState(false);
+  const { searchQuery } = useSelector((state) => state.util);
   return (
     <div
       className={`${styles.generalSidebar}
@@ -165,7 +168,15 @@ function NewDesignSideBar({
           )}
         </div>
       </div>
-      {children}
+      <div className={styles.rightChild}>
+        <TopNav
+          openSidebar={() => {
+            setToggleSidebar(!toggleSidebar);
+          }}
+          search={searchQuery}
+        />
+        {children}
+      </div>
     </div>
   );
 }
