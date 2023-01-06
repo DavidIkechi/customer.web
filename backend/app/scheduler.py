@@ -11,12 +11,10 @@ cron_schedule = Rocketry(config={"task_execution": "async"})
 
 @cron_schedule.task(every("3 seconds"))
 async def another():
-    print("dash")
     await cron_status.check_and_update_jobs()  
 
 @cron_schedule.task(cron("* * * * *")) 
 async def constantly():
-    print("man")
     await cron_status.transcription_mail()
 
       
