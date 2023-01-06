@@ -11,6 +11,7 @@ import cloudinary
 import cloudinary.uploader
 from datetime import datetime
 import uuid
+from sqlalchemy import or_
 from sqlalchemy.sql import func
 from collections import defaultdict
 from routers.utility import *
@@ -575,3 +576,16 @@ def top_up(db: Session, email_address: str, top_details: dict):
 
 def get_all_plans(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.ProductPlan).offset(skip).limit(limit).all()
+
+def get_all_unsent(db: Session):
+    return db.query(models.Job).filter(or_(models.Job.mail_sent == False, models.Job.mail_sent == None)).all()
+
+def get_job_by_id(db: Session, job_id: int):
+    return db.query(models.Job).filter(models.Job.id == job_id).first()
+
+def get_all_job_sent(db: Session, job_id: int):
+    return db.query(models.Job).filter(models.Job.job_id == job_id, models.Job.mail_sent == True).all()
+
+def get_all_job_with_id(db: Session, job_id: int):
+    return db.query(models.Job).filter(models.Job.job_id == job_id).all()
+   
