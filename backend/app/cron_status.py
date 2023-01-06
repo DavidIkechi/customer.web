@@ -70,4 +70,4 @@ async def transcription_mail():
         
         # check if all the jobs with the id have mail sent.
         if len(crud.get_all_job_sent(db, distinct_id)) == len(crud.get_all_job_with_id(db, distinct_id)):
-            transcription_result_email([email], user)
+            await transcription_result_email([email], user)
