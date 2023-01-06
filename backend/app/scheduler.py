@@ -10,7 +10,7 @@ import cron_status
 cron_schedule = Rocketry(config={"task_execution": "async"})
 
 # Creating some tasks
-@cron_schedule.task(every("30 seconds"))
+@cron_schedule.task(every("15 seconds"))
 async def do_things():
     await cron_status.transcription_mail()
     
