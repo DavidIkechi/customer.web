@@ -13,6 +13,7 @@ cron_schedule = Rocketry(config={"task_execution": "async"})
 async def another():
     await cron_status.check_and_update_jobs()  
 
+
 @cron_schedule.task(cron("* * * * *"), execution="main") 
 async def constantly():
     await cron_status.transcription_mail()
