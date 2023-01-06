@@ -14,7 +14,7 @@ async def another():
     print("dash")
     await cron_status.check_and_update_jobs()  
 
-@cron_schedule.task(cron("* * * * *")) 
+@cron_schedule.task(cron("* * * * *"), execution="main") 
 async def constantly():
     print("man")
     await cron_status.transcription_mail()
