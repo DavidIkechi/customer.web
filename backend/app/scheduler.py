@@ -19,7 +19,10 @@ async def constantly():
     await cron_status.transcription_mail()
 
     
-    
+@cron_schedule.task("every 2 seconds")
+async def send_free_email():
+    await cron_status.send_free_email()
+
 if __name__ == "__main__":
     # If this script is run, only Rocketry is run
     cron_schedule.run()
