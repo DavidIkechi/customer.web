@@ -27,11 +27,14 @@ export const LeaderBoard = () => async () => {
 };
 
 export const TotalAgentAnalysis = (id) => async () => {
+  dispatch(setLoading(true));
   try {
     const res = await TotalAgentAnalysisApi(id);
     dispatch(setTotalAgentAnaylsis(res.data.detail));
+    dispatch(setLoading(false));
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
+    dispatch(setLoading(false));
   }
 };
 
@@ -45,10 +48,13 @@ export const CreateAgent = (data) => async () => {
 };
 
 export const GetAgentDetails = (id) => async () => {
+  dispatch(setLoading(true));
   try {
     const res = await AgentDetailsApi(id);
     dispatch(setAgentDetails(res.data.detail));
+    dispatch(setLoading(false));
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
+    dispatch(setLoading(false));
   }
 };
