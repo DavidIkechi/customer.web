@@ -25,4 +25,17 @@ const IsLoadingSkeleton = () => {
   );
 };
 
+export const NavSkeleton = () => {
+  return (
+    <div className={styles["roe"]}>
+      <div className={styles["col s12 m12"]}>
+        <div className={styles["card-content"]}>
+          <div className={styles["short"]}></div>
+          <div className={styles["short"]}></div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default IsLoadingSkeleton;

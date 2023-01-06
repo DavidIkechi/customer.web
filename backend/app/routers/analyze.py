@@ -26,9 +26,7 @@ import crud
 from routers.transcribe import transcribe_file
 from jwt import main_login, get_access_token, verify_password, refresh
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from emails import send_email, verify_token, send_password_reset_email, password_verif_token, send_freeTrial_email, transcription_fail_email
-
-from routers.sentiment_utility import sentiment, sentiment_assembly
+from emails import send_email, verify_token, send_password_reset_email, password_verif_token, send_freeTrial_email
 
 analyze_router = APIRouter(
     prefix='/analyse',
@@ -51,7 +49,6 @@ async def analyse_audios(first_name: str, last_name: str, files: list, distinct_
             response = shorten_urls(urls)
             retrieve_url = response[0]
             new_url = retrieve_url.short_url
-            print(new_url)
             
             size = Path(file.filename).stat().st_size / 1048576
             audio_time = str(duration['hours'])+":"+ str(duration['mins'])+":"+ str(duration['secs'])
@@ -121,12 +118,10 @@ async def analyse_audios(first_name: str, last_name: str, files: list, distinct_
         
         user = crud.get_user_by_email(db, email=user_email)
         await transcription_fail_email([user_email], user)
+        with open("error.log", "a") as f:
+            f.write(str(user_email) + " " + str(datetime.now()) + " " + str(e) + "\n\n")
+        # create a log file to log all errors
         
-        return JSONResponse(
-            status_code= 500,
-            content=jsonable_encoder({"detail": str(e)}),
-        )
-
 @analyze_router.post("/upload_audios", status_code = 200)
 async def analyse(first_name: str = Form(), last_name: str = Form(), background_task: BackgroundTasks = BackgroundTasks(), 
                   db: Session = Depends(_services.get_session), files: List[UploadFile]=File(...), 

@@ -3,7 +3,7 @@ import { AccountApi, GoogleSignInApi, SignUpApi } from "../../axios/apis/user";
 import ErrorHandler from "../../axios/Utils/ErrorHandler";
 import { dispatch } from "../../store";
 import { createResponse } from "../../utils/UtilSlice";
-import { setToken, setUser } from "./userSlice";
+import { setError, setToken, setUser } from "./userSlice";
 
 export const SignUp = (data) => async () => {
   try {
@@ -14,6 +14,7 @@ export const SignUp = (data) => async () => {
       createResponse({ type: "Success", message: "Registration Successful" })
     );
   } catch (error) {
+    dispatch(setError(true));
     dispatch(createResponse(ErrorHandler(error)));
   }
 };
