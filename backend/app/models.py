@@ -36,6 +36,8 @@ class User(Base):
     deactivated_at = Column(DateTime(timezone=True), default=datetime.now())
     
     company = relationship("Company", back_populates="user")
+    user = relationship("Audio", uselist=False, back_populates="user_audio")
+
 
 
 
@@ -90,6 +92,7 @@ class Audio(Base):
     user_id = Column(Integer, ForeignKey("users.id", ondelete='CASCADE'))
 
     job = relationship("Job", uselist=False, back_populates="audio")
+    user_audio = relationship("User", back_populates="user")
 
 class Job(Base):
     __tablename__ = "jobs"
