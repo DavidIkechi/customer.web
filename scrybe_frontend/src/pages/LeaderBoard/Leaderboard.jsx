@@ -16,10 +16,7 @@ function Leaderboard() {
   const leaderboardData = useSelector((state) => state.agent.leaderboard);
   const dispatch = useDispatch();
 
-  const { isLoading } = useSelector((state) => state.util);
-
-  const [search, setSearch] = useState("");
-  const [toggleSidebar, setToggleSidebar] = useState(false);
+  const { isLoading, searchQuery } = useSelector((state) => state.util);
 
   const [leaderboard, setLeaderboard] = useState([]);
   const [data, setData] = useState(null);
@@ -69,15 +66,11 @@ function Leaderboard() {
     setControll(true);
   };
 
-  const searchFunction = (e) => {
-    setSearch(e.target.value);
-  };
-
   const searchLeaderboard = (leaderboardSearch) => {
     return leaderboardSearch?.filter((item) => {
       return JSON.stringify(item?.firstname || item?.lastname)
         ?.toLowerCase()
-        .includes(search.toLowerCase());
+        .includes(searchQuery.toLowerCase());
     });
   };
 

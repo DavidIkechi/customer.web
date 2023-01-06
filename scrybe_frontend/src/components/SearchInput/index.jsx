@@ -1,5 +1,7 @@
 import { PropTypes } from "prop-types";
 import React from "react";
+import { dispatch } from "../../redux/store";
+import { setSearchQuery } from "../../redux/utils/UtilSlice";
 import searchIcon from "./searchIcon.svg";
 import styles from "./searchinput.module.scss";
 
@@ -11,10 +13,8 @@ import styles from "./searchinput.module.scss";
  */
 
 const SearchInput = ({ inputValue }) => {
-  const [searchValue, setSearchValue] = React.useState("");
   const getSearchValue = (e) => {
-    setSearchValue(e.target.value);
-    inputValue(e);
+    dispatch(setSearchQuery(e.target.value));
   };
 
   return (
@@ -24,7 +24,7 @@ const SearchInput = ({ inputValue }) => {
         <input
           type="text"
           placeholder="Search"
-          value={searchValue}
+          value={inputValue}
           onChange={(e) => getSearchValue(e)}
         />
       </div>
