@@ -8,10 +8,6 @@ import partner1 from "./assets/partner1.svg";
 import partner2 from "./assets/partner2.svg";
 import partner3 from "./assets/partner3.svg";
 import partner4 from "./assets/partner4.svg";
-import cto from "./assets/cto.webp";
-import cfo from "./assets/cfo.webp";
-import cmo from "./assets/cmo.webp";
-import ceo from "./assets/ceo.webp";
 
 function About() {
   return (
@@ -196,10 +192,11 @@ function About() {
               </p>
             </div>
           </div>
-
-          <div className={styles.fourth__bottom}>
+        </div>
+      </section>
+      {/*   <div className={styles.fourth__bottom}>
             <div className={styles.flex__profile}>
-              {/* <div className={styles.profile__box}>
+              <div className={styles.profile__box}>
                 <div className={styles.profile__icon}>
                   <img
                     src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579336/team1_oqsdqn.webp"
@@ -210,8 +207,8 @@ function About() {
                   <h5 className={styles.profile__name}>Mark Essien</h5>
                   <p className={styles.profile__desc}>Advisor</p>
                 </div>
-              </div> */}
-              {/* <div className={styles.profile__box}>
+              </div> 
+               <div className={styles.profile__box}>
                 <div className={styles.profile__icon}>
                   <img
                     src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579336/team2_acaqn4.webp"
@@ -222,7 +219,7 @@ function About() {
                   <h5 className={styles.profile__name}>Aigbe Marvelous</h5>
                   <p className={styles.profile__desc}>Advisor</p>
                 </div>
-              </div> */}
+              </div>
               <div className={styles.profile__box}>
                 <div className={styles.profile__icon}>
                   <img
@@ -238,7 +235,7 @@ function About() {
                   </p>
                 </div>
               </div>
-              {/* <div className={styles.profile__box}>
+               <div className={styles.profile__box}>
                 <div className={styles.profile__icon}>
                   <img
                     src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579335/team4_p7ykpa.webp"
@@ -249,9 +246,9 @@ function About() {
                   <h5 className={styles.profile__name}>Delphine Ogbonna</h5>
                   <p className={styles.profile__desc}>Lead designer</p>
                 </div>
-              </div> */}
+              </div> 
 
-              {/* <div className={styles.profile__box}>
+               <div className={styles.profile__box}>
                 <div className={styles.profile__icon}>
                   <img
                     src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579335/team5_hv34zf.webp"
@@ -262,7 +259,7 @@ function About() {
                   <h5 className={styles.profile__name}>Ugochukwu Odumegwu</h5>
                   <p className={styles.profile__desc}>Back-End Lead</p>
                 </div>
-              </div> */}
+              </div>
               <div className={styles.profile__box}>
                 <div className={styles.profile__icon}>
                   <img
@@ -303,11 +300,11 @@ function About() {
             </div>
           </div>
 
-          {/* <div className={styles.team__content}>
+          <div className={styles.team__content}>
             <Link className={styles.team__expand}>See more in our team</Link>
-          </div> */}
+          </div>
         </div>
-      </section>
+      </section> */}
     </>
   );
 }
