@@ -283,6 +283,11 @@ hr {
   margin-bottom: 1rem;
 }
 
+.Header_content:hover {
+  transform: scale(1.008);
+  transition: all 0.3s ease-out;
+}
+
 .Header_content p {
   font-size: 16px;
   font-weight: 300;

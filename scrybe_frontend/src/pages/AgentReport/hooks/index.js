@@ -1,28 +1,27 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  GetAgentDetails,
+  TotalAgentAnalysis,
+} from "../../../redux/features/agents/service";
 
 const useAgentReport = (props) => {
   const [recentAgentReport, setAgentRecentReports] = useState([]);
+  const getAgentDetailsData = useSelector((state) => state.agent.agentDetails);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const token = localStorage.getItem("heedAccessToken");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "content-type": "Application/json",
-      },
-    };
     if (props?.controll) {
-      axios
-        .get(
-          `https://api.heed.hng.tech/AgentDetails?agent_id=${props?.agent_id}`,
-          config
-        )
-        .then((res) => {
-          setAgentRecentReports(res.data.Agent_Performance_Report);
-        });
+      dispatch(GetAgentDetails(props?.agent_id));
     }
-  }, [props]);
+  }, [props?.controll, dispatch, props?.agent_id]);
+
+  useEffect(() => {
+    const getData = () => {
+      setAgentRecentReports(getAgentDetailsData);
+    };
+    getData();
+  }, [getAgentDetailsData]);
 
   return recentAgentReport;
 };
@@ -30,26 +29,23 @@ export { useAgentReport };
 
 const useAgentAnalysis = (props) => {
   const [agentAnalysis, setAnalysis] = useState({});
+  const getTotalAnalysis = useSelector(
+    (state) => state.agent.totalAgentAnalysis
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const token = localStorage.getItem("heedAccessToken");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "content-type": "Application/json",
-      },
-    };
     if (props?.controll) {
-      axios
-        .get(
-          `https://api.heed.hng.tech/total-agent-analysis?agent_id=${props?.agent_id}`,
-          config
-        )
-        .then((res) => {
-          setAnalysis(res.data);
-        });
+      dispatch(TotalAgentAnalysis(props?.agent_id));
     }
-  }, [props]);
+  }, [props?.controll, dispatch, props?.agent_id]);
+
+  useEffect(() => {
+    const getData = () => {
+      setAnalysis(getTotalAnalysis);
+    };
+    getData();
+  }, [getTotalAnalysis]);
   return agentAnalysis;
 };
 
