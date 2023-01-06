@@ -115,7 +115,7 @@ def check_if_audio(files) -> bool:
 def get_length(files) -> int:
     total_length = 0
     for file in files:
-        contents = file.file.read()
+        contents = file.file.read(5242880)
         with open(file.filename, 'wb') as f:
             f.write(contents)
         total_length += audio_details(file.filename)['overall']
