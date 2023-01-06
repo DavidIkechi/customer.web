@@ -26,7 +26,9 @@ import crud
 from routers.transcribe import transcribe_file
 from jwt import main_login, get_access_token, verify_password, refresh
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from emails import send_email, verify_token, send_password_reset_email, password_verif_token, send_freeTrial_email
+from emails import send_email, verify_token, send_password_reset_email, password_verif_token, send_freeTrial_email, transcription_fail_email
+
+from routers.sentiment_utility import sentiment, sentiment_assembly
 
 analyze_router = APIRouter(
     prefix='/analyse',
@@ -358,5 +360,74 @@ async def free_trial(email: str = Form(), db : Session = Depends(_services.get_s
             "status": status_break[0], 
             "filaname": status_break[1], 
             "file_size": status_break[2]
+        }
+    }
+
+
+def get_transcript_result(transcript_id: str):
+    header = {
+        'authorization': os.getenv("ASSEMBLY_KEY"),
+        'content-type': 'application/json'
+    }
+    # Create a polling endpoint that will let us check when the transcription is complete
+    polling_endpoint = utils.make_polling_endpoint(transcript_id)
+    get_poll_result = utils.get_result(polling_endpoint, header)
+    
+    return get_poll_result.json()
+    
+    
+
+transcript_router = APIRouter(
+    prefix="/transcription",
+    tags=["transcription"]
+)
+
+@analyze_router.get("/test")
+async def test(db : Session = Depends(_services.get_session)):
+    try:
+        # db = initialize_db()
+        details = crud.get_all_freeTrial(db)
+        for transcript in details:
+            get_transcript_id = transcript.transcript_id
+            get_email = transcript.email
+            
+            current_status = transcript.transcript_status.split(",")
+            current_status_filename = current_status[1]
+            current_status_size = current_status[2]
+            transcript_audio = get_transcript_result(get_transcript_id)
+            transcript.job_status = transcript_audio['status']
+            transcript.transcript_status = ",".join([transcript.job_status, current_status_filename, current_status_size])
+            db.commit()
+            db.refresh(transcript)
+            
+            if transcript_audio['status'] != "completed":
+                return JSONResponse(
+                status_code= 406,
+                content=jsonable_encoder({"detail": "Your File Audio File Is Still Transcribing Please Hold On For A little While."})
+                )
+            else:
+                # get the text.
+                transcripted_word = transcript_audio['text']
+                sentiment_result = sentiment_assembly(transcript_audio)
+
+                negativity_score = sentiment_result['negativity_score']
+                positivity_score = sentiment_result['positivity_score']
+                neutrality_score = sentiment_result['neutrality_score']
+                overall_sentiment = sentiment_result['overall_sentiment']
+                most_negative_sentences = sentiment_result['most_negative_sentences']
+                most_positive_sentences = sentiment_result ['most_positive_sentences']
+                total_score = positivity_score + neutrality_score + negativity_score
+                average_score = round((positivity_score/ total_score) * 10, 1)
+                
+                await send_freeTrial_email([get_email], transcript)
+
+    except Exception as e:
+        return JSONResponse(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+    return {
+        "detail":{
+            "transcript_id": details
         }
     }
