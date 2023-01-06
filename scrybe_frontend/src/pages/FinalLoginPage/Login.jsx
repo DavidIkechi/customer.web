@@ -97,8 +97,6 @@ const Login = () => {
     signInWithPopup(auth, provider)
       .then(async (result) => {
         const email = result.user.email;
-
-        console.log(email);
         dispatch(UserGoogleLogin(email));
       })
       .catch((error) => {
