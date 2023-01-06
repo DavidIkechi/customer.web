@@ -101,142 +101,116 @@ function Leaderboard() {
         </div>
       </div>
 
-      <NewDesignSideBar
-        toggleSidebar={toggleSidebar}
-        needSearchMobile="needSearchMobile"
-        getValue={(e) => searchFunction(e)}
-        closeSidebar={() => setToggleSidebar(!toggleSidebar)}
-      >
-        <div className={styles.content_container}>
-          <section>
-            <div className={styles.right_section_top}>
-              <TopNav
-                openSidebar={() => {
-                  setToggleSidebar(!toggleSidebar);
-                }}
-                search={(e) => searchFunction(e)}
-              />
-            </div>
+      <div className={styles.content_container}>
+        <section>
+          <div className={styles.right_section}>
+            <h2>Leaderboard</h2>
+            <p>
+              This is a list showing the performance of your agents on heed via
+              the number of customers calls they have received..
+            </p>
+            <p className={styles.long_paragraph}>
+              Please note that each agent’s performance was rated using the
+              amount of calls they were able to receive per week, divided by the
+              number of days in a week.
+            </p>
+            <h6>To view agent report, please click on any on the agent IDs </h6>
 
-            <div className={styles.right_section}>
-              <h2>Leaderboard</h2>
-              <p>
-                This is a list showing the performance of your agents on heed
-                via the number of customers calls they have received..
-              </p>
-              <p className={styles.long_paragraph}>
-                Please note that each agent’s performance was rated using the
-                amount of calls they were able to receive per week, divided by
-                the number of days in a week.
-              </p>
-              <h6>
-                To view agent report, please click on any on the agent IDs{" "}
-              </h6>
-
-              <div className={styles.right_content2_container}>
-                <div className={styles.calender_content}>
-                  <div>
-                    <p id={styles.sort_by}>Sort by </p>
-                  </div>
-                  <select
-                    id="calender-value"
-                    name="calender"
-                    onChange={(e) => setRange(e.target.value)}
-                  >
-                    <option value="week">This week</option>
-                    <option value="month">This month</option>
-                  </select>
+            <div className={styles.right_content2_container}>
+              <div className={styles.calender_content}>
+                <div>
+                  <p id={styles.sort_by}>Sort by </p>
                 </div>
+                <select
+                  id="calender-value"
+                  name="calender"
+                  onChange={(e) => setRange(e.target.value)}
+                >
+                  <option value="week">This week</option>
+                  <option value="month">This month</option>
+                </select>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          <>
-            {isLoading ? (
-              <IsLoadingSkeleton />
-            ) : (
-              <>
-                <section className={styles.general_profile}>
-                  <div className={styles.Profile_container}>
-                    <>
-                      {searchLeaderboard(leaderboard)?.length > 0 ? (
-                        searchLeaderboard(leaderboard)?.map(
-                          (profile, index) => (
-                            <>
-                              <TopAgents
-                                key={profile.agent_id}
-                                person={profile}
-                                index={index}
-                                // index2={index2}
-                                handleAgent={handleAgent}
-                                agent_id={profile.agent_id}
-                                rank={profile.rank}
-                                show={profile.str_agent_id}
-                              />
-                            </>
-                          )
-                        )
-                      ) : (
-                        <div className={styles.empty_state}>
-                          <img src={notfoundImg} alt="not found" />
-                          <h3>Sorry, No Agent Record Found.</h3>
-                        </div>
-                      )}
-                    </>
-                  </div>
-                </section>
-
-                <section className={styles.Tabular_Container}>
-                  <div className={styles.Tabular_Content_Container}>
-                    <div className={styles.Header_title}>
-                      <p className={styles.Hide_for_mobile}>AGENT NAME</p>
-                      <span className={styles.Hide_for_desktop}>ID</span>
-                      <p className={styles.Hide_for_mobile}>
-                        No. of calls/week
-                      </p>
-                      <span className={styles.Hide_for_desktop}>
-                        <img src={CallIcon} className="" alt="profile1" />
-                      </span>
-
-                      <p className={styles.Hide_for_mobile}>Total score </p>
-                      <span className={styles.Hide_for_desktop}>Score/10</span>
-
-                      <p className={styles.Hide_for_mobile}>Rank </p>
-                      <span className={styles.Hide_for_desktop}>
-                        <img
-                          src={LeaderBoardIcon}
-                          className=""
-                          alt="profile1"
-                        />
-                      </span>
-                    </div>
-                    <hr></hr>
-                    {searchLeaderboard(otherAgent)?.length > 0 ? (
-                      <>
-                        {searchLeaderboard(otherAgent)?.map((profile) => (
-                          <OtherAgents
+        <>
+          {isLoading ? (
+            <IsLoadingSkeleton />
+          ) : (
+            <>
+              <section className={styles.general_profile}>
+                <div className={styles.Profile_container}>
+                  <>
+                    {searchLeaderboard(leaderboard)?.length > 0 ? (
+                      searchLeaderboard(leaderboard)?.map((profile, index) => (
+                        <>
+                          <TopAgents
                             key={profile.agent_id}
                             person={profile}
+                            index={index}
+                            // index2={index2}
                             handleAgent={handleAgent}
                             agent_id={profile.agent_id}
                             rank={profile.rank}
                             show={profile.str_agent_id}
                           />
-                        ))}
-                      </>
+                        </>
+                      ))
                     ) : (
                       <div className={styles.empty_state}>
                         <img src={notfoundImg} alt="not found" />
                         <h3>Sorry, No Agent Record Found.</h3>
                       </div>
                     )}
+                  </>
+                </div>
+              </section>
+
+              <section className={styles.Tabular_Container}>
+                <div className={styles.Tabular_Content_Container}>
+                  <div className={styles.Header_title}>
+                    <p className={styles.Hide_for_mobile}>AGENT NAME</p>
+                    <span className={styles.Hide_for_desktop}>ID</span>
+                    <p className={styles.Hide_for_mobile}>No. of calls/week</p>
+                    <span className={styles.Hide_for_desktop}>
+                      <img src={CallIcon} className="" alt="profile1" />
+                    </span>
+
+                    <p className={styles.Hide_for_mobile}>Total score </p>
+                    <span className={styles.Hide_for_desktop}>Score/10</span>
+
+                    <p className={styles.Hide_for_mobile}>Rank </p>
+                    <span className={styles.Hide_for_desktop}>
+                      <img src={LeaderBoardIcon} className="" alt="profile1" />
+                    </span>
                   </div>
-                </section>
-              </>
-            )}
-          </>
-        </div>
-      </NewDesignSideBar>
+                  <hr></hr>
+                  {searchLeaderboard(otherAgent)?.length > 0 ? (
+                    <>
+                      {searchLeaderboard(otherAgent)?.map((profile) => (
+                        <OtherAgents
+                          key={profile.agent_id}
+                          person={profile}
+                          handleAgent={handleAgent}
+                          agent_id={profile.agent_id}
+                          rank={profile.rank}
+                          show={profile.str_agent_id}
+                        />
+                      ))}
+                    </>
+                  ) : (
+                    <div className={styles.empty_state}>
+                      <img src={notfoundImg} alt="not found" />
+                      <h3>Sorry, No Agent Record Found.</h3>
+                    </div>
+                  )}
+                </div>
+              </section>
+            </>
+          )}
+        </>
+      </div>
     </>
   );
 }
