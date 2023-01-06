@@ -13,8 +13,8 @@ import { useSelector } from "react-redux";
 
 /**
  * Wrap your component with this component to get a sidebar with a logo, a search input field and a list of links.
- * getValue is a function that returns the value of the search input field
- * @param {getValue} function
+ * search is the value of the search input field
+ * @param {search} string
  * @useage getValue={(e) => console.log(e)} you will get the value of the search input field
  * @param {needSearchMobile} boolean
  * use this prop to determine if the search input field should be rendered on mobile screens or not!
@@ -28,7 +28,7 @@ import { useSelector } from "react-redux";
  */
 function NewDesignSideBar({
   children,
-  getValue,
+  search,
   needSearchMobile,
   needSearchDesktop,
   closeSidebar,
@@ -60,7 +60,7 @@ function NewDesignSideBar({
               styles[`${needSearchMobile}`]
             }`}
           >
-            <SearchInput inputValue={getValue} />
+            <SearchInput inputValue={search} />
           </div>
           <div className={styles.navLinks}>
             <NavLink
