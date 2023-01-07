@@ -56,4 +56,3 @@ def view_user_plan(user: models.User=Depends(auth.get_active_user), db: Session 
                     "Time_Left": math.floor(user.company.time_left / 60)}
     
     return plan_details
-
