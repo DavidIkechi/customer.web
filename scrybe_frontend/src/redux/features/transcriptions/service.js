@@ -18,7 +18,7 @@ export const GetTranscipt = (id) => async () => {
 export const GetTransciption = (id) => async () => {
   try {
     const res = await GetTranscriptionApi(id);
-    console.log(res);
+    console.log(res.data.sentiment_result);
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
   }

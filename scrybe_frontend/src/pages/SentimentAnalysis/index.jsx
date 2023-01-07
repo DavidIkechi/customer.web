@@ -9,12 +9,20 @@ import PhraseTagCard from "./components/PhraseTagCard";
 import SentimentAside from "./components/SentimentAside";
 import VerdictCard from "./components/VerdictCard";
 import styles from "./SentimentAnalysis.module.scss";
-import { useReadSentiment } from "./hooks";
+import { useEffect } from "react";
+import { dispatch } from "../../redux/store";
+import { NewAnalysis } from "../../redux/features/sentiment/service";
+import { useSelector } from "react-redux";
 
 function SentimentAnalysis() {
+  const { transcription } = useSelector((state) => state.transcription);
   const [isMobileAsideOpen, setIsMobileAsideOpen] = useState(false);
   const params = useParams();
-  const sentimentData = useReadSentiment(params.AudioId);
+
+  useEffect(() => {
+    dispatch(NewAnalysis(params.AudioId));
+  }, []);
+
   const positiveTags = [
     "brave",
     "good",
@@ -58,7 +66,7 @@ function SentimentAnalysis() {
   return (
     <div className={styles.page__container}>
       <div className={styles.audio__mobile}>
-        <AudioCard sentimentData={sentimentData} />
+        <AudioCard sentimentData={transcription} />
       </div>
       <div className={styles.sentiment__tab__opener}>
         <div className={styles.opener__content} onClick={openSentimentTab}>
@@ -70,7 +78,7 @@ function SentimentAnalysis() {
         <SentimentAside
           isMobileAsideOpen={isMobileAsideOpen}
           closeFunction={closeSentimentTab}
-          sentimentData={sentimentData}
+          sentimentData={transcription}
         />
       </div>
       <main className={styles.main__container}>
@@ -91,30 +99,30 @@ function SentimentAnalysis() {
           </div>
         </span>
         <div className={styles.analysis__cards}>
-          <AnalysisCard sentimentData={sentimentData} />;
+          <AnalysisCard sentimentData={transcription} />;
         </div>
       </main>
       <aside className={styles.aside__container}>
-        <AudioCard sentimentData={sentimentData} />
-        <OverAllSentimentCard sentimentData={sentimentData} />
-        <VerdictCard sentimentData={sentimentData} />
+        <AudioCard sentimentData={transcription} />
+        <OverAllSentimentCard sentimentData={transcription} />
+        <VerdictCard sentimentData={transcription} />
         <PhraseTagCard
           tags={
-            sentimentData.positiveTags
-              ? sentimentData.positiveTags
+            transcription.positiveTags
+              ? transcription.positiveTags
               : positiveTags
           }
           title={"Positive phrase tags"}
-          sentimentData={sentimentData}
+          sentimentData={transcription}
         />
         <PhraseTagCard
           tags={
-            sentimentData.negativeTags
-              ? sentimentData.negativeTags
+            transcription.negativeTags
+              ? transcription.negativeTags
               : negativeTags
           }
           title={"Negative phrase tags"}
-          sentimentData={sentimentData}
+          sentimentData={transcription}
         />
       </aside>
     </div>
