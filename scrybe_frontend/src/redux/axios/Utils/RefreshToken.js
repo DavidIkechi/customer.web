@@ -16,6 +16,7 @@ export const RefreshToken = async () => {
     );
     return res.data;
   } catch (err) {
-    console.log(err);
+    localStorage.clear();
+    sessionStorage.clear();
   }
 };
