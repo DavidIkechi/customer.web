@@ -514,3 +514,20 @@ def read_plans(skip: int = 0, limit: int = 100, db: Session = Depends(_services.
     return {      
         "detail": plans
     }
+@user_router.delete("/delete_plan/{plan_name}")
+async def delete_plan(plan_name: str, db: Session = Depends(_services.get_session), user: models.User = Depends(get_admin)):
+    try:
+        db_plan = crud.get_plan_by_name(db, plan_name)
+        if db_plan is None:
+            raise HTTPException(status_code=404, 
+                                detail="Plan not found")
+
+        crud.delete_plan(db, plan_name)
+    except Exception as e:
+        return JSONResponse(
+            status_code= 500,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+    return {
+        "detail": "Plan deleted successfully!"
+    }
