@@ -97,8 +97,6 @@ const Login = () => {
     signInWithPopup(auth, provider)
       .then(async (result) => {
         const email = result.user.email;
-
-        console.log(email);
         dispatch(UserGoogleLogin(email));
       })
       .catch((error) => {
@@ -130,7 +128,6 @@ const Login = () => {
 
           <div className={styles.greeting}>
             <h1>Welcome back Heeder</h1>
-            <p>Please enter your details</p>
           </div>
 
           <div className={styles.googlego} onClick={() => GoogleLogin()}>
