@@ -31,14 +31,12 @@ const TableData = ({ searchKeyword }) => {
   const [openModal, setOpenModal] = useState(false);
   const [recordingsProcessed, setRecordingsProcessed] = useState(false);
   const [openDeletePopup, setOpenDeletePopup] = useState(false);
-  // const [deleted, setDeleted] = useState(false);
   const sessionExpired = audioError;
   const isFetching = isLoading;
 
   useEffect(() => {
     dispatch(GetUserAudios());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   const getChecked = (e) => {
     let checkedList = [...recordCheckedList];
@@ -139,18 +137,6 @@ const TableData = ({ searchKeyword }) => {
           </div>
           <div className={styles.uploaded_header}>
             <h1>Transcription Status </h1>
-            {/* <h2 className={styles.est_time_left}>
-            Estimated Time Left:{" "}
-            <strong className={styles.est_time_left_num}>{timeLeft}</strong> Min
-          </h2> */}
-            {/* <div
-            className={styles.UploadedNavbarRec_btnwrap}
-            onClick={() => setModalOpen(true)}
-          >
-            <img src={uploadBtn_icon} alt="" />
-            <button className={styles.UploadedNavbarRec_btn}>Upload</button>
-          </div>
-          <Modal open={modalOpen} setOpen={setModalOpen} /> */}
           </div>
           <div className={styles.uploaded_table_wrap}>
             {isFetching ? (
