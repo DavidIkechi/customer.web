@@ -5,9 +5,11 @@
   height: 100%;
   display: flex;
 
-  > *:last-child {
+
+  .rightChild {
     overflow-y: scroll;
     height: 100vh;
+    width: 100%;
   }
 
   .generalSidebar_header {

@@ -117,7 +117,7 @@ const TopNav = ({ openSidebar, search }) => {
 // its prop type
 TopNav.propTypes = {
   openSidebar: PropTypes.func.isRequired,
-  search: PropTypes.func.isRequired,
+  search: PropTypes.string.isRequired,
 };
 
 export default TopNav;

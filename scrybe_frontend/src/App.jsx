@@ -84,13 +84,14 @@ function App() {
           <Route path="/try-results/:transcribeId" element={<TryResults />} />
 
           <Route path="/reviews" element={<Reviews />} />
+
+          <Route path="/checkout-enterprise" element={<Enterprise />} />
         </Route>
         {/* cant access without signin */}
 
         <Route element={<RequireToken />}>
           <Route path="/checkout-startup" element={<StartUp />} />
           <Route path="/checkout-growing" element={<Growing />} />
-          <Route path="/checkout-enterprise" element={<Enterprise />} />
           <Route path="/account" element={<Account />} />
           <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
           <Route path="/agent-report/:Agent_id" element={<AgentReport />} />
