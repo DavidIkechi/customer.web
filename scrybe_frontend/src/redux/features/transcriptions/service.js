@@ -5,6 +5,7 @@ import {
 import ErrorHandler from "../../axios/Utils/ErrorHandler";
 import { dispatch } from "../../store";
 import { createResponse } from "../../utils/UtilSlice";
+import { setTranscription } from "./transcriptionSlice";
 
 export const GetTranscipt = (id) => async () => {
   try {
@@ -18,7 +19,7 @@ export const GetTranscipt = (id) => async () => {
 export const GetTransciption = (id) => async () => {
   try {
     const res = await GetTranscriptionApi(id);
-    console.log(res.data.sentiment_result);
+    dispatch(setTranscription(res.data.detail));
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
   }

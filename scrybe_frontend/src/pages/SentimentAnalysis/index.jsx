@@ -11,17 +11,25 @@ import VerdictCard from "./components/VerdictCard";
 import styles from "./SentimentAnalysis.module.scss";
 import { useEffect } from "react";
 import { dispatch } from "../../redux/store";
-import { NewAnalysis } from "../../redux/features/sentiment/service";
 import { useSelector } from "react-redux";
+import { GetTransciption } from "../../redux/features/transcriptions/service";
+import IsLoadingSkeleton from "../../components/LoadingSkeleton";
 
 function SentimentAnalysis() {
   const { transcription } = useSelector((state) => state.transcription);
   const [isMobileAsideOpen, setIsMobileAsideOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
   const params = useParams();
 
   useEffect(() => {
-    dispatch(NewAnalysis(params.AudioId));
+    dispatch(GetTransciption(params.AudioId));
   }, []);
+
+  useEffect(() => {
+    if (transcription !== {}) {
+      setLoading(false);
+    }
+  }, [transcription]);
 
   const positiveTags = [
     "brave",
@@ -65,66 +73,74 @@ function SentimentAnalysis() {
 
   return (
     <div className={styles.page__container}>
-      <div className={styles.audio__mobile}>
-        <AudioCard sentimentData={transcription} />
-      </div>
-      <div className={styles.sentiment__tab__opener}>
-        <div className={styles.opener__content} onClick={openSentimentTab}>
-          Overall sentiment
-          <div className={styles.arrow__container}>
-            <img src={blueArrowIcon} alt="arrow icon" />
+      {loading ? (
+        <IsLoadingSkeleton />
+      ) : (
+        <>
+          <div className={styles.audio__mobile}>
+            <AudioCard sentimentData={transcription} />
           </div>
-        </div>
-        <SentimentAside
-          isMobileAsideOpen={isMobileAsideOpen}
-          closeFunction={closeSentimentTab}
-          sentimentData={transcription}
-        />
-      </div>
-      <main className={styles.main__container}>
-        <span className={styles.main__container__top}>
-          <div className={styles.main__container__top__arrow__icon__container}>
-            <Link to={`/transcriptions/${params.AudioId}`}>
-              <img
-                className={
-                  styles.main__container__top__arrow__icon__container__image
-                }
-                src={arrowIcon}
-                alt="arrow icon"
-              />
-            </Link>
+          <div className={styles.sentiment__tab__opener}>
+            <div className={styles.opener__content} onClick={openSentimentTab}>
+              Overall sentiment
+              <div className={styles.arrow__container}>
+                <img src={blueArrowIcon} alt="arrow icon" />
+              </div>
+            </div>
+            <SentimentAside
+              isMobileAsideOpen={isMobileAsideOpen}
+              closeFunction={closeSentimentTab}
+              sentimentData={transcription}
+            />
           </div>
-          <div className={styles.main__container__top__title}>
-            Sentiment analysis
-          </div>
-        </span>
-        <div className={styles.analysis__cards}>
-          <AnalysisCard sentimentData={transcription} />;
-        </div>
-      </main>
-      <aside className={styles.aside__container}>
-        <AudioCard sentimentData={transcription} />
-        <OverAllSentimentCard sentimentData={transcription} />
-        <VerdictCard sentimentData={transcription} />
-        <PhraseTagCard
-          tags={
-            transcription.positiveTags
-              ? transcription.positiveTags
-              : positiveTags
-          }
-          title={"Positive phrase tags"}
-          sentimentData={transcription}
-        />
-        <PhraseTagCard
-          tags={
-            transcription.negativeTags
-              ? transcription.negativeTags
-              : negativeTags
-          }
-          title={"Negative phrase tags"}
-          sentimentData={transcription}
-        />
-      </aside>
+          <main className={styles.main__container}>
+            <span className={styles.main__container__top}>
+              <div
+                className={styles.main__container__top__arrow__icon__container}
+              >
+                <Link to={`/transcriptions/${params.AudioId}`}>
+                  <img
+                    className={
+                      styles.main__container__top__arrow__icon__container__image
+                    }
+                    src={arrowIcon}
+                    alt="arrow icon"
+                  />
+                </Link>
+              </div>
+              <div className={styles.main__container__top__title}>
+                Sentiment analysis
+              </div>
+            </span>
+            <div className={styles.analysis__cards}>
+              <AnalysisCard sentimentData={transcription} />;
+            </div>
+          </main>
+          <aside className={styles.aside__container}>
+            <AudioCard sentimentData={transcription} />
+            <OverAllSentimentCard sentimentData={transcription} />
+            <VerdictCard sentimentData={transcription} />
+            <PhraseTagCard
+              tags={
+                transcription.positiveTags
+                  ? transcription.positiveTags
+                  : positiveTags
+              }
+              title={"Positive phrase tags"}
+              sentimentData={transcription}
+            />
+            <PhraseTagCard
+              tags={
+                transcription.negativeTags
+                  ? transcription.negativeTags
+                  : negativeTags
+              }
+              title={"Negative phrase tags"}
+              sentimentData={transcription}
+            />
+          </aside>
+        </>
+      )}
     </div>
   );
 }
