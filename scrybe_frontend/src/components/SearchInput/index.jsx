@@ -34,7 +34,7 @@ const SearchInput = ({ inputValue }) => {
 
 // type validation
 SearchInput.propTypes = {
-  inputValue: PropTypes.func.isRequired,
+  inputValue: PropTypes.string.isRequired,
 };
 
 export default SearchInput;
