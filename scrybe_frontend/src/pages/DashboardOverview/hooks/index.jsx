@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import ApiService from "../../../helpers/axioshelp/apis";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  GetRecentRecordings,
+  GetTotalRecordings,
+} from "../../../redux/features/audios/service";
+import { LeaderBoard } from "../../../redux/features/agents/service";
 
 const useDashBoardData = () => {
   const [recentRecording, setRecentRecordings] = useState({});
@@ -7,26 +12,38 @@ const useDashBoardData = () => {
   const [totalRecording, setTotalRecording] = useState(null);
   const [leaderboard, setLeaderboard] = useState({});
 
+  const totalRecordingData = useSelector(
+    (state) => state.audio.totalRecordings
+  );
+  const recentRecordingData = useSelector(
+    (state) => state.audio.recentRecordings
+  );
+  const leaderboardData = useSelector((state) => state.agent.leaderboard);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const GetData = async () => {
       //Get Recent Recordings
-      const res = await ApiService.RecentRecordings();
-      setRecentRecordings(res.data);
+      setRecentRecordings(recentRecordingData);
 
       //Get Total Anaylsis
-      const res1 = await ApiService.TotalAnalysis();
-      setTotalAnalysis(res1.data);
+      // const res1 = await ApiService.TotalAnalysis();
+      // setTotalAnalysis(res1.data);
 
       //Get TotalUserRecordings
-      const res2 = await ApiService.GetTotalUserRecordings();
-      setTotalRecording(res2.data);
+      setTotalRecording(totalRecordingData);
 
       // Get Leaderboard
-      const res3 = await ApiService.Leaderboard();
-      setLeaderboard(res3.data);
+      setLeaderboard(leaderboardData);
     };
     GetData();
-  }, []);
+  }, [totalRecordingData, recentRecordingData, leaderboardData]);
+
+  useEffect(() => {
+    dispatch(GetTotalRecordings());
+    dispatch(GetRecentRecordings());
+    dispatch(LeaderBoard());
+  }, [dispatch]);
 
   return { recentRecording, totalAnalysis, totalRecording, leaderboard };
 };
