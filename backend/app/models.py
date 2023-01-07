@@ -184,6 +184,7 @@ class PaymentHistory(Base):
     minutes = Column(Integer, index = True)
     payment_type = Column(String(255), nullable= True)
     email = Column(String(255), nullable= True)
+    payment_gateway = Column(String(255), nullable=False)
     
     
    

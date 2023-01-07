@@ -65,10 +65,14 @@ def download (id: Union[int, str], db: Session = Depends(_services.get_session),
         )
     return sentiment
     
-@sentiment_router.get("/total-analysis", summary="get user total analysis", response_model = schema.TotalAnalysis, status_code = 200)
+@sentiment_router.get("/total-analysis", summary="get user total analysis", status_code = 200)
 def get_total_analysis(db: Session = Depends(_services.get_session), user: models.User = Depends(get_active_user)):
+    
+    print("yeso")
     try: 
-        overall_sentiment = db.query(models.Audio).filter(models.Audio.user_id == user.id)
+        overall_sentiment = db.query(models.Audio).filter(models.Audio.user_id == user.id).all()
+        print(len(overall_sentiment))
+        print("yes")
         week = datetime.now().isocalendar().week
         month = datetime.now().month
         list_month=[]
@@ -77,6 +81,7 @@ def get_total_analysis(db: Session = Depends(_services.get_session), user: model
         month_item={}
         result = dict()
         for i in overall_sentiment:
+            print(i)
             if i.timestamp.month == month:
                 list_month.append(i.overall_sentiment)
             if i.timestamp.isocalendar().week == week:

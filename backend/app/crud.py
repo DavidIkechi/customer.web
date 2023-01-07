@@ -529,7 +529,8 @@ def store_transaction(db: Session, trans: dict):
         time_paid = trans['time_paid'],
         minutes = trans['minutes'],
         payment_type = trans['payment_channel'],
-        email = trans['email_address']
+        email = trans['email_address'],
+        payment_gateway = trans['payment_gateway']
     )
     
     db.add(db_trans)
