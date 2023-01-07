@@ -26,7 +26,6 @@ const TableData = ({ searchKeyword }) => {
   const { audios, audioError } = useSelector((state) => state.audio);
   const { isLoading } = useSelector((state) => state.util);
   const dispatch = useDispatch();
-  // const [deleteRecording] = useDeleteRecordingMutation();
   const allRecordings = audios;
   const [recordCheckedList, setRecordCheckedList] = useState([]);
   const [openModal, setOpenModal] = useState(false);
@@ -37,7 +36,6 @@ const TableData = ({ searchKeyword }) => {
   const isFetching = isLoading;
 
   useEffect(() => {
-    // dispatch(fetchRecordings());
     dispatch(GetUserAudios());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

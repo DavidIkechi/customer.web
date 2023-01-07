@@ -27,17 +27,11 @@ import TopNav from "../TopNav";
  * use this prop to determine if the sidebar should be open or closed on mobile screens when the hamburger icon is clicked from navbar
  * @returns a wrapper component with a sidebar and all the props passed to it
  */
-function NewDesignSideBar({
-  children,
-  search,
-  needSearchMobile,
-  needSearchDesktop,
-  closeSidebar,
-  toggleSidebar,
-}) {
+function NewDesignSideBar({ children, needSearchMobile, needSearchDesktop }) {
   const { user } = useSelector((state) => state.user);
   const [show, setShow] = useState(false);
-  const [setToggleSidebar] = useState(false);
+  const [toggleSidebar, setToggleSidebar] = useState(false);
+
   const { searchQuery } = useSelector((state) => state.util);
   return (
     <div
@@ -55,7 +49,7 @@ function NewDesignSideBar({
               src={closeIcon}
               alt="closeIcon"
               className={styles.SidebarcloseIcon}
-              onClick={closeSidebar}
+              onClick={() => setToggleSidebar(!toggleSidebar)}
             />
           </div>
           <div
@@ -63,7 +57,7 @@ function NewDesignSideBar({
               styles[`${needSearchMobile}`]
             }`}
           >
-            <SearchInput inputValue={search} />
+            <SearchInput inputValue={searchQuery} />
           </div>
           <div className={styles.navLinks}>
             <NavLink
@@ -73,6 +67,7 @@ function NewDesignSideBar({
                   ? `${styles.active} ${styles.navLink}`
                   : `${styles.inactive} ${styles.navLink}`
               }
+              onClick={() => setToggleSidebar(!toggleSidebar)}
             >
               <img
                 src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670577828/my-scrybe_zxxyrj.webp"
@@ -87,6 +82,7 @@ function NewDesignSideBar({
                   ? `${styles.active} ${styles.navLink}`
                   : `${styles.inactive} ${styles.navLink}`
               }
+              onClick={() => setToggleSidebar(!toggleSidebar)}
             >
               <img
                 src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670577829/analysis_gisqdf.webp"
@@ -102,6 +98,7 @@ function NewDesignSideBar({
                   ? `${styles.active} ${styles.navLink} `
                   : `${styles.inactive} ${styles.navLink}`
               }
+              onClick={() => setToggleSidebar(!toggleSidebar)}
             >
               <img
                 src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670577828/leaderboard_kqe7de.webp"
@@ -116,6 +113,7 @@ function NewDesignSideBar({
                   ? `${styles.active} ${styles.navLink}`
                   : `${styles.inactive} ${styles.navLink}`
               }
+              onClick={() => setToggleSidebar(!toggleSidebar)}
             >
               <img
                 src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670577828/settings_wzhu1l.webp"
