@@ -55,7 +55,6 @@ function About() {
           </div>
         </div>
       </section>
-
       <section className={styles.second__section}>
         <div className={styles.sect__container}>
           <div className={styles.head__container}>
@@ -123,7 +122,6 @@ function About() {
           </div>
         </div>
       </section>
-
       <section className={styles.third__section}>
         <div className={styles.sect__container}>
           <div className={styles.third__container}>
@@ -177,135 +175,6 @@ function About() {
           </div>
         </div>
       </section>
-
-{/*   <section className={styles.fourth__section}>
-         <div className={styles.sect__container}>
-          <div className={styles.fourth__top}>
-            <div className={styles.fourth__heading}>
-              <h1 className={styles.fourth__head}>Meet Our Team</h1>
-            </div>
-             <div className={styles.fourth__subtext}>
-               <p className={styles.fourth__subhead}>
-                We are a team of Product mangers, designers, developers and
-                sales representatives, under Workshop Apps Ventures studio ready
-                to help sales and customer support teams!
-               </p>
-             </div>
-           </div>
-         </div>
-      </section>
-*/}
-      {/*   <div className={styles.fourth__bottom}>
-            <div className={styles.flex__profile}>
-              <div className={styles.profile__box}>
-                <div className={styles.profile__icon}>
-                  <img
-                    src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579336/team1_oqsdqn.webp"
-                    alt="team members"
-                  />
-                </div>
-                <div className={styles.profile__text}>
-                  <h5 className={styles.profile__name}>Mark Essien</h5>
-                  <p className={styles.profile__desc}>Advisor</p>
-                </div>
-              </div> 
-               <div className={styles.profile__box}>
-                <div className={styles.profile__icon}>
-                  <img
-                    src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579336/team2_acaqn4.webp"
-                    alt="team members"
-                  />
-                </div>
-                <div className={styles.profile__text}>
-                  <h5 className={styles.profile__name}>Aigbe Marvelous</h5>
-                  <p className={styles.profile__desc}>Advisor</p>
-                </div>
-              </div>
-              <div className={styles.profile__box}>
-                <div className={styles.profile__icon}>
-                  <img
-                    // src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579335/team3_tdoajn.webp"
-                    src={ceo}
-                    alt="team members"
-                  />
-                </div>
-                <div className={styles.profile__text}>
-                  <h5 className={styles.profile__name}>Collins Akpaka</h5>
-                  <p className={styles.profile__desc}>
-                    Chief Executive Officer
-                  </p>
-                </div>
-              </div>
-               <div className={styles.profile__box}>
-                <div className={styles.profile__icon}>
-                  <img
-                    src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579335/team4_p7ykpa.webp"
-                    alt="team members"
-                  />
-                </div>
-                <div className={styles.profile__text}>
-                  <h5 className={styles.profile__name}>Delphine Ogbonna</h5>
-                  <p className={styles.profile__desc}>Lead designer</p>
-                </div>
-              </div> 
-
-               <div className={styles.profile__box}>
-                <div className={styles.profile__icon}>
-                  <img
-                    src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579335/team5_hv34zf.webp"
-                    alt="team members"
-                  />
-                </div>
-                <div className={styles.profile__text}>
-                  <h5 className={styles.profile__name}>Ugochukwu Odumegwu</h5>
-                  <p className={styles.profile__desc}>Back-End Lead</p>
-                </div>
-              </div>
-              <div className={styles.profile__box}>
-                <div className={styles.profile__icon}>
-                  <img
-                    // src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579335/team6_ezoxjg.webp"
-                    src={cto}
-                    alt="team members"
-                  />
-                </div>
-                <div className={styles.profile__text}>
-                  <h5 className={styles.profile__name}>Tochukwu Bedford</h5>
-                  <p className={styles.profile__desc}>
-                    Chief Technology Officer
-                  </p>
-                </div>
-              </div>
-              <div className={styles.profile__box}>
-                <div className={styles.profile__icon}>
-                  <img src={cmo} alt="team members" />
-                </div>
-                <div className={styles.profile__text}>
-                  <h5 className={styles.profile__name}>Mary Nwankwoala</h5>
-                  <p className={styles.profile__desc}>
-                    Chief Marketing Officer
-                  </p>
-                </div>
-              </div>
-              <div className={styles.profile__box}>
-                <div className={styles.profile__icon}>
-                  <img src={cfo} alt="team members" />
-                </div>
-                <div className={styles.profile__text}>
-                  <h5 className={styles.profile__name}>Victor Chukwueke</h5>
-                  <p className={styles.profile__desc}>
-                    Chief Operation Officer
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.team__content}>
-            <Link className={styles.team__expand}>See more in our team</Link>
-          </div>
-        </div>
-      </section> */}
     </>
   );
 }

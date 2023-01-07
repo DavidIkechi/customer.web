@@ -10,11 +10,12 @@ import SearchInput from "../SearchInput";
 import styles from "./generalSidebar.module.scss";
 
 import { useSelector } from "react-redux";
+import TopNav from "../TopNav";
 
 /**
  * Wrap your component with this component to get a sidebar with a logo, a search input field and a list of links.
- * getValue is a function that returns the value of the search input field
- * @param {getValue} function
+ * search is the value of the search input field
+ * @param {search} string
  * @useage getValue={(e) => console.log(e)} you will get the value of the search input field
  * @param {needSearchMobile} boolean
  * use this prop to determine if the search input field should be rendered on mobile screens or not!
@@ -26,16 +27,12 @@ import { useSelector } from "react-redux";
  * use this prop to determine if the sidebar should be open or closed on mobile screens when the hamburger icon is clicked from navbar
  * @returns a wrapper component with a sidebar and all the props passed to it
  */
-function NewDesignSideBar({
-  children,
-  getValue,
-  needSearchMobile,
-  needSearchDesktop,
-  closeSidebar,
-  toggleSidebar,
-}) {
+function NewDesignSideBar({ children, needSearchMobile, needSearchDesktop }) {
   const { user } = useSelector((state) => state.user);
   const [show, setShow] = useState(false);
+  const [toggleSidebar, setToggleSidebar] = useState(false);
+
+  const { searchQuery } = useSelector((state) => state.util);
   return (
     <div
       className={`${styles.generalSidebar}
@@ -52,7 +49,7 @@ function NewDesignSideBar({
               src={closeIcon}
               alt="closeIcon"
               className={styles.SidebarcloseIcon}
-              onClick={closeSidebar}
+              onClick={() => setToggleSidebar(!toggleSidebar)}
             />
           </div>
           <div
@@ -60,7 +57,7 @@ function NewDesignSideBar({
               styles[`${needSearchMobile}`]
             }`}
           >
-            <SearchInput inputValue={getValue} />
+            <SearchInput inputValue={searchQuery} />
           </div>
           <div className={styles.navLinks}>
             <NavLink
@@ -70,6 +67,7 @@ function NewDesignSideBar({
                   ? `${styles.active} ${styles.navLink}`
                   : `${styles.inactive} ${styles.navLink}`
               }
+              onClick={() => setToggleSidebar(!toggleSidebar)}
             >
               <img
                 src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670577828/my-scrybe_zxxyrj.webp"
@@ -84,6 +82,7 @@ function NewDesignSideBar({
                   ? `${styles.active} ${styles.navLink}`
                   : `${styles.inactive} ${styles.navLink}`
               }
+              onClick={() => setToggleSidebar(!toggleSidebar)}
             >
               <img
                 src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670577829/analysis_gisqdf.webp"
@@ -99,6 +98,7 @@ function NewDesignSideBar({
                   ? `${styles.active} ${styles.navLink} `
                   : `${styles.inactive} ${styles.navLink}`
               }
+              onClick={() => setToggleSidebar(!toggleSidebar)}
             >
               <img
                 src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670577828/leaderboard_kqe7de.webp"
@@ -113,6 +113,7 @@ function NewDesignSideBar({
                   ? `${styles.active} ${styles.navLink}`
                   : `${styles.inactive} ${styles.navLink}`
               }
+              onClick={() => setToggleSidebar(!toggleSidebar)}
             >
               <img
                 src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670577828/settings_wzhu1l.webp"
@@ -165,7 +166,15 @@ function NewDesignSideBar({
           )}
         </div>
       </div>
-      {children}
+      <div className={styles.rightChild}>
+        <TopNav
+          openSidebar={() => {
+            setToggleSidebar(!toggleSidebar);
+          }}
+          search={searchQuery}
+        />
+        {children}
+      </div>
     </div>
   );
 }
