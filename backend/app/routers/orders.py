@@ -19,14 +19,14 @@ from emails import send_email, verify_token, send_password_reset_email, password
 from paystackapi.paystack import Paystack
 from paystackapi.charge import Charge
 
-import stripe
+import stripe, json
+from . import utility
 from fastapi.responses import RedirectResponse
 
 from dotenv import load_dotenv
 load_dotenv()
 from datetime import datetime
-
-
+import hashlib, hmac, http
 order_router = APIRouter(
     prefix='/orders',
     tags=['orders'],
@@ -46,9 +46,7 @@ async def create_order(userPayment: schema.PaymentBase, db: Session = Depends(_s
                 status_code= 400,
                 content=jsonable_encoder({"detail": "Sorry, we do not have that plan"}),
             )
-            
-        
-            
+             
         amount = get_plan_details.price * userPayment.minutes * 100
         if amount < 10:
             return JSONResponse(
@@ -72,8 +70,7 @@ async def create_order(userPayment: schema.PaymentBase, db: Session = Depends(_s
                 status_code= 400,
                 content=jsonable_encoder({"detail": "An error occured while trying to initialise payment, please try again"}),
             )
-
-            
+         
     except Exception as e:
         return JSONResponse(
             status_code= 500,
@@ -89,14 +86,14 @@ async def create_order(userPayment: schema.PaymentBase, db: Session = Depends(_s
 @order_router.post("/verify_order/{ref_code}", description="Verify Paystack order for a user", status_code = 200)
 async def verify_order(ref_code: str, db: Session = Depends(_services.get_session), user: models.User = Depends(auth.get_active_user)):
     paystack = Paystack(secret_key=os.getenv('PAYSTACK_SECRET_KEY'))
+    user = crud.get_user_by_email(db, email=user.email)
+
     try:
         check_trans = crud.check_transaction(db, ref_code)
         
         if check_trans is not None:
-            return JSONResponse(
-                status_code= 400,
-                content=jsonable_encoder({"detail": "you can not use the same reference code twice."}),
-            )
+            return {"detail": transaction}
+
             
         veri = paystack.transaction().verify(reference = ref_code)
         get_status = veri['data']
@@ -107,12 +104,17 @@ async def verify_order(ref_code: str, db: Session = Depends(_services.get_sessio
                        "plan": get_status['metadata']['plan'],
                        "time_paid": get_status['paid_at'],
                        "payment_channel": get_status['channel'],
-                       "email_address": user.email
+                       "email_address": user.email,
+                       "payment_gateway": "Paystack"
                     }
         
         if get_status['status'].strip().lower() != "success":
             # send a mail receipt
             # await send_transaction_failure_receipt([user.email], transaction)
+            await send_failed_payment_email([email], user, 
+                                                plan=transaction['plan'], 
+                                                minutes=transaction['minutes'], 
+                                                price=transaction['amount'])
             return JSONResponse(
                 status_code= 400,
                 content=jsonable_encoder({"detail": "Sorry, your payment failed, please try again"}),
@@ -126,6 +128,10 @@ async def verify_order(ref_code: str, db: Session = Depends(_services.get_sessio
         # top up the users account
         top_up = crud.top_up(db,user.email, top_up_details)
         # send a mail receipt
+        await send_successful_payment_email([email], user, 
+                                                plan=transaction['plan'], 
+                                                minutes=transaction['minutes'], 
+                                                price=transaction['amount'])
         # await send_transaction_success_receipt([user.email], transaction)
         
     except Exception as e:
@@ -133,6 +139,81 @@ async def verify_order(ref_code: str, db: Session = Depends(_services.get_sessio
             status_code= 500,
             content=jsonable_encoder({"detail": str(e)}),
         )
+        
+    return {
+        "detail": transaction
+    }
+
+# paystack webhook.
+@order_router.post('/paystack_webhook', include_in_schema=False)
+async def heed_webhook_view(request: Request, db: Session = Depends(_services.get_session)):
+    paystack_secret = os.getenv('PAYSTACK_SECRET_KEY')
+
+    try:
+        payload = await request.body()
+            # get the header
+        paystack_header = request.headers.get('x-paystack-signature')
+        # convert data to dictionary.
+        get_data = json.loads(payload.decode('utf-8'))
+        signature = utility.generate_signature(paystack_secret, payload)
+        if signature != paystack_header:
+            return JSONResponse(
+                status_code= 401,
+                content=jsonable_encoder({"detail": "Authentication error"}),
+            )
+        
+        # get the reference
+        ref_code = get_data['data']['reference']
+        check_trans = crud.check_transaction(db, ref_code)
+        
+        # get all the data need.
+        get_status = get_data['data']
+        transaction = {"amount": get_status['amount']/100,
+                    "trans_id": str(get_status['id']),
+                    "reference": get_status['reference'],
+                    "minutes": get_status['metadata']['minutes'],
+                    "plan": get_status['metadata']['plan'],
+                    "time_paid": get_status['paid_at'],
+                    "payment_channel": get_status['channel'],
+                    "email_address": get_status['customer']['email'],
+                    "payment_gateway": "Paystack"
+                }
+        user = crud.get_user_by_email(db, email=transaction['email_address'])
+        email = transaction['email_address']
+        if check_trans is not None:
+            return {"detail": transaction}
+        
+        if get_data['event'] == "charge.success":
+            # store in the crud database.
+            trans_crud = crud.store_transaction(db, transaction)
+            top_up_details = {"minutes": get_status['metadata']['minutes'],
+                        "plan": get_status['metadata']['plan']}
+            # top up the users account
+            top_up = crud.top_up(db,user.email, top_up_details)
+            # send a mail receipt
+            await send_successful_payment_email([email], user, 
+                                                plan=transaction['plan'], 
+                                                minutes=transaction['minutes'], 
+                                                price=transaction['amount'])
+
+            # get the transaction details
+        else:
+            # an error must have occurred, send error mail.
+            await send_failed_payment_email([email], user, 
+                                                plan=transaction['plan'], 
+                                                minutes=transaction['minutes'], 
+                                                price=transaction['amount'])
+            return JSONResponse(
+                status_code= 404,
+                content=jsonable_encoder({"detail": "Transaction failed!."}),
+            )
+            
+    except Exception as e:
+        return JSONResponse(
+            status_code= 500,
+            content=jsonable_encoder({"detail": str(e)}),
+        ) 
+     
         
     return {
         "detail": transaction
@@ -191,16 +272,8 @@ def create_stripe_order(userPayment: schema.PaymentBase, db: Session = Depends(_
     }
 
 
+
 #webhook to handle all payments(successful, failed, declined) and fulfil order
-@order_router.post('/paystack-webhook', include_in_schema=False)
-async def heed_webhook_view(request: Request, stripe_signature: str = Header(str), db: Session = Depends(_services.get_session)):
-    payload = await request.body()
-    
-    print(payload)
-
-
-
-
 @order_router.post('/webhook', include_in_schema=False)
 async def heed_webhook_view(request: Request, stripe_signature: str = Header(str), db: Session = Depends(_services.get_session)):
     payload = await request.body()
@@ -256,7 +329,8 @@ def fulfill_order(db, session):
                     "plan": plan,
                     "time_paid": datetime.now(),
                     "payment_channel": payment_channel,
-                    "email_address": email
+                    "email_address": email,
+                    "payment_gateway": "Stripe"
                     }
         
         #push the details into the database.

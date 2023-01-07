@@ -323,23 +323,26 @@ async def auth(email: str, db: Session = Depends(_services.get_session)):
         "detail": tokens
     }
     
-# @user_router.get('/auth/google', status_code = 200)
-# async def auth(email: str, db: Session = Depends(_services.get_session)):
-#     try:
-#         user_db = crud.get_user_by_email(db, email)
+@user_router.get('/auth/google', status_code = 200)
+async def auth(email: str, db: Session = Depends(_services.get_session)):
+    try:
+        user_db = crud.get_user_by_email(db, email)
 
-#         if user_db is None:
-#             raise HTTPException(status_code=404, detail="User not found.")
+        if user_db is None:
+            return JSONResponse(
+                status_code= 404,
+                content=jsonable_encoder({"detail": "User not found!"}),
+            )
 
-#         tokens = get_access_token(email)
-#     except Exception as e:
-#         return JSONResponse(
-#             status_code= 500,
-#             content=jsonable_encoder({"detail": str(e)}),
-#         )
-#     return {
-#         "detail": tokens
-#     }
+        tokens = get_access_token(email)
+    except Exception as e:
+        return JSONResponse(
+            status_code= 500,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+    return {
+        "detail": tokens
+    }
 
 @user_router.get("/refresh-api-key", status_code = 200)
 async def refresh_api_key(user: models.User = Depends(get_active_user), db: Session = Depends(_services.get_session)):
@@ -513,4 +516,23 @@ def read_plans(skip: int = 0, limit: int = 100, db: Session = Depends(_services.
         )
     return {      
         "detail": plans
+    }
+@user_router.delete("/delete_plan/{plan_name}")
+async def delete_plan(plan_name: str, db: Session = Depends(_services.get_session), user: models.User = Depends(get_admin)):
+    try:
+        db_plan = crud.get_plan_by_name(db, plan_name)
+        if db_plan is None:
+            return JSONResponse(
+                status_code= 400,
+                content=jsonable_encoder({"detail": "Plan not found!"}),
+            )
+
+        crud.delete_plan(db, plan_name)
+    except Exception as e:
+        return JSONResponse(
+            status_code= 500,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+    return {
+        "detail": "Plan deleted successfully!"
     }

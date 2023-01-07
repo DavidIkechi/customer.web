@@ -517,7 +517,7 @@ def add_plan(db: Session, plan: schema.Plan):
     return db_plan
 
 def get_plan_by_name(db: Session, plan_name: str):
-    return db.query(models.ProductPlan).filter(models.ProductPlan.name == plan_name).first()
+    return db.query(models.ProductPlan).filter(models.ProductPlan.name == plan_name.lower()).first()
 
 
 def store_transaction(db: Session, trans: dict):
@@ -529,7 +529,8 @@ def store_transaction(db: Session, trans: dict):
         time_paid = trans['time_paid'],
         minutes = trans['minutes'],
         payment_type = trans['payment_channel'],
-        email = trans['email_address']
+        email = trans['email_address'],
+        payment_gateway = trans['payment_gateway']
     )
     
     db.add(db_trans)
@@ -588,4 +589,9 @@ def get_all_job_sent(db: Session, job_id: int):
 
 def get_all_job_with_id(db: Session, job_id: int):
     return db.query(models.Job).filter(models.Job.job_id == job_id).all()
+
+def delete_plan(db: Session, plan_name: str):
+    deleted_plan = db.query(models.ProductPlan).filter(models.ProductPlan.name == plan_name.lower()).delete()
+    db.commit()
+    return {"message":"Plan Deleted"}
    
