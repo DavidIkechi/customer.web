@@ -3,10 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: JSON.parse(localStorage.getItem("user")) || null,
   token: sessionStorage.getItem("heedAccessToken") || null,
-  response: {
-    message: "",
-    type: "",
-  },
   isLoading: false,
   navLoading: false,
 };
@@ -24,9 +20,12 @@ const userSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload;
     },
+    setError: (state, action) => {
+      state.error = action.payload;
+    },
   },
 });
 
-export const { setNavLoading, setToken, setUser } = userSlice.actions;
+export const { setNavLoading, setToken, setUser, setError } = userSlice.actions;
 
 export default userSlice.reducer;

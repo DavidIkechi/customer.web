@@ -13,10 +13,14 @@ cron_schedule = Rocketry(config={"task_execution": "async"})
 async def another():
     await cron_status.check_and_update_jobs()  
 
+
 @cron_schedule.task(cron("* * * * *"), execution="main") 
 async def constantly():
     await cron_status.transcription_mail()
 
+@cron_schedule.task(daily)
+async def account_deletion_reminder():
+    await cron_status.due_for_deletion()
       
 if __name__ == "__main__":
     # If this script is run, only Rocketry is run

@@ -65,6 +65,7 @@ const TableData = ({ searchKeyword }) => {
     const audioToInt = recordCheckedList.map((item) => Number(item));
     const params = audioToInt.map((i) => i).join("&audios=");
     dispatch(DeleteAudios(params));
+    handleClose();
   };
 
   const singleDelete = async (id) => {

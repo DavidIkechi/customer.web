@@ -589,4 +589,9 @@ def get_all_job_sent(db: Session, job_id: int):
 
 def get_all_job_with_id(db: Session, job_id: int):
     return db.query(models.Job).filter(models.Job.job_id == job_id).all()
+
+def delete_plan(db: Session, plan_name: str):
+    deleted_plan = db.query(models.ProductPlan).filter(models.ProductPlan.name == plan_name).delete()
+    db.commit()
+    return {"message":"Plan Deleted"}
    
