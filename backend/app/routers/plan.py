@@ -17,7 +17,7 @@ def convert_plan(plan_data: dict, user:models.User, db: Session):
     company = db.query(models.Company).filter(models.Company.id == user.company_id).first()
     old_plan = plan_data["current_plan"]
     balance_time = plan_data["minutes"]
-    if old_plan != "free":
+    if old_plan != "Free":
         initial_plan = crud.get_plan_by_name(db, old_plan)
         initial_plan_price = initial_plan.price
         upgrade_plan = crud.get_plan_by_name(db, plan_data["new_plan"])
