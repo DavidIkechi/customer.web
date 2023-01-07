@@ -5,6 +5,7 @@ import {
   GetTotalRecordings,
 } from "../../../redux/features/audios/service";
 import { LeaderBoard } from "../../../redux/features/agents/service";
+import { TotalAnalysis } from "../../../redux/features/sentiment/service";
 
 const useDashBoardData = () => {
   const [recentRecording, setRecentRecordings] = useState({});
@@ -19,6 +20,9 @@ const useDashBoardData = () => {
     (state) => state.audio.recentRecordings
   );
   const leaderboardData = useSelector((state) => state.agent.leaderboard);
+  const totalAnalysisData = useSelector(
+    (state) => state.sentiment.totalAnalysis
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,8 +31,7 @@ const useDashBoardData = () => {
       setRecentRecordings(recentRecordingData);
 
       //Get Total Anaylsis
-      // const res1 = await ApiService.TotalAnalysis();
-      // setTotalAnalysis(res1.data);
+      setTotalAnalysis(totalAnalysisData);
 
       //Get TotalUserRecordings
       setTotalRecording(totalRecordingData);
@@ -37,12 +40,18 @@ const useDashBoardData = () => {
       setLeaderboard(leaderboardData);
     };
     GetData();
-  }, [totalRecordingData, recentRecordingData, leaderboardData]);
+  }, [
+    totalRecordingData,
+    recentRecordingData,
+    leaderboardData,
+    totalAnalysisData,
+  ]);
 
   useEffect(() => {
     dispatch(GetTotalRecordings());
     dispatch(GetRecentRecordings());
     dispatch(LeaderBoard());
+    dispatch(TotalAnalysis());
   }, [dispatch]);
 
   return { recentRecording, totalAnalysis, totalRecording, leaderboard };

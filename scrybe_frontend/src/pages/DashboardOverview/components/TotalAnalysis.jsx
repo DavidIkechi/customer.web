@@ -52,7 +52,7 @@ const TotalAnalysis = ({ totalAnalysisData }) => {
 
   useEffect(() => {
     if (totalAnalysisData) {
-      setSelectedTotalAnalysis(totalAnalysisData.week);
+      setSelectedTotalAnalysis(totalAnalysisData?.week);
     } else {
       setSelectedTotalAnalysis([]);
     }
@@ -67,9 +67,9 @@ const TotalAnalysis = ({ totalAnalysisData }) => {
   const totalAnalysis = selectedTotalAnalysis?.map(
     (data) => data.positive + data.neutral + data.negative
   );
-  const Positive = selectedTotalAnalysis.map((data) => data.positive);
-  const Neutral = selectedTotalAnalysis.map((data) => data.neutral);
-  const Negative = selectedTotalAnalysis.map((data) => data.negative);
+  const Positive = selectedTotalAnalysis?.map((data) => data?.positive);
+  const Neutral = selectedTotalAnalysis?.map((data) => data?.neutral);
+  const Negative = selectedTotalAnalysis?.map((data) => data?.negative);
   const Total = [Positive, Neutral, Negative];
   const Max = Math.max(...Total);
   const MaxAnalysis = Math.round((Max / totalAnalysis) * 100);
@@ -105,7 +105,7 @@ const TotalAnalysis = ({ totalAnalysisData }) => {
           <option value="month">This month</option>
         </select>
       </div>
-      {selectedTotalAnalysis.length > 0 ? (
+      {selectedTotalAnalysis?.length > 0 ? (
         <div className={styles.total_analysis_chart}>
           <div className={styles.doughnut_chart}>
             <Doughnut options={chartOptions} data={chartData} />
