@@ -60,6 +60,7 @@ async def transcription_mail():
         # get the distinct ids
         distinct_id = unsent.job_id
         job_status = unsent.job_status
+        print(job_status)
         email = unsent.audio.user_audio.email
         user = unsent.audio.user_audio
         # check if the Job is completed.
