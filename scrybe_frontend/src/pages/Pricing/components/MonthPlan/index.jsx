@@ -1,12 +1,12 @@
+import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./monthplans.module.scss";
-import currency from "../../assets/dollar.svg";
 import checkIcon from "../../assets/check.svg";
+import currency from "../../assets/dollar.svg";
 import { monthlyPricing } from "./data";
-import axios from "axios";
+import styles from "./monthplans.module.scss";
 
-function MonthPlans({ monthState }) {
+function MonthPlans() {
   const navigate = useNavigate();
   const token = localStorage.getItem("heedAccessToken");
 
@@ -17,7 +17,7 @@ function MonthPlans({ monthState }) {
     };
     await axios
       .post(
-        "orders",
+        "orders/create_order",
         {
           billing_plan: pricing,
         },
@@ -35,7 +35,7 @@ function MonthPlans({ monthState }) {
     };
     await axios
       .post(
-        "orders",
+        "orders/create_order",
         {
           billing_plan: pricing,
         },
@@ -54,7 +54,7 @@ function MonthPlans({ monthState }) {
     };
     await axios
       .post(
-        "orders",
+        "orders/create_order",
         {
           billing_plan: pricing,
         },
@@ -82,6 +82,7 @@ function MonthPlans({ monthState }) {
 
           return (
             <div
+              key={id}
               className={`${styles.plansCard} ${styles.startUp} ${
                 id === 3 ? styles.enterprise : ""
               }`}
@@ -106,8 +107,8 @@ function MonthPlans({ monthState }) {
               </div>
               <div className={styles.FtnBtn}>
                 <div className={styles.pricingFeatures}>
-                  {features.map((feature) => (
-                    <div className={styles.pricingFeaturesItem}>
+                  {features.map((feature, index) => (
+                    <div className={styles.pricingFeaturesItem} key={index}>
                       <img src={checkIcon} alt="check-mark icon" />
                       <p>{feature}</p>
                     </div>
