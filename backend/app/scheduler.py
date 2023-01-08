@@ -18,10 +18,18 @@ async def another():
 async def constantly():
     await cron_status.transcription_mail()
 
+<<<<<<< HEAD
+    
+@cron_schedule.task("every 2 seconds")
+async def send_free_email():
+    await cron_status.send_free_email()
+
+=======
 @cron_schedule.task(daily)
 async def account_deletion_reminder():
     await cron_status.due_for_deletion()
       
+>>>>>>> 41959ffc903232018266b33b22c2a1c93cf0654a
 if __name__ == "__main__":
     # If this script is run, only Rocketry is run
     cron_schedule.run()

@@ -157,6 +157,7 @@ class FreeTrial(Base):
     email = Column(String(255), index=True)
     transcript_id = Column(String(255), index=True)
     transcript_status = Column(TEXT)
+    mail_sent = Column(Boolean, default=False)
 
 class Newsletter(Base):
     __tablename__ = "newsletter_subscribers"
