@@ -8,7 +8,7 @@ function AnalysisCard({ sentimentData }) {
   if (sentimentData.transcript) {
     try {
       let mostNegative = JSON.parse(sentimentData.most_negative_sentences);
-      let mostPositive = JSON.parse(sentimentData.most_postive_sentences); //there's a typo in the data key coming from the backend
+      let mostPositive = JSON.parse(sentimentData.most_positive_sentences);
       mostNegative = mostNegative.map((item) => {
         item.start = sentimentData.transcript.indexOf(item.sentence);
         item.end = item.start + item.sentence.length;
