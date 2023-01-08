@@ -6,6 +6,7 @@ import os
 
 from emails import transcription_result_email
 from dotenv import load_dotenv
+from datetime import datetime, timedelta
 
 load_dotenv()
 
@@ -85,25 +86,25 @@ def check_and_update_jobs():
 #                     db.commit()
             
         
-async def transcription_mail():
-    users = []
-    job_ids = []
-    db = initialize_db()
-    jobs = crud.get_jobs(db)
-    for job in jobs:
-        if job.job_status == "completed" and (job.mail_sent == False or job.mail_sent is None):
-            users.append(job.audio.user_id)
-            job_ids.append(job.job_id)
+# async def transcription_mail():
+#     users = []
+#     job_ids = []
+#     db = initialize_db()
+#     jobs = crud.get_jobs(db)
+#     for job in jobs:
+#         if job.job_status == "completed" and (job.mail_sent == False or job.mail_sent is None):
+#             users.append(job.audio.user_id)
+#             job_ids.append(job.job_id)
 
-    users = list(set(users))
-    job_ids = list(set(job_ids))
-    for i in users:
-        user = crud.get_user(db, i)
-        await transcription_result_email([user.email], user)
-        for j in job_ids:
-            jobs = crud.get_jobs_by_job_id(db, j)
-            for job in jobs:
-                job.mail_sent = True
-                db.commit()
+#     users = list(set(users))
+#     job_ids = list(set(job_ids))
+#     for i in users:
+#         user = crud.get_user(db, i)
+#         await transcription_result_email([user.email], user)
+#         for j in job_ids:
+#             jobs = crud.get_jobs_by_job_id(db, j)
+#             for job in jobs:
+#                 job.mail_sent = True
+#                 db.commit()
 
 

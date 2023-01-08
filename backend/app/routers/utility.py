@@ -8,7 +8,7 @@ import requests
 import time
 from fastapi import FastAPI, status, Depends, APIRouter,  UploadFile, File, Form, Query, Request, HTTPException
 import pandas as pd
-
+import hashlib, hmac, http
 import os
 
 from dotenv import load_dotenv
@@ -115,9 +115,14 @@ def check_if_audio(files) -> bool:
 def get_length(files) -> int:
     total_length = 0
     for file in files:
-        contents = file.file.read()
+        contents = file.file.read(5242880)
         with open(file.filename, 'wb') as f:
             f.write(contents)
         total_length += audio_details(file.filename)['overall']
     
     return total_length
+
+
+# return a hashed string.
+def generate_signature(secret: bytes, payload: bytes, digest_method = hashlib.sha512):
+    return hmac.new(secret.encode('utf-8'), payload, digest_method).hexdigest()

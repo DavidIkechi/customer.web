@@ -6,15 +6,18 @@ import {
 } from "../../axios/apis/agent";
 import ErrorHandler from "../../axios/Utils/ErrorHandler";
 import { dispatch } from "../../store";
-import { createResponse } from "../../utils/UtilSlice";
+import { createResponse, setLoading } from "../../utils/UtilSlice";
 import { setAgent, setLeaderBoard, setTotalAgentAnaylsis } from "./agentSlice";
 
 export const LeaderBoard = () => async () => {
+  dispatch(setLoading(true));
   try {
     const res = await LeaderBoardApi();
     dispatch(setLeaderBoard(res.data.detail));
+    dispatch(setLoading(false));
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
+    dispatch(setLoading(false));
   }
 };
 
