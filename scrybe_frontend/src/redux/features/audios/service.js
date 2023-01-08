@@ -71,6 +71,7 @@ export const DeleteAudios = (ids) => async () => {
   try {
     const res = await DeleteAudioApi(ids);
     console.log(res);
+    dispatch(GetUserAudios());
     dispatch(
       createResponse({
         type: "Success",

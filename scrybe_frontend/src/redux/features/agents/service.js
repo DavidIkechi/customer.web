@@ -7,7 +7,12 @@ import {
 import ErrorHandler from "../../axios/Utils/ErrorHandler";
 import { dispatch } from "../../store";
 import { createResponse, setLoading } from "../../utils/UtilSlice";
-import { setAgent, setLeaderBoard, setTotalAgentAnaylsis } from "./agentSlice";
+import {
+  setAgent,
+  setAgentDetails,
+  setLeaderBoard,
+  setTotalAgentAnaylsis,
+} from "./agentSlice";
 
 export const LeaderBoard = () => async () => {
   dispatch(setLoading(true));
@@ -21,12 +26,15 @@ export const LeaderBoard = () => async () => {
   }
 };
 
-export const TotalAgentAnalysis = () => async () => {
+export const TotalAgentAnalysis = (id) => async () => {
+  dispatch(setLoading(true));
   try {
-    const res = await TotalAgentAnalysisApi();
+    const res = await TotalAgentAnalysisApi(id);
     dispatch(setTotalAgentAnaylsis(res.data.detail));
+    dispatch(setLoading(false));
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
+    dispatch(setLoading(false));
   }
 };
 
@@ -40,10 +48,13 @@ export const CreateAgent = (data) => async () => {
 };
 
 export const GetAgentDetails = (id) => async () => {
+  dispatch(setLoading(true));
   try {
     const res = await AgentDetailsApi(id);
-    dispatch(setAgent(res.data.detail));
+    dispatch(setAgentDetails(res.data.detail));
+    dispatch(setLoading(false));
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
+    dispatch(setLoading(false));
   }
 };

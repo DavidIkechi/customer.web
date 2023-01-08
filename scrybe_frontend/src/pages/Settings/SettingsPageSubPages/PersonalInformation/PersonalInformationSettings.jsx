@@ -1,26 +1,18 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import BlueEditPen from "../../assets/icons/blue-pencil.png";
-// import BlackEditPen from "../../assets/icons/edit.svg";
-// import ProfilePic from "../../assets/images/Pic.png";
 import RedirectNav from "../../Components/SettingsPageRedirectNav/SettingsPageRedirectNav";
 import PersonalInfo from "./PersonalInformationSettings.module.scss";
-import ErrorHandler from "../../../../helpers/axioshelp/Utils/ErrorHandler";
 import SnackBar from "../../../../components/SnackBar/index";
-import { dispatch } from "../../../../redux/store";
-import { createResponse } from "../../../../redux/utils/UtilSlice";
-import { GetAccount } from "../../../../redux/features/users/service";
 import { useSelector } from "react-redux";
+import { dispatch } from "../../../../redux/store";
+import { UpdateProfile } from "../../../../redux/features/users/service";
 
 const PersonalInformation = () => {
-  const { user } = useSelector((state) => state.user);
+  const { user, updatedUser } = useSelector((state) => state.user);
   const { response } = useSelector((state) => state.util);
   const [accountUser, setAccountUser] = useState();
   const [previewImg, setPreviewImg] = useState(accountUser?.company_logo_url);
-
-  const navigate = useNavigate();
 
   const {
     register,
@@ -31,11 +23,6 @@ const PersonalInformation = () => {
   } = useForm();
 
   const submitCallback = () => {
-    const token = localStorage.getItem("heedAccessToken");
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "multipart/form-data",
-    };
     const data = new FormData();
     if (first_name) {
       data.append("firstname", first_name);
@@ -53,37 +40,19 @@ const PersonalInformation = () => {
       data.append("phone_number", phone_number);
     }
     if (company_image[0]) data.append("image_file", company_image[0]);
-    axios
-      .request({
-        method: "patch",
-        url: "https://api.heed.cx/users/update_profile",
-        data: data,
-        headers,
-      })
-      .then((res) => {
-        if (res.status) {
-          window.scrollTo(0, 0);
-          dispatch(
-            createResponse({
-              type: "Success",
-              message: "Profile Updated Successfully",
-            })
-          );
-          reset();
-          dispatch(GetAccount());
-        }
-      })
-      .catch((err) => {
-        console.log(err.response);
-        dispatch(createResponse(ErrorHandler(err.response)));
-      });
+
+    dispatch(UpdateProfile(data));
   };
 
   useEffect(() => {
     if (user) {
       setAccountUser(user);
     }
-  }, [user]);
+    if (updatedUser) {
+      reset();
+      window.scrollTo(0, 0);
+    }
+  }, [user, updatedUser, reset]);
 
   const first_name = watch("first_name");
   const last_name = watch("last_name");

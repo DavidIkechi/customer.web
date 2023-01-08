@@ -1,28 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-const baseURL = "https://api.heed.hng.tech";
-
-const useReadSentiment = (id) => {
-  const [sentimentData, setSentimentData] = useState({});
-  useEffect(() => {
-    const config = {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
-      },
-    };
-    axios
-      .get(baseURL + `/transcription/${id}`, config)
-      .then((newRes) => {
-        setSentimentData(newRes.data.sentiment_result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  return sentimentData;
-};
 
 const useMockEnd = (id) => {
   const [sentimentData, setSentimentData] = useState({});
@@ -49,4 +26,4 @@ const useMockEnd = (id) => {
   return sentimentData;
 };
 
-export { useReadSentiment, useMockEnd };
+export { useMockEnd };
