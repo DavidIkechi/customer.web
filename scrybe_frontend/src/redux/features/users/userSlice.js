@@ -5,6 +5,8 @@ const initialState = {
   token: sessionStorage.getItem("heedAccessToken") || null,
   isLoading: false,
   navLoading: false,
+  error: null,
+  updatedUser: null,
 };
 
 const userSlice = createSlice({
@@ -23,9 +25,13 @@ const userSlice = createSlice({
     setError: (state, action) => {
       state.error = action.payload;
     },
+    setUpdatedUser: (state, action) => {
+      state.updatedUser = action.payload;
+    },
   },
 });
 
-export const { setNavLoading, setToken, setUser, setError } = userSlice.actions;
+export const { setNavLoading, setToken, setUser, setError, setUpdatedUser } =
+  userSlice.actions;
 
 export default userSlice.reducer;

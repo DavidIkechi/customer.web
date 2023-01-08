@@ -11,3 +11,11 @@ export const GoogleSignInApi = async (email) => {
 export const AccountApi = async () => {
   return api.get(`users/account`);
 };
+
+export const UpdateUserApi = async (data) => {
+  return api.patch(`users/update_profile`, data);
+};
+
+export const ChangePasswordApi = async (data) => {
+  return api.patch(`users/change-password`, data);
+};
