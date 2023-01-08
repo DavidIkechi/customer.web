@@ -18,6 +18,7 @@ from emails import send_email, verify_token, send_password_reset_email, password
 
 from paystackapi.paystack import Paystack
 from paystackapi.charge import Charge
+from datetime import datetime
 
 import stripe, json
 from . import utility
@@ -97,12 +98,16 @@ async def verify_order(ref_code: str, db: Session = Depends(_services.get_sessio
             
         veri = paystack.transaction().verify(reference = ref_code)
         get_status = veri['data']
+        get_date = get_status['paid_at'].split("T")
+        conv_date = get_date[1].split(".")[0]
+        new_date1 = get_date[0] + " " + conv_date
+        new_date2 = datetime.strptime(new_date1, "%Y-%m-%d %H:%M:%S"))
         transaction = {"amount": get_status['amount']/100,
                        "trans_id": str(get_status['id']),
                        "reference": get_status['reference'],
                        "minutes": get_status['metadata']['minutes'],
                        "plan": get_status['metadata']['plan'],
-                       "time_paid": get_status['paid_at'],
+                       "time_paid": new_date2,
                        "payment_channel": get_status['channel'],
                        "email_address": user.email,
                        "payment_gateway": "Paystack"
@@ -168,16 +173,20 @@ async def heed_webhook_view(request: Request, db: Session = Depends(_services.ge
 
     # get all the data need.
     get_status = get_data['data']
+    get_date = get_status['paid_at'].split("T")
+    conv_date = get_date[1].split(".")[0]
+    new_date1 = get_date[0] + " " + conv_date
+    new_date2 = datetime.strptime(new_date1, "%Y-%m-%d %H:%M:%S"))
     transaction = {"amount": get_status['amount']/100,
-                "trans_id": str(get_status['id']),
-                "reference": get_status['reference'],
-                "minutes": get_status['metadata']['minutes'],
-                "plan": get_status['metadata']['plan'],
-                "time_paid": get_status['paid_at'],
-                "payment_channel": get_status['channel'],
-                "email_address": get_status['customer']['email'],
-                "payment_gateway": "Paystack"
-            }
+                   "trans_id": str(get_status['id']),
+                   "reference": get_status['reference'],
+                   "minutes": get_status['metadata']['minutes'],
+                   "plan": get_status['metadata']['plan'],
+                   "time_paid": new_date2,
+                   "payment_channel": get_status['channel'],
+                   "email_address": user.email,
+                   "payment_gateway": "Paystack"
+                }
     user = crud.get_user_by_email(db, email=transaction['email_address'])
     email = transaction['email_address']
     if check_trans is not None:
