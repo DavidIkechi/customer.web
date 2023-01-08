@@ -101,7 +101,7 @@ async def verify_order(ref_code: str, db: Session = Depends(_services.get_sessio
         get_date = get_status['paid_at'].split("T")
         conv_date = get_date[1].split(".")[0]
         new_date1 = get_date[0] + " " + conv_date
-        new_date2 = datetime.strptime(new_date1, "%Y-%m-%d %H:%M:%S"))
+        new_date2 = datetime.strptime(new_date1, "%Y-%m-%d %H:%M:%S")
         transaction = {"amount": get_status['amount']/100,
                        "trans_id": str(get_status['id']),
                        "reference": get_status['reference'],
@@ -176,7 +176,7 @@ async def heed_webhook_view(request: Request, db: Session = Depends(_services.ge
     get_date = get_status['paid_at'].split("T")
     conv_date = get_date[1].split(".")[0]
     new_date1 = get_date[0] + " " + conv_date
-    new_date2 = datetime.strptime(new_date1, "%Y-%m-%d %H:%M:%S"))
+    new_date2 = datetime.strptime(new_date1, "%Y-%m-%d %H:%M:%S")
     transaction = {"amount": get_status['amount']/100,
                    "trans_id": str(get_status['id']),
                    "reference": get_status['reference'],
