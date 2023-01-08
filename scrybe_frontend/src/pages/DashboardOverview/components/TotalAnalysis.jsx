@@ -26,11 +26,11 @@ const TotalAnalysis = ({ totalAnalysisData }) => {
       labels: "",
       datasets: [
         {
-          label: selectedTotalAnalysis.map((data) => data.positive),
+          label: selectedTotalAnalysis?.map((data) => data?.positive),
           data: [
-            selectedTotalAnalysis.map((data) => data.positive),
-            selectedTotalAnalysis.map((data) => data.neutral),
-            selectedTotalAnalysis.map((data) => data.negative),
+            selectedTotalAnalysis?.map((data) => data?.positive),
+            selectedTotalAnalysis?.map((data) => data?.neutral),
+            selectedTotalAnalysis?.map((data) => data?.negative),
           ],
           backgroundColor: ["#76C86F", "#FFCE54", "#FF7589"],
           borderWidth: 0,
@@ -61,8 +61,6 @@ const TotalAnalysis = ({ totalAnalysisData }) => {
   function analysisTimeStampFunc(e) {
     setSelectedTotalAnalysis(totalAnalysisData[e.target.value]);
   }
-  // console.log("d", selectedTotalAnalysis);
-  // console.log("ff", Object.keys(selectedTotalAnalysis));
 
   const totalAnalysis = selectedTotalAnalysis?.map(
     (data) => data.positive + data.neutral + data.negative

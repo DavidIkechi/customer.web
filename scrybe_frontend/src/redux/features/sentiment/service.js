@@ -20,7 +20,7 @@ export const Download = (id) => async () => {
 export const TotalAnalysis = () => async () => {
   try {
     const res = await TotalAnalysisApi();
-    dispatch(setTotalAnaylsis(res.data));
+    dispatch(setTotalAnaylsis(res.data.detail));
     // console.log(res.data);
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
