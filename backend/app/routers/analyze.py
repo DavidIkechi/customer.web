@@ -14,7 +14,6 @@ from auth import (
 from emails import *
 from . import utility as utils
 import auth
-from . import utility as utils
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 import os
@@ -299,7 +298,6 @@ async def free_trial(email: str = Form(), db : Session = Depends(_services.get_s
         duration = audio_details(file.filename)
         audio_time = str(duration['hours'])+":"+ str(duration['mins'])+":"+ str(duration['secs'])
 
-        
         if email_check:
             os.unlink(file.filename)
             return JSONResponse(
@@ -339,7 +337,7 @@ async def free_trial(email: str = Form(), db : Session = Depends(_services.get_s
 
             db_result = models.FreeTrial(transcript_id=transcript_id, transcript_status=audio_list, email=email)
             
-           
+        
             db.add(db_result)
             db.commit()
             db.refresh(db_result)

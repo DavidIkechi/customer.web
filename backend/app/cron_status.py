@@ -6,7 +6,9 @@ import os
 
 from emails import transcription_result_email, send_freeTrial_email
 from dotenv import load_dotenv
+
 from routers.transcribe import get_transcript_result
+from datetime import datetime, timedelta
 
 load_dotenv()
 
@@ -72,7 +74,6 @@ async def transcription_mail():
         # check if all the jobs with the id have mail sent.
         if len(crud.get_all_job_sent(db, distinct_id)) == len(crud.get_all_job_with_id(db, distinct_id)):
             await transcription_result_email([email], user)
-
             
 
 async def send_free_email():
@@ -110,4 +111,13 @@ async def send_free_email():
                 db.commit()
                 db.refresh(transcript)
         
-        
+
+def due_for_deletion():
+    db = initialize_db()
+    users = crud.get_users(db)
+    for user in users:
+        if user.is_deactivated == True and user.deactivated_at is not None:
+            deactivated_days = datetime.now() - user.deactivated_at
+            if deactivated_days >=30:
+                user.is_due_for_deletion = True
+                db.commit()

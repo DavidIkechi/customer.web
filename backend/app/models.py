@@ -34,6 +34,7 @@ class User(Base):
     created_at = Column(DateTime(timezone=True), default=datetime.now())
     is_deactivated = Column(Boolean, default=False)
     deactivated_at = Column(DateTime(timezone=True), default=datetime.now())
+    is_due_for_deletion = Column(Boolean, default=False)
     
     company = relationship("Company", back_populates="user")
     user = relationship("Audio", uselist=False, back_populates="user_audio")
@@ -185,6 +186,7 @@ class PaymentHistory(Base):
     minutes = Column(Integer, index = True)
     payment_type = Column(String(255), nullable= True)
     email = Column(String(255), nullable= True)
+    payment_gateway = Column(String(255), nullable=False)
     
     
    
