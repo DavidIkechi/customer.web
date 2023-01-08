@@ -2,7 +2,6 @@ import axios from "axios";
 import { RefreshToken } from "./Utils/RefreshToken";
 
 const headers = {
-  "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Credentials": true,
   "content-type": "Application/json",
 };

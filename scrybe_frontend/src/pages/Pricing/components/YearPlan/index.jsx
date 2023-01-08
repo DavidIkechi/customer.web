@@ -1,23 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import styles from "./yearplans.module.scss";
+import checkIcon from "../../assets/check.svg";
 import currency from "../../assets/naira.svg";
 import startUpIcon from "../../assets/star.svg";
-import growingIcon from "../../assets/auto_graph.svg";
-import enterpriseIcon from "../../assets/corporate_fare.svg";
-import checkIcon from "../../assets/check.svg";
 import { yearlyPricing } from "./data";
+import styles from "./yearplans.module.scss";
 
 function YearPlans({ yearState }) {
   return (
     <div className={`${styles.year}`}>
       <div className={`${styles.plans}`}>
         {yearlyPricing.map((data) => {
-          const { id, title, pricing, headDescription, duration, features } =
-            data;
+          const { id, title, pricing, headDescription, features } = data;
 
           return (
             <div
+              key={id}
               className={`${styles.plansCard} ${styles.startUp} ${
                 id === 3 ? styles.enterprise : ""
               }`}
@@ -42,8 +39,8 @@ function YearPlans({ yearState }) {
               </div>
               <div className={styles.FtnBtn}>
                 <div className={styles.pricingFeatures}>
-                  {features.map((feature) => (
-                    <div className={styles.pricingFeaturesItem}>
+                  {features.map((feature, index) => (
+                    <div className={styles.pricingFeaturesItem} key={index}>
                       <img src={checkIcon} alt="check-mark icon" />
                       <p>{feature}</p>
                     </div>
