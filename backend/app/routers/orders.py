@@ -184,7 +184,7 @@ async def heed_webhook_view(request: Request, db: Session = Depends(_services.ge
                    "plan": get_status['metadata']['plan'],
                    "time_paid": new_date2,
                    "payment_channel": get_status['channel'],
-                   "email_address": user.email,
+                   "email_address": get_status['customer']['email'],
                    "payment_gateway": "Paystack"
                 }
     user = crud.get_user_by_email(db, email=transaction['email_address'])
