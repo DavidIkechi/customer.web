@@ -154,74 +154,74 @@ async def verify_order(ref_code: str, db: Session = Depends(_services.get_sessio
 async def heed_webhook_view(request: Request, db: Session = Depends(_services.get_session)):
     paystack_secret = os.getenv('PAYSTACK_SECRET_KEY')
 
-    #     try:
-    payload = await request.body()
-    # get the header
-    paystack_header = request.headers.get('x-paystack-signature')
-    # convert data to dictionary.
-    get_data = json.loads(payload.decode('utf-8'))
-    signature = utility.generate_signature(paystack_secret, payload)
-    if signature != paystack_header:
+    try:
+        payload = await request.body()
+        # get the header
+        paystack_header = request.headers.get('x-paystack-signature')
+        # convert data to dictionary.
+        get_data = json.loads(payload.decode('utf-8'))
+        signature = utility.generate_signature(paystack_secret, payload)
+        if signature != paystack_header:
+            return JSONResponse(
+                status_code= 401,
+                content=jsonable_encoder({"detail": "Authentication error"}),
+            )
+
+        # get the reference
+        ref_code = get_data['data']['reference']
+        check_trans = crud.check_transaction(db, ref_code)
+
+        # get all the data need.
+        get_status = get_data['data']
+        get_date = get_status['paid_at'].split("T")
+        conv_date = get_date[1].split(".")[0]
+        new_date1 = get_date[0] + " " + conv_date
+        new_date2 = datetime.strptime(new_date1, "%Y-%m-%d %H:%M:%S")
+        transaction = {"amount": get_status['amount']/100,
+                       "trans_id": str(get_status['id']),
+                       "reference": get_status['reference'],
+                       "minutes": get_status['metadata']['minutes'],
+                       "plan": get_status['metadata']['plan'],
+                       "time_paid": new_date2,
+                       "payment_channel": get_status['channel'],
+                       "email_address": get_status['customer']['email'],
+                       "payment_gateway": "Paystack"
+                    }
+        user = crud.get_user_by_email(db, email=transaction['email_address'])
+        email = transaction['email_address']
+        if check_trans is not None:
+            return {"detail": transaction}
+
+        if get_data['event'] == "charge.success":
+            # store in the crud database.
+            trans_crud = crud.store_transaction(db, transaction)
+            top_up_details = {"minutes": get_status['metadata']['minutes'],
+                        "plan": get_status['metadata']['plan']}
+            # top up the users account
+            top_up = crud.top_up(db,user.email, top_up_details)
+            # send a mail receipt
+            await send_successful_payment_email([email], user, 
+                                                plan=transaction['plan'], 
+                                                minutes=transaction['minutes'], 
+                                                price=transaction['amount'])
+
+            # get the transaction details
+        else:
+            # an error must have occurred, send error mail.
+            await send_failed_payment_email([email], user, 
+                                                plan=transaction['plan'], 
+                                                minutes=transaction['minutes'], 
+                                                price=transaction['amount'])
+            return JSONResponse(
+                status_code= 404,
+                content=jsonable_encoder({"detail": "Transaction failed!."}),
+            )
+
+    except Exception as e:
         return JSONResponse(
-            status_code= 401,
-            content=jsonable_encoder({"detail": "Authentication error"}),
-        )
-
-    # get the reference
-    ref_code = get_data['data']['reference']
-    check_trans = crud.check_transaction(db, ref_code)
-
-    # get all the data need.
-    get_status = get_data['data']
-    get_date = get_status['paid_at'].split("T")
-    conv_date = get_date[1].split(".")[0]
-    new_date1 = get_date[0] + " " + conv_date
-    new_date2 = datetime.strptime(new_date1, "%Y-%m-%d %H:%M:%S")
-    transaction = {"amount": get_status['amount']/100,
-                   "trans_id": str(get_status['id']),
-                   "reference": get_status['reference'],
-                   "minutes": get_status['metadata']['minutes'],
-                   "plan": get_status['metadata']['plan'],
-                   "time_paid": new_date2,
-                   "payment_channel": get_status['channel'],
-                   "email_address": get_status['customer']['email'],
-                   "payment_gateway": "Paystack"
-                }
-    user = crud.get_user_by_email(db, email=transaction['email_address'])
-    email = transaction['email_address']
-    if check_trans is not None:
-        return {"detail": transaction}
-
-    if get_data['event'] == "charge.success":
-        # store in the crud database.
-        trans_crud = crud.store_transaction(db, transaction)
-        top_up_details = {"minutes": get_status['metadata']['minutes'],
-                    "plan": get_status['metadata']['plan']}
-        # top up the users account
-        top_up = crud.top_up(db,user.email, top_up_details)
-        # send a mail receipt
-        await send_successful_payment_email([email], user, 
-                                            plan=transaction['plan'], 
-                                            minutes=transaction['minutes'], 
-                                            price=transaction['amount'])
-
-        # get the transaction details
-    else:
-        # an error must have occurred, send error mail.
-        await send_failed_payment_email([email], user, 
-                                            plan=transaction['plan'], 
-                                            minutes=transaction['minutes'], 
-                                            price=transaction['amount'])
-        return JSONResponse(
-            status_code= 404,
-            content=jsonable_encoder({"detail": "Transaction failed!."}),
-        )
-            
-    #     except Exception as e:
-    #         return JSONResponse(
-    #             status_code= 500,
-    #             content=jsonable_encoder({"detail": str(e)}),
-    #         ) 
+            status_code= 500,
+            content=jsonable_encoder({"detail": str(e)}),
+        ) 
      
         
     return {
