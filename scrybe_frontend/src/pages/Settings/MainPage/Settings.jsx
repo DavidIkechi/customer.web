@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import ChevronRight from "../assets/icons/chevron-right.svg";
 // import ProfilePic from "../assets/images/Pic.png";
 import Overlay from "../Components/SettingsPageOverlay/SettingsPageOverlay";
@@ -38,9 +37,6 @@ const MainPage = () => {
   const [accountUser, setAccountUser] = React.useState();
 
   const [showModal, setShowModal] = React.useState(false);
-  const [toggleSidebar, setToggleSidebar] = React.useState(false);
-
-  const navigate = useNavigate();
 
   const togglePage = (page) => {
     if (page === "Personal information") {

@@ -1,9 +1,9 @@
 import api from "../axios";
 
 export const GetTranscriptionApi = (id) => {
-  return api.get(`transciption/${id}`);
+  return api.get(`transcription/${id}`);
 };
 
 export const GetTransciptApi = (id) => {
-  return api.get(`transciption/get_transcript/${id}`);
+  return api.get(`transcription/get_transcript/${id}`);
 };

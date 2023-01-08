@@ -36,7 +36,8 @@ const TableData = ({ searchKeyword }) => {
 
   useEffect(() => {
     dispatch(GetUserAudios());
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getChecked = (e) => {
     let checkedList = [...recordCheckedList];
@@ -55,7 +56,6 @@ const TableData = ({ searchKeyword }) => {
     setOpenDeletePopup(false);
     setRecordCheckedList([]);
     setOpenModal(false);
-    dispatch(GetUserAudios());
   };
   const deleteBulkRecordings = async () => {
     const audioToInt = recordCheckedList.map((item) => Number(item));
@@ -66,7 +66,6 @@ const TableData = ({ searchKeyword }) => {
 
   const singleDelete = async (id) => {
     dispatch(DeleteAudios(id));
-    dispatch(GetUserAudios());
   };
 
   const allRecordingsProcessed = () => {

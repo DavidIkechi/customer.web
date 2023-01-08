@@ -5,6 +5,8 @@ import Footer from "../../../../components/Footer";
 import RedirectNav from "../../Components/SettingsPageRedirectNav/SettingsPageRedirectNav";
 import AccountPageCss from "./AccountSettings.module.scss";
 import axios from "axios";
+import { dispatch } from "../../../../redux/store";
+import { ChangePassword } from "../../../../redux/features/users/service";
 
 const AccountSettings = () => {
   const currentDate = new Date().toLocaleDateString("en-GB");
@@ -16,30 +18,13 @@ const AccountSettings = () => {
     formState: { errors },
   } = useForm();
 
-  const baseUrl = "https://api.heed.hng.tech";
   const submitCallback = () => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
-        Accept: "application/json",
-      },
+    console.log("hey");
+    const data = {
+      old_password: old_password,
+      new_password: new_password,
     };
-    axios
-      .patch(baseUrl + "/change-password", config, {
-        old_password: old_password,
-        new_password: new_password,
-      })
-      .then((res) => {
-        /* TODO:
-          - Display a success modal if server returns 200
-          - Designer is currently working on the modal
-        */
-        if (res.status >= 200 && res.status < 300)
-          console.log("Password reset successful", res.data);
-      })
-      .catch((err) => {
-        console.log("Server returned the following error", err);
-      });
+    dispatch(ChangePassword(data));
   };
 
   // Watch event for disable button
