@@ -6,6 +6,7 @@ import {
 import ErrorHandler from "../../axios/Utils/ErrorHandler";
 import { dispatch } from "../../store";
 import { createResponse } from "../../utils/UtilSlice";
+import { setTotalAnaylsis } from "./sentimentSlice";
 
 export const Download = (id) => async () => {
   try {
@@ -19,7 +20,8 @@ export const Download = (id) => async () => {
 export const TotalAnalysis = () => async () => {
   try {
     const res = await TotalAnalysisApi();
-    console.log(res);
+    dispatch(setTotalAnaylsis(res.data.detail));
+    // console.log(res.data);
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
   }

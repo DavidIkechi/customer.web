@@ -5,8 +5,8 @@ import analyzeReducer from "./features/analyze/analyzeSlice";
 import audioReducer from "./features/audios/audioSlice";
 import orderReducer from "./features/orders/orderSlice";
 import transcriptionReducer from "./features/transcriptions/transcriptionSlice";
-import sentimentReducer from "./features/sentiment/sentimentSlice";
 import utilReducer from "./utils/UtilSlice";
+import sentimentReducer from "./features/sentiment/sentimentSlice";
 
 const store = configureStore({
   reducer: {
@@ -16,8 +16,8 @@ const store = configureStore({
     audio: audioReducer,
     order: orderReducer,
     transcription: transcriptionReducer,
-    sentiment: sentimentReducer,
     util: utilReducer,
+    sentiment: sentimentReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
   devTools: true,
