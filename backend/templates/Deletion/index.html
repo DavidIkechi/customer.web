@@ -15,7 +15,8 @@
     }
     .body{
         background-color: #f7f7f7;
-        padding:30px 16px
+        padding:30px 16px;
+        height:100vh
     }
     .main {
       padding-left: 40px;
@@ -84,9 +85,21 @@
     h1{
       margin-bottom: 15px;
     }
+    .delete{
+      color:#f32013
+    }
+    @media screen and (max-width:710px){
+      .body{
+        padding: 0;
+        height: unset;
+      }
+      .logo img{
+          max-width:70%
+      }
+    }
     @media screen and (max-width:375px){
       h1{
-        font-size: 8vw;
+        font-size: 7vw;
       }
     }
   </style>
@@ -108,14 +121,15 @@
           class="mail"
         />
         <h5 class="no-wrap">Hello {{firstname}},</h5>
-        <h1>Account Deletion</h1>
+        <h1>Account <span class="delete">Deletion</span></h1>
         <p>
-          This email confirms that your account has been successfully deleted. We are sorry that you have decided to move on.
+          Your account has been successfully deleted and your login credentials no longer exist.         
         </p>
         <p>You do not have an account with us anymore. Your login credentials no longer exists, so we can no longer offer you our services.
         </p>
         <p>
-          Visit our <a href="mailto:info@heed.cx">Help Centre</a> for more info or reach out to our <a href="mailto:support@heed.cx">Support team</a>.
+          For more information, visit our <a href="mailto:info@heed.cx">Help Centre</a> or contact our 
+          <a href="mailto:support@heed.cx">Support team</a>.
         </p>
       <div class="copyright">
         <p><span class="copy">©</span> Copyright 2022 | Heed</p>

@@ -15,7 +15,8 @@
     }
     .body{
       background-color: #f7f7f7;
-      padding:30px 8px
+      padding:30px 8px;
+      height:100vh
     }
     .main {
       padding-inline: 40px;
@@ -62,6 +63,7 @@
     .message a {
       color: #006CFF;
       text-decoration: none;
+      line-height: 30px;
     }
     .copy {
       font-size: 16px;
@@ -83,9 +85,21 @@
     h1{
       margin-bottom: 15px;
     }
+    .deactivate{
+      color:#f32013
+    }
+    @media screen and (max-width:710px){
+      .body{
+        padding: 0;
+        height: unset;
+      }
+      .logo img{
+          max-width:70%
+      }
+    }
     @media screen and (max-width:375px){
       h1{
-        font-size: 8vw;
+        font-size: 7vw;
       }
     }
   </style>
@@ -107,16 +121,16 @@
           class="mail"
         />
         <h5 class="no-wrap">Hello {{firstname}},</h5>
-        <h1>Account Deactivation</h1>
+        <h1>Account <span class="deactivate">Deactivation</span></h1>
         <p>
           You recently requested to delete your account.
           Your account will be deactivated for 30days, during which time you can reactivate it.
         </p>
         <p>
-          If this was a mistake or you are having second thoughts, please reply to let us know.
+          If you want to reactivate it during this time, please reply. 
         </p>
         <p>
-          If you need help retaining your account, please don't hesitate to contact our
+          If you need help retaining your account, contact our
            <a href="mailto:support@heed.cx">Support team</a> or visit our <a href ="mailto:info@heed.cx">Help Centre</a> for more information.
         </p>
       <div class="copyright">
