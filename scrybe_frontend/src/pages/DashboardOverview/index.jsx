@@ -12,7 +12,13 @@ function DashboardOverview() {
   const { recentRecording, totalAnalysis, totalRecording, leaderboard } =
     useDashBoardData();
 
-  const { isLoading } = useSelector((state) => state.util);
+  const { isLoading, searchQuery } = useSelector((state) => state.util);
+
+  const searchDashboard = (search) => {
+    return search.filter((item) =>
+      item?.filename?.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  };
 
   return (
     <section className={styles.dashboard_overview}>
@@ -25,7 +31,10 @@ function DashboardOverview() {
             <TotalAnalysis totalAnalysisData={totalAnalysis} />
             <LeaderBoard LeaderboardData={leaderboard} />
           </div>
-          <RecentRecording recentRecording={recentRecording} />
+          <RecentRecording
+            recentRecording={recentRecording}
+            searchDashboard={searchDashboard}
+          />
         </>
       )}
     </section>

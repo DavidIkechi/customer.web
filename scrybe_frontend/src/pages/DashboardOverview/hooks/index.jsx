@@ -8,10 +8,10 @@ import { LeaderBoard } from "../../../redux/features/agents/service";
 import { TotalAnalysis } from "../../../redux/features/sentiment/service";
 
 const useDashBoardData = () => {
-  const [recentRecording, setRecentRecordings] = useState({});
+  const [recentRecording, setRecentRecordings] = useState([]);
   const [totalAnalysis, setTotalAnalysis] = useState(null);
   const [totalRecording, setTotalRecording] = useState(null);
-  const [leaderboard, setLeaderboard] = useState({});
+  const [leaderboard, setLeaderboard] = useState([]);
 
   const totalRecordingData = useSelector(
     (state) => state.audio.totalRecordings

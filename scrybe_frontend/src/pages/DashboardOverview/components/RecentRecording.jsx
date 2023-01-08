@@ -6,12 +6,12 @@ import upload from "../assets/upload.svg";
 import empty_state from "../assets/empty_state.png";
 import Modal from "../../../components/Modal";
 
-const RecentRecording = ({ recentRecording }) => {
+const RecentRecording = ({ recentRecording, searchDashboard }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <>
-      {recentRecording?.length > 0 ? (
+      {searchDashboard(recentRecording)?.length > 0 ? (
         <table className={styles.recent_recordings}>
           <caption>Recent recordings </caption>
           <thead>
@@ -28,7 +28,7 @@ const RecentRecording = ({ recentRecording }) => {
             </tr>
           </thead>
           <tbody>
-            {recentRecording?.map((data, index) => {
+            {searchDashboard(recentRecording)?.map((data, index) => {
               return (
                 <tr key={index + 2}>
                   <td>
