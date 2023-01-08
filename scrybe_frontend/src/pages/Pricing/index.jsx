@@ -2,8 +2,8 @@ import React from "react";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Pricing.module.scss";
-import YearPlans from "./components/YearPlan/yearPlans";
-import MonthPlans from "./components/MonthPlan/monthPlans";
+import YearPlans from "./components/YearPlan";
+import MonthPlans from "./components/MonthPlan";
 
 function Pricing() {
   const plansRef = useRef();
@@ -52,14 +52,12 @@ function Pricing() {
               <img
                 src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/heroimage_1_znov39.webp"
                 alt=""
-                srcSet=""
               />
             </div>
           </div>
           <img
             src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584782/Sectionbottom_aunogb.webp"
             alt=""
-            srcset=""
             className={styles.curves}
           />
         </div>
@@ -94,8 +92,8 @@ function Pricing() {
           </div> */}
         </div>
         <div>
-          <div>{showMonth && <MonthPlans monthState={true} />}</div>
-          <div>{showYear && <YearPlans yearState={false} />}</div>
+          <div>{showMonth && <MonthPlans />}</div>
+          {/* <div>{showYear && <YearPlans yearState={false} />}</div> */}
         </div>
 
         <div className={styles.features}>
