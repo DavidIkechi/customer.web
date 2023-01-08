@@ -5,6 +5,7 @@ import analyzeReducer from "./features/analyze/analyzeSlice";
 import audioReducer from "./features/audios/audioSlice";
 import orderReducer from "./features/orders/orderSlice";
 import transcriptionReducer from "./features/transcriptions/transcriptionSlice";
+import sentimentReducer from "./features/sentiment/sentimentSlice";
 import utilReducer from "./utils/UtilSlice";
 import sentimentReducer from "./features/sentiment/sentimentSlice";
 
@@ -15,7 +16,8 @@ const store = configureStore({
     analyze: analyzeReducer,
     audio: audioReducer,
     order: orderReducer,
-    transciption: transcriptionReducer,
+    transcription: transcriptionReducer,
+    sentiment: sentimentReducer,
     util: utilReducer,
     sentiment: sentimentReducer,
   },
