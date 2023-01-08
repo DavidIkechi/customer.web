@@ -55,6 +55,7 @@ async def transcription_mail():
     db = initialize_db()
     # get all unsent mails.
     all_unsent = crud.get_all_unsent(db)
+    print(len(all_unsent))
     for unsent in all_unsent:
         # get the distinct ids
         distinct_id = unsent.job_id
