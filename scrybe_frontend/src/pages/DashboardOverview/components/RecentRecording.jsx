@@ -1,20 +1,17 @@
 import React, { useState } from "react";
-// import { useEffect } from "react";
-// import { Link } from "react-router-dom";
+import { shortenfilename } from "../../UploadedRecordings/TableData/shortenFileLen";
 import styles from "../DashboardOverview.module.scss";
 import toneWave from "../assets/tone_wave.svg";
 import upload from "../assets/upload.svg";
 import empty_state from "../assets/empty_state.png";
 import Modal from "../../../components/Modal";
 
-const RecentRecording = ({ recentRecording }) => {
+const RecentRecording = ({ recentRecording, searchDashboard }) => {
   const [modalOpen, setModalOpen] = useState(false);
-  // console.log(recentRecording[0]);
-  // const date = recentRecording.map((data) => data.timestamp);
-  // console.log(date);
+
   return (
     <>
-      {recentRecording?.length > 0 ? (
+      {searchDashboard(recentRecording)?.length > 0 ? (
         <table className={styles.recent_recordings}>
           <caption>Recent recordings </caption>
           <thead>
@@ -31,22 +28,25 @@ const RecentRecording = ({ recentRecording }) => {
             </tr>
           </thead>
           <tbody>
-            {recentRecording &&
-              recentRecording?.map((data, index) => (
+            {searchDashboard(recentRecording)?.map((data, index) => {
+              return (
                 <tr key={index + 2}>
                   <td>
                     <img src={toneWave} alt="tone wave" />
                   </td>
-                  <td style={{ textAlign: "left" }}>{data.filename}</td>
-                  <td>{data.duration} mins</td>
-                  <td>{data.size} mb</td>
+                  <td style={{ textAlign: "left" }}>
+                    {shortenfilename(data?.filename)}
+                  </td>
+                  <td>{data?.duration} mins</td>
+                  <td>{data?.size} mb</td>
                   <td>
-                    {data.timestamp.charAt(11) === "0"
-                      ? data.timestamp.replace("T0", " ")
-                      : data.timestamp.replace("T", " ")}
+                    {data?.timestamp.charAt(11) === "0"
+                      ? data?.timestamp.replace("T0", " ")
+                      : data?.timestamp.replace("T", " ")}
                   </td>
                 </tr>
-              ))}
+              );
+            })}
           </tbody>
         </table>
       ) : (
