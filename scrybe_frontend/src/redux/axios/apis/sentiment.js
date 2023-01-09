@@ -8,7 +8,7 @@ export const DownloadApi = (id) => {
 };
 
 export const TotalAnalysisApi = () => {
-  return api.get(`sentiments/total_analysis`);
+  return api.get(`/sentiments/total-analysis`);
 };
 
 export const GetAnaylsisApi = (id) => {

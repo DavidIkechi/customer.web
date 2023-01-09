@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   transcipt: null,
-  transcription: null,
+  transcription: {},
 };
 
 const transciptionSlice = createSlice({

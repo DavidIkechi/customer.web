@@ -50,11 +50,14 @@ export const GetAudioSentiment = (id) => async () => {
 };
 
 export const GetRecentRecordings = () => async () => {
+  dispatch(setLoading(true));
   try {
     const res = await RecentRecordingsApi();
     dispatch(setRecentRecordings(res.data.detail));
+    dispatch(setLoading(false));
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
+    dispatch(setLoading(false));
   }
 };
 
@@ -71,6 +74,7 @@ export const DeleteAudios = (ids) => async () => {
   try {
     const res = await DeleteAudioApi(ids);
     console.log(res);
+    dispatch(GetUserAudios());
     dispatch(
       createResponse({
         type: "Success",

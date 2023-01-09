@@ -14,7 +14,6 @@ from auth import (
 from emails import *
 from . import utility as utils
 import auth
-from . import utility as utils
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 import os
@@ -27,8 +26,8 @@ from routers.transcribe import transcribe_file
 from jwt import main_login, get_access_token, verify_password, refresh
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from emails import send_email, verify_token, send_password_reset_email, password_verif_token, send_freeTrial_email
-from datetime import datetime, date
 
+from routers.sentiment_utility import sentiment, sentiment_assembly
 
 analyze_router = APIRouter(
     prefix='/analyse',
@@ -290,21 +289,34 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), background_
 async def free_trial(email: str = Form(), db : Session = Depends(_services.get_session), file: UploadFile = File(...)):
     try:
         email_lower = email.lower()
+        # checking if the mail address is professional
+        if utils.check_if_professional(email_lower) > 0:
+            return JSONResponse(
+                status_code= 400,
+                content=jsonable_encoder({"detail": "Please enter a valid Professional email address"})
+            )
+            
+        if not utils.validate_and_verify_email(email_lower):
+            return JSONResponse(
+                status_code= 400,
+                content=jsonable_encoder({"detail": "Sorry, we could not verify your email address, try again or enter a valid email address!"})
+            )
+            
         email_check = crud.free_user_by_email(db, email=email_lower)
         with open(f'{file.filename}', "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
+            
         fileSize = 5242880 / 1048576
         getSize = Path(file.filename).stat().st_size / 1048576
         time = str(0)+":"+str(3)+":"+str(0)
         duration = audio_details(file.filename)
         audio_time = str(duration['hours'])+":"+ str(duration['mins'])+":"+ str(duration['secs'])
 
-        
         if email_check:
             os.unlink(file.filename)
             return JSONResponse(
-            status_code= 400,
-            content=jsonable_encoder({"detail": "Email Has Been Used For Free Trial Before, Please Sign Up For Our Paid Plan."})
+                status_code= 400,
+                content=jsonable_encoder({"detail": "Email Has already Been Used For Free Trial, Please Sign Up For Our Paid Plan."})
             )
         if getSize > fileSize:
             os.unlink(file.filename)
@@ -339,7 +351,7 @@ async def free_trial(email: str = Form(), db : Session = Depends(_services.get_s
 
             db_result = models.FreeTrial(transcript_id=transcript_id, transcript_status=audio_list, email=email)
             
-           
+        
             db.add(db_result)
             db.commit()
             db.refresh(db_result)
@@ -359,3 +371,5 @@ async def free_trial(email: str = Form(), db : Session = Depends(_services.get_s
             "file_size": status_break[2]
         }
     }
+
+

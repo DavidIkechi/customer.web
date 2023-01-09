@@ -140,6 +140,10 @@ def get_freeaudio(db: Session, audio_id: int):
 
 def get_freetrial(db: Session, id: int):
     return db.query(models.FreeTrial).filter(models.FreeTrial.transcript_id == id).first()
+    
+
+def get_all_freeTrial(db: Session):
+    return db.query(models.FreeTrial).filter(or_(models.FreeTrial.mail_sent == False, models.FreeTrial.mail_sent == None)).all()
 
 def get_audios(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Audio).offset(skip).limit(limit).all()
@@ -517,7 +521,7 @@ def add_plan(db: Session, plan: schema.Plan):
     return db_plan
 
 def get_plan_by_name(db: Session, plan_name: str):
-    return db.query(models.ProductPlan).filter(models.ProductPlan.name == plan_name).first()
+    return db.query(models.ProductPlan).filter(models.ProductPlan.name == plan_name.lower()).first()
 
 
 def store_transaction(db: Session, trans: dict):
@@ -529,7 +533,8 @@ def store_transaction(db: Session, trans: dict):
         time_paid = trans['time_paid'],
         minutes = trans['minutes'],
         payment_type = trans['payment_channel'],
-        email = trans['email_address']
+        email = trans['email_address'],
+        payment_gateway = trans['payment_gateway']
     )
     
     db.add(db_trans)
@@ -588,4 +593,9 @@ def get_all_job_sent(db: Session, job_id: int):
 
 def get_all_job_with_id(db: Session, job_id: int):
     return db.query(models.Job).filter(models.Job.job_id == job_id).all()
+
+def delete_plan(db: Session, plan_name: str):
+    deleted_plan = db.query(models.ProductPlan).filter(models.ProductPlan.name == plan_name.lower()).delete()
+    db.commit()
+    return {"message":"Plan Deleted"}
    

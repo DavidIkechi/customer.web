@@ -1,9 +1,15 @@
 import axios from "axios";
-import { AccountApi, GoogleSignInApi, SignUpApi } from "../../axios/apis/user";
+import {
+  AccountApi,
+  ChangePasswordApi,
+  GoogleSignInApi,
+  SignUpApi,
+  UpdateUserApi,
+} from "../../axios/apis/user";
 import ErrorHandler from "../../axios/Utils/ErrorHandler";
 import { dispatch } from "../../store";
 import { createResponse } from "../../utils/UtilSlice";
-import { setError, setToken, setUser } from "./userSlice";
+import { setError, setToken, setUpdatedUser, setUser } from "./userSlice";
 
 export const SignUp = (data) => async () => {
   try {
@@ -47,6 +53,38 @@ export const GetAccount = () => async () => {
     const res = await AccountApi();
     dispatch(setUser(res.data.detail));
     localStorage.setItem("user", JSON.stringify(res.data.detail));
+  } catch (error) {
+    dispatch(createResponse(ErrorHandler(error)));
+  }
+};
+
+export const UpdateProfile = (data) => async () => {
+  try {
+    const res = await UpdateUserApi(data);
+    dispatch(setUpdatedUser(res.data.detail));
+    dispatch(
+      createResponse({
+        type: "Success",
+        message: "Profile Updated Successfully",
+      })
+    );
+    dispatch(GetAccount());
+  } catch (error) {
+    dispatch(createResponse(ErrorHandler(error)));
+  }
+};
+
+export const ChangePassword = (data) => async () => {
+  try {
+    const res = await ChangePasswordApi(data);
+    dispatch(setUpdatedUser(res.data.detail));
+    dispatch(
+      createResponse({
+        type: "Success",
+        message: "Password reset successful",
+      })
+    );
+    dispatch(GetAccount());
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
   }

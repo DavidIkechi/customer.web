@@ -1,4 +1,5 @@
 from typing import List, Union, Optional
+from pyngrok import ngrok
 from fastapi import Depends, FastAPI, UploadFile, File, status, HTTPException, Form, Query
 from fastapi.middleware.cors import CORSMiddleware
 from rocketry import Rocketry
@@ -60,6 +61,9 @@ from elasticapm.contrib.starlette import make_apm_client, ElasticAPM
 import cron_status
 from scheduler import cron_schedule as cron_rocketry
 
+import ssl
+from pyngrok import ngrok, conf, installer
+
 apm_config = {
     'SERVICE_NAME': 'Heed_api',
     'SERVER_URL': 'http://localhost:8200',
@@ -97,7 +101,8 @@ tags_metadata = [
 
 # create the database.
 models.Base.metadata.create_all(engine)
-
+# Open a SSH tunnel
+# <NgrokTunnel: "tcp://0.tcp.ngrok.io:12345" -> "localhost:22">
 
 app = FastAPI(
     title="Heed API",

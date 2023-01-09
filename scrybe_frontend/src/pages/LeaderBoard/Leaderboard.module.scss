@@ -78,8 +78,12 @@
 }
 
 /* End of styling new design for Leaderbord */
+.content_container::-webkit-scrollbar {
+  display: none;
+}
 
 .content_container {
+  scroll-behavior: smooth;
   background-color: #FAFAFA;
   width: 100%;
   font-family: "Poppins", sans-serif;
@@ -281,6 +285,11 @@ hr {
   display: grid;
   grid-template-columns: 8fr 6fr 5fr 0fr;
   margin-bottom: 1rem;
+}
+
+.Header_content:hover {
+  transform: scale(1.008);
+  transition: all 0.3s ease-out;
 }
 
 .Header_content p {
