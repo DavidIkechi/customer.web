@@ -58,7 +58,6 @@ async def transcription_mail():
     for unsent in all_unsent:
         # get the distinct ids
         distinct_id = unsent.job_id
-        print(distinct_id)
         job_status = unsent.job_status
         email = unsent.audio.user_audio.email
         user = unsent.audio.user_audio
@@ -66,12 +65,10 @@ async def transcription_mail():
         if job_status == "completed":
             # set the mail to true.
             get_job = crud.get_job_by_id(db, unsent.id)
-            print(get_job)
             get_job.mail_sent = True
             db.commit()
         
         # check if all the jobs with the id have mail sent.
-        print(len(crud.get_all_job_sent(db, distinct_id)), len(crud.get_all_job_with_id(db, distinct_id)))
         if len(crud.get_all_job_sent(db, distinct_id)) == len(crud.get_all_job_with_id(db, distinct_id)):
             await transcription_result_email([email], user)
 
