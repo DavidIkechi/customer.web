@@ -15,6 +15,7 @@ import crud
 from jwt import main_login, get_access_token, verify_password, refresh
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from emails import send_email, verify_token, send_password_reset_email, password_verif_token, send_successful_payment_email, send_failed_payment_email
+from BitlyAPI import shorten_urls
 
 from paystackapi.paystack import Paystack
 from paystackapi.charge import Charge
@@ -275,7 +276,7 @@ def create_stripe_order(userPayment: schema.PaymentBase, db: Session = Depends(_
     # print(checkout_session.url)
     # return RedirectResponse(checkout_session.url, status_code=303)
     return {"detail": {
-        "payment_url": checkout_session.url,
+        "payment_url": shorten_urls([checkout_session.url])[0].short_url,
         "gateway": "stripe"
         }
     }
