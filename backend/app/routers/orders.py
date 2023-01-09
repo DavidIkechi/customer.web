@@ -244,6 +244,11 @@ def create_stripe_order(userPayment: schema.PaymentBase, db: Session = Depends(_
 
     unit_price = get_plan_details.price * 100
     units = int(userPayment.minutes)
+
+    amount =  get_plan_details.price * units
+    if amount < 10:
+        raise HTTPException(status_code=400, detail="Sorry, the minimum order you can place is $10")
+
     try:
         checkout_session = stripe.checkout.Session.create(
             line_items=[
@@ -268,20 +273,39 @@ def create_stripe_order(userPayment: schema.PaymentBase, db: Session = Depends(_
 
             },
             customer_email= user_email,
-            success_url= liveDomain + 'stripe-order/?success=true',
+            success_url= liveDomain + 'stripe-order/success?session_id={CHECKOUT_SESSION_ID}',
             cancel_url= liveDomain + 'stripe-order/?canceled=true',
         )
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
     # print(checkout_session.url)
     # return RedirectResponse(checkout_session.url, status_code=303)
+    print(checkout_session.url)
     return {"detail": {
         "payment_url": shorten_urls([checkout_session.url])[0].short_url,
         "gateway": "stripe"
         }
     }
 
-
+#getting transaction details.
+@order_router.get('/stripe-order-details/{session_id}', description="get detials of successful transaction")
+def create_stripe_order(session_id: str, Session = Depends(_services.get_session), user: models.User = Depends(auth.get_active_user)):
+    session = stripe.checkout.Session.retrieve(session_id)
+    customer =session.customer_details
+    if session.payment_status == 'paid':
+        status = 'paid'
+    else:
+        status = 'processing'
+    transaction = {'customer_name': customer.name,
+                    'customer_email': customer.email,
+                    'amount' : '$' + str(session.amount_total/100),
+                    'plan': session.metadata.plan,
+                    'minutes': session.metadata.minutes,
+                    'price_per_minute':'$' + str(session.metadata.price_per_minute),
+                    'status': status,
+                    'payment_method': 'card(stripe)'
+                    }
+    return transaction
 
 #webhook to handle all payments(successful, failed, declined) and fulfil order
 @order_router.post('/webhook', include_in_schema=False)
