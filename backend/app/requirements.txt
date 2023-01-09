@@ -61,4 +61,7 @@ paystackapi==2.1.0
 alembic==1.9.0
 pandas==1.4.2
 rocketry==2.5.1
+<<<<<<< HEAD
+=======
 pyngrok==5.2.1
+>>>>>>> 41959ffc903232018266b33b22c2a1c93cf0654a
