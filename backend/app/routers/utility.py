@@ -93,7 +93,7 @@ def validate_and_verify_email(input_email):
         check_dns=True,
         dns_timeout=10,
         check_smtp=True,
-        smtp_debug=True
+        smtp_debug=True,
     )
     return isValid
 
