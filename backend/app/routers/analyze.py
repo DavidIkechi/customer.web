@@ -289,9 +289,23 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), background_
 async def free_trial(email: str = Form(), db : Session = Depends(_services.get_session), file: UploadFile = File(...)):
     try:
         email_lower = email.lower()
+        # checking if the mail address is professional
+        if utils.check_if_professional(email_lower) > 0:
+            return JSONResponse(
+                status_code= 400,
+                content=jsonable_encoder({"detail": "Please enter a valid Professional email address"})
+            )
+            
+        if not utils.validate_and_verify_email(email_lower):
+            return JSONResponse(
+                status_code= 400,
+                content=jsonable_encoder({"detail": "Sorry, we could not verify your email address, try again or enter a valid email address!"})
+            )
+            
         email_check = crud.free_user_by_email(db, email=email_lower)
         with open(f'{file.filename}', "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
+            
         fileSize = 5242880 / 1048576
         getSize = Path(file.filename).stat().st_size / 1048576
         time = str(0)+":"+str(3)+":"+str(0)
@@ -301,8 +315,8 @@ async def free_trial(email: str = Form(), db : Session = Depends(_services.get_s
         if email_check:
             os.unlink(file.filename)
             return JSONResponse(
-            status_code= 400,
-            content=jsonable_encoder({"detail": "Email Has Been Used For Free Trial Before, Please Sign Up For Our Paid Plan."})
+                status_code= 400,
+                content=jsonable_encoder({"detail": "Email Has already Been Used For Free Trial, Please Sign Up For Our Paid Plan."})
             )
         if getSize > fileSize:
             os.unlink(file.filename)
