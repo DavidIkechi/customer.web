@@ -157,6 +157,7 @@ class FreeTrial(Base):
     email = Column(String(255), index=True)
     transcript_id = Column(String(255), index=True)
     transcript_status = Column(TEXT)
+    mail_sent = Column(Boolean, default=False)
 
 class Newsletter(Base):
     __tablename__ = "newsletter_subscribers"
@@ -177,7 +178,7 @@ class ProductPlan(Base):
 class PaymentHistory(Base):
     __tablename__ = "payment_history"
     id = Column(Integer, primary_key=True, index=True)
-    transaction_id = Column(String(255), nullable= True)
+    transaction_id = Column(TEXT, nullable= True)
     reference = Column(String(255), nullable= True)
     amount = Column(Float, index=True, nullable=False)
     plan = Column(String(255), nullable=False)
