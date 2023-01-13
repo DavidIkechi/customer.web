@@ -7,6 +7,7 @@ const initialState = {
   navLoading: false,
   error: null,
   updatedUser: null,
+  resetUser: null,
 };
 
 const userSlice = createSlice({
@@ -28,10 +29,19 @@ const userSlice = createSlice({
     setUpdatedUser: (state, action) => {
       state.updatedUser = action.payload;
     },
+    setResetPasswordUser: (state, action) => {
+      state.resetUser = action.payload;
+    },
   },
 });
 
-export const { setNavLoading, setToken, setUser, setError, setUpdatedUser } =
-  userSlice.actions;
+export const {
+  setNavLoading,
+  setToken,
+  setUser,
+  setError,
+  setUpdatedUser,
+  setResetPasswordUser,
+} = userSlice.actions;
 
 export default userSlice.reducer;
