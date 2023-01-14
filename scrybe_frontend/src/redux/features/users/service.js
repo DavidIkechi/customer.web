@@ -5,11 +5,18 @@ import {
   GoogleSignInApi,
   SignUpApi,
   UpdateUserApi,
+  ResetPasswordApi,
 } from "../../axios/apis/user";
 import ErrorHandler from "../../axios/Utils/ErrorHandler";
 import { dispatch } from "../../store";
 import { createResponse } from "../../utils/UtilSlice";
-import { setError, setToken, setUpdatedUser, setUser } from "./userSlice";
+import {
+  setError,
+  setToken,
+  setUpdatedUser,
+  setUser,
+  setResetPasswordUser,
+} from "./userSlice";
 
 export const SignUp = (data) => async () => {
   try {
@@ -110,4 +117,20 @@ export const LogOut = () => async () => {
   dispatch(setUser(null));
   dispatch(setToken(null));
   dispatch(createResponse({ type: "", message: "" }));
+};
+
+export const ResetPassword = (data, query) => async () => {
+  try {
+    const res = await ResetPasswordApi(data, query);
+    dispatch(setResetPasswordUser(res.data.detail));
+    dispatch(
+      createResponse({
+        type: "Success",
+        message: "Password reset successful",
+      })
+    );
+    dispatch(GetAccount());
+  } catch (error) {
+    dispatch(createResponse(ErrorHandler(error)));
+  }
 };
