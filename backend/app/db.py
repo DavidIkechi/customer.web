@@ -12,8 +12,8 @@ load_dotenv()
 # cloudinary config
 cloudinary.config(
     cloud_name = os.getenv('CLOUD_NAME'),
-    api_key = os.getenv('API_KEY'),
-    api_secret = os.getenv('API_SECRET'),
+    api_key = os.getenv('CLOUD_KEY'),
+    api_secret = os.getenv('CLOUD_SECRET'),
     secure = True
 )
 
@@ -24,8 +24,6 @@ DB_USER = os.getenv("DB_USER")
 
 DB_CONNECTION = DB_USER+":"+DB_PASS+"@"+DB_HOST+"/"+DB_NAME
 SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://"+DB_CONNECTION
-
-# SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://root:10of10in10@localhost/heed"
 
 # SQLALCHEMY_DATABASE_URL = "sqlite:///./heetest.db"
 

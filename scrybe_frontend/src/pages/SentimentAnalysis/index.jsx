@@ -26,7 +26,7 @@ function SentimentAnalysis() {
   }, []);
 
   useEffect(() => {
-    if (transcription) {
+    if (transcription !== {}) {
       setLoading(false);
     }
   }, [transcription]);
