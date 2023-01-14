@@ -1,7 +1,7 @@
 import styles from "./Leaderboard.module.scss";
 import IsLoadingSkeleton from "../../components/LoadingSkeleton";
-import NewDesignSideBar from "../../components/NewDesignSidebar";
-import TopNav from "../../components/TopNav";
+// import NewDesignSideBar from "../../components/NewDesignSidebar";
+// import TopNav from "../../components/TopNav";
 import { useState, useEffect } from "react";
 import notfoundImg from "./images/notfound.svg";
 import CallIcon from "./images/Call-icon.png";
