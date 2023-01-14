@@ -189,8 +189,6 @@ class Order(OrderBase):
     order_date: datetime
     next_payment_due_date: datetime
 
-class ChangePlan(BaseModel):
-    plan: str
 
 class ChangePassword(BaseModel):
     old_password: str
