@@ -20,6 +20,7 @@ from routers.audios import audio_router
 from routers.sentiment import sentiment_router
 from routers.analyze import analyze_router
 from routers.score import score_count
+from routers.plan import plan_router
 import models, json
 from auth import get_active_user, get_current_user, get_admin
 
@@ -43,7 +44,7 @@ from BitlyAPI import shorten_urls
 import services as _services
 
 from datetime import datetime, timedelta, date
-from fastapi_utils.tasks import repeat_every
+# from fastapi_utils.tasks import repeat_every
 
 
 import shutil
@@ -141,6 +142,10 @@ app.include_router(
 
 app.include_router(
     analyze_router
+)
+
+app.include_router(
+    plan_router
 )
 
 # app.add_middleware(ElasticAPM, client=apm)

@@ -50,6 +50,7 @@ async def create_order(userPayment: schema.PaymentBase, db: Session = Depends(_s
             )
              
         amount = get_plan_details.price * userPayment.minutes * 100
+
         if amount / 100 < 10:
             return JSONResponse(
                 status_code= 400,
