@@ -15,9 +15,11 @@ import crud
 from jwt import main_login, get_access_token, verify_password, refresh
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from emails import send_email, verify_token, send_password_reset_email, password_verif_token, send_successful_payment_email, send_failed_payment_email
+from BitlyAPI import shorten_urls
 
 from paystackapi.paystack import Paystack
 from paystackapi.charge import Charge
+from datetime import datetime
 
 import stripe, json
 from . import utility
@@ -48,7 +50,7 @@ async def create_order(userPayment: schema.PaymentBase, db: Session = Depends(_s
             )
              
         amount = get_plan_details.price * userPayment.minutes * 100
-        if amount < 10:
+        if amount/100 < 10:
             return JSONResponse(
                 status_code= 400,
                 content=jsonable_encoder({"detail": "Sorry, minimum order you can place is $10"}),
@@ -97,12 +99,16 @@ async def verify_order(ref_code: str, db: Session = Depends(_services.get_sessio
             
         veri = paystack.transaction().verify(reference = ref_code)
         get_status = veri['data']
+        get_date = get_status['paid_at'].split("T")
+        conv_date = get_date[1].split(".")[0]
+        new_date1 = get_date[0] + " " + conv_date
+        new_date2 = datetime.strptime(new_date1, "%Y-%m-%d %H:%M:%S")
         transaction = {"amount": get_status['amount']/100,
                        "trans_id": str(get_status['id']),
                        "reference": get_status['reference'],
                        "minutes": get_status['metadata']['minutes'],
                        "plan": get_status['metadata']['plan'],
-                       "time_paid": get_status['paid_at'],
+                       "time_paid": new_date2,
                        "payment_channel": get_status['channel'],
                        "email_address": user.email,
                        "payment_gateway": "Paystack"
@@ -151,7 +157,7 @@ async def heed_webhook_view(request: Request, db: Session = Depends(_services.ge
 
     try:
         payload = await request.body()
-            # get the header
+        # get the header
         paystack_header = request.headers.get('x-paystack-signature')
         # convert data to dictionary.
         get_data = json.loads(payload.decode('utf-8'))
@@ -161,28 +167,32 @@ async def heed_webhook_view(request: Request, db: Session = Depends(_services.ge
                 status_code= 401,
                 content=jsonable_encoder({"detail": "Authentication error"}),
             )
-        
+
         # get the reference
         ref_code = get_data['data']['reference']
         check_trans = crud.check_transaction(db, ref_code)
-        
+
         # get all the data need.
         get_status = get_data['data']
+        get_date = get_status['paid_at'].split("T")
+        conv_date = get_date[1].split(".")[0]
+        new_date1 = get_date[0] + " " + conv_date
+        new_date2 = datetime.strptime(new_date1, "%Y-%m-%d %H:%M:%S")
         transaction = {"amount": get_status['amount']/100,
-                    "trans_id": str(get_status['id']),
-                    "reference": get_status['reference'],
-                    "minutes": get_status['metadata']['minutes'],
-                    "plan": get_status['metadata']['plan'],
-                    "time_paid": get_status['paid_at'],
-                    "payment_channel": get_status['channel'],
-                    "email_address": get_status['customer']['email'],
-                    "payment_gateway": "Paystack"
-                }
+                       "trans_id": str(get_status['id']),
+                       "reference": get_status['reference'],
+                       "minutes": get_status['metadata']['minutes'],
+                       "plan": get_status['metadata']['plan'],
+                       "time_paid": new_date2,
+                       "payment_channel": get_status['channel'],
+                       "email_address": get_status['customer']['email'],
+                       "payment_gateway": "Paystack"
+                    }
         user = crud.get_user_by_email(db, email=transaction['email_address'])
         email = transaction['email_address']
         if check_trans is not None:
             return {"detail": transaction}
-        
+
         if get_data['event'] == "charge.success":
             # store in the crud database.
             trans_crud = crud.store_transaction(db, transaction)
@@ -207,7 +217,7 @@ async def heed_webhook_view(request: Request, db: Session = Depends(_services.ge
                 status_code= 404,
                 content=jsonable_encoder({"detail": "Transaction failed!."}),
             )
-            
+
     except Exception as e:
         return JSONResponse(
             status_code= 500,
@@ -266,7 +276,7 @@ def create_stripe_order(userPayment: schema.PaymentBase, db: Session = Depends(_
     # print(checkout_session.url)
     # return RedirectResponse(checkout_session.url, status_code=303)
     return {"detail": {
-        "payment_url": checkout_session.url,
+        "payment_url": shorten_urls([checkout_session.url])[0].short_url,
         "gateway": "stripe"
         }
     }
