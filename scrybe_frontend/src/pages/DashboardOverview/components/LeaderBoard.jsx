@@ -14,8 +14,8 @@ const LeaderBoard = ({ LeaderboardData }) => {
   const [selected, setSelected] = useState({});
 
   useEffect(() => {
-    setSelected(LeaderboardData.week);
-  }, [LeaderboardData.week]);
+    setSelected(LeaderboardData?.week);
+  }, [LeaderboardData?.week]);
   function selectFunc(e) {
     setSelected(LeaderboardData[e.target.value]);
   }
@@ -32,7 +32,7 @@ const LeaderBoard = ({ LeaderboardData }) => {
         </select>
       </div>
       <div className={styles.subcontent_con}>
-        {selected && selected.Top3_Agents?.length > 0 ? (
+        {selected && selected?.Top3_Agents?.length > 0 ? (
           <div className={styles.agents}>
             <table>
               <thead>
@@ -49,7 +49,7 @@ const LeaderBoard = ({ LeaderboardData }) => {
               </thead>
               <tbody>
                 {selected &&
-                  selected.Top3_Agents?.map((value, index) => (
+                  selected?.Top3_Agents?.map((value, index) => (
                     <tr style={{ background: bgMap[index] }} key={index + 1}>
                       <td>{value.str_agent_id}</td>
                       <td>{value.total_calls}</td>

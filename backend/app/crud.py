@@ -140,6 +140,10 @@ def get_freeaudio(db: Session, audio_id: int):
 
 def get_freetrial(db: Session, id: int):
     return db.query(models.FreeTrial).filter(models.FreeTrial.transcript_id == id).first()
+    
+
+def get_all_freeTrial(db: Session):
+    return db.query(models.FreeTrial).filter(or_(models.FreeTrial.mail_sent == False, models.FreeTrial.mail_sent == None)).all()
 
 def get_audios(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Audio).offset(skip).limit(limit).all()

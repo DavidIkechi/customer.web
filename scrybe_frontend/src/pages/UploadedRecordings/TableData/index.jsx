@@ -26,18 +26,15 @@ const TableData = ({ searchKeyword }) => {
   const { audios, audioError } = useSelector((state) => state.audio);
   const { isLoading } = useSelector((state) => state.util);
   const dispatch = useDispatch();
-  // const [deleteRecording] = useDeleteRecordingMutation();
   const allRecordings = audios;
   const [recordCheckedList, setRecordCheckedList] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [recordingsProcessed, setRecordingsProcessed] = useState(false);
   const [openDeletePopup, setOpenDeletePopup] = useState(false);
-  // const [deleted, setDeleted] = useState(false);
   const sessionExpired = audioError;
   const isFetching = isLoading;
 
   useEffect(() => {
-    // dispatch(fetchRecordings());
     dispatch(GetUserAudios());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -59,7 +56,6 @@ const TableData = ({ searchKeyword }) => {
     setOpenDeletePopup(false);
     setRecordCheckedList([]);
     setOpenModal(false);
-    dispatch(GetUserAudios());
   };
   const deleteBulkRecordings = async () => {
     const audioToInt = recordCheckedList.map((item) => Number(item));
@@ -70,7 +66,6 @@ const TableData = ({ searchKeyword }) => {
 
   const singleDelete = async (id) => {
     dispatch(DeleteAudios(id));
-    dispatch(GetUserAudios());
   };
 
   const allRecordingsProcessed = () => {
@@ -141,18 +136,6 @@ const TableData = ({ searchKeyword }) => {
           </div>
           <div className={styles.uploaded_header}>
             <h1>Transcription Status </h1>
-            {/* <h2 className={styles.est_time_left}>
-            Estimated Time Left:{" "}
-            <strong className={styles.est_time_left_num}>{timeLeft}</strong> Min
-          </h2> */}
-            {/* <div
-            className={styles.UploadedNavbarRec_btnwrap}
-            onClick={() => setModalOpen(true)}
-          >
-            <img src={uploadBtn_icon} alt="" />
-            <button className={styles.UploadedNavbarRec_btn}>Upload</button>
-          </div>
-          <Modal open={modalOpen} setOpen={setModalOpen} /> */}
           </div>
           <div className={styles.uploaded_table_wrap}>
             {isFetching ? (

@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
+import NewDesignSideBar from "./components/NewDesignSidebar";
 
 export function RequireToken() {
   const auth = useSelector((state) => state.user.token);
@@ -8,7 +9,11 @@ export function RequireToken() {
     return <Navigate to="/login" replace />;
   }
 
-  return <Outlet />;
+  return (
+    <NewDesignSideBar needSearchMobile="needSearchMobile">
+      <Outlet />
+    </NewDesignSideBar>
+  );
 }
 
 export function Authenticated() {
