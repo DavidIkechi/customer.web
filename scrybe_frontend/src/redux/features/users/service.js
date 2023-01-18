@@ -59,7 +59,7 @@ export const GetAccount = () => async () => {
   try {
     const res = await AccountApi();
     dispatch(setUser(res.data.detail));
-    localStorage.setItem("user", JSON.stringify(res.data.detail));
+    sessionStorage.setItem("user", JSON.stringify(res.data.detail));
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
   }

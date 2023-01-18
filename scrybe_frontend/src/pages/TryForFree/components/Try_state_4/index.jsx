@@ -1,43 +1,28 @@
-// eslint-disable-next-line no-warning-comments
-// TODO disable eslint warning for this todo ;)
 import React from "react";
-import axios from "axios";
-// import ProgressBar from "../ProgressBar/index";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import styles from "./try_state_4.module.scss";
-// import RecordingName from "../../assets/recording-name-1.png";
 import { useEffect, useState } from "react";
-// import { useState } from "react";
+import { GetTranscript } from "../../../../redux/features/transcriptions/service";
+import { dispatch } from "../../../../redux/store";
+import { useSelector } from "react-redux";
 
 export default function TryFourth() {
   const { transcribeId } = useParams();
+  const { transcript } = useSelector((state) => state.transcription);
   const [display, setDisplay] = useState({});
 
   useEffect(() => {
     if (transcribeId) {
-      // console.log(transcribeId);
-      // console.log("");
-      getResults(transcribeId);
+      dispatch(GetTranscript(transcribeId));
     }
   }, [transcribeId]);
-  const getResults = async (transcribeId) => {
-    const formData = new FormData();
-    formData.append("transcript_id", transcribeId);
-    try {
-      const response = await axios({
-        method: "get",
-        url: `https://api.heed.hng.tech/get_transcript/${transcribeId}`,
-        // data: formData,
-        headers: { "Content-Type": "application/json" },
-      });
-      const results = response.data;
-      setDisplay(results);
-      // console.log(results);
-    } catch (error) {
-      // console.log(error);
+
+  useEffect(() => {
+    if (transcript) {
+      setDisplay(transcript);
     }
-  };
+  }, [transcript]);
 
   return (
     <section className={styles.transcribeAnalysis}>
