@@ -5,14 +5,14 @@ import account from "./assets/account.jpg";
 import logout from "./assets/logout.jpg";
 import support from "./assets/support.jpg";
 import styles from "./dropdown.module.scss";
-function DropDownModal({ closeModal }) {
+function DropDownModal({ closeModal, classes }) {
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const signout = () => {
     dispatch(LogOut());
   };
   return (
-    <div className={styles.dropdown}>
+    <div className={`${styles.dropdown} ${styles[classes]}`}>
       <div className={styles.opacity} onClick={closeModal}></div>
       <Link to="/account">
         <div className={styles.list}>

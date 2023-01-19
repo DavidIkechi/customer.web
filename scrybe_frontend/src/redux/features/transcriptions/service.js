@@ -5,12 +5,12 @@ import {
 import ErrorHandler from "../../axios/Utils/ErrorHandler";
 import { dispatch } from "../../store";
 import { createResponse } from "../../utils/UtilSlice";
-import { setTranscription } from "./transcriptionSlice";
+import { setTranscript, setTranscription } from "./transcriptionSlice";
 
-export const GetTranscipt = (id) => async () => {
+export const GetTranscript = (id) => async () => {
   try {
     const res = await GetTransciptApi(id);
-    console.log(res);
+    setTranscript(res.data.detail);
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
   }
