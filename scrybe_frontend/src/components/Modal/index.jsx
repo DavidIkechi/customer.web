@@ -7,8 +7,13 @@ import DragAndDrop from "./Components/DragAndDrop";
 import UploadProgress from "./Components/UploadProgress";
 import SubUploadProgress from "./Components/SubUploadProgress";
 import UploadComplete from "./Components/UploadComplete";
+import { dispatch } from "../../redux/store";
+import { createResponse } from "../../redux/utils/UtilSlice";
+import ErrorHandler from "../../redux/axios/Utils/ErrorHandler";
+import { useNavigate } from "react-router";
 
 const Modal = ({ open, setOpen }) => {
+  const navigate = useNavigate();
   const [showUploadProgress, setShowUploadProgress] = useState(false);
   const [showProgressList, setShowProgressList] = useState(false);
   const [isUploadComplete, setIsUploadComplete] = useState(false);
@@ -33,10 +38,10 @@ const Modal = ({ open, setOpen }) => {
     const myData = new FormData();
     myData.append("first_name", firstName);
     myData.append("last_name", lastName);
-    myData.append("file", file);
+    myData.append("files", file);
     setFile({ file, progress: 0 });
 
-    const destinationUrl = "analyse/upload_audios";
+    const destinationUrl = "https://api.heed.cx/analyse/upload_audios";
     const token = sessionStorage.getItem("heedAccessToken");
 
     const headers = { Authorization: `Bearer ${token}` };
@@ -51,9 +56,19 @@ const Modal = ({ open, setOpen }) => {
         },
       })
       .then((response) => {
-        console.log("http response", response.data);
-        setIsUploadComplete(true);
-        setLink(response.data.transcript_id);
+        setOpen(false);
+        setFile({ file: { name: "", progress: 0 } });
+        setFirstName("");
+        setLastName("");
+        dispatch(
+          createResponse({ type: "Success", message: response.data.detail })
+        );
+
+        setTimeout(() => navigate("/uploaded-recordings"), 4000);
+      })
+      .catch((err) => {
+        setOpen(false);
+        dispatch(createResponse(ErrorHandler(err)));
       });
   };
 
@@ -74,6 +89,9 @@ const Modal = ({ open, setOpen }) => {
                 alt=""
                 onClick={() => {
                   setOpen(false);
+                  setFile({ file: { name: "", progress: 0 } });
+                  setFirstName("");
+                  setLastName("");
                 }}
               />
             </div>

@@ -18,7 +18,6 @@ export function RequireToken() {
 
 export function Authenticated() {
   const auth = useSelector((state) => state.user.token);
-
   if (auth) {
     return <Navigate to="/dashboard" replace />;
   }
