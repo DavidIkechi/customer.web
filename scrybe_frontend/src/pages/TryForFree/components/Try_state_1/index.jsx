@@ -55,13 +55,14 @@ export default function TryState1() {
     try {
       const response = await axios({
         method: "post",
-        url: "https://api.heed.hng.tech/tryForFree",
+        url: "https://api.heed.cx/analyse/tryForFree",
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
       });
       setUploadSuccess(true);
       setError(false);
-      setTranscribeId(response.data.transcript_id);
+      console.log(response.data);
+      setTranscribeId(response.data.detail.transcript_id);
     } catch (error) {
       // console.log(error.message);
       // console.log(error.response.status);

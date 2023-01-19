@@ -1,16 +1,19 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { ResetPassword } from "../../redux/features/users/service";
 import styles from "../NewSetNewPassword/setPassword.module.scss";
 import setPassword from "../NewSetNewPassword/assets/set__pswd.png";
 import eyeOff from "../NewSetNewPassword/assets/eye__off.png";
 import heedLogo from "../NewSetNewPassword/assets/heed__logo.png";
-// import { Link } from "react-router-dom";
 
 const Index = () => {
+  const { resetUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
+  console.log(resetUser);
 
   const {
     register,
@@ -19,16 +22,17 @@ const Index = () => {
     formState: { errors },
   } = useForm();
 
-  const baseUrl = "https://api.heed.hng.tech";
+  useEffect(() => {
+    if (resetUser) {
+      navigate("/pw-reset-successful");
+    }
+  }, [resetUser, navigate]);
+
+  const [searchParams] = useSearchParams();
   const submitCallback = () => {
-    const query = new URLSearchParams(location.search);
-    axios
-      .patch(baseUrl + "/reset-password?token=" + query.get("token"), {
-        password: password,
-      })
-      .then((res) => {
-        if (res.status === 200) navigate("/pw-reset-successful");
-      });
+    const data = { password: password };
+    dispatch(ResetPassword(data, searchParams.get("token")));
+    console.log(searchParams.get("token"));
   };
 
   // Watch event for disable button
@@ -71,7 +75,6 @@ const Index = () => {
                       type="password"
                       name="password"
                       id="password"
-                      // className={styles.email}
                       placeholder="Enter your new password"
                       className={`${errors.password && styles.errorInput} `}
                       {...register("password", {
@@ -99,15 +102,6 @@ const Index = () => {
                   value="Reset password"
                   className={`${isValid && styles.form__button}`}
                 />
-                {/* <div className={styles.form__action}>
-                  <button
-                    type="submit"
-                    value="Reset password"
-                    className={styles.form__button}
-                  >
-                    Reset password
-                  </button>
-                </div> */}
               </form>
             </div>
           </div>
