@@ -8,7 +8,7 @@ import styles from "./monthplans.module.scss";
 
 function MonthPlans() {
   const navigate = useNavigate();
-  const token = localStorage.getItem("heedAccessToken");
+  const token = sessionStorage.getItem("heedAccessToken");
 
   const checkoutStartup = async (pricing) => {
     const headers = {
@@ -19,7 +19,7 @@ function MonthPlans() {
       .post(
         "orders/create_order",
         {
-          billing_plan: pricing,
+          pricing,
         },
         { headers }
       )
@@ -37,7 +37,7 @@ function MonthPlans() {
       .post(
         "orders/create_order",
         {
-          billing_plan: pricing,
+          pricing,
         },
         { headers }
       )
@@ -56,7 +56,7 @@ function MonthPlans() {
       .post(
         "orders/create_order",
         {
-          billing_plan: pricing,
+          pricing,
         },
         { headers }
       )
