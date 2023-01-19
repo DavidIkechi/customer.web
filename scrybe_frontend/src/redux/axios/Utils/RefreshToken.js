@@ -1,4 +1,5 @@
 import axios from "axios";
+import { setToken } from "../../features/users/userSlice";
 
 export const RefreshToken = async () => {
   let refreshToken = sessionStorage.getItem("heedRefreshToken");
@@ -16,6 +17,8 @@ export const RefreshToken = async () => {
     );
     return res.data;
   } catch (err) {
+    console.log("this is error on refresh token file: ", err);
+    setToken(null);
     localStorage.clear();
     sessionStorage.clear();
   }
