@@ -99,7 +99,6 @@ const DragAndDrop = ({
           disabled={false}
           accept="audio/*"
           onChange={(event) => {
-            console.log("workin");
             handleOnSelectFile(Array.from(event.target.files)[0]);
           }}
         />
