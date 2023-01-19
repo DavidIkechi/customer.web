@@ -5,6 +5,7 @@
   gap: 23px;
   max-width: 100%;
   width: min(100%, 75.25rem);
+  padding: 0 1.5rem;
   margin-inline: auto;
   @include media(1220px) {
     width: pix-rem(390);
@@ -12,8 +13,14 @@
     justify-content: center;
   }
 
+  @include media(820px) {
+    width: 100%;
+    flex-direction: column;
+  }
+
   @include media(420px) {
     width: 95%;
+    flex-direction: column;
     margin-inline: auto;
   }
 }
