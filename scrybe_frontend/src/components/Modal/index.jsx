@@ -1,16 +1,15 @@
-import React, { useEffect } from "react";
-import style from "./Modal.module.scss";
-import closecircle from "./assets/closecircle.png";
-import { useState } from "react";
 import axios from "axios";
-import DragAndDrop from "./Components/DragAndDrop";
-import UploadProgress from "./Components/UploadProgress";
-import SubUploadProgress from "./Components/SubUploadProgress";
-import UploadComplete from "./Components/UploadComplete";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import ErrorHandler from "../../redux/axios/Utils/ErrorHandler";
 import { dispatch } from "../../redux/store";
 import { createResponse } from "../../redux/utils/UtilSlice";
-import ErrorHandler from "../../redux/axios/Utils/ErrorHandler";
-import { useNavigate } from "react-router";
+import closecircle from "./assets/closecircle.png";
+import DragAndDrop from "./Components/DragAndDrop";
+import SubUploadProgress from "./Components/SubUploadProgress";
+import UploadComplete from "./Components/UploadComplete";
+import UploadProgress from "./Components/UploadProgress";
+import style from "./Modal.module.scss";
 
 const Modal = ({ open, setOpen }) => {
   const navigate = useNavigate();
@@ -66,9 +65,9 @@ const Modal = ({ open, setOpen }) => {
 
         setTimeout(() => navigate("/uploaded-recordings"), 4000);
       })
-      .catch((err) => {
+      .catch((error) => {
         setOpen(false);
-        dispatch(createResponse(ErrorHandler(err)));
+        dispatch(createResponse(ErrorHandler(error)));
       });
   };
 
