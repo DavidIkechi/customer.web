@@ -21,6 +21,21 @@ const ErrorHandler = (err) => {
       };
     }
   }
+  if (err.code === "ERR_BAD_RESPONSE") {
+    if (err.response.data) {
+      return {
+        type: "Error",
+        message: err.response.data.detail
+          ? err.response.data.detail
+          : "Something went wrong",
+      };
+    } else {
+      return {
+        type: "Error",
+        message: "Something went wrong",
+      };
+    }
+  }
   return {
     type: "Error",
     message: "Something went wrong",
