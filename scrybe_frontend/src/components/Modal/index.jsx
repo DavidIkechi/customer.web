@@ -56,10 +56,7 @@ const Modal = ({ open, setOpen }) => {
         },
       })
       .then((response) => {
-        setOpen(false);
-        setFile({ file: { name: "", progress: 0 } });
-        setFirstName("");
-        setLastName("");
+        ResetState();
         dispatch(
           createResponse({ type: "Success", message: response.data.detail })
         );
@@ -70,6 +67,13 @@ const Modal = ({ open, setOpen }) => {
         setOpen(false);
         dispatch(createResponse(ErrorHandler(err)));
       });
+  };
+
+  const ResetState = () => {
+    setOpen(false);
+    setFile({ file: { name: "", progress: 0 } });
+    setFirstName("");
+    setLastName("");
   };
 
   return (
@@ -84,16 +88,7 @@ const Modal = ({ open, setOpen }) => {
               <p>Agent call recording uploaded successfully</p>
             )}
             <div className={style.close}>
-              <img
-                src={closecircle}
-                alt=""
-                onClick={() => {
-                  setOpen(false);
-                  setFile({ file: { name: "", progress: 0 } });
-                  setFirstName("");
-                  setLastName("");
-                }}
-              />
+              <img src={closecircle} alt="" onClick={() => ResetState()} />
             </div>
           </div>
           <div className={style["modal-body-container"]}>
