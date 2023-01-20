@@ -73,6 +73,7 @@ function TranscriptionMain() {
         headers,
       })
       .then((newRes) => {
+        console.log(newRes.data.detail);
         setStillProcessing(false);
         setIsFetching(false);
 
