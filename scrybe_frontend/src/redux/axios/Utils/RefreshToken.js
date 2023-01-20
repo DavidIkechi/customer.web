@@ -2,7 +2,7 @@ import axios from "axios";
 import { setToken } from "../../features/users/userSlice";
 
 export const RefreshToken = async () => {
-  let refreshToken = sessionStorage.getItem("heedRefreshToken");
+  let refreshToken = localStorage.getItem("heedRefreshToken");
   const formBody = {
     refresh_token: refreshToken,
   };
