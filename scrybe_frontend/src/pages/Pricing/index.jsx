@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import MonthPlans from "./components/MonthPlan";
+import Plans from "./Plans";
 import styles from "./Pricing.module.scss";
 
 function Pricing() {
@@ -41,7 +41,7 @@ function Pricing() {
         </div>
         <div>
           <div>
-            <MonthPlans />
+            <Plans />
           </div>
         </div>
 

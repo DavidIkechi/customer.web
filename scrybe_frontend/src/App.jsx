@@ -6,8 +6,6 @@ import Account from "./pages/Account";
 import AgentReport from "./pages/AgentReport";
 import CheckMail from "./pages/CheckMail/index";
 import Enterprise from "./pages/Checkout/Enterprise";
-import Growing from "./pages/Checkout/Growing";
-import StartUp from "./pages/Checkout/Startup";
 import DashboardOverview from "./pages/DashboardOverview";
 import Error from "./pages/Error/Error";
 import FAQs from "./pages/FaqsPage";
@@ -40,10 +38,10 @@ import UploadedRecordings from "./pages/UploadedRecordings";
 import EmailVerify from "./pages/VerificationEmail/EmailVerify";
 
 import * as atatus from "atatus-spa";
-import PublicLayout from "./PublicLayout";
-import SnackBar from "./components/SnackBar/index";
 import { useSelector } from "react-redux";
-import CheckoutPage from "./pages/Pricing/components/CheckoutPage";
+import SnackBar from "./components/SnackBar";
+import CheckoutPage from "./pages/Pricing/CheckoutPage";
+import PublicLayout from "./PublicLayout";
 atatus.config("006cee2d85d74c12953a30f3e9b78569").install();
 
 function App() {
@@ -89,11 +87,10 @@ function App() {
           <Route path="/checkout-enterprise" element={<Enterprise />} />
         </Route>
         {/* cant access without signin */}
+        <Route path="/checkout" element={<CheckoutPage />} />
 
         <Route element={<RequireToken />}>
-          <Route path="/checkout-startup" element={<StartUp />} />
-          <Route path="/checkout-growing" element={<Growing />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
+          {/* <Route path="/checkout" element={<CheckoutPage />} /> */}
           <Route path="/account" element={<Account />} />
           <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
           <Route path="/agent-report/:Agent_id" element={<AgentReport />} />

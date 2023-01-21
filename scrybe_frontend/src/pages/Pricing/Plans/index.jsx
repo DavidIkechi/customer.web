@@ -1,69 +1,12 @@
-import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import checkIcon from "../../assets/check.svg";
-import currency from "../../assets/dollar.svg";
-import { monthlyPricing } from "./data";
-import styles from "./monthplans.module.scss";
+import checkIcon from "../assets/check.svg";
+import currency from "../assets/dollar.svg";
+import { PricingData } from "./data";
+import styles from "./plans.module.scss";
 
-function MonthPlans() {
+function Plans() {
   const navigate = useNavigate();
-
-  // const checkoutStartup = async (pricing) => {
-  //   const headers = {
-  //     "Content-Type": "application/json",
-  //     Authorization: `Bearer ${token}`,
-  //   };
-  //   await axios
-  //     .post(
-  //       "orders/create_order",
-  //       {
-  //         pricing,
-  //       },
-  //       { headers }
-  //     )
-  //     .then((res) => {
-  //       console.log(res);
-  //       navigate("/checkout-startup");
-  //     });
-  // };
-  // const checkoutGrowing = async (pricing) => {
-  //   const headers = {
-  //     "Content-Type": "application/json",
-  //     Authorization: `Bearer ${token}`,
-  //   };
-  //   await axios
-  //     .post(
-  //       "orders/create_order",
-  //       {
-  //         pricing,
-  //       },
-  //       { headers }
-  //     )
-  //     .then((res) => {
-  //       console.log(res);
-  //       navigate("/checkout-growing");
-  //     });
-  // };
-  // const checkoutEnterprise = async (pricing) => {
-  //   console.log(token);
-  //   const headers = {
-  //     "Content-Type": "application/json",
-  //     Authorization: `Bearer ${token}`,
-  //   };
-  //   await axios
-  //     .post(
-  //       "orders/create_order",
-  //       {
-  //         pricing,
-  //       },
-  //       { headers }
-  //     )
-  //     .then((res) => {
-  //       console.log(res);
-  //       navigate("/checkout-enterprise");
-  //     });
-  // };
 
   const getSelectedPlan = (plan) => {
     localStorage.setItem("selectedPlan", plan);
@@ -73,7 +16,7 @@ function MonthPlans() {
   return (
     <div className={`${styles.month}`}>
       <div className={`${styles.plans}`}>
-        {monthlyPricing.map((data) => {
+        {PricingData.map((data) => {
           const {
             id,
             icon,
@@ -132,4 +75,4 @@ function MonthPlans() {
   );
 }
 
-export default MonthPlans;
+export default Plans;
