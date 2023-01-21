@@ -105,11 +105,15 @@ const Login = () => {
       });
   };
 
+  const HandleRemember = (e) => {
+    localStorage.setItem("rememberMe", e.target.checked);
+  };
+
   useEffect(() => {
     if (user) {
       setTimeout(() => navigate("/dashboard"), 1000);
     }
-  }, [user, navigate]);
+  }, [user]);
 
   return (
     <>
@@ -192,7 +196,7 @@ const Login = () => {
 
             <div className={styles.checkbox}>
               <div>
-                <input type="checkbox" />
+                <input type="checkbox" onChange={(e) => HandleRemember(e)} />
                 <p>Remember me</p>
               </div>
               <Link to="/forget-password">Forgot Password</Link>

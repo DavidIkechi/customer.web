@@ -7,12 +7,22 @@ import styles from "./DashboardOverview.module.scss";
 import { useDashBoardData } from "./hooks/index";
 import { useSelector } from "react-redux";
 import IsLoadingSkeleton from "../../components/LoadingSkeleton";
+import { useEffect } from "react";
+import { dispatch } from "../../redux/store";
+import { GetAccount } from "../../redux/features/users/service";
 
 function DashboardOverview() {
   const { recentRecording, totalAnalysis, totalRecording, leaderboard } =
     useDashBoardData();
 
   const { isLoading, searchQuery } = useSelector((state) => state.util);
+  const { token } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(GetAccount());
+    }
+  }, [token]);
 
   const searchDashboard = (search) => {
     return search.filter((item) =>
