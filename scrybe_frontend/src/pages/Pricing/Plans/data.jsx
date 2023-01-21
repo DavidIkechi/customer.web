@@ -1,8 +1,7 @@
-import startUpIcon from "../../assets/star.svg";
-import growingIcon from "../../assets/auto_graph.svg";
-import enterpriseIcon from "../../assets/corporate_fare.svg";
+import startUpIcon from "../assets/star.svg";
+import enterpriseIcon from "../assets/corporate_fare.svg";
 
-export const monthlyPricing = [
+export const PricingData = [
   {
     id: 1,
     icon: startUpIcon,
