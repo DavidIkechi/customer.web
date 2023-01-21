@@ -8,62 +8,66 @@ import styles from "./monthplans.module.scss";
 
 function MonthPlans() {
   const navigate = useNavigate();
-  const token = sessionStorage.getItem("heedAccessToken");
 
-  const checkoutStartup = async (pricing) => {
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
-    await axios
-      .post(
-        "orders/create_order",
-        {
-          pricing,
-        },
-        { headers }
-      )
-      .then((res) => {
-        console.log(res);
-        navigate("/checkout-startup");
-      });
-  };
-  const checkoutGrowing = async (pricing) => {
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
-    await axios
-      .post(
-        "orders/create_order",
-        {
-          pricing,
-        },
-        { headers }
-      )
-      .then((res) => {
-        console.log(res);
-        navigate("/checkout-growing");
-      });
-  };
-  const checkoutEnterprise = async (pricing) => {
-    console.log(token);
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
-    await axios
-      .post(
-        "orders/create_order",
-        {
-          pricing,
-        },
-        { headers }
-      )
-      .then((res) => {
-        console.log(res);
-        navigate("/checkout-enterprise");
-      });
+  // const checkoutStartup = async (pricing) => {
+  //   const headers = {
+  //     "Content-Type": "application/json",
+  //     Authorization: `Bearer ${token}`,
+  //   };
+  //   await axios
+  //     .post(
+  //       "orders/create_order",
+  //       {
+  //         pricing,
+  //       },
+  //       { headers }
+  //     )
+  //     .then((res) => {
+  //       console.log(res);
+  //       navigate("/checkout-startup");
+  //     });
+  // };
+  // const checkoutGrowing = async (pricing) => {
+  //   const headers = {
+  //     "Content-Type": "application/json",
+  //     Authorization: `Bearer ${token}`,
+  //   };
+  //   await axios
+  //     .post(
+  //       "orders/create_order",
+  //       {
+  //         pricing,
+  //       },
+  //       { headers }
+  //     )
+  //     .then((res) => {
+  //       console.log(res);
+  //       navigate("/checkout-growing");
+  //     });
+  // };
+  // const checkoutEnterprise = async (pricing) => {
+  //   console.log(token);
+  //   const headers = {
+  //     "Content-Type": "application/json",
+  //     Authorization: `Bearer ${token}`,
+  //   };
+  //   await axios
+  //     .post(
+  //       "orders/create_order",
+  //       {
+  //         pricing,
+  //       },
+  //       { headers }
+  //     )
+  //     .then((res) => {
+  //       console.log(res);
+  //       navigate("/checkout-enterprise");
+  //     });
+  // };
+
+  const getSelectedPlan = (plan) => {
+    localStorage.setItem("selectedPlan", plan);
+    navigate("/checkout");
   };
 
   return (
@@ -76,6 +80,7 @@ function MonthPlans() {
             title,
             pricing,
             headDescription,
+            planKey,
             duration,
             features,
           } = data;
@@ -115,15 +120,7 @@ function MonthPlans() {
                   ))}
                 </div>
 
-                <button
-                  onClick={() => {
-                    id === 1
-                      ? checkoutStartup(pricing)
-                      : id === 2
-                      ? checkoutGrowing(pricing)
-                      : checkoutEnterprise(pricing);
-                  }}
-                >
+                <button onClick={() => getSelectedPlan(planKey)}>
                   Get Started
                 </button>
               </div>
