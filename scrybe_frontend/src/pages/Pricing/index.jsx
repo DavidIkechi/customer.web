@@ -1,36 +1,9 @@
 import React from "react";
-import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import styles from "./Pricing.module.scss";
-import YearPlans from "./components/YearPlan";
 import MonthPlans from "./components/MonthPlan";
+import styles from "./Pricing.module.scss";
 
 function Pricing() {
-  const plansRef = useRef();
-  const [showMonth, setshowMonth] = useState(true);
-  const [showYear, setshowYear] = useState(false);
-  const [listmonthActive, setlistmonthActive] = useState(true);
-  const [listyearActive, setlistyearActive] = useState(false);
-
-  const toggleYear = () => {
-    if (showMonth) {
-      setshowMonth(false);
-      setshowYear(true);
-      setlistmonthActive(false);
-      setlistyearActive(true);
-    }
-  };
-  const toggleMonth = () => {
-    if (!showMonth) {
-      setshowMonth(true);
-      setshowYear(false);
-      setlistmonthActive(true);
-      setlistyearActive(false);
-    } else {
-      showMonth();
-    }
-  };
-
   return (
     <>
       <div className={styles.pricing}>
@@ -65,35 +38,11 @@ function Pricing() {
           <h2 className={styles.CTAtitle}>
             Choose a plan that fits your needs
           </h2>
-          {/* <div className={styles.CTAs}>
-            <button
-              className={`${styles.ctaMonth} ${
-                listmonthActive
-                  ? styles.listItemActive
-                  : styles.listItemInActiveh4
-              }`}
-              onClick={() => {
-                toggleMonth();
-              }}
-            >
-              Monthly
-            </button>
-            <button
-              ref={plansRef}
-              className={`${styles.ctaYear} ${
-                listyearActive
-                  ? styles.listItemActive
-                  : styles.listItemInActiveh4
-              }`}
-              onClick={toggleYear}
-            >
-              Yearly
-            </button>
-          </div> */}
         </div>
         <div>
-          <div>{showMonth && <MonthPlans />}</div>
-          {/* <div>{showYear && <YearPlans yearState={false} />}</div> */}
+          <div>
+            <MonthPlans />
+          </div>
         </div>
 
         <div className={styles.features}>

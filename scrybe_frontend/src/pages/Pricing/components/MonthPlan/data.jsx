@@ -8,6 +8,7 @@ export const monthlyPricing = [
     icon: startUpIcon,
     title: "Core Transcription",
     headDescription: "Starter",
+    planKey: "starter",
     pricing: "0.02",
     duration: "per minute . Pre Recorded Transcription",
     features: [
@@ -22,6 +23,7 @@ export const monthlyPricing = [
     icon: enterpriseIcon,
     title: "Voice Analysis",
     headDescription: "Enterprise",
+    planKey: "enterprise",
     pricing: "0.03",
     duration: "per minute . Pre Recorded Transcription",
     features: [
@@ -37,7 +39,8 @@ export const monthlyPricing = [
     id: 3,
     icon: enterpriseIcon,
     title: "Voice Analysis",
-    headDescription: "Enterprise",
+    headDescription: "Enterprise Plus",
+    planKey: "enterprise_plus",
     pricing: "0.035",
     duration: " per minute . Live Stream Transcription",
     features: [
