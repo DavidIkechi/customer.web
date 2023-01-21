@@ -87,10 +87,9 @@ function App() {
           <Route path="/checkout-enterprise" element={<Enterprise />} />
         </Route>
         {/* cant access without signin */}
-        <Route path="/checkout" element={<CheckoutPage />} />
 
         <Route element={<RequireToken />}>
-          {/* <Route path="/checkout" element={<CheckoutPage />} /> */}
+          <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/account" element={<Account />} />
           <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
           <Route path="/agent-report/:Agent_id" element={<AgentReport />} />
