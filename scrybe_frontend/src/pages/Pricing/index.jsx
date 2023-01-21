@@ -1,36 +1,9 @@
 import React from "react";
-import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import Plans from "./Plans";
 import styles from "./Pricing.module.scss";
-import YearPlans from "./components/YearPlan/yearPlans";
-import MonthPlans from "./components/MonthPlan/monthPlans";
 
 function Pricing() {
-  const plansRef = useRef();
-  const [showMonth, setshowMonth] = useState(true);
-  const [showYear, setshowYear] = useState(false);
-  const [listmonthActive, setlistmonthActive] = useState(true);
-  const [listyearActive, setlistyearActive] = useState(false);
-
-  const toggleYear = () => {
-    if (showMonth) {
-      setshowMonth(false);
-      setshowYear(true);
-      setlistmonthActive(false);
-      setlistyearActive(true);
-    }
-  };
-  const toggleMonth = () => {
-    if (!showMonth) {
-      setshowMonth(true);
-      setshowYear(false);
-      setlistmonthActive(true);
-      setlistyearActive(false);
-    } else {
-      showMonth();
-    }
-  };
-
   return (
     <>
       <div className={styles.pricing}>
@@ -52,14 +25,12 @@ function Pricing() {
               <img
                 src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584783/heroimage_1_znov39.webp"
                 alt=""
-                srcSet=""
               />
             </div>
           </div>
           <img
             src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670584782/Sectionbottom_aunogb.webp"
             alt=""
-            srcset=""
             className={styles.curves}
           />
         </div>
@@ -67,35 +38,11 @@ function Pricing() {
           <h2 className={styles.CTAtitle}>
             Choose a plan that fits your needs
           </h2>
-          {/* <div className={styles.CTAs}>
-            <button
-              className={`${styles.ctaMonth} ${
-                listmonthActive
-                  ? styles.listItemActive
-                  : styles.listItemInActiveh4
-              }`}
-              onClick={() => {
-                toggleMonth();
-              }}
-            >
-              Monthly
-            </button>
-            <button
-              ref={plansRef}
-              className={`${styles.ctaYear} ${
-                listyearActive
-                  ? styles.listItemActive
-                  : styles.listItemInActiveh4
-              }`}
-              onClick={toggleYear}
-            >
-              Yearly
-            </button>
-          </div> */}
         </div>
         <div>
-          <div>{showMonth && <MonthPlans monthState={true} />}</div>
-          <div>{showYear && <YearPlans yearState={false} />}</div>
+          <div>
+            <Plans />
+          </div>
         </div>
 
         <div className={styles.features}>

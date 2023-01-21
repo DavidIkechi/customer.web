@@ -19,11 +19,9 @@ import {
 } from "./audioSlice";
 
 export const GetUserAudios = () => async () => {
-  dispatch(setLoading(true));
   try {
     const res = await UserAudiosApi();
     dispatch(setAudios(res.data.detail));
-    dispatch(setLoading(false));
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
     dispatch(setLoading(false));
@@ -50,11 +48,9 @@ export const GetAudioSentiment = (id) => async () => {
 };
 
 export const GetRecentRecordings = () => async () => {
-  dispatch(setLoading(true));
   try {
     const res = await RecentRecordingsApi();
     dispatch(setRecentRecordings(res.data.detail));
-    dispatch(setLoading(false));
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
     dispatch(setLoading(false));
