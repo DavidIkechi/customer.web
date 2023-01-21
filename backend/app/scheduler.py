@@ -25,6 +25,10 @@ async def send_free_email():
 @cron_schedule.task(daily)
 async def account_deletion_reminder():
     await cron_status.due_for_deletion()
+
+@cron_schedule.task("daily")
+async def agent_report():
+    await cron_status.agent_report()
       
 if __name__ == "__main__":
     # If this script is run, only Rocketry is run

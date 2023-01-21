@@ -598,4 +598,3 @@ def delete_plan(db: Session, plan_name: str):
     deleted_plan = db.query(models.ProductPlan).filter(models.ProductPlan.name == plan_name.lower()).delete()
     db.commit()
     return {"message":"Plan Deleted"}
-   
