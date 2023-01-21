@@ -15,11 +15,9 @@ import {
 } from "./agentSlice";
 
 export const LeaderBoard = () => async () => {
-  dispatch(setLoading(true));
   try {
     const res = await LeaderBoardApi();
     dispatch(setLeaderBoard(res.data.detail));
-    dispatch(setLoading(false));
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
     dispatch(setLoading(false));
@@ -27,11 +25,9 @@ export const LeaderBoard = () => async () => {
 };
 
 export const TotalAgentAnalysis = (id) => async () => {
-  dispatch(setLoading(true));
   try {
     const res = await TotalAgentAnalysisApi(id);
     dispatch(setTotalAgentAnaylsis(res.data.detail));
-    dispatch(setLoading(false));
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
     dispatch(setLoading(false));
