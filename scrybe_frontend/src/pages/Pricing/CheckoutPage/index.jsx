@@ -1,9 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Check from "../assets/check.svg";
+import fluterwave from "../assets/fluterwave_icon.png";
 import selectArr from "../assets/select-arrow.svg";
+import stripe from "../assets/stripe_icon.png";
 import { PricingData } from "../Plans/data";
 import styles from "./checkout.module.scss";
+
+const paymentProviders = [
+  // {
+  //   id: 1,
+  //   name: "Paystack",
+  //   icon: paystack,
+  //   url: "",
+  // },
+  {
+    id: 2,
+    name: "Stripe",
+    icon: stripe,
+    url: "create-stripe-checkout-session",
+  },
+  {
+    id: 3,
+    name: "Flutterwave",
+    icon: fluterwave,
+    url: "",
+  },
+];
 const CheckoutPage = () => {
   const selectedPlanKey = localStorage.getItem("selectedPlan");
   const [selectedPlan, setSelectedPlan] = useState();
@@ -136,6 +159,19 @@ const CheckoutPage = () => {
             </div>
           </div>
           <div className={styles.completePayment}>
+            <div className={styles.selectPaymetProvider}>
+              <p>Select your preferred payment method:</p>
+              <div className={styles.paymentProvider}>
+                {paymentProviders.map((item) => (
+                  <div className={styles.providers} key={item.id}>
+                    <div className={styles.provider}>
+                      <img src={item.icon} alt={item.name} />
+                      <p>{item.name}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
             <div className={styles.agreement}>
               <input
                 type="checkbox"
