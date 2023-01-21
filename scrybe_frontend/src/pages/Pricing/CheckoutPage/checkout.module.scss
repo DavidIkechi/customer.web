@@ -344,7 +344,61 @@
 
       .completePayment {
         margin: 1rem 0;
+        .selectPaymetProvider {
+          margin: 1rem 0;
+          p {
+            font-weight: 300;
+            font-size: 12px;
+            line-height: 16px;
+            color: #7e7d7b;
+          }
 
+          .paymentProvider {
+            display: flex;
+            margin: 0 2rem;
+            @media screen and (max-width: 768px) {
+              flex-direction: column;
+            }
+            .providers {
+              margin: 1rem 0;
+              cursor: pointer;
+              .provider {
+                display: flex;
+                align-items: center;
+                margin-right: 1rem;
+                transition: all 0.3s ease-in-out;
+                -webkit-transition: all 0.3s ease-in-out;
+                -moz-transition: all 0.3s ease-in-out;
+                -ms-transition: all 0.3s ease-in-out;
+                -o-transition: all 0.3s ease-in-out;
+                img {
+                  margin-right: 5px;
+                  width: 40px;
+                  height: 40px;
+                  margin-right: 1rem;
+                  border-radius: 50%;
+                  -webkit-border-radius: 50%;
+                  -moz-border-radius: 50%;
+                  -ms-border-radius: 50%;
+                  -o-border-radius: 50%;
+                }
+                p {
+                  font-weight: 300;
+                  font-size: 14px;
+                  line-height: 16px;
+                  color: #3f3f3f;
+                }
+                &:hover {
+                  transform: scale(1.1);
+                  -webkit-transform: scale(1.1);
+                  -moz-transform: scale(1.1);
+                  -ms-transform: scale(1.1);
+                  -o-transform: scale(1.1);
+                }
+              }
+            }
+          }
+        }
         .agreement {
           display: flex;
           align-items: center;
