@@ -43,6 +43,7 @@ import * as atatus from "atatus-spa";
 import PublicLayout from "./PublicLayout";
 import SnackBar from "./components/SnackBar/index";
 import { useSelector } from "react-redux";
+import CheckoutPage from "./pages/Pricing/components/CheckoutPage";
 atatus.config("006cee2d85d74c12953a30f3e9b78569").install();
 
 function App() {
@@ -92,6 +93,7 @@ function App() {
         <Route element={<RequireToken />}>
           <Route path="/checkout-startup" element={<StartUp />} />
           <Route path="/checkout-growing" element={<Growing />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/account" element={<Account />} />
           <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
           <Route path="/agent-report/:Agent_id" element={<AgentReport />} />

@@ -8,13 +8,13 @@
   padding: 0 1.5rem;
   margin-inline: auto;
   @include media(1220px) {
-    width: pix-rem(390);
-    flex-direction: column;
+    width: 100%;
+    // flex-direction: column;
     justify-content: center;
   }
 
   @include media(820px) {
-    width: 100%;
+    width: pix-rem(420);
     flex-direction: column;
   }
 
@@ -31,7 +31,7 @@
   color: #3f3f3f;
   padding: 2rem;
   border-radius: 1.5rem;
-  border: 0.89px solid #002f49;
+  // border: 0.89px solid #002f49;
 }
 .plansCard button {
   display: block;
