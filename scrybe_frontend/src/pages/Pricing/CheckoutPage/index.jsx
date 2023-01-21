@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Check from "../assets/check.svg";
 import selectArr from "../assets/select-arrow.svg";
 import { PricingData } from "../Plans/data";
@@ -8,6 +9,8 @@ const CheckoutPage = () => {
   const [selectedPlan, setSelectedPlan] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [totalPay, setTotalPay] = useState(0);
+  const [isChecked, setIsChecked] = useState(false);
+  const [mins, setMins] = useState("");
 
   const getSelectedPlan = (plankey) => {
     if (selectedPlanKey) {
@@ -16,13 +19,23 @@ const CheckoutPage = () => {
     }
   };
 
-  const getMin = (e) => {
-    const min = e.target.value;
-    const toPay = min * selectedPlan.pricing;
+  const getMin = (min) => {
+    const toPay = min * selectedPlan?.pricing;
     setTotalPay(toPay);
   };
 
-  console.log("selectedPlan", selectedPlan);
+  const handlesSelectPlan = (plan) => {
+    setSelectedPlan(plan);
+    localStorage.setItem("selectedPlan", plan.planKey);
+    getSelectedPlan(plan.planKey);
+    setIsModalOpen(false);
+    getMin(Number(mins));
+  };
+
+  useEffect(() => {
+    getMin(Number(mins));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mins, selectedPlan]);
 
   useEffect(() => {
     getSelectedPlan(selectedPlanKey);
@@ -67,6 +80,7 @@ const CheckoutPage = () => {
                 <div className={styles.modalContent}>
                   {PricingData.map((plan, index) => (
                     <div
+                      onClick={() => handlesSelectPlan(plan)}
                       className={`${styles.modalContent__item} ${
                         plan.headDescription === "Enterprise Plus" &&
                         styles.plus
@@ -84,7 +98,11 @@ const CheckoutPage = () => {
                           <p>Per minute</p>
                         </div>
                         <div className={styles.priceDetails__button}>
-                          click to select
+                          {plan.id === selectedPlan.id ? (
+                            <img src={Check} alt="check" />
+                          ) : (
+                            <p>click to select</p>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -98,7 +116,12 @@ const CheckoutPage = () => {
             <p>Type in the amount of minutes you want to buy</p>
             <div className={styles.paymentCard__input}>
               <div className={styles.paymentCardInputBox}>
-                <input type="number" placeholder="200" onChange={getMin} />
+                <input
+                  type="number"
+                  placeholder="200"
+                  value={mins}
+                  onChange={(e) => setMins(e.target.value)}
+                />
                 <p>minutes</p>
               </div>
               <p>X</p>
@@ -111,6 +134,27 @@ const CheckoutPage = () => {
               <h3>Total to pay</h3>
               <h1 className={styles.paymentPrice}>${totalPay}</h1>
             </div>
+          </div>
+          <div className={styles.completePayment}>
+            <div className={styles.agreement}>
+              <input
+                type="checkbox"
+                onChange={(e) => setIsChecked(e.target.value)}
+              />
+              <p>
+                We process payments through a trusted third party payment
+                company. By clicking ‘proceed to checkout’ button below, you
+                agree to be redirected to our processor’s payment page.
+              </p>
+            </div>
+            <button
+              className={`${styles.payBtn} ${!isChecked && styles.disabled}`}
+            >
+              Proceed to checkout
+            </button>
+            <p className={styles.cancelBtn}>
+              <Link to="/">Exit payment</Link>
+            </p>
           </div>
         </div>
         <div className={styles.selectedPlanDetails}>
@@ -128,6 +172,12 @@ const CheckoutPage = () => {
           )}
         </div>
       </div>
+      {isModalOpen && (
+        <div
+          className={styles.modalOverlay}
+          onClick={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
