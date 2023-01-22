@@ -16,7 +16,7 @@ pipeline {
         	stage("build backend"){
 
 			steps {
-				sh '''
+				sh '''#!/bin/bash
 				    cd backend/app
 				    python3 -m pip install --upgrade pip && pip3 install pyopenssl --upgrade
 				    source env/bin/activate
@@ -33,7 +33,7 @@ pipeline {
 
 				sh "sudo pm2 delete heed"
 				sh "sudo pm2 delete heed_api"
-				sh '''
+				sh '''#!/bin/bash
 				    cd backend/app
 				    source env/bin/activate
 				    sudo pm2 start main.py --name heed_api --interpreter python3
