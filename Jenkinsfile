@@ -20,7 +20,7 @@ pipeline {
 				    cd backend/app
 				    python3 -m pip install --upgrade pip && pip3 install pyopenssl --upgrade
 				    source env/bin/activate
-				    pip install --user -r requirements.txt --force
+				    pip install -r requirements.txt --force
 				    alembic revision --autogenerate -m 'first migration' && alembic upgrade head
 				'''
 				
