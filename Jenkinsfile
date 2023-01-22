@@ -18,8 +18,8 @@ pipeline {
 			steps {
 				sh '''
 				    cd backend/app
-				    source env/bin/activate
 				    python3 -m pip install --upgrade pip && pip3 install pyopenssl --upgrade"
+				    source env/bin/activate
 				    pip3 install -r requirements.txt --force"
 				    alembic revision --autogenerate -m 'first migration' && alembic upgrade head"
 				'''
