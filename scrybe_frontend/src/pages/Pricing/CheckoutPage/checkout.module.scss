@@ -362,8 +362,18 @@
             .providers {
               margin: 1rem 0;
               cursor: pointer;
+              .selectedPayment {
+                border-color: #0062e8 !important;
+                border-radius: 5px;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                -ms-border-radius: 5px;
+                -o-border-radius: 5px;
+              }
               .provider {
+                padding: 5px;
                 display: flex;
+                border: 1px solid transparent;
                 align-items: center;
                 margin-right: 1rem;
                 transition: all 0.3s ease-in-out;
