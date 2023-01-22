@@ -34,6 +34,7 @@ const CheckoutPage = () => {
   const [totalPay, setTotalPay] = useState(0);
   const [isChecked, setIsChecked] = useState(false);
   const [mins, setMins] = useState("");
+  const [selectedPayment, setSelectedPayment] = useState(paymentProviders[0]);
 
   const getSelectedPlan = (plankey) => {
     if (selectedPlanKey) {
@@ -64,6 +65,10 @@ const CheckoutPage = () => {
     getSelectedPlan(selectedPlanKey);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handlePayment = (provider) => {
+    setSelectedPayment(provider);
+  };
 
   return (
     <div className={styles.checkoutPage}>
@@ -163,8 +168,16 @@ const CheckoutPage = () => {
               <p>Select your preferred payment method:</p>
               <div className={styles.paymentProvider}>
                 {paymentProviders.map((item) => (
-                  <div className={styles.providers} key={item.id}>
-                    <div className={styles.provider}>
+                  <div
+                    className={styles.providers}
+                    key={item.id}
+                    onClick={() => handlePayment(item)}
+                  >
+                    <div
+                      className={`${styles.provider} ${
+                        selectedPayment.id === item.id && styles.selectedPayment
+                      }`}
+                    >
                       <img src={item.icon} alt={item.name} />
                       <p>{item.name}</p>
                     </div>
