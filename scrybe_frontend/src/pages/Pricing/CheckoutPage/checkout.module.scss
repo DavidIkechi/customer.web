@@ -52,9 +52,9 @@
         }
 
         &__input {
-          padding: 10px 40px 20px 40px;
+          padding: 10px 40px;
           width: 100%;
-          height: 110px;
+          height: max-content;
           background: #002d6b;
           border-radius: 8px;
           @media screen and (max-width: 768px) {
@@ -431,6 +431,7 @@
         }
         .payBtn {
           width: 100%;
+          position: relative;
           height: 40px;
           background: #006cff;
           border-radius: 4px;
@@ -448,6 +449,12 @@
           -o-transition: all 0.3s ease-in-out;
           &:hover {
             background: #002d6b;
+          }
+          p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 16px;
+            color: #fefefd;
           }
         }
         .disabled {

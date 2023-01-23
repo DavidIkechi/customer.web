@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import Spinner from "../../../components/ButtonSpinner";
+import { createPaymentEndpoint } from "../../../redux/features/orders/service";
 import Check from "../assets/check.svg";
 import fluterwave from "../assets/fluterwave_icon.png";
 import selectArr from "../assets/select-arrow.svg";
@@ -28,6 +31,7 @@ const paymentProviders = [
   },
 ];
 const CheckoutPage = () => {
+  // const { paymentUrl } = useSelector((state) => state.order);
   const selectedPlanKey = localStorage.getItem("selectedPlan");
   const [selectedPlan, setSelectedPlan] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,6 +39,9 @@ const CheckoutPage = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [mins, setMins] = useState("");
   const [selectedPayment, setSelectedPayment] = useState(paymentProviders[0]);
+  const [isLoading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   const getSelectedPlan = (plankey) => {
     if (selectedPlanKey) {
@@ -45,7 +52,8 @@ const CheckoutPage = () => {
 
   const getMin = (min) => {
     const toPay = min * selectedPlan?.pricing;
-    setTotalPay(toPay);
+    const rounded = Math.round(toPay * 10) / 10;
+    setTotalPay(rounded);
   };
 
   const handlesSelectPlan = (plan) => {
@@ -70,10 +78,28 @@ const CheckoutPage = () => {
     setSelectedPayment(provider);
   };
 
+  const handleCheckout = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMins("");
+    setIsChecked(false);
+    const url = selectedPayment.url;
+    const data = {
+      minutes: Number(mins),
+      plan: selectedPlan.headDescription,
+    };
+    setTimeout(() => {
+      dispatch(createPaymentEndpoint(url, data));
+      setLoading(false);
+    }, 3000);
+  };
   return (
     <div className={styles.checkoutPage}>
       <div className={styles.checkoutGrid}>
-        <div className={styles.checkoutGrid__billing}>
+        <form
+          className={styles.checkoutGrid__billing}
+          onSubmit={handleCheckout}
+        >
           <h1>Billing details</h1>
           <div className={styles.billingDropDown}>
             <h3>choose a different plan:</h3>
@@ -148,6 +174,7 @@ const CheckoutPage = () => {
                   type="number"
                   placeholder="200"
                   value={mins}
+                  required
                   onChange={(e) => setMins(e.target.value)}
                 />
                 <p>minutes</p>
@@ -197,15 +224,18 @@ const CheckoutPage = () => {
               </p>
             </div>
             <button
-              className={`${styles.payBtn} ${!isChecked && styles.disabled}`}
+              type="submit"
+              className={`${styles.payBtn} ${!isChecked && styles.disabled} ${
+                isLoading && styles.disabled
+              }`}
             >
-              Proceed to checkout
+              {isLoading ? <Spinner /> : <p>Proceed to checkout</p>}
             </button>
             <p className={styles.cancelBtn}>
               <Link to="/">Exit payment</Link>
             </p>
           </div>
-        </div>
+        </form>
         <div className={styles.selectedPlanDetails}>
           {selectedPlan && (
             <div className={styles.selectedPlanDetails__plan}>
