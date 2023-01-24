@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import Spinner from "../../../components/ButtonSpinner";
 import { createPaymentEndpoint } from "../../../redux/features/orders/service";
@@ -42,6 +43,7 @@ const CheckoutPage = () => {
   const [isLoading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const getSelectedPlan = (plankey) => {
     if (selectedPlanKey) {
@@ -74,6 +76,13 @@ const CheckoutPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (!selectedPlanKey) {
+      navigate("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedPlan]);
+
   const handlePayment = (provider) => {
     setSelectedPayment(provider);
   };
@@ -91,6 +100,7 @@ const CheckoutPage = () => {
     setTimeout(() => {
       dispatch(createPaymentEndpoint(url, data));
       setLoading(false);
+      localStorage.removeItem("selectedPlan");
     }, 3000);
   };
   return (
@@ -215,6 +225,7 @@ const CheckoutPage = () => {
             <div className={styles.agreement}>
               <input
                 type="checkbox"
+                value={isChecked}
                 onChange={(e) => setIsChecked(e.target.value)}
               />
               <p>

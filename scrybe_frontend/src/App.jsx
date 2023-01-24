@@ -91,6 +91,7 @@ function App() {
 
         <Route element={<RequireToken />}>
           <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/stripe-order/" element={<CheckoutPage />} />
           <Route path="/paymentFailed" element={<PaymentFailed />} />
           <Route path="/account" element={<Account />} />
           <Route path="/uploaded-recordings" element={<UploadedRecordings />} />

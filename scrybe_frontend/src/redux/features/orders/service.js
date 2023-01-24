@@ -32,7 +32,8 @@ export const createPaymentEndpoint = (url, data) => async () => {
     dispatch(setPaymentEndpoint(res.data.detail));
     console.log(res);
     if (res.data.detail?.payment_url)
-      window.location.replace = res.data.detail?.payment_url;
+      // window.location.replace = res.data.detail?.payment_url;
+      window.location.assign(res.data.detail?.payment_url);
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
   }

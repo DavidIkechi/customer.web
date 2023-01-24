@@ -33,6 +33,7 @@ const TableData = ({ searchKeyword }) => {
   const [openDeletePopup, setOpenDeletePopup] = useState(false);
   const sessionExpired = audioError;
   const isFetching = isLoading;
+  console.log("isFetching", isFetching);
 
   useEffect(() => {
     dispatch(GetUserAudios());
