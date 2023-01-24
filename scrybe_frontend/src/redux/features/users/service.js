@@ -110,12 +110,12 @@ export const UserGoogleLogin = (email) => async () => {
     const res = await GoogleSignInApi(email);
     const rememberMe = localStorage.getItem("rememberMe");
     if (rememberMe) {
-      sessionStorage.setItem("heedAccessToken", res.data.access_token);
-      localStorage.setItem("heedAccessToken", res.data.access_token);
+      sessionStorage.setItem("heedAccessToken", res.data.detail.access_token);
+      localStorage.setItem("heedAccessToken", res.data.detail.access_token);
     } else {
-      sessionStorage.setItem("heedAccessToken", res.data.access_token);
+      sessionStorage.setItem("heedAccessToken", res.data.detail.access_token);
     }
-    localStorage.setItem("heedRefreshToken", res.data.refresh_token);
+    localStorage.setItem("heedRefreshToken", res.data.detail.refresh_token);
     dispatch(setToken(res.data.detail.access_token));
 
     dispatch(createResponse({ type: "Success", message: "Login successful" }));
