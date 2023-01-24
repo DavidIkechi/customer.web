@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import Loading from "./components/Loading";
 import NewDesignSideBar from "./components/NewDesignSidebar";
 import { setToken } from "./redux/features/users/userSlice";
 import { dispatch } from "./redux/store";
@@ -30,15 +29,9 @@ export function RequireToken() {
   }
 
   return (
-    <>
-      {!isLoading ? (
-        <NewDesignSideBar needSearchMobile="needSearchMobile">
-          <Outlet />
-        </NewDesignSideBar>
-      ) : (
-        <Loading />
-      )}
-    </>
+    <NewDesignSideBar needSearchMobile="needSearchMobile">
+      <Outlet />
+    </NewDesignSideBar>
   );
 }
 
