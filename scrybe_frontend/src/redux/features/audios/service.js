@@ -19,7 +19,7 @@ import {
 } from "./audioSlice";
 
 export const GetUserAudios = () => async () => {
-  // dispatch(setLoading(true));
+  dispatch(setLoading(true));
   try {
     const res = await UserAudiosApi();
     dispatch(setAudios(res.data.detail));
