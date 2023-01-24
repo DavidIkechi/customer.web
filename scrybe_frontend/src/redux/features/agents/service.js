@@ -15,9 +15,11 @@ import {
 } from "./agentSlice";
 
 export const LeaderBoard = () => async () => {
+  dispatch(setLoading(true));
   try {
     const res = await LeaderBoardApi();
     dispatch(setLeaderBoard(res.data.detail));
+    dispatch(setLoading(false));
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
     dispatch(setLoading(false));
