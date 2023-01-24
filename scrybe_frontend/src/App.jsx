@@ -93,7 +93,11 @@ function App() {
 
         <Route element={<RequireToken />}>
           <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/stripe-order/" element={<StripePaymentSuccessPage />} />
+          <Route
+            path="/stripe-order/?success"
+            element={<StripePaymentSuccessPage />}
+          />
+          <Route path="/stripe-order/?canceled" element={<PaymentFailed />} />
           <Route
             path="/paymentSuccess"
             element={<PaystackPaymentSuccessPage />}
