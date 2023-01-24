@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./features/users/userSlice";
 import agentReducer from "./features/agents/agentSlice";
 import analyzeReducer from "./features/analyze/analyzeSlice";
 import audioReducer from "./features/audios/audioSlice";
 import orderReducer from "./features/orders/orderSlice";
-import transcriptionReducer from "./features/transcriptions/transcriptionSlice";
-import utilReducer from "./utils/UtilSlice";
 import sentimentReducer from "./features/sentiment/sentimentSlice";
+import transcriptionReducer from "./features/transcriptions/transcriptionSlice";
+import userReducer from "./features/users/userSlice";
+import utilReducer from "./utils/UtilSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,7 +14,7 @@ const store = configureStore({
     agent: agentReducer,
     analyze: analyzeReducer,
     audio: audioReducer,
-    order: orderReducer,
+    orders: orderReducer,
     transcription: transcriptionReducer,
     util: utilReducer,
     sentiment: sentimentReducer,
