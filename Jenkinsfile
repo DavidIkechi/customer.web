@@ -32,12 +32,7 @@ pipeline {
 			steps {
 
 				sh "sudo pm2 delete heed"
-				sh "sudo pm2 delete heed_api"
-				sh '''
-				    cd backend/app
-				    source env/bin/activate
-				    sudo pm2 start main.py --name heed_api --interpreter python3
-				'''
+				sh "sudo pm2 restart heed_api"
 				sh "cd scrybe_frontend && sudo pm2 start --name heed npm -- start"
 				sh "sudo pm2 save"
 			}
