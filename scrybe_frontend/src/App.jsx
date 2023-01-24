@@ -39,11 +39,11 @@ import EmailVerify from "./pages/VerificationEmail/EmailVerify";
 
 import * as atatus from "atatus-spa";
 import { useSelector } from "react-redux";
+import PaymentFailed from "./components/PaymentFailed";
 import SnackBar from "./components/SnackBar";
 import PaystackPaymentSuccessPage from "./pages/PaystackPaymentSuccessPage";
 import CheckoutPage from "./pages/Pricing/CheckoutPage";
-import PaymentFailed from "./pages/Pricing/PaymentFailed";
-import StripePaymentSuccessPage from "./pages/StripePaymentSuccessPage";
+import StripePaymentRedirectPage from "./pages/StripePaymentRedirectPage";
 import PublicLayout from "./PublicLayout";
 atatus.config("006cee2d85d74c12953a30f3e9b78569").install();
 
@@ -94,10 +94,13 @@ function App() {
         <Route element={<RequireToken />}>
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route
-            path="/stripe-order/?success"
-            element={<StripePaymentSuccessPage />}
+            path="/stripe-order/"
+            element={<StripePaymentRedirectPage />}
           />
-          <Route path="/stripe-order/?canceled" element={<PaymentFailed />} />
+          {/* <Route
+            path="/stripe-order/?canceled=true"
+            element={<PaymentFailed />}
+          /> */}
           <Route
             path="/paymentSuccess"
             element={<PaystackPaymentSuccessPage />}
