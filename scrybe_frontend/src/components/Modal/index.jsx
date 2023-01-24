@@ -73,6 +73,7 @@ const Modal = ({ open, setOpen }) => {
     setFile({ file: { name: "", progress: 0 } });
     setFirstName("");
     setLastName("");
+    setShowUploadProgress(false);
   };
 
   return (
@@ -100,6 +101,9 @@ const Modal = ({ open, setOpen }) => {
                   setLastName={setLastName}
                   handleUpload={handleUpload}
                   btnDisabled={btnDisabled}
+                  firstName={firstName}
+                  lastName={lastName}
+                  file={file.name}
                   // isNamesValid={isNamesValid}
                 />
               )}
