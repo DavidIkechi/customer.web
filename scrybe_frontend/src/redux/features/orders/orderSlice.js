@@ -4,6 +4,7 @@ const initialState = {
   orders: [],
   order: {},
   orderError: null,
+  paymentUrl: {},
 };
 
 const orderSlice = createSlice({
@@ -19,9 +20,13 @@ const orderSlice = createSlice({
     setOrderError: (state, action) => {
       state.orderError = action.payload;
     },
+    setPaymentEndpoint: (state, action) => {
+      state.paymentUrl = action.payload;
+    },
   },
 });
 
-export const { setOrder, setOrderError, setOrders } = orderSlice.actions;
+export const { setOrder, setOrderError, setOrders, setPaymentEndpoint } =
+  orderSlice.actions;
 
 export default orderSlice.reducer;

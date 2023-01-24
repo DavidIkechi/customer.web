@@ -109,12 +109,6 @@ const Login = () => {
     localStorage.setItem("rememberMe", e.target.checked);
   };
 
-  useEffect(() => {
-    if (user) {
-      setTimeout(() => navigate("/dashboard"), 1000);
-    }
-  }, [user]);
-
   return (
     <>
       <div className={styles.signinContainer}>

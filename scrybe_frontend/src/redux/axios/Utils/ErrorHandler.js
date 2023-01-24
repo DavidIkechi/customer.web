@@ -3,7 +3,7 @@ const ErrorHandler = (err) => {
   if (err.code === "ERR_NETWORK") {
     return {
       type: "Error",
-      message: "You are offline",
+      message: "You are not connected to the internet, refresh and try again",
     };
   }
   if (err.code === "ERR_BAD_REQUEST") {
