@@ -24,7 +24,7 @@ def generate_uuid():
 
 def is_admin_check(email_address: str):
     admin_list = ['davidakwuruu@gmail.com','tekkieware@gmail.com', 
-                  'collinsakpaka@gmail.com','dprincecoder@gmail.com']
+                  'collinsakpaka@gmail.com','dprincecoder@gmail.com','oyindamoladekeye@gmail.com']
     
     return email_address.lower() in admin_list
 
