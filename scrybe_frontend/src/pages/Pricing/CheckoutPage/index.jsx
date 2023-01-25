@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import Spinner from "../../../components/ButtonSpinner";
+import { setOrder } from "../../../redux/features/orders/orderSlice";
 import { createPaymentEndpoint } from "../../../redux/features/orders/service";
 import Check from "../assets/check.svg";
 import fluterwave from "../assets/fluterwave_icon.png";
@@ -32,7 +33,6 @@ const paymentProviders = [
   },
 ];
 const CheckoutPage = () => {
-  // const { paymentUrl } = useSelector((state) => state.order);
   const selectedPlanKey = localStorage.getItem("selectedPlan");
   const [selectedPlan, setSelectedPlan] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -102,6 +102,16 @@ const CheckoutPage = () => {
       setLoading(false);
       localStorage.removeItem("selectedPlan");
     }, 3000);
+    dispatch(
+      setOrder({
+        minutes: Number(mins),
+        plan: selectedPlan?.headDescription,
+        total: totalPay,
+        planPrice: selectedPlan?.pricing,
+        paymentMethod: selectedPayment.name,
+        date: new Date().toDateString(),
+      })
+    );
   };
   return (
     <div className={styles.checkoutPage}>

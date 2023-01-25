@@ -41,6 +41,7 @@ import * as atatus from "atatus-spa";
 import { useSelector } from "react-redux";
 import PaymentFailed from "./components/PaymentFailed";
 import SnackBar from "./components/SnackBar";
+import PaymentDetails from "./pages/PaymentDetails";
 import PaystackPaymentSuccessPage from "./pages/PaystackPaymentSuccessPage";
 import CheckoutPage from "./pages/Pricing/CheckoutPage";
 import StripePaymentRedirectPage from "./pages/StripePaymentRedirectPage";
@@ -97,10 +98,7 @@ function App() {
             path="/stripe-order/"
             element={<StripePaymentRedirectPage />}
           />
-          {/* <Route
-            path="/stripe-order/?canceled=true"
-            element={<PaymentFailed />}
-          /> */}
+          <Route path="/your-order" element={<PaymentDetails />} />
           <Route
             path="/paymentSuccess"
             element={<PaystackPaymentSuccessPage />}
