@@ -17,36 +17,49 @@ const PaymentDetails = () => {
             <h2>Summary</h2>
             <div className={styles.section}>
               <div className={styles.flex}>
-                <h3>Price/plan</h3>
+                <h3>
+                  Price/plan<span>:</span>
+                </h3>
                 <div className={styles.hr} />
                 <p>${planPrice} per minutes</p>
               </div>
               <div className={styles.flex}>
-                <h3>Plan</h3>
+                <h3>
+                  Plan<span>:</span>
+                </h3>
                 <div className={styles.hr} />
                 <p>{plan}</p>
               </div>
             </div>
             <div className={`${styles.section} ${styles.paymentSection}`}>
               <div className={styles.flex}>
-                <h3>Payment method</h3>
+                <h3>
+                  Payment method<span>:</span>
+                </h3>
                 <div className={styles.hr} />
                 <p>{paymentMethod}</p>
               </div>
               <div className={styles.flex}>
-                <h3>Start date</h3>
+                <h3>
+                  Start date<span>:</span>
+                </h3>
                 <div className={styles.hr} />
                 <p>{date}</p>
               </div>
             </div>
             <div className={`${styles.section} ${styles.totalSection}`}>
               <div className={styles.flex}>
-                <h3>Total minutes purchased</h3>
+                <h3>
+                  Total minutes purchased
+                  <span>:</span>
+                </h3>
                 <div className={styles.hr} />
                 <p>{minutes} minutes</p>
               </div>
               <div className={styles.flex}>
-                <h3>Total amount paid</h3>
+                <h3>
+                  Total amount paid <span>:</span>
+                </h3>
                 <div className={styles.hr} />
                 <p className={styles.total}>${total}</p>
               </div>

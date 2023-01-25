@@ -53,6 +53,18 @@
             font-weight: 600;
             font-size: 20px;
             line-height: 24px;
+            span {
+              font-weight: 300;
+              font-size: 16px;
+              line-height: 24px;
+              display: none;
+              @media screen and (max-width: 768px) {
+                display: inline;
+              }
+            }
+            @media screen and (max-width: 768px) {
+              font-size: 16px;
+            }
           }
           .hr {
             position: absolute;
@@ -64,6 +76,9 @@
             height: 2px;
             background: #a7a6a4;
             margin: 10px 0;
+            @media screen and (max-width: 768px) {
+              display: none;
+            }
           }
           p {
             font-weight: 300;
