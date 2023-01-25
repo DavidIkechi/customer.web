@@ -90,8 +90,16 @@ const CheckoutPage = () => {
   const handleCheckout = (e) => {
     e.preventDefault();
     setLoading(true);
-    setMins("");
-    setIsChecked(false);
+    const orderToSave = {
+      minutes: Number(mins),
+      plan: selectedPlan?.headDescription,
+      total: totalPay,
+      planPrice: selectedPlan?.pricing,
+      paymentMethod: selectedPayment.name,
+      date: new Date().toDateString(),
+    };
+    localStorage.setItem("order", JSON.stringify(orderToSave));
+    dispatch(setOrder(orderToSave));
     const url = selectedPayment.url;
     const data = {
       minutes: Number(mins),
@@ -99,19 +107,11 @@ const CheckoutPage = () => {
     };
     setTimeout(() => {
       dispatch(createPaymentEndpoint(url, data));
+      setMins("");
+      setIsChecked(false);
       setLoading(false);
       localStorage.removeItem("selectedPlan");
     }, 3000);
-    dispatch(
-      setOrder({
-        minutes: Number(mins),
-        plan: selectedPlan?.headDescription,
-        total: totalPay,
-        planPrice: selectedPlan?.pricing,
-        paymentMethod: selectedPayment.name,
-        date: new Date().toDateString(),
-      })
-    );
   };
   return (
     <div className={styles.checkoutPage}>

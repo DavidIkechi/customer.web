@@ -3,13 +3,16 @@ import indicatorImg from "./assets/indicator.png";
 import styles from "./paymentDetails.module.scss";
 
 const PaymentDetails = () => {
+  // const { order } = useSelector((state) => state.order);
+  const order = JSON.parse(localStorage.getItem("order"));
   const [timedown, setTimedown] = React.useState(false);
-  let minutes = 2000;
-  let plan = "starter";
-  let total = 20;
-  let planPrice = "0.2";
-  let paymentMethod = "Stripe";
-  let date = new Date().toDateString();
+  console.log(order);
+  let minutes = order?.minutes;
+  let plan = order?.plan;
+  let total = order?.total;
+  let planPrice = order?.planPrice;
+  let paymentMethod = order?.paymentMethod;
+  let date = order?.date;
 
   React.useEffect(() => {
     setTimeout(() => {
