@@ -1,7 +1,9 @@
 import React from "react";
+import indicatorImg from "./assets/indicator.png";
 import styles from "./paymentDetails.module.scss";
 
 const PaymentDetails = () => {
+  const [timedown, setTimedown] = React.useState(false);
   let minutes = 2000;
   let plan = "starter";
   let total = 20;
@@ -9,10 +11,27 @@ const PaymentDetails = () => {
   let paymentMethod = "Stripe";
   let date = new Date().toDateString();
 
+  React.useEffect(() => {
+    setTimeout(() => {
+      setTimedown(true);
+    }, 10000);
+  }, []);
   return (
-    <div className={styles.paymentContainer}>
+    <div
+      className={`${styles.paymentContainer} ${timedown && styles.hideAlert}`}
+    >
       <div className={styles.centered}>
         <div className={styles.paymentDetails}>
+          <div className={styles.paymentDetails__modalAlert}>
+            <img src={indicatorImg} alt="success" />
+            <h3>Your payment is successful</h3>
+            <p>
+              we received your payment of <span>${total}</span>. A payment
+              receipt with the following breakdown has been sent to your email{" "}
+              <span className={styles.mail}>username@yourmail.com</span>
+            </p>
+            <p className={styles.trsnID}>Transaction ID: 792HDK029J4A627</p>
+          </div>
           <div className={styles.paymentDetails__summary}>
             <h2>Summary</h2>
             <div className={styles.section}>
