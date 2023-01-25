@@ -1,10 +1,22 @@
 import React from "react";
-import styles from "./homePageRedesign.module.scss";
+import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import styles from "./homePageRedesign.module.scss";
 
 const Index = () => {
   return (
     <div>
+      <Helmet>
+        <title>Heed - AI Powered Call Analytics</title>
+        <meta
+          name="description"
+          content="Heed is a customer support platform that uses AI to boost sales and support teams efficiency and customer satisfaction. Heed uses Artificial Intelligence to automatically transcribe and analyze recorded audio calls by Customer support agents and sales reps to give cutting-edge insight into customer sentiment, thereby boosting operational efficiency, brand loyalty and customer retention"
+        />
+        <meta
+          name="keywords"
+          content="Heed, customer support, AI - Powered Solutions, To Boost Sales And Support Teams Efficiency And Customer Satisfaction, AI, Artificial Intelligence, automatically transcribe, analyze recorded audio calls, Customer support agents, sales reps, cutting-edge insight, customer sentiment, operational efficiency, brand loyalty, customer retention"
+        />
+      </Helmet>
       <section className={styles.first__section}>
         <div className={styles.sect__container}>
           <div className={styles.hero__flex}>
@@ -29,26 +41,12 @@ const Index = () => {
               <div className={styles.hero__action}>
                 <div className={styles.button__content}>
                   <Link to="/support-team" style={{ width: "48%" }}>
-                    <button
-                      className={styles.hero__buttonOne}
-                      // style={{
-                      //   backgroundColor: supportColor ? "#006CFF" : "#FFFFFF",
-                      //   color: supportText ? "#FFFFFF" : "#006CFF",
-                      // }}
-                      // onClick={toggleColor}
-                    >
+                    <button className={styles.hero__buttonOne}>
                       For Support
                     </button>
                   </Link>
                   <Link to="/sales-team" style={{ width: "48%" }}>
-                    <button
-                      className={styles.hero__buttonTwo}
-                      // style={{
-                      //   backgroundColor: saleColor ? "#006CFF" : "#FFFFFF",
-                      //   color: saleText ? "#FFFFFF" : "#006CFF",
-                      // }}
-                      // onClick={toggleColor}
-                    >
+                    <button className={styles.hero__buttonTwo}>
                       For Sales
                     </button>
                   </Link>

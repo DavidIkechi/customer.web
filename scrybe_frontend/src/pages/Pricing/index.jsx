@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import Plans from "./Plans";
 import styles from "./Pricing.module.scss";
@@ -6,6 +7,17 @@ import styles from "./Pricing.module.scss";
 function Pricing() {
   return (
     <>
+      <Helmet>
+        <title>Pricing | Heed</title>
+        <meta
+          name="description"
+          content="Heed Plans for every stage of your customer success team"
+        />
+        <meta
+          name="keywords"
+          content="Heed, pricing, cost, pricing plans, pricing packages, special offers"
+        />
+      </Helmet>
       <div className={styles.pricing}>
         <div className={styles.hero}>
           <div className={styles.container}>
