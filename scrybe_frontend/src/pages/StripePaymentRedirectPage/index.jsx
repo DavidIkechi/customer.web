@@ -6,14 +6,14 @@ function StripePaymentRedirectPage() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const success = queryParams.get("success");
-  const cancel = queryParams.get("cancel");
+  const cancel = queryParams.get("canceled");
 
   return success ? (
     <p>Payment SuccessFull</p>
   ) : cancel ? (
     <PaymentFailed msg="Payment Canceled" />
   ) : (
-    <PaymentFailed msg="Something else occured" />
+    <PaymentFailed msg="Something went wrong" />
   );
 }
 
