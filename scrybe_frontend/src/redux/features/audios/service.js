@@ -70,8 +70,7 @@ export const GetTotalRecordings = () => async () => {
 
 export const DeleteAudios = (ids) => async () => {
   try {
-    const res = await DeleteAudioApi(ids);
-    console.log(res);
+    await DeleteAudioApi(ids);
     dispatch(GetUserAudios());
     dispatch(
       createResponse({
