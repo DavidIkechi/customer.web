@@ -20,7 +20,7 @@ const SnackBar = ({ response }) => {
         setOpen(false);
         setClassName("");
         dispatch(createResponse({ type: "", message: "" }));
-      }, 5000);
+      }, 4000);
     }
   }, [response]);
 
