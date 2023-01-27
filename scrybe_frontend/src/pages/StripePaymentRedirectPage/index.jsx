@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import PaymentFailed from "../../components/PaymentFailed";
+import PaymentDetails from "../PaymentDetails";
 
 function StripePaymentRedirectPage() {
   const location = useLocation();
@@ -9,7 +10,7 @@ function StripePaymentRedirectPage() {
   const cancel = queryParams.get("canceled");
 
   return success ? (
-    <p>Payment SuccessFull</p>
+    <PaymentDetails />
   ) : cancel ? (
     <PaymentFailed msg="Payment Canceled" />
   ) : (

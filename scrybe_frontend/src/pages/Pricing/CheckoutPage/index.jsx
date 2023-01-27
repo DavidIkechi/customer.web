@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import Spinner from "../../../components/ButtonSpinner";
+import { setOrder } from "../../../redux/features/orders/orderSlice";
 import { createPaymentEndpoint } from "../../../redux/features/orders/service";
 import Check from "../assets/check.svg";
 import fluterwave from "../assets/fluterwave_icon.png";
@@ -32,7 +33,6 @@ const paymentProviders = [
   },
 ];
 const CheckoutPage = () => {
-  // const { paymentUrl } = useSelector((state) => state.order);
   const selectedPlanKey = localStorage.getItem("selectedPlan");
   const [selectedPlan, setSelectedPlan] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -90,8 +90,16 @@ const CheckoutPage = () => {
   const handleCheckout = (e) => {
     e.preventDefault();
     setLoading(true);
-    setMins("");
-    setIsChecked(false);
+    const orderToSave = {
+      minutes: Number(mins),
+      plan: selectedPlan?.headDescription,
+      total: totalPay,
+      planPrice: selectedPlan?.pricing,
+      paymentMethod: selectedPayment.name,
+      date: new Date().toDateString(),
+    };
+    localStorage.setItem("order", JSON.stringify(orderToSave));
+    dispatch(setOrder(orderToSave));
     const url = selectedPayment.url;
     const data = {
       minutes: Number(mins),
@@ -99,6 +107,8 @@ const CheckoutPage = () => {
     };
     setTimeout(() => {
       dispatch(createPaymentEndpoint(url, data));
+      setMins("");
+      setIsChecked(false);
       setLoading(false);
       localStorage.removeItem("selectedPlan");
     }, 3000);
