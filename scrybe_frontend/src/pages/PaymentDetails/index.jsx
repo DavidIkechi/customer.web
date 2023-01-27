@@ -1,5 +1,7 @@
+import jsPDF from "jspdf";
 import React from "react";
 import indicatorImg from "./assets/indicator.png";
+import pdf from "./assets/pdf.png";
 import styles from "./paymentDetails.module.scss";
 
 const PaymentDetails = () => {
@@ -19,6 +21,21 @@ const PaymentDetails = () => {
       setTimedown(true);
     }, 10000);
   }, []);
+
+  // prepare json to pdf file conversion for download
+  const downloadPDF = () => {
+    const doc = new jsPDF();
+    // Set the font size and style for the table
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+
+    // Define the columns for the table
+    var columns = ["Plan", "Minutes", "Total", "Plan Price", "Payment Method"];
+    let rows = [plan, minutes, total, planPrice, paymentMethod];
+    // Draw the table
+    doc.autoTable(columns, rows);
+    doc.save("paymentDetails.pdf");
+  };
   return (
     <div
       className={`${styles.paymentContainer} ${timedown && styles.hideAlert}`}
@@ -87,7 +104,19 @@ const PaymentDetails = () => {
               </div>
             </div>
           </div>
-          <div className={styles.actionBtns}></div>
+          <div className={styles.actionBtns}>
+            <div className={styles.actionBtns__account}>
+              <a href="/account">Go to your Account page</a>
+            </div>
+            <div className={styles.actionBtns__pdf}>
+              <div className={styles.flex}>
+                <img src={pdf} alt="pdf" />
+                <div onClick={downloadPDF} className={styles.download}>
+                  Download as PDF
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div className={styles.complaintBox}>
           <div className={styles.complaintBox__header}>

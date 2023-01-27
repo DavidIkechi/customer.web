@@ -179,6 +179,75 @@
         padding: 20px 0;
       }
     }
+    .actionBtns {
+      margin: 20px 0;
+      width: 100%;
+      &__account {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        @media screen and (max-width: 768px) {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        a {
+          width: 100%;
+          text-align: center;
+          padding: 10px 0;
+          border-radius: 4px;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 24px;
+          color: #ffffff;
+          background: #006cff;
+          transition: all 0.5s ease-in-out;
+          -webkit-transition: all 0.5s ease-in-out;
+          -moz-transition: all 0.5s ease-in-out;
+          -ms-transition: all 0.5s ease-in-out;
+          -o-transition: all 0.5s ease-in-out;
+          &:hover {
+            background: #0052cc;
+          }
+          @media screen and (max-width: 768px) {
+            width: 100%;
+            margin-bottom: 10px;
+          }
+        }
+      }
+      &__pdf {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+        // @media screen and (max-width: 768px) {
+        //   flex-direction: column;
+        //   align-items: flex-start;
+        // }
+        cursor: pointer;
+        .flex {
+          display: flex;
+          align-items: center;
+          img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            margin-right: 10px;
+          }
+          a.download {
+            width: 100%;
+            // text-align: center;
+            padding: 10px 0;
+            color: #3f3f3f;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 24px;
+          }
+        }
+      }
+    }
   }
 
   .complaintBox {
