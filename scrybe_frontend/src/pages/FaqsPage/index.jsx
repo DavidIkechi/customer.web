@@ -1,11 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-param-reassign */
 import React, { useState } from "react";
-import styles from "./style.module.scss";
-import FaqComponent from "./FaqComponent";
+import { Helmet } from "react-helmet-async";
 import { Hero } from "./assets";
-import Footer from "../../components/Footer";
-import NavBar from "../../components/NavbarFree";
+import FaqComponent from "./FaqComponent";
+import styles from "./style.module.scss";
 function FAQs() {
   const [faqs, setFaqs] = useState([
     {
@@ -60,43 +59,56 @@ function FAQs() {
   };
 
   return (
-    <div className={styles.faq__wrapper}>
-      <div className={styles.faq__hero}>
-        <div className={styles.faqFlex}>
-          <div className={styles.FAQs}>
-            <div className={styles.faqHero__content}>
-              <div className={styles.h1}>
-                <h1>
-                  Get the answers you're looking for on <span>Heed</span>
-                </h1>
-              </div>
-              <div className="styles.faqImg">
-                <img src={Hero} alt="" />
+    <>
+      <Helmet>
+        <title>FAQs</title>
+        <meta
+          name="description"
+          content="FAQs, get insight on our FAQs, Get the answers you're looking for on Heed"
+        />
+        <meta
+          name="keywords"
+          content="FAQs, Heed, help center, customer service, troubleshooting, how-to guides, user manual"
+        />
+      </Helmet>
+      <div className={styles.faq__wrapper}>
+        <div className={styles.faq__hero}>
+          <div className={styles.faqFlex}>
+            <div className={styles.FAQs}>
+              <div className={styles.faqHero__content}>
+                <div className={styles.h1}>
+                  <h1>
+                    Get the answers you're looking for on <span>Heed</span>
+                  </h1>
+                </div>
+                <div className="styles.faqImg">
+                  <img src={Hero} alt="" />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className={styles.faq__section}>
-        <div className={styles.faq__title}>
-          <h4>Frequently Asked Questions</h4>
-          <p>Need Some Answers?</p>
-        </div>
-        <div className={styles.faq__accordion}>
-          <div className="faqs">
-            {faqs.map((faq, i) => (
-              <FaqComponent
-                faq={faq}
-                index={i}
-                key={i + 1}
-                toggleFAQ={toggleFAQ}
-              />
-            ))}
+        <div className={styles.faq__section}>
+          <div className={styles.faq__title}>
+            <h4>Frequently Asked Questions</h4>
+            <p>Need Some Answers?</p>
+          </div>
+          <div className={styles.faq__accordion}>
+            <div className="faqs">
+              {faqs.map((faq, i) => (
+                <FaqComponent
+                  faq={faq}
+                  index={i}
+                  key={i + 1}
+                  toggleFAQ={toggleFAQ}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

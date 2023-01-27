@@ -1,21 +1,38 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import { LogOut } from "../../redux/features/users/service";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Link, NavLink } from "react-router-dom";
+import { GetAccount, LogOut } from "../../redux/features/users/service";
+import { setToken } from "../../redux/features/users/userSlice";
+import { dispatch } from "../../redux/store";
 import styles from "./nav.module.scss";
 
 function NavBar() {
-  const navigate = useNavigate();
   const [clicked, setClicked] = useState(false);
-  const { user: currentUser, isLoading } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
+  const { user, isLoading, token } = useSelector((state) => state.user);
+  const [currentUser, setUser] = useState(user);
   const handleLogout = () => {
     dispatch(LogOut());
   };
-
   function handleClick() {
     setClicked((pre) => !pre);
   }
+
+  if (!token) {
+    const rememberMe = localStorage.getItem("rememberMe");
+    if (rememberMe) {
+      const Token = localStorage.getItem("heedAccessToken");
+      if (Token) {
+        dispatch(setToken(Token));
+        dispatch(GetAccount());
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (user) {
+      setUser(user);
+    }
+  }, [user]);
 
   return (
     <nav className={styles.nav}>
