@@ -1,13 +1,14 @@
 import { useSelector } from "react-redux";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import NewDesignSideBar from "./components/NewDesignSidebar";
 import { setToken } from "./redux/features/users/userSlice";
 import { dispatch } from "./redux/store";
 
 export function RequireToken() {
   const auth = useSelector((state) => state.user.token);
-  const { isLoading } = useSelector((state) => state.util);
-  const { pathname } = useLocation();
+  let currentPath = window.location.pathname;
+  let queryString = window.location.search;
+  let pathname = currentPath + queryString;
 
   if (!auth) {
     const rememberMe = localStorage.getItem("rememberMe");
