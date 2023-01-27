@@ -22,7 +22,7 @@ async def constantly():
 async def send_free_email():
     await cron_status.send_free_email()
 
-@cron_schedule.task(daily)
+@cron_schedule.task("daily")
 async def account_deletion_reminder():
     await cron_status.due_for_deletion()
 

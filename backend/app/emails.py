@@ -337,18 +337,20 @@ async def agent_report_email(email: List, instance: User, reports: List):
 
     if len(reports) > 3:
         phrase = "Your bottom 3 agents for this month are:"
-        for report in reports[3:]:
-            board = f"""
-                <li>
-                    <h3> {report["firstname"]} {report["lastname"]} </h3>
-                    <p> Total calls: {report["total_calls"]} </p>
-                    <p> Positive calls: {report["positive_score"]} </p>
-                    <p> Negative calls: {report["negative_score"]} </p>
-                    <p> Neutral calls: {report["neutral_score"]} </p>
-                    <p> Rank: {report["rank"]}</p>
-                </li>
-            """
-            bottom += board
+        total = len(reports)
+        for report in reports[-3:]:
+            if reports.index(report) > 2:
+                board = f"""
+                    <li>
+                        <h3> {report["firstname"]} {report["lastname"]} </h3>
+                        <p> Total calls: {report["total_calls"]} </p>
+                        <p> Positive calls: {report["positive_score"]} </p>
+                        <p> Negative calls: {report["negative_score"]} </p>
+                        <p> Neutral calls: {report["neutral_score"]} </p>
+                        <p> Rank: {report["rank"]}</p>
+                    </li>
+                """
+                bottom += board
 
     template = f"""
     <div>
