@@ -316,3 +316,70 @@ async def send_failed_payment_email(email: List, instance: User, plan, minutes, 
 
     fm =FastMail(conf)
     await fm.send_message(message=message, template_name='TopUp/failure.html')
+
+async def agent_report_email(email: List, instance: User, reports: List):
+    firstname = instance.first_name
+    top = """"""
+    bottom = """"""
+    phrase = ""
+    for report in reports[:3]:
+        board = f"""
+            <li>
+                <h3> {report["firstname"]} {report["lastname"]} </h3>
+                <p> Total calls: {report["total_calls"]} </p>
+                <p> Positive calls: {report["positive_score"]} </p>
+                <p> Negative calls: {report["negative_score"]} </p>
+                <p> Neutral calls: {report["neutral_score"]} </p>
+                <p> Rank: {report["rank"]}</p>
+            </li>
+        """
+        top += board
+
+    if len(reports) > 3:
+        phrase = "Your bottom 3 agents for this month are:"
+        total = len(reports)
+        for report in reports[-3:]:
+            if reports.index(report) > 2:
+                board = f"""
+                    <li>
+                        <h3> {report["firstname"]} {report["lastname"]} </h3>
+                        <p> Total calls: {report["total_calls"]} </p>
+                        <p> Positive calls: {report["positive_score"]} </p>
+                        <p> Negative calls: {report["negative_score"]} </p>
+                        <p> Neutral calls: {report["neutral_score"]} </p>
+                        <p> Rank: {report["rank"]}</p>
+                    </li>
+                """
+                bottom += board
+
+    template = f"""
+    <div>
+    <h3>Transcription Result</h3>
+    <br>
+    <p><b>Dear {firstname},</b></p>
+    <p>
+        Your top 3 agents for this month are:
+    </p>
+    <ol>
+        {top}
+    </ol>
+    <p>{phrase}</P>
+    <ol>
+        {bottom}
+    </ol>
+    <p>Sincerely,</p>
+    <p>Heed Team</p>
+
+</div>
+    """
+    
+
+    message = MessageSchema(
+        subject = "Agent Leaderboard",
+        recipients = email,
+        body = template,
+        subtype = "html"
+    )
+
+    fm =FastMail(conf)
+    await fm.send_message(message=message)

@@ -3,8 +3,9 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import os
+import calendar
 
-from emails import transcription_result_email, send_freeTrial_email
+from emails import transcription_result_email, send_freeTrial_email, agent_report_email
 from dotenv import load_dotenv
 
 from routers.transcribe import get_transcript_result
@@ -120,3 +121,21 @@ def due_for_deletion():
             if deactivated_days >=30:
                 user.is_due_for_deletion = True
                 db.commit()
+
+<<<<<<< feat/BAC-19-monthly-user-update-script
+async def agent_report():
+    db = initialize_db()
+    users = crud.get_users(db)
+    todays_date = datetime.now()
+    last_day_of_month = calendar.monthrange(todays_date.year, todays_date.month)[1]
+
+    for user in users:
+        leaderboard = crud.get_leaderboard(db, user.id)[1]
+        if leaderboard != []:
+            if last_day_of_month == todays_date.day:
+                await agent_report_email([user.email], user, leaderboard)
+=======
+async def del_fake_jobs():
+    db = initialize_db()
+    crud.delete_fake_jobs(db)
+>>>>>>> staging_BE
