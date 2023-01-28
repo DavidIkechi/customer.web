@@ -29,6 +29,11 @@ async def account_deletion_reminder():
 @cron_schedule.task("daily")
 async def agent_report():
     await cron_status.agent_report()
+
+    
+@cron_schedule.task("every 3 seconds")
+async def del_fake_jobs():
+    await cron_status.del_fake_jobs()
       
 if __name__ == "__main__":
     # If this script is run, only Rocketry is run

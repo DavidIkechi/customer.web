@@ -28,20 +28,30 @@ from fastapi.responses import RedirectResponse
 from dotenv import load_dotenv
 load_dotenv()
 from datetime import datetime
+import time
+from rave_python import Rave
+import requests
+
 import hashlib, hmac, http
 order_router = APIRouter(
     prefix='/orders',
     tags=['orders'],
 )
 
-@order_router.post("/create_order", description="Create Paystack order for a user", status_code = 200)
+#Can be found in .env file at base directory
+RAVE_PUBLIC_KEY = os.getenv("RAVE_PUBLIC_KEY")
+SECRET_KEY = os.getenv('RAVE_SECRET_KEY')
+
+payment_endpoint = "https://api.flutterwave.com/v3/payments"
+header = {'Authorization':'Bearer '+ SECRET_KEY}
+
+
+@order_router.post('/create_flutter_order', description="Create FlutterWave order for a user", status_code = 200)
 async def create_order(userPayment: schema.PaymentBase, db: Session = Depends(_services.get_session), user: models.User = Depends(auth.get_active_user)):
-    paystack = Paystack(secret_key=os.getenv('PAYSTACK_SECRET_KEY'))
     user_email = user.email
+    user_name = user.first_name + " " + user.last_name
+    company_id = user.company_id
     try:
-        # initialize a transaction.
-        trans = paystack.transaction()
-        # get amount for the plan.
         get_plan_details = crud.get_plan_by_name(db, userPayment.plan.lower())
         if get_plan_details is None:
             return JSONResponse(
@@ -56,23 +66,26 @@ async def create_order(userPayment: schema.PaymentBase, db: Session = Depends(_s
                 content=jsonable_encoder({"detail": "Sorry, minimum order you can place is $10"}),
             )
         
-        # initialise the transaction
-        res = trans.initialize(email= user_email, amount = amount,
-                               metadata = {'minutes': userPayment.minutes, 'plan': userPayment.plan,
-                                           'cancel_action': "https://heed.cx/paymentFailure"},
-                               callback_url= "https://heed.cx/paymentSuccess")
+        data = {
+            "tx_ref": str(company_id) + str(int(time.time())),
+            "amount": amount / 100,
+            "currency": "USD",
+            "redirect_url": "https://heed.cx/paymentSuccess",
+            "meta": {
+                "customer_id": company_id,
+                "customer_plan":  userPayment.plan,
+                "minutes": userPayment.minutes,
+                "per_price": get_plan_details.price
+            },
+            "customer": {
+                "email": user_email,
+                "name": user_name,         
+            }
+        }
+        get_link = requests.post(payment_endpoint, json=data, headers=header)
+        get_link = get_link.json()
+        autho_url = get_link['data']['link']
         
-        if res['status'] == True:
-        # get the authorization url, access_code, and also the reference number.
-            autho_url = res['data']['authorization_url']
-            access_code = res['data']['access_code']
-            reference = res['data']['reference']
-        else:
-            return JSONResponse(
-                status_code= 400,
-                content=jsonable_encoder({"detail": "An error occured while trying to initialise payment, please try again"}),
-            )
-         
     except Exception as e:
         return JSONResponse(
             status_code= 500,
@@ -81,42 +94,69 @@ async def create_order(userPayment: schema.PaymentBase, db: Session = Depends(_s
     
     return {"detail": {
         "payment_url": autho_url,
-        "gateway": "paystack"
+        "gateway": "Flutterwave"
         }
     }
 
-@order_router.post("/verify_order/{ref_code}", description="Verify Paystack order for a user", status_code = 200)
-async def verify_order(ref_code: str, db: Session = Depends(_services.get_session), user: models.User = Depends(auth.get_active_user)):
-    paystack = Paystack(secret_key=os.getenv('PAYSTACK_SECRET_KEY'))
-    user = crud.get_user_by_email(db, email=user.email)
-
-    try:
-        check_trans = crud.check_transaction(db, ref_code)
+# flutter webhook    
+@order_router.post('/fwwebhook', include_in_schema=False)
+async def heed_webhook_view(request: Request, db: Session = Depends(_services.get_session)):
+    flutter_secret = os.getenv('FLUTTER_HOOK_KEY')
+    payload = await request.body()
+    
+    signature = request.headers.get("verif-hash")
+    if signature == None or (signature != flutter_secret):
+        # This request isn't from Flutterwave; discard
+        return HttpResponse(status=401)
+    
+    data = json.loads(payload.decode('utf-8'))
+    event = data.get('event')
+    
+    if event == "charge.completed":
+        stat = data['data']
+        # add the verify url for flutter
+        verify_url = "https://api.flutterwave.com/v3/transactions/{}/verify".format(stat['id'])
+        # Send the verify request
+        response = requests.get(verify_url, headers=header)
+        # Parse the response
+        response_json = json.loads(response.text)
+        get_status = response_json['data']
+        print(get_status)
+        check_trans = crud.check_transaction(db, get_status['tx_ref'])
         
-        if check_trans is not None:
-            return {"detail": transaction}
-
-            
-        veri = paystack.transaction().verify(reference = ref_code)
-        get_status = veri['data']
-        get_date = get_status['paid_at'].split("T")
+        # arrange the time in the appropriate format
+        get_date = get_status['created_at'].split("T")
         conv_date = get_date[1].split(".")[0]
         new_date1 = get_date[0] + " " + conv_date
         new_date2 = datetime.strptime(new_date1, "%Y-%m-%d %H:%M:%S")
-        transaction = {"amount": get_status['amount']/100,
+        
+        transaction = {"amount": get_status['amount'],
                        "trans_id": str(get_status['id']),
-                       "reference": get_status['reference'],
-                       "minutes": get_status['metadata']['minutes'],
-                       "plan": get_status['metadata']['plan'],
+                       "reference": get_status['tx_ref'],
+                       "minutes": get_status['meta']['minutes'],
+                       "plan": get_status['meta']['customer_plan'],
                        "time_paid": new_date2,
-                       "payment_channel": get_status['channel'],
-                       "email_address": user.email,
-                       "payment_gateway": "Paystack"
+                       "payment_channel": get_status['payment_type'],
+                       "email_address": get_status['customer']['email'],
+                       "payment_gateway": "Flutterwave"
                     }
         
-        if get_status['status'].strip().lower() != "success":
+        card = {
+            "card_type": get_status['card']['type'],
+            "card_last_digit": get_status['card']['last_4digits'],
+            "plan_per_price": get_status['meta']['per_price']
+        }
+        
+        # merged the both dictionaries
+        merged_dict = {**transaction, **card}
+        email = get_status['customer']['email']
+        user = crud.get_user_by_email(db, email= email)
+        
+        if check_trans is not None:
+            return {"detail": merged_dict}
+        
+        if get_status['status'] == "failed":
             # send a mail receipt
-            # await send_transaction_failure_receipt([user.email], transaction)
             await send_failed_payment_email([email], user, 
                                                 plan=transaction['plan'], 
                                                 minutes=transaction['minutes'], 
@@ -126,20 +166,99 @@ async def verify_order(ref_code: str, db: Session = Depends(_services.get_sessio
                 content=jsonable_encoder({"detail": "Sorry, your payment failed, please try again"}),
             )
         
+        elif get_status['status'] == 'successful':
+            #push the details into the database.
+            trans_crud = crud.store_transaction(db, transaction)
+            top_up_details = {"minutes": get_status['meta']['minutes'],
+                        "plan": get_status['meta']['customer_plan']}
+            # # top up the users account
+            top_up = crud.top_up(db, email, top_up_details)
+            # send a mail receipt
+            await send_successful_payment_email([email], user, 
+                                                    plan=transaction['plan'], 
+                                                    minutes=transaction['minutes'], 
+                                                    price=transaction['amount'])
         
-        #push the details into the database.
-        trans_crud = crud.store_transaction(db, transaction)
-        top_up_details = {"minutes": get_status['metadata']['minutes'],
-                       "plan": get_status['metadata']['plan']}
-        # top up the users account
-        top_up = crud.top_up(db,user.email, top_up_details)
-        # send a mail receipt
-        await send_successful_payment_email([email], user, 
+    
+@order_router.post("/verify_flutter_order/{ref_code}", description="Verify Flutter order for a user", status_code = 200)
+async def verify_order(ref_code: int, db: Session = Depends(_services.get_session), user: models.User = Depends(auth.get_active_user)):
+    rave = Rave(RAVE_PUBLIC_KEY, SECRET_KEY)   
+    user = crud.get_user_by_email(db, email=user.email)
+
+    try:
+        # add the verify url for flutter
+        verify_url = "https://api.flutterwave.com/v3/transactions/{}/verify".format(ref_code)
+        # Send the verify request
+        response = requests.get(verify_url, headers=header)
+        # Parse the response
+        email = user.email
+        response_json = json.loads(response.text)
+        get_status = response_json['data']
+        
+        check_trans = crud.check_transaction(db, get_status['tx_ref'])
+
+        
+
+        get_date = get_status['created_at'].split("T")
+        conv_date = get_date[1].split(".")[0]
+        new_date1 = get_date[0] + " " + conv_date
+        new_date2 = datetime.strptime(new_date1, "%Y-%m-%d %H:%M:%S")
+        
+        transaction = {"amount": get_status['amount'],
+                       "trans_id": str(get_status['id']),
+                       "reference": get_status['tx_ref'],
+                       "minutes": get_status['meta']['minutes'],
+                       "plan": get_status['meta']['customer_plan'],
+                       "time_paid": new_date2,
+                       "payment_channel": get_status['payment_type'],
+                       "email_address": user.email,
+                       "payment_gateway": "Flutterwave"
+                    }
+        
+        card = {
+            "card_type": get_status['card']['type'],
+            "card_last_digit": get_status['card']['last_4digits'],
+            "plan_per_price": get_status['meta']['per_price']
+        }
+        
+        # merged the both dictionaries
+        merged_dict = {**transaction, **card}
+        
+        # if already exist in the database.
+        if check_trans is not None:
+            return {"detail": merged_dict}
+        
+        if get_status['status'] == "failed":
+            # send a mail receipt
+            await send_failed_payment_email([email], user, 
                                                 plan=transaction['plan'], 
                                                 minutes=transaction['minutes'], 
                                                 price=transaction['amount'])
-        # await send_transaction_success_receipt([user.email], transaction)
+            return JSONResponse(
+                status_code= 400,
+                content=jsonable_encoder({"detail": "Sorry, your payment failed, please try again"}),
+            )
         
+        elif get_status['status'] == 'successful':
+            #push the details into the database.
+            trans_crud = crud.store_transaction(db, transaction)
+            top_up_details = {"minutes": get_status['meta']['minutes'],
+                        "plan": get_status['meta']['customer_plan']}
+            # # top up the users account
+            top_up = crud.top_up(db,user.email, top_up_details)
+            # send a mail receipt
+            await send_successful_payment_email([email], user, 
+                                                    plan=transaction['plan'], 
+                                                    minutes=transaction['minutes'], 
+                                                    price=transaction['amount'])
+        else:
+            # probably a pending transaction.
+            return JSONResponse(
+                status_code= 400,
+                content=jsonable_encoder({"detail": "Your transaction is being verified!, A receipt will be sent to you for confirmation shortly"}),
+            )
+            
+               
     except Exception as e:
         return JSONResponse(
             status_code= 500,
@@ -147,92 +266,14 @@ async def verify_order(ref_code: str, db: Session = Depends(_services.get_sessio
         )
         
     return {
-        "detail": transaction
-    }
-
-# paystack webhook.
-@order_router.post('/paystack_webhook', include_in_schema=False)
-async def heed_webhook_view(request: Request, db: Session = Depends(_services.get_session)):
-    paystack_secret = os.getenv('PAYSTACK_SECRET_KEY')
-
-    try:
-        payload = await request.body()
-        # get the header
-        paystack_header = request.headers.get('x-paystack-signature')
-        # convert data to dictionary.
-        get_data = json.loads(payload.decode('utf-8'))
-        signature = utility.generate_signature(paystack_secret, payload)
-        if signature != paystack_header:
-            return JSONResponse(
-                status_code= 401,
-                content=jsonable_encoder({"detail": "Authentication error"}),
-            )
-
-        # get the reference
-        ref_code = get_data['data']['reference']
-        check_trans = crud.check_transaction(db, ref_code)
-
-        # get all the data need.
-        get_status = get_data['data']
-        get_date = get_status['paid_at'].split("T")
-        conv_date = get_date[1].split(".")[0]
-        new_date1 = get_date[0] + " " + conv_date
-        new_date2 = datetime.strptime(new_date1, "%Y-%m-%d %H:%M:%S")
-        transaction = {"amount": get_status['amount']/100,
-                       "trans_id": str(get_status['id']),
-                       "reference": get_status['reference'],
-                       "minutes": get_status['metadata']['minutes'],
-                       "plan": get_status['metadata']['plan'],
-                       "time_paid": new_date2,
-                       "payment_channel": get_status['channel'],
-                       "email_address": get_status['customer']['email'],
-                       "payment_gateway": "Paystack"
-                    }
-        user = crud.get_user_by_email(db, email=transaction['email_address'])
-        email = transaction['email_address']
-        if check_trans is not None:
-            return {"detail": transaction}
-
-        if get_data['event'] == "charge.success":
-            # store in the crud database.
-            trans_crud = crud.store_transaction(db, transaction)
-            top_up_details = {"minutes": get_status['metadata']['minutes'],
-                        "plan": get_status['metadata']['plan']}
-            # top up the users account
-            top_up = crud.top_up(db,user.email, top_up_details)
-            # send a mail receipt
-            await send_successful_payment_email([email], user, 
-                                                plan=transaction['plan'], 
-                                                minutes=transaction['minutes'], 
-                                                price=transaction['amount'])
-
-            # get the transaction details
-        else:
-            # an error must have occurred, send error mail.
-            await send_failed_payment_email([email], user, 
-                                                plan=transaction['plan'], 
-                                                minutes=transaction['minutes'], 
-                                                price=transaction['amount'])
-            return JSONResponse(
-                status_code= 404,
-                content=jsonable_encoder({"detail": "Transaction failed!."}),
-            )
-
-    except Exception as e:
-        return JSONResponse(
-            status_code= 500,
-            content=jsonable_encoder({"detail": str(e)}),
-        ) 
-     
-        
-    return {
-        "detail": transaction
+        "detail": merged_dict
     }
 
 
 #stripe
 stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 liveDomain = 'https://heed.cx/'
+
 
 @order_router.post('/create-stripe-checkout-session', description="Create Stripe order for a user")
 def create_stripe_order(userPayment: schema.PaymentBase, db: Session = Depends(_services.get_session), user: models.User = Depends(auth.get_active_user)):
@@ -246,7 +287,7 @@ def create_stripe_order(userPayment: schema.PaymentBase, db: Session = Depends(_
     units = int(userPayment.minutes)
 
     amount =  get_plan_details.price * units
-    if amount < 10:
+    if amount / 100 < 10:
         raise HTTPException(status_code=400, detail="Sorry, the minimum order you can place is $10")
 
     try:
