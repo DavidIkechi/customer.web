@@ -142,7 +142,12 @@ function NewDesignSideBar({ children, needSearchMobile, needSearchDesktop }) {
                     onClick={() => setShow((prev) => !prev)}
                     className={styles.arrow}
                   />
-                  {show && <DropDownModal closeModal={() => setShow(false)} />}
+                  {show && (
+                    <DropDownModal
+                      closeModal={() => setShow(false)}
+                      classes="top"
+                    />
+                  )}
                 </div>
                 <p className={styles.workspace_name}>{user?.company_name}</p>
               </div>

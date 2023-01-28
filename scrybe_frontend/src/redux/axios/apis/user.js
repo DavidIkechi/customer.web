@@ -19,3 +19,7 @@ export const UpdateUserApi = async (data) => {
 export const ChangePasswordApi = async (data) => {
   return api.patch(`users/change-password`, data);
 };
+
+export const ResetPasswordApi = async (data, query) => {
+  return api.patch(`users/reset-password?token=${query}`, data);
+};

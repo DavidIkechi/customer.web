@@ -9,6 +9,9 @@ const DragAndDrop = ({
   setLastName,
   handleUpload,
   btnDisabled,
+  firstName,
+  lastName,
+  file,
   // isNamesValid,
 }) => {
   const showUploadProgress = () => {
@@ -49,6 +52,7 @@ const DragAndDrop = ({
           id="firstName"
           required
           placeholder="First Name"
+          value={firstName}
           name="firstName"
           onChange={(event) => setFirstName(event.target.value)}
         />
@@ -58,6 +62,7 @@ const DragAndDrop = ({
           required
           placeholder="Last Name"
           name="lastName"
+          value={lastName}
           onChange={(event) => setLastName(event.target.value)}
         />
       </label>
@@ -69,11 +74,7 @@ const DragAndDrop = ({
         </div>
         <div className={style["right-or"]}></div>
       </div>
-      <button
-        disabled={btnDisabled}
-        onClick={() => console.log("heyy")}
-        className={style["primary-button"]}
-      >
+      <button disabled={btnDisabled} className={style["primary-button"]}>
         <label htmlFor="file">Browse Files</label>
       </button>
       <p className={style["small-text"]}>
@@ -85,11 +86,11 @@ const DragAndDrop = ({
           id="file"
           name="file"
           hidden
+          value={file}
           multiple
           disabled={true}
           accept="audio/*"
           onChange={(event) => {
-            console.log("working");
             handleOnSelectFile(Array.from(event.target.files)[0]);
           }}
         />
@@ -100,11 +101,11 @@ const DragAndDrop = ({
           id="file"
           name="file"
           hidden
+          value={file}
           multiple
           disabled={false}
           accept="audio/*"
           onChange={(event) => {
-            console.log("workin");
             handleOnSelectFile(Array.from(event.target.files)[0]);
           }}
         />

@@ -24,7 +24,7 @@ def generate_uuid():
 
 def is_admin_check(email_address: str):
     admin_list = ['davidakwuruu@gmail.com','tekkieware@gmail.com', 
-                  'collinsakpaka@gmail.com','dprincecoder@gmail.com']
+                  'collinsakpaka@gmail.com','dprincecoder@gmail.com','oyindamoladekeye@gmail.com']
     
     return email_address.lower() in admin_list
 
@@ -621,8 +621,7 @@ def delete_plan(db: Session, plan_name: str):
     deleted_plan = db.query(models.ProductPlan).filter(models.ProductPlan.name == plan_name.lower()).delete()
     db.commit()
     return {"message":"Plan Deleted"}
-<<<<<<< feat/BAC-19-monthly-user-update-script
-=======
+
 
 def delete_plan_by_id(db: Session, plan_id: int):
     deleted_plan = db.query(models.ProductPlan).filter(models.ProductPlan.id == plan_id).delete()
@@ -631,7 +630,3 @@ def delete_plan_by_id(db: Session, plan_id: int):
 
 def get_plan_by_id(db: Session, plan_id: int):
     return db.query(models.ProductPlan).filter(models.ProductPlan.id == plan_id).first()
-
-
-   
->>>>>>> staging_BE
