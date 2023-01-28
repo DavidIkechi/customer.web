@@ -1,5 +1,6 @@
 from datetime import datetime
 from enum import Enum
+from fastapi import FastAPI, File, Form
 from typing import List, Optional
 from pydantic import BaseModel, EmailStr, Extra
 from uuid import UUID, uuid1
@@ -189,6 +190,8 @@ class Order(OrderBase):
     order_date: datetime
     next_payment_due_date: datetime
 
+class ChangePlan(BaseModel):
+    plan: str
 
 class ChangePassword(BaseModel):
     old_password: str
@@ -207,3 +210,5 @@ class Plan(BaseModel):
     name: str
     price: float
     features: list
+    # duration: str
+    # title: str
