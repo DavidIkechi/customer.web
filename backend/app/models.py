@@ -170,10 +170,13 @@ class Newsletter(Base):
 class ProductPlan(Base):
     __tablename__ = "product_plans"
     id = Column(Integer, primary_key=True, index=True)
+    icon_url = Column(String(255), nullable=False)
     name = Column(String(255), nullable=False)
     price = Column(Float, index=True, nullable=False)
     features = Column(JSON, nullable=False)
-    
+    title = Column(String(255), nullable=False)
+    duration = Column(String(255), nullable=False)
+    additional = Column(String(255), nullable=False)
     
 class PaymentHistory(Base):
     __tablename__ = "payment_history"

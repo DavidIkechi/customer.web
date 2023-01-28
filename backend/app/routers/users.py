@@ -418,19 +418,6 @@ async def deactivate(db: Session = Depends(_services.get_session), user: models.
         "detail": "User Deactivated"
     }
 
-@user_router.post("/add_new_plan")
-async def add_new_plan(plan: schema.Plan, 
-                       db: Session = Depends(_services.get_session), user: models.User = Depends(get_admin)):
-    try:
-        add_plan = crud.add_plan(db, plan)
-    except Exception as e:
-        return JSONResponse(
-            status_code= 500,
-            content=jsonable_encoder({"detail": str(e)}),
-        )
-    return {
-        "detail": "Plan Added Successfully"
-    }
     
 @user_router.post("/delete_user/{user_id}")
 async def delete_user(user_id: int, db: Session = Depends(_services.get_session), user: models.User = Depends(get_admin)):
@@ -488,35 +475,3 @@ async def reactivate_user(user_id: int, db: Session = Depends(_services.get_sess
         "detail": "User Account was successfully Reactivated!"
     }    
 
-@user_router.get("/get_all_plans", summary = "get all plans", status_code= 200)
-def read_plans(skip: int = 0, limit: int = 100, db: Session = Depends(_services.get_session), 
-               user: models.User = Depends(get_active_user)):
-    try:
-        plans = crud.get_all_plans(db, skip=skip, limit=limit)
-    except Exception as e:
-       return JSONResponse(
-            status_code= 500,
-            content=jsonable_encoder({"detail": str(e)}),
-        )
-    return {      
-        "detail": plans
-    }
-@user_router.delete("/delete_plan/{plan_name}")
-async def delete_plan(plan_name: str, db: Session = Depends(_services.get_session), user: models.User = Depends(get_admin)):
-    try:
-        db_plan = crud.get_plan_by_name(db, plan_name)
-        if db_plan is None:
-            return JSONResponse(
-                status_code= 400,
-                content=jsonable_encoder({"detail": "Plan not found!"}),
-            )
-
-        crud.delete_plan(db, plan_name)
-    except Exception as e:
-        return JSONResponse(
-            status_code= 500,
-            content=jsonable_encoder({"detail": str(e)}),
-        )
-    return {
-        "detail": "Plan deleted successfully!"
-    }

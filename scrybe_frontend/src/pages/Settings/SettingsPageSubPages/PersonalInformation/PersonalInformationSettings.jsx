@@ -7,7 +7,6 @@ import SnackBar from "../../../../components/SnackBar/index";
 import { useSelector } from "react-redux";
 import { dispatch } from "../../../../redux/store";
 import { UpdateProfile } from "../../../../redux/features/users/service";
-import dummyImg from "../../assets/images/dummy.png";
 
 const PersonalInformation = () => {
   const { user, updatedUser } = useSelector((state) => state.user);
@@ -95,7 +94,7 @@ const PersonalInformation = () => {
                 <div className={PersonalInfo.profilePicBlank}></div>
                 <img
                   className={PersonalInfo.profilePic}
-                  src={previewImg ? previewImg : dummyImg}
+                  src={previewImg}
                   alt="profile pic"
                 />
                 <div className={PersonalInfo.changeImg}>
