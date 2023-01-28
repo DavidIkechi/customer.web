@@ -122,7 +122,6 @@ def due_for_deletion():
                 user.is_due_for_deletion = True
                 db.commit()
 
-<<<<<<< feat/BAC-19-monthly-user-update-script
 async def agent_report():
     db = initialize_db()
     users = crud.get_users(db)
@@ -134,8 +133,7 @@ async def agent_report():
         if leaderboard != []:
             if last_day_of_month == todays_date.day:
                 await agent_report_email([user.email], user, leaderboard)
-=======
+
 async def del_fake_jobs():
     db = initialize_db()
     crud.delete_fake_jobs(db)
->>>>>>> staging_BE
