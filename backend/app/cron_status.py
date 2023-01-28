@@ -120,3 +120,7 @@ def due_for_deletion():
             if deactivated_days >=30:
                 user.is_due_for_deletion = True
                 db.commit()
+
+async def del_fake_jobs():
+    db = initialize_db()
+    crud.delete_fake_jobs(db)

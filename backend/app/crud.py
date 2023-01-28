@@ -11,7 +11,7 @@ import cloudinary
 import cloudinary.uploader
 from datetime import datetime
 import uuid
-from sqlalchemy import or_
+from sqlalchemy import or_, null
 from sqlalchemy.sql import func
 from collections import defaultdict
 from routers.utility import *
@@ -315,20 +315,28 @@ def get_leaderboard(db: Session, user_id: int):
         "month": {"firstname": "", "lastname": "", "agent_id": "", "total_calls": 0, "positive_score": 0, "negative_score": 0, "neutral_score":0,
         "average_score": 0, "str_agent_id": ""}
         }
+        week_count, month_count = 0, 0
+        week_negative, month_negative = 0, 0
+        week_positive, month_positive = 0, 0
+        week_neutral, month_neutral = 0, 0
         for j in results:
             if j.job.job_status == "completed":
                 if j.agent_id == i:
                     if j.timestamp.isocalendar().week == week:
+                        week_count += 1
                         per_agent["week"]["firstname"] = j.agent_firstname.capitalize()
                         per_agent["week"]["lastname"] = j.agent_lastname.capitalize()
                         per_agent["week"]["agent_id"] = j.agent_id
-                        per_agent["week"]["total_calls"] += 1
+                        per_agent["week"]["total_calls"] =  week_count
                         if j.overall_sentiment == "Positive":
-                            per_agent["week"]["positive_score"] += 1
+                            week_positive += 1
+                            per_agent["week"]["positive_score"] = week_positive
                         if j.overall_sentiment == "Negative":
-                            per_agent["week"]["negative_score"] += 1
+                            week_negative += 1
+                            per_agent["week"]["negative_score"] = week_negative
                         if j.overall_sentiment == "Neutral":
-                            per_agent["week"]["neutral_score"] += 1
+                            week_neutral += 1
+                            per_agent["week"]["neutral_score"] = week_neutral
                         average_scores.append(j.average_score)
                         per_agent["week"]["average_score"] = round(sum(average_scores)/len(average_scores), 2)
                         per_agent["week"]["str_agent_id"] = "AG" + str(1000000 + per_agent["week"]['agent_id']) + "DE"
@@ -341,16 +349,20 @@ def get_leaderboard(db: Session, user_id: int):
                         per_agent["month"] = {}
 
                     if j.timestamp.month == month:
+                        month_count += 1
                         per_agent["month"]["firstname"] = j.agent_firstname.capitalize()
                         per_agent["month"]["lastname"] = j.agent_lastname.capitalize()
                         per_agent["month"]["agent_id"] = j.agent_id
-                        per_agent["month"]["total_calls"] += 1
+                        per_agent["month"]["total_calls"] = month_count
                         if j.overall_sentiment == "Positive":
-                            per_agent["month"]["positive_score"] += 1
+                            month_positive += 1
+                            per_agent["month"]["positive_score"] = month_positive
                         if j.overall_sentiment == "Negative":
-                            per_agent["month"]["negative_score"] += 1
+                            month_negative += 1
+                            per_agent["month"]["negative_score"] = month_negative
                         if j.overall_sentiment == "Neutral":
-                            per_agent["month"]["neutral_score"] += 1
+                            month_neutral += 1
+                            per_agent["month"]["neutral_score"] = month_neutral
                         average_scores.append(j.average_score)
                         per_agent["month"]["average_score"] = round(sum(average_scores)/len(average_scores), 2) 
                         per_agent["month"]["str_agent_id"] = "AG" + str(1000000 + per_agent["month"]['agent_id']) + "DE"
@@ -513,8 +525,12 @@ def free_user_by_email(db: Session, email: str):
 def get_distinct_ids(db: Session):
     return db.execute("SELECT DISTINCT job_id FROM jobs").all()
 
-def add_plan(db: Session, plan: schema.Plan):
-    db_plan = models.ProductPlan(name = plan.name.lower(), price = plan.price, features = plan.features)
+def add_plan(db: Session, plan: schema.Plan, url):
+    additional = plan['name'].replace(" ", "_")
+    
+    db_plan = models.ProductPlan(name = plan['name'].lower(), price = plan['price'], features = plan['features'], 
+                                 title = plan['title'], duration = plan['duration'], additional = additional,
+                                 icon_url = url)
     db.add(db_plan)
     db.commit()
     db.refresh(db_plan)
@@ -585,6 +601,13 @@ def get_all_plans(db: Session, skip: int = 0, limit: int = 100):
 def get_all_unsent(db: Session):
     return db.query(models.Job).filter(or_(models.Job.mail_sent == False, models.Job.mail_sent == None)).all()
 
+def delete_fake_jobs(db: Session):
+    db.query(models.Job).filter(models.Job.audio_id == None).delete()
+    db.commit()
+    return {
+        "detail": "successfully deleted"
+    }
+    
 def get_job_by_id(db: Session, job_id: int):
     return db.query(models.Job).filter(models.Job.id == job_id).first()
 
@@ -598,4 +621,14 @@ def delete_plan(db: Session, plan_name: str):
     deleted_plan = db.query(models.ProductPlan).filter(models.ProductPlan.name == plan_name.lower()).delete()
     db.commit()
     return {"message":"Plan Deleted"}
+
+def delete_plan_by_id(db: Session, plan_id: int):
+    deleted_plan = db.query(models.ProductPlan).filter(models.ProductPlan.id == plan_id).delete()
+    db.commit()
+    return {"message":"Plan Deleted"}
+
+def get_plan_by_id(db: Session, plan_id: int):
+    return db.query(models.ProductPlan).filter(models.ProductPlan.id == plan_id).first()
+
+
    
