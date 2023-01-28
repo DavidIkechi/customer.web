@@ -621,6 +621,8 @@ def delete_plan(db: Session, plan_name: str):
     deleted_plan = db.query(models.ProductPlan).filter(models.ProductPlan.name == plan_name.lower()).delete()
     db.commit()
     return {"message":"Plan Deleted"}
+<<<<<<< feat/BAC-19-monthly-user-update-script
+=======
 
 def delete_plan_by_id(db: Session, plan_id: int):
     deleted_plan = db.query(models.ProductPlan).filter(models.ProductPlan.id == plan_id).delete()
@@ -632,3 +634,4 @@ def get_plan_by_id(db: Session, plan_id: int):
 
 
    
+>>>>>>> staging_BE
