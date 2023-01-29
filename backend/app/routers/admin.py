@@ -39,7 +39,7 @@ admin_router = APIRouter(
 
 # endpoint for user login
 @admin_router.post('/make_super_admin', summary = "make super admin", status_code= 200)
-async def make_admin(email_address: str, db: Session = Depends(_services.get_session),  user: models.User = Depends(get_admin)):
+async def make_admin(email_address: str, db: Session = Depends(_services.get_session),  user: models.User = Depends(get_super_admin)):
     try:
         db_user = crud.get_user_by_email(db, email = email_address)
         if not db_user:
