@@ -39,7 +39,7 @@ admin_router = APIRouter(
 
 # endpoint for user login
 @admin_router.post('/make_super_admin', summary = "make super admin", status_code= 200)
-async def make_admin(email_address: str, db: Session = Depends(_services.get_session),  user: models.User = Depends(get_admin)):
+async def make_admin(email_address: str, db: Session = Depends(_services.get_session),  user: models.User = Depends(get_super_admin)):
     try:
         db_user = crud.get_user_by_email(db, email = email_address)
         if not db_user:
@@ -162,4 +162,41 @@ async def make_admin(email_address: str, db: Session = Depends(_services.get_ses
     
     return {
         "detail": f"{db_user.first_name} is now an admin"
+    }
+    
+@admin_router.delete("/delete_user/{user_id}", summary="delete user and admins", status_code = 200)
+async def delete_user(user_id: int, db: Session = Depends(_services.get_session), user: models.User = Depends(get_super_admin)):
+    try:
+       # first check if the user account exists at first.
+        db_user = crud.get_user(db, user_id)
+        user_email = db_user.email
+        db_user_id = crud.get_user_by_email(db, email=user_email)
+
+        user_details = {
+            "first_name": db_user_id.first_name
+        }
+        if db_user is None:
+            raise HTTPException(status_code=404, 
+                                detail="User not found")
+            
+        if db_user.is_super_admin:
+            return JSONResponse(
+                status_code=400,
+                content = jsonable_encoder({"detail": "You can not delete a super admin account"})
+            )
+            
+        # delete the user account
+        crud.delete_user(db, user_id)
+        await send_delete_email([user_email], user_details)
+        
+        return {"detail": 
+            "Account was successfully deleted"}
+        
+    except Exception as e:
+        return JSONResponse(
+            status_code= 500,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+    return {
+        "detail": "User Account was successfully deleted!"
     }
