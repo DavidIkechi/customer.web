@@ -421,7 +421,7 @@ async def deactivate(db: Session = Depends(_services.get_session), user: models.
     }
 
     
-@user_router.post("/delete_user/{user_id}", status_code = 200)
+@user_router.delete("/delete_user/{user_id}", status_code = 200)
 async def delete_user(user_id: int, db: Session = Depends(_services.get_session), user: models.User = Depends(get_admin)):
     try:
        # first check if the user account exists at first.
@@ -435,6 +435,13 @@ async def delete_user(user_id: int, db: Session = Depends(_services.get_session)
         if db_user is None:
             raise HTTPException(status_code=404, 
                                 detail="User not found")
+            
+        if db_user.is_super_admin or db_user.is_admin:
+            return JSONResponse(
+                status_code=400,
+                content = jsonable_encoder({"detail": "You can not delete an admin or super admin account"})
+            )
+            
         # delete the user account
         crud.delete_user(db, user_id)
         await send_delete_email([user_email], user_details)
