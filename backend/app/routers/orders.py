@@ -287,7 +287,7 @@ def create_stripe_order(userPayment: schema.PaymentBase, db: Session = Depends(_
     units = int(userPayment.minutes)
 
     amount =  get_plan_details.price * units
-    if amount / 100 < 10:
+    if amount < 10:
         raise HTTPException(status_code=400, detail="Sorry, the minimum order you can place is $10")
 
     try:
