@@ -53,9 +53,12 @@ def create_user(db: Session, user: schema.User):
         company_id = randint(0, 1000000)
 
     # create the company.
-    if is_admin_check(user.email) is True:
+    if check_admin(db, user.email) > 0:
         is_admin = True
         time_left = 6000.0
+    elif check_test(db, user.email) > 0:
+        is_admin = False
+        time_left = 600.0
     else:
         # check if the email address is a professional email address.
         if check_if_professional(user.email) > 0:
@@ -530,7 +533,8 @@ def add_plan(db: Session, plan: schema.Plan, url):
     
     db_plan = models.ProductPlan(name = plan['name'].lower(), price = plan['price'], features = plan['features'], 
                                  title = plan['title'], duration = plan['duration'], additional = additional,
-                                 icon_url = url)
+                                 icon_url = url, audio_intelligence = plan['audio'], live_stream = plan['livestream'])
+    
     db.add(db_plan)
     db.commit()
     db.refresh(db_plan)
@@ -538,7 +542,6 @@ def add_plan(db: Session, plan: schema.Plan, url):
 
 def get_plan_by_name(db: Session, plan_name: str):
     return db.query(models.ProductPlan).filter(models.ProductPlan.name == plan_name.lower()).first()
-
 
 def store_transaction(db: Session, trans: dict):
     db_trans = models.PaymentHistory(
@@ -630,3 +633,45 @@ def delete_plan_by_id(db: Session, plan_id: int):
 
 def get_plan_by_id(db: Session, plan_id: int):
     return db.query(models.ProductPlan).filter(models.ProductPlan.id == plan_id).first()
+
+def add_admin(db: Session, email: str):
+    if len(db.query(models.Admins).filter(models.Admins.email == email).all()) > 0:
+        return JSONResponse(
+            status_code=400,
+            content = jsonable_encoder({"detail": "Admin User account already exists"})
+        ) 
+        
+    db_admin = models.Admins(email = email)
+    db.add(db_admin)
+    db.commit()
+    db.refresh(db_admin)
+    return db_admin
+
+def add_test_users(db: Session, email: str):
+    if len(db.query(models.TestUsers).filter(models.TestUsers.email == email).all()) > 0:
+        return JSONResponse(
+            status_code=400,
+            content = jsonable_encoder({"detail": "Test User account already exists"})
+        ) 
+    db_test_users = models.TestUsers(email = email)
+    db.add(db_test_users)
+    db.commit()
+    db.refresh(db_test_users)
+    return db_test_users
+
+def check_admin(db: Session, email: str):
+    return len(db.query(models.Admins).filter(models.Admins.email == email).all())
+
+def check_test(db: Session, email: str):
+    return len(db.query(models.TestUsers).filter(models.TestUsers.email == email).all())
+
+    
+    
+    
+    
+    
+    
+    
+
+
+   

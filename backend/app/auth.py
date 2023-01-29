@@ -118,4 +118,38 @@ async def get_admin(db: Session = Depends(_services.get_session), token: str = D
     
     return user_email
 
+
+async def get_super_admin(db: Session = Depends(_services.get_session), token: str = Depends(oauth2_scheme)) -> bool:
+    """ This function checks if a user is a super admin.
+
+    Args:
+        db (Session, optional): A session of the created database.
+        token (str, optional): A string which represents the created or stored token generated after a user must have been logged in.
+
+    Raises:
+        credentials_exception: A dictionary which represents the exception caught when there is a mismatch or failure.
+
+    Returns:
+        A boolean that tells if the user is admin.
+    """
+    
+    user_email = await get_current_user(db, token)
+    # if the user is not admin.
+    if not user_email.is_super_admin:
+        raise HTTPException(
+            status_code=status.HTTP_423_LOCKED,
+            detail="User is not a Super admin",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    # if the user is an admin
+    else:
+    # admin but not active
+        if not user_email.is_active:
+            raise HTTPException(
+                status_code=status.HTTP_423_LOCKED,
+                detail="Super admin Account not active",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+    
+    return user_email
          
