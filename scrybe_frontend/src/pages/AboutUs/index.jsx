@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import styles from "./About.module.scss";
 import icon1 from "./assets/icon1.svg";
 import icon2 from "./assets/icon2.svg";
@@ -12,6 +13,17 @@ import partner4 from "./assets/partner4.svg";
 function About() {
   return (
     <>
+      <Helmet>
+        <title>About Us | Heed</title>
+        <meta
+          name="description"
+          content="Heed helps sales managers work faster, with simplified roles"
+        />
+        <meta
+          name="keywords"
+          content="About heed, Heed history, Heed mission, Heed values, team members, leadership team, management team, Heed culture, corporate responsibility, customer-centric, industry leader, commitment to excellence, long-term relationships, Heed overview, who we are, what we do"
+        />
+      </Helmet>
       <section className={styles.first__section}>
         <div className={styles.sect__container}>
           <div className={styles.first__top}>

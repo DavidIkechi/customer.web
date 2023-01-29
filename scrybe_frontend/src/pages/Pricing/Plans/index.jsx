@@ -1,23 +1,36 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import styles from "./yearplans.module.scss";
-import currency from "../../assets/naira.svg";
-import startUpIcon from "../../assets/star.svg";
-import growingIcon from "../../assets/auto_graph.svg";
-import enterpriseIcon from "../../assets/corporate_fare.svg";
-import checkIcon from "../../assets/check.svg";
-import { yearlyPricing } from "./data";
+import { useNavigate } from "react-router-dom";
+import checkIcon from "../assets/check.svg";
+import currency from "../assets/dollar.svg";
+import { PricingData } from "./data";
+import styles from "./plans.module.scss";
 
-function YearPlans({ yearState }) {
+function Plans() {
+  const navigate = useNavigate();
+
+  const getSelectedPlan = (plan) => {
+    localStorage.setItem("selectedPlan", plan);
+    navigate("/checkout");
+  };
+
   return (
-    <div className={`${styles.year}`}>
+    <div className={`${styles.month}`}>
       <div className={`${styles.plans}`}>
-        {yearlyPricing.map((data) => {
-          const { id, title, pricing, headDescription, duration, features } =
-            data;
+        {PricingData.map((data) => {
+          const {
+            id,
+            icon,
+            title,
+            pricing,
+            headDescription,
+            planKey,
+            duration,
+            features,
+          } = data;
 
           return (
             <div
+              key={id}
               className={`${styles.plansCard} ${styles.startUp} ${
                 id === 3 ? styles.enterprise : ""
               }`}
@@ -25,7 +38,7 @@ function YearPlans({ yearState }) {
               <div className={styles.plansCardHeading}>
                 <div className={styles.plansCardTitle}>
                   <div className={styles.plansCardIcon}>
-                    <img src={startUpIcon} alt="star icon" />
+                    <img src={icon} alt="star icon" />
                   </div>
                   <h3>{title}</h3>
                 </div>
@@ -38,18 +51,21 @@ function YearPlans({ yearState }) {
                   </div>
                   <h4>{pricing}</h4>
                 </div>
-                <p>per month</p>
+                <p>{duration}</p>
               </div>
               <div className={styles.FtnBtn}>
                 <div className={styles.pricingFeatures}>
-                  {features.map((feature) => (
-                    <div className={styles.pricingFeaturesItem}>
+                  {features.map((feature, index) => (
+                    <div className={styles.pricingFeaturesItem} key={index}>
                       <img src={checkIcon} alt="check-mark icon" />
                       <p>{feature}</p>
                     </div>
                   ))}
                 </div>
-                <button>Get Started</button>
+
+                <button onClick={() => getSelectedPlan(planKey)}>
+                  Get Started
+                </button>
               </div>
             </div>
           );
@@ -59,4 +75,4 @@ function YearPlans({ yearState }) {
   );
 }
 
-export default YearPlans;
+export default Plans;

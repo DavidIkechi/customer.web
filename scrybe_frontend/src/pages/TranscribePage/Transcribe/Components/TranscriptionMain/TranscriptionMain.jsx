@@ -69,24 +69,20 @@ function TranscriptionMain() {
       Authorization: `Bearer ${accessToken}`,
     };
     axios
-      .get(`https://api.heed.hng.tech/transcription/${transcription_id}`, {
+      .get(`https://api.heed.cx/transcription/${transcription_id}`, {
         headers,
       })
       .then((newRes) => {
-        if (newRes.data.status) {
-          setStillProcessing(true);
-          setIsFetching(false);
-          return;
-        }
-        setApiError(false);
+        console.log(newRes.data.detail);
+        setStillProcessing(false);
         setIsFetching(false);
-        setFormattedData(
-          generateArray(newRes.data.sentiment_result.transcript)
-        );
-        setAudioSrc(newRes.data.sentiment_result.audio_url);
-        setAudioFileSize(newRes.data.sentiment_result.audio_size);
-        setAudioFileName(newRes.data.sentiment_result.audio_filename);
-        setDownloadData(newRes.data);
+
+        setApiError(false);
+        setFormattedData(generateArray(newRes.data.detail.transcript));
+        setAudioSrc(newRes.data.detail.audio_url);
+        setAudioFileSize(newRes.data.detail.audio_size);
+        setAudioFileName(newRes.data.detail.audio_filename);
+        setDownloadData(newRes.data.detail);
       })
       .catch(() => {
         setApiError(true);
@@ -94,7 +90,7 @@ function TranscriptionMain() {
       });
   };
   useEffect(() => {
-    const accessToken = localStorage.getItem("heedAccessToken");
+    const accessToken = sessionStorage.getItem("heedAccessToken");
     fetchActualData(accessToken, getTranscriptionId());
     fetchRecentRecordings(accessToken);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -169,11 +165,11 @@ function TranscriptionMain() {
       Authorization: `Bearer ${accessToken}`,
     };
     axios
-      .get(`https://api.heed.hng.tech/recent-recordings?skip=0&limit=5`, {
+      .get(`https://api.heed.cx/audios/recent-recordings?skip=0&limit=5`, {
         headers,
       })
       .then((newRes) => {
-        setRecentRecordings(newRes.data);
+        setRecentRecordings(newRes.data.detail);
       });
   };
 
