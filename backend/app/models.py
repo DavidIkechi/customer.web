@@ -21,7 +21,6 @@ def generate_agent_id():
 
 class User(Base):
     __tablename__ = "users"
-
     id = Column(Integer, primary_key=True, index=True)
     first_name = Column(String(255), index=True)
     last_name = Column(String(255), index=True)
@@ -35,6 +34,7 @@ class User(Base):
     is_deactivated = Column(Boolean, default=False)
     deactivated_at = Column(DateTime(timezone=True), default=datetime.now())
     is_due_for_deletion = Column(Boolean, default=False)
+    is_super_admin = Column(Boolean, default = False)
     
     company = relationship("Company", back_populates="user")
     user = relationship("Audio", uselist=False, back_populates="user_audio")
@@ -44,7 +44,6 @@ class User(Base):
 
 class Company(Base):
     __tablename__ = 'companies'
-
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255), index=True)
     address = Column(TEXT)
@@ -54,22 +53,15 @@ class Company(Base):
     
     user = relationship("User", uselist=False, back_populates="company")
     
-    
-
-
 class Agent(Base):
     __tablename__ = "agents"
-
     id = Column(Integer, primary_key=True, index=True, unique=True, nullable=False, default=generate_agent_id)
     first_name = Column(String(255), index=True)
     last_name = Column(String(255), index=True)
     location = Column(String(255), index=True)
     company_id = Column(Integer, ForeignKey("companies.id", ondelete='CASCADE'))
     aud_id = Column(Integer, index=True)
-    
-    
-
-
+       
 class Audio(Base):
     __tablename__ = "audios"
     id = Column(Integer, primary_key=True, index=True)
@@ -97,7 +89,6 @@ class Audio(Base):
 
 class Job(Base):
     __tablename__ = "jobs"
-
     id = Column(Integer, primary_key=True, index=True)
     timestamp = Column(DateTime, index=True, default=datetime.now())
     job_status = Column(TEXT)
@@ -110,7 +101,6 @@ class Job(Base):
 
 class uploaded_Job(Base):
     __tablename__ = "uploaded_jobs"
-
     id = Column(Integer, primary_key=True, index=True)
     job_id = Column(String(255), index=True)
     audio_url = Column(String(255), index=True)
@@ -126,7 +116,6 @@ class History(Base):
     
 class Analysis(Base):
     __tablename__ = "analysis"
-
     id = Column(Integer, primary_key=True, index=True)
     audio_path = Column(TEXT)
     timestamp = Column(DateTime, index=True)
@@ -140,7 +129,6 @@ class Analysis(Base):
 
 class UserProfile(Base):
     __tablename__ = "accounts"
-    
     id = Column(Integer, ForeignKey("users.id"), nullable=True)
     phone_number = Column(String(255))
     company_address = Column(TEXT)
@@ -152,7 +140,6 @@ class UserProfile(Base):
 
 class FreeTrial(Base):
     __tablename__ = "free_trial"
-
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String(255), index=True)
     transcript_id = Column(String(255), index=True)
@@ -161,11 +148,19 @@ class FreeTrial(Base):
 
 class Newsletter(Base):
     __tablename__ = "newsletter_subscribers"
-
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String(255), nullable = False)
     name = Column(Integer)
     
+class Admins(Base):
+    __tablename__ = "admin_user"
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String(255), nullable = False)
+    
+class TestUsers(Base):
+    __tablename__ = "test_user"
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String(255), nullable = False)
     
 class ProductPlan(Base):
     __tablename__ = "product_plans"
@@ -177,6 +172,8 @@ class ProductPlan(Base):
     title = Column(String(255), nullable=False)
     duration = Column(String(255), nullable=False)
     additional = Column(String(255), nullable=False)
+    audio_intelligence = Column(Boolean, default=False)
+    live_stream = Column(Boolean, default=False)
     
 class PaymentHistory(Base):
     __tablename__ = "payment_history"

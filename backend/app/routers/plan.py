@@ -164,11 +164,13 @@ async def get_plan(plan_id: int, db: Session = Depends(_services.get_session)):
 
 
 @plan_router.post("/add_new_plan")
-async def add_new_plan(plan_name: str = Form(None),
-                       plan_price: float = Form(None),
-                       features: List[str] = Form(None),
-                       duration: str = Form(None),
-                       title: str = Form(None),
+async def add_new_plan(plan_name: str = Form(),
+                       plan_price: float = Form(),
+                       features: List[str] = Form(),
+                       duration: str = Form(),
+                       title: str = Form(),
+                       audio_intelligence: bool = Form(),
+                       live_stream: bool = Form(),
                        file: UploadFile = File(..., content_type='image/*'),
                        db: Session = Depends(_services.get_session), user: models.User = Depends(get_admin)):
     try:    
@@ -187,10 +189,11 @@ async def add_new_plan(plan_name: str = Form(None),
             "price": float(plan_price),
             "features": new_features,
             "duration": duration,
-            "title": title
+            "title": title,
+            "audio": audio_intelligence,
+            "livestream": live_stream
         }
         
-        print(new_url)
         add_plan = crud.add_plan(db, plan, new_url)
         # os.remove(file.filename)
 
@@ -202,3 +205,5 @@ async def add_new_plan(plan_name: str = Form(None),
     return {
         "detail": "Plan Added Successfully"
     }
+    
+

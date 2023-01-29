@@ -55,9 +55,11 @@ async def create_user(user: schema.UserCreate, db: Session = Depends(_services.g
 
     # check if email exists and is valid
     email_exists = utils.validate_and_verify_email(user.email)
-    # if not email_exists:
-    #     raise HTTPException(status_code=400, detail="Your email could not be verified. Please enter a valid email")
-
+    if not email_exists:
+        return JSONResponse(
+            status_code=400,
+            content = jsonable_encoder({"detail": "User email couldnot be verified!, please use a proper email"})
+        )
     # create the user before sending a mail.
     new_user = crud.create_user(db=db, user=user)
     await send_email([user.email], user)
@@ -419,7 +421,7 @@ async def deactivate(db: Session = Depends(_services.get_session), user: models.
     }
 
     
-@user_router.post("/delete_user/{user_id}")
+@user_router.post("/delete_user/{user_id}", status_code = 200)
 async def delete_user(user_id: int, db: Session = Depends(_services.get_session), user: models.User = Depends(get_admin)):
     try:
        # first check if the user account exists at first.
@@ -449,7 +451,7 @@ async def delete_user(user_id: int, db: Session = Depends(_services.get_session)
         "detail": "User Account was successfully deleted!"
     }
        
-@user_router.post("/reactivate_user/{user_id}")
+@user_router.post("/reactivate_user/{user_id}", status_code = 200)
 async def reactivate_user(user_id: int, db: Session = Depends(_services.get_session), user: models.User = Depends(get_admin)):
     try:
        # first check if the user account exists at first.
