@@ -133,7 +133,7 @@ async def agent_report():
         if leaderboard != []:
             if last_day_of_month == todays_date.day:
                 await agent_report_email([user.email], user, leaderboard)
-                
+
 async def del_fake_jobs():
     db = initialize_db()
     crud.delete_fake_jobs(db)
