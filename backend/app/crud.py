@@ -15,6 +15,8 @@ from sqlalchemy import or_, null
 from sqlalchemy.sql import func
 from collections import defaultdict
 from routers.utility import *
+import pytz
+import tzlocal
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -294,8 +296,10 @@ def get_leaderboard(db: Session, user_id: int):
     
     agents = dict()
     unique_ids = []
-    week = datetime.now().isocalendar().week
-    month = datetime.now().month
+    local_timezone = tzlocal.get_localzone()
+
+    week = datetime.now().astimezone(local_timezone).isocalendar()[1]
+    month = datetime.now().astimezone(local_timezone).month
     total_week = 0
     total_month = 0
 
@@ -304,10 +308,10 @@ def get_leaderboard(db: Session, user_id: int):
             unique_id = i.agent_id
             unique_ids.append(unique_id)
 
-        if i.timestamp.isocalendar().week == week:
+        if i.timestamp.astimezone(local_timezone).isocalendar()[1] == week:
             total_week += 1
         
-        if i.timestamp.month == month:
+        if i.timestamp.astimezone(local_timezone).month == month:
             total_month += 1
 
 
@@ -325,7 +329,7 @@ def get_leaderboard(db: Session, user_id: int):
         for j in results:
             if j.job.job_status == "completed":
                 if j.agent_id == i:
-                    if j.timestamp.isocalendar().week == week:
+                    if j.timestamp.astimezone(local_timezone).isocalendar().week == week:
                         week_count += 1
                         per_agent["week"]["firstname"] = j.agent_firstname.capitalize()
                         per_agent["week"]["lastname"] = j.agent_lastname.capitalize()
@@ -345,13 +349,13 @@ def get_leaderboard(db: Session, user_id: int):
                         per_agent["week"]["str_agent_id"] = "AG" + str(1000000 + per_agent["week"]['agent_id']) + "DE"
                         per_agent["week"]["weekly"] = "week"
 
-                    if j.timestamp.isocalendar().week != week:
+                    if j.timestamp.astimezone(local_timezone).isocalendar().week != week:
                         per_agent["week"] = {}
 
-                    if j.timestamp.month != month:
+                    if j.timestamp.astimezone(local_timezone).month != month:
                         per_agent["month"] = {}
 
-                    if j.timestamp.month == month:
+                    if j.timestamp.astimezone(local_timezone).month == month:
                         month_count += 1
                         per_agent["month"]["firstname"] = j.agent_firstname.capitalize()
                         per_agent["month"]["lastname"] = j.agent_lastname.capitalize()

@@ -22,6 +22,9 @@ import cloudinary
 import cloudinary.uploader
 from BitlyAPI import shorten_urls
 import crud
+import pytz
+import tzlocal
+from datetime import datetime
 from routers.transcribe import transcribe_file
 from jwt import main_login, get_access_token, verify_password, refresh
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -38,7 +41,8 @@ analyze_router = APIRouter(
 async def analyse_audios(first_name: str, last_name: str, files: list, distinct_id:int, user_id: int, company_id: int, db: Session):
     
     db_company = db.query(models.Company).filter(models.Company.id == company_id).first()
-    
+    local_timezone = tzlocal.get_localzone()
+
     all_transcripts = []
     try:
         for file in files: 
@@ -80,10 +84,10 @@ async def analyse_audios(first_name: str, last_name: str, files: list, distinct_
                 db_agent = db.query(models.Agent).filter(models.Agent.first_name == first_name, 
                                             models.Agent.last_name == last_name).first()
             
-
+            get_time = datetime.now().astimezone(local_timezone)
             db_audio = models.Audio(audio_path=audio_url, job_id = transcript_id, user_id=user_id, size=size, duration=audio_time, 
                                     agent_id=db_agent.id, agent_firstname= db_agent.first_name, agent_lastname=db_agent.last_name, 
-                                    filename = file.filename)
+                                    filename = file.filename, timestamp = get_time)
 
             db.add(db_audio)
             db.commit()
