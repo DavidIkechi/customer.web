@@ -52,7 +52,7 @@ const TotalAnalysis = ({ totalAnalysisData }) => {
 
   useEffect(() => {
     if (totalAnalysisData) {
-      setSelectedTotalAnalysis(totalAnalysisData?.week);
+      setSelectedTotalAnalysis(totalAnalysisData?.month);
     } else {
       setSelectedTotalAnalysis([]);
     }
@@ -99,8 +99,8 @@ const TotalAnalysis = ({ totalAnalysisData }) => {
           <img src={analysis} alt="Total recording" /> Total Analysis
         </h1>
         <select className={styles.dropdown} onChange={analysisTimeStampFunc}>
-          <option value="week">This week</option>
           <option value="month">This month</option>
+          <option value="week">This week</option>
         </select>
       </div>
       {selectedTotalAnalysis?.length > 0 ? (
