@@ -10,7 +10,8 @@ from auth import (
     get_current_user
 )
 from datetime import datetime, timedelta, date
-
+import pytz
+import tzlocal
 import auth
 from . import utility as utils
 from fastapi.responses import JSONResponse
@@ -69,18 +70,20 @@ def download (id: Union[int, str], db: Session = Depends(_services.get_session),
 def get_total_analysis(db: Session = Depends(_services.get_session), user: models.User = Depends(get_active_user)):
     
     try: 
+        local_timezone = tzlocal.get_localzone()
         overall_sentiment = db.query(models.Audio).filter(models.Audio.user_id == user.id).all()
-        week = datetime.now().isocalendar().week
-        month = datetime.now().month
+        
+        week = datetime.now().astimezone(local_timezone).isocalendar()[1]
+        month = datetime.now().astimezone(local_timezone).month
         list_month=[]
         list_week=[]
         week_item={}
         month_item={}
         result = dict()
         for i in overall_sentiment:
-            if i.timestamp.month == month:
+            if i.timestamp.astimezone(local_timezone).month == month:
                 list_month.append(i.overall_sentiment)
-            if i.timestamp.isocalendar().week == week:
+            if i.timestamp.astimezone(local_timezone).isocalendar()[1] == week:
                 list_week.append(i.overall_sentiment)
         if len(list_week) > 0:
             week_item['id'] = 1

@@ -64,3 +64,4 @@ rocketry==2.5.1
 pyngrok==5.2.1
 rave-python==1.2.16
 python-flutterwave==0.7.9
+tzlocal==4.2

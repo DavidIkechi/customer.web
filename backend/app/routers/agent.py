@@ -25,6 +25,8 @@ from jwt import main_login, get_access_token, verify_password, refresh
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from emails import send_email, verify_token, send_password_reset_email, password_verif_token
 from datetime import datetime, timedelta, date
+import pytz
+import tzlocal
 
 agent_router = APIRouter(
     prefix='/agents',
@@ -54,9 +56,25 @@ def get_agents_leaderboard(db: Session = Depends(_services.get_session), user: m
 @agent_router.get("/total-agent-analysis", summary="get total agent analysis")
 def get_total_agent_analysis(agent_id: int, db: Session = Depends(_services.get_session), user: models.User = Depends(get_active_user)):
     try:
+        local_timezone = tzlocal.get_localzone()
         total_analysis = db.query(models.Audio).filter(models.Audio.user_id == user.id, models.Audio.agent_id == agent_id)
-        week = datetime.now().isocalendar().week
-        month = datetime.now().month
+        week = datetime.now().astimezone(local_timezone).isocalendar().week
+        month = datetime.now().astimezone(local_timezone).month
+        year = datetime.now().astimezone(local_timezone).year
+        
+        month_weeks = [
+            {"total_recording": 0}
+        ]
+        # get the number of week for that year and month.
+        mumber_of_weeks = utils.weeks_in_month(year, month)
+        for i in range(number_of_weeks):
+            id_count = i + 1
+            positive_count, negative_count, neutral_count = 0, 0, 0
+            
+            month_weeks.append(
+                {"id": id_count, "time": "wk"+str(id_count), "positive": 0,
+                 "negative": 0, "neutral": 0}
+            )
         result = {
             "week": [
                 {"total_recording": 0},
@@ -68,55 +86,31 @@ def get_total_agent_analysis(agent_id: int, db: Session = Depends(_services.get_
                 {"id": 6, "time": "Day 6", "positive": 0, "negative": 0, "neutral": 0},
                 {"id": 7, "time": "Day 7", "positive": 0, "negative": 0, "neutral": 0}
             ],
-            "month": [
-                {"total_recording": 0},
-                {"id": 1, "time": "wk1", "positive": 0, "negative": 0, "neutral": 0},
-                {"id": 2, "time": "wk2", "positive": 0, "negative": 0, "neutral": 0},
-                {"id": 3, "time": "wk3", "positive": 0, "negative": 0, "neutral": 0},
-                {"id": 4, "time": "wk4", "positive": 0, "negative": 0, "neutral": 0}
-            ]
+            "month": month_weeks
         }
+        
+        
         for i in total_analysis:
-            if i.timestamp.isocalendar().week == week:
+            if i.timestamp.astimezone(local_timezone).isocalendar().week == week:
                 result["week"][0]["total_recording"] += 1
                 for y in range(7):
-                    if i.timestamp.weekday() == y:
+                    if i.timestamp.astimezone(local_timezone).weekday() == y:
                         if i.overall_sentiment == "Positive":
                             result["week"][y+1]["positive"] += 1
                         elif i.overall_sentiment == "Negative":
                             result["week"][y+1]["negative"] += 1
                         elif i.overall_sentiment == "Neutral":
                             result["week"][y+1]["neutral"] += 1
-            if i.timestamp.month == month:
+            if i.timestamp.astimezone(local_timezone).month == month:
                 result["month"][0]["total_recording"] += 1
-                if i.timestamp.day <= 7:
-                    if i.overall_sentiment == "Positive":
-                        result["month"][1]["positive"] += 1
-                    elif i.overall_sentiment == "Negative":
-                        result["month"][1]["negative"] += 1
-                    elif i.overall_sentiment == "Neutral":
-                        result["month"][1]["neutral"] += 1
-                elif 8 <= i.timestamp.day <= 14:
-                    if i.overall_sentiment == "Positive":
-                        result["month"][2]["positive"] += 1
-                    elif i.overall_sentiment == "Negative":
-                        result["month"][2]["negative"] += 1
-                    elif i.overall_sentiment == "Neutral":
-                        result["month"][2]["neutral"] += 1
-                elif 15 <= i.timestamp.day <= 21:
-                    if i.overall_sentiment == "Positive":
-                        result["month"][3]["positive"] += 1
-                    elif i.overall_sentiment == "Negative":
-                        result["month"][3]["negative"] += 1
-                    elif i.overall_sentiment == "Neutral":
-                        result["month"][3]["neutral"] += 1
-                elif 22 <= i.timestamp.day <= 31:
-                    if i.overall_sentiment == "Positive":
-                        result["month"][4]["positive"] += 1
-                    elif i.overall_sentiment == "Negative":
-                        result["month"][4]["negative"] += 1
-                    elif i.overall_sentiment == "Neutral":
-                        result["month"][4]["neutral"] += 1
+                get_week = i.timestamp.astimezone(local_timezone).isocalendar().week
+                if i.overall_sentiment == "Positive":
+                    result["month"][get_week]["positive"] += 1
+                elif i.overall_sentiment == "Negative":
+                    result["month"][get_week]["negative"] += 1
+                elif i.overall_sentiment == "Neutral":
+                    result["month"][get_week]["neutral"] += 1
+                
     except Exception as e:
         return JSONResponse(
             status_code= status.HTTP_400_BAD_REQUEST,
@@ -141,6 +135,8 @@ def get_agent_performance(agent_id: int, db: Session = Depends(_services.get_ses
                           user: models.User = Depends(get_active_user)):
     try:
         result = {}
+        result['week'] = []
+        result['month'] = []
         leaderboard = crud.get_leaderboard(db, user.id)
         for i in leaderboard[0]:
             if i["agent_id"] == agent_id:
