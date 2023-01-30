@@ -25,6 +25,8 @@ from jwt import main_login, get_access_token, verify_password, refresh
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from emails import send_email, verify_token, send_password_reset_email, password_verif_token
 from datetime import datetime, timedelta, date
+import pytz
+import tzlocal
 
 agent_router = APIRouter(
     prefix='/agents',
@@ -54,9 +56,10 @@ def get_agents_leaderboard(db: Session = Depends(_services.get_session), user: m
 @agent_router.get("/total-agent-analysis", summary="get total agent analysis")
 def get_total_agent_analysis(agent_id: int, db: Session = Depends(_services.get_session), user: models.User = Depends(get_active_user)):
     try:
+        local_timezone = tzlocal.get_localzone()
         total_analysis = db.query(models.Audio).filter(models.Audio.user_id == user.id, models.Audio.agent_id == agent_id)
-        week = datetime.now().isocalendar().week
-        month = datetime.now().month
+        week = datetime.now().astimezone(local_timezone).isocalendar().week
+        month = datetime.now().astimezone(local_timezone).month
         result = {
             "week": [
                 {"total_recording": 0},
@@ -77,19 +80,19 @@ def get_total_agent_analysis(agent_id: int, db: Session = Depends(_services.get_
             ]
         }
         for i in total_analysis:
-            if i.timestamp.isocalendar().week == week:
+            if i.timestamp.astimezone(local_timezone).isocalendar().week == week:
                 result["week"][0]["total_recording"] += 1
                 for y in range(7):
-                    if i.timestamp.weekday() == y:
+                    if i.timestamp.astimezone(local_timezone).weekday() == y:
                         if i.overall_sentiment == "Positive":
                             result["week"][y+1]["positive"] += 1
                         elif i.overall_sentiment == "Negative":
                             result["week"][y+1]["negative"] += 1
                         elif i.overall_sentiment == "Neutral":
                             result["week"][y+1]["neutral"] += 1
-            if i.timestamp.month == month:
+            if i.timestamp.astimezone(local_timezone).month == month:
                 result["month"][0]["total_recording"] += 1
-                if i.timestamp.day <= 7:
+                if i.timestamp.astimezone(local_timezone).day <= 7:
                     if i.overall_sentiment == "Positive":
                         result["month"][1]["positive"] += 1
                     elif i.overall_sentiment == "Negative":
@@ -141,6 +144,8 @@ def get_agent_performance(agent_id: int, db: Session = Depends(_services.get_ses
                           user: models.User = Depends(get_active_user)):
     try:
         result = {}
+        result['week'] = []
+        result['month'] = []
         leaderboard = crud.get_leaderboard(db, user.id)
         for i in leaderboard[0]:
             if i["agent_id"] == agent_id:
