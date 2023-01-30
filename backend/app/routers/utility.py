@@ -14,9 +14,9 @@ import os
 from dotenv import load_dotenv
 from email_validate import validate
 from audio import audio_details
-
+import calendar
+import datetime
 load_dotenv()
-
 
 upload_endpoint = "https://api.assemblyai.com/v2/upload"
 transcript_endpoint = "https://api.assemblyai.com/v2/transcript"
@@ -126,3 +126,12 @@ def get_length(files) -> int:
 # return a hashed string.
 def generate_signature(secret: bytes, payload: bytes, digest_method = hashlib.sha512):
     return hmac.new(secret.encode('utf-8'), payload, digest_method).hexdigest()
+
+def weeks_in_month(year, month):
+    c = calendar.Calendar(firstweekday=calendar.SUNDAY)
+    monthcal = c.monthdatescalendar(year, month)
+    return len([day for week in monthcal for day in week if day.month == month])
+
+def current_year_month():
+    now = datetime.datetime.now()
+    return now.year, now.month
