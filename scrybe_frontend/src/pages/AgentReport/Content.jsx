@@ -16,8 +16,8 @@ const Content = (props) => {
   const [selectReport, setSelectReport] = useState([]);
 
   useEffect(() => {
-    setSelectReport(agentAnalysisData?.week);
-    setSelectData(agentReportData?.week);
+    setSelectReport(agentAnalysisData?.month);
+    setSelectData(agentReportData?.month);
   }, [agentAnalysisData, agentReportData]);
 
   const handleDate = (e) => {
@@ -57,8 +57,8 @@ const Content = (props) => {
               <div className={styles.select}>
                 <p>View by</p>
                 <select className={styles.dropdown} onChange={handleDate}>
-                  <option value="week">This week</option>
                   <option value="month">This month</option>
+                  <option value="week">This week</option>
                 </select>
               </div>
             </div>
