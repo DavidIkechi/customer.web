@@ -14,8 +14,8 @@ const LeaderBoard = ({ LeaderboardData }) => {
   const [selected, setSelected] = useState({});
 
   useEffect(() => {
-    setSelected(LeaderboardData?.week);
-  }, [LeaderboardData?.week]);
+    setSelected(LeaderboardData?.month);
+  }, [LeaderboardData?.month]);
   function selectFunc(e) {
     setSelected(LeaderboardData[e.target.value]);
   }
@@ -27,8 +27,8 @@ const LeaderBoard = ({ LeaderboardData }) => {
           Agents Leaderboard
         </h1>
         <select className={styles.dropdown} onChange={selectFunc}>
-          <option value="week">This week</option>
           <option value="month">This month</option>
+          <option value="week">This week</option>
         </select>
       </div>
       <div className={styles.subcontent_con}>

@@ -21,15 +21,15 @@ function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState([]);
   const [data, setData] = useState(null);
   const [otherAgent, setOtherAgent] = useState([]);
-  const [range, setRange] = useState("week");
+  const [range, setRange] = useState("month");
 
   useEffect(() => {
     const getData = () => {
       const response = leaderboardData;
-      const arr = response?.week?.Top3_Agents;
+      const arr = response?.month?.Top3_Agents;
       setData(response);
       setLeaderboard(arr);
-      const otherAgents = response?.week?.Other_Agents;
+      const otherAgents = response?.month?.Other_Agents;
       setOtherAgent(otherAgents);
     };
     getData();
@@ -41,13 +41,13 @@ function Leaderboard() {
 
   useEffect(() => {
     if (data) {
-      if (range === "week") {
-        setLeaderboard(data?.week?.Top3_Agents);
-        setOtherAgent(data?.week?.Other_Agents);
-      }
       if (range === "month") {
         setLeaderboard(data?.month?.Top3_Agents);
         setOtherAgent(data?.month?.Other_Agents);
+      }
+      if (range === "week") {
+        setLeaderboard(data?.week?.Top3_Agents);
+        setOtherAgent(data?.week?.Other_Agents);
       }
     }
   }, [range, data]);
@@ -119,8 +119,8 @@ function Leaderboard() {
                   name="calender"
                   onChange={(e) => setRange(e.target.value)}
                 >
-                  <option value="week">This week</option>
                   <option value="month">This month</option>
+                  <option value="week">This week</option>
                 </select>
               </div>
             </div>
