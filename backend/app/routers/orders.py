@@ -180,7 +180,7 @@ async def heed_webhook_view(request: Request, db: Session = Depends(_services.ge
                                                     price=transaction['amount'])
         
     
-@order_router.post("/verify_flutter_order/{ref_code}", description="Verify Flutter order for a user", status_code = 200)
+@order_router.get("/verify_flutter_order/{ref_code}", description="Verify Flutter order for a user", status_code = 200)
 async def verify_order(ref_code: int, db: Session = Depends(_services.get_session), user: models.User = Depends(auth.get_active_user)):
     rave = Rave(RAVE_PUBLIC_KEY, SECRET_KEY)   
     user = crud.get_user_by_email(db, email=user.email)
