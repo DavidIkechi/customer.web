@@ -3,6 +3,7 @@ import agentReducer from "./features/agents/agentSlice";
 import analyzeReducer from "./features/analyze/analyzeSlice";
 import audioReducer from "./features/audios/audioSlice";
 import orderReducer from "./features/orders/orderSlice";
+import planReducer from "./features/plans/planSlice";
 import sentimentReducer from "./features/sentiment/sentimentSlice";
 import transcriptionReducer from "./features/transcriptions/transcriptionSlice";
 import userReducer from "./features/users/userSlice";
@@ -18,6 +19,7 @@ const store = configureStore({
     transcription: transcriptionReducer,
     util: utilReducer,
     sentiment: sentimentReducer,
+    plan: planReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
   devTools: true,
