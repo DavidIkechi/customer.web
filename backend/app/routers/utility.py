@@ -36,7 +36,9 @@ def _read_file(filename, chunk_size=5242880):
 def request_transcript(upload_url, header):
     transcript_request = {
         'audio_url': upload_url,
-        'sentiment_analysis': True
+        'sentiment_analysis': True,
+        "speaker_labels": True
+
 
     }
     transcript_response = requests.post(
