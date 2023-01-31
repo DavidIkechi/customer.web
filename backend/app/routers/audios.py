@@ -22,6 +22,9 @@ from jwt import main_login, get_access_token, verify_password, refresh
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from emails import send_email, verify_token, send_password_reset_email, password_verif_token
 from datetime import datetime, timedelta, date
+from . import utility as utils
+import pytz
+import tzlocal
 
 
 audio_router = APIRouter(
@@ -123,11 +126,26 @@ def get_recent_recordings(skip: int = 0, limit: int = 5, db: Session = Depends(_
 def total_recordings_user(db: Session = Depends(_services.get_session), user: models.User = Depends(get_active_user)):
     
     try:
+        local_timezone = tzlocal.get_localzone()
         total_recordings = db.query(models.Audio).filter(models.Audio.user_id == user.id)
-        week = datetime.now().isocalendar().week
-        month = datetime.now().month
+        week = datetime.now().astimezone(local_timezone).isocalendar()[1]
+        month = datetime.now().astimezone(local_timezone).month
+        year = datetime.now().astimezone(local_timezone).year
         
+        month_weeks = [
+            {"total_recording": 0}
+        ]
+        
+        number_of_weeks = utils.weeks_in_month(year, month)
+
         if total_recordings.count() > 0:
+            
+            for i in range(number_of_weeks):
+                id_count = i + 1            
+                month_weeks.append(
+                    {"id": id_count, "time": "wk"+str(id_count), "totalRecordings": 0}
+                )
+            
             results = {
             "week": [
                 {"total_recording": 0},
@@ -139,42 +157,35 @@ def total_recordings_user(db: Session = Depends(_services.get_session), user: mo
                 {"id": 6, "time": "S", "totalRecordings": 0},
                 {"id": 7, "time": "S", "totalRecordings": 0}
             ],
-            "month": [
-                {"total_recording": 0},
-                {"id": 1, "time": "wk1", "totalRecordings": 0},
-                {"id": 2, "time": "wk2", "totalRecordings": 0},
-                {"id": 3, "time": "wk3", "totalRecordings": 0},
-                {"id": 4, "time": "wk4", "totalRecordings": 0}
-            ]
+            "month":  month_weeks
         }
             for i in total_recordings:
-                if i.timestamp.isocalendar().week == week:
+                if i.timestamp.astimezone(local_timezone).isocalendar().week == week:
                     results["week"][0]["total_recording"] += 1
-                    if i.timestamp.weekday() == 0:
+                    if i.timestamp.astimezone(local_timezone).weekday() == 0:
                         results["week"][1]["totalRecordings"] += 1
-                    elif i.timestamp.weekday() == 1:
+                    elif i.timestamp.astimezone(local_timezone).weekday() == 1:
                         results["week"][2]["totalRecordings"] += 1
-                    elif i.timestamp.weekday() == 2:
+                    elif i.timestamp.astimezone(local_timezone).weekday() == 2:
                         results["week"][3]["totalRecordings"] += 1
-                    elif i.timestamp.weekday() == 3:
+                    elif i.timestamp.astimezone(local_timezone).weekday() == 3:
                         results["week"][4]["totalRecordings"] += 1
-                    elif i.timestamp.weekday() == 4:
+                    elif i.timestamp.astimezone(local_timezone).weekday() == 4:
                         results["week"][5]["totalRecordings"] += 1
-                    elif i.timestamp.weekday() == 5:
+                    elif i.timestamp.astimezone(local_timezone).weekday() == 5:
                         results["week"][6]["totalRecordings"] += 1
-                    elif i.timestamp.weekday() == 6:
+                    elif i.timestamp.astimezone(local_timezone).weekday() == 6:
                         results["week"][7]["totalRecordings"] += 1
 
-                if i.timestamp.month == month:
+                if i.timestamp.astimezone(local_timezone).month == month:
                     results["month"][0]["total_recording"] += 1
-                    if i.timestamp.day <= 7:
-                        results["month"][1]["totalRecordings"] += 1
-                    elif 8 <= i.timestamp.day <= 14:
-                        results["month"][2]["totalRecordings"] += 1
-                    elif 15 <= i.timestamp.day <= 21:
-                        results["month"][3]["totalRecordings"] += 1
-                    elif 22 <= i.timestamp.day <= 31:
-                        results["month"][4]["totalRecordings"] += 1
+                    get_time= i.timestamp.astimezone(local_timezone)
+                    get_day = get_time.day
+                    get_year = get_time.year
+                    get_month = get_time.month
+                    get_week = utils.week_of_month(datetime(get_year, get_month, get_day))
+                    results["month"][get_week]["totalRecordings"] += 1
+                    
         else:
             results = {
                 "week": [],

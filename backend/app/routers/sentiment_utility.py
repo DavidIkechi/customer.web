@@ -80,3 +80,16 @@ def sentiment_assembly(transcript):
             "most_positive_sentences": json.dumps(pos_sent)
             }
     return sentiment        
+
+def sentiment_utterances(transcript):
+    all_utterances = []
+    print(transcript) 
+    for each_utter in transcript['utterances']:
+        all_utterances.append({
+            "speaker": each_utter['speaker'],
+            "word_spoken": each_utter['text'],
+            "sentiment": each_utter['sentiment'].title()
+        })
+        
+    return all_utterances
+    
