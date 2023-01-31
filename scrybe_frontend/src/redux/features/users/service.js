@@ -6,6 +6,7 @@ import {
   SignUpApi,
   UpdateUserApi,
   ResetPasswordApi,
+  RefreshApiKey,
 } from "../../axios/apis/user";
 import ErrorHandler from "../../axios/Utils/ErrorHandler";
 import { dispatch } from "../../store";
@@ -16,6 +17,7 @@ import {
   setUpdatedUser,
   setUser,
   setResetPasswordUser,
+  setRefreshApiKey,
 } from "./userSlice";
 
 export const SignUp = (data) => async () => {
@@ -68,6 +70,15 @@ export const GetAccount = () => async () => {
     const res = await AccountApi();
     dispatch(setUser(res.data.detail));
     sessionStorage.setItem("user", JSON.stringify(res.data.detail));
+  } catch (error) {
+    dispatch(createResponse(ErrorHandler(error)));
+  }
+};
+
+export const GetRefreshApiKey = () => async () => {
+  try {
+    const res = await RefreshApiKey();
+    dispatch(setRefreshApiKey(res.data.detail));
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
   }

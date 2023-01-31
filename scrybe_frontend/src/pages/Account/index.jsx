@@ -6,12 +6,17 @@ import accountStyles from "./account.module.scss";
 import chevronLeft from "./assets/icons/chevron-left.svg";
 import plus from "./assets/icons/plus.svg";
 import { CreateAgent } from "../../redux/features/agents/service";
-import { GetAccount } from "../../redux/features/users/service";
+import {
+  GetAccount,
+  GetRefreshApiKey,
+} from "../../redux/features/users/service";
 
 function Account() {
   const { user } = useSelector((state) => state.user);
+  const apiKey = useSelector((state) => state.user.refreshApiKey);
   const [accountModalIsActive, setAccountModalIsActive] = useState(false);
   const [accountUser, setAccountUser] = useState();
+  const [toggleApi, setToggleApi] = useState(false);
   const toggleAccountModal = () => {
     setAccountModalIsActive((current) => !current);
   };
@@ -41,6 +46,11 @@ function Account() {
     };
     dispatch(CreateAgent(data));
     dispatch(GetAccount());
+  };
+
+  const handleRefreshApiKey = () => {
+    dispatch(GetRefreshApiKey());
+    setToggleApi(!toggleApi);
   };
 
   const first_name = watch("first_name");
@@ -250,8 +260,14 @@ function Account() {
                 <div>
                   <p>API Key</p>
                   <div>
-                    <p>{accountUser?.api_key}</p>
-                    <button type="button">Refresh</button>
+                    {toggleApi ? (
+                      <p>{apiKey}</p>
+                    ) : (
+                      <p>{accountUser?.api_key}</p>
+                    )}
+                    <button type="button" onClick={handleRefreshApiKey}>
+                      Refresh
+                    </button>
                   </div>
                 </div>
               </div>
