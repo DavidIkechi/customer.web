@@ -8,6 +8,7 @@ const initialState = {
   error: null,
   updatedUser: null,
   resetUser: null,
+  refreshApiKey: null,
 };
 
 const userSlice = createSlice({
@@ -32,6 +33,9 @@ const userSlice = createSlice({
     setResetPasswordUser: (state, action) => {
       state.resetUser = action.payload;
     },
+    setRefreshApiKey: (state, action) => {
+      state.refreshApiKey = action.payload;
+    },
   },
 });
 
@@ -42,6 +46,7 @@ export const {
   setError,
   setUpdatedUser,
   setResetPasswordUser,
+  setRefreshApiKey,
 } = userSlice.actions;
 
 export default userSlice.reducer;

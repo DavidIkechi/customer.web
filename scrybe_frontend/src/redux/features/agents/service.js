@@ -1,6 +1,6 @@
 import {
   AgentDetailsApi,
-  CreateApi,
+  CreateAgentApi,
   LeaderBoardApi,
   TotalAgentAnalysisApi,
 } from "../../axios/apis/agent";
@@ -38,7 +38,7 @@ export const TotalAgentAnalysis = (id) => async () => {
 
 export const CreateAgent = (data) => async () => {
   try {
-    const res = await CreateApi(data);
+    const res = await CreateAgentApi(data);
     dispatch(setAgent(res.data.detail));
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));

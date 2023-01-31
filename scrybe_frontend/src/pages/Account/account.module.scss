@@ -1,7 +1,7 @@
 @import "../../assets/styles/utilities/functionsANDmedia";
 @import "../../assets/styles/utilities/variables";
 @import "../../assets/styles/reset";
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+// @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 .account__container {
   width: 100%;
@@ -473,6 +473,9 @@
         }
       }
     }
+    div::-webkit-scrollbar {
+      display: none;
+    }
     div {
       overflow-y: scroll;
       height: pix-rem(144);
@@ -481,12 +484,17 @@
         li {
           display: flex;
           justify-content: space-between;
+          background: #5297f936;
+          padding: 8px;
+          margin: 0 0 5px 0;
+          border-radius: 4px;
 
           p:first-of-type {
             color: $blue-500;
             font-weight: 600;
             font-size: pix-rem(16);
             line-height: pix-rem(24);
+            text-transform: capitalize !important;
           }
           p:last-of-type {
             font-weight: 300;
