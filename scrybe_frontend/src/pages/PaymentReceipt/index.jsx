@@ -4,7 +4,7 @@ import indicatorImg from "./assets/indicator.png";
 import pdf from "./assets/pdf.png";
 import styles from "./paymentDetails.module.scss";
 
-const PaymentDetails = () => {
+const PaymentReceipt = () => {
   // const { order } = useSelector((state) => state.order);
   const order = JSON.parse(localStorage.getItem("order"));
   const [timedown, setTimedown] = React.useState(false);
@@ -138,4 +138,4 @@ const PaymentDetails = () => {
   );
 };
 
-export default PaymentDetails;
+export default PaymentReceipt;
