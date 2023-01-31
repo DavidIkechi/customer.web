@@ -8,7 +8,7 @@ export const TotalAgentAnalysisApi = async (id) => {
   return api.get(`agents/total-agent-analysis?agent_id=${id}`);
 };
 
-export const CreateApi = async (data) => {
+export const CreateAgentApi = async (data) => {
   return api.post(`agents/agent`, data);
 };
 

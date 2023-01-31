@@ -1,19 +1,29 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import accountStyles from "./account.module.scss";
 import chevronLeft from "./assets/icons/chevron-left.svg";
 import plus from "./assets/icons/plus.svg";
+import { CreateAgent } from "../../redux/features/agents/service";
+import SkeletonLoader from "../SentimentAnalysis/components/SkeletonLoader";
+import {
+  GetAccount,
+  GetRefreshApiKey,
+} from "../../redux/features/users/service";
 
 function Account() {
   const { user } = useSelector((state) => state.user);
+  const apiKey = useSelector((state) => state.user.refreshApiKey);
   const [accountModalIsActive, setAccountModalIsActive] = useState(false);
   const [accountUser, setAccountUser] = useState();
+  const [toggleApi, setToggleApi] = useState(false);
+
   const toggleAccountModal = () => {
     setAccountModalIsActive((current) => !current);
   };
+
+  const { isLoading } = useSelector((state) => state.util);
 
   const navigate = useNavigate();
 
@@ -21,7 +31,6 @@ function Account() {
     register,
     handleSubmit,
     watch,
-    reset,
     formState: { errors },
   } = useForm();
 
@@ -31,36 +40,21 @@ function Account() {
     }
   }, [user]);
 
-  const baseUrl = "https://api.heed.cx";
+  const dispatch = useDispatch();
+
   const submitCallback = () => {
-    const config = {
-      headers: {
-        withCredentials: true,
-        Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
-      },
+    const data = {
+      first_name: first_name,
+      last_name: last_name,
+      location: location,
     };
-    first_name &&
-      last_name &&
-      location &&
-      axios
-        .post(
-          baseUrl + "/agent",
-          {
-            first_name: first_name,
-            last_name: last_name,
-            location: location,
-          },
-          config
-        )
-        .then((res) => {
-          if (res.status === 200) {
-            toggleAccountModal();
-            reset();
-          }
-        })
-        .catch((err) => {
-          console.log("this is the error:", err.response);
-        });
+    dispatch(CreateAgent(data));
+    dispatch(GetAccount());
+  };
+
+  const handleRefreshApiKey = () => {
+    dispatch(GetRefreshApiKey());
+    setToggleApi(!toggleApi);
   };
 
   const first_name = watch("first_name");
@@ -152,6 +146,7 @@ function Account() {
                     id="submit"
                     disabled={!isValid}
                     className={`${isValid && accountStyles.submitValid}`}
+                    onClick={toggleAccountModal}
                   >
                     Submit
                   </button>
@@ -255,8 +250,8 @@ function Account() {
                     {accountUser?.agents?.map((agent, index) => {
                       return agent ? (
                         <li key={index}>
-                          <p>{agent.first_name + " " + agent.last_name}</p>
-                          <p>{agent.location ? agent.location : "Abuja"}</p>
+                          <p>{agent?.first_name + " " + agent?.last_name}</p>
+                          <p>{agent?.location}</p>
                         </li>
                       ) : (
                         <p>You have no agents yet.</p>
@@ -269,10 +264,20 @@ function Account() {
                 <p>Developer tools</p>
                 <div>
                   <p>API Key</p>
-                  <div>
-                    <p>{accountUser?.api_key}</p>
-                    <button type="button">Refresh</button>
-                  </div>
+                  {isLoading ? (
+                    <SkeletonLoader type="text" numberOfLines={1} />
+                  ) : (
+                    <div>
+                      {toggleApi ? (
+                        <p>{apiKey}</p>
+                      ) : (
+                        <p>{accountUser?.api_key}</p>
+                      )}
+                      <button type="button" onClick={handleRefreshApiKey}>
+                        Refresh
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </section>

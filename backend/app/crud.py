@@ -502,12 +502,14 @@ def analyse_and_store_audio(db:Session, job_id, user_id):
                                             "audio_name": db_audio_filename}
 
     create_history(db, history_create)
+    
     other_details = {
         "audio_url": db_audio_url,
         "audio_size": db_audio_size,
         "audio_duration": db_audio_duration,
         "audio_filename": db_audio_filename
     }
+    
     dic2 = dict(sentiment_result, **other_details)
     return {"sentiment_result": dic2}
 
