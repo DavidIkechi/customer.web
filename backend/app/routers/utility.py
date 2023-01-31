@@ -1,5 +1,6 @@
 import requests
 import time
+from math import ceil
 from fastapi import HTTPException
 import boto3
 from botocore.exceptions import ClientError
@@ -128,10 +129,17 @@ def generate_signature(secret: bytes, payload: bytes, digest_method = hashlib.sh
     return hmac.new(secret.encode('utf-8'), payload, digest_method).hexdigest()
 
 def weeks_in_month(year, month):
-    c = calendar.Calendar(firstweekday=calendar.SUNDAY)
+    c = calendar.Calendar(firstweekday=calendar.MONDAY)
     monthcal = c.monthdatescalendar(year, month)
-    return len([day for week in monthcal for day in week if day.month == month])
+    return len(monthcal)
 
 def current_year_month():
     now = datetime.datetime.now()
     return now.year, now.month
+
+def week_of_month(dt):
+    first_day = dt.replace(day=1)
+    dom = dt.day
+    adjusted_dom = dom + first_day.weekday()
+
+    return int(ceil(adjusted_dom/7.0))

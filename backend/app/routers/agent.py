@@ -58,7 +58,7 @@ def get_total_agent_analysis(agent_id: int, db: Session = Depends(_services.get_
     try:
         local_timezone = tzlocal.get_localzone()
         total_analysis = db.query(models.Audio).filter(models.Audio.user_id == user.id, models.Audio.agent_id == agent_id)
-        week = datetime.now().astimezone(local_timezone).isocalendar().week
+        week = datetime.now().astimezone(local_timezone).isocalendar()[1]
         month = datetime.now().astimezone(local_timezone).month
         year = datetime.now().astimezone(local_timezone).year
         
@@ -66,7 +66,9 @@ def get_total_agent_analysis(agent_id: int, db: Session = Depends(_services.get_
             {"total_recording": 0}
         ]
         # get the number of week for that year and month.
-        mumber_of_weeks = utils.weeks_in_month(year, month)
+        number_of_weeks = utils.weeks_in_month(year, month)
+        
+
         for i in range(number_of_weeks):
             id_count = i + 1
             positive_count, negative_count, neutral_count = 0, 0, 0
@@ -75,6 +77,7 @@ def get_total_agent_analysis(agent_id: int, db: Session = Depends(_services.get_
                 {"id": id_count, "time": "wk"+str(id_count), "positive": 0,
                  "negative": 0, "neutral": 0}
             )
+            
         result = {
             "week": [
                 {"total_recording": 0},
@@ -88,8 +91,7 @@ def get_total_agent_analysis(agent_id: int, db: Session = Depends(_services.get_
             ],
             "month": month_weeks
         }
-        
-        
+                
         for i in total_analysis:
             if i.timestamp.astimezone(local_timezone).isocalendar().week == week:
                 result["week"][0]["total_recording"] += 1
@@ -103,7 +105,12 @@ def get_total_agent_analysis(agent_id: int, db: Session = Depends(_services.get_
                             result["week"][y+1]["neutral"] += 1
             if i.timestamp.astimezone(local_timezone).month == month:
                 result["month"][0]["total_recording"] += 1
-                get_week = i.timestamp.astimezone(local_timezone).isocalendar().week
+                get_time= i.timestamp.astimezone(local_timezone)
+                get_day = get_time.day
+                get_year = get_time.year
+                get_month = get_time.month
+                
+                get_week = utils.week_of_month(datetime(get_year, get_month, get_day))
                 if i.overall_sentiment == "Positive":
                     result["month"][get_week]["positive"] += 1
                 elif i.overall_sentiment == "Negative":
