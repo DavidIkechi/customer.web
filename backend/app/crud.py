@@ -298,8 +298,8 @@ def get_leaderboard(db: Session, user_id: int):
     unique_ids = []
     local_timezone = tzlocal.get_localzone()
 
-    week = datetime.now().astimezone(local_timezone).isocalendar()[1]
-    month = datetime.now().astimezone(local_timezone).month
+    week = datetime.datetime.now().astimezone(local_timezone).isocalendar()[1]
+    month = datetime.datetime.now().astimezone(local_timezone).month
     total_week = 0
     total_month = 0
 
