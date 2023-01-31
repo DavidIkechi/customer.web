@@ -6,6 +6,7 @@ import accountStyles from "./account.module.scss";
 import chevronLeft from "./assets/icons/chevron-left.svg";
 import plus from "./assets/icons/plus.svg";
 import { CreateAgent } from "../../redux/features/agents/service";
+import SkeletonLoader from "../SentimentAnalysis/components/SkeletonLoader";
 import {
   GetAccount,
   GetRefreshApiKey,
@@ -17,9 +18,12 @@ function Account() {
   const [accountModalIsActive, setAccountModalIsActive] = useState(false);
   const [accountUser, setAccountUser] = useState();
   const [toggleApi, setToggleApi] = useState(false);
+
   const toggleAccountModal = () => {
     setAccountModalIsActive((current) => !current);
   };
+
+  const { isLoading } = useSelector((state) => state.util);
 
   const navigate = useNavigate();
 
@@ -259,16 +263,20 @@ function Account() {
                 <p>Developer tools</p>
                 <div>
                   <p>API Key</p>
-                  <div>
-                    {toggleApi ? (
-                      <p>{apiKey}</p>
-                    ) : (
-                      <p>{accountUser?.api_key}</p>
-                    )}
-                    <button type="button" onClick={handleRefreshApiKey}>
-                      Refresh
-                    </button>
-                  </div>
+                  {isLoading ? (
+                    <SkeletonLoader type="text" numberOfLines={1} />
+                  ) : (
+                    <div>
+                      {toggleApi ? (
+                        <p>{apiKey}</p>
+                      ) : (
+                        <p>{accountUser?.api_key}</p>
+                      )}
+                      <button type="button" onClick={handleRefreshApiKey}>
+                        Refresh
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </section>

@@ -10,7 +10,7 @@ import {
 } from "../../axios/apis/user";
 import ErrorHandler from "../../axios/Utils/ErrorHandler";
 import { dispatch } from "../../store";
-import { createResponse } from "../../utils/UtilSlice";
+import { createResponse, setLoading } from "../../utils/UtilSlice";
 import {
   setError,
   setToken,
@@ -76,11 +76,14 @@ export const GetAccount = () => async () => {
 };
 
 export const GetRefreshApiKey = () => async () => {
+  dispatch(setLoading(true));
   try {
     const res = await RefreshApiKey();
     dispatch(setRefreshApiKey(res.data.detail));
+    dispatch(setLoading(false));
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
+    dispatch(setLoading(false));
   }
 };
 
