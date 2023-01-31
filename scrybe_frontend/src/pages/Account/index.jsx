@@ -146,6 +146,7 @@ function Account() {
                     id="submit"
                     disabled={!isValid}
                     className={`${isValid && accountStyles.submitValid}`}
+                    onClick={toggleAccountModal}
                   >
                     Submit
                   </button>
