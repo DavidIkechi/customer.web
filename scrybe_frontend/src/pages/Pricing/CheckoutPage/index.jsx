@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import Spinner from "../../../components/ButtonSpinner";
-import { setOrder } from "../../../redux/features/orders/orderSlice";
 import { createPaymentEndpoint } from "../../../redux/features/orders/service";
 import Check from "../assets/check.svg";
 import fluterwave from "../assets/fluterwave_icon.png";
@@ -32,6 +31,7 @@ const paymentProviders = [
   },
 ];
 const CheckoutPage = () => {
+  const { isLoading: backendLoading } = useSelector((state) => state.util);
   const { plans } = useSelector((state) => state.plan);
   const selectedPlanKey = localStorage.getItem("selectedPlan");
   const [selectedPlan, setSelectedPlan] = useState({});
@@ -44,7 +44,6 @@ const CheckoutPage = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(plans);
 
   const getSelectedPlan = (planKey) => {
     if (selectedPlanKey) {
@@ -91,15 +90,6 @@ const CheckoutPage = () => {
   const handleCheckout = (e) => {
     e.preventDefault();
     setLoading(true);
-    const orderToSave = {
-      minutes: Number(mins),
-      plan: selectedPlan?.name,
-      total: totalPay,
-      planPrice: selectedPlan?.price,
-      paymentMethod: selectedPayment.name,
-      date: new Date().toDateString(),
-    };
-    dispatch(setOrder(orderToSave));
     const url = selectedPayment.url;
     const data = {
       minutes: Number(mins),
@@ -238,7 +228,7 @@ const CheckoutPage = () => {
             <div className={styles.agreement}>
               <input
                 type="checkbox"
-                value={isChecked}
+                checked={isChecked}
                 onChange={(e) => setIsChecked(e.target.value)}
               />
               <p>
@@ -253,7 +243,13 @@ const CheckoutPage = () => {
                 isLoading && styles.disabled
               }`}
             >
-              {isLoading ? <Spinner /> : <p>Proceed to checkout</p>}
+              {isLoading ? (
+                <Spinner />
+              ) : backendLoading ? (
+                <Spinner />
+              ) : (
+                <p>Proceed to checkout</p>
+              )}
             </button>
             <p className={styles.cancelBtn}>
               <Link to="/">Exit payment</Link>

@@ -15,7 +15,7 @@ const store = configureStore({
     agent: agentReducer,
     analyze: analyzeReducer,
     audio: audioReducer,
-    orders: orderReducer,
+    order: orderReducer,
     transcription: transcriptionReducer,
     util: utilReducer,
     sentiment: sentimentReducer,

@@ -2,8 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   order: {},
-  orderError: null,
-  paymentUrl: {},
 };
 
 const orderSlice = createSlice({
@@ -11,18 +9,11 @@ const orderSlice = createSlice({
   initialState,
   reducers: {
     setOrder: (state, action) => {
-      state.orders = action.payload;
-    },
-    setOrderError: (state, action) => {
-      state.orderError = action.payload;
-    },
-    setPaymentEndpoint: (state, action) => {
-      state.paymentUrl = action.payload;
+      state.order = action.payload;
     },
   },
 });
 
-export const { setOrder, setOrderError, setPaymentEndpoint } =
-  orderSlice.actions;
+export const { setOrder } = orderSlice.actions;
 
 export default orderSlice.reducer;
