@@ -102,7 +102,7 @@ const PaymentReceipt = () => {
                     Price/plan<span>:</span>
                   </h3>
                   <div className={styles.hr} />
-                  <p>{planPrice} per minutes</p>
+                  <p>${planPrice} per minutes</p>
                 </div>
                 <div className={styles.flex}>
                   <h3>
@@ -142,7 +142,7 @@ const PaymentReceipt = () => {
                     Total amount paid <span>:</span>
                   </h3>
                   <div className={styles.hr} />
-                  <p className={styles.total}>{total}</p>
+                  <p className={styles.total}>${total}</p>
                 </div>
               </div>
             </div>
