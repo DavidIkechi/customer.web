@@ -65,7 +65,6 @@ async def send_email(email: List, instance: User):
     fm =FastMail(conf)
     await fm.send_message(message=message, template_name='EmailVerification/index.html')
 
-
 async def send_password_reset_email(email: List, instance: User):
     expire = datetime.utcnow() + timedelta(minutes=1440)
 
@@ -224,7 +223,6 @@ async def verify_token(token: str, db: Session):
             return JSONResponse(
                 status_code= 400,
                 content=jsonable_encoder({"detail": "Token not authorized for user"}),
-            )     
 
     except Exception as e:
         return False
