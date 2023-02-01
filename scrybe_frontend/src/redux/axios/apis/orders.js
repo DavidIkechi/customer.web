@@ -1,15 +1,11 @@
 import api from "../axios";
 
-export const CreateOrderApi = (order) => {
-  return api.post(`orders/create_order`, {
-    billing_plan: order,
-  });
-};
-
-export const VerifyOrderApi = (order, ref_code) => {
-  return api.post(`orders/verify_order/${ref_code}`, order);
-};
-
-export const CreatePaymentEndpointApi = (url, order) => {
+export const createPaymentEndpointApi = (url, order) => {
   return api.post(`orders/${url}`, order);
+};
+export const verifyStripeOrderApi = (ref_code) => {
+  return api.get(`orders/stripe-order-details/${ref_code}`);
+};
+export const verifyFluterwaveOrderApi = (ref_code) => {
+  return api.get(`orders/verify_flutter_order/${ref_code}`);
 };

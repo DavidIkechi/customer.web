@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import Spinner from "../../../components/ButtonSpinner";
-import { setOrder } from "../../../redux/features/orders/orderSlice";
 import { createPaymentEndpoint } from "../../../redux/features/orders/service";
 import Check from "../assets/check.svg";
 import fluterwave from "../assets/fluterwave_icon.png";
 import selectArr from "../assets/select-arrow.svg";
 import stripe from "../assets/stripe_icon.png";
-import { PricingData } from "../Plans/data";
 import styles from "./checkout.module.scss";
 
 const paymentProviders = [
@@ -29,12 +27,14 @@ const paymentProviders = [
     id: 3,
     name: "Flutterwave",
     icon: fluterwave,
-    url: "",
+    url: "create_flutter_order",
   },
 ];
 const CheckoutPage = () => {
+  const { isLoading: backendLoading } = useSelector((state) => state.util);
+  const { plans } = useSelector((state) => state.plan);
   const selectedPlanKey = localStorage.getItem("selectedPlan");
-  const [selectedPlan, setSelectedPlan] = useState();
+  const [selectedPlan, setSelectedPlan] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [totalPay, setTotalPay] = useState(0);
   const [isChecked, setIsChecked] = useState(false);
@@ -45,23 +45,23 @@ const CheckoutPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const getSelectedPlan = (plankey) => {
+  const getSelectedPlan = (planKey) => {
     if (selectedPlanKey) {
-      let thePlan = PricingData.filter((plan) => plan.planKey === plankey)[0];
-      setSelectedPlan(thePlan);
+      let [object] = plans.filter((plan) => plan.additional === planKey);
+      setSelectedPlan(object);
     }
   };
 
   const getMin = (min) => {
-    const toPay = min * selectedPlan?.pricing;
+    const toPay = min * selectedPlan?.price;
     const rounded = Math.round(toPay * 10) / 10;
     setTotalPay(rounded);
   };
 
-  const handlesSelectPlan = (plan) => {
+  const handleSelectPlan = (plan) => {
     setSelectedPlan(plan);
-    localStorage.setItem("selectedPlan", plan.planKey);
-    getSelectedPlan(plan.planKey);
+    localStorage.setItem("selectedPlan", plan.additional);
+    getSelectedPlan(plan.additional);
     setIsModalOpen(false);
     getMin(Number(mins));
   };
@@ -90,20 +90,10 @@ const CheckoutPage = () => {
   const handleCheckout = (e) => {
     e.preventDefault();
     setLoading(true);
-    const orderToSave = {
-      minutes: Number(mins),
-      plan: selectedPlan?.headDescription,
-      total: totalPay,
-      planPrice: selectedPlan?.pricing,
-      paymentMethod: selectedPayment.name,
-      date: new Date().toDateString(),
-    };
-    localStorage.setItem("order", JSON.stringify(orderToSave));
-    dispatch(setOrder(orderToSave));
     const url = selectedPayment.url;
     const data = {
       minutes: Number(mins),
-      plan: selectedPlan.headDescription,
+      plan: selectedPlan.name,
     };
     setTimeout(() => {
       dispatch(createPaymentEndpoint(url, data));
@@ -124,17 +114,21 @@ const CheckoutPage = () => {
           <div className={styles.billingDropDown}>
             <h3>choose a different plan:</h3>
             <p>Click dropdown to switch between available plans</p>
-            <div className={styles.billingDropDown__input}>
+
+            <div
+              className={styles.billingDropDown__input}
+              onClick={() => setIsModalOpen(!isModalOpen)}
+            >
               {selectedPlan && (
                 <div className={styles.inputItem}>
                   <div className={styles.nameDetails}>
-                    <p>{selectedPlan.headDescription} Plan</p>
+                    <p>{selectedPlan.name} Plan</p>
                     <h2>{selectedPlan.title}</h2>
                     <p>{selectedPlan.duration}</p>
                   </div>
                   <div className={styles.priceDetails}>
                     <div className={styles.priceDetails__price}>
-                      <h2>${selectedPlan.pricing}</h2>
+                      <h2>${selectedPlan.price}</h2>
                       <p>Per minute</p>
                     </div>
                     <img
@@ -152,23 +146,22 @@ const CheckoutPage = () => {
             {isModalOpen && (
               <div className={styles.billingDropDown__modal}>
                 <div className={styles.modalContent}>
-                  {PricingData.map((plan, index) => (
+                  {plans.map((plan, index) => (
                     <div
-                      onClick={() => handlesSelectPlan(plan)}
+                      onClick={() => handleSelectPlan(plan)}
                       className={`${styles.modalContent__item} ${
-                        plan.headDescription === "Enterprise Plus" &&
-                        styles.plus
+                        plan.name === "enterprise plus" && styles.plus
                       }`}
                       key={index}
                     >
                       <div className={styles.nameDetails}>
-                        <p>{plan.headDescription}</p>
+                        <p>{plan.name}</p>
                         <h2>{plan.title}</h2>
                         <p>{plan.duration}</p>
                       </div>
                       <div className={styles.priceDetails}>
                         <div className={styles.priceDetails__price}>
-                          <h2>${plan.pricing}</h2>
+                          <h2>${plan.price}</h2>
                           <p>Per minute</p>
                         </div>
                         <div className={styles.priceDetails__button}>
@@ -201,7 +194,7 @@ const CheckoutPage = () => {
               </div>
               <p>X</p>
               <div className={styles.planPrice}>
-                ${selectedPlan && selectedPlan.pricing}
+                ${selectedPlan && selectedPlan.price}
               </div>
             </div>
             <div className={styles.hr} />
@@ -235,7 +228,7 @@ const CheckoutPage = () => {
             <div className={styles.agreement}>
               <input
                 type="checkbox"
-                value={isChecked}
+                checked={isChecked}
                 onChange={(e) => setIsChecked(e.target.value)}
               />
               <p>
@@ -250,7 +243,13 @@ const CheckoutPage = () => {
                 isLoading && styles.disabled
               }`}
             >
-              {isLoading ? <Spinner /> : <p>Proceed to checkout</p>}
+              {isLoading ? (
+                <Spinner />
+              ) : backendLoading ? (
+                <Spinner />
+              ) : (
+                <p>Proceed to checkout</p>
+              )}
             </button>
             <p className={styles.cancelBtn}>
               <Link to="/">Exit payment</Link>
@@ -262,7 +261,7 @@ const CheckoutPage = () => {
             <div className={styles.selectedPlanDetails__plan}>
               <h1>{selectedPlan.title}</h1>
               <h3>Features:</h3>
-              {selectedPlan.features.map((feature, index) => (
+              {selectedPlan.features?.map((feature, index) => (
                 <p key={index}>
                   <img src={Check} alt="check" />
                   {feature}

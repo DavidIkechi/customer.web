@@ -1,11 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import checkIcon from "../assets/check.svg";
 import currency from "../assets/dollar.svg";
-import { PricingData } from "./data";
 import styles from "./plans.module.scss";
 
 function Plans() {
+  const { plans } = useSelector((state) => state.plan);
   const navigate = useNavigate();
 
   const getSelectedPlan = (plan) => {
@@ -16,14 +17,14 @@ function Plans() {
   return (
     <div className={`${styles.month}`}>
       <div className={`${styles.plans}`}>
-        {PricingData.map((data) => {
+        {plans.map((data) => {
           const {
             id,
-            icon,
+            icon_url,
             title,
-            pricing,
-            headDescription,
-            planKey,
+            price,
+            name,
+            additional,
             duration,
             features,
           } = data;
@@ -38,18 +39,18 @@ function Plans() {
               <div className={styles.plansCardHeading}>
                 <div className={styles.plansCardTitle}>
                   <div className={styles.plansCardIcon}>
-                    <img src={icon} alt="star icon" />
+                    <img src={icon_url} alt="star icon" />
                   </div>
                   <h3>{title}</h3>
                 </div>
-                <p>{headDescription}</p>
+                <p>{name}</p>
               </div>
               <div className={styles.plansPricing}>
                 <div className={styles.plansPricingFigure}>
                   <div className={styles.plansPricingCurrency}>
                     <img src={currency} alt="currency symbol" />
                   </div>
-                  <h4>{pricing}</h4>
+                  <h4>{price}</h4>
                 </div>
                 <p>{duration}</p>
               </div>
@@ -63,7 +64,7 @@ function Plans() {
                   ))}
                 </div>
 
-                <button onClick={() => getSelectedPlan(planKey)}>
+                <button onClick={() => getSelectedPlan(additional)}>
                   Get Started
                 </button>
               </div>

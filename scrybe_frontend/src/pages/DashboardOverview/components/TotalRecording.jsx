@@ -48,7 +48,7 @@ const TotalRecording = ({ totalRecordingData }) => {
 
   useEffect(() => {
     if (totalRecordingData) {
-      setSelectedTotalRecordings(totalRecordingData?.week);
+      setSelectedTotalRecordings(totalRecordingData?.month);
     } else {
       setSelectedTotalRecordings([]);
     }
@@ -68,8 +68,8 @@ const TotalRecording = ({ totalRecordingData }) => {
           id="timeStamp"
           onChange={recordingsTimeStampFunc}
         >
-          <option value="week">This week</option>
           <option value="month">This month</option>
+          <option value="week">This week</option>
         </select>
       </div>
       {selectedTotalRecordings?.length > 0 ? (
