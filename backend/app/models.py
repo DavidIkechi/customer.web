@@ -150,7 +150,6 @@ class Newsletter(Base):
     __tablename__ = "newsletter_subscribers"
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String(255), nullable = False)
-    name = Column(Integer)
     
 class Admins(Base):
     __tablename__ = "admin_user"

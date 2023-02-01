@@ -9,10 +9,12 @@ from dotenv import dotenv_values
 from models import User
 from starlette.requests import Request
 from starlette.responses import JSONResponse
+from fastapi.responses import JSONResponse
 from crud import get_user_by_email
 from sqlalchemy.orm import Session
 from dotenv import load_dotenv
 import os
+from fastapi.encoders import jsonable_encoder
 from pydantic import EmailStr, BaseModel
 
 
@@ -62,22 +64,6 @@ async def send_email(email: List, instance: User):
 
     fm =FastMail(conf)
     await fm.send_message(message=message, template_name='EmailVerification/index.html')
-
-
-async def verify_token(token: str, db: Session):
-    try:
-        payload = jwt.decode(token, os.getenv('SECRET'), algorithms=['HS256'])
-        user = get_user_by_email(db, payload.get("email"))
-
-    except Exception as e:
-        print(e)
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid or expired token",
-            headers={"WWW.Authenticate": "Bearer"}
-        )
-    return user
-
 
 
 async def send_password_reset_email(email: List, instance: User):
@@ -233,14 +219,16 @@ async def verify_token(token: str, db: Session):
     try:
         payload = jwt.decode(token, os.getenv('SECRET'), algorithms=['HS256'])
         user = get_user_by_email(db, payload.get("email"))
+        
+        if user is None:
+            return JSONResponse(
+                status_code= 400,
+                content=jsonable_encoder({"detail": "Token not authorized for user"}),
+            )     
 
     except Exception as e:
-        print(e)
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="The token is invalid or has expired!",
-            headers={"WWW.Authenticate": "Bearer"}
-        )
+        return False
+        
     return user
 
 
