@@ -1,40 +1,49 @@
 import {
-  CreateOrderApi,
-  CreatePaymentEndpointApi,
-  VerifyOrderApi,
+  createPaymentEndpointApi,
+  verifyFluterwaveOrderApi,
+  verifyStripeOrderApi,
 } from "../../axios/apis/orders";
 import ErrorHandler from "../../axios/Utils/ErrorHandler";
 import { dispatch } from "../../store";
-import { createResponse } from "../../utils/UtilSlice";
-import { setPaymentEndpoint } from "./orderSlice";
-
-export const CreateOrder = (data) => async () => {
-  try {
-    const res = await CreateOrderApi(data);
-    console.log(res);
-  } catch (error) {
-    dispatch(createResponse(ErrorHandler(error)));
-  }
-};
-
-export const VerifyOrder = (data) => async () => {
-  try {
-    const res = await VerifyOrderApi(data);
-    console.log(res);
-  } catch (error) {
-    dispatch(createResponse(ErrorHandler(error)));
-  }
-};
+import { createResponse, setLoading } from "../../utils/UtilSlice";
+import { setOrder } from "./orderSlice";
 
 export const createPaymentEndpoint = (url, data) => async () => {
+  dispatch(setLoading(true));
   try {
-    const res = await CreatePaymentEndpointApi(url, data);
-    dispatch(setPaymentEndpoint(res.data.detail));
+    const res = await createPaymentEndpointApi(url, data);
     console.log(res);
     if (res.data.detail?.payment_url)
-      // window.location.replace = res.data.detail?.payment_url;
       window.location.assign(res.data.detail?.payment_url);
+    dispatch(setLoading(false));
   } catch (error) {
     dispatch(createResponse(ErrorHandler(error)));
+    dispatch(setLoading(false));
+  }
+};
+
+export const verifyStripeOrder = (ref_code) => async () => {
+  dispatch(setLoading(true));
+  try {
+    const res = await verifyStripeOrderApi(ref_code);
+    console.log(res);
+    dispatch(setOrder(res.data));
+    dispatch(setLoading(false));
+  } catch (error) {
+    dispatch(createResponse(ErrorHandler(error)));
+    dispatch(setLoading(false));
+  }
+};
+
+export const verifyFluterwaveOrder = (ref_code) => async () => {
+  dispatch(setLoading(true));
+  try {
+    const res = await verifyFluterwaveOrderApi(ref_code);
+    console.log(res);
+    dispatch(setOrder(res.data.detail));
+    dispatch(setLoading(false));
+  } catch (error) {
+    dispatch(createResponse(ErrorHandler(error)));
+    dispatch(setLoading(false));
   }
 };
