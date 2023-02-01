@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import { GetAccount, LogOut } from "../../redux/features/users/service";
@@ -8,8 +8,11 @@ import styles from "./nav.module.scss";
 
 function NavBar() {
   const [clicked, setClicked] = useState(false);
-  const { user, isLoading, token } = useSelector((state) => state.user);
-  const [currentUser, setUser] = useState(user);
+  const {
+    user: currentUser,
+    isLoading,
+    token,
+  } = useSelector((state) => state.user);
   const handleLogout = () => {
     dispatch(LogOut());
   };
@@ -27,12 +30,6 @@ function NavBar() {
       }
     }
   }
-
-  useEffect(() => {
-    if (user) {
-      setUser(user);
-    }
-  }, [user]);
 
   return (
     <nav className={styles.nav}>
