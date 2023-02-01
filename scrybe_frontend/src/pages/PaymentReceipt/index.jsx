@@ -2,32 +2,64 @@ import jsPDF from "jspdf";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import IsLoadingSkeleton from "../../components/LoadingSkeleton";
-import { verifyStripeOrder } from "../../redux/features/orders/service";
+import {
+  verifyFluterwaveOrder,
+  verifyStripeOrder,
+} from "../../redux/features/orders/service";
 import { dispatch } from "../../redux/store";
 import indicatorImg from "./assets/indicator.png";
 import pdf from "./assets/pdf.png";
 import styles from "./paymentDetails.module.scss";
 
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const options = {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  };
+  return date.toLocaleDateString("en-US", options);
+};
+const formatAmount = (amount) => {
+  if (typeof amount === "string") {
+    return parseFloat(amount.replace(/\$/g, ""));
+  }
+  return amount;
+};
+
 const PaymentReceipt = () => {
   const { order } = useSelector((state) => state.order);
+  console.log(order);
+  const todaydate = new Date().toDateString();
   const { isLoading } = useSelector((state) => state.util);
   const [timedown, setTimedown] = useState(false);
   const url = new URL(window.location.href);
-  const sessionId = url.searchParams.get("session_id");
+  const stripeSessionId = url.searchParams.get("session_id");
+  const fluterWaveTrxn = url.searchParams.get("transaction_id");
+
+  // destructuring order object from the two payments response
   let minutes = order?.minutes;
   let plan = order?.plan;
   let total = order?.amount;
-  let planPrice = order?.price_per_minute;
-  let paymentMethod = order?.payment_method;
-  let date = new Date().toDateString();
-  let customerEmail = order?.customer_email;
+  let planPrice =
+    formatAmount(order?.price_per_minute) ||
+    formatAmount(order?.plan_per_price);
+  let flutterwaveFullCard = `${order?.payment_gateway} (${order?.card_type} ${order?.card_last_digit})`;
+  let paymentMethod = order?.payment_method || flutterwaveFullCard;
+  let date = formatDate(order?.time_paid) || todaydate;
+  let customerEmail = order?.customer_email || order?.email_address;
 
   useEffect(() => {
-    dispatch(verifyStripeOrder(sessionId));
+    if (stripeSessionId) {
+      dispatch(verifyStripeOrder(stripeSessionId));
+    } else if (fluterWaveTrxn) {
+      dispatch(verifyFluterwaveOrder(fluterWaveTrxn));
+    }
     setTimeout(() => {
       setTimedown(true);
     }, 10000);
-  }, [sessionId]);
+  }, [fluterWaveTrxn, stripeSessionId]);
 
   // prepare json to pdf file conversion for download
   const downloadPDF = () => {
@@ -70,7 +102,7 @@ const PaymentReceipt = () => {
                     Price/plan<span>:</span>
                   </h3>
                   <div className={styles.hr} />
-                  <p>{planPrice} per minutes</p>
+                  <p>${planPrice} per minutes</p>
                 </div>
                 <div className={styles.flex}>
                   <h3>
@@ -110,7 +142,7 @@ const PaymentReceipt = () => {
                     Total amount paid <span>:</span>
                   </h3>
                   <div className={styles.hr} />
-                  <p className={styles.total}>{total}</p>
+                  <p className={styles.total}>${total}</p>
                 </div>
               </div>
             </div>
