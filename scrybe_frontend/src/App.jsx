@@ -42,7 +42,6 @@ import { useSelector } from "react-redux";
 import PaymentFailed from "./components/PaymentFailed";
 import SnackBar from "./components/SnackBar";
 import PaymentReceipt from "./pages/PaymentReceipt";
-import PaystackPaymentSuccessPage from "./pages/PaystackPaymentSuccessPage";
 import CheckoutPage from "./pages/Pricing/CheckoutPage";
 import StripePaymentRedirectPage from "./pages/StripePaymentRedirectPage";
 import PublicLayout from "./PublicLayout";
@@ -101,10 +100,7 @@ function App() {
           <Route path="/stripe-order/success" element={<PaymentReceipt />} />
 
           <Route path="/your-order" element={<PaymentReceipt />} />
-          <Route
-            path="/paymentSuccess"
-            element={<PaystackPaymentSuccessPage />}
-          />
+          <Route path="/paymentSuccess" element={<PaymentReceipt />} />
           <Route path="/paymentFailed" element={<PaymentFailed />} />
           <Route path="/account" element={<Account />} />
           <Route path="/uploaded-recordings" element={<UploadedRecordings />} />
