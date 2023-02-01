@@ -14,6 +14,7 @@ from crud import get_user_by_email
 from sqlalchemy.orm import Session
 from dotenv import load_dotenv
 import os
+from fastapi.encoders import jsonable_encoder
 from pydantic import EmailStr, BaseModel
 
 
@@ -222,15 +223,10 @@ async def verify_token(token: str, db: Session):
             return JSONResponse(
                 status_code= 400,
                 content=jsonable_encoder({"detail": "Token not authorized for user"}),
-            )
 
     except Exception as e:
-        print(e)
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="The token is invalid or has expired!",
-            headers={"WWW.Authenticate": "Bearer"}
-        )
+        return False
+        
     return user
 
 

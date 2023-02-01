@@ -202,9 +202,6 @@ class RefreshToken(BaseModel):
 
 class Newsletter(BaseModel):
     email: EmailStr
-
-    class Config:
-        orm_mode = True
         
 class Plan(BaseModel):
     name: str

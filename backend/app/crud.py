@@ -514,8 +514,8 @@ def analyse_and_store_audio(db:Session, job_id, user_id):
     return {"sentiment_result": dic2}
 
 #News letter.
-def add_newsletter_subscriber(db: Session, subscriber: schema.Newsletter):
-    db_subscriber = models.Newsletter(email = subscriber.email)
+def add_newsletter_subscriber(db: Session, email_add: str):
+    db_subscriber = models.Newsletter(email = email_add)
     db.add(db_subscriber)
     db.commit()
     db.refresh(db_subscriber)
