@@ -175,6 +175,13 @@ def update_profile(
 async def email_verification(request: Request, token: str, db: Session = Depends(_services.get_session)):
     try:
         user = await verify_token(token, db)
+        
+        if user is False:
+            return JSONResponse(
+                status_code= 400,
+                content=jsonable_encoder({"detail": "Signature has expired or is invalid"}),
+            )
+            
         if user and not user.is_active:
             user.is_active = True
             user.is_verified = True
@@ -363,23 +370,27 @@ async def get_history(user: models.User = Depends(get_active_user),
         "detail": user_history
     }
 
-@user_router.post("/newsletter-subscription", summary="newsletter subscription", 
-                  response_model= schema.Newsletter, status_code = 200)
+@user_router.post("/newsletter-subscription", summary="newsletter subscription", status_code = 200)
 def subscribe_to_newletter(subscriber: schema.Newsletter, db: Session = Depends(_services.get_session)):
-    db_subscriber = crud.check_subscrition_email(db,email=subscriber.email)
+    db_subscriber = crud.check_subscrition_email(db, email=subscriber.email)
 
     if db_subscriber:
         raise HTTPException(status_code=400, detail="You are already subscribed to our newsletter")
     try:
-        crud.add_newsletter_subscriber(db=db, subscriber=subscriber)
+        email_exists = utils.validate_and_verify_email(subscriber.email)
+        if not email_exists:
+            return JSONResponse(
+                status_code=400,
+                content = jsonable_encoder({"detail": "User email couldnot be verified!, please use a proper email"})
+            )
+        crud.add_newsletter_subscriber(db=db, email = subscriber.email)
         return {
-            "detail": subscriber
+            "detail": subscriber.email
         }
     except:
         raise HTTPException(status_code=500, detail="An unknown error occured. Try Again") 
 
-@user_router.get("/get_newsletter-subscribers", summary="Get all existing subscribers", response_model=list[schema.Newsletter],
-                 status_code = 200)
+@user_router.get("/get_newsletter-subscribers", summary="Get all existing subscribers", status_code = 200)
 def get_subscribers(skip: int = 0, db: Session = Depends(_services.get_session), user: models.User = Depends(get_admin)):
     try:
         subscribers = crud.get_newsletter_subscribers(db, skip=skip)
