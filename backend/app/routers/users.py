@@ -371,9 +371,15 @@ def subscribe_to_newletter(subscriber: schema.Newsletter, db: Session = Depends(
     if db_subscriber:
         raise HTTPException(status_code=400, detail="You are already subscribed to our newsletter")
     try:
-        crud.add_newsletter_subscriber(db=db, subscriber=subscriber)
+        email_exists = utils.validate_and_verify_email(subscriber.email)
+        if not email_exists:
+            return JSONResponse(
+                status_code=400,
+                content = jsonable_encoder({"detail": "User email couldnot be verified!, please use a proper email"})
+            )
+        crud.add_newsletter_subscriber(db=db, subscriber=subscriber.email)
         return {
-            "detail": subscriber
+            "detail": subscriber.email
         }
     except:
         raise HTTPException(status_code=500, detail="An unknown error occured. Try Again") 
