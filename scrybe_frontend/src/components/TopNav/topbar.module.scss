@@ -1,11 +1,15 @@
 .TopNav {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 2;
   background: #ffffff;
-  height: 80px;
+  height: fit-content;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 1rem;
-  position: relative;
+  padding: 1.2rem 1rem;
+  // position: relative;
 
   //toggle nav and logo
   .TopNav_toggle {
@@ -43,7 +47,10 @@
       margin-right: 1rem;
       .TopNav_user_desktop {
         display: flex;
-        img {
+        .userimg {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
           margin-right: 1rem;
         }
         .TopNav_user_desktop_nameDetails {
@@ -54,15 +61,15 @@
           .TopNav_user_desktop_name_arr {
             display: flex;
             .name {
-              font-family: "Kanit";
+              font-family: "Poppins";
               font-style: normal;
               font-weight: 600;
               font-size: 20px;
               line-height: 20px;
               margin-right: 0.5rem;
-              /* identical to box height, or 120% */
-
-              /* Grey/grey-500 */
+              @media screen and (min-width: 860px) and (max-width: 1050px) {
+                font-size: 17px;
+              }
 
               color: #454545;
             }
@@ -73,19 +80,15 @@
               -ms-transition: all 0.3s ease-in-out !important;
               -o-transition: all 0.3s ease-in-out !important;
               -webkit-transition: all;
-}
+            }
           }
           .workspace_name {
-            font-family: "Kanit";
+            font-family: "Poppins";
             font-style: normal;
             font-weight: 300;
             font-size: 14px;
             line-height: 20px;
-            /* identical to box height, or 143% */
-
-            /* Grey/grey-200 */
-
-            color: #a9a9a9;
+            color: #454545;
           }
         }
       }
@@ -94,13 +97,19 @@
     // user img mobile
     .TopNav_user_mobile {
       display: none;
+      .userimg {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 1rem;
+      }
     }
     .TopNav_btnwrap {
       background: #006cff;
       border-radius: 4px;
       display: block;
       padding: 12px 32px;
-      width: 143px;
+      width: fit-content;
       display: flex;
       height: 48px;
       img {
@@ -113,20 +122,22 @@
         border: none;
         background: none;
         color: #ffffff;
-        font-family: "Kanit";
+        font-family: "Poppins";
         font-weight: 500;
         font-size: 14px;
       }
     }
   }
+  .mobileLoader {
+    display: none;
+  }
 }
-.showDropup .arrow{
+.showDropup .arrow {
   transform: rotate(180deg);
   -webkit-transform: rotate(180deg);
   -moz-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   -o-transform: rotate(180deg);
-  
 }
 
 // responsive
@@ -143,6 +154,22 @@
       display: none !important;
     }
     .TopNav_btnwrap {
+      margin-right: 20px;
+      width: fit-content;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 16px !important;
+      display: flex;
+      height: 48px;
+      background-color: #006affdc !important;
+      margin: 0 1rem !important;
+      img {
+        margin-right: 0 !important;
+      }
+    }
+    .TopNav_btn {
       display: none !important;
     }
     .TopNav_user_mobile {
@@ -158,10 +185,53 @@
     .TopNav_search {
       display: none;
     }
+    .desktopLoader {
+      display: none;
+    }
+    .mobileLoader {
+      display: block;
+    }
   }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1024px) {
+@media screen and (min-width: 768px) and (max-width: 860px) {
+  .TopNav {
+    // background: #000;
+    padding: 0.5rem;
+
+    .TopNav_toggle {
+      display: flex;
+    }
+
+    .TopNav_btnwrap {
+      width: fit-content;
+      // background-color: red;
+      margin: 0 1rem !important;
+    }
+
+    .TopNav_user_desktop {
+      display: none !important;
+    }
+    // .TopNav_btnwrap {
+    //   display: none !important;
+    // }
+    .TopNav_user_mobile {
+      display: block !important;
+      float: right;
+      position: relative;
+      img {
+        // position: absolute;
+        top: 1rem;
+        right: 1rem;
+      }
+    }
+    .desktopLoader {
+      display: block;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
   .TopNav {
     // background: #000;
     padding: 0.5rem;
@@ -174,7 +244,8 @@
       display: none !important;
     }
     .TopNav_btnwrap {
-      display: none !important;
+      width: fit-content;
+      // background-color: red;
     }
     .TopNav_user_mobile {
       display: block !important;
@@ -186,5 +257,11 @@
         right: 1rem;
       }
     }
+  }
+  .desktopLoader {
+    display: none;
+  }
+  .mobileLoader {
+    display: block;
   }
 }

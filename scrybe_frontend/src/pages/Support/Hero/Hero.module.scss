@@ -1,136 +1,135 @@
-@use "../../../functions.scss"as *;
+@use "../../../functions.scss" as *;
 
 #Img_container {
-    background-image: url("../Assets/Hero-Background-Img.svg");
-  }
+  background-image: url("../Assets/Hero-Background-Img.webp");
+}
 .HeroContainer {
-    .HeroTexts {
-        margin-top: 3rem;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+  .HeroTexts {
+    margin-top: 3rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-
-        .PageHeading {
-            font-family: "Kanit";
-            font-style: normal;
-            font-weight: 600;
-            font-size: 48px;
-            line-height: 50px;
-            text-align: center;
-            color: #313131;
-            width: 60%;
-            margin: 1rem auto;
-            @include media(1100px) {
-                width: 80%;
-                font-size: 36px;
-                line-height: 32px;
-            }
-            @include media(650px) {
-                width: 90%;
-            }
-            @include media(400px) {
-                font-size: 24px;
-                line-height: 32px;
-            }
-        }
-
-        .PageParagraph {
-            font-family: "Kanit";
-            font-style: normal;
-            font-weight: 300;
-            font-size: 20px;
-            line-height: 30px;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            color: #6a6a6a;
-            width: 70%;
-            margin-bottom: 1rem;
-            @include media(1100px) {
-                width: 80%;
-            }
-            @include media(650px) {
-                width: 90%;
-            }
-        }
+    .PageHeading {
+      font-family: "Poppins";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 48px;
+      line-height: 50px;
+      text-align: center;
+      color: #313131;
+      width: 60%;
+      margin: 1rem auto;
+      @include media(1100px) {
+        width: 80%;
+        font-size: 36px;
+        line-height: 32px;
+      }
+      @include media(650px) {
+        width: 90%;
+      }
+      @include media(400px) {
+        font-size: 24px;
+        line-height: 32px;
+      }
     }
 
-    .CTAs {
-        display: flex;
-        justify-content: center;
-        gap: pix-rem(50);
-        margin-top: pix-rem(40);
-        margin-bottom: pix-rem(40);
-
-        @include media(440px) {
-            flex-direction: column-reverse;
-            align-items: center;
-            gap: pix-rem(16);
-            margin-top: pix-rem(34);
-        }
-
-        .ctaDemo,
-        .ctaStarter {
-            text-decoration: none;
-            padding-block: pix-rem(16);
-            padding-inline: pix-rem(16);
-            border-radius: pix-rem(4);
-            width: min(100%, pix-rem(181));
-
-            @include media(440px) {
-                width: 80%;
-            }
-
-            text-align: center;
-        }
-
-        .ctaDemo {
-            border: pix-rem(1) solid #006cff;
-            color: #006cff;
-
-            &:active {
-                color: darken($color: #006cff, $amount: 15);
-                border: pix-rem(1) solid darken(#006cff, $amount: 15);
-            }
-        }
-
-        .ctaStarter {
-            background-color: #006cff;
-            color: white;
-
-            &:active {
-                background-color: darken($color: #006cff, $amount: 15);
-            }
-        }
+    .PageParagraph {
+      font-family: "Poppins";
+      font-style: normal;
+      font-weight: 300;
+      font-size: 20px;
+      line-height: 30px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: #6a6a6a;
+      width: 70%;
+      margin-bottom: 1rem;
+      @include media(1100px) {
+        width: 80%;
+      }
+      @include media(650px) {
+        width: 90%;
+      }
     }
-    .HeroImageContainer{
-        background-color: #549DFF;
-        width: 100%;
-        text-align: center;
-        position: relative;
-        display: flex;
-        justify-content: center;
-        margin-top: 250px;
-        @include media(600px) {
-            margin-top: 150px;
-        }
-        >img{
-            text-align: center;
-            width: 50%;
-            position: relative;
-            top: -150px;
-            @include media(800px) {
-                width: 75%;
-            }
-            @include media(600px) {
-                top: -100px;
-            }
-            @include media(450px) {
-                top: -50px;
-            }
-        }
+  }
+
+  .CTAs {
+    display: flex;
+    justify-content: center;
+    gap: pix-rem(50);
+    margin-top: pix-rem(40);
+    margin-bottom: pix-rem(40);
+
+    @include media(440px) {
+      flex-direction: column-reverse;
+      align-items: center;
+      gap: pix-rem(16);
+      margin-top: pix-rem(34);
     }
+
+    .ctaDemo,
+    .ctaStarter {
+      text-decoration: none;
+      padding-block: pix-rem(16);
+      padding-inline: pix-rem(16);
+      border-radius: pix-rem(4);
+      width: min(100%, pix-rem(181));
+
+      @include media(440px) {
+        width: 80%;
+      }
+
+      text-align: center;
+    }
+
+    .ctaDemo {
+      border: pix-rem(1) solid #006cff;
+      color: #006cff;
+
+      &:active {
+        color: darken($color: #006cff, $amount: 15);
+        border: pix-rem(1) solid darken(#006cff, $amount: 15);
+      }
+    }
+
+    .ctaStarter {
+      background-color: #006cff;
+      color: white;
+
+      &:active {
+        background-color: darken($color: #006cff, $amount: 15);
+      }
+    }
+  }
+  .HeroImageContainer {
+    background-color: #549dff;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-top: 250px;
+    @include media(600px) {
+      margin-top: 150px;
+    }
+    > img {
+      text-align: center;
+      width: 50%;
+      position: relative;
+      top: -150px;
+      @include media(800px) {
+        width: 75%;
+      }
+      @include media(600px) {
+        top: -100px;
+      }
+      @include media(450px) {
+        top: -50px;
+      }
+    }
+  }
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Footer from "../../components/Footer";
-import NavBar from "../../components/navBar";
+import NavBar from "../../components/NavbarFree";
 import arrowLeft from "./assets/arrow__left.png";
 import pressArtIcon from "./assets/pressArtIcon.png";
 import styles from "./pressArticle.module.scss";
@@ -9,9 +9,7 @@ import styles from "./pressArticle.module.scss";
 const index = () => {
   return (
     <div>
-      <div>
-        <NavBar />
-      </div>
+      <div></div>
       <section className={styles.first__section}>
         <div className={styles.sect__container}>
           <div className={styles.first__heading}>
@@ -244,9 +242,7 @@ const index = () => {
           </div>
         </div>
       </section>
-      <div>
-        <Footer />
-      </div>
+      <div></div>
     </div>
   );
 };

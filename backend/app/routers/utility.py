@@ -1,18 +1,23 @@
 import requests
 import time
+from math import ceil
 from fastapi import HTTPException
 import boto3
 from botocore.exceptions import ClientError
 import logging
 import requests
 import time
-
+from fastapi import FastAPI, status, Depends, APIRouter,  UploadFile, File, Form, Query, Request, HTTPException
+import pandas as pd
+import hashlib, hmac, http
 import os
 
 from dotenv import load_dotenv
-
+from email_validate import validate
+from audio import audio_details
+import calendar
+import datetime
 load_dotenv()
-
 
 upload_endpoint = "https://api.assemblyai.com/v2/upload"
 transcript_endpoint = "https://api.assemblyai.com/v2/transcript"
@@ -27,41 +32,14 @@ def _read_file(filename, chunk_size=5242880):
                 break
             yield data
 
-
-# Uploads a file to AAI servers
-def upload_file(audio_file, header):
-    try:
-        # upload_response = requests.post(
-        #     upload_endpoint,
-        #     headers=header, data=_read_file(audio_file)
-        # )
-        bucket_name = "code-bearer"
-        object_name = audio_file
-
-        iam_access_id = os.getenv("Access_key_id")
-        iam_secret_key = os.getenv("secret_access_key")
-        s3_client = boto3.client(
-            's3', 
-            aws_access_key_id=iam_access_id,
-            aws_secret_access_key=iam_secret_key
-            )
-        p_url = s3_client.generate_presigned_url(
-            ClientMethod='get_object',
-            Params={'Bucket': bucket_name, 'Key': object_name},
-            ExpiresIn = 1800)
-        for bucket in s3.buckets.all():
-            print(bucket.name)
-
-    except ClientError as e:
-        logging.error(e)
-    
-    return p_url
-
-
 # Request transcript for file uploaded to AAI servers
 def request_transcript(upload_url, header):
     transcript_request = {
-        'audio_url': upload_url
+        'audio_url': upload_url,
+        'sentiment_analysis': True,
+        "speaker_labels": True
+
+
     }
     transcript_response = requests.post(
         transcript_endpoint,
@@ -106,3 +84,64 @@ def get_paragraphs(polling_endpoint, header):
         paragraphs.append(para)
 
     return paragraphs
+
+# Verify/Validate email address
+
+def validate_and_verify_email(input_email):
+    email = input_email
+    isValid = validate(
+        email_address=email,
+        check_format=True,
+        check_blacklist=True,
+        check_dns=True,
+        dns_timeout=10,
+        check_smtp=True,
+        smtp_debug=True,
+    )
+    return isValid
+
+def check_if_professional(email_address: str) -> int:
+    get_data = pd.read_csv(os.path.normcase(os.path.abspath('routers/email-providers.csv')), header= None)
+    free_domain = email_address.split('@')[1]
+    return len(get_data.loc[get_data[0] == free_domain])
+
+"""
+file must be audios.
+"""
+def check_if_audio(files) -> bool:
+    for file in files:
+        if file.content_type.split("/")[0] != "audio":
+            return False
+    return True
+    
+# get the total length of the files in secs.
+def get_length(files) -> int:
+    total_length = 0
+    for file in files:
+        contents = file.file.read(5242880)
+        with open(file.filename, 'wb') as f:
+            f.write(contents)
+        total_length += audio_details(file.filename)['overall']
+    
+    return total_length
+
+
+# return a hashed string.
+def generate_signature(secret: bytes, payload: bytes, digest_method = hashlib.sha512):
+    return hmac.new(secret.encode('utf-8'), payload, digest_method).hexdigest()
+
+def weeks_in_month(year, month):
+    c = calendar.Calendar(firstweekday=calendar.MONDAY)
+    monthcal = c.monthdatescalendar(year, month)
+    return len(monthcal)
+
+def current_year_month():
+    now = datetime.datetime.now()
+    return now.year, now.month
+
+def week_of_month(dt):
+    first_day = dt.replace(day=1)
+    dom = dt.day
+    adjusted_dom = dom + first_day.weekday()
+
+    return int(ceil(adjusted_dom/7.0))

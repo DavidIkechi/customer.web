@@ -1,24 +1,35 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import styles from "./SentimentAnalysis.module.scss";
 import arrowIcon from "./assets/icons/arrow_back.svg";
 import blueArrowIcon from "./assets/icons/blue_arrow.svg";
 import AnalysisCard from "./components/AnalysisCard";
 import AudioCard from "./components/AudioCard";
-import SentimentAside from "./components/SentimentAside";
 import OverAllSentimentCard from "./components/OverallSentimentCard";
-import VerdictCard from "./components/VerdictCard";
 import PhraseTagCard from "./components/PhraseTagCard";
-import SideBar from "../../components/SideBar";
-import { useMockEnd } from "./hooks";
-import NewDesignSideBar from "../../components/NewDesignSidebar/index";
-import TopNav from "../../components/TopNav";
+import SentimentAside from "./components/SentimentAside";
+import VerdictCard from "./components/VerdictCard";
+import styles from "./SentimentAnalysis.module.scss";
+import { useEffect } from "react";
+import { dispatch } from "../../redux/store";
+import { useSelector } from "react-redux";
+import { GetTransciption } from "../../redux/features/transcriptions/service";
+import IsLoadingSkeleton from "../../components/LoadingSkeleton";
 
 function SentimentAnalysis() {
+  const { transcription } = useSelector((state) => state.transcription);
   const [isMobileAsideOpen, setIsMobileAsideOpen] = useState(false);
-  const [toggleSidebar, setToggleSidebar] = useState(false);
+  const [loading, setLoading] = useState(true);
   const params = useParams();
-  const sentimentData = useMockEnd(parseInt(params.AudioId));
+
+  useEffect(() => {
+    dispatch(GetTransciption(params.AudioId));
+  }, []);
+
+  useEffect(() => {
+    if (transcription !== {}) {
+      setLoading(false);
+    }
+  }, [transcription]);
 
   const positiveTags = [
     "brave",
@@ -61,20 +72,13 @@ function SentimentAnalysis() {
   };
 
   return (
-    <>
-      <TopNav
-        openSidebar={() => {
-          setToggleSidebar(!toggleSidebar);
-        }}
-      />
-      <NewDesignSideBar
-        toggleSidebar={toggleSidebar}
-        needSearchMobile="needSearchMobile"
-        closeSidebar={() => setToggleSidebar(!toggleSidebar)}
-      >
-        <div className={styles.page__container}>
+    <div className={styles.page__container}>
+      {loading ? (
+        <IsLoadingSkeleton />
+      ) : (
+        <>
           <div className={styles.audio__mobile}>
-            <AudioCard />
+            <AudioCard sentimentData={transcription} />
           </div>
           <div className={styles.sentiment__tab__opener}>
             <div className={styles.opener__content} onClick={openSentimentTab}>
@@ -86,7 +90,7 @@ function SentimentAnalysis() {
             <SentimentAside
               isMobileAsideOpen={isMobileAsideOpen}
               closeFunction={closeSentimentTab}
-              sentimentData={sentimentData}
+              sentimentData={transcription}
             />
           </div>
           <main className={styles.main__container}>
@@ -109,35 +113,35 @@ function SentimentAnalysis() {
               </div>
             </span>
             <div className={styles.analysis__cards}>
-              <AnalysisCard sentimentData={sentimentData} />;
+              <AnalysisCard sentimentData={transcription} />;
             </div>
           </main>
           <aside className={styles.aside__container}>
-            <AudioCard />
-            <OverAllSentimentCard sentimentData={sentimentData} />
-            <VerdictCard sentimentData={sentimentData} />
+            <AudioCard sentimentData={transcription} />
+            <OverAllSentimentCard sentimentData={transcription} />
+            <VerdictCard sentimentData={transcription} />
             <PhraseTagCard
               tags={
-                sentimentData.positiveTags
-                  ? sentimentData.positiveTags
+                transcription.positiveTags
+                  ? transcription.positiveTags
                   : positiveTags
               }
               title={"Positive phrase tags"}
-              sentimentData={sentimentData}
+              sentimentData={transcription}
             />
             <PhraseTagCard
               tags={
-                sentimentData.negativeTags
-                  ? sentimentData.negativeTags
+                transcription.negativeTags
+                  ? transcription.negativeTags
                   : negativeTags
               }
               title={"Negative phrase tags"}
-              sentimentData={sentimentData}
+              sentimentData={transcription}
             />
           </aside>
-        </div>
-      </NewDesignSideBar>
-    </>
+        </>
+      )}
+    </div>
   );
 }
 

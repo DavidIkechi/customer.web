@@ -7,28 +7,36 @@ from mutagen.aac import AAC
 from mutagen.mp4 import MP4
 
 def audio_details(filename):
+    #
     audio = {}
     file = Path(filename)
-    if filename[-3:] == "mp3":
+    if filename[-3:].lower() == "mp3":
         audio_file = MP3(filename)
-    elif filename[-3:] == "wav":
+    elif filename[-3:].lower() == "wav":
         audio_file = WAVE(filename)
-    elif filename[-3:] == "flac":
+    elif filename[-3:].lower() == "flac":
         audio_file = FLAC(filename)
-    elif filename[-3:] == "aac":
+    elif filename[-3:].lower() == "aac":
         audio_file = AAC(filename)
-    elif filename[-3:] == "mp4":
+    elif filename[-3:].lower() == "mp4":
         audio_file = MP4(filename)
-    elif filename[-3:] == "m4a":
+    elif filename[-3:].lower() == "m4a":
         audio_file = MP4(filename)
     else:
         raise Exception ("File format not supported")
 
-
     audio_info = audio_file.info
     length = int(audio_info.length)
-    mins = math.ceil(length / 60)
-
+    overall = length
+    hours = length // 3600  # calculate in hours
+    length %= 3600
+    mins = length // 60  # calculate in minutes
+    length %= 60
+    seconds = length  # calculate in seconds
+  
+    audio["hours"] = hours
+    audio['secs'] = seconds
+    audio['overall'] = overall
 
     audio["size"] = math.ceil(int(file.stat().st_size) / 1048576)
     audio["mins"] = mins

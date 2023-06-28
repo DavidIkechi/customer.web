@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Hero.module.scss";
 import { NavLink } from "react-router-dom";
-import HeroImage from "../Assets/Support-Img.svg";
+import HeroImage from "../Assets/Support-Img.webp";
 
 const Hero = () => {
   return (
@@ -21,10 +21,10 @@ const Hero = () => {
       </div>
 
       <div className={styles.CTAs}>
-        <NavLink to="/" className={styles.ctaDemo}>
-          Login
+        <NavLink to="/signup" className={styles.ctaDemo}>
+          Sign up
         </NavLink>
-        <NavLink to="/" className={styles.ctaStarter}>
+        <NavLink to="/try" className={styles.ctaStarter}>
           Try for Free
         </NavLink>
       </div>

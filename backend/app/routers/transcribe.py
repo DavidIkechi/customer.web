@@ -9,8 +9,14 @@ import models, schema
 from . import utility as utils
 from dotenv import load_dotenv
 from . import sentiment
+from routers.sentiment_utility import sentiment, sentiment_assembly
+from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
 import os
 import crud
+from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
+from emails import send_email, verify_token, send_password_reset_email, password_verif_token, send_freeTrial_email
 
 load_dotenv()
 
@@ -19,7 +25,10 @@ def get_transcript(upload_url):
         'authorization': os.getenv("ASSEMBLY_KEY"),
         'content-type': 'application/json'
     }
-    transcript_response = utils.request_transcript(upload_url, header)
+    try:
+        transcript_response = utils.request_transcript(upload_url, header)
+    except Exception as e:
+        return False
 
     return transcript_response
 
@@ -47,89 +56,75 @@ def transcribe_file(file_url):
    audio_to_word = get_transcript(file_url)
    return audio_to_word
 
-
-
-
-
-# """ Please Note that these endpoints are subject to change as the query would be better suited to retrieve transcripts from the transcript table by transcript_id and
-#     not Audio by audio_id.
-#     If the transcript table is available, the code will be refractored to implement changes and queries to the transcript table """
-
 # ENDPOINT TO GET A PARTICULAR TRANSCRIPT USING THE AUDIO ID
-@transcript_router.get("/{job_id}", description="Retrieving transcript by audio ID")
-def view_transcript(job_id: Union[int, str], db: Session = Depends(_services.get_session), current_user: Union[str , int] = Depends(auth.get_active_user)):
-    user_id = current_user.id
+@transcript_router.get("/{job_id}", description="Retrieving transcript by audio ID", status_code = 200)
+def view_transcript(job_id: Union[int, str], db: Session = Depends(_services.get_session), 
+                    current_user: Union[str , int] = Depends(auth.get_active_user)):
+    try:
+        user_id = current_user.id  
+        sentiment_result = crud.analyse_and_store_audio(db, job_id, user_id)
+    except Exception as e:
+        return JSONResponse(
+            status_code= 500,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
 
-    Job = db.query(models.Audio).filter(models.Audio.job_id == job_id).first()
-    if not Job:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f"Job with id: {job_id} was not found")
-    job_audio_id = job_id
-    audio_id = Job.id
-    
-    
-    transcript_audio = get_transcript_result(job_audio_id)
-    db_job = db.query(models.Job).filter(models.Job.audio_id == audio_id).first()
-    db_job.job_status = transcript_audio['status']
-    db.commit()
-    
-    if transcript_audio['status'] != "completed":
-        return {
-            "status":transcript_audio['status']
-        }
-        
-    # get the text.
-    transcripted_word = transcript_audio['text']
-    sentiment_result = sentiment.sentiment(transcripted_word)
-
-    negativity_score = sentiment_result['negativity_score']
-    positivity_score = sentiment_result['positivity_score']
-    neutrality_score = sentiment_result['neutrality_score']
-    overall_sentiment = sentiment_result['overall_sentiment']
-    most_negative_sentences = sentiment_result['most_negative_sentences']
-    most_positive_sentences = sentiment_result ['most_postive_sentences']
-    total_score = positivity_score + neutrality_score + negativity_score
-    average_score = round((positivity_score/ total_score) * 10, 1)
-    
-    db_audio = db.query(models.Audio).filter(models.Audio.job_id == job_id).first()
-    db_audio_id = db_audio.id
-    db_audio_url = db_audio.audio_path
-    db_audio_filename = db_audio.filename
-    db_audio_size = db_audio.size
-    db_audio_duration = db_audio.duration
-
-    db_audio.transcript, db_audio.positivity_score = transcripted_word, positivity_score
-    db_audio.negativity_score, db_audio.neutrality_score=negativity_score, neutrality_score
-    db_audio.overall_sentiment, db_audio.most_negative_sentences=overall_sentiment, most_negative_sentences 
-    db_audio.most_positive_sentences = most_positive_sentences
-    db_audio.average_score = average_score
-    db.commit()
-
-    db_agent = db.query(models.Agent).filter(models.Agent.aud_id == db_audio_id).first()
-    agent_name = db_agent.first_name + " "+ db_agent.last_name
-    
-    history_create: schema.HistoryCreate = {"user_id":user_id,
-                                            "sentiment_result":overall_sentiment,
-                                            "agent_name": agent_name,
-                                            "audio_name": db_audio_filename}
-
-    crud.create_history(db, history_create)
-    other_details = {
-        "audio_url": db_audio_url,
-        "audio_size": db_audio_size,
-        "audio_duration": db_audio_duration,
-        "audio_filename": db_audio_filename
+    return {
+        "detail": sentiment_result
     }
+
+@transcript_router.get("/get_transcript/{transcript_id}", description="Retrieving transcript by audio ID", status_code = 200)
+async def view_transcript(transcript_id: Union[int, str], db: Session = Depends(_services.get_session)):
+    transcript = crud.get_freetrial(db, id = transcript_id)
+    if not transcript:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, 
+            detail=f"Transcription with id: {transcript_id} was not found")
     
-    sentiment_result.update(other_details)
+    try:
+        transcript_audio_id = transcript_id
+        
+        current_status = transcript.transcript_status.split(",")
+        current_status_filename = current_status[1]
+        current_status_size = current_status[2]
+        transcript_audio = get_transcript_result(transcript_audio_id)
+        transcript.job_status = transcript_audio['status']
+        transcript.transcript_status = ",".join([transcript.job_status, current_status_filename, current_status_size])
+        db.commit()
+        db.refresh(transcript)
+        
+        if transcript_audio['status'] != "completed":
+            return JSONResponse(
+            status_code= 406,
+            content=jsonable_encoder({"detail": "Your File Audio File Is Still Transcribing Please Hold On For A little While."})
+            )
+        else:
+            # get the text.
+            transcripted_word = transcript_audio['text']
+            sentiment_result = sentiment_assembly(transcript_audio)
 
-    return {"sentiment_result": sentiment_result}
+            negativity_score = sentiment_result['negativity_score']
+            positivity_score = sentiment_result['positivity_score']
+            neutrality_score = sentiment_result['neutrality_score']
+            overall_sentiment = sentiment_result['overall_sentiment']
+            most_negative_sentences = sentiment_result['most_negative_sentences']
+            most_positive_sentences = sentiment_result ['most_positive_sentences']
+            total_score = positivity_score + neutrality_score + negativity_score
+            average_score = round((positivity_score/ total_score) * 10, 1)
 
-# #ENDPOINT TO GET ALL TRANSCRIPTS AS A LIST
-# @transcript_router.get("/view_transcripts", response_model=List[schema.Audio], description="Retrieve all Transcripts")
-# def get_transcripts(db: Session = Depends(_services.get_session), current_user: Union[str , int] = Depends(auth.get_current_user), limit : int = 0, skip: int = 0, ):
-#     transcripts = db.query(models.Audio).filter(models.Audio.transcript).limit(limit).offset(skip).all()
-#     return transcripts
+    except Exception as e:
+        return JSONResponse(
+            status_code= 500,
+            content=jsonable_encoder({"detail": str(e)}),
+        )
+
+    return {"detail": {"transcription": transcripted_word,"most positive": most_positive_sentences,         
+            "most_negative_score": most_negative_sentences,  
+            "overall_sentiment_result": overall_sentiment,
+            "average_score": average_score,
+            "filename":current_status_filename, "filesize":current_status_size, 
+            "status": transcript_audio['status']}
+    }
 
 
 

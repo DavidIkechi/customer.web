@@ -1,4 +1,17 @@
 .TranscribePage {
   display: flex;
   background-color: #f9f9f9;
+  width: 100%;
+}
+
+.Transcribe {
+  font-family: "Poppins", sans-serif;
+  width: 100%;
+}
+
+@media screen and (max-width: 960px) {
+  .Transcribe {
+    left: 0;
+    width: 100vw;
+  }
 }

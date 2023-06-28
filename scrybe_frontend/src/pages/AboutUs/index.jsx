@@ -1,6 +1,5 @@
 import React from "react";
-import Footer from "../../components/Footer";
-import NavBar from "../../components/NavbarFree";
+import { Helmet } from "react-helmet-async";
 import styles from "./About.module.scss";
 import icon1 from "./assets/icon1.svg";
 import icon2 from "./assets/icon2.svg";
@@ -10,30 +9,27 @@ import partner1 from "./assets/partner1.svg";
 import partner2 from "./assets/partner2.svg";
 import partner3 from "./assets/partner3.svg";
 import partner4 from "./assets/partner4.svg";
-import team1 from "./assets/team1.png";
-import team2 from "./assets/team2.png";
-import team3 from "./assets/team3.png";
-import team4 from "./assets/team4.png";
-import team5 from "./assets/team5.png";
-import team6 from "./assets/team6.png";
-import team7 from "./assets/team7.png";
-import team8 from "./assets/team8.png";
-import HeroIcon from "./assets/hero__icon.png";
 
 function About() {
-  React.useEffect(() => {
-    // 👇️ scroll to top on page load
-    window.scrollTo({ top: 0, left: 0 });
-  }, []);
   return (
-    <div className="App" data-testid="app-container">
-      <NavBar />
+    <>
+      <Helmet>
+        <title>About Us | Heed</title>
+        <meta
+          name="description"
+          content="Heed helps sales managers work faster, with simplified roles"
+        />
+        <meta
+          name="keywords"
+          content="About heed, Heed history, Heed mission, Heed values, team members, leadership team, management team, Heed culture, corporate responsibility, customer-centric, industry leader, commitment to excellence, long-term relationships, Heed overview, who we are, what we do"
+        />
+      </Helmet>
       <section className={styles.first__section}>
         <div className={styles.sect__container}>
           <div className={styles.first__top}>
             <div className={styles.first__heading}>
               <h1 className={styles.first__head}>
-                Heed helps sales mangers work{" "}
+                Heed helps sales managers work{" "}
                 <span className={styles.first__inline}>faster</span>, with
                 <span className={styles.first__inline}> simplified roles</span>
               </h1>
@@ -63,7 +59,7 @@ function About() {
             </div>
             <div className={styles.hero__image}>
               <img
-                src={HeroIcon}
+                src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670579336/hero__icon_p0nom4.webp"
                 alt="hero figure"
                 className={styles.hero__figure}
               />
@@ -71,7 +67,6 @@ function About() {
           </div>
         </div>
       </section>
-
       <section className={styles.second__section}>
         <div className={styles.sect__container}>
           <div className={styles.head__container}>
@@ -139,7 +134,6 @@ function About() {
           </div>
         </div>
       </section>
-
       <section className={styles.third__section}>
         <div className={styles.sect__container}>
           <div className={styles.third__container}>
@@ -165,10 +159,12 @@ function About() {
                   <h4 className={styles.icon__head}>HotelsNg</h4>
                 </div>
                 <div className={styles.third__flex}>
-                  <div className={styles.comp__icons}>
+                  <div className={`${styles.comp__icons} ${styles.desk__icon}`}>
                     <img src={partner4} alt="companies icon" />
                   </div>
-                  <h4 className={styles.icon__head}>The HNG Internship</h4>
+                  <h4 className={`${styles.icon__head} ${styles.desk__wrap}`}>
+                    The HNG Internship
+                  </h4>
                 </div>
               </div>
               <div className={`${styles.each__flex} ${styles.reverse}`}>
@@ -176,7 +172,9 @@ function About() {
                   <div className={styles.comp__icons}>
                     <img src={partner3} alt="companies icon" />
                   </div>
-                  <h4 className={styles.icon__head}>BrainBox inc.</h4>
+                  <h4 className={`${styles.icon__head} ${styles.desk__wrap}`}>
+                    BrainBox inc.
+                  </h4>
                 </div>
                 <div className={styles.third__flex}>
                   <div className={styles.comp__icons}>
@@ -189,105 +187,7 @@ function About() {
           </div>
         </div>
       </section>
-
-      <section className={styles.fourth__section}>
-        <div className={styles.sect__container}>
-          <div className={styles.fourth__top}>
-            <div className={styles.fourth__heading}>
-              <h1 className={styles.fourth__head}>Meet Our Team</h1>
-            </div>
-            <div className={styles.fourth__subtext}>
-              <p className={styles.fourth__subhead}>
-                We are improving at a breakneck speed and are across all tech
-                departments. We research and deploy advanced machine learning
-                and deep learning technologies. Here are the key members that
-                make up the team behind Heed.
-              </p>
-            </div>
-          </div>
-
-          <div className={styles.fourth__bottom}>
-            <div className={styles.flex__profile}>
-              <div className={styles.profile__box}>
-                <div className={styles.profile__icon}>
-                  <img src={team1} alt="team members" />
-                </div>
-                <div className={styles.profile__text}>
-                  <h5 className={styles.profile__name}>Mark Essien</h5>
-                  <p className={styles.profile__desc}>Advisor</p>
-                </div>
-              </div>
-              <div className={styles.profile__box}>
-                <div className={styles.profile__icon}>
-                  <img src={team2} alt="team members" />
-                </div>
-                <div className={styles.profile__text}>
-                  <h5 className={styles.profile__name}>Aigbe Marvelous</h5>
-                  <p className={styles.profile__desc}>Advisor</p>
-                </div>
-              </div>
-              <div className={styles.profile__box}>
-                <div className={styles.profile__icon}>
-                  <img src={team3} alt="team members" />
-                </div>
-                <div className={styles.profile__text}>
-                  <h5 className={styles.profile__name}>Collins Akpaka</h5>
-                  <p className={styles.profile__desc}>CEO</p>
-                </div>
-              </div>
-              <div className={styles.profile__box}>
-                <div className={styles.profile__icon}>
-                  <img src={team4} alt="team members" />
-                </div>
-                <div className={styles.profile__text}>
-                  <h5 className={styles.profile__name}>Delphine Ogbonna</h5>
-                  <p className={styles.profile__desc}>Lead designer</p>
-                </div>
-              </div>
-
-              <div className={styles.profile__box}>
-                <div className={styles.profile__icon}>
-                  <img src={team5} alt="team members" />
-                </div>
-                <div className={styles.profile__text}>
-                  <h5 className={styles.profile__name}>Ugochukwu Odumegwu</h5>
-                  <p className={styles.profile__desc}>Back-End Lead</p>
-                </div>
-              </div>
-              <div className={styles.profile__box}>
-                <div className={styles.profile__icon}>
-                  <img src={team6} alt="team members" />
-                </div>
-                <div className={styles.profile__text}>
-                  <h5 className={styles.profile__name}>Tochukwu Bedford</h5>
-                  <p className={styles.profile__desc}>Front-End Lead</p>
-                </div>
-              </div>
-              <div className={styles.profile__box}>
-                <div className={styles.profile__icon}>
-                  <img src={team7} alt="team members" />
-                </div>
-                <div className={styles.profile__text}>
-                  <h5 className={styles.profile__name}>Alice Awobite</h5>
-                  <p className={styles.profile__desc}>Product Designer</p>
-                </div>
-              </div>
-              <div className={styles.profile__box}>
-                <div className={styles.profile__icon}>
-                  <img src={team8} alt="team members" />
-                </div>
-                <div className={styles.profile__text}>
-                  <h5 className={styles.profile__name}>Favour Mustapha</h5>
-                  <p className={styles.profile__desc}>Product Designer</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
+    </>
   );
 }
 

@@ -20,11 +20,11 @@ const TotalRecording = ({ totalRecordingData }) => {
 
   useEffect(() => {
     setChartData({
-      labels: selectedTotalRecordings.map((data) => data.time),
+      labels: selectedTotalRecordings?.map((data) => data?.time),
       datasets: [
         {
           label: "",
-          data: selectedTotalRecordings.map((data) => data.totalRecordings),
+          data: selectedTotalRecordings?.map((data) => data.totalRecordings),
           backgroundColor: ["#B0CAD9", "#005584", "#548DAD", "#004D78"],
           maxBarThickness: 10,
           borderSkipped: "start",
@@ -48,7 +48,7 @@ const TotalRecording = ({ totalRecordingData }) => {
 
   useEffect(() => {
     if (totalRecordingData) {
-      setSelectedTotalRecordings(totalRecordingData.week);
+      setSelectedTotalRecordings(totalRecordingData?.month);
     } else {
       setSelectedTotalRecordings([]);
     }
@@ -68,21 +68,15 @@ const TotalRecording = ({ totalRecordingData }) => {
           id="timeStamp"
           onChange={recordingsTimeStampFunc}
         >
-          <option value="week">This week</option>
           <option value="month">This month</option>
+          <option value="week">This week</option>
         </select>
       </div>
-
-      {/* <h2 className={styles.thismonth}>
-      This month <img src={chevron} alt="" />
-    </h2> */}
-      {selectedTotalRecordings.length > 0 ? (
+      {selectedTotalRecordings?.length > 0 ? (
         <div className={styles.recordings__chart}>
           <div>
             <h1 className={styles.totalNumber}>
-              {selectedTotalRecordings.map(
-                (data) => data.selectedTotalRecordings
-              )}
+              {selectedTotalRecordings?.map((data) => data?.total_recording)}
             </h1>
             <Bar options={chartOptions} data={chartData} />
           </div>

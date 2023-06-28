@@ -1,25 +1,21 @@
-import React, { useEffect } from "react";
-import { NavLink } from "react-router-dom";
-import SearchInput from "./SearchInput";
-// import styles from "./SideBar.module.scss";
+import React, { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import closeIcon from "./icons/closeIcon.svg";
-import logoSVG from "./icons/logo.svg";
-// import insight from "./assets/icons/insight.svg";
-import leaderboard from "./icons/leaderboard.svg";
-// import monthlyAnalysis from "./assets/icons/monthly-analysis.svg";
-import analysis from "./icons/analysis.svg";
 import dropdown_arr from "./icons/dropdownArr.svg";
-import myScrybe from "./icons/my-scrybe.svg";
-import settings from "./icons/settings.svg";
-import usrAvatar from "./icons/user_avatar.svg";
+import DummyImg from "./icons/dummy.png";
+import logoSVG from "./icons/logo.svg";
 
-import axios from "axios";
+import DropDownModal from "../DropdownMenu";
+import SearchInput from "../SearchInput";
 import styles from "./generalSidebar.module.scss";
+
+import { useSelector } from "react-redux";
+import TopNav from "../TopNav";
 
 /**
  * Wrap your component with this component to get a sidebar with a logo, a search input field and a list of links.
- * getValue is a function that returns the value of the search input field
- * @param {getValue} function
+ * search is the value of the search input field
+ * @param {search} string
  * @useage getValue={(e) => console.log(e)} you will get the value of the search input field
  * @param {needSearchMobile} boolean
  * use this prop to determine if the search input field should be rendered on mobile screens or not!
@@ -31,56 +27,12 @@ import styles from "./generalSidebar.module.scss";
  * use this prop to determine if the sidebar should be open or closed on mobile screens when the hamburger icon is clicked from navbar
  * @returns a wrapper component with a sidebar and all the props passed to it
  */
-function NewDesignSideBar({
-  children,
-  getValue,
-  needSearchMobile,
-  needSearchDesktop,
-  closeSidebar,
-  toggleSidebar,
-}) {
-  const [currentUser, setCurrentUser] = React.useState(null);
-  const f = async () => {
-    const config = {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("heedAccessToken")}`,
-      },
-    };
-    const res = await axios.get("account", config);
-    setCurrentUser(res.data);
-  };
-  useEffect(() => {
-    {
-      /**
-          api_key
-      : 
-      "1fa2ba5a-5f0a-4fce-a663-44d64ee3b853"
-      company_address
-      : 
-      null
-      company_logo_url
-      : 
-      null
-      company_name
-      : 
-      "zurikoko"
-      email
-      : 
-      "dprincecoder@gmail.com"
-      first_name
-      : 
-      "Prince"
-      last_name
-      : 
-      "Azubuike"
-      phone_number
-      : 
-      null
-  */
-    }
-    f();
-  }, []);
+function NewDesignSideBar({ children, needSearchMobile, needSearchDesktop }) {
+  const { user } = useSelector((state) => state.user);
+  const [show, setShow] = useState(false);
+  const [toggleSidebar, setToggleSidebar] = useState(false);
+
+  const { searchQuery } = useSelector((state) => state.util);
   return (
     <div
       className={`${styles.generalSidebar}
@@ -97,7 +49,7 @@ function NewDesignSideBar({
               src={closeIcon}
               alt="closeIcon"
               className={styles.SidebarcloseIcon}
-              onClick={closeSidebar}
+              onClick={() => setToggleSidebar(!toggleSidebar)}
             />
           </div>
           <div
@@ -105,7 +57,7 @@ function NewDesignSideBar({
               styles[`${needSearchMobile}`]
             }`}
           >
-            <SearchInput inputValue={getValue} />
+            <SearchInput inputValue={searchQuery} />
           </div>
           <div className={styles.navLinks}>
             <NavLink
@@ -115,8 +67,12 @@ function NewDesignSideBar({
                   ? `${styles.active} ${styles.navLink}`
                   : `${styles.inactive} ${styles.navLink}`
               }
+              onClick={() => setToggleSidebar(!toggleSidebar)}
             >
-              <img src={myScrybe} alt="myScrybe icon" />
+              <img
+                src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670577828/my-scrybe_zxxyrj.webp"
+                alt="myScrybe icon"
+              />
               <p>Overview</p>
             </NavLink>
             <NavLink
@@ -126,8 +82,12 @@ function NewDesignSideBar({
                   ? `${styles.active} ${styles.navLink}`
                   : `${styles.inactive} ${styles.navLink}`
               }
+              onClick={() => setToggleSidebar(!toggleSidebar)}
             >
-              <img src={analysis} alt="analysis icon" />
+              <img
+                src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670577829/analysis_gisqdf.webp"
+                alt="analysis icon"
+              />
               <p>Analysis</p>
             </NavLink>
 
@@ -138,8 +98,12 @@ function NewDesignSideBar({
                   ? `${styles.active} ${styles.navLink} `
                   : `${styles.inactive} ${styles.navLink}`
               }
+              onClick={() => setToggleSidebar(!toggleSidebar)}
             >
-              <img src={leaderboard} alt="leaderboard icon" />
+              <img
+                src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670577828/leaderboard_kqe7de.webp"
+                alt="leaderboard icon"
+              />
               <p>Leaderboard</p>
             </NavLink>
             <NavLink
@@ -149,41 +113,73 @@ function NewDesignSideBar({
                   ? `${styles.active} ${styles.navLink}`
                   : `${styles.inactive} ${styles.navLink}`
               }
+              onClick={() => setToggleSidebar(!toggleSidebar)}
             >
-              <img src={settings} alt="settings icon" />
+              <img
+                src="https://res.cloudinary.com/dvm7gjjp8/image/upload/v1670577828/settings_wzhu1l.webp"
+                alt="settings icon"
+              />
               <p>Settings</p>
             </NavLink>
           </div>
         </div>
         <div className={styles.generalSidebar__bottom}>
-          <div className={styles.generalSidebar_user_desktop}>
-            <img
-              src={
-                currentUser?.company_logo_url
-                  ? currentUser?.company_logo_url
-                  : usrAvatar
-              }
-              alt={currentUser?.first_name}
-            />
-            <div className={styles.generalSidebar_user_desktop_nameDetails}>
-              <div className={styles.generalSidebar_user_desktop_name_arr}>
-                <p className={styles.name}>
-                  {currentUser?.first_name
-                    ? `${currentUser?.first_name} ${currentUser?.last_name}`
-                    : "John Doe"}
-                </p>
-                <img src={dropdown_arr} alt="dropdown arrow" />
+          {user ? (
+            <div className={styles.generalSidebar_user_desktop}>
+              <img
+                className={styles.userimg}
+                src={user?.company_logo_url ? user?.company_logo_url : DummyImg}
+                alt={user?.first_name}
+              />
+              <div className={styles.generalSidebar_user_desktop_nameDetails}>
+                <div className={styles.generalSidebar_user_desktop_name_arr}>
+                  <Link to="/account" className={styles.name}>
+                    {user?.first_name} {user?.last_name}
+                  </Link>
+                  <img
+                    src={dropdown_arr}
+                    alt="dropdown arrow"
+                    onClick={() => setShow((prev) => !prev)}
+                    className={styles.arrow}
+                  />
+                  {show && (
+                    <DropDownModal
+                      closeModal={() => setShow(false)}
+                      classes="top"
+                    />
+                  )}
+                </div>
+                <p className={styles.workspace_name}>{user?.company_name}</p>
               </div>
-              <p className={styles.workspace_name}>
-                {currentUser?.company_name
-                  ? currentUser?.company_name
-                  : "Office workspace"}
-              </p>
             </div>
-          </div>
+          ) : (
+            <div className={styles.generalSidebar_user_desktop}>
+              <img className={styles.userimg} src={DummyImg} alt="John Doe" />
+              <div className={styles.generalSidebar_user_desktop_nameDetails}>
+                <div className={styles.generalSidebar_user_desktop_name_arr}>
+                  <p className={styles.name}>John Doe</p>
+                  <img
+                    src={dropdown_arr}
+                    alt="dropdown arrow"
+                    onClick={() => setShow((prev) => !prev)}
+                    className={styles.arrow}
+                  />
+                </div>
+                <p className={styles.workspace_name}>Office workspace</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
-      {children}
+      <div className={styles.rightChild}>
+        <TopNav
+          openSidebar={() => {
+            setToggleSidebar(!toggleSidebar);
+          }}
+          search={searchQuery}
+        />
+        {children}
+      </div>
     </div>
   );
 }

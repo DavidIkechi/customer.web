@@ -1,40 +1,33 @@
 import React from "react";
 import styles from "./Reviews.module.scss";
 // Import Images
-import headerImg from "./assets/reviews-head-img.svg";
-import company1 from "./assets/companies-1.svg";
-import company2 from "./assets/companies-2.svg";
-import company3 from "./assets/companies-3.svg";
-import company4 from "./assets/companies-4.svg";
-import company5 from "./assets/companies-5.svg";
-import company6 from "./assets/companies-6.svg";
 import avi1 from "./assets/avi-1.svg";
 import avi2 from "./assets/avi-2.svg";
 import avi3 from "./assets/avi-3.svg";
 import avi4 from "./assets/avi-4.svg";
 import avi5 from "./assets/avi-5.svg";
 import avi6 from "./assets/avi-6.svg";
+import company1 from "./assets/companies-1.svg";
+import company2 from "./assets/companies-2.svg";
+import company3 from "./assets/companies-3.svg";
+import company4 from "./assets/companies-4.svg";
+import company5 from "./assets/companies-5.svg";
+import company6 from "./assets/companies-6.svg";
 import footerImg from "./assets/reviews-bottom-img.png";
-import NavBar from "../../components/NavbarFree";
-import Footer from "../../components/Footer";
+import headerImg from "./assets/reviews-head-img.svg";
 
 function Reviews() {
-  React.useEffect(() => {
-    // 👇️ scroll to top on page load
-    window.scrollTo({ top: 0, left: 0 });
-  }, []);
   return (
     <>
-      <NavBar />
       <main className={styles.main}>
         <header className={styles.hero}>
           <div className={styles.text}>
             <h1>Community Love</h1>
             <p>
-              Scrybe provides guaranteed 99% accurate transcripts and
-              sentimental analysis with quick turnaround for customers large and
-              small. That’s why we have the highest number of positie reviews
-              than any other transcription service around .
+              Heed provides guaranteed 99% accurate transcripts and sentimental
+              analysis with quick turnaround for customers large and small.
+              That’s why we have the highest number of positie reviews than any
+              other transcription service around .
             </p>
           </div>
           <div className={styles.image}>
@@ -78,7 +71,7 @@ function Reviews() {
             </div>
             <h3>Alex Aloxie, CEO United Bank of Africa.</h3>
             <p>
-              Scrybe has helped our business grow and expand as we have great
+              Heed has helped our business grow and expand as we have great
               insight into our customer preferences
             </p>
           </div>
@@ -89,8 +82,8 @@ function Reviews() {
             </div>
             <h3>Richard,Customer experience manager, Bua foods.</h3>
             <p>
-              Scrybe has reduced the after call admin work and this saves a
-              whole lot of time
+              Heed has reduced the after call admin work and this saves a whole
+              lot of time
             </p>
           </div>
 
@@ -101,7 +94,7 @@ function Reviews() {
             <h3>Alice Ndukwe, Content Creator.</h3>
             <p>
               Captioning has been made a nightmare for me !!, and it took only
-              few minutes to be delivered by scrybe that’s incredible!!
+              few minutes to be delivered by Heed that’s incredible!!
             </p>
           </div>
 
@@ -118,9 +111,7 @@ function Reviews() {
               <img src={avi5} alt="" />
             </div>
             <h3>Anna Hartley, HR Manager, Otter AI.</h3>
-            <p>
-              Scrybe has been a game changer In the way my business operates-
-            </p>
+            <p>Heed has been a game changer In the way my business operates-</p>
           </div>
 
           <div>
@@ -137,7 +128,7 @@ function Reviews() {
         </section>
 
         <section className={styles.join}>
-          <h3>Join 100+ companies to use Scrybe</h3>
+          <h3>Join 100+ companies to use Heed</h3>
           <p>
             Companies of all sizes from Startup and Fortune 500 companies use
             Scribe{" "}
@@ -147,7 +138,7 @@ function Reviews() {
               <img src={footerImg} alt="" />
             </div>
             <div>
-              <h2>Start using Scrybe today</h2>
+              <h2>Start using Heed today</h2>
               <div className={styles.btns_btm}>
                 <button type="button" className={styles.left_btn}>
                   Try for free
@@ -160,7 +151,6 @@ function Reviews() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

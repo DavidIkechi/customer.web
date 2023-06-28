@@ -2,11 +2,14 @@
 .trySection {
   width: 100%;
   margin-bottom: 5vh;
+  display: flex;
+  justify-content: center;
 }
 .HeroSection {
   display: flex;
   justify-content: space-between;
-  padding: 10vh 6% 18vh;
+  padding: 10vh 8% 18vh;
+  max-width: 1440px;
 
   .backgroundImage {
     position: absolute;
@@ -16,7 +19,12 @@
     bottom: 0;
     z-index: -1;
     width: 100%;
-    height: 90vh;
+    height: 70vh;
+
+    @media screen and (max-width: 1440px) {
+      height: 95vh;
+    }
+ 
   }
 
   .Hero1 {
@@ -65,12 +73,16 @@
 .downHero {
   display: flex;
   gap: 2%;
-  margin-top: 10vh;
-  padding: 0 6%;
+  margin-top: 13vh;
+  max-width: 1440px;
+  padding: 0 8%;
+  @media screen and (max-width: 1440px) {
+    margin-top: 20vh;
+  }
 
   hr {
     border: 2px solid #006cff;
-    margin: 1.5vh 0;
+    margin: 0.7vh 0;
   }
   p {
     color: #6a6a6a;
@@ -90,7 +102,7 @@
   .HeroSection {
     display: flex;
     justify-content: space-between;
-    padding: 7vh 6% 18vh;
+    padding: 7vh 8% 18vh;
 
     .backgroundImage {
       position: absolute;
@@ -142,7 +154,7 @@
     display: flex;
     gap: 2%;
     margin-top: 10vh;
-    padding: 0 6%;
+    padding: 0 8%;
 
     hr {
       border: 2px solid #006cff;
@@ -167,7 +179,7 @@
   .HeroSection {
     display: flex;
     justify-content: space-between;
-    padding: 7vh 5% 18vh;
+    padding: 7vh 8% 18vh;
 
     .backgroundImage {
       position: absolute;
@@ -219,7 +231,7 @@
     display: flex;
     gap: 2%;
     margin-top: 7vh;
-    padding: 0 6%;
+    padding: 0 8%;
 
     hr {
       border: 2px solid #006cff;
@@ -244,7 +256,7 @@
   .HeroSection {
     display: flex;
     justify-content: space-between;
-    padding: 5vh 5% 18vh;
+    padding: 5vh 8% 18vh;
 
     .backgroundImage {
       position: absolute;
@@ -296,7 +308,7 @@
     display: flex;
     gap: 2%;
     margin-top: 1vh;
-    padding: 0 6%;
+    padding: 0 8%;
 
     hr {
       border: 2px solid #006cff;
@@ -320,7 +332,7 @@
   .HeroSection {
     display: flex;
     justify-content: space-between;
-    padding: 5vh 5% 18vh;
+    padding: 5vh 8% 18vh;
 
     .backgroundImage {
       position: absolute;
@@ -372,7 +384,7 @@
     display: flex;
     gap: 2%;
     margin-top: 1vh;
-    padding: 0 6%;
+    padding: 0 8%;
 
     hr {
       border: 2px solid #006cff;
@@ -398,7 +410,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 5vh 5% 18vh;
+    padding: 5vh 8% 18vh;
 
     .backgroundImage {
       position: absolute;
@@ -457,7 +469,7 @@
     display: flex;
     gap: 0%;
     margin-top: 15vh;
-    padding: 0 5%;
+    padding: 0 8%;
 
     hr {
       border: 2px solid #006cff;
@@ -484,7 +496,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 3vh 5% 18vh;
+    padding: 3vh 8% 18vh;
 
     .backgroundImage {
       position: absolute;
@@ -494,7 +506,7 @@
       bottom: 0;
       z-index: -1;
       width: 100%;
-      height: 113vh;
+      height: 120vh;
     }
 
     .Hero1 {
@@ -544,7 +556,7 @@
     display: flex;
     gap: 0%;
     margin-top: 12vh;
-    padding: 0 5%;
+    padding: 0 8%;
 
     hr {
       border: 2px solid #006cff;
@@ -571,7 +583,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 3vh 5% 18vh;
+    padding: 3vh 8% 18vh;
 
     .backgroundImage {
       position: absolute;
@@ -581,7 +593,7 @@
       bottom: 0;
       z-index: -1;
       width: 100%;
-      height: 120vh;
+      height: 110vh;
     }
 
     .Hero1 {
@@ -631,7 +643,7 @@
     display: flex;
     gap: 0%;
     margin-top: 10vh;
-    padding: 0 5%;
+    padding: 0 8%;
 
     hr {
       border: 2px solid #006cff;

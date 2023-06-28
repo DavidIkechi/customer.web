@@ -1,5 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&display=swap");
-*, *::before, *::after {
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -11,8 +13,19 @@ img {
   max-width: 100%;
 }
 
-h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
-  font-family: "Kanit", sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+input,
+textarea,
+label,
+span,
+button {
+  font-family: "Poppins", sans-serif;
 }
 
 .sect__container {
@@ -32,7 +45,7 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
   line-height: 2.5rem;
 }
 .section__one .hero__head .hero__inline {
-  color: #0062E8;
+  color: #0062e8;
 }
 .section__one .hero__subhead {
   margin-bottom: 0.5em;
@@ -78,7 +91,8 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
   border-bottom: 1px solid rgba(204, 204, 204, 0.8);
   border-bottom-width: 1px thick;
 }
-.section__three .three__each .three__head, .section__three .three__sep .three__head {
+.section__three .three__each .three__head,
+.section__three .three__sep .three__head {
   font-size: 0.8rem;
   color: #313131;
   font-weight: 600;
@@ -86,7 +100,8 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
   fill: solid;
   line-height: 1.2rem;
 }
-.section__three .three__each .three__text, .section__three .three__sep .three__text {
+.section__three .three__each .three__text,
+.section__three .three__sep .three__text {
   font-size: 0.6rem;
   color: #313131;
   font-weight: 300;
@@ -315,4 +330,4 @@ h1, h2, h3, h4, h5, h6, p, input, textarea, label, span, button {
     width: 0.7rem;
     margin-left: 0.2em;
   }
-}/*# sourceMappingURL=press.module.css.map */
+} /*# sourceMappingURL=press.module.css.map */

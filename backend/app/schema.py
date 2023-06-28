@@ -1,18 +1,25 @@
 from datetime import datetime
 from enum import Enum
+from fastapi import FastAPI, File, Form
 from typing import List, Optional
 from pydantic import BaseModel, EmailStr, Extra
 from uuid import UUID, uuid1
+
 
 class UserBase(BaseModel):
     first_name: str
     last_name: str
     email: str
     # created_at: datetime
+    
+class PaymentBase(BaseModel):
+    minutes: int
+    plan: str
 
 
 class UserCreate(UserBase):
     company_name: str
+    company_address: str
     password: str
 
 class User(UserBase):
@@ -70,12 +77,84 @@ class Audio(AudioBase):
     class Config:
         orm_mode = True
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class AgentBase(BaseModel):
     first_name: str
     last_name: str
 
 class AgentCreate(AgentBase):
-    pass
+    location: str
 
 class Agent(AgentBase):
     id: int
@@ -157,7 +236,7 @@ class UserProfile(BaseModel):
 class UserProfileUpdate(BaseModel):
     phone_number: Optional[str]
     company_address: Optional[str]
-    company_logo_url: Optional[str]
+
 
 
 class ForgetPassword(BaseModel):
@@ -182,3 +261,23 @@ class Order(OrderBase):
     annual_amount: float
     order_date: datetime
     next_payment_due_date: datetime
+
+class ChangePlan(BaseModel):
+    plan: str
+
+class ChangePassword(BaseModel):
+    old_password: str
+    new_password: str
+
+class RefreshToken(BaseModel):
+    refresh_token:str
+
+class Newsletter(BaseModel):
+    email: EmailStr
+        
+class Plan(BaseModel):
+    name: str
+    price: float
+    features: list
+    # duration: str
+    # title: str

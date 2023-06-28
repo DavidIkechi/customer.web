@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Footer from "../../components/Footer";
-import NavBar from "../../components/navBar";
+import NavBar from "../../components/NavbarFree";
 import arrowLeft from "./assets/arrow__left.png";
 import bannerImage from "./assets/bannerImage.png";
 import cardlogo from "./assets/cardlogo.png";
@@ -19,9 +19,7 @@ import styles from "./press.module.scss";
 const index = () => {
   return (
     <div>
-      <div>
-        <NavBar />
-      </div>
+      <div></div>
       <section className={styles.section__one}>
         <div className={styles.sect__container}>
           <div className={styles.hero__heading}>
@@ -644,9 +642,7 @@ const index = () => {
           </div>
         </div>
       </section>
-      <div>
-        <Footer />
-      </div>
+      <div></div>
     </div>
   );
 };

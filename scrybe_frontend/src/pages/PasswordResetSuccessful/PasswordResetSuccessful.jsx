@@ -18,7 +18,7 @@ function PasswordResetSuccessful() {
               Click below to login.
             </h3>
             <form action="">
-              <NavLink to={"/signin"}>
+              <NavLink to={"/login"}>
                 <input
                   type="submit"
                   value="Continue"

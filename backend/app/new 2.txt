@@ -1,0 +1,114 @@
+config_data = [
+        {"client_id": 1, "trans_channel_id": 1, "trans_method": "smtp-email", "trans_config":
+            {"mail_server": os.getenv('MAIL_SERVER'), "mail_username": os.getenv('MAIL_USERNAME'),
+             "mail_password": os.getenv('MAIL_PASSWORD'), "smtp_port": os.getenv('SMTP_PORT'),
+             "mail_tls": os.getenv('MAIL_TLS'), "mail_ssl": os.getenv('MAIL_SSL')}},
+        {"client_id": 1, "trans_channel_id": 2, "trans_method": "twilio-sms", "trans_config":
+            {"account_sid": os.getenv('ACCOUNT_SID'), "auth_token": os.getenv('AUTH_TOKEN'),
+             "sender_number": os.getenv('SENDER_NUMBER')}},
+        {"client_id": 1, "trans_channel_id":2, "trans_method":"nexmo-sms", "trans_config":
+            {"api_key": os.getenv('API_KEY'), "secret_key": os.getenv('SECRET_KEY'),
+             "sender_number": os.getenv('SENDER_NUMBER')}},
+        {"client_id": 1, "trans_channel_id":1, "trans_method":"mail-gun-email", "trans_config":
+            {"mail_domain": os.getenv('MAIL_DOMAIN'), "api_key": os.getenv('API_KEY')}}
+    ]
+	
+	
+def test_create_sms_nexmo_config(get_session):
+    # first populate the transport channel and transport type tables
+    seed_transport_channel(get_session)
+    seed_notification_type(get_session)
+    seed_channel_transport(get_session)
+    # add the client
+    client_1 = ClientSchema(**get_client_data())
+    created_client_1 = models.Client.create_single_client(get_session, client_1.slug, client_1.client_key)
+    get_session.add(created_client_1)
+    get_session.commit()
+    # add the email_config_data for client
+    config_data = trans_config_data()[2]
+    config_data_schema = TransportConfigSchema(**config_data)
+    # create the data.
+    trans_config = models.TransportConfiguration.create_transport_config(
+        get_session, config_data_schema.dict(exclude_unset=True, exclude_none=True))
+    get_session.add(trans_config)
+    get_session.commit()
+     # check that it was added.
+    retrieve_configs = models.TransportConfiguration.retrieve_transport_configs(get_session)
+    assert len(retrieve_configs.all()) == 1
+    # get the data added.
+    single_config = models.TransportConfiguration.get_transport_config_by_id(get_session, 1)
+    assert single_config.client_id == 1
+    assert single_config.trans_channel_id == 2
+    #get config parameters
+    config_para = models.ChannelTransportType.get_channel_trans_params_by_id(get_session, 3)
+    config_para_data = config_para.parameters
+    config_gateway = config_para.slug
+    # ensure that the keys are the same with the expected parameters    
+    assert list(single_config.trans_config.keys()) == config_para_data
+    assert single_config.trans_method == config_gateway
+	
+	
+def test_get_active_client_by_client_id(get_session):
+    # first populate the transport channel and transport type tables
+    seed_transport_channel(get_session)
+    seed_notification_type(get_session)
+    seed_channel_transport(get_session)
+    seed_client(get_session)
+    seed_transport_configuration(get_session)
+    
+    active_client_data = {
+        "client_id": 1, "trans_channel_id": 1, "trans_config_id": 1
+    }
+    # create the active client
+    active_client = ActiveChannelClientConfig.create_active_channel(
+        get_session, active_client_data)
+    get_session.add(active_client)
+    get_session.commit()
+    # get the client by id
+    get_active_client = ActiveChannelClientConfig.get_active_channel_by_client_id(get_session, active_client_data['client_id'])
+    assert get_active_client is not None
+    assert len(get_active_client) == 1
+	
+def test_get_active_channels_by_transport(get_session):
+    # first populate the transport channel and transport type tables
+    seed_transport_channel(get_session)
+    seed_notification_type(get_session)
+    seed_channel_transport(get_session)
+    seed_client(get_session)
+    seed_transport_configuration(get_session)
+    
+    active_client_data = {
+        "client_id": 1, "trans_channel_id": 1, "trans_config_id": 1
+    }
+    # create the active client
+    active_client = ActiveChannelClientConfig.create_active_channel(
+        get_session, active_client_data)
+    get_session.add(active_client)
+    get_session.commit()
+    # get the client by id
+    get_client_config = ActiveChannelClientConfig.retrieve_active_channels_by_trans_channel(
+        get_session, active_client_data['trans_channel_id'])
+    
+    assert len(get_client_config.all()) == 1
+    
+def test_get_active_client_by_trans_config_id(get_session):
+    # first populate the transport channel and transport type tables
+    seed_transport_channel(get_session)
+    seed_notification_type(get_session)
+    seed_channel_transport(get_session)
+    seed_client(get_session)
+    seed_transport_configuration(get_session)
+    
+    active_client_data = {
+        "client_id": 1, "trans_channel_id": 1, "trans_config_id": 1
+    }
+    # create the active client
+    active_client = ActiveChannelClientConfig.create_active_channel(
+        get_session, active_client_data)
+    get_session.add(active_client)
+    get_session.commit()
+    # get the client by id
+    get_active_client = ActiveChannelClientConfig.get_active_channel_by_trans_config_id(
+        get_session, active_client_data['trans_config_id'])
+    assert get_active_client.client_id == 1
+    assert get_active_client.trans_channel_id == 1

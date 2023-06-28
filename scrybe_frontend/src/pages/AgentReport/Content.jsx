@@ -4,94 +4,72 @@ import close from "./assets/icon.svg";
 import Charts from "./components/ChartContainer";
 import AgentDetails from "./components/AgentDetails";
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { agentData } from "./components/Data";
 import { useAgentReport } from "./hooks";
+import { useAgentAnalysis } from "./hooks";
+import { useSelector } from "react-redux";
+import IsLoadingSkeleton from "../../components/LoadingSkeleton";
 
-const Content = () => {
-  const agentReport = useAgentReport();
-
-  // chart data
-
-  const [agentDets, setAgentDets] = useState({});
-  const [data_id, setData_id] = useState("5");
-
-  useEffect(() => {
-    const data =
-      "grant_type=&username=rambeybello%40gmail.com&password=aaaaaaaa&scope=&client_id=&client_secret=";
-    axios.post("https://api.heed.hng.tech/login", data).then((res) => {
-      const headers = {
-        Authorization: `Bearer ${res.data.access_token}`,
-      };
-      axios
-        .get(
-          `https://api.heed.hng.tech/total-agent-analysis?agent_id=${data_id}`,
-          {
-            headers,
-          }
-        )
-        .then((res) => {
-          console.log(res.data);
-          setAgentDets(res.data);
-        });
-    });
-  }, []);
-
-  // console.log(agentDets);
-  // chart data
-
+const Content = (props) => {
+  const agentReportData = useAgentReport(props);
+  const agentAnalysisData = useAgentAnalysis(props);
+  const [selectData, setSelectData] = useState([]);
   const [selectReport, setSelectReport] = useState([]);
 
+  useEffect(() => {
+    setSelectReport(agentAnalysisData?.month);
+    setSelectData(agentReportData?.month);
+  }, [agentAnalysisData, agentReportData]);
+
   const handleDate = (e) => {
-    setSelectReport(agentData[e.target.value]);
-    // setSelectReport(agentDets[e.target.value]);
+    setSelectReport(agentAnalysisData[e.target.value]);
+    setSelectData(agentReportData[e.target.value]);
   };
 
-  useEffect(() => {
-    setSelectReport(agentData.week);
-    // setSelectReport(agentDets.week);
-    // console.log(selectReport);
-  }, []);
+  const { isLoading } = useSelector((state) => state.util);
 
   return (
-    // <div className={styles.container}>
-    <div className={styles.mainWrapper}>
-      <div className={styles.header}>
-        <h1>Agent Report</h1>
-        <img src={close} alt="close" />
-      </div>
-
-      <div className={styles.idcont}>
+    <>
+      {isLoading ? (
+        <IsLoadingSkeleton />
+      ) : (
         <>
-          {agentReport.map((detail) => {
-            return (
+          <div className={styles.mainWrapper}>
+            <div className={styles.header}>
+              <h1>Agent Report</h1>
+              <img
+                src={close}
+                alt="close"
+                onClick={() => props?.setModal(false)}
+              />
+            </div>
+
+            <div className={styles.idcont}>
               <div className={styles.agentId}>
                 <p className={styles.secondp}>
-                  Agent ID: &nbsp; &nbsp; {detail.agent_id}
+                  Agent ID: &nbsp; &nbsp; {props?.show}
                 </p>
 
                 <p className={styles.secondp}>
-                  Rank: &nbsp; &nbsp; {detail.rank}
+                  Rank: &nbsp; &nbsp; {props?.rank}
                 </p>
               </div>
-            );
-          })}
-        </>
 
-        <div className={styles.select}>
-          <p>View by</p>
-          <select className={styles.dropdown} onChange={handleDate}>
-            <option value="week">This week</option>
-            <option value="month">This month</option>
-          </select>
-        </div>
-      </div>
-      <div className={styles.topDetailsDiv}>
-        <Charts selectReport={selectReport} />
-        <AgentDetails />
-      </div>
-    </div>
-    // </div>
+              <div className={styles.select}>
+                <p>View by</p>
+                <select className={styles.dropdown} onChange={handleDate}>
+                  <option value="month">This month</option>
+                  <option value="week">This week</option>
+                </select>
+              </div>
+            </div>
+            <div className={styles.topDetailsDiv}>
+              <Charts selectReport={selectReport} />
+              <AgentDetails selectData={selectData} />
+            </div>
+          </div>
+        </>
+      )}
+    </>
   );
 };
 

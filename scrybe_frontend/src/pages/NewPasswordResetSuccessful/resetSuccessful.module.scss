@@ -1,0 +1,193 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+input,
+textarea,
+label,
+span,
+button {
+  font-family: "Poppins", sans-serif;
+}
+
+.sect__container {
+  width: 90%;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.overall__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+//Styling of the first section
+
+.first__section {
+  flex-basis: 48%;
+  position: relative;
+  height: 95vh;
+  display: flex;
+  align-items: center;
+
+  .logo__container {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0;
+  }
+
+  .logo__container .logo__text {
+    margin-left: 0.5em;
+  }
+
+  .logo__container .logo__head {
+    font-size: 1.25rem;
+    color: #454545;
+    font-weight: 600;
+    font-style: bold;
+    fill: solid;
+    line-height: 1.5rem;
+  }
+
+  .logo__container .heed__logo {
+    width: 1.25rem;
+  }
+
+  .bottom__content {
+    .second__top .second__heading {
+      margin-bottom: 0.5em;
+    }
+
+    .second__top .second__head {
+      font-size: 1.5rem;
+      color: #454545;
+      font-weight: 600;
+      font-style: bold;
+      fill: solid;
+      line-height: 1.5rem;
+    }
+
+    .second__top .second__subtext {
+      margin-bottom: 1.5em;
+    }
+
+    .second__top .second__subhead {
+      font-size: 1rem;
+      color: #a9a9a9;
+      font-weight: 400;
+      font-style: normal;
+      fill: solid;
+      line-height: 1.5rem;
+    }
+
+    .form__container .form__action {
+      margin-bottom: 0.5em;
+    }
+
+    .form__container .form__button {
+      width: 100%;
+      font-weight: 500;
+      border: none;
+      border-radius: 0.3rem;
+      padding: 0.8em 0.8em;
+      background-color: #006cff;
+      color: #ffffff;
+      font-size: 0.7rem;
+      line-height: 1.5rem;
+      outline: none;
+    }
+  }
+}
+
+.second__section {
+  flex-basis: 48%;
+  margin: auto 0;
+  background-color: #e6f0ff;
+  border-radius: 0.5rem;
+  height: 95vh;
+  display: flex;
+  align-items: center;
+
+  .check__icon {
+    width: 100%;
+  }
+
+  .mobile__view {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .overall__container {
+    display: flex;
+    flex-direction: column-reverse;
+    // height: 100vh;
+  }
+
+  //Styling of the first section
+
+  .first__section {
+    padding-bottom: 5em;
+    width: 100%;
+
+    .logo__container {
+      display: none;
+    }
+  }
+
+  .second__section {
+    background-color: unset;
+    position: relative;
+
+    .logo__container {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      top: 0;
+    }
+
+    .logo__container .logo__text {
+      margin-left: 0.5em;
+    }
+
+    .logo__container .logo__head {
+      font-size: 1.25rem;
+      color: #454545;
+      font-weight: 600;
+      font-style: bold;
+      fill: solid;
+      line-height: 1.5rem;
+    }
+
+    .logo__container .heed__logo {
+      width: 1.25rem;
+    }
+
+    .check__icon {
+      width: 70%;
+      margin: 0 auto;
+    }
+  }
+}

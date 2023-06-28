@@ -1,17 +1,19 @@
-import { React, useRef } from "react";
+import { React } from "react";
 import styles from "./styles/AgentReport.module.scss";
 import Content from "./Content";
 
-// onClick={() => modal.showModal()}
-function AgentReport() {
-  let modal = useRef();
-  // let handleDate;
-
+function AgentReport({ setModal, agent_id, controll, rank, show }) {
   return (
     <>
-      <dialog className={styles.container} ref={(mode) => (modal = mode)}>
-        <Content />
-      </dialog>
+      <div className={styles.container}>
+        <Content
+          setModal={setModal}
+          controll={controll}
+          agent_id={agent_id}
+          show={show}
+          rank={rank}
+        />
+      </div>
     </>
   );
 }

@@ -1,5 +1,7 @@
 import { PropTypes } from "prop-types";
 import React from "react";
+import { dispatch } from "../../redux/store";
+import { setSearchQuery } from "../../redux/utils/UtilSlice";
 import searchIcon from "./searchIcon.svg";
 import styles from "./searchinput.module.scss";
 
@@ -10,31 +12,29 @@ import styles from "./searchinput.module.scss";
  * @returns the search input component with the given className
  */
 
-const SearchInput = ({ className, inputValue }) => {
-  const [searchValue, setSearchValue] = React.useState("");
-
+const SearchInput = ({ inputValue }) => {
   const getSearchValue = (e) => {
-    setSearchValue(e.target.value);
-    inputValue(e);
+    dispatch(setSearchQuery(e.target.value));
   };
 
   return (
-    <div className={styles[`${className}`]}>
-      <img src={searchIcon} alt="" className={styles.searchIcon} />
-      <input
-        type="text"
-        placeholder="Search"
-        value={searchValue}
-        onChange={(e) => getSearchValue(e)}
-      />
+    <div className={styles.sidebar_input}>
+      <div className={styles.sidebar_inputWrap}>
+        <img src={searchIcon} alt="" className={styles.searchIcon} />
+        <input
+          type="text"
+          placeholder="Search"
+          value={inputValue}
+          onChange={(e) => getSearchValue(e)}
+        />
+      </div>
     </div>
   );
 };
 
 // type validation
 SearchInput.propTypes = {
-  className: PropTypes.string.isRequired,
-  inputValue: PropTypes.func.isRequired,
+  inputValue: PropTypes.string.isRequired,
 };
 
 export default SearchInput;

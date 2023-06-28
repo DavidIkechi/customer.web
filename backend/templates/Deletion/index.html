@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heed</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap");
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      border: 0;
+      margin:0
+    }
+    .body{
+        background-color: #f7f7f7;
+        padding:30px 16px;
+        height:100vh
+    }
+    .main {
+      padding-left: 40px;
+      padding-right: 40px;
+      max-width: 700px;
+      padding-top: 22px;
+      padding-bottom: 15px;
+      font-family: "Poppins", sans-serif;
+      color: #3f3f3f;
+      margin:0 auto;
+      background-color: #ffffff;
+      border-radius: 16px;
+    }
+    .message {
+      display: block;
+      text-align: center;
+    }
+    .logo img {
+      width: 150px;
+      max-width: 40%;
+    }
+    .heed {
+      color: #006cff;
+    }
+    .mail {
+      width: 100%;
+      max-width: 300px;
+    }
+    p {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 24px;
+      text-align: center;
+    }
+    h1{
+      font-weight: 500;
+    }
+    .copyright {
+      text-align: center;
+      margin-top: 5vw;
+    }
+    .copyright p {
+      font-weight: 400;
+    }
+    .message a {
+      color: #006CFF;
+      text-decoration: none;
+    }
+    .copy {
+      font-size: 16px;
+      padding-left: 5px;
+      padding-left: 5px;
+    }
+    h5 {
+      margin-right: 450px;
+      font-weight: normal;
+      font-size: 18px;
+      float: left;
+      white-space: nowrap;
+      margin-top:20px;
+      margin-bottom: 10px;
+    }
+     .no-wrap wbr{
+      display:none
+    }
+    h1{
+      margin-bottom: 15px;
+      color:#f32013
+    }
+    .delete{
+      color:#f32013
+    }
+    @media screen and (max-width:710px){
+      .body{
+        padding: 0;
+        height: unset;
+      }
+      .logo img{
+          max-width:70%
+      }
+    }
+    @media screen and (max-width:375px){
+      h1{
+        font-size: 7vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="body">
+    <div class="main">
+      <div class="logo">
+        <a href="https://heed.cx"
+          ><img
+            src="https://res.cloudinary.com/dcsv5etuw/image/upload/v1671352986/logo_rwgpkh.jpg"
+            alt=""
+        /></a>
+      </div>
+      <div class="message">
+        <img
+          src="https://res.cloudinary.com/dcsv5etuw/image/upload/v1671760242/Frame_1000002580_zdw3vf.jpg"
+          alt=""
+          class="mail"
+        />
+        <h5 class="no-wrap">Hello {{firstname}},</h5>
+        <h1>Account Deletion</h1>
+        <p>
+          Your account has been successfully <span class="delete">deleted</span> and your login credentials no longer exist.         
+        </p>
+        <p>You do not have an account with us anymore. Your login credentials no longer exists, so we can no longer offer you our services.
+        </p>
+        <p>
+          For more information, visit our <a href="mailto:info@heed.cx">Help Centre</a> or contact our 
+          <a href="mailto:support@heed.cx">Support team</a>.
+        </p>
+      <div class="copyright">
+        <p><span class="copy">©</span> Copyright 2022 | Heed</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

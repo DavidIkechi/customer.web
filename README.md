@@ -1,9 +1,12 @@
-# Scrybe - customersupport.web
+# Heed - customersupport.web
 
 ## Deployment Status
+
 ![example workflow](https://github.com/workshopapps/customersupport.web/actions/workflows/main.yml/badge.svg)
 
-![Scrybe Logo](/scrybe_frontend/src/assets/scrybe_logo_with_text.svg)
+![Heed Logo](/scrybe_frontend/src/assets/heed_logo_with_text.svg)
+
+This repo contains both the Front and Back end for the <a href="https://heed.cx/" target="blank">Heed App</a>
 
 ## Current Setup (This project uses:)
 
@@ -15,14 +18,15 @@
 
 ## Deployment to Live Link
 
-- Repo deploys to scrybe.hng.tech from branch "main"
+- Repo deploys to <a href="https://heed.cx/" target="blank">Heed App</a>  from branch "main" and Continuous deployment is setup with Jenkins
 
-## Contributing
+## Contributing - Frontend
 
-- Fork this repo
-- Clone your fork of this repo
-- When working on a new feature create a new branch and work there
+- When working on a new feature/fix create a new branch and work there.
+- Clone the repo.
+- Checkout to your branch with `git checkout nameofBranch`
 - Run `npm install` then `npm run dev` launch the project
+- Remember to update your branch from dev.
 - While working, make frequent commits
 - When you're done working on your feature make a PR only to the dev branch (not staging or main)
 
@@ -36,6 +40,6 @@ If you try committing and get an error from Git:
 
 ### Questions about the structure of the repo?
 
-Ask [Tochi](https://github.com/tochibedford)
+Ask [Tochi](https://github.com/tochibedford) - Frontend
 or
-[Bazz](https://github.com/dev-bazz).
+[David](https://github.com/DavidIkechi) - Backend

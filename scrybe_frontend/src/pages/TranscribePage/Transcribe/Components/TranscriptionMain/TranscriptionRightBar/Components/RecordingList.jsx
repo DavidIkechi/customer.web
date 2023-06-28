@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./RecordingList.module.scss";
-// import AudioFilesData from "./AudioFilesData";
+import recordingIcon from "../../../../../assets/recording call.png";
 
 function RecordingList({ recentRecordings }) {
   return (
@@ -28,31 +28,24 @@ function RecordingList({ recentRecordings }) {
         </svg>
       </div>
       <div className={styles.audioList}>
-        {recentRecordings.map((list, index) => {
+        {recentRecordings.map((list) => {
           return (
             <div className={styles.AudioInfo} key={list.id}>
-              <svg
-                width="52"
-                height="52"
-                viewBox="0 0 52 52"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect width="52" height="52" rx="26" fill="#E6F0FF" />
-                <g mask="url(#mask0_1919_29315)">
-                  <path
-                    d="M21.5 31.5V20.5H22.5V31.5H21.5ZM25.5 35.5V16.5H26.5V35.5H25.5ZM17.5 27.5V24.5H18.5V27.5H17.5ZM29.5 31.5V20.5H30.5V31.5H29.5ZM33.5 27.5V24.5H34.5V27.5H33.5Z"
-                    fill="#002D6B"
-                  />
-                </g>
-              </svg>
+              <img src={recordingIcon} alt="recording-Icon" />
               <div className={styles.AudioName}>
-                <h2>{`Recording 0${index + 1} .mp3`}</h2>
-                <p>{`${list.size}.0 mb`}</p>
+                <h2>{list.filename}</h2>
+                <p>{`${list.size} mb`}</p>
               </div>
             </div>
           );
         })}
+        {/* <div className={styles.AudioInfo}>
+          <img src={recordingIcon} alt="recording-Icon" />
+          <div className={styles.AudioName}>
+            <h2>{`Recording 0${3 + 1} .mp3`}</h2>
+            <p>{`.0 mb`}</p>
+          </div>
+        </div> */}
       </div>
     </div>
   );
