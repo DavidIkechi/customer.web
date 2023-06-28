@@ -9,9 +9,9 @@ import cron_status
 
 cron_schedule = Rocketry(config={"task_execution": "async"})
 
-@cron_schedule.task(every("3 seconds"))
-async def another():
-    await cron_status.check_and_update_jobs()
+# @cron_schedule.task(every("10 seconds"))
+# async def another():
+#     await cron_status.check_and_update_jobs()
 
 
 @cron_schedule.task(cron("* * * * *"), execution="main") 
@@ -31,7 +31,7 @@ async def agent_report():
     await cron_status.agent_report()
 
     
-@cron_schedule.task("every 3 seconds")
+@cron_schedule.task("every 30 seconds")
 async def del_fake_jobs():
     await cron_status.del_fake_jobs()
       

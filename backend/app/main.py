@@ -231,6 +231,12 @@ AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
 async def ping():
     return {"message": "Heed Up"}
 
+
+# Close the connection after the endpoint returns
+# @app.on_event("shutdown")
+# def shutdown_event():
+#     db.close()
+
 if __name__ == "__main__":
     # Print Rocketry's logs to terminal
     # logger = logging.getLogger("rocketry.task")

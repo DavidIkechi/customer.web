@@ -223,7 +223,7 @@ async def verify_token(token: str, db: Session):
             return JSONResponse(
                 status_code= 400,
                 content=jsonable_encoder({"detail": "Token not authorized for user"}),
-
+            )
     except Exception as e:
         return False
         

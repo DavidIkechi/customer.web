@@ -4,6 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 import cloudinary
 import os
+import logging
 
 from dotenv import load_dotenv
 
@@ -29,13 +30,27 @@ SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://"+DB_CONNECTION
 
 # SQLALCHEMY_DATABASE_URL = "sqlite:///./heetest.db"
 
-
+# Enable SQLAlchemy logging
+logging.basicConfig()
+logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 engine = create_engine(
 
-    SQLALCHEMY_DATABASE_URL#, connect_args = {"check_same_thread": False}
-
+    SQLALCHEMY_DATABASE_URL,
+    pool_size=5,
+    max_overflow=0,
+    pool_recycle=120
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
+
+# @pytest.fixture(scope='function')
+# def session(db):
+#     connection = db.connect()
+#     transaction = connection.begin()
+#     session = sessionmaker(bind=connection)()
+#     yield session
+#     session.close()
+#     transaction.rollback()
+#     connection.close()

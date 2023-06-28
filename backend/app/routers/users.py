@@ -58,7 +58,9 @@ async def create_user(user: schema.UserCreate, db: Session = Depends(_services.g
     if not email_exists:
         return JSONResponse(
             status_code=400,
-            content = jsonable_encoder({"detail": "User email couldnot be verified!, please use a proper email"})
+            content = jsonable_encoder({"detail"
+                                        
+                                        : "User email couldnot be verified!, please use a proper email"})
         )
     # create the user before sending a mail.
     new_user = crud.create_user(db=db, user=user)
@@ -383,7 +385,7 @@ def subscribe_to_newletter(subscriber: schema.Newsletter, db: Session = Depends(
                 status_code=400,
                 content = jsonable_encoder({"detail": "User email couldnot be verified!, please use a proper email"})
             )
-        crud.add_newsletter_subscriber(db=db, email = subscriber.email)
+        crud.add_newsletter_subscriber(db=db, email_add = subscriber.email)
         return {
             "detail": subscriber.email
         }
@@ -495,3 +497,56 @@ async def reactivate_user(user_id: int, db: Session = Depends(_services.get_sess
         "detail": "User Account was successfully Reactivated!"
     }    
 
+from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware import Middleware
+from sqlalchemy.orm import Session
+from typing import Optional
+
+from database import SessionLocal, engine
+from models import Client
+
+app = FastAPI()
+
+# Middleware that validates client key
+async def validate_client_key(request, call_next):
+    # Get client key from headers
+    client_key = request.headers.get("X-Client-Key")
+    if not client_key:
+        raise HTTPException(status_code=401, detail="Client key is missing")
+    
+    # Get client from database
+    db = SessionLocal()
+    client = db.query(Client).filter(Client.key == client_key).first()
+    if not client:
+        raise HTTPException(status_code=401, detail="Invalid client key")
+    
+    # Attach client to request state for later use
+    request.state.client = client
+    
+    response = await call_next(request)
+    return response
+
+# Attach middleware to app
+middleware = [
+    Middleware(validate_client_key),
+]
+app = FastAPI(middleware=middleware)
+
+# Example endpoint that uses client
+@app.get("/clients/me")
+async def get_current_client(client: Client = Depends(get_current_client)):
+    return client
+
+# Dependency that gets current client from request state
+def get_current_client(request):
+    return request.state.client
+
+# Create database tables
+def create_tables():
+    from models import Base
+    Base.metadata.create_all(bind=engine)
+
+if __name__ == "__main__":
+    # Create database tables
+    create_tables()

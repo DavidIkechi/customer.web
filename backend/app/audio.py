@@ -7,6 +7,7 @@ from mutagen.aac import AAC
 from mutagen.mp4 import MP4
 
 def audio_details(filename):
+    #
     audio = {}
     file = Path(filename)
     if filename[-3:].lower() == "mp3":

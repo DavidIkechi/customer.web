@@ -138,7 +138,7 @@ async def analyse(first_name: str = Form(), last_name: str = Form(), background_
         if len(files) > 5:
             return JSONResponse(
                 status_code= 406,
-                content=jsonable_encoder({"detail": "You can not upload more than two files"}),
+                content=jsonable_encoder({"detail": "You can not upload more than five files"}),
             )
         # if the file type is not audio.
         if not utils.check_if_audio(files):
