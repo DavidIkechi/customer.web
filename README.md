@@ -6,7 +6,7 @@
 
 ![Heed Logo](/scrybe_frontend/src/assets/heed_logo_with_text.svg)
 
-This repo contains both the Front and Back end for the <a href="https://heed.cx/" target="blank">Heed App</a>
+This repo contains both the Front and Back end for the <a href="#" target="blank">Heed App</a>
 
 ## Current Setup (This project uses:)
 
